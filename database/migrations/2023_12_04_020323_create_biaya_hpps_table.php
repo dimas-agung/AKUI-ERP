@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('unit_id');
             $table->string('jenis_biaya');
             $table->string('biaya_per_gram');
-            $table->varchar('status');
+            $table->integer('status');
             $table->timestamps();
         });
     }

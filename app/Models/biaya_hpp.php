@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class biaya_hpp extends Model
 {
     use HasFactory;
+    protected $table = 'biaya_hpps';
     protected $fillable = [
         'datetime',
         'unit_id',

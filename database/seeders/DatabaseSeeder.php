@@ -18,5 +18,8 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call(Biaya_hppSeeder::class);
+        $this->call(UnitSeeder::class);
+        $this->call(WorkstationSeeder::class);
     }
 }

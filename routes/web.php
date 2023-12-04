@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/biaya', 'BiayaController@home');
+Route::get('/biaya/unit', 'BiayaController@unit');
+Route::get('/biaya/workstation', 'BiayaController@workstation');
