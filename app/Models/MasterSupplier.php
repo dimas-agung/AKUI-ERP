@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MasterSupplier extends Model
 {
     use HasFactory;
-    protected $table ='master_supplier';
+    protected $table ='master_supplier_raw_material';
 
     protected $fillable = [
         'nama_supplier',

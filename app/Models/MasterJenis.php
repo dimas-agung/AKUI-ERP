@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MasterJenis extends Model
 {
     use HasFactory;
-    protected $table ='master_jenis';
+    protected $table ='master_jenis_raw_material';
 
     protected $fillable = [
         'datetime',
