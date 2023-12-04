@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\MmasterTujuanKirim;
+use App\Models\MasterTujuan;
 use Illuminate\Database\Seeder;
 
-class MmasterTujuanKirimSeeder extends Seeder
+class MasterTujuanSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,26 +14,25 @@ class MmasterTujuanKirimSeeder extends Seeder
      */
     public function run()
     {
-        MmasterTujuanKirim::create([
+        MasterTujuan::create([
             'tujuan_kirim' => 'Surabaya',
-            'letak_kirim' => 'Gudang 1',
-            'inisial_kirim' => 'K001',
+            'letak_tujuan' => 'Gudang 1',
+            'inisial_tujuan' => 'K001',
             'status' => 1,
         ]);
         
-        MmasterTujuanKirim::create([
+        MasterTujuan::create([
             'tujuan_kirim' => 'Malaysia',
-            'letak_kirim' => 'Gudang 2',
-            'inisial_kirim' => 'K002',
+            'letak_tujuan' => 'Gudang 2',
+            'inisial_tujuan' => 'K002',
             'status' => 0,
         ]);
         
-        MmasterTujuanKirim::create([
+        MasterTujuan::create([
             'tujuan_kirim' => 'Singapura',
-            'letak_kirim' => 'Gudang 3',
-            'inisial_kirim' => 'K003',
+            'letak_tujuan' => 'Gudang 3',
+            'inisial_tujuan' => 'K003',
             'status' => 1,
         ]);
-
     }
 }

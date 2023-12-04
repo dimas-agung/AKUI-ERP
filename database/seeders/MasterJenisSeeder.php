@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\MmasterJenis;
+use App\Models\MasterJenis;
 use Illuminate\Database\Seeder;
 
-class MmasterJenisSeeder extends Seeder
+class MasterJenisSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class MmasterJenisSeeder extends Seeder
      */
     public function run()
     {
-        MmasterJenis::create([
+        MasterJenis::create([
             'datetime' => '2023-12-04 13:31:20',
             'jenis' => 'Calestial',
             'kategori_susut' => 'A',
@@ -23,7 +23,7 @@ class MmasterJenisSeeder extends Seeder
             'harga_estimasi' => 20000,
             'status' => 0,
         ]);
-        MmasterJenis::create([
+        MasterJenis::create([
             'datetime' => '2023-02-13 15:31:20',
             'jenis' => 'Calestial Crown',
             'kategori_susut' => 'C',
@@ -32,7 +32,7 @@ class MmasterJenisSeeder extends Seeder
             'harga_estimasi' => 30000,
             'status' => 1,
         ]);
-        MmasterJenis::create([
+        MasterJenis::create([
             'datetime' => '2023-09-14 16:31:20',
             'jenis' => 'Calestial',
             'kategori_susut' => 'C',

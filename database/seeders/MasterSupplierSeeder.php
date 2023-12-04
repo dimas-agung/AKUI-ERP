@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\MmasterSuplier;
+use App\Models\MasterSupplier;
 use Illuminate\Database\Seeder;
 
-class MmasterSuplierSeeder extends Seeder
+class MasterSupplierSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,19 +14,19 @@ class MmasterSuplierSeeder extends Seeder
      */
     public function run()
     {
-        MmasterSuplier::create([
+        MasterSupplier::create([
             'nama_supplier' => 'Supplier 1',
             'inisial_supplier' => 'sp-A',
             'status' => 1,
         ]);
 
-        MmasterSuplier::create([
+        MasterSupplier::create([
             'nama_supplier' => 'Supplier 2',
             'inisial_supplier' => 'sp-B',
             'status' => 0,
         ]);
 
-        MmasterSuplier::create([
+        MasterSupplier::create([
             'nama_supplier' => 'Supplier 3',
             'inisial_supplier' => 'sp-C',
             'status' => 1,

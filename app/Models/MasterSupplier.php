@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MmasterJenis extends Model
+class MasterSupplier extends Model
 {
     use HasFactory;
+    protected $table ='master_supplier';
 
     protected $fillable = [
-        'datetime',
-        'jenis',
-        'kategori_susut',
-        'upah_operator',
-        'pengurangan_harga',
-        'harga_estimasi',
+        'nama_supplier',
+        'inisial_supplier',
         'status',
     ];
 }
