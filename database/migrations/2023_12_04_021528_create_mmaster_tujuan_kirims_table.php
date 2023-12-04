@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('mmaster_tujuan_kirims', function (Blueprint $table) {
             $table->id();
-            $table->string('tujuan_kirim');
-            $table->string('letak_tujuan');
-            $table->string('inisial_tujuan');
-            $table->string('status');
+            $table->varchar('tujuan_kirim');
+            $table->varchar('letak_tujuan');
+            $table->varchar('inisial_tujuan');
+            $table->int('status');
             $table->timestamps();
         });
     }
