@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('mmaster_jenis', function (Blueprint $table) {
             $table->id();
             $table->date('datetime');
-            $table->varchar('jenis');
-            $table->varchar('kategori_susut');
-            $table->varchar('upah_operator');
-            $table->varchar('pengurangan_harga');
+            $table->string('jenis');
+            $table->string('kategori_susut');
+            $table->string('upah_operator');
+            $table->string('pengurangan_harga');
             $table->int('harga_estimasi');
             $table->int('status');
             $table->timestamps();
