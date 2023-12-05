@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('biaya_hpps', function (Blueprint $table) {
+        Schema::create('biaya_hpp', function (Blueprint $table) {
             $table->id();
             $table->date('datetime');
             $table->integer('unit_id');
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('biaya_hpps');
+        Schema::dropIfExists('biaya_hpp');
     }
 };

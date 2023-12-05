@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class unit extends Model
 {
     use HasFactory;
-    protected $table = 'units';
+    protected $table = 'unit';
     protected $fillable = [
         'datetime',
         'workstation_id',
         'nama',
         'status',
     ];
+
+    public function workstation()
+    {
+    	return $this->belongsTo(Workstation::class, 'workstation_id', 'id');
+    }
 }

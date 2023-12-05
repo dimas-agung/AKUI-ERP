@@ -9,9 +9,11 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
+
     public function up(): void
     {
-        Schema::create('units', function (Blueprint $table) {
+        Schema::create('unit', function (Blueprint $table) {
             $table->id();
             $table->date('datetime');
             $table->integer('workstation_id');
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('unit');
     }
 };
