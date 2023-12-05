@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\TransitGradingKasar;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,9 +20,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        
+
         $this->call(MasterJenisSeeder::class);
         $this->call(MasterSupplierSeeder::class);
         $this->call(MasterTujuanSeeder::class);
+        $this->call(TransitGradingKasarSeeder::class);
+        $this->call(TransitGradingHalusSeeder::class);
     }
 }
