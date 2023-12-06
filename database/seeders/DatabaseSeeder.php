@@ -24,7 +24,5 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterJenisSeeder::class);
         $this->call(MasterSupplierSeeder::class);
         $this->call(MasterTujuanSeeder::class);
-        $this->call(TransitGradingKasarSeeder::class);
-        $this->call(TransitGradingHalusSeeder::class);
     }
 }

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->date('datetime');
             $table->string('jenis');
             $table->string('kategori_susut');
-            $table->string('upah_operator');
-            $table->string('pengurangan_harga');
+            $table->integer('upah_operator');
+            $table->integer('pengurangan_harga');
             $table->integer('harga_estimasi');
             $table->integer('status');
             $table->timestamps();

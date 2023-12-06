@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('upc_pre_clean_stok', function (Blueprint $table) {
+        Schema::create('prm_raw_material_stok', function (Blueprint $table) {
             $table->string('unit');
+            $table->foreignId('id_box');
             $table->string('nomor_batch');
             $table->string('nama_supplier');
             $table->string('jenis');
-            $table->integer('berat');
-            $table->integer('pcs');
-            $table->integer('kadar_air');
-            $table->integer('modal');
-            $table->integer('total_modal');
+            $table->float('berat_masuk');
+            $table->float('berat_keluar');
+            $table->float('sisa_berat');
+            $table->float('avg_kadar_air');
+            $table->decimal('modal', $scale = 2);
+            $table->decimal('total_modal', $scale = 2);
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('upc_pre_clean_stok');
+        Schema::dropIfExists('prm_raw_material_stok');
     }
 };

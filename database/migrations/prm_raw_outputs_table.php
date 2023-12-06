@@ -11,18 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ugk_adding', function (Blueprint $table) {
+        Schema::create('prm_raw_material_output', function (Blueprint $table) {
             $table->id();
-            $table->string('nomor_btsb');
-            $table->integer('id_box');
+            $table->string('id_box');
             $table->string('nomor_batch');
             $table->string('nama_supplier');
             $table->string('jenis');
-            $table->integer('berat_adding');
-            $table->integer('kadar_air');
-            $table->string('nomor_grading');
-            $table->integer('modal');
-            $table->integer('total_modal');
+            $table->float('berat');
+            $table->float('kadar_air');
+            $table->string('tujuan_kirim');
+            $table->string('letak_tujuan');
+            $table->string('inisial_tujuan');
+            $table->string('nomor_btsb');
+            $table->decimal('modal', $scale = 2);
+            $table->decimal('total_modal', $scale = 2);
             $table->string('keterangan');
             $table->timestamps();
             $table->integer('nip_admin');
@@ -34,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ugk_adding');
+        Schema::dropIfExists('prm_raw_material_output');
     }
 };

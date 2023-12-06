@@ -18,7 +18,7 @@ class MasterJenisSeeder extends Seeder
             'datetime' => '2023-12-04 13:31:20',
             'jenis' => 'Calestial',
             'kategori_susut' => 'A',
-            'upah_operator' => 50000,
+            'upah_operator' => 5000,
             'pengurangan_harga' => 10000,
             'harga_estimasi' => 20000,
             'status' => 0,

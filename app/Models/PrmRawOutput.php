@@ -26,4 +26,9 @@ class PrmRawOutput extends Model
         'timestamp',
         'nip_admin'
     ];
+
+    public function MasterTujuan()
+    {
+        return $this->belongsTo(master_tujuan_raw_material::class, 'tujuan_kirim', 'id');
+    }
 }

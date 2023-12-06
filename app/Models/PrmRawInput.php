@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PrmRawInput extends Model
 {
@@ -30,4 +31,12 @@ class PrmRawInput extends Model
         'timestamp',
         'nip_admin'
     ];
+    // public function MasterSupplier()
+    // {
+    //     return $this->belongsTo(master_supplier_raw_material::class, 'nama_supplier', 'id');
+    // }
+    // public function MasterJenis()
+    // {
+    //     return $this->belongsTo(master_jenis_raw_material::class, 'jenis', 'id');
+    // }
 }

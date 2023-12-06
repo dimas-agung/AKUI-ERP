@@ -20,14 +20,14 @@ class MasterTujuanSeeder extends Seeder
             'inisial_tujuan' => 'K001',
             'status' => 1,
         ]);
-        
+
         MasterTujuan::create([
             'tujuan_kirim' => 'Malaysia',
             'letak_tujuan' => 'Gudang 2',
             'inisial_tujuan' => 'K002',
             'status' => 0,
         ]);
-        
+
         MasterTujuan::create([
             'tujuan_kirim' => 'Singapura',
             'letak_tujuan' => 'Gudang 3',
