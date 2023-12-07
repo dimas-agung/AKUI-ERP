@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_supplier');
             $table->string('inisial_supplier');
-            $table->integer('status');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
