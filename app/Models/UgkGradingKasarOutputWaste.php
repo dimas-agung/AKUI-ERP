@@ -10,7 +10,6 @@ class UgkGradingKasarOutputWaste extends Model
     use HasFactory;
     protected $table = 'ugk_grading_kasar_output_waste';
     protected $fillable = [
-        'unit',
         'id_box',
         'nomor_batch',
         'nama_supplier',

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ugh_grading_halus_stock_wip extends Model
+class UghGradingHalusStockWip extends Model
 {
     use HasFactory;
     protected $table = 'ugh_grading_halus_stock_wip';

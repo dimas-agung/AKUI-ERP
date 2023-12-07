@@ -20,4 +20,9 @@ class Unit extends Model
     {
     	return $this->belongsTo(Workstation::class);
     }
+
+    public function biayahpp()
+    {
+        return $this->hasMany(BiayaHpp::class);
+    }
 }

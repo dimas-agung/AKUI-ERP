@@ -14,4 +14,10 @@ class Workstation extends Model
         'nama',
         'status',
     ];
+
+
+    public function unit()
+    {
+        return $this->hasMany(Unit::class);
+    }
 }

@@ -25,5 +25,17 @@ class UnitSeeder extends Seeder
             'nama'      => 'Pengiriman',
             'status'    => 0,
         ]);
+        Unit::create([
+            'datetime'      => '2023-12-04',
+            'workstation_id' => 3,
+            'nama'      => 'Pengemasan',
+            'status'    => 0,
+        ]);
+        Unit::create([
+            'datetime'      => '2023-12-04',
+            'workstation_id' => 4,
+            'nama'      => 'Pengecek',
+            'status'    => 0,
+        ]);
     }
 }

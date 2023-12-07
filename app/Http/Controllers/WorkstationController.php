@@ -4,31 +4,35 @@ namespace App\Http\Controllers;
 
 //return type View
 use Illuminate\View\View;
-use App\Models\unit;
 use App\Models\Workstation;
 use Illuminate\Http\Request;
 
 //return type redirectResponse
 use Illuminate\Http\RedirectResponse;
 
-class UnitController extends Controller
+class WorkstationController extends Controller
 {
     public function index(){
-        $workstation = Workstation::with('unit')->get();
-        $unit = unit::all();
-        return response()->view('Unit', [
-            'unit' => $unit,
+
+        $workstation = Workstation::all();
+        return response()->view('Workstation', [
             'workstation' => $workstation,
         ]);
     }
 
-    // Belum Dilanjutkan untuk CRUD nya
+
 
     public function create(): View
     {
-        return view('createunit');
+        return view('create');
     }
 
+        /**
+     * store
+     *
+     * @param  mixed $request
+     * @return RedirectResponse
+     */
     public function store(Request $request): RedirectResponse
     {
         //validate form
@@ -39,14 +43,14 @@ class UnitController extends Controller
         ]);
 
         //create post
-        unit::create([
+        Workstation::create([
             'datetime'     => $request->datetime,
             'nama'   => $request->nama,
             'status'   => $request->status
         ]);
 
         //redirect to index
-        return redirect()->route('unit.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('workstation.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
 
@@ -59,6 +63,13 @@ class UnitController extends Controller
         return view('show', compact('workstation'));
     }
 
+
+     /**
+     * edit
+     *
+     * @param  mixed $id
+     * @return View
+     */
     public function edit(string $id): View
     {
         //get post by ID

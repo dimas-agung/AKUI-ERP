@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('unit_id')->constrained('unit');
             $table->string('jenis_biaya');
             $table->float('biaya_per_gram');
-            $table->integer('status');
+            $table->integer('status')->default('1');
             $table->timestamps();
         });
     }

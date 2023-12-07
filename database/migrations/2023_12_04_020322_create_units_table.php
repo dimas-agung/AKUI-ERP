@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('datetime');
             $table->foreignId('workstation_id')->constrained('workstation');
             $table->string('nama');
-            $table->integer('status');
+            $table->integer('status')->default('1');
             $table->timestamps();
         });
     }

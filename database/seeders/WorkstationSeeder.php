@@ -15,12 +15,27 @@ class WorkstationSeeder extends Seeder
     {
         Workstation::create([
             'datetime'      => '2023-12-04',
-            'nama'      => 'perbarui',
+            'nama'      => 'Joko',
             'status'    => 0,
         ]);
         Workstation::create([
             'datetime'      => '2023-12-04',
-            'nama'      => 'Pengiriman',
+            'nama'      => 'Budi',
+            'status'    => 1,
+        ]);
+        Workstation::create([
+            'datetime'      => '2023-12-04',
+            'nama'      => 'Jawir',
+            'status'    => 1,
+        ]);
+        Workstation::create([
+            'datetime'      => '2023-12-04',
+            'nama'      => 'Jamet',
+            'status'    => 0,
+        ]);
+        Workstation::create([
+            'datetime'      => '2023-12-04',
+            'nama'      => 'Supri',
             'status'    => 1,
         ]);
     }
