@@ -5,24 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ugh_grading_halus_output extends Model
+class TransitPreWash extends Model
 {
     use HasFactory;
-    protected $table = 'ugh_grading_halus_output';
+    protected $table = 'transit_pre_wash';
     protected $fillable = [
-        'id_box',
+        'unit',
+        'nomor_job',
         'nomor_batch',
         'jenis',
         'berat',
         'pcs',
         'kadar_air',
-        'tujuan_kirim',
-        'nomor_job',
-        'nomor_bstb',
         'modal',
         'total_modal',
-        'keterangan',
         'timestamp',
-        'nip_admin',
     ];
 }

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('biaya_hpp', function (Blueprint $table) {
             $table->id();
             $table->date('datetime');
-            $table->integer('unit_id');
+            $table->foreignId('unit_id')->constrained('unit');
             $table->string('jenis_biaya');
-            $table->string('biaya_per_gram');
+            $table->float('biaya_per_gram');
             $table->integer('status');
             $table->timestamps();
         });

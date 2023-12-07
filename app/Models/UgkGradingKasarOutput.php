@@ -5,26 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ugh_grading_halus_hasil extends Model
+class UgkGradingKasarOutput extends Model
 {
     use HasFactory;
-    protected $table = 'ugh_grading_halus_hasil';
+    protected $table = 'ugk_grading_kasar_output';
     protected $fillable = [
-        'nomor_grading',
+        'id_box',
         'nomor_batch',
         'nama_supplier',
-        'jenis_adding',
-        'berat_adding',
-        'pcs_adding',
+        'jenis',
+        'berat',
+        'pcs',
         'kadar_air',
-        'jenis_grading',
-        'berat_grading',
-        'pcs_grading',
-        'id_box',
+        'nomor_job',
+        'nomor_bstb',
         'modal',
         'total_modal',
-        'hpp',
-        'total_hpp',
         'keterangan',
         'timestamp',
         'nip_admin',

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\workstation;
+use App\Models\Workstation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,12 +13,12 @@ class WorkstationSeeder extends Seeder
      */
     public function run(): void
     {
-        workstation::create([
+        Workstation::create([
             'datetime'      => '2023-12-04',
             'nama'      => 'perbarui',
             'status'    => 0,
         ]);
-        workstation::create([
+        Workstation::create([
             'datetime'      => '2023-12-04',
             'nama'      => 'Pengiriman',
             'status'    => 1,

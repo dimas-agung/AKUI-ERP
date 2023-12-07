@@ -17,3 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::controller(App\Http\Controllers\UnitController::class)->group(function () {
+    Route::get('/unit', 'index')->name('unit.index');
+});

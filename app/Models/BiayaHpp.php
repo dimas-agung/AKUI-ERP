@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class biaya_hpp extends Model
+class BiayaHpp extends Model
 {
     use HasFactory;
     protected $table = 'biaya_hpp';
@@ -18,6 +18,6 @@ class biaya_hpp extends Model
     ];
 
     public function unit()  {
-    	return $this->belongsTo(Unit::class, 'unit_id', 'id');
+    	return $this->belongsTo(Unit::class);
     }
 }

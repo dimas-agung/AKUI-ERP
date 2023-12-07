@@ -5,20 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class transit_pre_wash extends Model
+class UclStok extends Model
 {
     use HasFactory;
-    protected $table = 'transit_pre_wash';
+    protected $table = 'ucl_stok';
     protected $fillable = [
         'unit',
-        'nomor_job',
         'nomor_batch',
         'jenis',
-        'berat',
-        'pcs',
-        'kadar_air',
+        'berat_masuk',
+        'pcs_masuk',
+        'berat_keluar',
+        'pcs_keluar',
+        'sisa_berat',
+        'sisa_pcs',
+        'avg_kadar_air',
         'modal',
         'total_modal',
-        'timestamp',
     ];
 }

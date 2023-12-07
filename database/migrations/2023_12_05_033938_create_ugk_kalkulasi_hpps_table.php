@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('berat_grading');
             $table->string('pcs_grading');
             $table->string('id_box');
-            $table->decimal('biaya_produksi', $scale = 2);
+            $table->foreignId('biaya_produksi')->constrained('biaya_hpp');
             $table->string('modal');
             $table->string('total_modal');
             $table->string('fix_modal');

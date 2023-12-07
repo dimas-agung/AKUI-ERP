@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ugk_hasil', function (Blueprint $table) {
             $table->id();
-            $table->integer('nomor_grading');
+            $table->foreignId('nomor_grading')->constrained('ugk_kalkulasi_hpp');
             $table->integer('nomor_batch');
             $table->string('nama_supplier');
             $table->string('jenis_adding');

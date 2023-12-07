@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ugk_grading_kasar_stok', function (Blueprint $table) {
-            $table->id();
-            $table->string('id_box');
+            $table->integer('unit');
+            $table->foreignId('id_box')->constrained('ugk_hasil');
             $table->integer('nomor_batch');
             $table->string('nama_supplier');
             $table->string('jenis');

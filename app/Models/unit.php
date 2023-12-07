@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class unit extends Model
+class Unit extends Model
 {
     use HasFactory;
     protected $table = 'unit';
@@ -16,8 +16,8 @@ class unit extends Model
         'status',
     ];
 
-    public function workstation()
+    public function Workstation()
     {
-    	return $this->belongsTo(Workstation::class, 'workstation_id', 'id');
+    	return $this->belongsTo(Workstation::class);
     }
 }
