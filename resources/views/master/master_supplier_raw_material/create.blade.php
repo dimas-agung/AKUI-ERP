@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-body">
-                        <form action="{{ route('master_supplier.store') }}" method="POST">
+                        <form action="{{ route('master_supplier_raw_material.store') }}" method="POST">
 
                             @csrf
 
@@ -34,21 +34,6 @@
                                     </div>
                                 @enderror
                             </div>
-
-                            <div class="form-group">
-                                <label class="font-weight-bold">Status</label>
-                                {{-- <select name="" id=""></select> --}}
-                                <input type="text" class="form-control @error('status') is-invalid @enderror"
-                                    name="status" placeholder="Masukan Status">
-
-                                <!-- error message untuk title -->
-                                @error('status')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
 
                             <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>

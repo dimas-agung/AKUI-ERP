@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_jenis_raw_material', function (Blueprint $table) {
+        Schema::create('master_jenis_raw_materials', function (Blueprint $table) {
             $table->id();
-            $table->date('datetime');
             $table->string('jenis');
             $table->string('kategori_susut');
             $table->integer('upah_operator');
             $table->integer('pengurangan_harga');
             $table->integer('harga_estimasi');
-            $table->integer('status')->default(1);
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_jenis_raw_material');
+        Schema::dropIfExists('master_jenis_raw_materials');
     }
 };

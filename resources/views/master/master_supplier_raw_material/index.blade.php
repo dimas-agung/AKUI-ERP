@@ -9,7 +9,8 @@
                 </div>
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-body">
-                        <a href="{{ route('master_supplier.create') }}" class="btn btn-md btn-success mb-3">TAMBAH
+                        <a href="{{ route('master_supplier_raw_material.create') }}"
+                            class="btn btn-md btn-success mb-3">TAMBAH
                             POST</a>
                         <table class="table table-bordered">
                             <thead>
@@ -18,23 +19,27 @@
                                     <th scope="col">Nama Supplier</th>
                                     <th scope="col">Inisial supplier</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Tanggal Buat</th>
+                                    <th scope="col">Tanggal Update</th>
                                     <th scope="col">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($MasterSupplier as $MasSupp)
+                                @forelse ($MasterSupplierRawMaterial as $MasterSPR)
                                     <tr>
-                                        <td>{{ $MasSupp->id }}</td>
-                                        <td>{{ $MasSupp->nama_supplier }}</td>
-                                        <td>{{ $MasSupp->inisial_supplier }}</td>
-                                        <td>{{ $MasSupp->status }}</td>
+                                        <td>{{ $MasterSPR->id }}</td>
+                                        <td>{{ $MasterSPR->nama_supplier }}</td>
+                                        <td>{{ $MasterSPR->inisial_supplier }}</td>
+                                        <td>{{ $MasterSPR->status }}</td>
+                                        <td>{{ $MasterSPR->created_at }}</td>
+                                        <td>{{ $MasterSPR->updated_at }}</td>
                                         <td class="text-center">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('master_supplier.destroy', $MasSupp->id) }}"
+                                                action="{{ route('master_supplier_raw_material.destroy', $MasterSPR->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('master_supplier.show', $MasSupp->id) }}"
+                                                <a href="{{ route('master_supplier_raw_material.show', $MasterSPR->id) }}"
                                                     class="btn btn-sm btn-dark">SHOW</a>
-                                                <a href="{{ route('master_supplier.edit', $MasSupp->id) }}"
+                                                <a href="{{ route('master_supplier_raw_material.edit', $MasterSPR->id) }}"
                                                     class="btn btn-sm btn-primary">EDIT</a>
                                                 @csrf
                                                 @method('DELETE')
@@ -49,7 +54,6 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        {{-- {{ $MasterSupplier->links() }} --}}
                     </div>
                 </div>
             </div>

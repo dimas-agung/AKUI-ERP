@@ -2,20 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\MasterJenis;
+use App\Models\MasterJenisRawMaterial;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class MasterJenisSeeder extends Seeder
+class MasterJenisRawMaterialSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        MasterJenis::create([
-            'datetime' => '2023-12-04 13:31:20',
+        MasterJenisRawMaterial::create([
             'jenis' => 'Calestial',
             'kategori_susut' => 'A',
             'upah_operator' => 5000,
@@ -23,20 +21,18 @@ class MasterJenisSeeder extends Seeder
             'harga_estimasi' => 20000,
             'status' => 1,
         ]);
-        MasterJenis::create([
-            'datetime' => '2023-02-13 15:31:20',
-            'jenis' => 'Calestial Crown',
-            'kategori_susut' => 'C',
-            'upah_operator' => 60000,
+        MasterJenisRawMaterial::create([
+            'jenis' => 'Crown',
+            'kategori_susut' => 'B',
+            'upah_operator' => 6000,
             'pengurangan_harga' => 20000,
             'harga_estimasi' => 30000,
             'status' => 1,
         ]);
-        MasterJenis::create([
-            'datetime' => '2023-09-14 16:31:20',
-            'jenis' => 'Calestial',
+        MasterJenisRawMaterial::create([
+            'jenis' => 'Crown',
             'kategori_susut' => 'C',
-            'upah_operator' => 70000,
+            'upah_operator' => 7000,
             'pengurangan_harga' => 30000,
             'harga_estimasi' => 40000,
             'status' => 1,

@@ -9,39 +9,43 @@
                 </div>
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-body">
-                        <a href="{{ route('master_jenis.create') }}" class="btn btn-md btn-success mb-3">TAMBAH POST</a>
+                        <a href="{{ route('master_jenis_raw_material.create') }}" class="btn btn-md btn-success mb-3">TAMBAH
+                            POST</a>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Date</th>
                                     <th scope="col">Jenis</th>
                                     <th scope="col">Kategori Susut</th>
                                     <th scope="col">Upah Operator</th>
                                     <th scope="col">Pengurangan harga</th>
                                     <th scope="col">Harga Estimasi</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Tanggal Buat</th>
+                                    <th scope="col">Tanggal Update</th>
                                     <th scope="col">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($MasterJenis as $MasJen)
+                                @forelse ($MasterJenisRawMaterial as $MasterJRM)
                                     <tr>
-                                        <td>{{ $MasJen->id }}</td>
-                                        <td>{{ $MasJen->datetime }}</td>
-                                        <td>{{ $MasJen->jenis }}</td>
-                                        <td>{{ $MasJen->kategori_susut }}</td>
-                                        <td>{{ $MasJen->upah_operator }}</td>
-                                        <td>{{ $MasJen->pengurangan_harga }}</td>
-                                        <td>{{ $MasJen->harga_estimasi }}</td>
-                                        <td>{{ $MasJen->status }}</td>
+                                        <td>{{ $MasterJRM->id }}</td>
+                                        <td>{{ $MasterJRM->jenis }}</td>
+                                        <td>{{ $MasterJRM->kategori_susut }}</td>
+                                        <td>{{ $MasterJRM->upah_operator }}</td>
+                                        <td>{{ $MasterJRM->pengurangan_harga }}</td>
+                                        <td>{{ $MasterJRM->harga_estimasi }}</td>
+                                        <td>{{ $MasterJRM->status }}</td>
+                                        <td>{{ $MasterJRM->created_at }}</td>
+                                        <td>{{ $MasterJRM->updated_at }}</td>
                                         <td>
                                             <form class="d-flex text-center" style="flex-direction: column;"
                                                 onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('master_jenis.destroy', $MasJen->id) }}" method="POST">
-                                                <a href="{{ route('master_jenis.show', $MasJen->id) }}"
+                                                action="{{ route('master_jenis_raw_material.destroy', $MasterJRM->id) }}"
+                                                method="POST">
+                                                <a href="{{ route('master_jenis_raw_material.show', $MasterJRM->id) }}"
                                                     class="btn btn-sm btn-dark mb-2">SHOW</a>
-                                                <a href="{{ route('master_jenis.edit', $MasJen->id) }}"
+                                                <a href="{{ route('master_jenis_raw_material.edit', $MasterJRM->id) }}"
                                                     class="btn btn-sm btn-primary mb-2">EDIT</a>
                                                 @csrf
                                                 @method('DELETE')
@@ -56,7 +60,6 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        {{-- {{ $MasterSupplier->links() }} --}}
                     </div>
                 </div>
             </div>

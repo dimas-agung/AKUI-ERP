@@ -5,9 +5,11 @@
             <div class="col-md-8">
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-body">
-                        <h4>{{ $MasSupp->nama_supplier }}</h4>
-                        <h4>{{ $MasSupp->inisial_supplier }}</h4>
-                        <h4>{{ $MasSupp->status }}</h4>
+                        <h4>{{ $MasterTJRM->id }}</h4>
+                        <h4>{{ $MasterTJRM->tujuan_kirim }}</h4>
+                        <h4>{{ $MasterTJRM->letak_tujuan }}</h4>
+                        <h4>{{ $MasterTJRM->inisial_tujuan }}</h4>
+                        <h4>{{ $MasterTJRM->status }}</h4>
                     </div>
                 </div>
             </div>

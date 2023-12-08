@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_tujuan_kirim_raw_material', function (Blueprint $table) {
+        Schema::create('master_tujuan_kirim_raw_materials', function (Blueprint $table) {
             $table->id();
             $table->string('tujuan_kirim');
             $table->string('letak_tujuan');
             $table->string('inisial_tujuan');
-            $table->integer('status')->default(1);
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_tujuan_kirim_raw_material');
+        Schema::dropIfExists('master_tujuan_kirim_raw_materials');
     }
 };

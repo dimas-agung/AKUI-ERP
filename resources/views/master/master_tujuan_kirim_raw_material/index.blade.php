@@ -9,7 +9,8 @@
                 </div>
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-body">
-                        <a href="{{ route('master_tujuan.create') }}" class="btn btn-md btn-success mb-3">TAMBAH
+                        <a href="{{ route('master_tujuan_kirim_raw_material.create') }}"
+                            class="btn btn-md btn-success mb-3">TAMBAH
                             POST</a>
                         <table class="table table-bordered">
                             <thead>
@@ -19,23 +20,28 @@
                                     <th scope="col">Letak Tujuan</th>
                                     <th scope="col">Inisial Kirim</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Tanggal Buat</th>
+                                    <th scope="col">Tanggal Update</th>
                                     <th scope="col">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($MasterTujuan as $MasTu)
+                                @forelse ($MasterTujuanKirimRawMaterial as $MasterTJRM)
                                     <tr>
-                                        <td>{{ $MasTu->id }}</td>
-                                        <td>{{ $MasTu->tujuan_kirim }}</td>
-                                        <td>{{ $MasTu->letak_tujuan }}</td>
-                                        <td>{{ $MasTu->inisial_tujuan }}</td>
-                                        <td>{{ $MasTu->status }}</td>
+                                        <td>{{ $MasterTJRM->id }}</td>
+                                        <td>{{ $MasterTJRM->tujuan_kirim }}</td>
+                                        <td>{{ $MasterTJRM->letak_tujuan }}</td>
+                                        <td>{{ $MasterTJRM->inisial_tujuan }}</td>
+                                        <td>{{ $MasterTJRM->status }}</td>
+                                        <td>{{ $MasterTJRM->created_at }}</td>
+                                        <td>{{ $MasterTJRM->updated_at }}</td>
                                         <td class="text-center">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('master_tujuan.destroy', $MasTu->id) }}" method="POST">
-                                                <a href="{{ route('master_tujuan.show', $MasTu->id) }}"
+                                                action="{{ route('master_tujuan_kirim_raw_material.destroy', $MasterTJRM->id) }}"
+                                                method="POST">
+                                                <a href="{{ route('master_tujuan_kirim_raw_material.show', $MasterTJRM->id) }}"
                                                     class="btn btn-sm btn-dark">SHOW</a>
-                                                <a href="{{ route('master_tujuan.edit', $MasTu->id) }}"
+                                                <a href="{{ route('master_tujuan_kirim_raw_material.edit', $MasterTJRM->id) }}"
                                                     class="btn btn-sm btn-primary">EDIT</a>
                                                 @csrf
                                                 @method('DELETE')
