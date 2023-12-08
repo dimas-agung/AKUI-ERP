@@ -19,7 +19,7 @@
                                     <th scope="col">Letak Tujuan</th>
                                     <th scope="col">Inisial Kirim</th>
                                     <th scope="col">Status</th>
-                                    {{-- <th scope="col">AKSI</th> --}}
+                                    <th scope="col">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,10 +32,10 @@
                                         <td>{{ $MasTu->status }}</td>
                                         <td class="text-center">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('master_tujuan.destroy', $MasSupp->id) }}" method="POST">
-                                                <a href="{{ route('master_tujuan.show', $MasSupp->id) }}"
+                                                action="{{ route('master_tujuan.destroy', $MasTu->id) }}" method="POST">
+                                                <a href="{{ route('master_tujuan.show', $MasTu->id) }}"
                                                     class="btn btn-sm btn-dark">SHOW</a>
-                                                <a href="{{ route('master_tujuan.edit', $MasSupp->id) }}"
+                                                <a href="{{ route('master_tujuan.edit', $MasTu->id) }}"
                                                     class="btn btn-sm btn-primary">EDIT</a>
                                                 @csrf
                                                 @method('DELETE')
@@ -50,7 +50,6 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        {{-- {{ $MasterSupplier->links() }} --}}
                     </div>
                 </div>
             </div>

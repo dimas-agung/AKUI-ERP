@@ -38,3 +38,13 @@ Route::controller(App\Http\Controllers\MasterJenisController::class)->group(func
     Route::put('/master_jenis/update{id}', 'update')->name('master_jenis.update');
     Route::delete('/master_jenis/destroy{id}', 'destroy')->name('master_jenis.destroy');
 });
+
+Route::controller(App\Http\Controllers\MasterTujuanController::class)->group(function () {
+    Route::get('/master_tujuan', 'index')->name('master_tujuan.index');
+    Route::get('/master_tujuan/create', 'create')->name('master_tujuan.create');
+    Route::post('/master_tujuan/store', 'store')->name('master_tujuan.store');
+    Route::get('/master_tujuan/show/{id}', 'show')->name('master_tujuan.show');
+    Route::get('/master_tujuan/edit{id}', 'edit')->name('master_tujuan.edit');
+    Route::put('/master_tujuan/update{id}', 'update')->name('master_tujuan.update');
+    Route::delete('/master_tujuan/destroy{id}', 'destroy')->name('master_tujuan.destroy');
+});
