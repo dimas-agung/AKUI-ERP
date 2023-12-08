@@ -23,6 +23,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(MasterSupplierRawMaterialSeeder::class);
         $this->call(MasterJenisRawMaterialSeeder::class);
-        $this->call(MasterTujuanRawMaterialSeeder::class);
+        $this->call(MasterTujuanKirimRawMaterialSeeder::class);
     }
 }
