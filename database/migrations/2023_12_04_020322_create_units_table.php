@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('unit', function (Blueprint $table) {
             $table->id();
-            $table->date('datetime');
             $table->foreignId('workstation_id')->constrained('workstation');
             $table->string('nama');
             $table->integer('status')->default('1');

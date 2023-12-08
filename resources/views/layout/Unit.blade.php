@@ -11,24 +11,21 @@
 </head>
 
 <body style="background: lightgray">
-
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
                 <div>
-                    <h3 class="text-center my-4"></h3>
-                    <h5 class="text-center"><a href="https://instagram.com/Ael_ahyar">Ael_Ahyar</a></h5>
+                    @yield('judul')
+                    <h5 class="text-center"><a href="https://instagram.com/ael_ahyar">Ael_Ahyar</a></h5>
                     <hr>
                 </div>
-                @yield('konten')
+                @yield('con')
             </div>
         </div>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+    <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
     <script>
         //message with toastr
         @if (session()->has('success'))
@@ -40,7 +37,6 @@
         @endif
     </script>
     @yield('script')
-
 </body>
 
 </html>

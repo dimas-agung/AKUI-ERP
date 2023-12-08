@@ -15,38 +15,33 @@ class WorkstationController extends Controller
     public function index(){
 
         $workstation = Workstation::all();
-        return response()->view('Workstation', [
+        return response()->view('workstation.index', [
             'workstation' => $workstation,
         ]);
     }
 
 
-
+    /**
+     * Create
+     */
     public function create(): View
     {
-        return view('create');
+        return view('workstation.create');
     }
 
-        /**
+    /**
      * store
-     *
-     * @param  mixed $request
-     * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
         //validate form
         $this->validate($request, [
-            'datetime'     => 'required|min:5',
             'nama'   => 'required',
-            'status'   => 'required'
         ]);
 
         //create post
         Workstation::create([
-            'datetime'     => $request->datetime,
             'nama'   => $request->nama,
-            'status'   => $request->status
         ]);
 
         //redirect to index
@@ -60,15 +55,12 @@ class WorkstationController extends Controller
         $workstation = Workstation::findOrFail($id);
 
         //render view with post
-        return view('show', compact('workstation'));
+        return view('workstation.show', compact('workstation'));
     }
 
 
      /**
      * edit
-     *
-     * @param  mixed $id
-     * @return View
      */
     public function edit(string $id): View
     {
@@ -76,22 +68,17 @@ class WorkstationController extends Controller
         $workstation = Workstation::findOrFail($id);
 
         //render view with post
-        return view('edit', compact('workstation'));
+        return view('workstation.update', compact('workstation'));
     }
 
     /**
      * update
-     *
-     * @param  mixed $request
-     * @param  mixed $id
-     * @return RedirectResponse
      */
     public function update(Request $request, $id): RedirectResponse
     {
         $workstation = Workstation::findOrFail($id);
         //validate form
         $this->validate($request, [
-            'datetime'     => 'required|min:5',
             'nama'   => 'required',
             'status'   => 'required'
         ]);
@@ -99,7 +86,6 @@ class WorkstationController extends Controller
         //get post by ID
 
         $workstation->update([
-            'datetime'     => $request->datetime,
             'nama'   => $request->nama,
             'status'   => $request->status
         ]);
@@ -111,9 +97,6 @@ class WorkstationController extends Controller
 
         /**
      * destroy
-     *
-     * @param  mixed $post
-     * @return void
      */
     public function destroy($id): RedirectResponse
     {

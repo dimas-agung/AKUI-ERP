@@ -1,5 +1,7 @@
-@extends('layout.crud')
-@section('konten')
+@extends('layout.Workstation')
+@section('judul')
+    <h3 class="text-center my-4">Mengubah Data Workstation AKUI-ERP</h3>
+@section('con')
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-md-12">
@@ -9,21 +11,6 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-
-                            <div class="form-group">
-                                <label class="font-weight-bold">Tanggal</label>
-                                <input type="datetime" class="form-control @error('datetime') is-invalid @enderror"
-                                    name="datetime" value="{{ old('datetime', $workstation->datetime) }}"
-                                    placeholder="Masukkan Tanggal Post">
-
-                                <!-- error message untuk datetime -->
-                                @error('datetime')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama</label>
                                 <input type="text" class="form-control @error('nama') is-invalid @enderror"
@@ -40,10 +27,12 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Status</label>
-                                <input type="text" class="form-control @error('status') is-invalid @enderror"
-                                    name="status" value="{{ old('status', $workstation->status) }}"
-                                    placeholder="Masukkan Status Post">
-
+                                <select class="form-control @error('status') is-invalid @enderror" name="status"
+                                    value="{{ old('status') }}">
+                                    <option value="">Silahkan Pilih</option>
+                                    <option value="1">Aktif</option>
+                                    <option value="0">Tidak</option>
+                                </select>
                                 <!-- error message untuk status -->
                                 @error('status')
                                     <div class="alert alert-danger mt-2">

@@ -15,14 +15,12 @@ class BiayaHppSeeder extends Seeder
     public function run()
     {
         BiayaHpp::create([
-            'datetime' => '2023-12-04',
             'unit_id' => 1,
             'jenis_biaya' => 1,
             'biaya_per_gram' => 1,
             'status' => 1,
         ]);
         BiayaHpp::create([
-            'datetime' => '2023-12-04',
             'unit_id' => 2,
             'jenis_biaya' => 2,
             'biaya_per_gram' => 2,

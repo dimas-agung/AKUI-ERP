@@ -10,13 +10,12 @@ class Unit extends Model
     use HasFactory;
     protected $table = 'unit';
     protected $fillable = [
-        'datetime',
         'workstation_id',
         'nama',
         'status',
     ];
 
-    public function Workstation()
+    public function workstation()
     {
     	return $this->belongsTo(Workstation::class);
     }

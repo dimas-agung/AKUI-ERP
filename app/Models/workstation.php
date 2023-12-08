@@ -10,7 +10,6 @@ class Workstation extends Model
     use HasFactory;
     protected $table = 'workstation';
     protected $fillable = [
-        'datetime',
         'nama',
         'status',
     ];

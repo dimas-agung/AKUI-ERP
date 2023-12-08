@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\View\View;
 use App\Models\unit;
 use App\Models\Workstation;
+
 use Illuminate\Http\Request;
 
 //return type redirectResponse
@@ -13,10 +14,11 @@ use Illuminate\Http\RedirectResponse;
 
 class UnitController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $workstation = Workstation::with('unit')->get();
         $unit = unit::all();
-        return response()->view('Unit', [
+        return response()->view('unit.index', [
             'unit' => $unit,
             'workstation' => $workstation,
         ]);
@@ -26,75 +28,67 @@ class UnitController extends Controller
 
     public function create(): View
     {
-        return view('createunit');
+        return view('unit.create');
     }
 
     public function store(Request $request): RedirectResponse
     {
         //validate form
         $this->validate($request, [
-            'datetime'     => 'required|min:5',
-            'nama'   => 'required',
-            'status'   => 'required'
+            'workstation_id'   => 'required',
+            'nama'   => 'required'
         ]);
 
         //create post
         unit::create([
-            'datetime'     => $request->datetime,
-            'nama'   => $request->nama,
-            'status'   => $request->status
+            'workstation_id'     => $request->workstation_id,
+            'nama'   => $request->nama
         ]);
 
         //redirect to index
-        return redirect()->route('unit.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('index.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
 
     public function show(string $id): View
     {
         //get post by ID
-        $workstation = Workstation::findOrFail($id);
-
+        $unit = Unit::with('workstation')->findOrFail($id);
         //render view with post
-        return view('show', compact('workstation'));
+        return view('unit.Show', compact('unit'));
     }
 
     public function edit(string $id): View
     {
         //get post by ID
-        $workstation = Workstation::findOrFail($id);
+        $unit = unit::findOrFail($id);
 
         //render view with post
-        return view('edit', compact('workstation'));
+        return view('unit.update', compact('unit'));
     }
 
     /**
      * update
-     *
-     * @param  mixed $request
-     * @param  mixed $id
-     * @return RedirectResponse
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        $workstation = Workstation::findOrFail($id);
+        $unit = unit::findOrFail($id);
         //validate form
         $this->validate($request, [
-            'datetime'     => 'required|min:5',
+            'workstation_id'   => 'required',
             'nama'   => 'required',
             'status'   => 'required'
         ]);
 
         //get post by ID
 
-        $workstation->update([
-            'datetime'     => $request->datetime,
+        $unit->update([
+            'workstation_id'     => $request->workstation_id,
             'nama'   => $request->nama,
             'status'   => $request->status
         ]);
-
         //redirect to index
-        return redirect()->route('workstation.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('index.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
 
@@ -107,12 +101,12 @@ class UnitController extends Controller
     public function destroy($id): RedirectResponse
     {
         //get post by ID
-        $workstation = Workstation::findOrFail($id);
+        $unit = unit::findOrFail($id);
 
         //delete post
-        $workstation->delete();
+        $unit->delete();
 
         //redirect to index
-        return redirect()->route('workstation.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('index.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

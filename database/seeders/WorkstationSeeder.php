@@ -14,27 +14,22 @@ class WorkstationSeeder extends Seeder
     public function run(): void
     {
         Workstation::create([
-            'datetime'      => '2023-12-04',
             'nama'      => 'Joko',
             'status'    => 0,
         ]);
         Workstation::create([
-            'datetime'      => '2023-12-04',
             'nama'      => 'Budi',
             'status'    => 1,
         ]);
         Workstation::create([
-            'datetime'      => '2023-12-04',
             'nama'      => 'Jawir',
             'status'    => 1,
         ]);
         Workstation::create([
-            'datetime'      => '2023-12-04',
             'nama'      => 'Jamet',
             'status'    => 0,
         ]);
         Workstation::create([
-            'datetime'      => '2023-12-04',
             'nama'      => 'Supri',
             'status'    => 1,
         ]);

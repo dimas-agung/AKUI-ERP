@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('workstation', function (Blueprint $table) {
             $table->id();
-            $table->date('datetime');
             $table->string('nama');
             $table->integer('status')->default('1');
             $table->timestamps();

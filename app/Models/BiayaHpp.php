@@ -10,7 +10,6 @@ class BiayaHpp extends Model
     use HasFactory;
     protected $table = 'biaya_hpp';
     protected $fillable = [
-        'datetime',
         'unit_id',
         'jenis_biaya',
         'biaya_per_gram',
