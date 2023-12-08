@@ -1,8 +1,9 @@
-@extends('layout.Workstation')
-@section('judul')
-    <h3 class="text-center my-4">Data Workstation AKUI-ERP</h3>
+@extends('layout.master')
 @section('con')
     <div class="card border-0 shadow-sm rounded">
+        <div class="card-header text-center">
+            <h4>Data Workstation AKUI-ERP</h4>
+        </div>
         <div class="card-body">
             <a href="{{ route('workstation.create') }}" class="btn btn-md btn-success mb-3">TAMBAH POST</a>
             <table class="table table-bordered">

@@ -1,11 +1,12 @@
-@extends('layout.Unit')
-@section('judul')
-    <h3 class="text-center my-4">Detail Data Unit AKUI-ERP</h3>
+@extends('layout.master')
 @section('con')
     <div class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card border-0 shadow-sm rounded">
+                    <div class="card-header">
+                        <h4>Detail Data Unit AKUI-ERP</h4>
+                    </div>
                     <div class="card-body">
                         <table class="table table-bordered">
                             <thead>

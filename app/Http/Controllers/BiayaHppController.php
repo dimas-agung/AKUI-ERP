@@ -17,7 +17,7 @@ class BiayaHppController extends Controller
     public function index()
     {
         $unit = unit::with('biayahpp')->get();
-        $biaya = BiayaHpp::all();
+        $biaya = BiayaHpp::paginate(10)->all();
         return response()->view('biayahpp.index', [
             'biaya' => $biaya,
             'unit' => $unit,
