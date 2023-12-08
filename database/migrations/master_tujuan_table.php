@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('tujuan_kirim');
             $table->string('letak_tujuan');
             $table->string('inisial_tujuan');
-            $table->integer('status');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

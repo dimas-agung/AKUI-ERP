@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('upah_operator');
             $table->integer('pengurangan_harga');
             $table->integer('harga_estimasi');
-            $table->integer('status');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

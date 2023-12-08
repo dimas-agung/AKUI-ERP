@@ -21,7 +21,7 @@ class MasterJenisSeeder extends Seeder
             'upah_operator' => 5000,
             'pengurangan_harga' => 10000,
             'harga_estimasi' => 20000,
-            'status' => 0,
+            'status' => 1,
         ]);
         MasterJenis::create([
             'datetime' => '2023-02-13 15:31:20',
@@ -39,7 +39,7 @@ class MasterJenisSeeder extends Seeder
             'upah_operator' => 70000,
             'pengurangan_harga' => 30000,
             'harga_estimasi' => 40000,
-            'status' => 0,
+            'status' => 1,
         ]);
     }
 }

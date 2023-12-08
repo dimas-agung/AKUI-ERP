@@ -23,7 +23,7 @@ class MasterSupplierSeeder extends Seeder
         MasterSupplier::create([
             'nama_supplier' => 'Supplier 2',
             'inisial_supplier' => 'sp-B',
-            'status' => 0,
+            'status' => 1,
         ]);
 
         MasterSupplier::create([
