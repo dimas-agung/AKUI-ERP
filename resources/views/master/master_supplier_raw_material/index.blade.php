@@ -3,11 +3,10 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
-                <div>
-                    <h3 class="text-center my-4">DATA MASTER SUPPLIER</h3>
-                    <hr>
-                </div>
                 <div class="card border-0 shadow-sm rounded">
+                    <div class="card-header">
+                        <h4>DATA MASTER SUPPLIER RAW MATERIAL</h4>
+                    </div>
                     <div class="card-body">
                         <a href="{{ route('master_supplier_raw_material.create') }}"
                             class="btn btn-md btn-success mb-3">TAMBAH
