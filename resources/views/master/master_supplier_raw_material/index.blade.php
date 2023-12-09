@@ -100,7 +100,7 @@
                                     <td>{{ $MasterSPR->created_at }}</td>
                                     <td>{{ $MasterSPR->updated_at }}</td>
                                     <td class="text-center">
-                                        {{-- <div class="form-button-action">
+                                        <div class="form-button-action">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('master_supplier_raw_material.destroy', $MasterSPR->id) }}"
                                                 method="POST">
@@ -112,7 +112,7 @@
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
                                             </form>
-                                        </div> --}}
+                                        </div>
                                         <div class="form-button-action">
                                             <button type="button" data-toggle="tooltip" title=""
                                                 class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"

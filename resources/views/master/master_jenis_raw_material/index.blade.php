@@ -219,19 +219,19 @@
                                     <td>{{ $MasterJRM->created_at }}</td>
                                     <td>{{ $MasterJRM->updated_at }}</td>
                                     <td class="text-center">
-                                        {{-- <div class="form-button-action">
+                                        <div class="form-button-action">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('master_supplier_raw_material.destroy', $MasterSPR->id) }}"
+                                                action="{{ route('master_jenis_raw_material.destroy', $MasterJRM->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('master_supplier_raw_material.show', $MasterSPR->id) }}"
+                                                <a href="{{ route('master_jenis_raw_material.show', $MasterJRM->id) }}"
                                                     class="btn btn-sm btn-dark">SHOW</a>
-                                                <a href="{{ route('master_supplier_raw_material.edit', $MasterSPR->id) }}"
+                                                <a href="{{ route('master_jenis_raw_material.edit', $MasterJRM->id) }}"
                                                     class="btn btn-sm btn-primary">EDIT</a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
                                             </form>
-                                        </div> --}}
+                                        </div>
                                         <div class="form-button-action">
                                             <button type="button" data-toggle="tooltip" title=""
                                                 class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"

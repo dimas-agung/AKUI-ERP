@@ -67,8 +67,8 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Data Master Supplier Raw Material</h4>
-                    <button href="{{ route('master_supplier_raw_material.create') }}"
+                    <h4 class="card-title">Data Master Tujuan Kirim Raw Material</h4>
+                    <button href="{{ route('master_tujuan_kirim_raw_material.create') }}"
                         class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                         <i class="fa fa-plus"> Tambah Data </i>
                     </button>
@@ -82,14 +82,14 @@
                             <div class="modal-header no-bd">
                                 <h5 class="modal-title">
                                     <span class="fw-mediumbold">
-                                        Input Data Master Supplier Raw Material</span>
+                                        Input Data Master Tujuan Kirim Raw Material</span>
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('master_supplier_raw_material.store') }}" method="POST">
+                                <form action="{{ route('master_tujuan_kirim_raw_material.store') }}" method="POST">
                                     @csrf
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -180,19 +180,19 @@
                                     <td>{{ $MasterTJRM->created_at }}</td>
                                     <td>{{ $MasterTJRM->updated_at }}</td>
                                     <td class="text-center">
-                                        {{-- <div class="form-button-action">
+                                        <div class="form-button-action">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('master_supplier_raw_material.destroy', $MasterSPR->id) }}"
+                                                action="{{ route('master_tujuan_kirim_raw_material.destroy', $MasterTJRM->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('master_supplier_raw_material.show', $MasterSPR->id) }}"
+                                                <a href="{{ route('master_tujuan_kirim_raw_material.show', $MasterTJRM->id) }}"
                                                     class="btn btn-sm btn-dark">SHOW</a>
-                                                <a href="{{ route('master_supplier_raw_material.edit', $MasterSPR->id) }}"
+                                                <a href="{{ route('master_tujuan_kirim_raw_material.edit', $MasterTJRM->id) }}"
                                                     class="btn btn-sm btn-primary">EDIT</a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
                                             </form>
-                                        </div> --}}
+                                        </div>
                                         <div class="form-button-action">
                                             <button type="button" data-toggle="tooltip" title=""
                                                 class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"
