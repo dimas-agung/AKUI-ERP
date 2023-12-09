@@ -7,8 +7,8 @@ namespace App\Http\Controllers;
 use App\Models\BiayaHpp;
 use Illuminate\View\View;
 use App\Models\unit;
-use App\Models\Workstation;
 use Illuminate\Http\RedirectResponse;
+use Yajra\DataTables\Facades\DataTables;
 
 use Illuminate\Http\Request;
 
@@ -16,12 +16,22 @@ class BiayaHppController extends Controller
 {
     public function index()
     {
-        $unit = unit::with('biayahpp')->get();
-        $biaya = BiayaHpp::paginate(10)->all();
-        return response()->view('biayahpp.index', [
-            'biaya' => $biaya,
-            'unit' => $unit,
-        ]);
+        if (request()->ajax()) {
+            $unit = unit::with('biayahpp')->get();
+            $biaya = BiayaHpp::query();
+            return DataTables::of($biaya)
+
+                ->make();
+        }
+        return view('biayahpp.index');
+
+        // $unit = unit::with('biayahpp')->get();
+        // $biaya = BiayaHpp::paginate(10)->all();
+        // return response()->view('biayahpp.index', [
+        //     'biaya' => $biaya,
+        //     'unit' => $unit,
+        // ]);
+
     }
 
     // Belum Dilanjutkan untuk CRUD nya

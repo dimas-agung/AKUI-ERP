@@ -40,7 +40,7 @@
                         </tr>
                     @empty
                         <div class="alert alert-danger">
-                            Data Post belum Tersedia.
+                            Data Workstation belum Tersedia.
                         </div>
                     @endforelse
                 </tbody>

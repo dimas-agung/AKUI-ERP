@@ -38,7 +38,7 @@
                         </tr>
                     @empty
                         <div class="alert alert-danger">
-                            Data Post belum Tersedia.
+                            Data Unit belum Tersedia.
                         </div>
                     @endforelse
                 </tbody>

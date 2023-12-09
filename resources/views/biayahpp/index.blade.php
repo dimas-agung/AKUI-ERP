@@ -42,7 +42,7 @@
                         </tr>
                     @empty
                         <div class="alert alert-danger">
-                            Data Post belum Tersedia.
+                            Data Biaya HPP belum Tersedia.
                         </div>
                     @endforelse
                 </tbody>
