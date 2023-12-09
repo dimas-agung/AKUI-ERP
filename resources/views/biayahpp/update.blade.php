@@ -38,6 +38,7 @@
                                     </div>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label class="font-weight-bold">Biaya PerGram</label>
                                 <input type="text" class="form-control @error('biaya_per_gram') is-invalid @enderror"

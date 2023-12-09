@@ -16,25 +16,15 @@ class BiayaHppController extends Controller
 {
     public function index()
     {
-        if (request()->ajax()) {
-            $unit = unit::with('biayahpp')->get();
-            $biaya = BiayaHpp::query();
-            return DataTables::of($biaya)
 
-                ->make();
-        }
-        return view('biayahpp.index');
-
-        // $unit = unit::with('biayahpp')->get();
-        // $biaya = BiayaHpp::paginate(10)->all();
-        // return response()->view('biayahpp.index', [
-        //     'biaya' => $biaya,
-        //     'unit' => $unit,
-        // ]);
+        $unit = unit::with('biayahpp')->get();
+        $biaya = BiayaHpp::paginate(10)->all();
+        return response()->view('biayahpp.index', [
+            'biaya' => $biaya,
+            'unit' => $unit,
+        ]);
 
     }
-
-    // Belum Dilanjutkan untuk CRUD nya
 
     public function create(): View
     {

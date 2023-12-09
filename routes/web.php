@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::controller(App\Http\Controllers\WorkstationController::class)->group(function () {
@@ -39,8 +39,8 @@ Route::controller(App\Http\Controllers\UnitController::class)->group(function ()
 
 Route::controller(App\Http\Controllers\BiayaHppController::class)->group(function () {
     Route::get('/biayahpp', 'index')->name('biaya.index');
-    Route::get('/biayahpp/create', 'create')->name('biaya.create');
     Route::post('/biayahpp/store', 'store')->name('biaya.store');
+    Route::get('/biayahpp/create', 'create')->name('biaya.create');
     Route::get('/biayahpp/show/{id}', 'show')->name('biaya.show');
     Route::get('/biayahpp/edit/{id}', 'edit')->name('biaya.edit');
     Route::put('/biayahpp/update/{id}', 'update')->name('biaya.update');
