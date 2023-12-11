@@ -36,7 +36,7 @@ class WorkstationController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'nama'   => 'required',
+            'nama'   => 'required|unique:workstation',
         ]);
 
         //create post
@@ -79,7 +79,7 @@ class WorkstationController extends Controller
         $workstation = Workstation::findOrFail($id);
         //validate form
         $this->validate($request, [
-            'nama'   => 'required',
+            'nama'   => 'required|unique:workstation',
             'status'   => 'required'
         ]);
 

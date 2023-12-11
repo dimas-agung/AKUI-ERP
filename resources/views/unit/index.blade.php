@@ -44,9 +44,9 @@
                                                 <label for="workstation_id">Pilih Workstation ID:</label>
                                                 <select class="form-control @error('workstation_id') is-invalid @enderror"
                                                     id="workstation_id" name="workstation_id">
-                                                    @foreach ($unit as $post)
-                                                        <option value="{{ $post->workstation->id }}">
-                                                            {{ $post->workstation->nama }}</option>
+                                                    @foreach ($workstation as $post)
+                                                        <option value="{{ $post->id }}">
+                                                            {{ $post->nama }}</option>
                                                     @endforeach
                                                 </select>
 

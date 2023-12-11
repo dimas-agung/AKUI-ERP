@@ -48,9 +48,9 @@
                                                 <label for="unit_id">Pilih Unit ID:</label>
                                                 <select class="form-control @error('unit_id') is-invalid @enderror"
                                                     id="unit_id" name="unit_id">
-                                                    @foreach ($biaya as $post)
-                                                        <option value="{{ $post->unit->id }}">
-                                                            {{ $post->unit->nama }}</option>
+                                                    @foreach ($unit as $post)
+                                                        <option value="{{ $post->id }}">
+                                                            {{ $post->nama }}</option>
                                                     @endforeach
                                                 </select>
                                                 <!-- error message untuk title -->
