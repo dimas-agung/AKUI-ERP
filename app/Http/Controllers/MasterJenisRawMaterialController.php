@@ -28,7 +28,7 @@ class MasterJenisRawMaterialController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'jenis'                 => 'required',
+            'jenis'                 => 'required|unique:master_jenis_raw_materials',
             'kategori_susut',
             'upah_operator',
             'pengurangan_harga',

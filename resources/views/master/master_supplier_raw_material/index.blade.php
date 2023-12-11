@@ -7,7 +7,7 @@
                     <h4 class="card-title">Data Master Supplier Raw Material</h4>
                     <button href="{{ route('master_supplier_raw_material.create') }}"
                         class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-                        <i class="fa fa-plus"> Tambah Data </i>
+                        <i class="fa fa-plus"></i> Tambah Data
                     </button>
                 </div>
             </div>
