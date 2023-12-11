@@ -61,7 +61,7 @@
         </div>
     </div>
 @endsection --}}
-@extends('layouts.admin')
+@extends('layouts.template')
 @section('content')
     <div class="col-md-12">
         <div class="card">
@@ -176,7 +176,14 @@
                                     <td>{{ $MasterTJRM->tujuan_kirim }}</td>
                                     <td>{{ $MasterTJRM->letak_tujuan }}</td>
                                     <td>{{ $MasterTJRM->inisial_tujuan }}</td>
-                                    <td>{{ $MasterTJRM->status }}</td>
+                                    {{-- <td>{{ $MasterTJRM->status }}</td> --}}
+                                    <td>
+                                        @if ($MasterTJRM->status == 1)
+                                            Aktif
+                                        @else
+                                            Tidak Aktif
+                                        @endif
+                                    </td>
                                     <td>{{ $MasterTJRM->created_at }}</td>
                                     <td>{{ $MasterTJRM->updated_at }}</td>
                                     <td class="text-center">
@@ -184,8 +191,9 @@
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('master_tujuan_kirim_raw_material.destroy', $MasterTJRM->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('master_tujuan_kirim_raw_material.show', $MasterTJRM->id) }}"
-                                                    class="btn btn-sm btn-dark">SHOW</a>
+                                                {{-- <a href="{{ route('master_tujuan_kirim_raw_material.show', $MasterTJRM->id) }}"
+                                                    class="btn btn-sm btn-dark">SHOW</a> --}}
+
                                                 <a href="{{ route('master_tujuan_kirim_raw_material.edit', $MasterTJRM->id) }}"
                                                     class="btn btn-sm btn-primary">EDIT</a>
                                                 @csrf
@@ -193,7 +201,7 @@
                                                 <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
                                             </form>
                                         </div>
-                                        <div class="form-button-action">
+                                        {{-- <div class="form-button-action">
                                             <button type="button" data-toggle="tooltip" title=""
                                                 class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"
                                                 data-target="#UpModal">
@@ -203,7 +211,7 @@
                                                 class="btn btn-link btn-danger" data-original-title="Remove">
                                                 <i class="fa fa-times"></i>
                                             </button>
-                                        </div>
+                                        </div> --}}
                                     </td>
                                 </tr>
                             @empty

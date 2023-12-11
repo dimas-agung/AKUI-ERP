@@ -86,8 +86,14 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Status</label>
-                                <select class="form-control" @error('status') is-invalid @enderror" name="status"
-                                    value="{{ old('status', $MasterJRM->status) }}">
+                                <select class="form-control" @error('status') is-invalid @enderror" name="status">
+                                    <option>
+                                        @if ($MasterJRM->status == 1)
+                                            AKTIF
+                                        @else
+                                            TIDAK AKTIF
+                                        @endif
+                                    </option>
                                     <option value=1>AKTIF</option>
                                     <option value=0>TIDAK AKTIF</option>
                                 </select>

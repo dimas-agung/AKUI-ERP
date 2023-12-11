@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.template')
 @section('content')
     <div class="col-md-12">
         <div class="card">
@@ -96,16 +96,23 @@
                                     <td>{{ $MasterSPR->id }}</td>
                                     <td>{{ $MasterSPR->nama_supplier }}</td>
                                     <td>{{ $MasterSPR->inisial_supplier }}</td>
-                                    <td>{{ $MasterSPR->status }}</td>
+                                    {{-- <td>{{ $MasterSPR->status }}</td> --}}
+                                    <td>
+                                        @if ($MasterSPR->status == 1)
+                                            Aktif
+                                        @else
+                                            Tidak Aktif
+                                        @endif
+                                    </td>
                                     <td>{{ $MasterSPR->created_at }}</td>
                                     <td>{{ $MasterSPR->updated_at }}</td>
-                                    <td class="text-center">
+                                    <td>
                                         <div class="form-button-action">
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('master_supplier_raw_material.destroy', $MasterSPR->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('master_supplier_raw_material.show', $MasterSPR->id) }}"
-                                                    class="btn btn-sm btn-dark">SHOW</a>
+                                                {{-- <a href="{{ route('master_supplier_raw_material.show', $MasterSPR->id) }}"
+                                                    class="btn btn-sm btn-dark">SHOW</a> --}}
                                                 <a href="{{ route('master_supplier_raw_material.edit', $MasterSPR->id) }}"
                                                     class="btn btn-sm btn-primary">EDIT</a>
                                                 @csrf
@@ -113,7 +120,7 @@
                                                 <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
                                             </form>
                                         </div>
-                                        <div class="form-button-action">
+                                        {{-- <div class="form-button-action">
                                             <button type="button" data-toggle="tooltip" title=""
                                                 class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"
                                                 data-target="#UpModal">
@@ -123,7 +130,7 @@
                                                 class="btn btn-link btn-danger" data-original-title="Remove">
                                                 <i class="fa fa-times"></i>
                                             </button>
-                                        </div>
+                                        </div> --}}
                                     </td>
                                 </tr>
                             @empty

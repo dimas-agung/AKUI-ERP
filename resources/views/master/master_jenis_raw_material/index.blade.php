@@ -65,7 +65,7 @@
         </div>
     </div>
 @endsection --}}
-@extends('layouts.admin')
+@extends('layouts.template')
 @section('content')
     <div class="col-md-12">
         <div class="card">
@@ -128,7 +128,7 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Upah Operator</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="text"
+                                                <input type="number"
                                                     class="form-control @error('upah_operator') is-invalid @enderror"
                                                     name="upah_operator" placeholder="Masukan Upah Operator">
 
@@ -142,7 +142,7 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Pengurangan Harga</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="text"
+                                                <input type="number"
                                                     class="form-control @error('pengurangan_harga') is-invalid @enderror"
                                                     name="pengurangan_harga" placeholder="Masukan Pengurangan Harga">
 
@@ -156,7 +156,7 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Harga Estimasi</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="text"
+                                                <input type="number"
                                                     class="form-control @error('harga_estimasi') is-invalid @enderror"
                                                     name="harga_estimasi" placeholder="Masukan Harga Estimasi">
 
@@ -213,9 +213,22 @@
                                     <td>{{ $MasterJRM->jenis }}</td>
                                     <td>{{ $MasterJRM->kategori_susut }}</td>
                                     <td>{{ $MasterJRM->upah_operator }}</td>
-                                    <td>{{ $MasterJRM->pengurangan_harga }}</td>
+                                    {{-- <td>{{ $MasterJRM->pengurangan_harga }} %</td> --}}
+                                    <td>
+                                        @if ($MasterJRM->pengurangan_harga == '')
+                                        @else
+                                            {{ $MasterJRM->pengurangan_harga }} %
+                                        @endif
+                                    </td>
                                     <td>{{ $MasterJRM->harga_estimasi }}</td>
-                                    <td>{{ $MasterJRM->status }}</td>
+                                    {{-- <td>{{ $MasterJRM->status }} </td> --}}
+                                    <td>
+                                        @if ($MasterJRM->status == 1)
+                                            Aktif
+                                        @else
+                                            Tidak Aktif
+                                        @endif
+                                    </td>
                                     <td>{{ $MasterJRM->created_at }}</td>
                                     <td>{{ $MasterJRM->updated_at }}</td>
                                     <td class="text-center">
@@ -223,8 +236,8 @@
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('master_jenis_raw_material.destroy', $MasterJRM->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('master_jenis_raw_material.show', $MasterJRM->id) }}"
-                                                    class="btn btn-sm btn-dark">SHOW</a>
+                                                {{-- <a href="{{ route('master_jenis_raw_material.show', $MasterJRM->id) }}"
+                                                    class="btn btn-sm btn-dark">SHOW</a> --}}
                                                 <a href="{{ route('master_jenis_raw_material.edit', $MasterJRM->id) }}"
                                                     class="btn btn-sm btn-primary">EDIT</a>
                                                 @csrf
@@ -232,7 +245,7 @@
                                                 <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
                                             </form>
                                         </div>
-                                        <div class="form-button-action">
+                                        {{-- <div class="form-button-action">
                                             <button type="button" data-toggle="tooltip" title=""
                                                 class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"
                                                 data-target="#UpModal">
@@ -242,7 +255,7 @@
                                                 class="btn btn-link btn-danger" data-original-title="Remove">
                                                 <i class="fa fa-times"></i>
                                             </button>
-                                        </div>
+                                        </div> --}}
                                     </td>
                                 </tr>
                             @empty
