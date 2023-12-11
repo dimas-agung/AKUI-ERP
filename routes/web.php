@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
 Route::controller(App\Http\Controllers\WorkstationController::class)->group(function () {
     Route::get('/work', 'index')->name('workstation.index');
@@ -78,3 +80,7 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::c
     Route::put('/master_tujuan_kirim_raw_material/update{id}', 'update')->name('master_tujuan_kirim_raw_material.update');
     Route::delete('/master_tujuan_kirim_raw_material/destroy{id}', 'destroy')->name('master_tujuan_kirim_raw_material.destroy');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layouts.master')
 @section('con')
     <div class="card border-0 shadow-sm rounded">
         <div class="card-header text-center">
