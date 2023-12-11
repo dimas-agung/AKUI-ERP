@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.template1')
 @section('title')
     Biaya HPP
 @endsection
@@ -16,6 +16,7 @@
                 </div>
             </div>
             <div class="card-body">
+
                 {{-- Create Data --}}
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -39,26 +40,13 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group form-group-default">
-                                                {{-- <label>Unit ID</label>
-                                                <input id="addName" type="text"
-                                                    class="form-control @error('unit_id') is-invalid @enderror"
-                                                    name="unit_id" value="{{ old('unit_id') }}"
-                                                    placeholder="Masukkan Unit ID"> --}}
-
                                                 <label for="unit_id">Pilih Unit ID:</label>
-                                                <select class="form-control @error('unit_id') is-invalid @enderror"
-                                                    id="unit_id" name="unit_id">
+                                                <select class="form-control" id="unit_id" name="unit_id">
                                                     @foreach ($unit as $post)
                                                         <option value="{{ $post->id }}">
                                                             {{ $post->nama }}</option>
                                                     @endforeach
                                                 </select>
-                                                <!-- error message untuk title -->
-                                                @error('unit_id')
-                                                    <div class="alert alert-danger mt-2">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6 pr-0">

@@ -1,4 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.master1')
+@section('title')
+    Unit
+@endsection
 @section('content')
     <div class="col-md-12">
         <div class="card">
