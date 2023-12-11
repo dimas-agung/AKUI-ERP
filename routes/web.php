@@ -13,8 +13,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
+Route::controller(App\Http\Controllers\WorkstationController::class)->group(function () {
+    Route::get('/work', 'index')->name('workstation.index');
+    Route::get('/work/create', 'create')->name('workstation.create');
+    Route::post('/work/store', 'store')->name('workstation.store');
+    Route::get('/work/show/{id}', 'show')->name('workstation.show');
+    Route::get('/work/edit/{id}', 'edit')->name('workstation.edit');
+    Route::put('/work/update/{id}', 'update')->name('workstation.update');
+    Route::delete('/work/hapus/{id}', 'destroy')->name('workstation.destroy');
+});
+
+Route::controller(App\Http\Controllers\UnitController::class)->group(function () {
+    Route::get('/unit', 'index')->name('index.index');
+    Route::get('/unit/create', 'create')->name('index.create');
+    Route::post('/unit/store', 'store')->name('index.store');
+    Route::get('/unit/show/{id}', 'show')->name('index.show');
+    Route::get('/unit/edit/{id}', 'edit')->name('index.edit');
+    Route::put('/unit/update/{id}', 'update')->name('unit.update');
+    Route::delete('/unit/hapus/{id}', 'destroy')->name('index.destroy');
+});
+
+Route::controller(App\Http\Controllers\BiayaHppController::class)->group(function () {
+    Route::get('/biayahpp', 'index')->name('biaya.index');
+    Route::post('/biayahpp/store', 'store')->name('biaya.store');
+    Route::get('/biayahpp/create', 'create')->name('biaya.create');
+    Route::get('/biayahpp/show/{id}', 'show')->name('biaya.show');
+    Route::get('/biayahpp/edit/{id}', 'edit')->name('biaya.edit');
+    Route::put('/biayahpp/update/{id}', 'update')->name('biaya.update');
+    Route::delete('/biayahpp/hapus/{id}', 'destroy')->name('biaya.destroy');
 });
 
 //route resource
@@ -48,3 +80,7 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::c
     Route::put('/master_tujuan_kirim_raw_material/update{id}', 'update')->name('master_tujuan_kirim_raw_material.update');
     Route::delete('/master_tujuan_kirim_raw_material/destroy{id}', 'destroy')->name('master_tujuan_kirim_raw_material.destroy');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
