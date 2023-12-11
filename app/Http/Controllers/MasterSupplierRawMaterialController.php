@@ -31,6 +31,9 @@ class MasterSupplierRawMaterialController extends Controller
         $this->validate($request, [
             'nama_supplier'     => 'required',
             'inisial_supplier'  => 'required'
+        ], [
+            'nama_supplier.required' => 'Kolom Nama Supplier Wajib diisi.',
+            'inisial_supplier.required' => 'Kolom Inisial Supplier Wajib diisi.',
         ]);
 
         //create MasterSupplier

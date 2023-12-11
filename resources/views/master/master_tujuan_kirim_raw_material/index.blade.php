@@ -1,7 +1,7 @@
 @extends('layouts.template')
 @section('content')
     <div class="col-md-12">
-        <div class="card">
+        <div class="card mt-2">
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Data Master Tujuan Kirim Raw Material</h4>
@@ -12,6 +12,25 @@
                 </div>
             </div>
             <div class="card-body">
+                @include('sweetalert::alert')
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <strong>Sukses: </strong>{{ session()->get('success') }}
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul><strong>
+                                @foreach ($errors->all() as $error)
+                                    <li> {{ $error }} </li>
+                                @endforeach
+                            </strong>
+                        </ul>
+                        <p>Mohon periksa kembali formulir Anda.</p>
+                    </div>
+                @endif
+
                 {{-- Modal --}}
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">

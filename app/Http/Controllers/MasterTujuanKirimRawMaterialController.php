@@ -32,6 +32,10 @@ class MasterTujuanKirimRawMaterialController extends Controller
             'tujuan_kirim'      => 'required',
             'letak_tujuan'      => 'required',
             'inisial_tujuan'    => 'required'
+        ], [
+            'tujuan_kirim.required' => 'Kolom Tujuan Kirim Wajib diisi.',
+            'letak_tujuan.required' => 'Kolom Letak Tujuan Wajib diisi.',
+            'inisial_tujuan.required' => 'Kolom Inisial Tujuan Wajib diisi.'
         ]);
 
         //create MasterSupplier
@@ -40,7 +44,6 @@ class MasterTujuanKirimRawMaterialController extends Controller
             'letak_tujuan'      => $request->letak_tujuan,
             'inisial_tujuan'    => $request->inisial_tujuan
         ]);
-
         //redirect to index
         return redirect()->route('master_tujuan_kirim_raw_material.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }

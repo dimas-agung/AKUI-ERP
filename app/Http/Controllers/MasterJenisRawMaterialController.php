@@ -33,6 +33,8 @@ class MasterJenisRawMaterialController extends Controller
             'upah_operator',
             'pengurangan_harga',
             'harga_estimasi',
+        ], [
+            'jenis.required' => 'Kolom Jenis Wajib diisi.',
         ]);
 
         //create MasterSupplier

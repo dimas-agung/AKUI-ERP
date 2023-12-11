@@ -221,7 +221,6 @@
                 action
             ]);
             $('#addRowModal').modal('hide');
-
         });
     });
 </script>
