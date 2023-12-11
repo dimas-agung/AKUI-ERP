@@ -1,10 +1,13 @@
-@extends('layout.admin')
+@extends('layouts.master')
+@section('title')
+    Biaya HPP
+@endsection
 @section('content')
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Data Biaya HPP AKUI-ERP</h4>
+                    <h4 class="card-title">Data Biaya HPP</h4>
                     <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                         <i class="fa fa-plus"></i>
                         {{-- <a href="{{ route('biaya.create') }}" class="text-light">TAMBAH POST</a> --}}
@@ -36,12 +39,20 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group form-group-default">
-                                                <label>Unit ID</label>
+                                                {{-- <label>Unit ID</label>
                                                 <input id="addName" type="text"
                                                     class="form-control @error('unit_id') is-invalid @enderror"
                                                     name="unit_id" value="{{ old('unit_id') }}"
-                                                    placeholder="Masukkan Unit ID">
+                                                    placeholder="Masukkan Unit ID"> --}}
 
+                                                <label for="unit_id">Pilih Unit ID:</label>
+                                                <select class="form-control @error('unit_id') is-invalid @enderror"
+                                                    id="unit_id" name="unit_id">
+                                                    @foreach ($biaya as $post)
+                                                        <option value="{{ $post->unit->id }}">
+                                                            {{ $post->unit->nama }}</option>
+                                                    @endforeach
+                                                </select>
                                                 <!-- error message untuk title -->
                                                 @error('unit_id')
                                                     <div class="alert alert-danger mt-2">
@@ -124,7 +135,14 @@
                                     <td class="text-center">{!! $post->jenis_biaya !!}</td>
                                     <td class="text-center">{!! $post->biaya_per_gram !!}</td>
                                     <td class="text-center">{!! $post->unit_id !!}</td>
-                                    <td class="text-center">{!! $post->status !!}</td>
+                                    {{-- <td class="text-center">{!! $post->status !!}</td> --}}
+                                    <td>
+                                        @if ($post->status == 1)
+                                            Aktif
+                                        @else
+                                            Tidak Aktif
+                                        @endif
+                                    </td>
                                     <td class="text-center">{!! $post->created_at !!}</td>
                                     <td class="text-center">{!! $post->updated_at !!}</td>
                                     <td class="text-center">

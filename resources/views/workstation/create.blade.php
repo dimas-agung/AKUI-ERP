@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('con')
+@section('content')
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">

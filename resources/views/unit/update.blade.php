@@ -1,11 +1,14 @@
-@extends('layouts.master')
+@extends('layouts.admin')
+@section('title')
+    Unit
+@endsection
 @section('con')
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-header">
-                        <h4>Update Data Unit AKUI-ERP</h4>
+                        <h4>Update Data Unit</h4>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('unit.update', $unit->id) }}" method="POST" enctype="multipart/form-data">

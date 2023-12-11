@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-header">
-                        <h4>Update Data Workstation AKUI-ERP</h4>
+                        <h4>Update Data Workstation</h4>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('workstation.update', $workstation->id) }}" method="POST"

@@ -36,7 +36,7 @@ class UnitController extends Controller
         //validate form
         $this->validate($request, [
             'workstation_id'   => 'required',
-            'nama'   => 'required'
+            'nama'   => 'required|unique:unit'
         ]);
 
         //create post

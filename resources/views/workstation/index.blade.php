@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('con')
+@section('content')
     <div class="card border-0 shadow-sm rounded">
         <div class="card-header text-center">
             <h4>Data Workstation AKUI-ERP</h4>
@@ -22,7 +22,14 @@
                         <tr>
                             <td class="text-center">{{ $post->id }}</td>
                             <td class="text-center">{!! $post->nama !!}</td>
-                            <td class="text-center">{!! $post->status !!}</td>
+                            {{-- <td class="text-center">{!! $post->status !!}</td> --}}
+                            <td>
+                                @if ($post->status == 1)
+                                    Aktif
+                                @else
+                                    Tidak Aktif
+                                @endif
+                            </td>
                             <td class="text-center">{!! $post->created_at !!}</td>
                             <td class="text-center">{!! $post->updated_at !!}</td>
                             <td class="text-center">

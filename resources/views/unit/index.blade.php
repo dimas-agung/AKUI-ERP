@@ -34,12 +34,21 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <div class="form-group form-group-default">
-                                                <label>Workstation ID</label>
+                                            <div class="form-group">
+                                                {{-- <label>Workstation ID</label>
                                                 <input id="addName" type="text"
                                                     class="form-control @error('workstation_id') is-invalid @enderror"
                                                     name="workstation_id" value="{{ old('workstation_id') }}"
-                                                    placeholder="Masukkan Workstation ID">
+                                                    placeholder="Masukkan Workstation ID"> --}}
+
+                                                <label for="workstation_id">Pilih Workstation ID:</label>
+                                                <select class="form-control @error('workstation_id') is-invalid @enderror"
+                                                    id="workstation_id" name="workstation_id">
+                                                    @foreach ($unit as $post)
+                                                        <option value="{{ $post->workstation->id }}">
+                                                            {{ $post->workstation->nama }}</option>
+                                                    @endforeach
+                                                </select>
 
                                                 <!-- error message untuk title -->
                                                 @error('workstation_id')
@@ -100,7 +109,14 @@
                                 <tr>
                                     <td class="text-center">{{ $post->id }}</td>
                                     <td class="text-center">{!! $post->nama !!}</td>
-                                    <td class="text-center">{!! $post->status !!}</td>
+                                    {{-- <td class="text-center">{!! $post->status !!}</td> --}}
+                                    <td>
+                                        @if ($post->status == 1)
+                                            Aktif
+                                        @else
+                                            Tidak Aktif
+                                        @endif
+                                    </td>
                                     <td class="text-center">{!! $post->created_at !!}</td>
                                     <td class="text-center">{!! $post->updated_at !!}</td>
                                     <td class="text-center">
