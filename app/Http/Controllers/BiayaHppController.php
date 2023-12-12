@@ -17,11 +17,13 @@ class BiayaHppController extends Controller
     public function index()
     {
 
+        $i = 1;
         $unit = unit::with('biayahpp')->get();
         $biaya = BiayaHpp::paginate(10)->all();
         return response()->view('biayahpp.index', [
             'biaya' => $biaya,
             'unit' => $unit,
+            'i' => $i
         ]);
 
     }
@@ -38,6 +40,10 @@ class BiayaHppController extends Controller
             'unit_id'   => 'required',
             'jenis_biaya'   => 'required',
             'biaya_per_gram'   => 'required'
+        ], [
+            'unit_id.required' => 'Kolom Nama Biaya Wajib diisi.',
+            'jenis_biaya.required' => 'Kolom Inisial Biaya Wajib diisi.',
+            'biaya_per_gram.required' => 'Kolom Inisial Biaya Wajib diisi.'
         ]);
 
         //create post
@@ -74,6 +80,8 @@ class BiayaHppController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
+
+        $unit = unit::with('biayahpp')->get();
         $biaya = BiayaHpp::findOrFail($id);
         //validate form
         $this->validate($request, [
@@ -90,6 +98,9 @@ class BiayaHppController extends Controller
             'jenis_biaya'   => $request->jenis_biaya,
             'biaya_per_gram'   => $request->biaya_per_gram,
             'status'   => $request->status
+        ]);
+        $unit->update([
+            'unit' => $unit
         ]);
         //redirect to index
         return redirect()->route('biaya.index')->with(['success' => 'Data Berhasil Diubah!']);
@@ -113,4 +124,6 @@ class BiayaHppController extends Controller
         //redirect to index
         return redirect()->route('biaya.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
+
+
 }

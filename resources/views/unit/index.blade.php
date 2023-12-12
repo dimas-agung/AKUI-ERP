@@ -15,7 +15,24 @@
                 </div>
             </div>
             <div class="card-body">
+
                 {{-- Create Data --}}
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <strong>Sukses: </strong>{{ session()->get('success') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul><strong>
+                                @foreach ($errors->all() as $error)
+                                    <li> {{ $error }} </li>
+                                @endforeach
+                            </strong>
+                        </ul>
+                        <p>Mohon periksa kembali formulir Anda.</p>
+                    </div>
+                @endif
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -91,7 +108,7 @@
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center">ID</th>
+                                <th class="text-center">No</th>
                                 <th class="text-center">Nama Unit</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Tgl Buat</th>
@@ -126,6 +143,9 @@
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('index.destroy', $post->id) }}" method="POST">
+                                                <a href="{{ route('index.show', $post->id) }}"
+                                                    class="btn btn-link btn-info" title="Show Task"
+                                                    data-original-title="Show"><i class="fa fa-file"></i></a>
                                                 <a href="{{ route('index.edit', $post->id) }}"
                                                     class="btn btn-link btn-primary" title="Edit Task"
                                                     data-original-title="Edit Task"><i class="fa fa-edit"></i></a>

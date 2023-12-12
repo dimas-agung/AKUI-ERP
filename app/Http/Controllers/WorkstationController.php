@@ -13,10 +13,11 @@ use Illuminate\Http\RedirectResponse;
 class WorkstationController extends Controller
 {
     public function index(){
-
+        $i =1;
         $workstation = Workstation::all();
         return response()->view('workstation.index', [
             'workstation' => $workstation,
+            'i' => $i,
         ]);
     }
 
@@ -37,6 +38,8 @@ class WorkstationController extends Controller
         //validate form
         $this->validate($request, [
             'nama'   => 'required|unique:workstation',
+        ], [
+            'nama.required' => 'Kolom Nama Biaya Wajib diisi.',
         ]);
 
         //create post
@@ -109,4 +112,6 @@ class WorkstationController extends Controller
         //redirect to index
         return redirect()->route('workstation.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
+
+
 }

@@ -1,4 +1,4 @@
-@extends('layouts.template1')
+@extends('layouts.master1')
 @section('title')
     Biaya HPP
 @endsection
@@ -16,7 +16,23 @@
                 </div>
             </div>
             <div class="card-body">
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <strong>Sukses: </strong>{{ session()->get('success') }}
+                    </div>
+                @endif
 
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul><strong>
+                                @foreach ($errors->all() as $error)
+                                    <li> {{ $error }} </li>
+                                @endforeach
+                            </strong>
+                        </ul>
+                        <p>Mohon periksa kembali formulir Anda.</p>
+                    </div>
+                @endif
                 {{-- Create Data --}}
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -107,7 +123,7 @@
                             </tr>
                         </thead>
                         <tfoot>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Jenis Biaya</th>
                             <th>Biaya PerGram</th>
                             <th>Unit ID</th>
@@ -119,7 +135,7 @@
                         <tbody>
                             @forelse ($biaya as $post)
                                 <tr>
-                                    <td class="text-center">{{ $post->id }}</td>
+                                    <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{!! $post->jenis_biaya !!}</td>
                                     <td class="text-center">{!! $post->biaya_per_gram !!}</td>
                                     <td class="text-center">{!! $post->unit_id !!}</td>
@@ -137,26 +153,19 @@
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('biaya.destroy', $post->id) }}" method="POST">
+                                                <a href="{{ route('biaya.show', $post->id) }}"
+                                                    class="btn btn-link btn-info" title="Show Task"
+                                                    data-original-title="Show"><i class="fa fa-file"></i></a>
                                                 <a href="{{ route('biaya.edit', $post->id) }}"
                                                     class="btn btn-link btn-primary" title="Edit Task"
                                                     data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" data-toggle="tooltip" class="btn btn-link btn-danger"
-                                                    data-original-title="Remove"><i class="fa fa-times"></i></button>
+                                                <button type="submit" data-toggle="tooltip"
+                                                    class="btn btn-link btn-danger" data-original-title="Remove"><i
+                                                        class="fa fa-times"></i></button>
                                             </form>
                                         </div>
-                                        {{-- <div class="form-button-action">
-                                            <button type="button" data-toggle="modal" title=""
-                                                class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"
-                                                data-target="#UpModal">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-danger" data-original-title="Remove">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </div> --}}
                                     </td>
                                 </tr>
                             @empty

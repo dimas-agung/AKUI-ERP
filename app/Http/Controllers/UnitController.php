@@ -37,6 +37,9 @@ class UnitController extends Controller
         $this->validate($request, [
             'workstation_id'   => 'required',
             'nama'   => 'required|unique:unit'
+        ], [
+            'nama.required' => 'Kolom Nama Biaya Wajib diisi.',
+            'workstation_id.required' => 'Kolom Inisial Biaya Wajib diisi.'
         ]);
 
         //create post
