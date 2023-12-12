@@ -1,4 +1,4 @@
-@extends('layouts.master1')
+@extends('layouts.master')
 @section('title')
     Biaya HPP
 @endsection
@@ -112,10 +112,10 @@
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center">ID</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Nama Unit</th>
                                 <th class="text-center">Jenis Biaya</th>
                                 <th class="text-center">Biaya PerGram</th>
-                                <th class="text-center">Unit ID</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Tgl Buat</th>
                                 <th class="text-center">Tgl Update</th>
@@ -124,9 +124,9 @@
                         </thead>
                         <tfoot>
                             <th>No</th>
+                            <th>Nama Unit</th>
                             <th>Jenis Biaya</th>
                             <th>Biaya PerGram</th>
-                            <th>Unit ID</th>
                             <th>Status</th>
                             <th>Tgl Buat</th>
                             <th>Tgl Update</th>
@@ -136,9 +136,11 @@
                             @forelse ($biaya as $post)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
+
+                                    <td class="text-center">{{ $post->unit->nama }}</td>
+
                                     <td class="text-center">{!! $post->jenis_biaya !!}</td>
                                     <td class="text-center">{!! $post->biaya_per_gram !!}</td>
-                                    <td class="text-center">{!! $post->unit_id !!}</td>
                                     {{-- <td class="text-center">{!! $post->status !!}</td> --}}
                                     <td>
                                         @if ($post->status == 1)

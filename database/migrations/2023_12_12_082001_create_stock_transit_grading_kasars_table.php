@@ -11,23 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prm_raw_material_output', function (Blueprint $table) {
+        Schema::create('stock_transit_grading_kasars', function (Blueprint $table) {
             $table->id();
-            $table->string('id_box');
-            $table->string('nomor_batch');
-            $table->string('nama_supplier');
+            $table->string('nomor_bstb');
+            $table->string('nama_supplier')->unique();
             $table->string('jenis');
             $table->float('berat');
             $table->float('kadar_air');
             $table->string('tujuan_kirim');
             $table->string('letak_tujuan');
             $table->string('inisial_tujuan');
-            $table->string('nomor_btsb');
-            $table->decimal('modal', $scale = 2);
-            $table->decimal('total_modal', $scale = 2);
-            $table->string('keterangan');
+            $table->float('modal');
+            $table->float('total_modal');
+            $table->text('keterangan');
+            $table->string('user_created');
+            $table->string('user_updated');
             $table->timestamps();
-            $table->integer('nip_admin');
         });
     }
 
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prm_raw_material_output');
+        Schema::dropIfExists('stock_transit_grading_kasars');
     }
 };

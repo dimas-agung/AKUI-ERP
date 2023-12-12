@@ -1,4 +1,4 @@
-@extends('layouts.master1')
+@extends('layouts.master')
 @section('title')
     Update Biaya HPP
 @endsection
@@ -16,27 +16,13 @@
                     @method('PUT')
 
                     <div class="form-group">
-                        {{-- <label class="font-weight-bold">Unit ID</label>
-                        <input type="text" class="form-control @error('unit_id') is-invalid @enderror" name="unit_id"
-                            value="{{ old('unit_id', $biaya->unit_id) }}" placeholder="Masukkan Unit ID">
-
-                        <!-- error message untuk title -->
-                        @error('unit_id')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
-                            </div>
-                        @enderror --}}
-                        <div class="col-sm-12">
-                            <div class="form-group form-group-default">
-                                <label for="unit_id">Pilih Unit ID:</label>
-                                <select class="form-control" id="unit_id" name="unit_id">
-                                    @foreach ($unit as $post)
-                                        <option value="{{ $post->id }}">
-                                            {{ old('unit_id', $post->nama) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                        <label for="unit_id" class="font-weight-bold">Pilih Unit ID:</label>
+                        <select class="form-control" id="unit_id" name="unit_id">
+                            @foreach ($unit as $post)
+                                <option value="{{ $post->id }}" {{ $biaya->unit_id == $post->id ? 'selected' : '' }}>
+                                    {{ old('unit_id', $post->nama) }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -67,11 +53,16 @@
 
                     <div class="form-group">
                         <label class="font-weight-bold">Status</label>
-                        <select class="form-control @error('status') is-invalid @enderror" name="status"
-                            value="{{ old('status', $biaya->status) }}">
-                            <option value="">Silahkan Pilih</option>
-                            <option value="1">Aktif</option>
-                            <option value="0">Tidak</option>
+                        <select class="form-control js-example-basic-multiple @error('status') is-invalid @enderror"
+                            name="options[]" value="{{ old('status', $biaya->status) }}" multiple="multiple">
+                            <option value="1" {{ $biaya->status == 1 ? 'selected' : '' }}>Aktif</option>
+                            <option value="0" {{ $biaya->status == 0 ? 'selected' : '' }}>Tidak Aktif</option>
+                        </select>
+
+                        {{-- <select class="js-example-basic-multiple" name="options[]" multiple="multiple">
+                            @foreach ($options as $option)
+                                <option value="{{ $option }}">{{ $option }}</option>
+                            @endforeach --}}
                         </select>
                         <!-- error message untuk status -->
                         @error('status')

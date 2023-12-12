@@ -49,8 +49,6 @@ Route::controller(App\Http\Controllers\BiayaHppController::class)->group(functio
     Route::delete('/biayahpp/hapus/{id}', 'destroy')->name('biaya.destroy');
 });
 
-//route resource
-// Route::resource('/Mastersupplier', \App\Http\Controllers\MasterSupplierController::class);
 Route::controller(App\Http\Controllers\MasterSupplierRawMaterialController::class)->group(function () {
     Route::get('/master_supplier_raw_material', 'index')->name('master_supplier_raw_material.index');
     Route::get('/master_supplier_raw_material/create', 'create')->name('master_supplier_raw_material.create');
@@ -79,6 +77,16 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::c
     Route::get('/master_tujuan_kirim_raw_material/edit{id}', 'edit')->name('master_tujuan_kirim_raw_material.edit');
     Route::put('/master_tujuan_kirim_raw_material/update{id}', 'update')->name('master_tujuan_kirim_raw_material.update');
     Route::delete('/master_tujuan_kirim_raw_material/destroy{id}', 'destroy')->name('master_tujuan_kirim_raw_material.destroy');
+});
+
+Route::controller(App\Http\Controllers\PurchasingExim\StockTransitGradingKasarController::class)->group(function () {
+    Route::get('/StockTransitGradingKasar', 'index')->name('StockTransitGradingKasar.index');
+    Route::get('/StockTransitGradingKasar/create', 'create')->name('StockTransitGradingKasar.create');
+    Route::post('/StockTransitGradingKasar/store', 'store')->name('StockTransitGradingKasar.store');
+    Route::get('/StockTransitGradingKasar/show/{id}', 'show')->name('StockTransitGradingKasar.show');
+    Route::get('/StockTransitGradingKasar/edit{id}', 'edit')->name('StockTransitGradingKasar.edit');
+    Route::put('/StockTransitGradingKasar/update{id}', 'update')->name('StockTransitGradingKasar.update');
+    Route::delete('/StockTransitGradingKasar/destroy{id}', 'destroy')->name('StockTransitGradingKasar.destroy');
 });
 
 Auth::routes();

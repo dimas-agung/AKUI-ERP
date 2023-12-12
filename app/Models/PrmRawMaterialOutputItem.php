@@ -5,23 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UghGradingHalusPenerimaan extends Model
+class PrmRawMaterialOutputItem extends Model
 {
     use HasFactory;
-    protected $table = 'ugh_grading_halus_penerimaan';
+    protected $table = 'prm_raw_material_output_items';
     protected $fillable = [
+        'doc_no',
         'nomor_bstb',
         'nomor_batch',
+        'id_box',
         'nama_supplier',
         'jenis',
         'berat',
-        'pcs',
         'kadar_air',
-        'nomor_job',
+        'tujuan_kirim',
+        'letak_tujuan',
         'modal',
         'total_modal',
         'keterangan',
-        'timestamp',
-        'nip_admin',
+        'user_created',
+        'user_updated'
     ];
+
+    public function PrmRawMaterialOutputHeader()
+    {
+    	return $this->belongsTo(PrmRawMaterialOutputHeader::class);
+    }
 }

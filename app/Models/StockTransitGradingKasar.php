@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class StockTransitGradingKasar extends Model
 {
     use HasFactory;
-    protected $table = 'stock_transit_grading_kasar';
+    protected $table = 'stock_transit_grading_kasars';
     protected $fillable = [
         'nomor_bstb',
         'nama_supplier',
@@ -24,4 +24,9 @@ class StockTransitGradingKasar extends Model
         'user_created',
         'user_updated',
     ];
+
+    public function PramRawMaterialOutputHeaders()
+    {
+        return $this->hasMany(PrmRawMaterialOutputHeader::class);
+    }
 }

@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prm_raw_material_output_header', function (Blueprint $table) {
+        Schema::create('prm_raw_material_output_headers', function (Blueprint $table) {
             $table->id();
             $table->string('doc_no');
-            $table->foreignId('nomor_bstb');
+            $table->foreignId('nomor_bstb')->constrained('stock_transit_grading_kasars');
             $table->string('nomor_batch');
             $table->text('keterangan');
             $table->string('user_created');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prm_raw_material_output_header');
+        Schema::dropIfExists('prm_raw_material_output_headers');
     }
 };

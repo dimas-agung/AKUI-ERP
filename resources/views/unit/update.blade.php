@@ -1,4 +1,4 @@
-@extends('layouts.master1')
+@extends('layouts.master')
 @section('title')
     Update Unit
 @endsection
@@ -14,16 +14,14 @@
                     @method('PUT')
 
                     <div class="form-group">
-                        <label class="font-weight-bold">Workstation ID</label>
-                        <input type="text" class="form-control @error('workstation_id') is-invalid @enderror"
-                            name="workstation_id" value="{{ old('workstation_id', $unit->workstation_id) }}"
-                            placeholder="Masukkan workstation_id Post">
-                        <!-- error message untuk workstation_id -->
-                        @error('workstation_id')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                        <label for="workstation_id">Pilih Workstation ID</label>
+                        <select class="form-control" id="workstation_id" name="workstation_id">
+                            @foreach ($workstation as $post)
+                                <option value="{{ $post->id }}"
+                                    {{ $unit->workstation_id == $post->id ? 'selected' : '' }}>
+                                    {{ old('workstation_id', $post->nama) }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -42,9 +40,8 @@
                         <label class="font-weight-bold">Status</label>
                         <select class="form-control @error('status') is-invalid @enderror" name="status"
                             value="{{ old('status') }}">
-                            <option value="">Silahkan Pilih</option>
-                            <option value="1">Aktif</option>
-                            <option value="0">Tidak</option>
+                            <option value="1" {{ $unit->status == 1 ? 'selected' : '' }}>Aktif</option>
+                            <option value="0" {{ $unit->status == 0 ? 'selected' : '' }}>Tidak Aktif</option>
                         </select>
                         <!-- error message untuk status -->
                         @error('status')
