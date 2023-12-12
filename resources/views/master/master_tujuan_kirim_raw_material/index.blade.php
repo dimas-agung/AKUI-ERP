@@ -128,11 +128,10 @@
                         <tbody>
                             @forelse ($MasterTujuanKirimRawMaterial as $MasterTJRM)
                                 <tr>
-                                    <td>{{ $MasterTJRM->id }}</td>
+                                    <td>{{ $i++ }}</td>
                                     <td>{{ $MasterTJRM->tujuan_kirim }}</td>
                                     <td>{{ $MasterTJRM->letak_tujuan }}</td>
                                     <td>{{ $MasterTJRM->inisial_tujuan }}</td>
-                                    {{-- <td>{{ $MasterTJRM->status }}</td> --}}
                                     <td>
                                         @if ($MasterTJRM->status == 1)
                                             Aktif
@@ -144,30 +143,19 @@
                                     <td>{{ $MasterTJRM->updated_at }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('master_tujuan_kirim_raw_material.destroy', $MasterTJRM->id) }}"
                                                 method="POST">
-                                                {{-- <a href="{{ route('master_tujuan_kirim_raw_material.show', $MasterTJRM->id) }}"
-                                                    class="btn btn-sm btn-dark">SHOW</a> --}}
-
                                                 <a href="{{ route('master_tujuan_kirim_raw_material.edit', $MasterTJRM->id) }}"
-                                                    class="btn btn-sm btn-primary">EDIT</a>
+                                                    class="btn btn-link" title="Edit Task"
+                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                                <button type="submit" data-toggle="tooltip"
+                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
+                                                        class="fa fa-times"></i></button>
                                             </form>
                                         </div>
-                                        {{-- <div class="form-button-action">
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"
-                                                data-target="#UpModal">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-danger" data-original-title="Remove">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </div> --}}
                                     </td>
                                 </tr>
                             @empty

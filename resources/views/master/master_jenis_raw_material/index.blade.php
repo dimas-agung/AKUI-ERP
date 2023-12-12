@@ -159,11 +159,10 @@
                         <tbody>
                             @forelse ($MasterJenisRawMaterial as $MasterJRM)
                                 <tr>
-                                    <td>{{ $MasterJRM->id }}</td>
+                                    <td>{{ $i++ }}</td>
                                     <td>{{ $MasterJRM->jenis }}</td>
                                     <td>{{ $MasterJRM->kategori_susut }}</td>
                                     <td>{{ $MasterJRM->upah_operator }}</td>
-                                    {{-- <td>{{ $MasterJRM->pengurangan_harga }} %</td> --}}
                                     <td>
                                         @if ($MasterJRM->pengurangan_harga == '')
                                         @else
@@ -171,7 +170,6 @@
                                         @endif
                                     </td>
                                     <td>{{ $MasterJRM->harga_estimasi }}</td>
-                                    {{-- <td>{{ $MasterJRM->status }} </td> --}}
                                     <td>
                                         @if ($MasterJRM->status == 1)
                                             Aktif
@@ -183,29 +181,19 @@
                                     <td>{{ $MasterJRM->updated_at }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('master_jenis_raw_material.destroy', $MasterJRM->id) }}"
                                                 method="POST">
-                                                {{-- <a href="{{ route('master_jenis_raw_material.show', $MasterJRM->id) }}"
-                                                    class="btn btn-sm btn-dark">SHOW</a> --}}
                                                 <a href="{{ route('master_jenis_raw_material.edit', $MasterJRM->id) }}"
-                                                    class="btn btn-sm btn-primary">EDIT</a>
+                                                    class="btn btn-link" title="Edit Task"
+                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                                <button type="submit" data-toggle="tooltip"
+                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
+                                                        class="fa fa-times"></i></button>
                                             </form>
                                         </div>
-                                        {{-- <div class="form-button-action">
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"
-                                                data-target="#UpModal">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-danger" data-original-title="Remove">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </div> --}}
                                     </td>
                                 </tr>
                             @empty

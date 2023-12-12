@@ -26,4 +26,8 @@ class PrmRawMaterialOutputItem extends Model
         'user_created',
         'user_updated'
     ];
+    public function PrmRawMaterialStock()
+    {
+        return $this->belongsTo(PrmRawMaterialStock::class);
+    }
 }

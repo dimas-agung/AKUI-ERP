@@ -12,11 +12,12 @@ class MasterTujuanKirimRawMaterialController extends Controller
     //index
     public function index()
     {
-
+        $i = 1;
         $MasterTujuanKirimRawMaterial = MasterTujuanKirimRawMaterial::all();
         // return $MasterTujuanKirimRawMaterial;
         return response()->view('master.master_tujuan_kirim_raw_material.index', [
             'MasterTujuanKirimRawMaterial' => $MasterTujuanKirimRawMaterial,
+            'i' => $i
         ]);
     }
     // create

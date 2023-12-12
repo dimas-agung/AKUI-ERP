@@ -87,13 +87,6 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Status</label>
                                 <select class="form-control" @error('status') is-invalid @enderror" name="status">
-                                    {{-- <option>
-                                        @if ($MasterJRM->status == 1)
-                                            AKTIF
-                                        @else
-                                            TIDAK AKTIF
-                                        @endif
-                                    </option> --}}
                                     <option value="1" {{ $MasterJRM->status == 1 ? 'selected' : '' }}> AKTIF </option>
                                     <option value="0" {{ $MasterJRM->status == 0 ? 'selected' : '' }}> TIDAK AKTIF
                                     </option>
@@ -105,6 +98,7 @@
                                     </div>
                                 @enderror
                             </div>
+
 
                             <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>

@@ -110,10 +110,9 @@
                         <tbody>
                             @forelse ($MasterSupplierRawMaterial as $MasterSPR)
                                 <tr>
-                                    <td>{{ $MasterSPR->id }}</td>
+                                    <td>{{ $i++ }}</td>
                                     <td>{{ $MasterSPR->nama_supplier }}</td>
                                     <td>{{ $MasterSPR->inisial_supplier }}</td>
-                                    {{-- <td>{{ $MasterSPR->status }}</td> --}}
                                     <td>
                                         @if ($MasterSPR->status == 1)
                                             Aktif
@@ -125,29 +124,19 @@
                                     <td>{{ $MasterSPR->updated_at }}</td>
                                     <td>
                                         <div class="form-button-action">
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('master_supplier_raw_material.destroy', $MasterSPR->id) }}"
                                                 method="POST">
-                                                {{-- <a href="{{ route('master_supplier_raw_material.show', $MasterSPR->id) }}"
-                                                    class="btn btn-sm btn-dark">SHOW</a> --}}
                                                 <a href="{{ route('master_supplier_raw_material.edit', $MasterSPR->id) }}"
-                                                    class="btn btn-sm btn-primary">EDIT</a>
+                                                    class="btn btn-link" title="Edit Task"
+                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                                <button type="submit" data-toggle="tooltip"
+                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
+                                                        class="fa fa-times"></i></button>
                                             </form>
                                         </div>
-                                        {{-- <div class="form-button-action">
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"
-                                                data-target="#UpModal">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-danger" data-original-title="Remove">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </div> --}}
                                     </td>
                                 </tr>
                             @empty

@@ -32,4 +32,8 @@ class PrmRawMaterialStock extends Model
     {
         return $this->hasMany(PrmRawMaterialStockHistory::class);
     }
+    public function PrmRawMaterialOutputItem()
+    {
+        return $this->hasMany(PrmRawMaterialOutputItem::class);
+    }
 }

@@ -23,7 +23,7 @@ class PrmRawMaterialInputItem extends Model
         'harga_deal',
         'keterangan',
         'user_created',
-        'user_updated',
+        'user_updated'
     ];
     public function PrmRawMaterialInput()
     {
@@ -32,5 +32,9 @@ class PrmRawMaterialInputItem extends Model
     public function PrmRawMaterialStock()
     {
         return $this->hasOne(PrmRawMaterialStock::class);
+    }
+    public function MasterTujuanKirimRawMaterial()
+    {
+        return $this->belongsTo(MasterTujuanKirimRawMaterial::class);
     }
 }

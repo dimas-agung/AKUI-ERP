@@ -12,11 +12,12 @@ class MasterSupplierRawMaterialController extends Controller
     //index
     public function index()
     {
-
+        $i = 1;
         $MasterSupplierRawMaterial = MasterSupplierRawMaterial::all();
         // return $MasterSupplier;
         return response()->view('master.master_supplier_raw_material.index', [
             'MasterSupplierRawMaterial' => $MasterSupplierRawMaterial,
+            'i' => $i
         ]);
     }
     // create

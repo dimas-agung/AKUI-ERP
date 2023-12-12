@@ -15,6 +15,14 @@ class PrmRawMaterialOutputHeader extends Model
         'nomor_batch',
         'keterangan',
         'user_created',
-        'user_updated',
+        'user_updated'
     ];
+    public function PrmRawMaterialOutputItem()
+    {
+        return $this->belongsTo(PrmRawMaterialOutputItem::class);
+    }
+    public function StockTransitGradingKasar()
+    {
+        return $this->belongsTo(StockTransitGradingKasar::class);
+    }
 }

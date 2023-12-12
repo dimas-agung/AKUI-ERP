@@ -14,12 +14,16 @@ class MasterJenisRawMaterialController extends Controller
     //index
     public function index()
     {
+
+        $i = 1;
         $PrmRawMaterialInput = PrmRawMaterialInput::with('master_jenis_raw_material')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::all();
-
+        // return $PrmRawMaterialInput;
+        // return $MasterJenisRawMaterial;
         return response()->view('master.master_jenis_raw_material.index', [
             'PrmRawMaterialInput'    => $PrmRawMaterialInput,
             'MasterJenisRawMaterial' => $MasterJenisRawMaterial,
+            'i' => $i
         ]);
     }
     // create
