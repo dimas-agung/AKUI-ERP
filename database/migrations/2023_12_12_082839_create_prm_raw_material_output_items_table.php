@@ -11,14 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prm_raw_material_inputs', function (Blueprint $table) {
+        Schema::create('prm_raw_material_output_items', function (Blueprint $table) {
             $table->id();
             $table->string('doc_no');
-            $table->string('nomor_po');
+            $table->string('nomor_bstb');
             $table->string('nomor_batch');
-            $table->string('nomor_nota_supplier');
-            $table->string('nomor_nota_internal');
+            $table->string('id_box');
             $table->string('nama_supplier');
+            $table->string('jenis');
+            $table->float('berat');
+            $table->float('kadar_air');
+            $table->string('tujuan_kirim');
+            $table->string('letak_tujuan');
+            $table->string('inisial_tujuan');
+            $table->float('modal');
+            $table->float('total_modal');
             $table->text('keterangan');
             $table->string('user_created');
             $table->string('user_updated');
@@ -31,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prm_raw_material_inputs');
+        Schema::dropIfExists('prm_raw_material_output_items');
     }
 };

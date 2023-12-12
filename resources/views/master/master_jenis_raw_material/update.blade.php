@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.template')
 @section('content')
     <div class="container mt-5 mb-5">
         <div class="row">
@@ -87,15 +87,16 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Status</label>
                                 <select class="form-control" @error('status') is-invalid @enderror" name="status">
-                                    <option>
+                                    {{-- <option>
                                         @if ($MasterJRM->status == 1)
                                             AKTIF
                                         @else
                                             TIDAK AKTIF
                                         @endif
+                                    </option> --}}
+                                    <option value="1" {{ $MasterJRM->status == 1 ? 'selected' : '' }}> AKTIF </option>
+                                    <option value="0" {{ $MasterJRM->status == 0 ? 'selected' : '' }}> TIDAK AKTIF
                                     </option>
-                                    <option value=1>AKTIF</option>
-                                    <option value=0>TIDAK AKTIF</option>
                                 </select>
                                 <!-- error message untuk title -->
                                 @error('status')
