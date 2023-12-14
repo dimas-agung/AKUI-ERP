@@ -83,14 +83,14 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::c
 
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
     Route::get('/purchasingexim/prm_raw_material_input', 'index')->name('purchasingexim/prm_raw_material_input.index');
-    // Route::get('/master_tujuan_kirim_raw_material/create', 'create')->name('master_tujuan_kirim_raw_material.create');
-    // Route::post('/master_tujuan_kirim_raw_material/store', 'store')->name('master_tujuan_kirim_raw_material.store');
-    // Route::get('/master_tujuan_kirim_raw_material/show/{id}', 'show')->name('master_tujuan_kirim_raw_material.show');
-    // Route::get('/master_tujuan_kirim_raw_material/edit{id}', 'edit')->name('master_tujuan_kirim_raw_material.edit');
-    // Route::put('/master_tujuan_kirim_raw_material/update{id}', 'update')->name('master_tujuan_kirim_raw_material.update');
-    // Route::delete('/master_tujuan_kirim_raw_material/destroy{id}', 'destroy')->name('master_tujuan_kirim_raw_material.destroy');
+    Route::get('/purchasingexim/prm_raw_material_input/create', 'create')->name('purchasingexim/prm_raw_material_input.create');
+    Route::post('/purchasingexim/prm_raw_material_input/store', 'store')->name('purchasingexim/prm_raw_material_input.store');
+    Route::get('/purchasingexim/prm_raw_material_input/show/{id}', 'show')->name('purchasingexim/prm_raw_material_input.show');
+    Route::get('/purchasingexim/prm_raw_material_input/edit{id}', 'edit')->name('purchasingexim/prm_raw_material_input.edit');
+    Route::put('/purchasingexim/prm_raw_material_input/update{id}', 'update')->name('purchasingexim/prm_raw_material_input.update');
+    Route::delete('/purchasingexim/prm_raw_material_input/destroy{id}', 'destroy')->name('purchasingexim/prm_raw_material_input.destroy');
 });
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
