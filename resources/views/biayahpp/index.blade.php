@@ -56,11 +56,14 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group form-group-default">
-                                                <label for="unit_id">Pilih Unit ID:</label>
-                                                <select class="form-control" id="unit_id" name="unit_id">
+                                                <label for="basic-usage">Pilih Unit ID:</label>
+                                                <select id="basic-usage" name="unit_id"
+                                                    class="js-example-basic-single form-control" style="width: 100%;"
+                                                    tabindex="-1" aria-hidden="true" data-placeholder="Pilih Unit ID"
+                                                    multiple>
+                                                    <option></option>
                                                     @foreach ($unit as $post)
-                                                        <option value="{{ $post->id }}">
-                                                            {{ $post->nama }}</option>
+                                                        <option value="{{ $post->id }}">{{ $post->nama }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -264,4 +267,6 @@
             </div>
         </div>
     </div>
+@endsection
+@section('select')
 @endsection

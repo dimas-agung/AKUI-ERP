@@ -55,15 +55,11 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                {{-- <label>Workstation ID</label>
-                                                <input id="addName" type="text"
-                                                    class="form-control @error('workstation_id') is-invalid @enderror"
-                                                    name="workstation_id" value="{{ old('workstation_id') }}"
-                                                    placeholder="Masukkan Workstation ID"> --}}
-
                                                 <label for="workstation_id">Pilih Workstation ID:</label>
                                                 <select class="form-control @error('workstation_id') is-invalid @enderror"
-                                                    id="workstation_id" name="workstation_id">
+                                                    id="basic-usage" name="workstation_id"
+                                                    data-placeholder="Choose one thing" multiple>
+                                                    <option></option>
                                                     @foreach ($workstation as $post)
                                                         <option value="{{ $post->id }}">
                                                             {{ $post->nama }}</option>
@@ -177,90 +173,16 @@
                         </tbody>
                     </table>
                 </div>
-                {{-- Update Data --}}
-                {{-- <div class="modal fade" id="UpModal" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header no-bd">
-                                <h5 class="modal-title">
-                                    <span class="fw-mediumbold">
-                                        Update</span>
-                                    <span class="fw-light">
-                                        Data Biaya Hpp
-                                    </span>
-                                </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="small">Create a new row using this form, make sure you fill them all</p>
-                                <form action="{{ route('biaya.update') }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group form-group-default">
-                                                <label>Unit ID</label>
-                                                <input id="addName" type="text"
-                                                    class="form-control @error('unit_id') is-invalid @enderror"
-                                                    name="unit_id" value="{{ old('unit_id', $biaya->unit_id) }}"
-                                                    placeholder="Masukkan Unit ID">
-
-                                                <!-- error message untuk title -->
-                                                @error('unit_id')
-                                                    <div class="alert alert-danger mt-2">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 pr-0">
-                                            <div class="form-group form-group-default">
-                                                <label>Jenis Biaya</label>
-                                                <input id="addPosition" type="text"
-                                                    class="form-control @error('jenis_biaya') is-invalid @enderror"
-                                                    name="jenis_biaya"
-                                                    value="{{ old('jenis_biaya', $biaya->jenis_biaya) }}"
-                                                    placeholder="Masukkan Jenis Biaya">
-
-                                                <!-- error message untuk title -->
-                                                @error('jenis_biaya')
-                                                    <div class="alert alert-danger mt-2">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group form-group-default">
-                                                <label>Biaya PerGram</label>
-                                                <input id="addOffice" type="text"
-                                                    class="form-control @error('biaya_per_gram') is-invalid @enderror"
-                                                    name="biaya_per_gram"
-                                                    value="{{ old('biaya_per_gram', $biaya->biaya_per_gram) }}"
-                                                    placeholder="Masukkan Biaya PerGram">
-
-                                                <!-- error message untuk title -->
-                                                @error('biaya_per_gram')
-                                                    <div class="alert alert-danger mt-2">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer no-bd">
-                                        <button type="submit" class="btn btn-primary">Add</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>
+@endsection
+@section('select')
+    <script>
+        $(document).ready(function() {
+            $('#basic-usage').select2({
+                'maximumSelectionLength': 1
+            });
+        });
+    </script>
 @endsection

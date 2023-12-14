@@ -15,7 +15,7 @@
 
                     <div class="form-group">
                         <label for="workstation_id">Pilih Workstation ID</label>
-                        <select class="form-control" id="workstation_id" name="workstation_id">
+                        <select id="basic-usage" class="form-control" id="workstation_id" name="workstation_id">
                             @foreach ($workstation as $post)
                                 <option value="{{ $post->id }}"
                                     {{ $unit->workstation_id == $post->id ? 'selected' : '' }}>
@@ -58,4 +58,12 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('select')
+    <script>
+        $(document).ready(function() {
+            $('#basic-usage').select2();
+        });
+    </script>
 @endsection

@@ -53,16 +53,12 @@
 
                     <div class="form-group">
                         <label class="font-weight-bold">Status</label>
-                        <select class="form-control js-example-basic-multiple @error('status') is-invalid @enderror"
-                            name="options[]" value="{{ old('status', $biaya->status) }}" multiple="multiple">
+                        <label class="font-weight-bold">Status</label>
+                        <select class="form-control @error('status') is-invalid @enderror" name="status"
+                            value="{{ old('status', $biaya->status) }}">
                             <option value="1" {{ $biaya->status == 1 ? 'selected' : '' }}>Aktif</option>
                             <option value="0" {{ $biaya->status == 0 ? 'selected' : '' }}>Tidak Aktif</option>
                         </select>
-
-                        {{-- <select class="js-example-basic-multiple" name="options[]" multiple="multiple">
-                            @foreach ($options as $option)
-                                <option value="{{ $option }}">{{ $option }}</option>
-                            @endforeach --}}
                         </select>
                         <!-- error message untuk status -->
                         @error('status')

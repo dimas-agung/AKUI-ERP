@@ -46,22 +46,50 @@
     <script src="{{ asset('js/jquery.amsify.suggestags.js') }}"></script>
 
 
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
 
     <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-    <link href="{{ asset('css/jquery-customselect.css') }}" rel='stylesheet' />
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css">
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
     <script src="{{ asset('js/jquery-customselect.js') }}"></script>
+    <link href="{{ asset('css/jquery-customselect.css') }}" rel='stylesheet' />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
+    <!-- Sertakan jQuery terlebih dahulu -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    {{-- Select2 --}}
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Sertakan CSS dan JS Select2 -->
+    <!-- Styles -->
+    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"> --}}
+
+    <!-- resources/views/layouts/app.blade.php atau layout lainnya -->
+    <link rel="stylesheet" href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}">
+    <script src="{{ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('node_modules/select2/dist/js/select2.min.js') }}"></script>
+
+
 
 </head>
-
 
 <body>
     <div class="wrapper">
@@ -545,26 +573,61 @@
         </div>
         <!-- End Custom template -->
     </div>
+    {{-- Select 2 --}}
+    <!-- Scripts -->
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#basic-usage').select2({});
+        });
+    </script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 
-    <!-- Core JS Files -->
+    {{-- <script>
+        jQuery(document).ready(function($) {
+            $('.select2').select2({
+                'width': '100%'
+            });
+        });
+    </script> --}}
+
+    <!-- resources/views/layouts/app.blade.php atau layout lainnya -->
+    <script>
+        $(document).ready(function() {
+            $('#basic-usage').select2({
+                theme: "bootstrap4", // Sesuaikan tema dengan Bootstrap 4
+                width: '100%',
+                placeholder: "Pilih satu opsi",
+            });
+        });
+    </script>
+
+
+    <!--   Core JS Files   -->
+    {{-- <script src="../../assets/js/core/jquery.3.2.1.min.js"></script> --}}
     <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+    <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script>
     <!-- jQuery UI -->
-    <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
+    <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+    <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Atlantis JS -->
-    <script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
+    <script src="../../assets/js/atlantis.min.js"></script>
     <!-- Atlantis DEMO methods, don't include it in your project! -->
-    <script src="{{ asset('assets/js/setting-demo2.js') }}"></script>
+    <script src="../../assets/js/setting-demo2.js"></script>
 
-    <!-- Setingan -->
+    <!-- {{-- Setingan --}} -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+
+
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/jquery.amsify.suggestags.js') }}"></script>
     <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
@@ -573,6 +636,12 @@
     <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
     <script src="{{ asset('js/multi-input.js') }}"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/chart.js/chart.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
@@ -583,11 +652,10 @@
     <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script type="text/javascript">
         $('.tagInput').amsifySuggestags();
+        // $('input[name="variant"]')..tagsInput();;
     </script>
-
     <script>
         $(document).ready(function() {
             $('#basic-datatables').DataTable({});
@@ -602,7 +670,9 @@
                             )
                             .appendTo($(column.footer()).empty())
                             .on('change', function() {
-                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
 
                                 column
                                     .search(val ? '^' + val + '$' : '', true, false)
@@ -621,7 +691,8 @@
             $('#add-row').DataTable({
                 "pageLength": 10,
             });
-            var action =
+            var
+                action =
                 '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
 
             $('#addRowButton').click(function() {
@@ -632,16 +703,7 @@
                     action
                 ]);
                 $('#addRowModal').modal('hide');
-            });
-        });
-    </script>
 
-    @yield('select')
-    <script>
-        // In your Javascript (external .js resource or <script> tag)
-        $(document).ready(function() {
-            $('.js-example-basic-single').select2({
-                'maximumSelectionLength': 1
             });
         });
     </script>
