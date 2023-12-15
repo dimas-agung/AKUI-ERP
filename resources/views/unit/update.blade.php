@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master1')
 @section('title')
     Update Unit
 @endsection
@@ -14,8 +14,9 @@
                     @method('PUT')
 
                     <div class="form-group">
-                        <label for="workstation_id">Pilih Workstation ID</label>
-                        <select id="basic-usage" class="form-control" id="workstation_id" name="workstation_id">
+                        <label for="basic-usage">Pilih Workstation ID</label>
+                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
+                            aria-hidden="true" id="basic-usage" name="workstation_id">
                             @foreach ($workstation as $post)
                                 <option value="{{ $post->id }}"
                                     {{ $unit->workstation_id == $post->id ? 'selected' : '' }}>
@@ -59,11 +60,12 @@
         </div>
     </div>
 @endsection
-
-@section('select')
+@section('script')
     <script>
         $(document).ready(function() {
-            $('#basic-usage').select2();
+            $('.select2').select2({
+                closeOnSelect: false
+            });
         });
     </script>
 @endsection

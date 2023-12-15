@@ -17,7 +17,7 @@ class StockTransitGradingKasarController extends Controller
     public function index(){
         $i =1;
         $stockTGK = StockTransitGradingKasar::get();
-        return response()->view('StockTransitGradingKasar.index', [
+        return response()->view('purchasing_exim.StockTransitGradingKasar.index', [
             'stockTGK' => $stockTGK,
             'i' => $i,
         ]);
@@ -29,7 +29,7 @@ class StockTransitGradingKasarController extends Controller
      */
     public function create(): View
     {
-        return view('StockTransitGradingKasar.create');
+        return view('purchasing_exim.StockTransitGradingKasar.create');
     }
 
     /**
@@ -85,7 +85,7 @@ class StockTransitGradingKasarController extends Controller
         $stockTGK = StockTransitGradingKasar::findOrFail($id);
 
         //render view with post
-        return view('StockTransitGradingKasar.show', compact('stockTGK'));
+        return view('purchasing_exim.StockTransitGradingKasar.show', compact('stockTGK'));
     }
 
 
@@ -98,7 +98,7 @@ class StockTransitGradingKasarController extends Controller
         $stockTGK = StockTransitGradingKasar::findOrFail($id);
 
         //render view with post
-        return view('StockTransitGradingKasar.update', compact('stockTGK'));
+        return view('purchasing_exim.StockTransitGradingKasar.update', compact('stockTGK'));
     }
 
     /**
@@ -110,7 +110,7 @@ class StockTransitGradingKasarController extends Controller
         //validate form
         $this->validate($request, [
             'nomor_bstb'=> 'required',
-            'nama_supplier'=> 'required|unique:stock_transit_grading_kasars',
+            'nama_supplier'=> 'required',
             'jenis'=> 'required',
             'berat'=> 'required',
             'kadar_air'=> 'required',

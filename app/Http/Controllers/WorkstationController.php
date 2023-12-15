@@ -84,9 +84,6 @@ class WorkstationController extends Controller
         $this->validate($request, [
             'nama'   => 'required|unique:workstation',
             'status'   => 'required'
-        ], [
-            'nama.required' => 'Kolom Nama Biaya Wajib diisi.',
-            'status.required' => 'Kolom status Biaya Wajib diisi.',
         ]);
 
         //get post by ID

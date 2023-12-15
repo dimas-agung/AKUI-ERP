@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master1')
 @section('title')
     Biaya HPP
 @endsection
@@ -34,7 +34,7 @@
                     </div>
                 @endif
                 {{-- Create Data --}}
-                <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="addRowModal" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header no-bd">
@@ -57,15 +57,20 @@
                                         <div class="col-sm-12">
                                             <div class="form-group form-group-default">
                                                 <label for="basic-usage">Pilih Unit ID:</label>
-                                                <select id="basic-usage" name="unit_id"
-                                                    class="js-example-basic-single form-control" style="width: 100%;"
-                                                    tabindex="-1" aria-hidden="true" data-placeholder="Pilih Unit ID"
-                                                    multiple>
-                                                    <option></option>
+                                                <select class="form-control" id="basic-usage" name="unit_id"
+                                                    multiple="single">
                                                     @foreach ($unit as $post)
-                                                        <option value="{{ $post->id }}">{{ $post->nama }}</option>
+                                                        <option value="{{ $post->id }}">
+                                                            {{ $post->nama }}</option>
                                                     @endforeach
                                                 </select>
+
+                                                <!-- error message untuk title -->
+                                                @error('unit_id')
+                                                    <div class="alert alert-danger mt-2">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6 pr-0">
@@ -267,6 +272,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('select')
 @endsection

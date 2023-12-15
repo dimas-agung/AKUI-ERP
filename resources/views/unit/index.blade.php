@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master1')
 @section('title')
     Unit
 @endsection
@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Data Unit</h4>
+                    <h4 class="card-title">Data Unit AKUI-ERP</h4>
                     <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                         <i class="fa fa-plus"></i>
                         Add Data
@@ -33,7 +33,7 @@
                         <p>Mohon periksa kembali formulir Anda.</p>
                     </div>
                 @endif
-                <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="addRowModal" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header no-bd">
@@ -55,11 +55,9 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <label for="workstation_id">Pilih Workstation ID:</label>
-                                                <select class="form-control @error('workstation_id') is-invalid @enderror"
-                                                    id="basic-usage" name="workstation_id"
-                                                    data-placeholder="Choose one thing" multiple>
-                                                    <option></option>
+                                                <label for="basic-usage">Pilih Workstation ID:</label>
+                                                <select class="form-control" id="basic-usage" name="workstation_id"
+                                                    multiple="single">
                                                     @foreach ($workstation as $post)
                                                         <option value="{{ $post->id }}">
                                                             {{ $post->nama }}</option>
@@ -173,16 +171,90 @@
                         </tbody>
                     </table>
                 </div>
+                {{-- Update Data --}}
+                {{-- <div class="modal fade" id="UpModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header no-bd">
+                                <h5 class="modal-title">
+                                    <span class="fw-mediumbold">
+                                        Update</span>
+                                    <span class="fw-light">
+                                        Data Biaya Hpp
+                                    </span>
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="small">Create a new row using this form, make sure you fill them all</p>
+                                <form action="{{ route('biaya.update') }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group form-group-default">
+                                                <label>Unit ID</label>
+                                                <input id="addName" type="text"
+                                                    class="form-control @error('unit_id') is-invalid @enderror"
+                                                    name="unit_id" value="{{ old('unit_id', $biaya->unit_id) }}"
+                                                    placeholder="Masukkan Unit ID">
+
+                                                <!-- error message untuk title -->
+                                                @error('unit_id')
+                                                    <div class="alert alert-danger mt-2">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
+                                            <div class="form-group form-group-default">
+                                                <label>Jenis Biaya</label>
+                                                <input id="addPosition" type="text"
+                                                    class="form-control @error('jenis_biaya') is-invalid @enderror"
+                                                    name="jenis_biaya"
+                                                    value="{{ old('jenis_biaya', $biaya->jenis_biaya) }}"
+                                                    placeholder="Masukkan Jenis Biaya">
+
+                                                <!-- error message untuk title -->
+                                                @error('jenis_biaya')
+                                                    <div class="alert alert-danger mt-2">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-default">
+                                                <label>Biaya PerGram</label>
+                                                <input id="addOffice" type="text"
+                                                    class="form-control @error('biaya_per_gram') is-invalid @enderror"
+                                                    name="biaya_per_gram"
+                                                    value="{{ old('biaya_per_gram', $biaya->biaya_per_gram) }}"
+                                                    placeholder="Masukkan Biaya PerGram">
+
+                                                <!-- error message untuk title -->
+                                                @error('biaya_per_gram')
+                                                    <div class="alert alert-danger mt-2">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer no-bd">
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
             </div>
         </div>
     </div>
-@endsection
-@section('select')
-    <script>
-        $(document).ready(function() {
-            $('#basic-usage').select2({
-                'maximumSelectionLength': 1
-            });
-        });
-    </script>
 @endsection

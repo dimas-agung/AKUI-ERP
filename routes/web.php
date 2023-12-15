@@ -49,6 +49,8 @@ Route::controller(App\Http\Controllers\BiayaHppController::class)->group(functio
     Route::delete('/biayahpp/hapus/{id}', 'destroy')->name('biaya.destroy');
 });
 
+//route resource
+// Route::resource('/Mastersupplier', \App\Http\Controllers\MasterSupplierController::class);
 Route::controller(App\Http\Controllers\MasterSupplierRawMaterialController::class)->group(function () {
     Route::get('/master_supplier_raw_material', 'index')->name('master_supplier_raw_material.index');
     Route::get('/master_supplier_raw_material/create', 'create')->name('master_supplier_raw_material.create');
@@ -87,6 +89,16 @@ Route::controller(App\Http\Controllers\PurchasingExim\StockTransitGradingKasarCo
     Route::get('/StockTransitGradingKasar/edit{id}', 'edit')->name('StockTransitGradingKasar.edit');
     Route::put('/StockTransitGradingKasar/update{id}', 'update')->name('StockTransitGradingKasar.update');
     Route::delete('/StockTransitGradingKasar/destroy{id}', 'destroy')->name('StockTransitGradingKasar.destroy');
+});
+
+Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputHeaderController::class)->group(function () {
+    Route::get('/PrmRawMaterialOutputHeader', 'index')->name('PrmRawMaterialOutputHeader.index');
+    Route::get('/PrmRawMaterialOutputHeader/create', 'create')->name('PrmRawMaterialOutputHeader.create');
+    Route::post('/PrmRawMaterialOutputHeader/store', 'store')->name('PrmRawMaterialOutputHeader.store');
+    Route::get('/PrmRawMaterialOutputHeader/show/{id}', 'show')->name('PrmRawMaterialOutputHeader.show');
+    Route::get('/PrmRawMaterialOutputHeader/edit{id}', 'edit')->name('PrmRawMaterialOutputHeader.edit');
+    Route::put('/PrmRawMaterialOutputHeader/update{id}', 'update')->name('PrmRawMaterialOutputHeader.update');
+    Route::delete('/PrmRawMaterialOutputHeader/destroy{id}', 'destroy')->name('PrmRawMaterialOutputHeader.destroy');
 });
 
 Auth::routes();

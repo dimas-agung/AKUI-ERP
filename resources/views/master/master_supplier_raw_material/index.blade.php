@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.master1')
 @section('content')
     <div class="col-md-12">
         <div class="card">
@@ -30,7 +30,7 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <div class="form-group">
+                                            <div class="form-group form-group-default">
                                                 <label class="font-weight-bold">Nama Supplier</label>
                                                 <input type="text"
                                                     class="form-control @error('nama_supplier') is-invalid @enderror"

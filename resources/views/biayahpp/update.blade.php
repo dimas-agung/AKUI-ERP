@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master1')
 @section('title')
     Update Biaya HPP
 @endsection
@@ -16,8 +16,9 @@
                     @method('PUT')
 
                     <div class="form-group">
-                        <label for="unit_id" class="font-weight-bold">Pilih Unit ID:</label>
-                        <select class="form-control" id="unit_id" name="unit_id">
+                        <label for="basic-usage" class="font-weight-bold">Pilih Unit ID:</label>
+                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
+                            aria-hidden="true" name="unit_id" data-placeholder="Pilih Unit ID">
                             @foreach ($unit as $post)
                                 <option value="{{ $post->id }}" {{ $biaya->unit_id == $post->id ? 'selected' : '' }}>
                                     {{ old('unit_id', $post->nama) }}</option>
@@ -53,12 +54,10 @@
 
                     <div class="form-group">
                         <label class="font-weight-bold">Status</label>
-                        <label class="font-weight-bold">Status</label>
                         <select class="form-control @error('status') is-invalid @enderror" name="status"
                             value="{{ old('status', $biaya->status) }}">
                             <option value="1" {{ $biaya->status == 1 ? 'selected' : '' }}>Aktif</option>
                             <option value="0" {{ $biaya->status == 0 ? 'selected' : '' }}>Tidak Aktif</option>
-                        </select>
                         </select>
                         <!-- error message untuk status -->
                         @error('status')
@@ -77,4 +76,16 @@
         {{-- </div> --}}
     </div>
     {{-- </div> --}}
+@endsection
+@section('script')
+    <script>
+        // $(document).ready(function() {
+        //     $('.select2').select2({
+        //         closeOnSelect: false
+        //     });
+        // });
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
 @endsection

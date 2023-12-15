@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master1')
 @section('title')
     Update Workstation
 @endsection
