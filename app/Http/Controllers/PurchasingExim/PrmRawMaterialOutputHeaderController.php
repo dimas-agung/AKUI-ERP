@@ -16,7 +16,7 @@ class PrmRawMaterialOutputHeaderController extends Controller
     public function index(){
         $i =1;
         $stockTGK = StockTransitGradingKasar::with('PramRawMaterialOutputHeaders')->get();
-        $PrmRawMOH = PrmRawMaterialOutputHeader::with('PramRawMaterialOutputHeaders')->get();
+        $PrmRawMOH = PrmRawMaterialOutputHeader::with('StockTransitGradingKasar')->get();
         return response()->view('purchasing_exim.PrmRawMaterialOutputHeader.index', [
             'PrmRawMOH' => $PrmRawMOH,
             'stockTGK' => $stockTGK,
@@ -40,25 +40,25 @@ class PrmRawMaterialOutputHeaderController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'doc_no'=> 'required',
-            'nomor_bstb'=> 'required|unique:stock_transit_grading_kasars',
-            'nomor_batch'=> '',
-            'keterangan'=> '',
-            'user_created'=> '',
-            'user_updated'=> ''
+            'doc_no'        => 'required',
+            'nomor_bstb'    => 'required|unique:prm_raw_material_output_headers',
+            'nomor_batch'   => '',
+            'keterangan'    => '',
+            'user_created'  => '',
+            'user_updated'  => ''
         ], [
-            'doc_no.required' => 'Kolom Nomer Document Wajib diisi.',
-            'nomor_bstb.required' => 'Kolom Nomer BSTB Wajib diisi.'
+            'doc_no.required'       => 'Kolom Nomer Document Wajib diisi.',
+            'nomor_bstb.required'   => 'Kolom Nomer BSTB Wajib diisi.'
         ]);
 
         //create post
         PrmRawMaterialOutputHeader::create([
-            'doc_no'   => $request->nomor_bstb,
-            'nomor_bstb'   => $request->nama_supplier,
-            'nomor_batch'   => $request->jenis,
-            'keterangan'   => $request->berat,
-            'user_created'   => $request->kadar_air,
-            'user_updated'   => $request->tujuan_kirim
+            'doc_no'        => $request->doc_no,
+            'nomor_bstb'    => $request->nomor_bstb,
+            'nomor_batch'   => $request->nomor_batch,
+            'keterangan'    => $request->keterangan,
+            'user_created'  => $request->user_created,
+            'user_updated'  => $request->user_updated
         ]);
 
         //redirect to index
@@ -96,26 +96,26 @@ class PrmRawMaterialOutputHeaderController extends Controller
         $PrmRawMOH = PrmRawMaterialOutputHeader::findOrFail($id);
         //validate form
         $this->validate($request, [
-            'doc_no'=> 'required',
-            'nomor_bstb'=> 'required|unique:stock_transit_grading_kasars',
-            'nomor_batch'=> '',
-            'keterangan'=> '',
-            'user_created'=> '',
-            'user_updated'=> ''
+            'doc_no'        => 'required',
+            'nomor_bstb'    => 'required',
+            'nomor_batch'   => 'required',
+            'keterangan'    => 'required',
+            'user_created'  => 'required',
+            'user_updated'  => 'required'
         ], [
-            'doc_no.required' => 'Kolom Nomer Document Wajib diisi.',
-            'nomor_bstb.required' => 'Kolom Nomer BSTB Wajib diisi.'
+            'doc_no.required'       => 'Kolom Nomer Document Wajib diisi.',
+            'nomor_bstb.required'   => 'Kolom Nomer BSTB Wajib diisi.'
         ]);
 
         //get post by ID
 
         $PrmRawMOH->update([
-            'doc_no'   => $request->nomor_bstb,
-            'nomor_bstb'   => $request->nama_supplier,
-            'nomor_batch'   => $request->jenis,
-            'keterangan'   => $request->berat,
-            'user_created'   => $request->kadar_air,
-            'user_updated'   => $request->tujuan_kirim
+            'doc_no'        => $request->doc_no,
+            'nomor_bstb'    => $request->nomor_bstb,
+            'nomor_batch'   => $request->nomor_batch,
+            'keterangan'    => $request->keterangan,
+            'user_created'  => $request->user_created,
+            'user_updated'  => $request->user_updated
         ]);
 
         //redirect to index

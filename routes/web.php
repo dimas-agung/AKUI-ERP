@@ -101,6 +101,16 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputHeader
     Route::delete('/PrmRawMaterialOutputHeader/destroy{id}', 'destroy')->name('PrmRawMaterialOutputHeader.destroy');
 });
 
+Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputItemController::class)->group(function () {
+    Route::get('/PrmRawMaterialOutputItem', 'index')->name('PrmRawMaterialOutputItem.index');
+    Route::get('/PrmRawMaterialOutputItem/create', 'create')->name('PrmRawMaterialOutputItem.create');
+    Route::post('/PrmRawMaterialOutputItem/store', 'store')->name('PrmRawMaterialOutputItem.store');
+    Route::get('/PrmRawMaterialOutputItem/show/{id}', 'show')->name('PrmRawMaterialOutputItem.show');
+    Route::get('/PrmRawMaterialOutputItem/edit{id}', 'edit')->name('PrmRawMaterialOutputItem.edit');
+    Route::put('/PrmRawMaterialOutputItem/update{id}', 'update')->name('PrmRawMaterialOutputItem.update');
+    Route::delete('/PrmRawMaterialOutputItem/destroy{id}', 'destroy')->name('PrmRawMaterialOutputItem.destroy');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
