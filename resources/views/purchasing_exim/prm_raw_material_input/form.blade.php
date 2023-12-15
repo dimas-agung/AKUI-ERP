@@ -4,6 +4,192 @@
         <div class="card mt-2">
             <div class="card-header">
                 <div class="d-flex align-items-center">
+                    <h4 class="card-title">Input Purchasing Raw Material</h4>
+                </div>
+                <form action="{{ route('purchasingexim/prm_raw_material_input.store') }}" method="POST" class="row g-3">
+                    @csrf
+                    <div class="col-md-4">
+                        <label for="nomor_po" class="form-label">Nomor PO</label>
+                        <input type="text" class="form-control" id="nomor_po">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="nomor_batch" class="form-label">Nomor Batch</label>
+                        <input type="text" class="form-control" id="nomor_batch">
+                    </div>
+                    <div class="col-4">
+                        <label for="nomor_nota_supplier" class="form-label">Nomor Nota Supplier</label>
+                        <input type="text" class="form-control" id="nomor_nota_supplier">
+                    </div>
+                    <div class="col-6">
+                        <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
+                        <input type="text" class="form-control" id="nomor_nota_internal">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
+                        <select class="form-select select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
+                            aria-hidden="true" name="nama_supplier" data-placeholder="Pilih Nama Supplier">
+                            @foreach ($master_supplier_raw_materials as $MasterSPRM)
+                                <option value="{{ $MasterSPRM->nama_supplier }}">
+                                    {{ $MasterSPRM->nama_supplier }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="doc_no" class="form-label">Doc No</label>
+                        <input type="text" class="form-control" id="doc_no">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="basic-usage" class="form-label">Pilih Jenis :</label>
+                        <select class="form-select select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
+                            aria-hidden="true" name="jenis" data-placeholder="Pilih Jenis">
+                            @foreach ($master_jenis_raw_materials as $MasterJRM)
+                                <option value="{{ $MasterJRM->jenis }}">
+                                    {{ $MasterJRM->jenis }}</option>
+                            @endforeach
+                        </select>
+                        {{-- <label for="jenis" class="form-label">Jenis</label>
+                        <input type="text" class="form-control" id="jenis"> --}}
+                    </div>
+                    <div class="col-md-3">
+                        <label for="berat_nota" class="form-label">Berat Nota</label>
+                        <input type="number" class="form-control" id="berat_nota">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="berat_kotor" class="form-label">Berat Kotor</label>
+                        <input type="number" class="form-control" id="berat_kotor">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="berat_bersih" class="form-label">Berat Bersih</label>
+                        <input type="number" class="form-control" id="berat_bersih">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="selisih_berat" class="form-label">Selisih Berat</label>
+                        <input type="number" class="form-control" id="selisih_berat">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="kadar_air" class="form-label">Kadar Air</label>
+                        <input type="number" class="form-control" id="kadar_air">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="id_box" class="form-label">ID Box</label>
+                        <input type="text" class="form-control" id="id_box">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="harga_nota" class="form-label">Harga Nota</label>
+                        <input type="number" class="form-control" id="harga_nota">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="total_harga_nota" class="form-label">Total Harga Nota</label>
+                        <input type="number" class="form-control" id="total_harga_nota">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="harga_deal" class="form-label">Harga Deal</label>
+                        <input type="number" class="form-control" id="harga_deal">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <input type="text" class="form-control" id="keterangan">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    {{-- table --}}
+    <div class="col-md-12">
+        <div class="card mt-2">
+            <div class="card-header">
+                {{-- <div class="d-flex align-items-center">
+                    <h4 class="card-title">Input Purchasing Raw Material</h4>
+                </div> --}}
+                <form class="row g-3">
+                    <div class="col-md-3">
+                        <label for="doc_no" class="form-label">Doc No</label>
+                        <input type="text" class="form-control" id="doc_no">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="basic-usage" class="form-label">Pilih Jenis :</label>
+                        <select class="form-select select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
+                            aria-hidden="true" name="jenis" data-placeholder="Pilih Jenis">
+                            @foreach ($master_jenis_raw_materials as $MasterJRM)
+                                <option value="{{ $MasterJRM->jenis }}">
+                                    {{ $MasterJRM->jenis }}</option>
+                            @endforeach
+                        </select>
+                        {{-- <label for="jenis" class="form-label">Jenis</label>
+                        <input type="text" class="form-control" id="jenis"> --}}
+                    </div>
+                    <div class="col-md-3">
+                        <label for="berat_nota" class="form-label">Berat Nota</label>
+                        <input type="text" class="form-control" id="berat_nota">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="berat_kotor" class="form-label">Berat Kotor</label>
+                        <input type="text" class="form-control" id="berat_kotor">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="berat_bersih" class="form-label">Berat Bersih</label>
+                        <input type="text" class="form-control" id="berat_bersih">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="selisih_berat" class="form-label">Selisih Berat</label>
+                        <input type="text" class="form-control" id="selisih_berat">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="kadar_air" class="form-label">Kadar Air</label>
+                        <input type="text" class="form-control" id="kadar_air">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="id_box" class="form-label">ID Box</label>
+                        <input type="text" class="form-control" id="id_box">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="harga_nota" class="form-label">Harga Nota</label>
+                        <input type="text" class="form-control" id="harga_nota">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="total_harga_nota" class="form-label">Total Harga Nota</label>
+                        <input type="text" class="form-control" id="total_harga_nota">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="harga_deal" class="form-label">Harga Deal</label>
+                        <input type="text" class="form-control" id="harga_deal">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <input type="text" class="form-control" id="keterangan">
+                    </div>
+
+                    {{-- <div class="col-md-4">
+                        <label for="datetime" class="form-label">Datetime</label>
+                        <input type="text" class="form-control" id="datetime">
+                    </div> --}}
+                    {{-- <div class="col-md-4">
+                        <label for="nip_admin" class="form-label">NIP Admin</label>
+                        <input type="text" class="form-control" id="nip_admin">
+                    </div> --}}
+                    {{-- <div class="col-md-6">
+                        <label for="inputState" class="form-label">Nama Supplier</label>
+                        <select id="inputState" class="form-select">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                    </div> --}}
+                    {{-- <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div> --}}
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card mt-2">
+            <div class="card-header">
+                <div class="d-flex align-items-center">
                     <h4 class="card-title">Data Purchasing Raw Material Input</h4>
                     <button href="" class="btn btn-primary btn-round ml-auto" data-toggle="modal"
                         data-target="#addRowModal">
@@ -115,9 +301,8 @@
                                                     </div>
                                                 @enderror
                                             </div>
-                                            <div class="form-group">
+                                            {{-- <div class="form-group">
                                                 <label class="font-weight-bold">Nama Supplier</label>
-                                                {{-- <select name="" id=""></select> --}}
                                                 <input type="text"
                                                     class="form-control @error('nama_supplier') is-invalid @enderror"
                                                     name="nama_supplier" placeholder="Masukan Nama Supplier">
@@ -128,6 +313,17 @@
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
+                                            </div> --}}
+                                            <div class="col-md-6">
+                                                <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
+                                                <select class="form-select select2 select2-hidden-accessible"
+                                                    style="width: 100%;" tabindex="-1" aria-hidden="true"
+                                                    name="nama_supplier" data-placeholder="Pilih Nama Supplier">
+                                                    @foreach ($master_supplier_raw_materials as $MasterSPRM)
+                                                        <option value="{{ $MasterSPRM->nama_supplier }}">
+                                                            {{ $MasterSPRM->nama_supplier }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Keterangan</label>
@@ -210,7 +406,8 @@
                                     <td>{{ $MasterPRIM->nomor_batch }}</td>
                                     <td>{{ $MasterPRIM->nomor_nota_supplier }}</td>
                                     <td>{{ $MasterPRIM->nomor_nota_internal }}</td>
-                                    <td>{{ $MasterPRIM->master_supplier_raw_material->nama_supplier }}</td>
+                                    <td>{{ $MasterPRIM->nama_supplier }}</td>
+                                    {{-- <td>{{ $MasterPRIM->prm_raw_material_input->nama_supplier }}</td> --}}
                                     <td>{{ $MasterPRIM->keterangan }}</td>
                                     <td>{{ $MasterPRIM->user_created }}</td>
                                     <td>{{ $MasterPRIM->user_updated }}</td>
@@ -244,4 +441,16 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        // $(document).ready(function() {
+        //     $('.select2').select2({
+        //         closeOnSelect: false
+        //     });
+        // });
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
 @endsection

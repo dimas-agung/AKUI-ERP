@@ -27,14 +27,14 @@ class PrmRawMaterialInputItem extends Model
     ];
     public function PrmRawMaterialInput()
     {
-        return $this->hasMany(PrmRawMaterialInput::class);
+        return $this->hasMany(PrmRawMaterialInput::class, 'doc_no', 'doc_no');
     }
     public function PrmRawMaterialStock()
     {
-        return $this->hasOne(PrmRawMaterialStock::class);
+        return $this->hasOne(PrmRawMaterialStock::class, 'id_box', 'id_box');
     }
-    public function MasterTujuanKirimRawMaterial()
+    public function MasterJenisRawMaterial()
     {
-        return $this->belongsTo(MasterTujuanKirimRawMaterial::class);
+        return $this->belongsTo(MasterJenisRawMaterial::class);
     }
 }

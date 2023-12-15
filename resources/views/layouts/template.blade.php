@@ -43,8 +43,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/amsify.suggestags.css') }}" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="{{ asset('js/jquery.amsify.suggestags.js') }}"></script>
+
+    {{-- <!-- Memuat stylesheet Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" /> --}}
+
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
@@ -55,6 +58,15 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    <!-- Or for RTL support -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -78,7 +90,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    {{-- Select 2 --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
 </head>
 
 <body>
@@ -334,12 +354,12 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Account Setting</a>
                                         <div class="dropdown-divider"></div>
-                                        <form method="POST" action="{{ route('logout') }}">
+                                        {{-- <form method="POST" action="{{ route('logout') }}">
                                             {{ csrf_field() }}
-                                            {{-- {{ method_field('DELETE') }} --}}
+                                            {{ method_field('DELETE') }}
                                             <button class="dropdown-item" type="submit"
                                                 onclick="confirm('Apakah Anda Yakin ingin logout?')">Logout</button>
-                                        </form>
+                                        </form> --}}
                                         {{-- <a class="dropdown-item" href="">Logout</a></li> --}}
                                     </li>
                                 </div>
@@ -413,46 +433,21 @@
                             </div>
                         </li>
                         <li class="nav-item submenu">
-                            <a data-toggle="collapse" href="#base">
-                                <i class="fas fa-layer-group"></i>
-                                <p>Purchasing Exim</p>
+                            <a data-toggle="collapse" href="#sidebarLayouts">
+                                <i class="fas fa-th-list"></i>
+                                <p>Purchasing & EXIM</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="base">
+                            <div class="collapse" id="sidebarLayouts">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="{{ url('purchasingexim/prm_raw_material_input') }}">
+                                        <a href="{{ url('/purchasingexim/prm_raw_material_input') }}">
                                             <span class="sub-item">Prm Raw Material Input</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('purchasingexim/prm_raw_material_input_item') }}">
-                                            <span class="sub-item">Prm Raw Material Input Item</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('purchasingexim/prm_raw_material_stock') }}">
-                                            <span class="sub-item">Prm Raw Material Stock</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('purchasingexim/prm_raw_material_stock_history') }}">
-                                            <span class="sub-item">Prm Raw Material Stock History</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('purchasingexim/prm_raw_material_output_header') }}">
-                                            <span class="sub-item">Prm Raw Material Output Header</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('purchasingexim/prm_raw_material_output_item') }}">
-                                            <span class="sub-item">Prm Raw Material Output Item</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('purchasingexim/stock_transit_grading_kasar') }}">
-                                            <span class="sub-item">Stock Transit Grading Kasar</span>
+                                        <a href="{{ url('/purchasingexim/prm_raw_material_input_item') }}">
+                                            <span class="sub-item">Prm Raw Material Input Item test</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -466,7 +461,7 @@
             <div class="content">
                 <div class="page-inner">
                     <div class="page-header">
-                        <h4 class="page-title">{{ env('APP_NAME') }}</h4>
+                        <h4 class="page-title">Master</h4>
                         <ul class="breadcrumbs">
                             <li class="nav-home">
                                 <a href="{{ url('/') }}">
@@ -593,6 +588,7 @@
         </div>
         <!-- End Custom template -->
     </div>
+
     <!--   Core JS Files   -->
     <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
     <script src="../../assets/js/core/popper.min.js"></script>
@@ -643,63 +639,78 @@
         // $('input[name="variant"]')..tagsInput();;
     </script>
 
-</body>
+    {{-- Select 2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
-</html>
-<script>
-    $(document).ready(function() {
-        $('#basic-datatables').DataTable({});
+    <script>
+        $(document).ready(function() {
+            $('#basic-datatables').DataTable({});
 
-        $('#multi-filter-select').DataTable({
-            "pageLength": 10,
-            initComplete: function() {
-                this.api().columns().every(function() {
-                    var column = this;
-                    var select = $(
-                            '<select class="form-control"><option value=""></option></select>'
-                        )
-                        .appendTo($(column.footer()).empty())
-                        .on('change', function() {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
+            $('#multi-filter-select').DataTable({
+                "pageLength": 10,
+                initComplete: function() {
+                    this.api().columns().every(function() {
+                        var column = this;
+                        var select = $(
+                                '<select class="form-control"><option value=""></option></select>'
+                            )
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function() {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
 
-                            column
-                                .search(val ? '^' + val + '$' : '', true, false)
-                                .draw();
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+
+                        column.data().unique().sort().each(function(d, j) {
+                            select.append('<option value="' + d + '">' + d +
+                                '</option>')
                         });
-
-                    column.data().unique().sort().each(function(d, j) {
-                        select.append('<option value="' + d + '">' + d +
-                            '</option>')
                     });
-                });
-            }
-        });
+                }
+            });
 
-        // Add Row
-        $('#add-row').DataTable({
-            "pageLength": 10,
-        });
-        var
-            action =
-            '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+            // Add Row
+            $('#add-row').DataTable({
+                "pageLength": 10,
+            });
+            var
+                action =
+                '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
 
-        $('#addRowButton').click(function() {
-            $('#add-row').dataTable().fnAddData([
-                $("#addName").val(),
-                $("#addPosition").val(),
-                $("#addOffice").val(),
-                action
-            ]);
-            $('#addRowModal').modal('hide');
-        });
-    });
+            $('#addRowButton').click(function() {
+                $('#add-row').dataTable().fnAddData([
+                    $("#addName").val(),
+                    $("#addPosition").val(),
+                    $("#addOffice").val(),
+                    action
+                ]);
+                $('#addRowModal').modal('hide');
 
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
-    });
-</script>
+            });
+        });
+    </script>
+    <!-- Memuat skrip inisialisasi Select2 -->
+    <script>
+        // $('#basic-usage').select2({
+        //     theme: "bootstrap-5",
+        //     width: $(this).data('width') ? $(this).data('width') : $(this) ? '100%' : 'style',
+        //     placeholder: $(this).data('placeholder'),
+        //     // maxSelectLength: "1"
+        //     // "maxSelectLength": 1,
+        //     // "width": 100 % ,
+        // });
+        $('#basic-usage').select2({
+            theme: "bootstrap-5",
+            width: '100%',
+            placeholder: $(this).data('placeholder'),
+            maximumSelectionLength: 1, // Batasi pemilihan hanya satu opsi
+        });
+    </script>
+    @yield('script')
 </body>
 
 </html>

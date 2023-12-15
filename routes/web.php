@@ -91,6 +91,16 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputControl
     Route::delete('/purchasingexim/prm_raw_material_input/destroy{id}', 'destroy')->name('purchasingexim/prm_raw_material_input.destroy');
 });
 
+Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputItemController::class)->group(function () {
+    Route::get('/purchasingexim/prm_raw_material_input_item', 'index')->name('purchasingexim/prm_raw_material_input_item.index');
+    // Route::get('/purchasingexim/prm_raw_material_input/create', 'create')->name('purchasingexim/prm_raw_material_input.create');
+    // Route::post('/purchasingexim/prm_raw_material_input/store', 'store')->name('purchasingexim/prm_raw_material_input.store');
+    // Route::get('/purchasingexim/prm_raw_material_input/show/{id}', 'show')->name('purchasingexim/prm_raw_material_input.show');
+    // Route::get('/purchasingexim/prm_raw_material_input/edit{id}', 'edit')->name('purchasingexim/prm_raw_material_input.edit');
+    // Route::put('/purchasingexim/prm_raw_material_input/update{id}', 'update')->name('purchasingexim/prm_raw_material_input.update');
+    // Route::delete('/purchasingexim/prm_raw_material_input/destroy{id}', 'destroy')->name('purchasingexim/prm_raw_material_input.destroy');
+});
+
 // Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

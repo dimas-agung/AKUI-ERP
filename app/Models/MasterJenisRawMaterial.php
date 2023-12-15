@@ -17,8 +17,8 @@ class MasterJenisRawMaterial extends Model
         'harga_estimasi',
         'status',
     ];
-    public function PrmRawMaterialInput()
+    public function PrmRawMaterialInputItem()
     {
-        return $this->hasMany(PrmRawMaterialInput::class);
+        return $this->hasMany(PrmRawMaterialInputItem::class, 'jenis', 'jenis');
     }
 }

@@ -21,12 +21,12 @@ class PrmRawMaterialInput extends Model
         'user_updated'
     ];
 
-    public function MasterJenisRawMaterial()
+    public function MasterSupplierRawMaterial()
     {
-        return $this->belongsTo(MasterJenisRawMaterial::class, 'nama_supplier', 'nama_supplier');
+        return $this->belongsTo(MasterSupplierRawMaterial::class, 'nama_supplier', 'nama_supplier');
     }
-    // public function PrmRawMaterialInputItem()
-    // {
-    //     return $this->belongsTo(PrmRawMaterialInputItem::class);
-    // }
+    public function PrmRawMaterialInputItem()
+    {
+        return $this->belongsTo(PrmRawMaterialInputItem::class, 'doc_no', 'doc_no');
+    }
 }
