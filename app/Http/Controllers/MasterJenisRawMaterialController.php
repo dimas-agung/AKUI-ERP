@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\PurchasingExim\PrmRawMaterialInput as PurchasingEximPrmRawMaterialInput;
 use App\Models\MasterJenisRawMaterial;
+use App\Models\PrmRawMaterialInput;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -13,10 +15,15 @@ class MasterJenisRawMaterialController extends Controller
     public function index()
     {
 
+        $i = 1;
+        $PrmRawMaterialInput = PrmRawMaterialInput::with('master_jenis_raw_material')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::all();
-
+        // return $PrmRawMaterialInput;
+        // return $MasterJenisRawMaterial;
         return response()->view('master.master_jenis_raw_material.index', [
+            'PrmRawMaterialInput'    => $PrmRawMaterialInput,
             'MasterJenisRawMaterial' => $MasterJenisRawMaterial,
+            'i' => $i
         ]);
     }
     // create
@@ -29,11 +36,13 @@ class MasterJenisRawMaterialController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'jenis'                 => 'required',
-            'kategori_susut'        => 'required',
-            'upah_operator'         => 'required',
-            'pengurangan_harga'     => 'required',
-            'harga_estimasi'        => 'required'
+            'jenis'                 => 'required|unique:master_jenis_raw_materials',
+            'kategori_susut',
+            'upah_operator',
+            'pengurangan_harga',
+            'harga_estimasi',
+        ], [
+            'jenis.required' => 'Kolom Jenis Wajib diisi.',
         ]);
 
         //create MasterSupplier
@@ -42,7 +51,7 @@ class MasterJenisRawMaterialController extends Controller
             'kategori_susut'        => $request->kategori_susut,
             'upah_operator'         => $request->upah_operator,
             'pengurangan_harga'     => $request->pengurangan_harga,
-            'harga_estimasi'        => $request->harga_estimasi
+            'harga_estimasi'        => $request->harga_estimasi,
         ]);
 
         //redirect to index
@@ -73,10 +82,10 @@ class MasterJenisRawMaterialController extends Controller
         //validate form
         $validate = $this->validate($request, [
             'jenis'                 => 'required',
-            'kategori_susut'        => 'required',
-            'upah_operator'         => 'required',
-            'pengurangan_harga'     => 'required',
-            'harga_estimasi'        => 'required'
+            'kategori_susut',
+            'upah_operator'         => 'numeric',
+            'pengurangan_harga'     => 'numeric',
+            'harga_estimasi'        => 'numeric'
         ]);
 
         $MasterJRM->update([

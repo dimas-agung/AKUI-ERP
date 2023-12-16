@@ -1,80 +1,36 @@
-{{-- @extends('layouts.admin')
-@section('content')
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card border-0 shadow-sm rounded">
-                    <div class="card-header">
-                        <h4>DATA MASTER TUJUAN KIRIM RAW MATERIAL</h4>
-                    </div>
-                    <div class="card-body">
-                        <a href="{{ route('master_tujuan_kirim_raw_material.create') }}"
-                            class="btn btn-md btn-success mb-3">TAMBAH
-                            POST</a>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Tujuan Kirim</th>
-                                    <th scope="col">Letak Tujuan</th>
-                                    <th scope="col">Inisial Kirim</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Tanggal Buat</th>
-                                    <th scope="col">Tanggal Update</th>
-                                    <th scope="col">AKSI</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($MasterTujuanKirimRawMaterial as $MasterTJRM)
-                                    <tr>
-                                        <td>{{ $MasterTJRM->id }}</td>
-                                        <td>{{ $MasterTJRM->tujuan_kirim }}</td>
-                                        <td>{{ $MasterTJRM->letak_tujuan }}</td>
-                                        <td>{{ $MasterTJRM->inisial_tujuan }}</td>
-                                        <td>{{ $MasterTJRM->status }}</td>
-                                        <td>{{ $MasterTJRM->created_at }}</td>
-                                        <td>{{ $MasterTJRM->updated_at }}</td>
-                                        <td class="text-center">
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('master_tujuan_kirim_raw_material.destroy', $MasterTJRM->id) }}"
-                                                method="POST">
-                                                <a href="{{ route('master_tujuan_kirim_raw_material.show', $MasterTJRM->id) }}"
-                                                    class="btn btn-sm btn-dark">SHOW</a>
-                                                <a href="{{ route('master_tujuan_kirim_raw_material.edit', $MasterTJRM->id) }}"
-                                                    class="btn btn-sm btn-primary">EDIT</a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <div class="alert alert-danger">
-                                        Data Post belum Tersedia.
-                                    </div>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection --}}
-@extends('layouts.admin')
+@extends('layouts.template')
 @section('content')
     <div class="col-md-12">
-        <div class="card">
+        <div class="card mt-2">
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Data Master Tujuan Kirim Raw Material</h4>
                     <button href="{{ route('master_tujuan_kirim_raw_material.create') }}"
                         class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-                        <i class="fa fa-plus"> Tambah Data </i>
+                        <i class="fa fa-plus"></i> Tambah Data
                     </button>
                 </div>
             </div>
             <div class="card-body">
+                @include('sweetalert::alert')
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <strong>Sukses: </strong>{{ session()->get('success') }}
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul><strong>
+                                @foreach ($errors->all() as $error)
+                                    <li> {{ $error }} </li>
+                                @endforeach
+                            </strong>
+                        </ul>
+                        <p>Mohon periksa kembali formulir Anda.</p>
+                    </div>
+                @endif
+
                 {{-- Modal --}}
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -172,37 +128,33 @@
                         <tbody>
                             @forelse ($MasterTujuanKirimRawMaterial as $MasterTJRM)
                                 <tr>
-                                    <td>{{ $MasterTJRM->id }}</td>
+                                    <td>{{ $i++ }}</td>
                                     <td>{{ $MasterTJRM->tujuan_kirim }}</td>
                                     <td>{{ $MasterTJRM->letak_tujuan }}</td>
                                     <td>{{ $MasterTJRM->inisial_tujuan }}</td>
-                                    <td>{{ $MasterTJRM->status }}</td>
+                                    <td>
+                                        @if ($MasterTJRM->status == 1)
+                                            Aktif
+                                        @else
+                                            Tidak Aktif
+                                        @endif
+                                    </td>
                                     <td>{{ $MasterTJRM->created_at }}</td>
                                     <td>{{ $MasterTJRM->updated_at }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('master_tujuan_kirim_raw_material.destroy', $MasterTJRM->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('master_tujuan_kirim_raw_material.show', $MasterTJRM->id) }}"
-                                                    class="btn btn-sm btn-dark">SHOW</a>
                                                 <a href="{{ route('master_tujuan_kirim_raw_material.edit', $MasterTJRM->id) }}"
-                                                    class="btn btn-sm btn-primary">EDIT</a>
+                                                    class="btn btn-link" title="Edit Task"
+                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                                <button type="submit" data-toggle="tooltip"
+                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
+                                                        class="fa fa-times"></i></button>
                                             </form>
-                                        </div>
-                                        <div class="form-button-action">
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"
-                                                data-target="#UpModal">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-danger" data-original-title="Remove">
-                                                <i class="fa fa-times"></i>
-                                            </button>
                                         </div>
                                     </td>
                                 </tr>

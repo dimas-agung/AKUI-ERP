@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.template')
 @section('content')
     <div class="container mt-5 mb-5">
         <div class="row">
@@ -58,8 +58,9 @@
                                 <label class="font-weight-bold">Status</label>
                                 <select class="form-control" @error('status') is-invalid @enderror" name="status"
                                     value="{{ old('status', $MasterTJRM->status) }}">
-                                    <option value=1>AKTIF</option>
-                                    <option value=0>TIDAK AKTIF</option>
+                                    <option value="1" {{ $MasterTJRM->status == 1 ? 'selected' : '' }}>AKTIF</option>
+                                    <option value="0" {{ $MasterTJRM->status == 0 ? 'selected' : '' }}>TIDAK AKTIF
+                                    </option>
                                 </select>
                                 <!-- error message untuk title -->
                                 @error('status')

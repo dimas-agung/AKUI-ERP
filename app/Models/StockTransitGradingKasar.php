@@ -28,5 +28,6 @@ class StockTransitGradingKasar extends Model
     public function PramRawMaterialOutputHeaders()
     {
         return $this->hasMany(PrmRawMaterialOutputHeader::class, 'nomor_bstb', 'nomor_bstb');
+
     }
 }
