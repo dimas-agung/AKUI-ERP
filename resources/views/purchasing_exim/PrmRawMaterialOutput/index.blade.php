@@ -1,16 +1,19 @@
 @extends('layouts.master1')
 @section('title')
-    Prm Raw Material Output Item
+    PRM Raw Material Output
 @endsection
 @section('content')
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Data Prm Raw Material Output Item</h4>
+                    <h4 class="card-title">Data PRM Raw Material Output</h4>
                     <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-                        <i class="fa fa-plus"></i>
-                        Add Data
+                        <a href="{{ url('/PrmRawMaterialOutputItem/create') }}"
+                            style="text-decoration: none; color:aliceblue">
+                            <i class="fa fa-plus"></i>
+                            <span class="sub-item">Add Data</span>
+                        </a>
                     </button>
                 </div>
             </div>

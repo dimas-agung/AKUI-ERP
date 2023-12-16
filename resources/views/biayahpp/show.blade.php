@@ -1,4 +1,4 @@
-@extends('layouts.master1')
+@extends('layouts.master2')
 @section('title')
     Detail Biaya HPP
 @endsection

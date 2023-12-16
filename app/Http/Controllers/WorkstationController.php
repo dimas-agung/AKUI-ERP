@@ -19,6 +19,7 @@ class WorkstationController extends Controller
             'workstation' => $workstation,
             'i' => $i,
         ]);
+        // return response()->view('layouts.master2');
     }
 
 

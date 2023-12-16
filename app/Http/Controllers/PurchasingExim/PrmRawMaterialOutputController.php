@@ -7,31 +7,29 @@ use App\Http\Controllers\Controller;
 use App\Models\PrmRawMaterialOutputHeader;
 use App\Models\PrmRawMaterialOutputItem;
 use Illuminate\Http\Request;
+
 //return type redirectResponse
 use Illuminate\Http\RedirectResponse;
 
-
-class PrmRawMaterialOutputItemController extends Controller
+class PrmRawMaterialOutputController extends Controller
 {
-    //Index
     public function index(){
         $i =1;
         $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
         $PrmRawMOIC = PrmRawMaterialOutputItem::with('PrmRawMaterialOutputHeader')->get();
-        return response()->view('purchasing_exim.PrmRawMaterialOutputitem.index', [
+        return response()->view('purchasing_exim.PrmRawMaterialOutput.index', [
             'PrmRawMOIC' => $PrmRawMOIC,
             'PrmRawMOH' => $PrmRawMOH,
             'i' => $i,
         ]);
     }
 
-
         /**
      * Create
      */
     public function create(): View
     {
-        return view('purchasing_exim.PrmRawMaterialOutputItem.create');
+        return view('purchasing_exim.PrmRawMaterialOutput.create');
     }
 
     /**
@@ -42,7 +40,7 @@ class PrmRawMaterialOutputItemController extends Controller
         //validate form
         $this->validate($request, [
             'doc_no'       => 'required',
-            'nomor_bstb'   => 'required|unique:prm_raw_material_output_items',
+            'nomor_bstb'   => 'required|unique',
             'nomor_batch'  => 'required',
             'id_box'       => 'required',
             'nama_supplier'=> 'required',
@@ -82,31 +80,42 @@ class PrmRawMaterialOutputItemController extends Controller
             'user_updated'  => $request->user_updated
         ]);
 
+        PrmRawMaterialOutputHeader::create([
+            'doc_no'        => $request->doc_no,
+            'nomor_bstb'    => $request->nomor_bstb,
+            'nomor_batch'   => $request->nomor_batch,
+            'keterangan'    => $request->keterangan,
+            'user_created'  => $request->user_created,
+            'user_updated'  => $request->user_updated
+        ]);
+
         //redirect to index
-        return redirect()->route('PrmRawMaterialOutputItem.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
-
+    // Show
     public function show(string $id): View
     {
         //get post by ID
         $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
+        $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
 
         //render view with post
-        return view('purchasing_exim.PrmRawMaterialOutputItem.show', compact('PrmRawMOIC'));
+        return view('purchasing_exim.PrmRawMaterialOutput.show', compact('PrmRawMOIC', 'PrmRawMOH'));
     }
 
 
-     /**
+         /**
      * edit
      */
     public function edit(string $id): View
     {
         //get post by ID
         $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
+        $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
 
         //render view with post
-        return view('purchasing_exim.PrmRawMaterialOutputItem.update', compact('PrmRawMOIC'));
+        return view('purchasing_exim.PrmRawMaterialOutput.update', compact('PrmRawMOIC', 'PrmRawMOH'));
     }
 
     /**
@@ -115,6 +124,7 @@ class PrmRawMaterialOutputItemController extends Controller
     public function update(Request $request, $id): RedirectResponse
     {
         $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
+        $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
         //validate form
         $this->validate($request, [
             'doc_no'       => 'required',
@@ -159,8 +169,17 @@ class PrmRawMaterialOutputItemController extends Controller
             'user_updated'  => $request->user_updated
         ]);
 
+        $PrmRawMOH->update([
+            'doc_no'        => $request->doc_no,
+            'nomor_bstb'    => $request->nomor_bstb,
+            'nomor_batch'   => $request->nomor_batch,
+            'keterangan'    => $request->keterangan,
+            'user_created'  => $request->user_created,
+            'user_updated'  => $request->user_updated
+        ]);
+
         //redirect to index
-        return redirect()->route('PrmRawMaterialOutputItem.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
 
@@ -171,14 +190,13 @@ class PrmRawMaterialOutputItemController extends Controller
     {
         //get post by ID
         $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
+        $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
 
         //delete post
         $PrmRawMOIC->delete();
+        $PrmRawMOH->delete();
 
         //redirect to index
-        return redirect()->route('PrmRawMaterialOutputItem.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
-
-
-
 }
