@@ -36,7 +36,10 @@ class UnitController extends Controller
         //validate form
         $this->validate($request, [
             'workstation_id'   => 'required',
-            'nama'   => 'required'
+            'nama'   => 'required|unique:unit'
+        ], [
+            'nama.required' => 'Kolom Nama Biaya Wajib diisi.',
+            'workstation_id.required' => 'Kolom Inisial Biaya Wajib diisi.'
         ]);
 
         //create post
@@ -62,9 +65,10 @@ class UnitController extends Controller
     {
         //get post by ID
         $unit = unit::findOrFail($id);
+        $workstation = Workstation::with('unit')->get();
 
         //render view with post
-        return view('unit.update', compact('unit'));
+        return view('unit.update', compact('unit', 'workstation'));
     }
 
     /**
