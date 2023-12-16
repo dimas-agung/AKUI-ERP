@@ -9,6 +9,10 @@
                 <form action="{{ route('purchasingexim/prm_raw_material_input.store') }}" method="POST" class="row g-3">
                     @csrf
                     <div class="col-md-4">
+                        <label for="no_doc" class="form-label">Nomor DOC</label>
+                        <input type="text" class="form-control" id="no_doc">
+                    </div>
+                    <div class="col-md-4">
                         <label for="nomor_po" class="form-label">Nomor PO</label>
                         <input type="text" class="form-control" id="nomor_po">
                     </div>
@@ -20,11 +24,11 @@
                         <label for="nomor_nota_supplier" class="form-label">Nomor Nota Supplier</label>
                         <input type="text" class="form-control" id="nomor_nota_supplier">
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
                         <input type="text" class="form-control" id="nomor_nota_internal">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
                         <select class="form-select select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
                             aria-hidden="true" name="nama_supplier" data-placeholder="Pilih Nama Supplier">
@@ -34,7 +38,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <label for="doc_no" class="form-label">Doc No</label>
                         <input type="text" class="form-control" id="doc_no">
                     </div>
@@ -47,8 +51,6 @@
                                     {{ $MasterJRM->jenis }}</option>
                             @endforeach
                         </select>
-                        {{-- <label for="jenis" class="form-label">Jenis</label>
-                        <input type="text" class="form-control" id="jenis"> --}}
                     </div>
                     <div class="col-md-3">
                         <label for="berat_nota" class="form-label">Berat Nota</label>
@@ -89,7 +91,7 @@
                     <div class="col-md-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <input type="text" class="form-control" id="keterangan">
-                    </div>
+                    </div> --}}
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
@@ -120,8 +122,6 @@
                                     {{ $MasterJRM->jenis }}</option>
                             @endforeach
                         </select>
-                        {{-- <label for="jenis" class="form-label">Jenis</label>
-                        <input type="text" class="form-control" id="jenis"> --}}
                     </div>
                     <div class="col-md-3">
                         <label for="berat_nota" class="form-label">Berat Nota</label>
@@ -182,11 +182,15 @@
                     {{-- <div class="col-12">
                         <button type="submit" class="btn btn-primary">Tambah</button>
                     </div> --}}
+                    {{-- <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div> --}}
                 </form>
             </div>
         </div>
     </div>
-    <div class="col-md-12">
+    {{-- data table --}}
+    {{-- <div class="col-md-12">
         <div class="card mt-2">
             <div class="card-header">
                 <div class="d-flex align-items-center">
@@ -215,7 +219,7 @@
                         <p>Mohon periksa kembali formulir Anda.</p>
                     </div>
                 @endif
-                {{-- Modal --}}
+                #Modal#
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -273,7 +277,6 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Nomor Nota Supplier</label>
-                                                {{-- <select name="" id=""></select> --}}
                                                 <input type="text"
                                                     class="form-control @error('nomor_nota_supplier') is-invalid @enderror"
                                                     name="nomor_nota_supplier" placeholder="Masukan Nomor Nota Supplier">
@@ -289,7 +292,6 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Nomor Nota Internal</label>
-                                                {{-- <select name="" id=""></select> --}}
                                                 <input type="text"
                                                     class="form-control @error('nomor_nota_internal') is-invalid @enderror"
                                                     name="nomor_nota_internal" placeholder="Masukan Nota Internal">
@@ -301,19 +303,6 @@
                                                     </div>
                                                 @enderror
                                             </div>
-                                            {{-- <div class="form-group">
-                                                <label class="font-weight-bold">Nama Supplier</label>
-                                                <input type="text"
-                                                    class="form-control @error('nama_supplier') is-invalid @enderror"
-                                                    name="nama_supplier" placeholder="Masukan Nama Supplier">
-
-                                                <!-- error message untuk title -->
-                                                @error('nama_supplier')
-                                                    <div class="alert alert-danger mt-2">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div> --}}
                                             <div class="col-md-6">
                                                 <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
                                                 <select class="form-select select2 select2-hidden-accessible"
@@ -327,7 +316,6 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Keterangan</label>
-                                                {{-- <select name="" id=""></select> --}}
                                                 <input type="text"
                                                     class="form-control @error('keterangan') is-invalid @enderror"
                                                     name="keterangan" placeholder="Masukan Keterangan">
@@ -407,7 +395,7 @@
                                     <td>{{ $MasterPRIM->nomor_nota_supplier }}</td>
                                     <td>{{ $MasterPRIM->nomor_nota_internal }}</td>
                                     <td>{{ $MasterPRIM->nama_supplier }}</td>
-                                    {{-- <td>{{ $MasterPRIM->prm_raw_material_input->nama_supplier }}</td> --}}
+                                    <td>{{ $MasterPRIM->prm_raw_material_input->nama_supplier }}</td>
                                     <td>{{ $MasterPRIM->keterangan }}</td>
                                     <td>{{ $MasterPRIM->user_created }}</td>
                                     <td>{{ $MasterPRIM->user_updated }}</td>
@@ -440,15 +428,16 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 @section('script')
     <script>
-        // $(document).ready(function() {
-        //     $('.select2').select2({
-        //         closeOnSelect: false
-        //     });
-        // });
+        var form_header = document.getElementsByClassName('row g-3');
+        var form_detail = document.getElementsByClassName('row g-3');
+        console.log(form_header);
+        console.log(form_detail);
+    </script>
+    <script>
         $(document).ready(function() {
             $('.select2').select2();
         });

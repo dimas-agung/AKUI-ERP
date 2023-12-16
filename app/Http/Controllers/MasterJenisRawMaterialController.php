@@ -83,9 +83,9 @@ class MasterJenisRawMaterialController extends Controller
         $validate = $this->validate($request, [
             'jenis'                 => 'required',
             'kategori_susut',
-            'upah_operator'         => 'numeric',
-            'pengurangan_harga'     => 'numeric',
-            'harga_estimasi'        => 'numeric'
+            'upah_operator',
+            'pengurangan_harga',
+            'harga_estimasi'
         ]);
 
         $MasterJRM->update([
