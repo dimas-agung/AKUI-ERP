@@ -12,11 +12,12 @@ class MasterSupplierRawMaterialController extends Controller
     //index
     public function index()
     {
-
+        $i = 1;
         $MasterSupplierRawMaterial = MasterSupplierRawMaterial::all();
         // return $MasterSupplier;
         return response()->view('master.master_supplier_raw_material.index', [
             'MasterSupplierRawMaterial' => $MasterSupplierRawMaterial,
+            'i' => $i
         ]);
     }
     // create
@@ -31,6 +32,9 @@ class MasterSupplierRawMaterialController extends Controller
         $this->validate($request, [
             'nama_supplier'     => 'required',
             'inisial_supplier'  => 'required'
+        ], [
+            'nama_supplier.required' => 'Kolom Nama Supplier Wajib diisi.',
+            'inisial_supplier.required' => 'Kolom Inisial Supplier Wajib diisi.',
         ]);
 
         //create MasterSupplier

@@ -125,7 +125,7 @@
             $('#basic-datatables').DataTable({});
 
             $('#multi-filter-select').DataTable({
-                "pageLength": 5,
+                "pageLength": 10,
                 initComplete: function() {
                     this.api().columns().every(function() {
                         var column = this;
@@ -153,7 +153,7 @@
 
             // Add Row
             $('#add-row').DataTable({
-                "pageLength": 5,
+                "pageLength": 10,
             });
             var
                 action =
