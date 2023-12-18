@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PrmRawMaterialOutputItem extends Model
 {
     use HasFactory;
+
     protected $table = 'prm_raw_material_output_items';
+
     protected $fillable = [
         'doc_no',
         'nomor_bstb',
@@ -28,8 +30,9 @@ class PrmRawMaterialOutputItem extends Model
         'user_updated'
     ];
 
+
     public function PrmRawMaterialOutputHeader()
     {
-    	return $this->belongsTo(PrmRawMaterialOutputHeader::class, 'nomor_bstb', 'nomor_bstb');
+    	return $this->belongsTo(PrmRawMaterialOutputHeader::class);
     }
 }

@@ -1,84 +1,34 @@
-{{-- @extends('layouts.admin')
-@section('content')
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card border-0 shadow-sm rounded">
-                    <div class="card-header">
-                        <h4>DATA MASTER JENIS RAW MATERIAL</h4>
-                    </div>
-                    <div class="card-body">
-                        <a href="{{ route('master_jenis_raw_material.create') }}" class="btn btn-md btn-success mb-3">TAMBAH
-                            POST</a>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Jenis</th>
-                                    <th scope="col">Kategori Susut</th>
-                                    <th scope="col">Upah Operator</th>
-                                    <th scope="col">Pengurangan harga</th>
-                                    <th scope="col">Harga Estimasi</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Tanggal Buat</th>
-                                    <th scope="col">Tanggal Update</th>
-                                    <th scope="col">AKSI</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($MasterJenisRawMaterial as $MasterJRM)
-                                    <tr>
-                                        <td>{{ $MasterJRM->id }}</td>
-                                        <td>{{ $MasterJRM->jenis }}</td>
-                                        <td>{{ $MasterJRM->kategori_susut }}</td>
-                                        <td>{{ $MasterJRM->upah_operator }}</td>
-                                        <td>{{ $MasterJRM->pengurangan_harga }}</td>
-                                        <td>{{ $MasterJRM->harga_estimasi }}</td>
-                                        <td>{{ $MasterJRM->status }}</td>
-                                        <td>{{ $MasterJRM->created_at }}</td>
-                                        <td>{{ $MasterJRM->updated_at }}</td>
-                                        <td>
-                                            <form class="d-flex text-center" style="flex-direction: column;"
-                                                onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('master_jenis_raw_material.destroy', $MasterJRM->id) }}"
-                                                method="POST">
-                                                <a href="{{ route('master_jenis_raw_material.show', $MasterJRM->id) }}"
-                                                    class="btn btn-sm btn-dark mb-2">SHOW</a>
-                                                <a href="{{ route('master_jenis_raw_material.edit', $MasterJRM->id) }}"
-                                                    class="btn btn-sm btn-primary mb-2">EDIT</a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <div class="alert alert-danger">
-                                        Data Post belum Tersedia.
-                                    </div>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection --}}
-@extends('layouts.master1')
+
 @section('content')
     <div class="col-md-12">
-        <div class="card">
+        <div class="card mt-2">
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Data Master Jenis Raw Material</h4>
                     <button href="{{ route('master_jenis_raw_material.create') }}" class="btn btn-primary btn-round ml-auto"
                         data-toggle="modal" data-target="#addRowModal">
-                        <i class="fa fa-plus"> Tambah Data </i>
+                        <i class="fa fa-plus"></i> Tambah Data
                     </button>
                 </div>
             </div>
             <div class="card-body">
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <strong>Sukses: </strong>{{ session()->get('success') }}
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul><strong>
+                                @foreach ($errors->all() as $error)
+                                    <li> {{ $error }} </li>
+                                @endforeach
+                            </strong>
+                        </ul>
+                        <p>Mohon periksa kembali formulir Anda.</p>
+                    </div>
+                @endif
                 {{-- Modal --}}
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -128,7 +78,7 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Upah Operator</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="text"
+                                                <input type="number"
                                                     class="form-control @error('upah_operator') is-invalid @enderror"
                                                     name="upah_operator" placeholder="Masukan Upah Operator">
 
@@ -142,7 +92,7 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Pengurangan Harga</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="text"
+                                                <input type="number"
                                                     class="form-control @error('pengurangan_harga') is-invalid @enderror"
                                                     name="pengurangan_harga" placeholder="Masukan Pengurangan Harga">
 
@@ -156,7 +106,7 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Harga Estimasi</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="text"
+                                                <input type="number"
                                                     class="form-control @error('harga_estimasi') is-invalid @enderror"
                                                     name="harga_estimasi" placeholder="Masukan Harga Estimasi">
 
@@ -209,39 +159,40 @@
                         <tbody>
                             @forelse ($MasterJenisRawMaterial as $MasterJRM)
                                 <tr>
-                                    <td>{{ $MasterJRM->id }}</td>
+                                    <td>{{ $i++ }}</td>
                                     <td>{{ $MasterJRM->jenis }}</td>
                                     <td>{{ $MasterJRM->kategori_susut }}</td>
                                     <td>{{ $MasterJRM->upah_operator }}</td>
-                                    <td>{{ $MasterJRM->pengurangan_harga }}</td>
+                                    <td>
+                                        @if ($MasterJRM->pengurangan_harga == '')
+                                        @else
+                                            {{ $MasterJRM->pengurangan_harga }} %
+                                        @endif
+                                    </td>
                                     <td>{{ $MasterJRM->harga_estimasi }}</td>
-                                    <td>{{ $MasterJRM->status }}</td>
+                                    <td>
+                                        @if ($MasterJRM->status == 1)
+                                            Aktif
+                                        @else
+                                            Tidak Aktif
+                                        @endif
+                                    </td>
                                     <td>{{ $MasterJRM->created_at }}</td>
                                     <td>{{ $MasterJRM->updated_at }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('master_jenis_raw_material.destroy', $MasterJRM->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('master_jenis_raw_material.show', $MasterJRM->id) }}"
-                                                    class="btn btn-sm btn-dark">SHOW</a>
                                                 <a href="{{ route('master_jenis_raw_material.edit', $MasterJRM->id) }}"
-                                                    class="btn btn-sm btn-primary">EDIT</a>
+                                                    class="btn btn-link" title="Edit Task"
+                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                                <button type="submit" data-toggle="tooltip"
+                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
+                                                        class="fa fa-times"></i></button>
                                             </form>
-                                        </div>
-                                        <div class="form-button-action">
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"
-                                                data-target="#UpModal">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-danger" data-original-title="Remove">
-                                                <i class="fa fa-times"></i>
-                                            </button>
                                         </div>
                                     </td>
                                 </tr>

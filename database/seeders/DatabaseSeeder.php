@@ -28,8 +28,5 @@ class DatabaseSeeder extends Seeder
         $this->call(WorkstationSeeder::class);
         $this->call(UnitSeeder::class);
         $this->call(BiayaHppSeeder::class);
-        $this->call(StockTransitGradingKasarSeeder::class);
-        $this->call(PrmRawMaterialOutputHeaderSeeder::class);
-        $this->call(PrmRawMaterialOutputItemSeeder::class);
     }
 }

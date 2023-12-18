@@ -121,6 +121,7 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputContro
     Route::delete('/PrmRawMaterialOutput/destroy{id}', 'destroy')->name('PrmRawMaterialOutput.destroy');
 });
 
-Auth::routes();
+// Auth::routes();
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
