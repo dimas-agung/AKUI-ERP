@@ -11,7 +11,6 @@
                         <form action="{{ route('master_supplier_raw_material.update', $MasterSPR->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama Supplier</label>
                                 <input type="text" class="form-control @error('nama_supplier') is-invalid @enderror"

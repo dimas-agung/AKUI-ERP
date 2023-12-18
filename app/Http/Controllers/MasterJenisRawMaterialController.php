@@ -79,14 +79,20 @@ class MasterJenisRawMaterialController extends Controller
     {
         //get by ID
         $MasterJRM = MasterJenisRawMaterial::findOrFail($id);
+        $ValidasiJenis = 'required';
+        if ($request->jenis != $MasterJRM->jenis) {
+            $ValidasiJenis = 'required|unique:master_jenis_raw_materials';
+        }
 
         //validate form
         $validate = $this->validate($request, [
-            'jenis'                 => 'required',
+            'jenis'                 => $ValidasiJenis,
             'kategori_susut'        => 'required',
             'upah_operator',
             'pengurangan_harga',
             'harga_estimasi'
+        ], [
+            'jenis' => 'Jenis Sudah Digunakan'
         ]);
 
         $MasterJRM->update([

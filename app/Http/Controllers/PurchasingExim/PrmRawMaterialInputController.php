@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PurchasingExim;
 
 use App\Models\PrmRawMaterialInput;
+use App\Models\PrmRawMaterialInputItem;
 use App\Http\Controllers\Controller;
 use App\Models\MasterJenisRawMaterial;
 use Illuminate\Http\Request;
@@ -34,18 +35,29 @@ class PrmRawMaterialInputController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'doc_no'                => 'required',
-            'nomor_po'              => 'required',
-            'nomor_batch'           => 'required',
-            'nomor_nota_supplier'   => 'required',
-            'nomor_nota_internal'   => 'required',
-            'nama_supplier'         => 'required',
-            'keterangan'            => 'required',
-            'user_created'          => 'required',
-            'user_updated'
+            'doc_no.*'               => 'required|unique',
+            'nomor_po.*'             => 'required',
+            'nomor_batch.*'          => 'required',
+            'nomor_nota_supplier.*'  => 'required',
+            'nomor_nota_internal.*'  => 'required',
+            'nama_supplier.*'        => 'required',
+            'jenis'                  => 'required',
+            'berat_nota'             => 'required',
+            'berat_kotor'            => 'required',
+            'berat_bersih'           => 'required',
+            'selisih_berat'          => 'required',
+            'kadar_air'              => 'required',
+            'id_box'                 => 'required',
+            'harga_nota'             => 'required',
+            'total_harga_nota'       => 'required',
+            'harga_deal'             => 'required',
+            'keterangan',
+            'keterangan_item',
+            'user_created',
+            'user_updated',
         ]);
 
-        //create MasterSupplier
+        //create Purchasing Raw Material Input
         PrmRawMaterialInput::create([
             'doc_no'                => $request->doc_no,
             'nomor_po'              => $request->nomor_po,
@@ -54,6 +66,23 @@ class PrmRawMaterialInputController extends Controller
             'nomor_nota_internal'   => $request->nomor_nota_internal,
             'nama_supplier'         => $request->nama_supplier,
             'keterangan'            => $request->keterangan,
+            'user_created'          => $request->user_created,
+            'user_updated'          => $request->user_updated
+        ]);
+        //create Purchasing Raw Material Item
+        PrmRawMaterialInputItem::create([
+            'doc_no'                => $request->doc_no,
+            'jenis'                 => $request->jenis,
+            'berat_nota'            => $request->berat_nota,
+            'berat_kotor'           => $request->berat_kotor,
+            'berat_bersih'          => $request->berat_bersih,
+            'selisih_berat'         => $request->selisih_berat,
+            'kadar_air'             => $request->kadar_air,
+            'id_box'                => $request->id_box,
+            'harga_nota'            => $request->harga_nota,
+            'total_harga_nota'      => $request->total_harga_nota,
+            'harga_deal'            => $request->harga_deal,
+            'keterangan_item'       => $request->keterangan_item,
             'user_created'          => $request->user_created,
             'user_updated'          => $request->user_updated
         ]);

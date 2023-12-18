@@ -23,7 +23,7 @@ return new class extends Migration
             $table->float('harga_nota');
             $table->float('total_harga_nota');
             $table->float('harga_deal');
-            $table->text('keterangan');
+            $table->text('keterangan_item');
             $table->string('user_created');
             $table->string('user_updated');
             $table->timestamps();

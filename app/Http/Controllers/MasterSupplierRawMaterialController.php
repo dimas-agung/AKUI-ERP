@@ -67,25 +67,28 @@ class MasterSupplierRawMaterialController extends Controller
     {
         //get by ID
         $MasterSPR = MasterSupplierRawMaterial::findOrFail($id);
-        $validasiNamaSuppllier = 'required';
-        $validasiInitialSuppllier = 'required';
+        $ValidasiNamaSupplier = 'required';
+        $ValidasiInisialSupplier = 'required';
         if ($request->nama_supplier != $MasterSPR->nama_supplier) {
-            $validasiNamaSuppllier = 'required|unique:master_supplier_raw_materials';
+            $ValidasiNamaSupplier = 'required|unique:master_supplier_raw_materials';
         }
         if ($request->inisial_supplier != $MasterSPR->inisial_supplier) {
-            $validasiInitialSuppllier = 'required|unique:master_supplier_raw_materials';
+            $ValidasiInisialSupplier = 'required|unique:master_supplier_raw_materials';
         }
         // validate form
-        $validate = $this->validate($request, [
-            'nama_supplier'             => $validasiNamaSuppllier,
-            'inisial_supplier'          => $validasiInitialSuppllier,
-            'status'                    => 'required'
-        ]);
+        $this->validate($request, [
+            'nama_supplier'      => $ValidasiNamaSupplier,
+            'inisial_supplier'   => $ValidasiInisialSupplier,
+            'status'             => 'required',
+        ], [
+            'nama_supplier'     => 'Nama Supplier Sudah Digunakan',
+            'inisial_supplier'  => 'Inisial Supplier Sudah Digunakan',
 
+        ]);
         $MasterSPR->update([
             'nama_supplier'     => $request->nama_supplier,
             'inisial_supplier'  => $request->inisial_supplier,
-            'status'            => $request->status
+            'status'            => $request->status,
         ]);
 
         //redirect to index
