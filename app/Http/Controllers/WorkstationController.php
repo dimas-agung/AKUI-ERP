@@ -83,7 +83,7 @@ class WorkstationController extends Controller
         $workstation = Workstation::findOrFail($id);
         //validate form
         $this->validate($request, [
-            'nama'   => 'required|unique:workstation',
+            'nama'   => 'required',
             'status'   => 'required'
         ]);
 
