@@ -56,9 +56,9 @@ Route::controller(App\Http\Controllers\MasterSupplierRawMaterialController::clas
     Route::get('/master_supplier_raw_material/create', 'create')->name('master_supplier_raw_material.create');
     Route::post('/master_supplier_raw_material/store', 'store')->name('master_supplier_raw_material.store');
     Route::get('/master_supplier_raw_material/show/{id}', 'show')->name('master_supplier_raw_material.show');
-    Route::get('/master_supplier_raw_material/edit{id}', 'edit')->name('master_supplier_raw_material.edit');
-    Route::put('/master_supplier_raw_material/update{id}', 'update')->name('master_supplier_raw_material.update');
-    Route::delete('/master_supplier_raw_material/destroy{id}', 'destroy')->name('master_supplier_raw_material.destroy');
+    Route::get('/master_supplier_raw_material/edit/{id}', 'edit')->name('master_supplier_raw_material.edit');
+    Route::put('/master_supplier_raw_material/update/{id}', 'update')->name('master_supplier_raw_material.update');
+    Route::delete('/master_supplier_raw_material/destroy/{id}', 'destroy')->name('master_supplier_raw_material.destroy');
 });
 
 Route::controller(App\Http\Controllers\MasterJenisRawMaterialController::class)->group(function () {
@@ -66,9 +66,9 @@ Route::controller(App\Http\Controllers\MasterJenisRawMaterialController::class)-
     Route::get('/master_jenis_raw_material/create', 'create')->name('master_jenis_raw_material.create');
     Route::post('/master_jenis_raw_material/store', 'store')->name('master_jenis_raw_material.store');
     Route::get('/master_jenis_raw_material/show/{id}', 'show')->name('master_jenis_raw_material.show');
-    Route::get('/master_jenis_raw_material/edit{id}', 'edit')->name('master_jenis_raw_material.edit');
-    Route::put('/master_jenis_raw_material/update{id}', 'update')->name('master_jenis_raw_material.update');
-    Route::delete('/master_jenis_raw_material/destroy{id}', 'destroy')->name('master_jenis_raw_material.destroy');
+    Route::get('/master_jenis_raw_material/edit/{id}', 'edit')->name('master_jenis_raw_material.edit');
+    Route::put('/master_jenis_raw_material/update/{id}', 'update')->name('master_jenis_raw_material.update');
+    Route::delete('/master_jenis_raw_material/destroy/{id}', 'destroy')->name('master_jenis_raw_material.destroy');
 });
 
 Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::class)->group(function () {
@@ -76,9 +76,9 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::c
     Route::get('/master_tujuan_kirim_raw_material/create', 'create')->name('master_tujuan_kirim_raw_material.create');
     Route::post('/master_tujuan_kirim_raw_material/store', 'store')->name('master_tujuan_kirim_raw_material.store');
     Route::get('/master_tujuan_kirim_raw_material/show/{id}', 'show')->name('master_tujuan_kirim_raw_material.show');
-    Route::get('/master_tujuan_kirim_raw_material/edit{id}', 'edit')->name('master_tujuan_kirim_raw_material.edit');
-    Route::put('/master_tujuan_kirim_raw_material/update{id}', 'update')->name('master_tujuan_kirim_raw_material.update');
-    Route::delete('/master_tujuan_kirim_raw_material/destroy{id}', 'destroy')->name('master_tujuan_kirim_raw_material.destroy');
+    Route::get('/master_tujuan_kirim_raw_material/edit/{id}', 'edit')->name('master_tujuan_kirim_raw_material.edit');
+    Route::put('/master_tujuan_kirim_raw_material/update/{id}', 'update')->name('master_tujuan_kirim_raw_material.update');
+    Route::delete('/master_tujuan_kirim_raw_material/destroy/{id}', 'destroy')->name('master_tujuan_kirim_raw_material.destroy');
 });
 
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
@@ -86,19 +86,9 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputControl
     Route::get('/purchasingexim/prm_raw_material_input/create', 'create')->name('purchasingexim/prm_raw_material_input.create');
     Route::post('/purchasingexim/prm_raw_material_input/store', 'store')->name('purchasingexim/prm_raw_material_input.store');
     Route::get('/purchasingexim/prm_raw_material_input/show/{id}', 'show')->name('purchasingexim/prm_raw_material_input.show');
-    Route::get('/purchasingexim/prm_raw_material_input/edit{id}', 'edit')->name('purchasingexim/prm_raw_material_input.edit');
-    Route::put('/purchasingexim/prm_raw_material_input/update{id}', 'update')->name('purchasingexim/prm_raw_material_input.update');
-    Route::delete('/purchasingexim/prm_raw_material_input/destroy{id}', 'destroy')->name('purchasingexim/prm_raw_material_input.destroy');
-});
-
-Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputItemController::class)->group(function () {
-    Route::get('/purchasingexim/prm_raw_material_input_item', 'index')->name('purchasingexim/prm_raw_material_input_item.index');
-    // Route::get('/purchasingexim/prm_raw_material_input/create', 'create')->name('purchasingexim/prm_raw_material_input.create');
-    // Route::post('/purchasingexim/prm_raw_material_input/store', 'store')->name('purchasingexim/prm_raw_material_input.store');
-    // Route::get('/purchasingexim/prm_raw_material_input/show/{id}', 'show')->name('purchasingexim/prm_raw_material_input.show');
-    // Route::get('/purchasingexim/prm_raw_material_input/edit{id}', 'edit')->name('purchasingexim/prm_raw_material_input.edit');
-    // Route::put('/purchasingexim/prm_raw_material_input/update{id}', 'update')->name('purchasingexim/prm_raw_material_input.update');
-    // Route::delete('/purchasingexim/prm_raw_material_input/destroy{id}', 'destroy')->name('purchasingexim/prm_raw_material_input.destroy');
+    Route::get('/purchasingexim/prm_raw_material_input/edit/{id}', 'edit')->name('purchasingexim/prm_raw_material_input.edit');
+    Route::put('/purchasingexim/prm_raw_material_input/update/{id}', 'update')->name('purchasingexim/prm_raw_material_input.update');
+    Route::delete('/purchasingexim/prm_raw_material_input/destroy/{id}', 'destroy')->name('purchasingexim/prm_raw_material_input.destroy');
 });
 
 // Auth::routes();

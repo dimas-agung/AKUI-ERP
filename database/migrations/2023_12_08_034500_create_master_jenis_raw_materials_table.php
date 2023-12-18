@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('master_jenis_raw_materials', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis');
-            $table->string('kategori_susut')->nullable();
+            $table->string('jenis')->unique();
+            $table->string('kategori_susut');
             $table->float('upah_operator')->nullable();
             $table->float('pengurangan_harga')->nullable();
             $table->float('harga_estimasi')->nullable();

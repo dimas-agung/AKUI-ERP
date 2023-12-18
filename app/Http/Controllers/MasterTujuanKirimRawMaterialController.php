@@ -30,13 +30,13 @@ class MasterTujuanKirimRawMaterialController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'tujuan_kirim'      => 'required',
-            'letak_tujuan'      => 'required',
-            'inisial_tujuan'    => 'required'
+            'tujuan_kirim'              => 'required',
+            'letak_tujuan'              => 'required',
+            'inisial_tujuan'            => 'required|unique:master_tujuan_kirim_raw_materials'
         ], [
-            'tujuan_kirim.required' => 'Kolom Tujuan Kirim Wajib diisi.',
-            'letak_tujuan.required' => 'Kolom Letak Tujuan Wajib diisi.',
-            'inisial_tujuan.required' => 'Kolom Inisial Tujuan Wajib diisi.'
+            'tujuan_kirim.required'     => 'Kolom Tujuan Kirim Wajib diisi.',
+            'letak_tujuan.required'     => 'Kolom Letak Tujuan Wajib diisi.',
+            'inisial_tujuan.required'   => 'Kolom Inisial Tujuan Wajib diisi.'
         ]);
 
         //create MasterSupplier

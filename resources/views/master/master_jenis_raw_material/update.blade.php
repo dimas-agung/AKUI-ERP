@@ -102,6 +102,7 @@
 
                             <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
+                            <button type="button" class="btn btn-danger" onclick="goBack()">CANCEL</button>
 
                         </form>
                     </div>

@@ -703,6 +703,9 @@
     {{-- Select2 --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script>
+        function goBack() {
+            window.history.back();
+        }
         // Circles.create({
         //     id: "circles-1",
         //     radius: 45,

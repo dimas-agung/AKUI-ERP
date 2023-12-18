@@ -30,17 +30,17 @@ class MasterSupplierRawMaterialController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'nama_supplier'     => 'required',
-            'inisial_supplier'  => 'required'
+            'nama_supplier'             => 'required|unique:master_supplier_raw_materials',
+            'inisial_supplier'          => 'required|unique:master_supplier_raw_materials'
         ], [
-            'nama_supplier.required' => 'Kolom Nama Supplier Wajib diisi.',
+            'nama_supplier.required'    => 'Kolom Nama Supplier Wajib diisi.',
             'inisial_supplier.required' => 'Kolom Inisial Supplier Wajib diisi.',
         ]);
 
         //create MasterSupplier
         MasterSupplierRawMaterial::create([
-            'nama_supplier'     => $request->nama_supplier,
-            'inisial_supplier'  => $request->inisial_supplier
+            'nama_supplier'             => $request->nama_supplier,
+            'inisial_supplier'          => $request->inisial_supplier
         ]);
 
         //redirect to index
@@ -67,12 +67,19 @@ class MasterSupplierRawMaterialController extends Controller
     {
         //get by ID
         $MasterSPR = MasterSupplierRawMaterial::findOrFail($id);
-
-        //validate form
+        $validasiNamaSuppllier = 'required';
+        $validasiInitialSuppllier = 'required';
+        if ($request->nama_supplier != $MasterSPR->nama_supplier) {
+            $validasiNamaSuppllier = 'required|unique:master_supplier_raw_materials';
+        }
+        if ($request->inisial_supplier != $MasterSPR->inisial_supplier) {
+            $validasiInitialSuppllier = 'required|unique:master_supplier_raw_materials';
+        }
+        // validate form
         $validate = $this->validate($request, [
-            'nama_supplier'     => 'required',
-            'inisial_supplier'  => 'required',
-            'status'            => 'required'
+            'nama_supplier'             => $validasiNamaSuppllier,
+            'inisial_supplier'          => $validasiInitialSuppllier,
+            'status'                    => 'required'
         ]);
 
         $MasterSPR->update([
