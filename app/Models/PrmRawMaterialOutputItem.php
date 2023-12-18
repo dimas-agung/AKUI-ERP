@@ -22,9 +22,12 @@ class PrmRawMaterialOutputItem extends Model
         'kadar_air',
         'tujuan_kirim',
         'letak_tujuan',
+<<<<<<< HEAD
 
         'inisial_tujuan',
 
+=======
+>>>>>>> parent of acaa9aa (menambahkan menu purching exam baru)
         'modal',
         'total_modal',
         'keterangan',
@@ -35,6 +38,6 @@ class PrmRawMaterialOutputItem extends Model
 
     public function PrmRawMaterialOutputHeader()
     {
-    	return $this->belongsTo(PrmRawMaterialOutputHeader::class, 'nomor_bstb', 'nomor_bstb');
+    	return $this->belongsTo(PrmRawMaterialOutputHeader::class);
     }
 }

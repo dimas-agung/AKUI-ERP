@@ -1,13 +1,13 @@
 @extends('layouts.master1')
 @section('title')
-    Prm Raw Material Output Item
+    Stock Transit Grading Kasar
 @endsection
 @section('content')
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Data Prm Raw Material Output Item</h4>
+                    <h4 class="card-title">Stock Transit Grading Kasar</h4>
                     <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                         <i class="fa fa-plus"></i>
                         Add Data
@@ -34,14 +34,14 @@
                     </div>
                 @endif
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-xl" role="document">
-                        <div class="modal-content">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content col-sm-12">
                             <div class="modal-header no-bd">
                                 <h5 class="modal-title">
                                     <span class="fw-mediumbold">
                                         Input</span>
                                     <span class="fw-light">
-                                        Data Prm Raw Material Output Header
+                                        Data Unit
                                     </span>
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -50,29 +50,16 @@
                             </div>
                             <div class="modal-body">
                                 <p class="small">Create a new unit using this form, make sure you fill them all</p>
-                                <form action="{{ route('PrmRawMaterialOutputItem.store') }}" method="POST">
+                                <form action="{{ route('StockTransitGradingKasar.store') }}" method="POST">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-md-4 pr-0">
-                                            <div class="form-group">
-                                                <label>Nomer Dokument</label>
-                                                <input type="text"
-                                                    class="form-control @error('doc_no') is-invalid @enderror"
-                                                    name="doc_no" value="{{ old('doc_no') }}"
-                                                    placeholder="Masukkan Nomer Dokument">
-                                                <!-- error message untuk title -->
-                                                @error('doc_no')
-                                                    <div class="alert alert-danger mt-2">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>Nomor BTSB</label>
                                                 <input type="text"
                                                     class="form-control @error('nomor_bstb') is-invalid @enderror"
                                                     name="nomor_bstb" value="{{ old('nomor_bstb') }}"
-                                                    placeholder="Masukkan nomor stb">
+                                                    placeholder="Masukkan nomor_bstb">
                                                 <!-- error message untuk title -->
                                                 @error('nomor_bstb')
                                                     <div class="alert alert-danger mt-2">
@@ -80,32 +67,8 @@
                                                     </div>
                                                 @enderror
                                             </div>
-                                            <div class="form-group">
-                                                <label>Nomor Batch</label>
-                                                <input type="text"
-                                                    class="form-control @error('nomor_batch') is-invalid @enderror"
-                                                    name="nomor_batch" value="{{ old('nomor_batch') }}"
-                                                    placeholder="Masukkan Nomor Batch">
-                                                <!-- error message untuk title -->
-                                                @error('nomor_batch')
-                                                    <div class="alert alert-danger mt-2">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Id Box</label>
-                                                <input type="text"
-                                                    class="form-control @error('id_box') is-invalid @enderror"
-                                                    name="id_box" value="{{ old('id_box') }}"
-                                                    placeholder="Masukkan Id Box">
-                                                <!-- error message untuk title -->
-                                                @error('id_box')
-                                                    <div class="alert alert-danger mt-2">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>Nama Supplier</label>
                                                 <input type="text"
@@ -119,11 +82,13 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>Jenis</label>
                                                 <input type="text"
                                                     class="form-control @error('jenis') is-invalid @enderror" name="jenis"
-                                                    value="{{ old('jenis') }}" placeholder="Masukkan Jenis">
+                                                    value="{{ old('jenis') }}" placeholder="Masukkan jenis">
                                                 <!-- error message untuk title -->
                                                 @error('jenis')
                                                     <div class="alert alert-danger mt-2">
@@ -132,7 +97,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-4 pr-0">
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>Berat</label>
                                                 <input type="text"
@@ -145,12 +110,14 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>Kadar Air</label>
                                                 <input type="text"
                                                     class="form-control @error('kadar_air') is-invalid @enderror"
                                                     name="kadar_air" value="{{ old('kadar_air') }}"
-                                                    placeholder="Masukkan Kadar Air">
+                                                    placeholder="Masukkan kadar air">
                                                 <!-- error message untuk title -->
                                                 @error('kadar_air')
                                                     <div class="alert alert-danger mt-2">
@@ -158,6 +125,8 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>Tujuan Kirim</label>
                                                 <input type="text"
@@ -171,12 +140,14 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>Letak Tujuan</label>
                                                 <input type="text"
                                                     class="form-control @error('letak_tujuan') is-invalid @enderror"
                                                     name="letak_tujuan" value="{{ old('letak_tujuan') }}"
-                                                    placeholder="Masukkan letak tujuan">
+                                                    placeholder="Masukkan letak_tujuan">
                                                 <!-- error message untuk title -->
                                                 @error('letak_tujuan')
                                                     <div class="alert alert-danger mt-2">
@@ -184,12 +155,14 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>Inisial Tujuan</label>
                                                 <input type="text"
                                                     class="form-control @error('inisial_tujuan') is-invalid @enderror"
                                                     name="inisial_tujuan" value="{{ old('inisial_tujuan') }}"
-                                                    placeholder="Masukkan inisial tujuan">
+                                                    placeholder="Masukkan inisial_tujuan">
                                                 <!-- error message untuk title -->
                                                 @error('inisial_tujuan')
                                                     <div class="alert alert-danger mt-2">
@@ -198,7 +171,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-4 pr-0">
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>Modal</label>
                                                 <input type="text"
@@ -212,6 +185,8 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>Total Modal</label>
                                                 <input type="text"
@@ -225,6 +200,8 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>Keterangan</label>
                                                 <input type="text"
@@ -238,12 +215,14 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>User Created</label>
                                                 <input type="text"
                                                     class="form-control @error('user_created') is-invalid @enderror"
                                                     name="user_created" value="{{ old('user_created') }}"
-                                                    placeholder="Masukkan User Created">
+                                                    placeholder="Masukkan user created">
                                                 <!-- error message untuk title -->
                                                 @error('user_created')
                                                     <div class="alert alert-danger mt-2">
@@ -251,12 +230,14 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
                                             <div class="form-group">
                                                 <label>User Updated</label>
                                                 <input type="text"
                                                     class="form-control @error('user_updated') is-invalid @enderror"
                                                     name="user_updated" value="{{ old('user_updated') }}"
-                                                    placeholder="Masukkan User Updated">
+                                                    placeholder="Masukkan user updated">
                                                 <!-- error message untuk title -->
                                                 @error('user_updated')
                                                     <div class="alert alert-danger mt-2">
@@ -265,11 +246,10 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="modal-footer no-bd">
-                                            <button type="submit" class="btn btn-primary">Add</button>
-                                            <button type="button" class="btn btn-danger"
-                                                data-dismiss="modal">Close</button>
-                                        </div>
+                                    </div>
+                                    <div class="modal-footer no-bd">
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                     </div>
                                 </form>
                             </div>
@@ -282,10 +262,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Nomor Dokument</th>
-                                <th class="text-center">Nomor BSTB</th>
-                                <th class="text-center">Nomor Batch</th>
-                                <th class="text-center">Id Box</th>
+                                <th class="text-center">Nomor BTSB</th>
                                 <th class="text-center">Nama Supplier</th>
                                 <th class="text-center">Jenis</th>
                                 <th class="text-center">Berat</th>
@@ -303,10 +280,7 @@
                         </thead>
                         <tfoot>
                             <th class="text-center">No</th>
-                            <th class="text-center">Nomor Dokument</th>
-                            <th class="text-center">Nomor BSTB</th>
-                            <th class="text-center">Nomor Batch</th>
-                            <th class="text-center">Id Box</th>
+                            <th class="text-center">Nomor BTSB</th>
                             <th class="text-center">Nama Supplier</th>
                             <th class="text-center">Jenis</th>
                             <th class="text-center">Berat</th>
@@ -322,13 +296,10 @@
                             <th class="text-center">Action</th>
                         </tfoot>
                         <tbody>
-                            @forelse ($PrmRawMOIC as $post)
+                            @forelse ($stockTGK as $post)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{!! $post->doc_no !!}</td>
                                     <td class="text-center">{!! $post->nomor_bstb !!}</td>
-                                    <td class="text-center">{!! $post->nomor_batch !!}</td>
-                                    <td class="text-center">{!! $post->id_box !!}</td>
                                     <td class="text-center">{!! $post->nama_supplier !!}</td>
                                     <td class="text-center">{!! $post->jenis !!}</td>
                                     <td class="text-center">{!! $post->berat !!}</td>
@@ -344,12 +315,12 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('PrmRawMaterialOutputItem.destroy', $post->id) }}"
+                                                action="{{ route('StockTransitGradingKasar.destroy', $post->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('PrmRawMaterialOutputItem.show', $post->id) }}"
+                                                <a href="{{ route('StockTransitGradingKasar.show', $post->id) }}"
                                                     class="btn btn-link btn-info" title="Show Task"
                                                     data-original-title="Show"><i class="fa fa-file"></i></a>
-                                                <a href="{{ route('PrmRawMaterialOutputItem.edit', $post->id) }}"
+                                                <a href="{{ route('StockTransitGradingKasar.edit', $post->id) }}"
                                                     class="btn btn-link btn-primary" title="Edit Task"
                                                     data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
                                                 @csrf
