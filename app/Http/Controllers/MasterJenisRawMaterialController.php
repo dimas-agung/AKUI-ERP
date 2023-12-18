@@ -36,13 +36,14 @@ class MasterJenisRawMaterialController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'jenis'                 => 'required|unique:master_jenis_raw_materials',
-            'kategori_susut',
+            'jenis'                     => 'required|unique:master_jenis_raw_materials',
+            'kategori_susut'            => 'required',
             'upah_operator',
             'pengurangan_harga',
             'harga_estimasi',
         ], [
-            'jenis.required' => 'Kolom Jenis Wajib diisi.',
+            'jenis.required'            => 'Kolom Jenis Wajib diisi.',
+            'kategori_susut.required'   => 'Kolom Kategori Susut Wajib diisi.',
         ]);
 
         //create MasterSupplier
@@ -82,7 +83,7 @@ class MasterJenisRawMaterialController extends Controller
         //validate form
         $validate = $this->validate($request, [
             'jenis'                 => 'required',
-            'kategori_susut',
+            'kategori_susut'        => 'required',
             'upah_operator',
             'pengurangan_harga',
             'harga_estimasi'

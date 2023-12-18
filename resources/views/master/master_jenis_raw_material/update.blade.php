@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Upah Operator</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" class="form-control @error('upah_operator') is-invalid @enderror"
+                                <input type="number" class="form-control @error('upah_operator') is-invalid @enderror"
                                     name="upah_operator" value="{{ old('upah_operator', $MasterJRM->upah_operator) }}"
                                     placeholder="Masukan Upah Operator">
 
@@ -57,7 +57,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Pengurangan Harga</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" class="form-control @error('pengurangan_harga') is-invalid @enderror"
+                                <input type="number" class="form-control @error('pengurangan_harga') is-invalid @enderror"
                                     name="pengurangan_harga"
                                     value="{{ old('pengurangan_harga', $MasterJRM->pengurangan_harga) }}"
                                     placeholder="Masukan Pengurangan Harga">
@@ -72,7 +72,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Harga Estimasi</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" class="form-control @error('harga_estimasi') is-invalid @enderror"
+                                <input type="number" class="form-control @error('harga_estimasi') is-invalid @enderror"
                                     name="harga_estimasi" value="{{ old('harga_estimasi', $MasterJRM->harga_estimasi) }}"
                                     placeholder="Masukan Harga Estimasi">
 
