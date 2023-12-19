@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MasterJenisRawMaterial;
 use Illuminate\Http\Request;
 use App\Models\MasterSupplierRawMaterial;
+use Database\Seeders\MasterJenisRawMaterialSeeder;
 use Illuminate\Http\RedirectResponse;
 
 class PrmRawMaterialInputController extends Controller
@@ -18,7 +19,7 @@ class PrmRawMaterialInputController extends Controller
         $i = 1;
         $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
-        // $PrmRawMaterialInput = PrmRawMaterialInput::all();
+        $PrmRawMaterialInputItem = PrmRawMaterialInputItem::with('PrmRawMaterialInput')->get();
         $PrmRawMaterialInput = PrmRawMaterialInput::with('MasterSupplierRawMaterial')->get();
         // return $PrmRawMaterialInput;
         // return $MasterSupplierRawMaterial;
@@ -27,8 +28,19 @@ class PrmRawMaterialInputController extends Controller
             'prm_raw_material_inputs'       => $PrmRawMaterialInput,
             'master_supplier_raw_materials' => $MasterSupplierRawMaterial,
             'master_jenis_raw_materials'    => $MasterJenisRawMaterial,
-            'i' => $i
+            'prm_raw_material_input_items'  => $PrmRawMaterialInputItem,
+            'i' => $i,
         ]);
+    }
+    public function getDataSupplier(Request $request)
+    {
+        $nama_supplier = $request->nama_supplier;
+        // Lakukan logika untuk mengatur nomor batch berdasarkan id_box
+        // $nomorBatch = $this->query('nomor_batch',$id_box);
+        $data = MasterSupplierRawMaterial::where('nama_supplier', $nama_supplier)->first();
+
+        // Kembalikan nomor batch sebagai respons
+        return response()->json($data);
     }
     // store
     public function store(Request $request): RedirectResponse
@@ -36,11 +48,11 @@ class PrmRawMaterialInputController extends Controller
         //validate form
         $this->validate($request, [
             'doc_no.*'               => 'required|unique',
-            'nomor_po.*'             => 'required',
-            'nomor_batch.*'          => 'required',
-            'nomor_nota_supplier.*'  => 'required',
-            'nomor_nota_internal.*'  => 'required',
-            'nama_supplier.*'        => 'required',
+            'nomor_po'               => 'required',
+            'nomor_batch'          => 'required',
+            'nomor_nota_supplier'  => 'required',
+            'nomor_nota_internal'  => 'required',
+            'nama_supplier'        => 'required',
             'jenis'                  => 'required',
             'berat_nota'             => 'required',
             'berat_kotor'            => 'required',

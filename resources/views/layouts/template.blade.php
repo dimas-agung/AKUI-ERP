@@ -355,12 +355,12 @@
                             <div class="collapse" id="sidebarLayouts">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="{{ url('/purchasingexim/prm_raw_material_input') }}">
+                                        <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}">
                                             <span class="sub-item">Prm Raw Material Input</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('/purchasingexim/prm_raw_material_input_item') }}">
+                                        <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}">
                                             <span class="sub-item">Prm Raw Material Input Item test</span>
                                         </a>
                                     </li>
@@ -676,6 +676,8 @@
     {{-- Setingan --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
     <script src="{{ asset('js/scripts.js') }}"></script>
@@ -706,98 +708,6 @@
         function goBack() {
             window.history.back();
         }
-        // Circles.create({
-        //     id: "circles-1",
-        //     radius: 45,
-        //     value: 60,
-        //     maxValue: 100,
-        //     width: 7,
-        //     text: 5,
-        //     colors: ["#f1f1f1", "#FF9E27"],
-        //     duration: 400,
-        //     wrpClass: "circles-wrp",
-        //     textClass: "circles-text",
-        //     styleWrapper: true,
-        //     styleText: true,
-        // });
-
-        // Circles.create({
-        //     id: "circles-2",
-        //     radius: 45,
-        //     value: 70,
-        //     maxValue: 100,
-        //     width: 7,
-        //     text: 36,
-        //     colors: ["#f1f1f1", "#2BB930"],
-        //     duration: 400,
-        //     wrpClass: "circles-wrp",
-        //     textClass: "circles-text",
-        //     styleWrapper: true,
-        //     styleText: true,
-        // });
-
-        // Circles.create({
-        //     id: "circles-3",
-        //     radius: 45,
-        //     value: 40,
-        //     maxValue: 100,
-        //     width: 7,
-        //     text: 12,
-        //     colors: ["#f1f1f1", "#F25961"],
-        //     duration: 400,
-        //     wrpClass: "circles-wrp",
-        //     textClass: "circles-text",
-        //     styleWrapper: true,
-        //     styleText: true,
-        // });
-
-        // var totalIncomeChart = document.getElementById("totalIncomeChart").getContext("2d");
-
-        // var mytotalIncomeChart = new Chart(totalIncomeChart, {
-        //     type: "bar",
-        //     data: {
-        //         labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
-        //         datasets: [{
-        //             label: "Total Income",
-        //             backgroundColor: "#ff9e27",
-        //             borderColor: "rgb(23, 125, 255)",
-        //             data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
-        //         }, ],
-        //     },
-        //     options: {
-        //         responsive: true,
-        //         maintainAspectRatio: false,
-        //         legend: {
-        //             display: false,
-        //         },
-        //         scales: {
-        //             yAxes: [{
-        //                 ticks: {
-        //                     display: false, //this will remove only the label
-        //                 },
-        //                 gridLines: {
-        //                     drawBorder: false,
-        //                     display: false,
-        //                 },
-        //             }, ],
-        //             xAxes: [{
-        //                 gridLines: {
-        //                     drawBorder: false,
-        //                     display: false,
-        //                 },
-        //             }, ],
-        //         },
-        //     },
-        // });
-
-        // $("#lineChart").sparkline([105, 103, 123, 100, 95, 105, 115], {
-        //     type: "line",
-        //     height: "70",
-        //     width: "100%",
-        //     lineWidth: "2",
-        //     lineColor: "#ffa534",
-        //     fillColor: "rgba(255, 165, 52, .14)",
-        // });
 
         // Select2
         $(document).ready(function() {

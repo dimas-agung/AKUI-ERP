@@ -82,13 +82,14 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::c
 });
 
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
-    Route::get('/purchasingexim/prm_raw_material_input', 'index')->name('purchasingexim/prm_raw_material_input.index');
-    Route::get('/purchasingexim/prm_raw_material_input/create', 'create')->name('purchasingexim/prm_raw_material_input.create');
-    Route::post('/purchasingexim/prm_raw_material_input/store', 'store')->name('purchasingexim/prm_raw_material_input.store');
-    Route::get('/purchasingexim/prm_raw_material_input/show/{id}', 'show')->name('purchasingexim/prm_raw_material_input.show');
-    Route::get('/purchasingexim/prm_raw_material_input/edit/{id}', 'edit')->name('purchasingexim/prm_raw_material_input.edit');
-    Route::put('/purchasingexim/prm_raw_material_input/update/{id}', 'update')->name('purchasingexim/prm_raw_material_input.update');
-    Route::delete('/purchasingexim/prm_raw_material_input/destroy/{id}', 'destroy')->name('purchasingexim/prm_raw_material_input.destroy');
+    Route::get('/purchasing_exim/prm_raw_material_input', 'index')->name('purchasing_exim/prm_raw_material_input.index');
+    Route::get('/purchasing_exim/prm_raw_material_input/create', 'create')->name('purchasing_exim/prm_raw_material_input.create');
+    Route::post('/purchasing_exim/prm_raw_material_input/store', 'store')->name('purchasing_exim/prm_raw_material_input.store');
+    Route::get('/purchasing_exim/prm_raw_material_input/show/{id}', 'show')->name('purchasing_exim/prm_raw_material_input.show');
+    Route::get('/purchasing_exim/prm_raw_material_input/edit/{id}', 'edit')->name('purchasing_exim/prm_raw_material_input.edit');
+    Route::put('/purchasing_exim/prm_raw_material_input/update/{id}', 'update')->name('purchasing_exim/prm_raw_material_input.update');
+    Route::delete('/purchasing_exim/prm_raw_material_input/destroy/{id}', 'destroy')->name('purchasing_exim/prm_raw_material_input.destroy');
+    Route::get('/purchasing_exim/prm_raw_material_input/getDataSupplier', 'get')->name('purchasing_exim/prm_raw_material_input.getDataSupplier');
 });
 
 // Auth::routes();

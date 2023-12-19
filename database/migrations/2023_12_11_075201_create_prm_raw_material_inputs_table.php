@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('prm_raw_material_inputs', function (Blueprint $table) {
             $table->id();
-            $table->string('doc_no');
+            $table->string('doc_no')->unique();
             $table->string('nomor_po');
             $table->string('nomor_batch');
             $table->string('nomor_nota_supplier');
