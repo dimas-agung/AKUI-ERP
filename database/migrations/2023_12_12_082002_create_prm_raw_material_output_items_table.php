@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('prm_raw_material_output_items', function (Blueprint $table) {
             $table->id();
             $table->string('doc_no');
-            $table->foreignId('nomor_bstb')->constrained('prm_raw_material_output_headers');
+            $table->string('nomor_bstb');
             $table->string('nomor_batch');
             $table->string('id_box');
             $table->string('nama_supplier');
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('inisial_tujuan');
             $table->float('modal');
             $table->float('total_modal');
-            $table->text('keterangan');
+            $table->text('keterangan_item');
             $table->string('user_created');
             $table->string('user_updated');
             $table->timestamps();

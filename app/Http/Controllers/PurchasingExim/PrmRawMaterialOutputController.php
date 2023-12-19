@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use App\Models\PrmRawMaterialOutputHeader;
 use App\Models\PrmRawMaterialOutputItem;
+use App\Models\PrmRawMaterialStock;
 use Illuminate\Http\Request;
 
 //return type redirectResponse
@@ -17,6 +18,7 @@ class PrmRawMaterialOutputController extends Controller
         $i =1;
         $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
         $PrmRawMOIC = PrmRawMaterialOutputItem::with('PrmRawMaterialOutputHeader')->get();
+        // return $PrmRawMOIC;
         return response()->view('purchasing_exim.PrmRawMaterialOutput.index', [
             'PrmRawMOIC' => $PrmRawMOIC,
             'PrmRawMOH' => $PrmRawMOH,
@@ -29,8 +31,58 @@ class PrmRawMaterialOutputController extends Controller
      */
     public function create(): View
     {
-        return view('purchasing_exim.PrmRawMaterialOutput.create');
+        $PrmRawMS = PrmRawMaterialStock::with('PrmRawMaterialOutputItem')->get();
+        $PrmRawMOIC = PrmRawMaterialOutputItem::with('PrmRawMaterialStock')->get();
+        // return $PrmRawMOIC;
+        return view('purchasing_exim.PrmRawMaterialOutput.create', compact('PrmRawMOIC', 'PrmRawMS'));
     }
+
+    public function set(Request $request)
+    {
+        $id_box = $request->id_box;
+        // Lakukan logika untuk mengatur nomor batch berdasarkan id_box
+        // $nomorBatch = $this->query('nomor_batch',$id_box);
+        $data = PrmRawMaterialStock::where('id_box',$id_box)->first();
+
+        // Kembalikan nomor batch sebagai respons
+        return response()->json($data);
+    }
+
+    // Contoh controller
+public function sendData(Request $request)
+{
+    $data = $request->input('data');
+
+    // Lakukan sesuatu dengan data, misalnya menyimpan ke database
+    // ...
+
+    //create post
+    foreach ($data as $request) {
+        // Membuat dan menyimpan instance model
+        PrmRawMaterialOutputItem::create([
+            'doc_no'        => $request->doc_no,
+            'nomor_bstb'    => $request->nomor_bstb,
+            'nomor_batch'   => $request->nomor_batch,
+            'id_box'        => $request->id_box,
+            'nama_supplier' => $request->nama_supplier,
+            'jenis'         => $request->jenis,
+            'berat'         => $request->berat,
+            'kadar_air'     => $request->kadar_air,
+            'tujuan_kirim'  => $request->tujuan_kirim,
+            'letak_tujuan'  => $request->letak_tujuan,
+            'inisial_tujuan'=> $request->inisial_tujuan,
+            'modal'         => $request->modal,
+            'total_modal'   => $request->total_modal,
+            'keterangan_item'=> $request->keterangan_item,
+            'user_created'  => $request->user_created,
+            'user_updated'  => $request->user_updated
+            // Sesuaikan dengan kolom-kolom lain yang Anda punya
+        ]);
+    }
+
+        return response()->json(['message' => 'Data saved successfully']);
+    }
+
 
     /**
      * store
@@ -39,9 +91,9 @@ class PrmRawMaterialOutputController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'doc_no'       => 'required',
-            'nomor_bstb'   => 'required|unique',
-            'nomor_batch'  => 'required',
+            'doc_no.*'       => 'required',
+            'nomor_bstb.*'   => 'required|unique',
+            'nomor_batch.*'  => 'required',
             'id_box'       => 'required',
             'nama_supplier'=> 'required',
             'jenis'        => 'required',
@@ -53,11 +105,9 @@ class PrmRawMaterialOutputController extends Controller
             'modal'        => 'required',
             'total_modal'  => 'required',
             'keterangan'   => 'required',
-            'user_created' => '',
-            'user_updated' => ''
-        ], [
-            'doc_no.required' => 'Kolom Nomer Document Wajib diisi.',
-            'nomor_bstb.required' => 'Kolom Nomer BSTB Wajib diisi.'
+            'keterangan_item'   => 'required',
+            'user_created.*'    => 'required',
+            'user_updated.*'    => 'required'
         ]);
 
         //create post
@@ -75,11 +125,10 @@ class PrmRawMaterialOutputController extends Controller
             'inisial_tujuan'=> $request->inisial_tujuan,
             'modal'         => $request->modal,
             'total_modal'   => $request->total_modal,
-            'keterangan'    => $request->keterangan,
+            'keterangan_item'=> $request->keterangan_item,
             'user_created'  => $request->user_created,
             'user_updated'  => $request->user_updated
         ]);
-
         PrmRawMaterialOutputHeader::create([
             'doc_no'        => $request->doc_no,
             'nomor_bstb'    => $request->nomor_bstb,
@@ -164,7 +213,7 @@ class PrmRawMaterialOutputController extends Controller
             'inisial_tujuan'=> $request->inisial_tujuan,
             'modal'         => $request->modal,
             'total_modal'   => $request->total_modal,
-            'keterangan'    => $request->keterangan,
+            'keterangan_item'    => $request->keterangan_item,
             'user_created'  => $request->user_created,
             'user_updated'  => $request->user_updated
         ]);
@@ -194,7 +243,7 @@ class PrmRawMaterialOutputController extends Controller
 
         //delete post
         $PrmRawMOIC->delete();
-        $PrmRawMOH->delete();
+        // $PrmRawMOH->delete();
 
         //redirect to index
         return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);

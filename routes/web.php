@@ -91,37 +91,20 @@ Route::controller(App\Http\Controllers\PurchasingExim\StockTransitGradingKasarCo
     Route::delete('/StockTransitGradingKasar/destroy{id}', 'destroy')->name('StockTransitGradingKasar.destroy');
 });
 
-Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputHeaderController::class)->group(function () {
-    Route::get('/PrmRawMaterialOutputHeader', 'index')->name('PrmRawMaterialOutputHeader.index');
-    Route::get('/PrmRawMaterialOutputHeader/create', 'create')->name('PrmRawMaterialOutputHeader.create');
-    Route::post('/PrmRawMaterialOutputHeader/store', 'store')->name('PrmRawMaterialOutputHeader.store');
-    Route::get('/PrmRawMaterialOutputHeader/show/{id}', 'show')->name('PrmRawMaterialOutputHeader.show');
-    Route::get('/PrmRawMaterialOutputHeader/edit{id}', 'edit')->name('PrmRawMaterialOutputHeader.edit');
-    Route::put('/PrmRawMaterialOutputHeader/update{id}', 'update')->name('PrmRawMaterialOutputHeader.update');
-    Route::delete('/PrmRawMaterialOutputHeader/destroy{id}', 'destroy')->name('PrmRawMaterialOutputHeader.destroy');
-});
-
-Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputItemController::class)->group(function () {
-    Route::get('/PrmRawMaterialOutputItem', 'index')->name('PrmRawMaterialOutputItem.index');
-    Route::get('/PrmRawMaterialOutputItem/create', 'create')->name('PrmRawMaterialOutputItem.create');
-    Route::post('/PrmRawMaterialOutputItem/store', 'store')->name('PrmRawMaterialOutputItem.store');
-    Route::get('/PrmRawMaterialOutputItem/show/{id}', 'show')->name('PrmRawMaterialOutputItem.show');
-    Route::get('/PrmRawMaterialOutputItem/edit{id}', 'edit')->name('PrmRawMaterialOutputItem.edit');
-    Route::put('/PrmRawMaterialOutputItem/update{id}', 'update')->name('PrmRawMaterialOutputItem.update');
-    Route::delete('/PrmRawMaterialOutputItem/destroy{id}', 'destroy')->name('PrmRawMaterialOutputItem.destroy');
-});
-
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputController::class)->group(function () {
     Route::get('/PrmRawMaterialOutput', 'index')->name('PrmRawMaterialOutput.index');
     Route::get('/PrmRawMaterialOutput/create', 'create')->name('PrmRawMaterialOutput.create');
     Route::post('/PrmRawMaterialOutput/store', 'store')->name('PrmRawMaterialOutput.store');
+    Route::post('/PrmRawMaterialOutput/sendData', 'sendData')->name('PrmRawMaterialOutput.sendData');
     Route::get('/PrmRawMaterialOutput/show/{id}', 'show')->name('PrmRawMaterialOutput.show');
     Route::get('/PrmRawMaterialOutput/edit{id}', 'edit')->name('PrmRawMaterialOutput.edit');
     Route::put('/PrmRawMaterialOutput/update{id}', 'update')->name('PrmRawMaterialOutput.update');
     Route::delete('/PrmRawMaterialOutput/destroy{id}', 'destroy')->name('PrmRawMaterialOutput.destroy');
+    // routes/web.php
+    Route::get('/PrmRawMaterialOutput/get_data_id_box', 'set')->name('PrmRawMaterialOutput.set');
 });
 
-// Auth::routes();
+Auth::routes();
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -25,14 +25,17 @@ class PrmRawMaterialOutputItem extends Model
         'inisial_tujuan',
         'modal',
         'total_modal',
-        'keterangan',
+        'keterangan_item',
         'user_created',
         'user_updated'
     ];
 
-
+    public function PrmRawMaterialStock()
+    {
+    	return $this->belongsTo(PrmRawMaterialStock::class, 'id_box', 'id_box');
+    }
     public function PrmRawMaterialOutputHeader()
     {
-    	return $this->belongsTo(PrmRawMaterialOutputHeader::class);
+    	return $this->hasMany(PrmRawMaterialOutputHeader::class, 'nomor_bstb', 'nomor_bstb');
     }
 }

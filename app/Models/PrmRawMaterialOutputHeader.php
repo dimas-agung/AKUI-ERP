@@ -21,13 +21,8 @@ class PrmRawMaterialOutputHeader extends Model
         'user_updated',
     ];
 
-    public function StockTransitGradingKasar()
-    {
-    	return $this->belongsTo(StockTransitGradingKasar::class);
-    }
-
     public function PrmRawMaterialOutputItem()
     {
-        return $this->hasMany(PrmRawMaterialOutputItem::class);
+        return $this->belongsTo(PrmRawMaterialOutputItem::class, 'nomor_bstb', 'nomor_bstb');
     }
 }

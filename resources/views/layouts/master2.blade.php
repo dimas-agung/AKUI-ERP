@@ -217,12 +217,12 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Account Setting</a>
                                         <div class="dropdown-divider"></div>
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            {{ csrf_field() }}
-                                            {{-- {{ method_field('DELETE') }} --}}
-                                            <button class="dropdown-item" type="submit"
+                                        {{-- <form method="POST" action="{{ route('logout') }}">
+                                            {{ csrf_field() }} --}}
+                                        {{-- {{ method_field('DELETE') }} --}}
+                                        {{-- <button class="dropdown-item" type="submit"
                                                 onclick="confirm('Apakah Anda Yakin ingin logout?')">Logout</button>
-                                        </form>
+                                        </form> --}}
                                         {{-- <a class="dropdown-item" href="">Logout</a></li> --}}
                                     </li>
                                 </div>
@@ -360,13 +360,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('/PrmRawMaterialOutputHeader') }}">
-                                            <span class="sub-item">Prm Raw Material Output Header</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('/PrmRawMaterialOutputItem') }}">
-                                            <span class="sub-item">Prm Raw Material Output Item</span>
+                                        <a href="{{ url('/PrmRawMaterialOutput') }}">
+                                            <span class="sub-item">Prm Raw Material Output</span>
                                         </a>
                                     </li>
                                 </ul>
