@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Models\MasterJenisRawMaterial;
 use Illuminate\Http\Request;
 use App\Models\MasterSupplierRawMaterial;
-use Database\Seeders\MasterJenisRawMaterialSeeder;
 use Illuminate\Http\RedirectResponse;
 
 class PrmRawMaterialInputController extends Controller
@@ -32,6 +31,7 @@ class PrmRawMaterialInputController extends Controller
             'i' => $i,
         ]);
     }
+    // get Data Supplier
     public function getDataSupplier(Request $request)
     {
         $nama_supplier = $request->nama_supplier;
@@ -42,17 +42,52 @@ class PrmRawMaterialInputController extends Controller
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
     }
+    // get Data Jenis
+    public function getDataJenis(Request $request)
+    {
+        $jenis = $request->jenis;
+        $data = MasterJenisRawMaterial::where('jenis', $jenis)->first();
+
+        return response()->json($data);
+    }
+    public function simpanData(Request $request)
+    {
+        $dataToSave = $request->input('data');
+
+        // Iterasi setiap baris data dan simpan ke dalam database
+        foreach ($dataToSave as $data) {
+            PrmRawMaterialInputItem::create($data);
+            // PrmRawMaterialInputItem::create([
+            //     'doc_no'                => $request->doc_no,
+            //     'jenis'                 => $request->jenis,
+            //     'berat_nota'            => $request->berat_nota,
+            //     'berat_kotor'           => $request->berat_kotor,
+            //     'berat_bersih'          => $request->berat_bersih,
+            //     'selisih_berat'         => $request->selisih_berat,
+            //     'kadar_air'             => $request->kadar_air,
+            //     'id_box'                => $request->id_box,
+            //     'harga_nota'            => $request->harga_nota,
+            //     'total_harga_nota'      => $request->total_harga_nota,
+            //     'harga_deal'            => $request->harga_deal,
+            //     'keterangan_item'       => $request->keterangan_item,
+            //     'user_created'          => $request->user_created,
+            //     'user_updated'          => $request->user_updated
+            // ]);
+        }
+
+        return response()->json(['message' => 'Data berhasil disimpan']);
+    }
     // store
     public function store(Request $request): RedirectResponse
     {
         //validate form
         $this->validate($request, [
-            'doc_no.*'               => 'required|unique',
+            'doc_no.*',
             'nomor_po'               => 'required',
-            'nomor_batch'          => 'required',
-            'nomor_nota_supplier'  => 'required',
-            'nomor_nota_internal'  => 'required',
-            'nama_supplier'        => 'required',
+            'nomor_batch'            => 'required',
+            'nomor_nota_supplier'    => 'required',
+            'nomor_nota_internal'    => 'required',
+            'nama_supplier'          => 'required',
             'jenis'                  => 'required',
             'berat_nota'             => 'required',
             'berat_kotor'            => 'required',
