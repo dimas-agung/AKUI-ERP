@@ -51,36 +51,48 @@ class PrmRawMaterialOutputController extends Controller
     // Contoh controller
 public function sendData(Request $request)
 {
-    $data = $request->input('data');
+    $dataArray = json_decode($request->input('data'));
+    $dataHeader = json_decode($request->input('dataHeader'));
+    // return $dataArray;
+    // var_dump($dataArray[0]);
+    // return;
+    // return $dataHeader[0];
+// Pastikan doc_no ada dan merupakan string sebelum menggunakan substr
 
     // Lakukan sesuatu dengan data, misalnya menyimpan ke database
-    // ...
-
-    //create post
-    foreach ($data as $request) {
-        // Membuat dan menyimpan instance model
+    PrmRawMaterialOutputHeader::create([
+        'doc_no'        => $dataHeader[0]->doc_no,
+        'nomor_bstb'    => $dataHeader[0]->nomor_bstb,
+        'nomor_batch'   => $dataHeader[0]->nomor_batch,
+        'keterangan'    => $dataHeader[0]->keterangan,
+        'user_created'  => $dataHeader[0]->user_created,
+        'user_updated'  => $dataHeader[0]->user_updated
+    ]);
+    foreach ($dataArray as $item) {
+        // Simpan data ke dalam database menggunakan Eloquent atau Query Builder
         PrmRawMaterialOutputItem::create([
-            'doc_no'        => $request->doc_no,
-            'nomor_bstb'    => $request->nomor_bstb,
-            'nomor_batch'   => $request->nomor_batch,
-            'id_box'        => $request->id_box,
-            'nama_supplier' => $request->nama_supplier,
-            'jenis'         => $request->jenis,
-            'berat'         => $request->berat,
-            'kadar_air'     => $request->kadar_air,
-            'tujuan_kirim'  => $request->tujuan_kirim,
-            'letak_tujuan'  => $request->letak_tujuan,
-            'inisial_tujuan'=> $request->inisial_tujuan,
-            'modal'         => $request->modal,
-            'total_modal'   => $request->total_modal,
-            'keterangan_item'=> $request->keterangan_item,
-            'user_created'  => $request->user_created,
-            'user_updated'  => $request->user_updated
-            // Sesuaikan dengan kolom-kolom lain yang Anda punya
+            'doc_no'        => $item->doc_no,
+            'nomor_bstb'    => $item->nomor_bstb,
+            'nomor_batch'   => $item->nomor_batch,
+            'id_box'        => $item->id_box,
+            'nama_supplier' => $item->nama_supplier,
+            'jenis'         => $item->jenis,
+            'berat'         => $item->berat,
+            'kadar_air'     => $item->kadar_air,
+            'tujuan_kirim'  => $item->tujuan_kirim,
+            'letak_tujuan'  => $item->letak_tujuan,
+            'inisial_tujuan'=> $item->inisial_tujuan,
+            'modal'         => $item->modal,
+            'total_modal'   => $item->total_modal,
+            'keterangan_item'=> $item->keterangan_item,
+            'user_created'  => $item->user_created,
+            'user_updated'  => $item->user_updated
+            // Sesuaikan dengan kolom-kolom lain di tabel Anda
         ]);
     }
 
         return response()->json(['message' => 'Data saved successfully']);
+        // return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
 

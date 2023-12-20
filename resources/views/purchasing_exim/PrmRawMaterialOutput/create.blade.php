@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="card mt-2">
-            <form action="{{ route('PrmRawMaterialOutput.sendData') }}" method="POST">
+            <form action="{{ route('PrmRawMaterialOutput.store') }}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-12">
@@ -270,7 +270,8 @@
                                     </div>
                                     <div class="col-md-12">
                                         <button type="button" class="btn btn-primary" onclick="addRow()">Add</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        <a href="{{ url('/PrmRawMaterialOutput') }}" type="button"
+                                            class="btn btn-danger" data-dismiss="modal">Close</a>
                                     </div>
                                 </div>
                             </div>
@@ -283,9 +284,9 @@
                     <div class="col-md-12">
                         {{-- <div class="card"> --}}
                         <div class="card-header">
-                            <div class="card-title">Striped Rows</div>
+                            <div class="card-title">Validasi Data Input</div>
                         </div>
-                        <div class="card-body" style="overflow: scroll">
+                        <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
                             <table class="table table-striped mt-3">
                                 <thead>
                                     <tr>
@@ -310,10 +311,10 @@
                                 <tbody id="tableBody">
                                 </tbody>
                             </table>
-                            <div class="col-md-12">
-                                {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
-                                <button type="button" class="btn btn-primary" onclick="sendData()">Add</button>
-                            </div>
+                            {{-- <div class="col-md-12"> --}}
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="#" class="btn btn-primary" onclick="sendData()">Add</a>
+                            {{-- </div> --}}
                         </div>
                     </div>
                 </div>
@@ -350,7 +351,11 @@
             });
         });
 
+        var dataArray = [];
+        var dataHeader = [];
+
         function addRow() {
+            console.log(dataArray);
             // Mengambil nilai dari input
             var doc_no = $('#doc_no').val();
             var nomor_bstb = $('#nomor_bstb').val();
@@ -365,17 +370,15 @@
             var inisial_tujuan = $('#inisial_tujuan').val();
             var modal = $('#modal').val();
             var total_modal = $('#total_modal').val();
+            var keterangan = $('#keterangan').val();
             var keterangan_item = $('#keterangan_item').val();
             var user_created = $('#user_created').val();
             var user_updated = $('#user_updated').val();
-
             // Validasi input (sesuai kebutuhan)
             if (!id_box || !nomor_batch) {
                 alert('ID and nomor_batch are required.');
                 return;
             }
-
-
             // Menambahkan data ke dalam tabel
             var newRow = '<tr><td>' + doc_no + '</td><td>' + nomor_bstb + '</td><td>' + nomor_batch + '</td><td>' + id_box +
                 '</td><td>' + nama_supplier + '</td><td>' + jenis + '</td><td>' + berat + '</td><td>' + kadar_air +
@@ -385,7 +388,7 @@
             $('#tableBody').append(newRow);
 
             // Menambahkan data ke dalam array
-            var newData = {
+            dataArray.push({
                 doc_no: doc_no,
                 nomor_bstb: nomor_bstb,
                 nomor_batch: nomor_batch,
@@ -399,17 +402,21 @@
                 inisial_tujuan: inisial_tujuan,
                 modal: modal,
                 total_modal: total_modal,
-                keterangan: keterangan,
                 keterangan_item: keterangan_item,
                 user_created: user_created,
-                user_updated: user_updated,
-            };
-            dataArray.push(newData);
-
+                user_updated: user_updated
+            });
+            console.log(dataArray);
+            dataHeader = [];
+            dataHeader.push({
+                doc_no: doc_no,
+                nomor_bstb: nomor_bstb,
+                nomor_batch: nomor_batch,
+                keterangan: keterangan,
+                user_created: user_created,
+                user_updated: user_updated
+            });
             // Membersihkan nilai input setelah ditambahkan
-            $('#doc_no').val('');
-            $('#nomor_bstb').val('');
-            $('#nomor_batch').val('');
             $('#id_box').val('<option></option>');
             $('#nama_supplier').val('');
             $('#jenis').val('');
@@ -421,20 +428,33 @@
             $('#modal').val('');
             $('#total_modal').val('');
             $('#keterangan_item').val('');
-            $('#user_created').val('');
-            $('#user_updated').val('');
+        }
+
+        function getArray() {
+            // Menampilkan array di konsol untuk tujuan debugging
+            console.log(dataArray);
         }
 
         function sendData() {
+            console.log(dataArray);
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
                 url: `{{ route('PrmRawMaterialOutput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai
                 method: 'POST',
                 data: {
-                    data: dataArray
+                    data: JSON.stringify(dataArray),
+                    dataHeader: JSON.stringify(dataHeader),
+                    // _token: $('meta[name="csrf-token"]').attr('content')
+                    _token: '{{ csrf_token() }}'
                 },
+                dataType: 'json', // payload is json,
                 success: function(response) {
                     console.log('Data sent successfully:', response);
+
+                    // Menampilkan pesan berhasil
+                    // alert('Data sent successfully!');
+                    // console.log('Data sent successfully:', response);
+                    window.location.href = '{{ route('PrmRawMaterialOutput.index') }}';
                     // Lakukan sesuatu setelah data dikirim
                 },
                 error: function(error) {
@@ -443,7 +463,7 @@
             });
 
             // Membersihkan array setelah data dikirim
-            dataArray = [];
+            // dataArray = [];
         }
     </script>
 @endsection

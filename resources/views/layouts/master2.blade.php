@@ -3,6 +3,9 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Pastikan ada tag CSRF token di dalam formulir atau di dalam head -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title> {{ env('APP_TITLE') }} @yield('title')</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="../assets/img/icon.ico" type="image/x-icon" />
@@ -633,7 +636,8 @@
         <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
-    <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    {{-- <script src="../../assets/js/core/jquery.3.2.1.min.js"></script> --}}
     <script src="../../assets/js/core/popper.min.js"></script>
     <script src="../../assets/js/core/bootstrap.min.js"></script>
 
