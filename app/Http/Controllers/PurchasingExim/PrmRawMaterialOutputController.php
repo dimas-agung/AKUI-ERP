@@ -91,78 +91,87 @@ public function sendData(Request $request)
         ]);
     }
 
-        return response()->json(['message' => 'Data saved successfully']);
-        // return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
+        // return response()->json(['message' => 'Data saved successfully']);
+        return response()->json([
+            'message' => 'Data berhasil disimpan!',
+            'redirectTo' => route('PrmRawMaterialOutput.index'), // Ganti dengan nama route yang sesuai
+        ]);
     }
 
 
     /**
      * store
      */
-    public function store(Request $request): RedirectResponse
-    {
-        //validate form
-        $this->validate($request, [
-            'doc_no.*'       => 'required',
-            'nomor_bstb.*'   => 'required|unique',
-            'nomor_batch.*'  => 'required',
-            'id_box'       => 'required',
-            'nama_supplier'=> 'required',
-            'jenis'        => 'required',
-            'berat'        => 'required',
-            'kadar_air'    => 'required',
-            'tujuan_kirim' => 'required',
-            'letak_tujuan' => 'required',
-            'inisial_tujuan'=> 'required',
-            'modal'        => 'required',
-            'total_modal'  => 'required',
-            'keterangan'   => 'required',
-            'keterangan_item'   => 'required',
-            'user_created.*'    => 'required',
-            'user_updated.*'    => 'required'
-        ]);
+    // public function store(Request $request): RedirectResponse
+    // {
+    //     //validate form
+    //     $this->validate($request, [
+    //         'doc_no.*'       => 'required',
+    //         'nomor_bstb.*'   => 'required|unique',
+    //         'nomor_batch.*'  => 'required',
+    //         'id_box'       => 'required',
+    //         'nama_supplier'=> 'required',
+    //         'jenis'        => 'required',
+    //         'berat'        => 'required',
+    //         'kadar_air'    => 'required',
+    //         'tujuan_kirim' => 'required',
+    //         'letak_tujuan' => 'required',
+    //         'inisial_tujuan'=> 'required',
+    //         'modal'        => 'required',
+    //         'total_modal'  => 'required',
+    //         'keterangan'   => 'required',
+    //         'keterangan_item'   => 'required',
+    //         'user_created.*'    => 'required',
+    //         'user_updated.*'    => 'required'
+    //     ]);
 
-        //create post
-        PrmRawMaterialOutputItem::create([
-            'doc_no'        => $request->doc_no,
-            'nomor_bstb'    => $request->nomor_bstb,
-            'nomor_batch'   => $request->nomor_batch,
-            'id_box'        => $request->id_box,
-            'nama_supplier' => $request->nama_supplier,
-            'jenis'         => $request->jenis,
-            'berat'         => $request->berat,
-            'kadar_air'     => $request->kadar_air,
-            'tujuan_kirim'  => $request->tujuan_kirim,
-            'letak_tujuan'  => $request->letak_tujuan,
-            'inisial_tujuan'=> $request->inisial_tujuan,
-            'modal'         => $request->modal,
-            'total_modal'   => $request->total_modal,
-            'keterangan_item'=> $request->keterangan_item,
-            'user_created'  => $request->user_created,
-            'user_updated'  => $request->user_updated
-        ]);
-        PrmRawMaterialOutputHeader::create([
-            'doc_no'        => $request->doc_no,
-            'nomor_bstb'    => $request->nomor_bstb,
-            'nomor_batch'   => $request->nomor_batch,
-            'keterangan'    => $request->keterangan,
-            'user_created'  => $request->user_created,
-            'user_updated'  => $request->user_updated
-        ]);
+    //     //create post
+    //     PrmRawMaterialOutputItem::create([
+    //         'doc_no'        => $request->doc_no,
+    //         'nomor_bstb'    => $request->nomor_bstb,
+    //         'nomor_batch'   => $request->nomor_batch,
+    //         'id_box'        => $request->id_box,
+    //         'nama_supplier' => $request->nama_supplier,
+    //         'jenis'         => $request->jenis,
+    //         'berat'         => $request->berat,
+    //         'kadar_air'     => $request->kadar_air,
+    //         'tujuan_kirim'  => $request->tujuan_kirim,
+    //         'letak_tujuan'  => $request->letak_tujuan,
+    //         'inisial_tujuan'=> $request->inisial_tujuan,
+    //         'modal'         => $request->modal,
+    //         'total_modal'   => $request->total_modal,
+    //         'keterangan_item'=> $request->keterangan_item,
+    //         'user_created'  => $request->user_created,
+    //         'user_updated'  => $request->user_updated
+    //     ]);
+    //     PrmRawMaterialOutputHeader::create([
+    //         'doc_no'        => $request->doc_no,
+    //         'nomor_bstb'    => $request->nomor_bstb,
+    //         'nomor_batch'   => $request->nomor_batch,
+    //         'keterangan'    => $request->keterangan,
+    //         'user_created'  => $request->user_created,
+    //         'user_updated'  => $request->user_updated
+    //     ]);
 
-        //redirect to index
-        return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Disimpan!']);
-    }
+    //     //redirect to index
+    //     return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Disimpan!']);
+    // }
 
     // Show
-    public function show(string $id): View
+    public function show(string $id)
     {
         //get post by ID
-        $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
-        $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
-
+        $i =1;
+        // $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
+        $headers = PrmRawMaterialOutputHeader::findOrFail($id);
+        // $item      = $PrmRawMOH->PrmRawMaterialOutputItem;
+        // $PrmRawMOIC = PrmRawMaterialOutputItem::with('PrmRawMaterialOutputHeader')->get();
+        $headers = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')
+        ->where(['id'=> $id])
+        ->first();
+        // return $headers;
         //render view with post
-        return view('purchasing_exim.PrmRawMaterialOutput.show', compact('PrmRawMOIC', 'PrmRawMOH'));
+        return view('purchasing_exim.PrmRawMaterialOutput.show', compact('headers', 'i'));
     }
 
 
@@ -173,10 +182,12 @@ public function sendData(Request $request)
     {
         //get post by ID
         $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
-        $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
+        $PrmRawMS = PrmRawMaterialStock::with('PrmRawMaterialOutputItem')->get();
+        // return $PrmRawMOIC;
+        // $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
 
         //render view with post
-        return view('purchasing_exim.PrmRawMaterialOutput.update', compact('PrmRawMOIC', 'PrmRawMOH'));
+        return view('purchasing_exim.PrmRawMaterialOutput.update', compact('PrmRawMOIC', 'PrmRawMS'));
     }
 
     /**
@@ -230,14 +241,14 @@ public function sendData(Request $request)
             'user_updated'  => $request->user_updated
         ]);
 
-        $PrmRawMOH->update([
-            'doc_no'        => $request->doc_no,
-            'nomor_bstb'    => $request->nomor_bstb,
-            'nomor_batch'   => $request->nomor_batch,
-            'keterangan'    => $request->keterangan,
-            'user_created'  => $request->user_created,
-            'user_updated'  => $request->user_updated
-        ]);
+        // $PrmRawMOH->update([
+        //     'doc_no'        => $request->doc_no,
+        //     'nomor_bstb'    => $request->nomor_bstb,
+        //     'nomor_batch'   => $request->nomor_batch,
+        //     'keterangan'    => $request->keterangan,
+        //     'user_created'  => $request->user_created,
+        //     'user_updated'  => $request->user_updated
+        // ]);
 
         //redirect to index
         return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
@@ -251,10 +262,20 @@ public function sendData(Request $request)
     {
         //get post by ID
         $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
-        $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
 
         //delete post
         $PrmRawMOIC->delete();
+
+        //redirect to index
+        return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    }
+    public function destroyHead($id): RedirectResponse
+    {
+        //get post by ID\
+        $PrmRawMOH = PrmRawMaterialOutputHeader::findOrFail($id);
+        // return $PrmRawMOH;
+        //delete post
+        $PrmRawMOH->delete();
         // $PrmRawMOH->delete();
 
         //redirect to index

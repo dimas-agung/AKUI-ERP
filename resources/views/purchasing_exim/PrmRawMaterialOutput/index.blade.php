@@ -17,7 +17,6 @@
                 </div>
             </div>
             <div class="card-body">
-
                 {{-- Create Data --}}
                 @if (session()->has('success'))
                     <div class="alert alert-success">
@@ -72,14 +71,11 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('PrmRawMaterialOutput.destroy', $post->id) }}"
+                                                action="{{ route('PrmRawMaterialOutput.destroyHead', $post->id) }}"
                                                 method="POST">
                                                 <a href="{{ route('PrmRawMaterialOutput.show', $post->id) }}"
                                                     class="btn btn-link btn-info" title="Show Task"
                                                     data-original-title="Show"><i class="fa fa-file"></i></a>
-                                                <a href="{{ route('PrmRawMaterialOutput.edit', $post->id) }}"
-                                                    class="btn btn-link btn-primary" title="Edit Task"
-                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" data-toggle="tooltip"

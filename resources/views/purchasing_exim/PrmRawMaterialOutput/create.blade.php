@@ -117,7 +117,6 @@
                                 <h4>Input Data Prm Raw Material Output Item</h4>
                             </div>
                             <div class="card-body">
-
                                 {{-- Create Data --}}
                                 @if (session()->has('success'))
                                     <div class="alert alert-success">
@@ -311,10 +310,7 @@
                                 <tbody id="tableBody">
                                 </tbody>
                             </table>
-                            {{-- <div class="col-md-12"> --}}
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="#" class="btn btn-primary" onclick="sendData()">Add</a>
-                            {{-- </div> --}}
+                            <a href="#" class="btn btn-primary" onclick="sendData()">Submit</a>
                         </div>
                     </div>
                 </div>
@@ -449,13 +445,8 @@
                 },
                 dataType: 'json', // payload is json,
                 success: function(response) {
-                    console.log('Data sent successfully:', response);
-
-                    // Menampilkan pesan berhasil
-                    // alert('Data sent successfully!');
-                    // console.log('Data sent successfully:', response);
-                    window.location.href = '{{ route('PrmRawMaterialOutput.index') }}';
-                    // Lakukan sesuatu setelah data dikirim
+                    alert('Success: ' + response.message); // Tampilkan pesan berhasil
+                    window.location.href = response.redirectTo; // Redirect ke halaman lain
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);
