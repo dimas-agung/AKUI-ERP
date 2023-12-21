@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('nomor_nota_supplier');
             $table->string('nomor_nota_internal');
             $table->string('nama_supplier');
-            $table->text('keterangan');
+            $table->text('keterangan')->nullable();
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

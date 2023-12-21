@@ -6,26 +6,26 @@
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Input Purchasing Raw Material</h4>
                 </div>
-                {{-- <form action="{{ route('purchasing_exim/prm_raw_material_input.store') }}" method="POST" class="row g-3" --}}
+                {{-- <form action="{{ route('purchasing_exim/prm_raw_material_input.store') }}" method="POST" class="row g-3"> --}}
                 <form method="POST" class="row g-3" id="myForm">
                     @csrf
-                    {{-- <div class="col-md-4">
+                    <div class="col-md-4">
                         <label for="no_doc" class="form-label">Nomor DOC</label>
-                        <input type="text" class="form-control" id="no_doc">
-                    </div> --}}
-                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="no_doc" value="1" readonly>
+                    </div>
+                    <div class="col-md-4">
                         <label for="nomor_po" class="form-label">Nomor PO</label>
                         <input type="text" class="form-control" id="nomor_po">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="nomor_batch" class="form-label">Nomor Batch</label>
                         <input type="text" class="form-control" id="nomor_batch">
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <label for="nomor_nota_supplier" class="form-label">Nomor Nota Supplier</label>
                         <input type="text" class="form-control" id="nomor_nota_supplier">
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
                         <input type="text" class="form-control" id="nomor_nota_internal">
                     </div>
@@ -41,7 +41,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-flex">
                         <hr>
                     </div>
                     <div class="col-md-3">
@@ -92,15 +92,15 @@
                         <input type="number" class="form-control" id="harga_deal">
                     </div>
                     <div class="col-md-3">
-                        <label for="keterangan_item" class="form-label">Keterangan</label>
-                        <input type="text" class="form-control" id="keterangan_item">
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <input type="text" class="form-control" id="keterangan">
                     </div>
                     <div class="col-md-3">
                         <label for="user_created" class="form-label">NIP Admin</label>
                         <input type="text" class="form-control" id="user_created">
                     </div>
                     <div class="col-12">
-                        <button type="button" class="btn btn-primary" id="addDataToTable">Tambah</button>
+                        <button type="button" class="btn btn-primary" onclick="addRow()">Tambah</button>
                         {{-- <button type="submit" class="btn btn-warning" id="resetBtn">Reset</button> --}}
                     </div>
                 </form>
@@ -117,7 +117,7 @@
                     <table class="table" id="dataTable">
                         <thead>
                             <tr>
-                                {{-- <th scope="col">No</th> --}}
+                                {{-- <th scope="col">Doc No</th> --}}
                                 <th scope="col">Jenis</th>
                                 <th scope="col">Berat Nota</th>
                                 <th scope="col">Berat Kotor</th>
@@ -137,7 +137,7 @@
                     </table>
                 </div>
                 <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-success" id="simpanData">Simpan</button>
+                    <button type="submit" class="btn btn-success" onclick="simpanData()">Simpan</button>
                 </div>
             </div>
         </div>
@@ -145,6 +145,9 @@
 @endsection
 @section('script')
     <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
         // Menambahkan event listener untuk perubahan nilai pada input nomor nota supplier dan select nama supplier
         $('#nomor_nota_supplier').on('input', generateNomorNotaInternal);
         $('#nama_supplier').on('change', generateNomorNotaInternal);
@@ -283,98 +286,132 @@
         }
     </script>
     <script>
-        $(document).ready(function() {
-            // Event handler untuk tombol Tambah
-            $('#addDataToTable').on('click', function() {
-                // Mengambil nilai dari setiap input
-                let Jenis = $('#jenis').val();
-                let BeratNota = $('#berat_nota').val();
-                let BeratKotor = $('#berat_kotor').val();
-                let BeratBersih = $('#berat_bersih').val();
-                let SelisihBerat = $('#selisih_berat').val();
-                let KadarAir = $('#kadar_air').val();
-                let IdBox = $('#id_box').val();
-                let HargaNota = $('#harga_nota').val();
-                let TotalHargaNota = $('#total_harga_nota').val();
-                let HargaDeal = $('#harga_deal').val();
-                let Keterangan = $('#keterangan_item').val();
-                let NipAdmin = $('#user_created').val();
+        // test
+        var dataArray = [];
+        var dataHeader = [];
 
-                if (Jenis.trim() === '' || BeratNota.trim() === '' || BeratKotor.trim() === '' ||
-                    BeratBersih.trim() === '' || SelisihBerat.trim() === '' || KadarAir.trim() === '' ||
-                    IdBox.trim() === '' || HargaNota.trim() === '' || TotalHargaNota.trim() ===
-                    '' || HargaDeal.trim() === '') {
-                    alert('Harap isi semua kolom.');
-                    return; // Berhenti jika ada input yang kosong
+        function addRow() {
+            console.log(dataArray);
+            // Mengambil nilai dari input
+            let doc_no = $('#doc_no').val();
+            let nomor_po = $('#nomor_po').val();
+            let nomor_batch = $('#nomor_batch').val();
+            let nomor_nota_supplier = $('#nomor_nota_supplier').val();
+            let nomor_nota_internal = $('#nomor_nota_internal').val();
+            let nama_supplier = $('#nama_supplier').val();
+            let jenis = $('#jenis').val();
+            let berat_nota = $('#berat_nota').val();
+            let berat_kotor = $('#berat_kotor').val();
+            let berat_bersih = $('#berat_bersih').val();
+            let selisih_berat = $('#selisih_berat').val();
+            let kadar_air = $('#kadar_air').val();
+            let id_box = $('#id_box').val();
+            let harga_nota = $('#harga_nota').val();
+            let total_harga_nota = $('#total_harga_nota').val();
+            let harga_deal = $('#harga_deal').val();
+            let keterangan = $('#keterangan').val();
+            let user_created = $('#user_created').val();
+
+            // Validasi input (sesuai kebutuhan)
+            if (nomor_po.trim() === '' || nomor_batch.trim() === '' || nomor_nota_supplier.trim() === '' ||
+                nomor_nota_internal.trim() === '' || nama_supplier.trim() === '' || jenis.trim() === '' ||
+                berat_nota.trim() === '' || berat_kotor.trim() === '' || berat_bersih.trim() === '' ||
+                selisih_berat.trim() === '' ||
+                kadar_air.trim() === '' || id_box.trim() === '' || harga_nota.trim() === '' || total_harga_nota.trim() ===
+                '' || harga_deal.trim() === '') {
+                alert('Harap isi semua kolom.');
+                return; // Berhenti jika ada input yang kosong
+            }
+            // Menambahkan data ke dalam tabel
+            var newRow = '<tr>' +
+                // '<td>' + doc_no + '</td>' +
+                '<td>' + jenis + '</td>' +
+                '<td>' + berat_nota + '</td>' +
+                '<td>' + berat_kotor + '</td>' +
+                '<td>' + berat_bersih + '</td>' +
+                '<td>' + selisih_berat + '</td>' +
+                '<td>' + kadar_air + '</td>' +
+                '<td>' + id_box + '</td>' +
+                '<td>' + harga_nota + '</td>' +
+                '<td>' + total_harga_nota + '</td>' +
+                '<td>' + harga_deal + '</td>' +
+                '<td>' + keterangan + '</td>' +
+                '<td>' + user_created + '</td>' +
+                '</tr>';
+            $('#dataTable tbody').append(newRow);
+            // $('#myForm')[0].reset();
+
+            // Menambahkan data ke dalam array
+            dataArray.push({
+                doc_no: doc_no,
+                jenis: jenis,
+                berat_nota: berat_nota,
+                berat_kotor: berat_kotor,
+                berat_bersih: berat_bersih,
+                selisih_berat: selisih_berat,
+                kadar_air: kadar_air,
+                id_box: id_box,
+                harga_nota: harga_nota,
+                total_harga_nota: total_harga_nota,
+                harga_deal: harga_deal,
+                keterangan: keterangan,
+                user_created: user_created,
+
+            });
+            console.log(dataArray);
+            dataHeader = [];
+            dataHeader.push({
+                doc_no: doc_no,
+                nomor_po: nomor_po,
+                nomor_batch: nomor_batch,
+                nomor_nota_supplier: nomor_nota_supplier,
+                nomor_nota_internal: nomor_nota_internal,
+                nama_supplier: nama_supplier,
+                keterangan: keterangan,
+                user_created: user_created,
+            });
+            // Membersihkan nilai input setelah ditambahkan
+            $('#jenis').val('');
+            $('#berat_nota').val('');
+            $('#berat_kotor').val('');
+            $('#berat_bersih').val('');
+            $('#selisih_berat').val('');
+            $('#kadar_air').val('');
+            $('#id_box').val('');
+            $('#harga_nota').val('');
+            $('#total_harga_nota').val('');
+            $('#harga_deal').val('');
+            $('#keterangan').val('');
+        }
+
+        function getArray() {
+            // Menampilkan array di konsol untuk tujuan debugging
+            console.log(dataArray);
+        }
+
+        function simpanData() {
+            console.log(dataArray);
+            // Mengirim data ke server menggunakan AJAX
+            $.ajax({
+                url: `{{ route('prm_raw_material_input.simpanData') }}`, // Ganti dengan URL endpoint yang sesuai
+                method: 'POST',
+                data: {
+                    data: JSON.stringify(dataArray),
+                    dataHeader: JSON.stringify(dataHeader),
+                    _token: '{{ csrf_token() }}'
+                },
+                dataType: 'json', // payload is json,
+                success: function(response) {
+                    console.log('Data sent successfully:', response);
+                    window.location.href = `{{ route('purchasing_exim/prm_raw_material_input.index') }}`;
+                },
+                error: function(error) {
+                    console.error('Error sending data:', error);
                 }
-
-                // Buat baris baru untuk tabel
-
-                var newRow = '<tr>' +
-                    '<td>' + Jenis + '</td>' +
-                    '<td>' + BeratNota + '</td>' +
-                    '<td>' + BeratKotor + '</td>' +
-                    '<td>' + BeratBersih + '</td>' +
-                    '<td>' + SelisihBerat + '</td>' +
-                    '<td>' + KadarAir + '</td>' +
-                    '<td>' + IdBox + '</td>' +
-                    '<td>' + HargaNota + '</td>' +
-                    '<td>' + TotalHargaNota + '</td>' +
-                    '<td>' + HargaDeal + '</td>' +
-                    '<td>' + Keterangan + '</td>' +
-                    '<td>' + NipAdmin + '</td>' +
-                    '</tr>';
-
-                // Tambahkan baris ke dalam tabel
-                $('#dataTable tbody').append(newRow);
-                $('#myForm')[0].reset();
             });
 
-        });
+            // Membersihkan array setelah data dikirim
+            // dataArray = [];
+        }
     </script>
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#simpanData').on('click', function() {
-                var dataToSend = [];
-
-                // Mendapatkan semua baris dari tabel kecuali header
-                $('#dataTable tbody tr').each(function() {
-                    var rowData = {};
-                    $(this).find('td').each(function(index, element) {
-                        var columnName = $('#dataTable thead th').eq(index).text().trim();
-                        rowData[columnName] = $(element).text().trim();
-                    });
-                    dataToSend.push(rowData);
-                });
-
-                // Kirim data ke Laravel menggunakan AJAX
-                $.ajax({
-                    url: `{{ route('prm_raw_material_input.simpanData') }}`,
-                    method: 'POST',
-                    data: {
-                        data: dataToSend,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        // Tanggapi respon dari server jika ada
-                    },
-                    error: function(error) {
-                        // Tanggapi kesalahan jika ada
-                    }
-                });
-            });
-        });
-    </script>
-    {{-- <script>
-        $(document).ready(function() {
-            $('#resetBtn').on('click', function() {
-                $('#myForm').trigger('reset'); // Memicu event reset pada formulir
-            });
-        });
-    </script> --}}
 @endsection

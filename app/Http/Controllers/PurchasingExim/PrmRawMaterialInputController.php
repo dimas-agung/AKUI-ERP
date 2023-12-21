@@ -23,12 +23,22 @@ class PrmRawMaterialInputController extends Controller
         // return $PrmRawMaterialInput;
         // return $MasterSupplierRawMaterial;
         // return $MasterJenisRawMaterial;
-        return response()->view('purchasing_exim.prm_raw_material_input.form', [
+        return response()->view('purchasing_exim.prm_raw_material_input.index', [
             'prm_raw_material_inputs'       => $PrmRawMaterialInput,
             'master_supplier_raw_materials' => $MasterSupplierRawMaterial,
             'master_jenis_raw_materials'    => $MasterJenisRawMaterial,
             'prm_raw_material_input_items'  => $PrmRawMaterialInputItem,
             'i' => $i,
+        ]);
+    }
+    // create
+    public function create()
+    {
+        $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+        $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
+        return view('purchasing_exim/prm_raw_material_input.create', [
+            'master_supplier_raw_materials' => $MasterSupplierRawMaterial,
+            'master_jenis_raw_materials'    => $MasterJenisRawMaterial,
         ]);
     }
     // get Data Supplier
@@ -50,32 +60,51 @@ class PrmRawMaterialInputController extends Controller
 
         return response()->json($data);
     }
+
     public function simpanData(Request $request)
     {
-        $dataToSave = $request->input('data');
+        $dataArray = json_decode($request->input('data'));
+        $dataHeader = json_decode($request->input('dataHeader'));
+        // return $dataArray;
+        // var_dump($dataArray[0]);
+        // return;
+        // return $dataHeader[0];
+        // Pastikan doc_no ada dan merupakan string sebelum menggunakan substr
 
-        // Iterasi setiap baris data dan simpan ke dalam database
-        foreach ($dataToSave as $data) {
-            PrmRawMaterialInputItem::create($data);
-            // PrmRawMaterialInputItem::create([
-            //     'doc_no'                => $request->doc_no,
-            //     'jenis'                 => $request->jenis,
-            //     'berat_nota'            => $request->berat_nota,
-            //     'berat_kotor'           => $request->berat_kotor,
-            //     'berat_bersih'          => $request->berat_bersih,
-            //     'selisih_berat'         => $request->selisih_berat,
-            //     'kadar_air'             => $request->kadar_air,
-            //     'id_box'                => $request->id_box,
-            //     'harga_nota'            => $request->harga_nota,
-            //     'total_harga_nota'      => $request->total_harga_nota,
-            //     'harga_deal'            => $request->harga_deal,
-            //     'keterangan_item'       => $request->keterangan_item,
-            //     'user_created'          => $request->user_created,
-            //     'user_updated'          => $request->user_updated
-            // ]);
+        // Lakukan sesuatu dengan data, misalnya menyimpan ke database
+        PrmRawMaterialInput::create([
+            // 'doc_no'                => $dataHeader[0]->doc_no,
+            'nomor_po'              => $dataHeader[0]->nomor_po,
+            'nomor_batch'           => $dataHeader[0]->nomor_batch,
+            'nomor_nota_supplier'   => $dataHeader[0]->nomor_nota_supplier,
+            'nomor_nota_internal'   => $dataHeader[0]->nomor_nota_internal,
+            'nama_supplier'         => $dataHeader[0]->nama_supplier,
+            'keterangan'            => $dataHeader[0]->keterangan,
+            'user_created'          => $dataHeader[0]->user_created,
+            // 'user_updated'          => $dataHeader[0]->user_updated
+        ]);
+        foreach ($dataArray as $item) {
+            // Simpan data ke dalam database menggunakan Eloquent atau Query Builder
+            PrmRawMaterialInputItem::create([
+                // 'doc_no'            => $item->doc_no,
+                'jenis'             => $item->jenis,
+                'berat_nota'        => $item->berat_nota,
+                'berat_kotor'       => $item->berat_kotor,
+                'berat_bersih'      => $item->berat_bersih,
+                'selisih_berat'     => $item->selisih_berat,
+                'kadar_air'         => $item->kadar_air,
+                'id_box'            => $item->id_box,
+                'harga_nota'        => $item->harga_nota,
+                'total_harga_nota'  => $item->total_harga_nota,
+                'harga_deal'        => $item->harga_deal,
+                'keterangan'        => $item->keterangan,
+                'user_created'      => $item->user_created,
+                // 'user_updated'      => $item->user_updated
+                // Sesuaikan dengan kolom-kolom lain di tabel Anda
+            ]);
         }
-
-        return response()->json(['message' => 'Data berhasil disimpan']);
+        return response()->json(['message' => 'Data Berhasil Disimpan']);
+        // return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     // store
     public function store(Request $request): RedirectResponse
@@ -99,7 +128,6 @@ class PrmRawMaterialInputController extends Controller
             'total_harga_nota'       => 'required',
             'harga_deal'             => 'required',
             'keterangan',
-            'keterangan_item',
             'user_created',
             'user_updated',
         ]);
@@ -129,12 +157,75 @@ class PrmRawMaterialInputController extends Controller
             'harga_nota'            => $request->harga_nota,
             'total_harga_nota'      => $request->total_harga_nota,
             'harga_deal'            => $request->harga_deal,
-            'keterangan_item'       => $request->keterangan_item,
+            'keterangan'            => $request->keterangan,
             'user_created'          => $request->user_created,
             'user_updated'          => $request->user_updated
         ]);
 
         //redirect to index
         return redirect()->route('prm_raw_material_input.index')->with(['success' => 'Data Berhasil Disimpan!']);
+    }
+    // show
+    public function show(string $id)
+    {
+        //get by ID
+        $MasterPRIM = PrmRawMaterialInput::findOrFail($id);
+        $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
+            ->where(['id' => $id])
+            ->first();
+
+        //render view
+        return view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM'));
+    }
+    // edit
+    public function edit(string $id)
+    {
+        $MasterPRIM = PrmRawMaterialInput::findOrFail($id);
+
+        return view('purchasing_exim.prm_raw_material_input.update', compact('MasterPRIM'));
+    }
+    // update
+    public function update(Request $request, $id): RedirectResponse
+    {
+        //get by ID
+        $MasterSPR = MasterSupplierRawMaterial::findOrFail($id);
+        $ValidasiNamaSupplier = 'required';
+        $ValidasiInisialSupplier = 'required';
+        if ($request->nama_supplier != $MasterSPR->nama_supplier) {
+            $ValidasiNamaSupplier = 'required|unique:master_supplier_raw_materials';
+        }
+        if ($request->inisial_supplier != $MasterSPR->inisial_supplier) {
+            $ValidasiInisialSupplier = 'required|unique:master_supplier_raw_materials';
+        }
+        // validate form
+        $this->validate($request, [
+            'nama_supplier'      => $ValidasiNamaSupplier,
+            'inisial_supplier'   => $ValidasiInisialSupplier,
+            'status'             => 'required',
+        ], [
+            'nama_supplier'     => 'Nama Supplier Sudah Digunakan',
+            'inisial_supplier'  => 'Inisial Supplier Sudah Digunakan',
+
+        ]);
+        $MasterSPR->update([
+            'nama_supplier'     => $request->nama_supplier,
+            'inisial_supplier'  => $request->inisial_supplier,
+            'status'            => $request->status,
+        ]);
+
+        //redirect to index
+        return redirect()->route('master_supplier_raw_material.index')->with(['success' => 'Data Berhasil Diubah!']);
+    }
+    // destroy
+    public function destroy($id): RedirectResponse
+    {
+        //get by ID
+        $MasterSPR = MasterSupplierRawMaterial::findOrFail($id);
+
+        //delete
+        $MasterSPR->delete();
+
+        //redirect to index
+        return redirect()->route('master_supplier_raw_material.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

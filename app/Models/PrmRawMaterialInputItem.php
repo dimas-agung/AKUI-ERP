@@ -21,7 +21,7 @@ class PrmRawMaterialInputItem extends Model
         'harga_nota',
         'total_harga_nota',
         'harga_deal',
-        'keterangan_item',
+        'keterangan',
         'user_created',
         'user_updated'
     ];
