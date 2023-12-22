@@ -403,7 +403,7 @@
                 dataType: 'json', // payload is json,
                 success: function(response) {
                     console.log('Data sent successfully:', response);
-                    window.location.href = `{{ route('purchasing_exim/prm_raw_material_input.index') }}`;
+                    window.location.href = `{{ route('prm_raw_material_input.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);

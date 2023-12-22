@@ -1,4 +1,7 @@
 @extends('layouts.template')
+@section('title')
+    Master Jenis Raw Material
+@endsection
 @section('content')
     <div class="col-md-12">
         <div class="card mt-2">

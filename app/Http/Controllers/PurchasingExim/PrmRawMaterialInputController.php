@@ -107,67 +107,70 @@ class PrmRawMaterialInputController extends Controller
         // return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     // store
-    public function store(Request $request): RedirectResponse
-    {
-        //validate form
-        $this->validate($request, [
-            'doc_no.*',
-            'nomor_po'               => 'required',
-            'nomor_batch'            => 'required',
-            'nomor_nota_supplier'    => 'required',
-            'nomor_nota_internal'    => 'required',
-            'nama_supplier'          => 'required',
-            'jenis'                  => 'required',
-            'berat_nota'             => 'required',
-            'berat_kotor'            => 'required',
-            'berat_bersih'           => 'required',
-            'selisih_berat'          => 'required',
-            'kadar_air'              => 'required',
-            'id_box'                 => 'required',
-            'harga_nota'             => 'required',
-            'total_harga_nota'       => 'required',
-            'harga_deal'             => 'required',
-            'keterangan',
-            'user_created',
-            'user_updated',
-        ]);
+    // public function store(Request $request): RedirectResponse
+    // {
+    //     //validate form
+    //     $this->validate($request, [
+    //         'doc_no.*',
+    //         'nomor_po'               => 'required',
+    //         'nomor_batch'            => 'required',
+    //         'nomor_nota_supplier'    => 'required',
+    //         'nomor_nota_internal'    => 'required',
+    //         'nama_supplier'          => 'required',
+    //         'jenis'                  => 'required',
+    //         'berat_nota'             => 'required',
+    //         'berat_kotor'            => 'required',
+    //         'berat_bersih'           => 'required',
+    //         'selisih_berat'          => 'required',
+    //         'kadar_air'              => 'required',
+    //         'id_box'                 => 'required',
+    //         'harga_nota'             => 'required',
+    //         'total_harga_nota'       => 'required',
+    //         'harga_deal'             => 'required',
+    //         'keterangan',
+    //         'user_created',
+    //         'user_updated',
+    //     ]);
 
-        //create Purchasing Raw Material Input
-        PrmRawMaterialInput::create([
-            'doc_no'                => $request->doc_no,
-            'nomor_po'              => $request->nomor_po,
-            'nomor_batch'           => $request->nomor_batch,
-            'nomor_nota_supplier'   => $request->nomor_nota_supplier,
-            'nomor_nota_internal'   => $request->nomor_nota_internal,
-            'nama_supplier'         => $request->nama_supplier,
-            'keterangan'            => $request->keterangan,
-            'user_created'          => $request->user_created,
-            'user_updated'          => $request->user_updated
-        ]);
-        //create Purchasing Raw Material Item
-        PrmRawMaterialInputItem::create([
-            'doc_no'                => $request->doc_no,
-            'jenis'                 => $request->jenis,
-            'berat_nota'            => $request->berat_nota,
-            'berat_kotor'           => $request->berat_kotor,
-            'berat_bersih'          => $request->berat_bersih,
-            'selisih_berat'         => $request->selisih_berat,
-            'kadar_air'             => $request->kadar_air,
-            'id_box'                => $request->id_box,
-            'harga_nota'            => $request->harga_nota,
-            'total_harga_nota'      => $request->total_harga_nota,
-            'harga_deal'            => $request->harga_deal,
-            'keterangan'            => $request->keterangan,
-            'user_created'          => $request->user_created,
-            'user_updated'          => $request->user_updated
-        ]);
+    //     //create Purchasing Raw Material Input
+    //     PrmRawMaterialInput::create([
+    //         'doc_no'                => $request->doc_no,
+    //         'nomor_po'              => $request->nomor_po,
+    //         'nomor_batch'           => $request->nomor_batch,
+    //         'nomor_nota_supplier'   => $request->nomor_nota_supplier,
+    //         'nomor_nota_internal'   => $request->nomor_nota_internal,
+    //         'nama_supplier'         => $request->nama_supplier,
+    //         'keterangan'            => $request->keterangan,
+    //         'user_created'          => $request->user_created,
+    //         'user_updated'          => $request->user_updated
+    //     ]);
+    //     //create Purchasing Raw Material Item
+    //     PrmRawMaterialInputItem::create([
+    //         'doc_no'                => $request->doc_no,
+    //         'jenis'                 => $request->jenis,
+    //         'berat_nota'            => $request->berat_nota,
+    //         'berat_kotor'           => $request->berat_kotor,
+    //         'berat_bersih'          => $request->berat_bersih,
+    //         'selisih_berat'         => $request->selisih_berat,
+    //         'kadar_air'             => $request->kadar_air,
+    //         'id_box'                => $request->id_box,
+    //         'harga_nota'            => $request->harga_nota,
+    //         'total_harga_nota'      => $request->total_harga_nota,
+    //         'harga_deal'            => $request->harga_deal,
+    //         'keterangan'            => $request->keterangan,
+    //         'user_created'          => $request->user_created,
+    //         'user_updated'          => $request->user_updated
+    //     ]);
 
-        //redirect to index
-        return redirect()->route('prm_raw_material_input.index')->with(['success' => 'Data Berhasil Disimpan!']);
-    }
+    //     //redirect to index
+    //     return redirect()->route('prm_raw_material_input.index')->with(['success' => 'Data Berhasil Disimpan!']);
+    // }
     // show
     public function show(string $id)
     {
+        $i = 1;
+        $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+        $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
         //get by ID
         $MasterPRIM = PrmRawMaterialInput::findOrFail($id);
         $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
@@ -175,46 +178,76 @@ class PrmRawMaterialInputController extends Controller
             ->first();
 
         //render view
-        return view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM'));
+        // return response()->view('purchasing_exim.prm_raw_material_input.show', [
+        //     'prm_raw_material_inputs'       => $MasterPRIM,
+        //     'master_supplier_raw_materials' => $MasterSupplierRawMaterial,
+        //     'master_jenis_raw_materials'    => $MasterJenisRawMaterial,
+        //     'i' => $i,
+        // ]);
+        return response()->view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM', 'i', 'MasterSupplierRawMaterial', 'MasterJenisRawMaterial'));
     }
     // edit
     public function edit(string $id)
     {
-        $MasterPRIM = PrmRawMaterialInput::findOrFail($id);
+        $MasterPRIMI = PrmRawMaterialInputItem::findOrFail($id);
+        // $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+        $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
 
-        return view('purchasing_exim.prm_raw_material_input.update', compact('MasterPRIM'));
+        return view('purchasing_exim.prm_raw_material_input.update', compact('MasterPRIMI', 'MasterJenisRawMaterial'));
     }
     // update
     public function update(Request $request, $id): RedirectResponse
     {
-        //get by ID
-        $MasterSPR = MasterSupplierRawMaterial::findOrFail($id);
-        $ValidasiNamaSupplier = 'required';
-        $ValidasiInisialSupplier = 'required';
-        if ($request->nama_supplier != $MasterSPR->nama_supplier) {
-            $ValidasiNamaSupplier = 'required|unique:master_supplier_raw_materials';
-        }
-        if ($request->inisial_supplier != $MasterSPR->inisial_supplier) {
-            $ValidasiInisialSupplier = 'required|unique:master_supplier_raw_materials';
-        }
-        // validate form
+        $PrmRawMaterialInputItem = PrmRawMaterialInputItem::findOrFail($id);
+        // $PrmRawMaterialInput = PrmRawMaterialInput::with('PrmRawMaterialInputItem')->get();
+        //validate form
         $this->validate($request, [
-            'nama_supplier'      => $ValidasiNamaSupplier,
-            'inisial_supplier'   => $ValidasiInisialSupplier,
-            'status'             => 'required',
-        ], [
-            'nama_supplier'     => 'Nama Supplier Sudah Digunakan',
-            'inisial_supplier'  => 'Inisial Supplier Sudah Digunakan',
+            'doc_no'            => 'required',
+            'jenis'             => 'required',
+            'berat_nota'        => 'required',
+            'berat_kotor'       => 'required',
+            'berat_bersih'      => 'required',
+            'selisih_berat'     => 'required',
+            'kadar_air'         => 'required',
+            'id_box'            => 'required',
+            'harga_nota'        => 'required',
+            'total_harga_nota'  => 'required',
+            'harga_deal'        => 'required',
+            'keterangan'        => '',
+            'user_created'      => '',
+            'user_updated'      => ''
+        ]);
 
+        //get post by ID
+
+        $PrmRawMaterialInputItem->update([
+            'doc_no'            => $request->doc_no,
+            'jenis'             => $request->jenis,
+            'berat_nota'        => $request->berat_nota,
+            'berat_kotor'       => $request->berat_kotor,
+            'berat_bersih'      => $request->berat_bersih,
+            'selisih_berat'     => $request->selisih_berat,
+            'kadar_air'         => $request->kadar_air,
+            'id_box'            => $request->id_box,
+            'harga_nota'        => $request->harga_nota,
+            'total_harga_nota'  => $request->total_harga_nota,
+            'harga_deal'        => $request->harga_deal,
+            'keterangan'        => $request->keterangan,
+            'user_created'      => $request->user_created,
+            'user_updated'      => $request->user_updated
         ]);
-        $MasterSPR->update([
-            'nama_supplier'     => $request->nama_supplier,
-            'inisial_supplier'  => $request->inisial_supplier,
-            'status'            => $request->status,
-        ]);
+
+        // $PrmRawMOH->update([
+        //     'doc_no'        => $request->doc_no,
+        //     'nomor_bstb'    => $request->nomor_bstb,
+        //     'nomor_batch'   => $request->nomor_batch,
+        //     'keterangan'    => $request->keterangan,
+        //     'user_created'  => $request->user_created,
+        //     'user_updated'  => $request->user_updated
+        // ]);
 
         //redirect to index
-        return redirect()->route('master_supplier_raw_material.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('purchasing_exim.prm_raw_material_input.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     // destroy
     public function destroy($id): RedirectResponse

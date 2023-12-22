@@ -1,14 +1,13 @@
 @extends('layouts.template')
+@section('title')
+    Purchasing Raw Material Input
+@endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Data Purchasing Raw Material</h4>
-                    {{-- <button href="{{ url('purchasing_exim/prm_raw_material_input/create') }}"
-                        class="btn btn-primary btn-round ml-auto">
-                        <i class="fa fa-plus"></i> Tambah Data
-                    </button> --}}
                     <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                         <a href="{{ url('/purchasing_exim/prm_raw_material_input/create') }}"
                             style="text-decoration: none; color:aliceblue">
@@ -19,6 +18,7 @@
                 </div>
             </div>
             <div class="card-body">
+                {{-- Create Data --}}
                 @if (session()->has('success'))
                     <div class="alert alert-success">
                         <strong>Sukses: </strong>{{ session()->get('success') }}
@@ -39,35 +39,35 @@
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">No Doc</th>
-                                <th scope="col">Nomor PO</th>
-                                <th scope="col">Nomor Batch</th>
-                                <th scope="col">Nomor Nota Supplier</th>
-                                <th scope="col">Nomor Nota Internal</th>
-                                <th scope="col">Nama Supplier</th>
-                                <th scope="col">Keterangan</th>
-                                <th scope="col">User Created</th>
-                                <th scope="col">User Updated</th>
-                                <th scope="col">Created At</th>
-                                <th scope="col">Updated At</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col" class="text-center">No</th>
+                                <th scope="col" class="text-center">No Doc</th>
+                                <th scope="col" class="text-center">Nomor PO</th>
+                                <th scope="col" class="text-center">Nomor Batch</th>
+                                <th scope="col" class="text-center">Nomor Nota Supplier</th>
+                                <th scope="col" class="text-center">Nomor Nota Internal</th>
+                                <th scope="col" class="text-center">Nama Supplier</th>
+                                <th scope="col" class="text-center">Keterangan</th>
+                                <th scope="col" class="text-center">User Created</th>
+                                <th scope="col" class="text-center">User Updated</th>
+                                <th scope="col" class="text-center">Created At</th>
+                                <th scope="col" class="text-center">Updated At</th>
+                                <th scope="col" class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tfoot>
-                            <th scope="col">No</th>
-                            <th scope="col">No Doc</th>
-                            <th scope="col">Nomor PO</th>
-                            <th scope="col">Nomor Batch</th>
-                            <th scope="col">Nomor Nota Supplier</th>
-                            <th scope="col">Nomor Nota Internal</th>
-                            <th scope="col">Nama Supplier</th>
-                            <th scope="col">Keterangan</th>
-                            <th scope="col">User Created</th>
-                            <th scope="col">User Updated</th>
-                            <th scope="col">Created At</th>
-                            <th scope="col">Updated At</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" class="text-center">No</th>
+                            <th scope="col" class="text-center">No Doc</th>
+                            <th scope="col" class="text-center">Nomor PO</th>
+                            <th scope="col" class="text-center">Nomor Batch</th>
+                            <th scope="col" class="text-center">Nomor Nota Supplier</th>
+                            <th scope="col" class="text-center">Nomor Nota Internal</th>
+                            <th scope="col" class="text-center">Nama Supplier</th>
+                            <th scope="col" class="text-center">Keterangan</th>
+                            <th scope="col" class="text-center">User Created</th>
+                            <th scope="col" class="text-center">User Updated</th>
+                            <th scope="col" class="text-center">Created At</th>
+                            <th scope="col" class="text-center">Updated At</th>
+                            <th scope="col" class="text-center">Actions</th>
                         </tfoot>
                         <tbody>
                             @forelse ($prm_raw_material_inputs as $MasterPRIM)
@@ -87,11 +87,11 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('purchasing_exim/prm_raw_material_input.destroy', $MasterPRIM->id) }}"
+                                                action="{{ route('prm_raw_material_input.destroy', $MasterPRIM->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('purchasing_exim/prm_raw_material_input.edit', $MasterPRIM->id) }}"
-                                                    class="btn btn-link" title="Edit Task"
-                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
+                                                <a href="{{ route('prm_raw_material_input.show', $MasterPRIM->id) }}"
+                                                    class="btn btn-link" title="Show Detail"
+                                                    data-original-title="Show Detail"><i class="fa fa-file"></i></a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" data-toggle="tooltip"
