@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\PurchasingExim\PrmRawMaterialInput as PurchasingEximPrmRawMaterialInput;
 use App\Models\MasterJenisRawMaterial;
-use App\Models\PrmRawMaterialInput;
+use App\Models\PrmRawMaterialInputItem;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -16,12 +16,12 @@ class MasterJenisRawMaterialController extends Controller
     {
 
         $i = 1;
-        $PrmRawMaterialInput = PrmRawMaterialInput::with('master_jenis_raw_material')->get();
+        $PrmRawMaterialInputItem = PrmRawMaterialInputItem::with('MasterJenisRawMaterial')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::all();
         // return $PrmRawMaterialInput;
         // return $MasterJenisRawMaterial;
         return response()->view('master.master_jenis_raw_material.index', [
-            'PrmRawMaterialInput'    => $PrmRawMaterialInput,
+            'PrmRawMaterialInput'    => $PrmRawMaterialInputItem,
             'MasterJenisRawMaterial' => $MasterJenisRawMaterial,
             'i' => $i
         ]);
