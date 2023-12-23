@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PurchasingExim;
 //return type View
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
+use App\Models\PrmRawMaterialOutputHeader;
 use App\Models\StockTransitGradingKasar;
 use Illuminate\Http\Request;
 
@@ -16,9 +17,12 @@ class StockTransitGradingKasarController extends Controller
     //Index
     public function index(){
         $i =1;
-        $stockTGK = StockTransitGradingKasar::get();
+        $stockTGK = StockTransitGradingKasar::with('StockTransitGradingKasar')->get();
+        $PrmRawMOH = PrmRawMaterialOutputHeader::with('StockTransitGradingKasar')->get();
+        // return $PrmRawMOH;
         return response()->view('purchasing_exim.StockTransitGradingKasar.index', [
             'stockTGK' => $stockTGK,
+            'PrmRawMOH' => $PrmRawMOH,
             'i' => $i,
         ]);
     }

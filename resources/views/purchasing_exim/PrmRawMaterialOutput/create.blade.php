@@ -449,7 +449,10 @@
                     window.location.href = response.redirectTo; // Redirect ke halaman lain
                 },
                 error: function(error) {
-                    console.error('Error sending data:', error);
+                    // console.error('Error sending data:', error);
+                    // console.error('Error: ' + response.error);
+                    console.error('Error:', response);
+                    console.log('Validation Errors:', response.responseJSON.errors);
                 }
             });
 

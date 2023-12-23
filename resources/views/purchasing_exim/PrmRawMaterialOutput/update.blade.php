@@ -12,22 +12,6 @@
                     <h4>Update Data Prm Raw Material Output</h4>
                 </div>
                 <div class="card-body">
-                    @if (session()->has('success'))
-                        <div class="alert alert-success">
-                            <strong>Sukses: </strong>{{ session()->get('success') }}
-                        </div>
-                    @endif
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul><strong>
-                                    @foreach ($errors->all() as $error)
-                                        <li> {{ $error }} </li>
-                                    @endforeach
-                                </strong>
-                            </ul>
-                            <p>Mohon periksa kembali formulir Anda.</p>
-                        </div>
-                    @endif
                     <form action="{{ route('PrmRawMaterialOutput.update', $PrmRawMOIC->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
@@ -95,7 +79,7 @@
                                     <option></option>
                                     @foreach ($PrmRawMS as $post)
                                         <option value="{{ $post->id_box }}"
-                                            {{ $post->id_box == $post->id_box ? 'selected' : '' }}>
+                                            {{ $post->id_box == $PrmRawMOIC->id_box ? 'selected' : '' }}>
                                             {{ old('id_box', $post->id_box) }}</option>
                                     @endforeach
                                 </select>
@@ -105,7 +89,7 @@
                                 <div class="form-group">
                                     <label>Nomor Batch</label>
                                     <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
-                                        onchange="handleChange(this.{{ old('nomor_batch') }})"
+                                        value="{{ old('nomor_batch', $PrmRawMOIC->nomor_batch) }}"
                                         placeholder="Masukkan nomor batch">
                                 </div>
                             </div>
@@ -114,7 +98,7 @@
                                 <div class="form-group">
                                     <label>Nama Supplier</label>
                                     <input type="text" class="form-control" id="nama_supplier" name="nama_supplier"
-                                        onchange="handleChange(this.{{ old('nama_supplier') }})"
+                                        value="{{ old('nama_supplier', $PrmRawMOIC->nama_supplier) }}"
                                         placeholder="Masukkan nama supplier">
                                 </div>
                             </div>
@@ -122,7 +106,7 @@
                                 <div class="form-group">
                                     <label>Jenis</label>
                                     <input type="text" class="form-control" id="jenis" name="jenis"
-                                        onchange="handleChange(this.{{ old('jenis') }})" placeholder="Masukkan jenis">
+                                        value="{{ old('jenis', $PrmRawMOIC->jenis) }}" placeholder="Masukkan jenis">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -131,12 +115,6 @@
                                     <input type="text" class="form-control @error('berat') is-invalid @enderror"
                                         name="berat" value="{{ old('berat', $PrmRawMOIC->berat) }}"
                                         placeholder="Masukkan berat">
-                                    <!-- error message untuk title -->
-                                    @error('berat')
-                                        <div class="alert alert-danger mt-2">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -145,12 +123,6 @@
                                     <input type="text" class="form-control @error('kadar_air') is-invalid @enderror"
                                         name="kadar_air" value="{{ old('kadar_air', $PrmRawMOIC->kadar_air) }}"
                                         placeholder="Masukkan kadar air">
-                                    <!-- error message untuk title -->
-                                    @error('kadar_air')
-                                        <div class="alert alert-danger mt-2">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">

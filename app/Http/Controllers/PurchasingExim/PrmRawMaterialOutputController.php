@@ -7,10 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Models\PrmRawMaterialOutputHeader;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\PrmRawMaterialStock;
+
+use App\Services\PrmRawMaterialOutputService;
+use App\Http\Requests\PrmRawMaterialOutputRequest;
 use Illuminate\Http\Request;
 
 //return type redirectResponse
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class PrmRawMaterialOutputController extends Controller
 {
@@ -49,61 +53,24 @@ class PrmRawMaterialOutputController extends Controller
     }
 
     // Contoh controller
-public function sendData(Request $request)
-{
+    public function sendData(
+        PrmRawMaterialOutputRequest $request,
+        PrmRawMaterialOutputService $prmRawMaterialOutputService)
+    {
     $dataArray = json_decode($request->input('data'));
     $dataHeader = json_decode($request->input('dataHeader'));
-    // return $dataArray;
-    // var_dump($dataArray[0]);
-    // return;
-    // return $dataHeader[0];
-// Pastikan doc_no ada dan merupakan string sebelum menggunakan substr
 
-    // Lakukan sesuatu dengan data, misalnya menyimpan ke database
-    PrmRawMaterialOutputHeader::create([
-        'doc_no'        => $dataHeader[0]->doc_no,
-        'nomor_bstb'    => $dataHeader[0]->nomor_bstb,
-        'nomor_batch'   => $dataHeader[0]->nomor_batch,
-        'keterangan'    => $dataHeader[0]->keterangan,
-        'user_created'  => $dataHeader[0]->user_created,
-        'user_updated'  => $dataHeader[0]->user_updated
-    ]);
-    foreach ($dataArray as $item) {
-        // Simpan data ke dalam database menggunakan Eloquent atau Query Builder
-        PrmRawMaterialOutputItem::create([
-            'doc_no'        => $item->doc_no,
-            'nomor_bstb'    => $item->nomor_bstb,
-            'nomor_batch'   => $item->nomor_batch,
-            'id_box'        => $item->id_box,
-            'nama_supplier' => $item->nama_supplier,
-            'jenis'         => $item->jenis,
-            'berat'         => $item->berat,
-            'kadar_air'     => $item->kadar_air,
-            'tujuan_kirim'  => $item->tujuan_kirim,
-            'letak_tujuan'  => $item->letak_tujuan,
-            'inisial_tujuan'=> $item->inisial_tujuan,
-            'modal'         => $item->modal,
-            'total_modal'   => $item->total_modal,
-            'keterangan_item'=> $item->keterangan_item,
-            'user_created'  => $item->user_created,
-            'user_updated'  => $item->user_updated
-            // Sesuaikan dengan kolom-kolom lain di tabel Anda
-        ]);
+        // $result = $this->$prmRawMaterialOutputService->sendData($dataHeader[0], $dataArray);
+        $result = $prmRawMaterialOutputService->sendData($dataHeader[0], $dataArray);
+
+        if ($result['success']) {
+            return response()->json($result);
+        } else {
+            return response()->json($result, 500);
+        }
+
     }
 
-        // return response()->json(['message' => 'Data saved successfully']);
-        return response()->json([
-            'message' => 'Data berhasil disimpan!',
-            'redirectTo' => route('PrmRawMaterialOutput.index'), // Ganti dengan nama route yang sesuai
-        ]);
-    }
-
-
-    /**
-     * store
-     */
-    // public function store(Request $request): RedirectResponse
-    // {
     //     //validate form
     //     $this->validate($request, [
     //         'doc_no.*'       => 'required',
@@ -164,8 +131,6 @@ public function sendData(Request $request)
         $i =1;
         // $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
         $headers = PrmRawMaterialOutputHeader::findOrFail($id);
-        // $item      = $PrmRawMOH->PrmRawMaterialOutputItem;
-        // $PrmRawMOIC = PrmRawMaterialOutputItem::with('PrmRawMaterialOutputHeader')->get();
         $headers = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')
         ->where(['id'=> $id])
         ->first();
@@ -174,8 +139,7 @@ public function sendData(Request $request)
         return view('purchasing_exim.PrmRawMaterialOutput.show', compact('headers', 'i'));
     }
 
-
-         /**
+    /**
      * edit
      */
     public function edit(string $id): View
@@ -184,7 +148,6 @@ public function sendData(Request $request)
         $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
         $PrmRawMS = PrmRawMaterialStock::with('PrmRawMaterialOutputItem')->get();
         // return $PrmRawMOIC;
-        // $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
 
         //render view with post
         return view('purchasing_exim.PrmRawMaterialOutput.update', compact('PrmRawMOIC', 'PrmRawMS'));
@@ -193,67 +156,77 @@ public function sendData(Request $request)
     /**
      * update
      */
-    public function update(Request $request, $id): RedirectResponse
+    // public function update(
+    //     PrmRawMaterialOutputRequest $request,
+    //     PrmRawMaterialOutputService $prmRawMaterialOutputService, $id)
+    // {
+    //     $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
+    //     $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
+    //     // validate form
+    //     // $this->validate($request, [
+    //     //     'doc_no'       => 'required',
+    //     //     'nomor_bstb'   => 'required',
+    //     //     'nomor_batch'  => 'required',
+    //     //     'id_box'       => 'required',
+    //     //     'nama_supplier'=> 'required',
+    //     //     'jenis'        => 'required',
+    //     //     'berat'        => 'required',
+    //     //     'kadar_air'    => 'required',
+    //     //     'tujuan_kirim' => 'required',
+    //     //     'letak_tujuan' => 'required',
+    //     //     'inisial_tujuan'=> 'required',
+    //     //     'modal'        => 'required',
+    //     //     'total_modal'  => 'required',
+    //     //     'keterangan'   => '',
+    //     //     'user_created' => '',
+    //     //     'user_updated' => ''
+    //     // ], [
+    //     //     'doc_no.required' => 'Kolom Nomer Document Wajib diisi.',
+    //     //     'nomor_bstb.required' => 'Kolom Nomer BSTB Wajib diisi.'
+    //     // ]);
+
+    //     // get post by ID
+
+    //     // $PrmRawMOIC->update([
+    //     //     'doc_no'        => $request->doc_no,
+    //     //     'nomor_bstb'    => $request->nomor_bstb,
+    //     //     'nomor_batch'   => $request->nomor_batch,
+    //     //     'id_box'        => $request->id_box,
+    //     //     'nama_supplier' => $request->nama_supplier,
+    //     //     'jenis'         => $request->jenis,
+    //     //     'berat'         => $request->berat,
+    //     //     'kadar_air'     => $request->kadar_air,
+    //     //     'tujuan_kirim'  => $request->tujuan_kirim,
+    //     //     'letak_tujuan'  => $request->letak_tujuan,
+    //     //     'inisial_tujuan'=> $request->inisial_tujuan,
+    //     //     'modal'         => $request->modal,
+    //     //     'total_modal'   => $request->total_modal,
+    //     //     'keterangan_item'    => $request->keterangan_item,
+    //     //     'user_created'  => $request->user_created,
+    //     //     'user_updated'  => $request->user_updated
+    //     // ]);
+
+    //     //redirect to index
+    //     // return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
+    //     // $PrmRawMOICy = $prmRawMaterialOutputService->updateItem($PrmRawMOICy);
+
+    //     // if ($result['success']) {
+    //     //     return response()->json($result);
+    //     // } else {
+    //     //     return response()->json($result, 500);
+    //     // }
+    // }
+    public function update(Request $request, $id)
     {
-        $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
-        $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
-        //validate form
-        $this->validate($request, [
-            'doc_no'       => 'required',
-            'nomor_bstb'   => 'required',
-            'nomor_batch'  => 'required',
-            'id_box'       => 'required',
-            'nama_supplier'=> 'required',
-            'jenis'        => 'required',
-            'berat'        => 'required',
-            'kadar_air'    => 'required',
-            'tujuan_kirim' => 'required',
-            'letak_tujuan' => 'required',
-            'inisial_tujuan'=> 'required',
-            'modal'        => 'required',
-            'total_modal'  => 'required',
-            'keterangan'   => '',
-            'user_created' => '',
-            'user_updated' => ''
-        ], [
-            'doc_no.required' => 'Kolom Nomer Document Wajib diisi.',
-            'nomor_bstb.required' => 'Kolom Nomer BSTB Wajib diisi.'
-        ]);
+        $prmRawMaterialOutputService = app(PrmRawMaterialOutputService::class);
 
-        //get post by ID
+        // Lakukan sesuatu dengan layanan
+        $result = $prmRawMaterialOutputService->updateItem($request, $id);
 
-        $PrmRawMOIC->update([
-            'doc_no'        => $request->doc_no,
-            'nomor_bstb'    => $request->nomor_bstb,
-            'nomor_batch'   => $request->nomor_batch,
-            'id_box'        => $request->id_box,
-            'nama_supplier' => $request->nama_supplier,
-            'jenis'         => $request->jenis,
-            'berat'         => $request->berat,
-            'kadar_air'     => $request->kadar_air,
-            'tujuan_kirim'  => $request->tujuan_kirim,
-            'letak_tujuan'  => $request->letak_tujuan,
-            'inisial_tujuan'=> $request->inisial_tujuan,
-            'modal'         => $request->modal,
-            'total_modal'   => $request->total_modal,
-            'keterangan_item'    => $request->keterangan_item,
-            'user_created'  => $request->user_created,
-            'user_updated'  => $request->user_updated
-        ]);
+        // Lakukan sesuatu dengan hasil
 
-        // $PrmRawMOH->update([
-        //     'doc_no'        => $request->doc_no,
-        //     'nomor_bstb'    => $request->nomor_bstb,
-        //     'nomor_batch'   => $request->nomor_batch,
-        //     'keterangan'    => $request->keterangan,
-        //     'user_created'  => $request->user_created,
-        //     'user_updated'  => $request->user_updated
-        // ]);
-
-        //redirect to index
-        return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return $result;
     }
-
 
         /**
      * destroy

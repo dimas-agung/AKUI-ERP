@@ -1,21 +1,20 @@
 @extends('layouts.master2')
 @section('title')
-    Stock Transit Grading Kasar
+    Data Stock Transit Grading Kasar
 @endsection
 @section('content')
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Stock Transit Grading Kasar</h4>
-                    <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                    <h4 class="card-title">Data Stock Transit Grading Kasar</h4>
+                    {{-- <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                         <i class="fa fa-plus"></i>
                         Add Data
-                    </button>
+                    </button> --}}
                 </div>
             </div>
             <div class="card-body">
-
                 {{-- Create Data --}}
                 @if (session()->has('success'))
                     <div class="alert alert-success">
@@ -33,7 +32,7 @@
                         <p>Mohon periksa kembali formulir Anda.</p>
                     </div>
                 @endif
-                <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                {{-- <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-xl" role="document">
                         <div class="modal-content">
                             <div class="modal-header no-bd">
@@ -41,7 +40,7 @@
                                     <span class="fw-mediumbold">
                                         Input</span>
                                     <span class="fw-light">
-                                        Data Unit
+                                        Data Stock Transit Grading Kasar
                                     </span>
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -235,7 +234,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="table-responsive">
                     <table id="add-row" class="display table table-striped table-hover">
@@ -243,7 +242,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Nomor BTSB</th>
-                                <th class="text-center">Nama Supplier</th>
+                                {{-- <th class="text-center">Nama Supplier</th>
                                 <th class="text-center">Jenis</th>
                                 <th class="text-center">Berat</th>
                                 <th class="text-center">Kadar Air</th>
@@ -251,17 +250,17 @@
                                 <th class="text-center">Letak Tujuan</th>
                                 <th class="text-center">Inisial Tujuan</th>
                                 <th class="text-center">Modal</th>
-                                <th class="text-center">Total Modal</th>
+                                <th class="text-center">Total Modal</th> --}}
                                 <th class="text-center">Keterangan</th>
                                 <th class="text-center">User Created</th>
                                 <th class="text-center">User Updated</th>
-                                <th style="width: 10%" class="text-center">Action</th>
+                                {{-- <th style="width: 10%" class="text-center">Action</th> --}}
                             </tr>
                         </thead>
                         <tfoot>
                             <th class="text-center">No</th>
                             <th class="text-center">Nomor BTSB</th>
-                            <th class="text-center">Nama Supplier</th>
+                            {{-- <th class="text-center">Nama Supplier</th>
                             <th class="text-center">Jenis</th>
                             <th class="text-center">Berat</th>
                             <th class="text-center">Kadar Air</th>
@@ -269,30 +268,30 @@
                             <th class="text-center">Letak Tujuan</th>
                             <th class="text-center">Inisial Tujuan</th>
                             <th class="text-center">Modal</th>
-                            <th class="text-center">Total Modal</th>
+                            <th class="text-center">Total Modal</th> --}}
                             <th class="text-center">Keterangan</th>
                             <th class="text-center">User Created</th>
                             <th class="text-center">User Updated</th>
-                            <th class="text-center">Action</th>
+                            {{-- <th class="text-center">Action</th> --}}
                         </tfoot>
                         <tbody>
-                            @forelse ($stockTGK as $post)
+                            @forelse ($PrmRawMOH as $post)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{!! $post->nomor_bstb !!}</td>
-                                    <td class="text-center">{!! $post->nama_supplier !!}</td>
-                                    <td class="text-center">{!! $post->jenis !!}</td>
+                                    {{-- <td class="text-center">{!! $post->nama_supplier !!}</td> --}}
+                                    {{-- <td class="text-center">{!! $post->jenis !!}</td>
                                     <td class="text-center">{!! $post->berat !!}</td>
                                     <td class="text-center">{!! $post->kadar_air !!}</td>
                                     <td class="text-center">{!! $post->tujuan_kirim !!}</td>
                                     <td class="text-center">{!! $post->letak_tujuan !!}</td>
                                     <td class="text-center">{!! $post->inisial_tujuan !!}</td>
                                     <td class="text-center">{!! $post->modal !!}</td>
-                                    <td class="text-center">{!! $post->total_modal !!}</td>
+                                    <td class="text-center">{!! $post->total_modal !!}</td> --}}
                                     <td class="text-center">{!! $post->keterangan !!}</td>
                                     <td class="text-center">{!! $post->user_created !!}</td>
                                     <td class="text-center">{!! $post->user_updated !!}</td>
-                                    <td class="text-center">
+                                    {{-- <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('StockTransitGradingKasar.destroy', $post->id) }}"
@@ -310,7 +309,7 @@
                                                         class="fa fa-times"></i></button>
                                             </form>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
