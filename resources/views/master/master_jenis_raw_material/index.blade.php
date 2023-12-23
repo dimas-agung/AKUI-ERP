@@ -1,4 +1,7 @@
 @extends('layouts.template')
+@section('Menu')
+    Master
+@endsection
 @section('title')
     Master Jenis Raw Material
 @endsection
@@ -81,8 +84,11 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Upah Operator</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="number"
-                                                    class="form-control @error('upah_operator') is-invalid @enderror"
+                                                <input type="text" pattern="[0-9]*" inputmode="numeric"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                    class="form-control @error('upah_operator')
+is-invalid
+@enderror"
                                                     name="upah_operator" placeholder="Masukan Upah Operator">
 
                                                 <!-- error message untuk title -->
@@ -95,8 +101,11 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Pengurangan Harga</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="number"
-                                                    class="form-control @error('pengurangan_harga') is-invalid @enderror"
+                                                <input type="text" pattern="[0-9]*" inputmode="numeric"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                    class="form-control @error('pengurangan_harga')
+is-invalid
+@enderror"
                                                     name="pengurangan_harga" placeholder="Masukan Pengurangan Harga">
 
                                                 <!-- error message untuk title -->
@@ -109,8 +118,11 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Harga Estimasi</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="number"
-                                                    class="form-control @error('harga_estimasi') is-invalid @enderror"
+                                                <input type="text" pattern="[0-9]*" inputmode="numeric"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                    class="form-control @error('harga_estimasi')
+is-invalid
+@enderror"
                                                     name="harga_estimasi" placeholder="Masukan Harga Estimasi">
 
                                                 <!-- error message untuk title -->
@@ -135,29 +147,29 @@
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Jenis</th>
-                                <th scope="col">Kategori Susut</th>
-                                <th scope="col">Upah Operator</th>
-                                <th scope="col">Pengurangan harga</th>
-                                <th scope="col">Harga Estimasi</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Tanggal Buat</th>
-                                <th scope="col">Tanggal Update</th>
-                                <th scope="col">AKSI</th>
+                                <th scope="col" class="text-center">No</th>
+                                <th scope="col" class="text-center">Jenis</th>
+                                <th scope="col" class="text-center">Kategori Susut</th>
+                                <th scope="col" class="text-center">Upah Operator</th>
+                                <th scope="col" class="text-center">Pengurangan harga</th>
+                                <th scope="col" class="text-center">Harga Estimasi</th>
+                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col" class="text-center">Tanggal Buat</th>
+                                <th scope="col" class="text-center">Tanggal Update</th>
+                                <th scope="col" class="text-center">AKSI</th>
                             </tr>
                         </thead>
                         <tfoot>
-                            <th scope="col">No</th>
-                            <th scope="col">Jenis</th>
-                            <th scope="col">Kategori Susut</th>
-                            <th scope="col">Upah Operator</th>
-                            <th scope="col">Pengurangan harga</th>
-                            <th scope="col">Harga Estimasi</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Tanggal Buat</th>
-                            <th scope="col">Tanggal Update</th>
-                            <th scope="col">AKSI</th>
+                            <th scope="col" class="text-center">No</th>
+                            <th scope="col" class="text-center">Jenis</th>
+                            <th scope="col" class="text-center">Kategori Susut</th>
+                            <th scope="col" class="text-center">Upah Operator</th>
+                            <th scope="col" class="text-center">Pengurangan harga</th>
+                            <th scope="col" class="text-center">Harga Estimasi</th>
+                            <th scope="col" class="text-center">Status</th>
+                            <th scope="col" class="text-center">Tanggal Buat</th>
+                            <th scope="col" class="text-center">Tanggal Update</th>
+                            <th scope="col" class="text-center">AKSI</th>
                         </tfoot>
                         <tbody>
                             @forelse ($MasterJenisRawMaterial as $MasterJRM)

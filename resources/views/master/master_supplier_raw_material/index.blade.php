@@ -1,4 +1,7 @@
 @extends('layouts.template')
+@section('Menu')
+    Master
+@endsection
 @section('title')
     Master Supplier Raw Material
 @endsection
@@ -92,23 +95,23 @@
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Nama Supplier</th>
-                                <th scope="col">Inisial supplier</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Tanggal Buat</th>
-                                <th scope="col">Tanggal Update</th>
-                                <th scope="col">AKSI</th>
+                                <th scope="col" class="text-center">No</th>
+                                <th scope="col" class="text-center">Nama Supplier</th>
+                                <th scope="col" class="text-center">Inisial supplier</th>
+                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col" class="text-center">Tanggal Buat</th>
+                                <th scope="col" class="text-center">Tanggal Update</th>
+                                <th scope="col" class="text-center">AKSI</th>
                             </tr>
                         </thead>
                         <tfoot>
-                            <th scope="col">No</th>
-                            <th scope="col">Nama Supplier</th>
-                            <th scope="col">Inisial supplier</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Tanggal Buat</th>
-                            <th scope="col">Tanggal Update</th>
-                            <th scope="col">AKSI</th>
+                            <th scope="col" class="text-center">No</th>
+                            <th scope="col" class="text-center">Nama Supplier</th>
+                            <th scope="col" class="text-center">Inisial supplier</th>
+                            <th scope="col" class="text-center">Status</th>
+                            <th scope="col" class="text-center">Tanggal Buat</th>
+                            <th scope="col" class="text-center">Tanggal Update</th>
+                            <th scope="col" class="text-center">AKSI</th>
                         </tfoot>
                         <tbody>
                             @forelse ($MasterSupplierRawMaterial as $MasterSPR)

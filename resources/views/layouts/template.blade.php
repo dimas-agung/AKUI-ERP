@@ -326,7 +326,7 @@
             <div class="content">
                 <div class="page-inner">
                     <div class="page-header">
-                        <h4 class="page-title">Master</h4>
+                        <h4 class="page-title">@yield('Menu')</h4>
                         <ul class="breadcrumbs">
                             <li class="nav-home">
                                 <a href="{{ url('/') }}">
@@ -337,13 +337,10 @@
                                 <i class="flaticon-right-arrow"></i>
                             </li>
                             <li class="nav-item">
-                                <a href="#">@yield('title')</a>
+                                <a href="{{ url('/') }}">@yield('title')</a>
                             </li>
                             <li class="separator">
                                 <i class="flaticon-right-arrow"></i>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#">Basic Form</a>
                             </li>
                         </ul>
                     </div>

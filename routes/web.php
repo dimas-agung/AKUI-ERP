@@ -84,11 +84,13 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::c
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
     Route::get('/purchasing_exim/prm_raw_material_input', 'index')->name('prm_raw_material_input.index');
     Route::get('/purchasing_exim/prm_raw_material_input/create', 'create')->name('prm_raw_material_input.create');
+    Route::get('/purchasing_exim/prm_raw_material_input/create_item', 'create')->name('prm_raw_material_input.create');
     Route::post('/purchasing_exim/prm_raw_material_input/store', 'store')->name('prm_raw_material_input.store');
     Route::get('/purchasing_exim/prm_raw_material_input/show/{id}', 'show')->name('prm_raw_material_input.show');
     Route::get('/purchasing_exim/prm_raw_material_input/edit/{id}', 'edit')->name('prm_raw_material_input.edit');
-    Route::put('/purchasing_exim/prm_raw_material_input/update/{id}', 'update')->name('prm_raw_material_input.update');
-    Route::delete('/purchasing_exim/prm_raw_material_input/destroy/{id}', 'destroy')->name('prm_raw_material_input.destroy');
+    Route::post('/purchasing_exim/prm_raw_material_input/update/{id}', 'update')->name('prm_raw_material_input.update');
+    Route::delete('/purchasing_exim/prm_raw_material_input/destroyInput/{id}', 'destroyInput')->name('prm_raw_material_input.destroyInput');
+    Route::delete('/purchasing_exim/prm_raw_material_input/destroyItem/{id}', 'destroyItem')->name('prm_raw_material_input.destroyItem');
     Route::get('/purchasing_exim/prm_raw_material_input/getDataSupplier', 'getDataSupplier')->name('prm_raw_material_input.getDataSupplier');
     Route::get('/purchasing_exim/prm_raw_material_input/getDataJenis', 'getDataJenis')->name('prm_raw_material_input.getDataJenis');
     Route::post('/purchasing_exim/prm_raw_material_input/simpanData', 'simpanData')->name('prm_raw_material_input.simpanData');

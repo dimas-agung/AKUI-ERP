@@ -57,23 +57,33 @@
                     </div>
                     <div class="col-md-3">
                         <label for="berat_nota" class="form-label">Berat Nota</label>
-                        <input type="number" class="form-control" id="berat_nota">
+                        <input type="text" pattern="[0-9]*" inputmode="numeric"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
+                            id="berat_nota">
                     </div>
                     <div class="col-md-3">
                         <label for="berat_kotor" class="form-label">Berat Kotor</label>
-                        <input type="number" class="form-control" id="berat_kotor">
+                        <input type="text" pattern="[0-9]*" inputmode="numeric"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
+                            id="berat_kotor">
                     </div>
                     <div class="col-md-3">
                         <label for="berat_bersih" class="form-label">Berat Bersih</label>
-                        <input type="number" class="form-control" id="berat_bersih">
+                        <input type="text" pattern="[0-9]*" inputmode="numeric"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
+                            id="berat_bersih">
                     </div>
                     <div class="col-md-3">
                         <label for="selisih_berat" class="form-label">Selisih Berat</label>
-                        <input type="number" class="form-control" id="selisih_berat">
+                        <input type="text" pattern="[0-9]*" inputmode="numeric"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
+                            id="selisih_berat">
                     </div>
                     <div class="col-md-3">
                         <label for="kadar_air" class="form-label">Kadar Air</label>
-                        <input type="number" class="form-control" id="kadar_air">
+                        <input type="text" pattern="[0-9]*" inputmode="numeric"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
+                            id="kadar_air">
                     </div>
                     <div class="col-md-3">
                         <label for="id_box" class="form-label">ID Box</label>
@@ -81,15 +91,21 @@
                     </div>
                     <div class="col-md-3">
                         <label for="harga_nota" class="form-label">Harga Nota</label>
-                        <input type="number" class="form-control" id="harga_nota">
+                        <input type="text" pattern="[0-9]*" inputmode="numeric"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
+                            id="harga_nota">
                     </div>
                     <div class="col-md-3">
                         <label for="total_harga_nota" class="form-label">Total Harga Nota</label>
-                        <input type="number" class="form-control" id="total_harga_nota">
+                        <input type="text" pattern="[0-9]*" inputmode="numeric"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
+                            id="total_harga_nota">
                     </div>
                     <div class="col-md-3">
                         <label for="harga_deal" class="form-label">Harga Deal</label>
-                        <input type="number" class="form-control" id="harga_deal">
+                        <input type="text" pattern="[0-9]*" inputmode="numeric"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
+                            id="harga_deal">
                     </div>
                     <div class="col-md-3">
                         <label for="keterangan" class="form-label">Keterangan</label>

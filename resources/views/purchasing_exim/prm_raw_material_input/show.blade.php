@@ -8,6 +8,13 @@
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Detail Data Purchasing Raw Material</h4>
+                    <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                        <a href="{{ url('/purchasing_exim/prm_raw_material_input/create_item') }}"
+                            style="text-decoration: none; color:aliceblue">
+                            <i class="fa fa-plus"></i>
+                            <span class="sub-item">Add Data</span>
+                        </a>
+                    </button>
                 </div>
             </div>
             <div class="card-body">
@@ -94,11 +101,11 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('prm_raw_material_input.destroy', $MasterPRIM->id) }}"
+                                                action="{{ route('prm_raw_material_input.destroyItem', $MasterPRIM->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('prm_raw_material_input.edit', $MasterPRIM->id) }}"
+                                                {{-- <a href="{{ route('prm_raw_material_input.edit', $MasterPRIM->id) }}"
                                                     class="btn btn-link" title="Edit Task"
-                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
+                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a> --}}
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" data-toggle="tooltip"
@@ -116,6 +123,10 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="col-12 mt-2 text-end">
+                    <button type="button" class="btn btn-danger mt-2 text-end" onclick="goBack()">Cancel</button>
+                </div>
+
             </div>
         </div>
     </div>

@@ -1,4 +1,7 @@
 @extends('layouts.template')
+@section('Menu')
+    Master
+@endsection
 @section('title')
     Master Tujuan Kirim Raw Material
 @endsection
@@ -108,25 +111,25 @@
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Tujuan Kirim</th>
-                                <th scope="col">Letak Tujuan</th>
-                                <th scope="col">Inisial Kirim</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Tanggal Buat</th>
-                                <th scope="col">Tanggal Update</th>
-                                <th scope="col">AKSI</th>
+                                <th scope="col" class="text-center">No</th>
+                                <th scope="col" class="text-center">Tujuan Kirim</th>
+                                <th scope="col" class="text-center">Letak Tujuan</th>
+                                <th scope="col" class="text-center">Inisial Kirim</th>
+                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col" class="text-center">Tanggal Buat</th>
+                                <th scope="col" class="text-center">Tanggal Update</th>
+                                <th scope="col" class="text-center">AKSI</th>
                             </tr>
                         </thead>
                         <tfoot>
-                            <th scope="col">No</th>
-                            <th scope="col">Tujuan Kirim</th>
-                            <th scope="col">Letak Tujuan</th>
-                            <th scope="col">Inisial Kirim</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Tanggal Buat</th>
-                            <th scope="col">Tanggal Update</th>
-                            <th scope="col">AKSI</th>
+                            <th scope="col" class="text-center">No</th>
+                            <th scope="col" class="text-center">Tujuan Kirim</th>
+                            <th scope="col" class="text-center">Letak Tujuan</th>
+                            <th scope="col" class="text-center">Inisial Kirim</th>
+                            <th scope="col" class="text-center">Status</th>
+                            <th scope="col" class="text-center">Tanggal Buat</th>
+                            <th scope="col" class="text-center">Tanggal Update</th>
+                            <th scope="col" class="text-center">AKSI</th>
                         </tfoot>
                         <tbody>
                             @forelse ($MasterTujuanKirimRawMaterial as $MasterTJRM)

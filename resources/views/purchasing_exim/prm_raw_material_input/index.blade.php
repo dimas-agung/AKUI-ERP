@@ -1,4 +1,7 @@
 @extends('layouts.template')
+@section('Menu')
+    Purchasing & EXIM
+@endsection
 @section('title')
     Purchasing Raw Material Input
 @endsection
@@ -87,7 +90,7 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('prm_raw_material_input.destroy', $MasterPRIM->id) }}"
+                                                action="{{ route('prm_raw_material_input.destroyInput', $MasterPRIM->id) }}"
                                                 method="POST">
                                                 <a href="{{ route('prm_raw_material_input.show', $MasterPRIM->id) }}"
                                                     class="btn btn-link" title="Show Detail"

@@ -6,8 +6,8 @@
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Input Purchasing Raw Material</h4>
                 </div>
-                <form action="{{ route('prm_raw_material_input.update', $MasterPRIMI->id) }} " method="POST" class="row g-3">
-                    {{-- <form method="POST" class="row g-3" id="myForm"> --}}
+                {{-- <form action="{{ route('purchasing_exim/prm_raw_material_input.store') }}" method="POST" class="row g-3"> --}}
+                <form method="POST" class="row g-3" id="myForm">
                     @csrf
                     <div class="col-md-4">
                         <label for="no_doc" class="form-label">Nomor DOC</label>
@@ -15,30 +15,29 @@
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_po" class="form-label">Nomor PO</label>
-                        <input type="text" class="form-control" id="nomor_po" readonly>
+                        <input type="text" class="form-control" id="nomor_po">
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_batch" class="form-label">Nomor Batch</label>
-                        <input type="text" class="form-control" id="nomor_batch" readonly>
+                        <input type="text" class="form-control" id="nomor_batch">
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_nota_supplier" class="form-label">Nomor Nota Supplier</label>
-                        <input type="text" class="form-control" id="nomor_nota_supplier" readonly>
+                        <input type="text" class="form-control" id="nomor_nota_supplier">
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
-                        <input type="text" class="form-control" id="nomor_nota_internal" readonly>
+                        <input type="text" class="form-control" id="nomor_nota_internal">
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
                         <select class="form-select select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
                             aria-hidden="true" name="nama_supplier" id="nama_supplier"
-                            data-placeholder="Pilih Nama Supplier" readonly>
-                            @foreach ($MasterSupplierRawMaterial as $MasterSPRM)
+                            data-placeholder="Pilih Nama Supplier">
+                            @foreach ($master_supplier_raw_materials as $MasterSPRM)
                                 <option></option>
-                                <option value="{{ $MasterSPRM->nama_supplier }}"
-                                    {{ $MasterSPRM->nama_supplier == $MasterSPRM->nama_supplier ? 'selected' : '' }}>
-                                    {{ old('nama_supplier', $MasterSPRM->nama_supplier) }}</option>
+                                <option value="{{ $MasterSPRM->nama_supplier }}">
+                                    {{ $MasterSPRM->nama_supplier }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -49,78 +48,60 @@
                         <label for="basic-usage" class="form-label">Pilih Jenis :</label>
                         <select class="form-select select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
                             aria-hidden="true" name="jenis" id="jenis" data-placeholder="Pilih Jenis">
-                            @foreach ($MasterJenisRawMaterial as $MasterJRM)
-                                {{-- <option></option> --}}
-                                <option value="{{ $MasterJRM->jenis }}"
-                                    {{ $MasterJRM->jenis == $MasterPRIMI->jenis ? 'selected' : '' }}>
-                                    {{ old('jenis', $MasterJRM->jenis) }}</option>
-                                {{-- <option value="{{ old('jenis', $MasterPRIMI->jenis) }}"></option> --}}
+                            @foreach ($master_jenis_raw_materials as $MasterJRM)
+                                <option></option>
+                                <option value="{{ $MasterJRM->jenis }}">
+                                    {{ $MasterJRM->jenis }}</option>
                             @endforeach
-                            {{-- @foreach ($PrmRawMS as $post)
-                                <option value="{{ $post->id_box }}" {{ $post->id_box == $post->id_box ? 'selected' : '' }}>
-                                    {{ old('id_box', $post->id_box) }}</option>
-                            @endforeach --}}
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="berat_nota" class="form-label">Berat Nota</label>
-                        <input type="number" class="form-control" id="berat_nota"
-                            value="{{ old('nomor_po', $MasterPRIMI->berat_nota) }}">
+                        <input type="text" pattern="[0-9]*" inputmode="numeric" class="form-control" id="berat_nota">
                     </div>
                     <div class="col-md-3">
                         <label for="berat_kotor" class="form-label">Berat Kotor</label>
-                        <input type="number" class="form-control" id="berat_kotor"
-                            value="{{ old('nomor_po', $MasterPRIMI->berat_kotor) }}">
+                        <input type="number" class="form-control" id="berat_kotor">
                     </div>
                     <div class="col-md-3">
                         <label for="berat_bersih" class="form-label">Berat Bersih</label>
-                        <input type="number" class="form-control" id="berat_bersih"
-                            value="{{ old('nomor_po', $MasterPRIMI->berat_bersih) }}">
+                        <input type="number" class="form-control" id="berat_bersih">
                     </div>
                     <div class="col-md-3">
                         <label for="selisih_berat" class="form-label">Selisih Berat</label>
-                        <input type="number" class="form-control" id="selisih_berat"
-                            value="{{ old('nomor_po', $MasterPRIMI->selisih_berat) }}">
+                        <input type="number" class="form-control" id="selisih_berat">
                     </div>
                     <div class="col-md-3">
                         <label for="kadar_air" class="form-label">Kadar Air</label>
-                        <input type="number" class="form-control" id="kadar_air"
-                            value="{{ old('nomor_po', $MasterPRIMI->kadar_air) }}">
+                        <input type="number" class="form-control" id="kadar_air">
                     </div>
                     <div class="col-md-3">
                         <label for="id_box" class="form-label">ID Box</label>
-                        <input type="text" class="form-control" id="id_box"
-                            value="{{ old('nomor_po', $MasterPRIMI->id_box) }}">
+                        <input type="text" class="form-control" id="id_box">
                     </div>
                     <div class="col-md-3">
                         <label for="harga_nota" class="form-label">Harga Nota</label>
-                        <input type="number" class="form-control" id="harga_nota"
-                            value="{{ old('nomor_po', $MasterPRIMI->harga_nota) }}">
+                        <input type="number" class="form-control" id="harga_nota">
                     </div>
                     <div class="col-md-3">
                         <label for="total_harga_nota" class="form-label">Total Harga Nota</label>
-                        <input type="number" class="form-control" id="total_harga_nota"
-                            value="{{ old('nomor_po', $MasterPRIMI->total_harga_nota) }}">
+                        <input type="number" class="form-control" id="total_harga_nota">
                     </div>
                     <div class="col-md-3">
                         <label for="harga_deal" class="form-label">Harga Deal</label>
-                        <input type="number" class="form-control" id="harga_deal"
-                            value="{{ old('nomor_po', $MasterPRIMI->harga_deal) }}">
+                        <input type="number" class="form-control" id="harga_deal">
                     </div>
                     <div class="col-md-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
-                        <input type="text" class="form-control" id="keterangan"
-                            value="{{ old('nomor_po', $MasterPRIMI->keterangan) }}">
+                        <input type="text" class="form-control" id="keterangan">
                     </div>
                     <div class="col-md-3">
                         <label for="user_created" class="form-label">NIP Admin</label>
-                        <input type="text" class="form-control" id="user_created"
-                            value="{{ old('nomor_po', $MasterPRIMI->user_created) }}">
+                        <input type="text" class="form-control" id="user_created">
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
-                        {{-- <button type="button" class="btn btn-warning" onclick="addRow()">Update</button> --}}
-                        <button type="button" class="btn btn-danger" onclick="goBack()">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="addRow()">Tambah</button>
+                        {{-- <button type="submit" class="btn btn-warning" id="resetBtn">Reset</button> --}}
                     </div>
                 </form>
             </div>
@@ -129,14 +110,14 @@
     </div>
 
     {{-- table --}}
-    {{-- <div class="col-md-12">
+    <div class="col-md-12">
         <div class="card mt-2">
             <div class="card-header">
                 <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
                     <table class="table" id="dataTable">
                         <thead>
                             <tr>
-                                <th scope="col">Doc No</th>
+                                {{-- <th scope="col">Doc No</th> --}}
                                 <th scope="col">Jenis</th>
                                 <th scope="col">Berat Nota</th>
                                 <th scope="col">Berat Kotor</th>
@@ -160,7 +141,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 @endsection
 @section('script')
     <script>

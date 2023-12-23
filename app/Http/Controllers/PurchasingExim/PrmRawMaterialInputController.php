@@ -111,25 +111,25 @@ class PrmRawMaterialInputController extends Controller
     // {
     //     //validate form
     //     $this->validate($request, [
-    //         'doc_no.*',
-    //         'nomor_po'               => 'required',
-    //         'nomor_batch'            => 'required',
-    //         'nomor_nota_supplier'    => 'required',
-    //         'nomor_nota_internal'    => 'required',
-    //         'nama_supplier'          => 'required',
-    //         'jenis'                  => 'required',
-    //         'berat_nota'             => 'required',
-    //         'berat_kotor'            => 'required',
-    //         'berat_bersih'           => 'required',
-    //         'selisih_berat'          => 'required',
-    //         'kadar_air'              => 'required',
-    //         'id_box'                 => 'required',
-    //         'harga_nota'             => 'required',
-    //         'total_harga_nota'       => 'required',
-    //         'harga_deal'             => 'required',
-    //         'keterangan',
-    //         'user_created',
-    //         'user_updated',
+    // 'doc_no.*',
+    // 'nomor_po'               => 'required',
+    // 'nomor_batch'            => 'required',
+    // 'nomor_nota_supplier'    => 'required',
+    // 'nomor_nota_internal'    => 'required',
+    // 'nama_supplier'          => 'required',
+    // 'jenis'                  => 'required',
+    // 'berat_nota'             => 'required',
+    // 'berat_kotor'            => 'required',
+    // 'berat_bersih'           => 'required',
+    // 'selisih_berat'          => 'required',
+    // 'kadar_air'              => 'required',
+    // 'id_box'                 => 'required',
+    // 'harga_nota'             => 'required',
+    // 'total_harga_nota'       => 'required',
+    // 'harga_deal'             => 'required',
+    // 'keterangan',
+    // 'user_created',
+    // 'user_updated',
     //     ]);
 
     //     //create Purchasing Raw Material Input
@@ -190,10 +190,15 @@ class PrmRawMaterialInputController extends Controller
     public function edit(string $id)
     {
         $MasterPRIMI = PrmRawMaterialInputItem::findOrFail($id);
-        // $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+        // $PrmRawMaterialInput = PrmRawMaterialInput::findOrFail($id);
+        $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
-
-        return view('purchasing_exim.prm_raw_material_input.update', compact('MasterPRIMI', 'MasterJenisRawMaterial'));
+        // $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
+        //     ->where(['id' => $id])
+        //     ->first();
+        // return $MasterPRIMI;
+        // return $PrmRawMaterialInput;
+        return view('purchasing_exim.prm_raw_material_input.update', compact('MasterPRIMI', 'MasterJenisRawMaterial', 'MasterSupplierRawMaterial'));
     }
     // update
     public function update(Request $request, $id): RedirectResponse
@@ -247,18 +252,30 @@ class PrmRawMaterialInputController extends Controller
         // ]);
 
         //redirect to index
-        return redirect()->route('purchasing_exim.prm_raw_material_input.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('prm_raw_material_input.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     // destroy
-    public function destroy($id): RedirectResponse
+    public function destroyInput($id): RedirectResponse
     {
         //get by ID
-        $MasterSPR = MasterSupplierRawMaterial::findOrFail($id);
+        $PrmRawMaterialInput = PrmRawMaterialInput::findOrFail($id);
 
         //delete
-        $MasterSPR->delete();
+        $PrmRawMaterialInput->delete();
 
         //redirect to index
-        return redirect()->route('master_supplier_raw_material.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('prm_raw_material_input.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    }
+    public function destroyItem($id): RedirectResponse
+    {
+        //get by ID
+        $PrmRawMaterialInputItem = PrmRawMaterialInputItem::findOrFail($id);
+
+        //delete
+        $PrmRawMaterialInputItem->delete();
+
+        //redirect to index
+        return redirect()->route('prm_raw_material_input.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        // return redirect()->route('prm_raw_material_input.show')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }
