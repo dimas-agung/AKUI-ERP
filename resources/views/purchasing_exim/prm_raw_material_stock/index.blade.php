@@ -1,15 +1,32 @@
+{{-- 'id_box',
+'nomor_batch',
+'nama_supplier',
+'jenis',
+'berat_masuk',
+'berat_keluar',
+'sisa_berat',
+'avg_kadar_air',
+'modal',
+'total_modal',
+'keterangan',
+'user_created',
+'user_updated' --}}
+
 @extends('layouts.template')
+@section('Menu')
+    Purchasing & EXIM
+@endsection
 @section('title')
     Purchasing Raw Material Input
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Detail Data Purchasing Raw Material</h4>
-                    <button class="btn btn-primary btn-round ml-auto">
-                        <a href="{{ url('/purchasing_exim/prm_raw_material_input/create_item') }}"
+                    <h4 class="card-title">Data Purchasing Raw Material</h4>
+                    <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                        <a href="{{ url('/purchasing_exim/prm_raw_material_input/create') }}"
                             style="text-decoration: none; color:aliceblue">
                             <i class="fa fa-plus"></i>
                             <span class="sub-item">Add Data</span>
@@ -18,7 +35,8 @@
                 </div>
             </div>
             <div class="card-body">
-                {{-- @if (session()->has('success'))
+                {{-- Create Data --}}
+                @if (session()->has('success'))
                     <div class="alert alert-success">
                         <strong>Sukses: </strong>{{ session()->get('success') }}
                     </div>
@@ -33,23 +51,21 @@
                         </ul>
                         <p>Mohon periksa kembali formulir Anda.</p>
                     </div>
-                @endif --}}
+                @endif
                 <div class="table-responsive">
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">No</th>
-                                <th scope="col" class="text-center">No Doc</th>
-                                <th scope="col" class="text-center">Jenis</th>
-                                <th scope="col" class="text-center">Berat Nota</th>
-                                <th scope="col" class="text-center">Berat kotor</th>
-                                <th scope="col" class="text-center">Berat Bersih</th>
-                                <th scope="col" class="text-center">Selisih Berat</th>
-                                <th scope="col" class="text-center">Kadar Air</th>
                                 <th scope="col" class="text-center">Id Box</th>
-                                <th scope="col" class="text-center">Harga Nota</th>
-                                <th scope="col" class="text-center">Total Harga Nota</th>
-                                <th scope="col" class="text-center">Harga Deal</th>
+                                <th scope="col" class="text-center">Nomor Batch</th>
+                                <th scope="col" class="text-center">Nama Supplier</th>
+                                <th scope="col" class="text-center">Jenis</th>
+                                <th scope="col" class="text-center">Berat Masuk</th>
+                                <th scope="col" class="text-center">Berat Keluar</th>
+                                <th scope="col" class="text-center">Sisa Berat</th>
+                                <th scope="col" class="text-center">Modal</th>
+                                <th scope="col" class="text-center">Total Modal</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">User Created</th>
                                 <th scope="col" class="text-center">User Updated</th>
@@ -60,17 +76,15 @@
                         </thead>
                         <tfoot>
                             <th scope="col" class="text-center">No</th>
-                            <th scope="col" class="text-center">No Doc</th>
-                            <th scope="col" class="text-center">Jenis</th>
-                            <th scope="col" class="text-center">Berat Nota</th>
-                            <th scope="col" class="text-center">Berat kotor</th>
-                            <th scope="col" class="text-center">Berat Bersih</th>
-                            <th scope="col" class="text-center">Selisih Berat</th>
-                            <th scope="col" class="text-center">Kadar Air</th>
                             <th scope="col" class="text-center">Id Box</th>
-                            <th scope="col" class="text-center">Harga Nota</th>
-                            <th scope="col" class="text-center">Total Harga Nota</th>
-                            <th scope="col" class="text-center">Harga Deal</th>
+                            <th scope="col" class="text-center">Nomor Batch</th>
+                            <th scope="col" class="text-center">Nama Supplier</th>
+                            <th scope="col" class="text-center">Jenis</th>
+                            <th scope="col" class="text-center">Berat Masuk</th>
+                            <th scope="col" class="text-center">Berat Keluar</th>
+                            <th scope="col" class="text-center">Sisa Berat</th>
+                            <th scope="col" class="text-center">Modal</th>
+                            <th scope="col" class="text-center">Total Modal</th>
                             <th scope="col" class="text-center">Keterangan</th>
                             <th scope="col" class="text-center">User Created</th>
                             <th scope="col" class="text-center">User Updated</th>
@@ -79,20 +93,15 @@
                             <th scope="col" class="text-center">Actions</th>
                         </tfoot>
                         <tbody>
-                            @forelse ($MasterPRIM->PrmRawMaterialInputItem as $MasterPRIM)
+                            {{-- @forelse ($prm_raw_material_inputs as $MasterPRIM)
                                 <tr>
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $MasterPRIM->doc_no }}</td>
-                                    <td>{{ $MasterPRIM->jenis }}</td>
-                                    <td>{{ $MasterPRIM->berat_nota }}</td>
-                                    <td>{{ $MasterPRIM->berat_kotor }}</td>
-                                    <td>{{ $MasterPRIM->berat_bersih }}</td>
-                                    <td>{{ $MasterPRIM->selisih_berat }}</td>
-                                    <td>{{ $MasterPRIM->kadar_air }}</td>
-                                    <td>{{ $MasterPRIM->id_box }}</td>
-                                    <td>{{ $MasterPRIM->harga_nota }}</td>
-                                    <td>{{ $MasterPRIM->total_harga_nota }}</td>
-                                    <td>{{ $MasterPRIM->harga_deal }}</td>
+                                    <td>{{ $MasterPRIM->nomor_po }}</td>
+                                    <td>{{ $MasterPRIM->nomor_batch }}</td>
+                                    <td>{{ $MasterPRIM->nomor_nota_supplier }}</td>
+                                    <td>{{ $MasterPRIM->nomor_nota_internal }}</td>
+                                    <td>{{ $MasterPRIM->nama_supplier }}</td>
                                     <td>{{ $MasterPRIM->keterangan }}</td>
                                     <td>{{ $MasterPRIM->user_created }}</td>
                                     <td>{{ $MasterPRIM->user_updated }}</td>
@@ -101,11 +110,11 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('prm_raw_material_input.destroyItem', $MasterPRIM->id) }}"
+                                                action="{{ route('prm_raw_material_input.destroyInput', $MasterPRIM->id) }}"
                                                 method="POST">
-                                                {{-- <a href="{{ route('prm_raw_material_input.edit', $MasterPRIM->id) }}"
-                                                    class="btn btn-link" title="Edit Task"
-                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a> --}}
+                                                <a href="{{ route('prm_raw_material_input.show', $MasterPRIM->id) }}"
+                                                    class="btn btn-link" title="Show Detail"
+                                                    data-original-title="Show Detail"><i class="fa fa-file"></i></a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" data-toggle="tooltip"
@@ -119,14 +128,10 @@
                                 <div class="alert alert-danger">
                                     Data Purchasing belum Tersedia.
                                 </div>
-                            @endforelse
+                            @endforelse --}}
                         </tbody>
                     </table>
                 </div>
-                <div class="col-12 mt-2 text-end">
-                    <button type="button" class="btn btn-danger mt-2 text-end" onclick="goBack()">Cancel</button>
-                </div>
-
             </div>
         </div>
     </div>

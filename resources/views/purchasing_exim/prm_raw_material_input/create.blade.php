@@ -134,18 +134,18 @@
                         <thead>
                             <tr>
                                 {{-- <th scope="col">Doc No</th> --}}
-                                <th scope="col">Jenis</th>
-                                <th scope="col">Berat Nota</th>
-                                <th scope="col">Berat Kotor</th>
-                                <th scope="col">Berat Bersih</th>
-                                <th scope="col">Selisih Berat</th>
-                                <th scope="col">Kadar Air</th>
-                                <th scope="col">ID Box</th>
-                                <th scope="col">Harga Nota</th>
-                                <th scope="col">Total Harga Nota</th>
-                                <th scope="col">Harga Deal</th>
-                                <th scope="col">Keterangan</th>
-                                <th scope="col">NIP Admin</th>
+                                <th scope="col" class="text-center">Jenis</th>
+                                <th scope="col" class="text-center">Berat Nota</th>
+                                <th scope="col" class="text-center">Berat Kotor</th>
+                                <th scope="col" class="text-center">Berat Bersih</th>
+                                <th scope="col" class="text-center">Selisih Berat</th>
+                                <th scope="col" class="text-center">Kadar Air</th>
+                                <th scope="col" class="text-center">ID Box</th>
+                                <th scope="col" class="text-center">Harga Nota</th>
+                                <th scope="col" class="text-center">Total Harga Nota</th>
+                                <th scope="col" class="text-center">Harga Deal</th>
+                                <th scope="col" class="text-center">Keterangan</th>
+                                <th scope="col" class="text-center">NIP Admin</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -199,7 +199,6 @@
                     // let created_at = response.created_at;
                     generateNomorNotaInternal(inisial_supplier);
                     // generateNomorNotaInternal(created_at);
-
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -224,7 +223,6 @@
                     // let created_at = response.created_at;
                     generateIdBox(jenis);
                     // generateNomorNotaInternal(created_at);
-
                 },
                 error: function(error) {
                     console.error('Error:', error);

@@ -15,11 +15,11 @@
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_po" class="form-label">Nomor PO</label>
-                        <input type="text" class="form-control" id="nomor_po">
+                        <input type="text" class="form-control" id="nomor_po" readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_batch" class="form-label">Nomor Batch</label>
-                        <input type="text" class="form-control" id="nomor_batch">
+                        <input type="text" class="form-control" id="nomor_batch" readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_nota_supplier" class="form-label">Nomor Nota Supplier</label>
@@ -27,13 +27,13 @@
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
-                        <input type="text" class="form-control" id="nomor_nota_internal">
+                        <input type="text" class="form-control" id="nomor_nota_internal" readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
                         <select class="form-select select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
                             aria-hidden="true" name="nama_supplier" id="nama_supplier"
-                            data-placeholder="Pilih Nama Supplier">
+                            data-placeholder="Pilih Nama Supplier" readonly>
                             @foreach ($master_supplier_raw_materials as $MasterSPRM)
                                 <option></option>
                                 <option value="{{ $MasterSPRM->nama_supplier }}">
@@ -105,7 +105,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 
@@ -118,18 +117,18 @@
                         <thead>
                             <tr>
                                 {{-- <th scope="col">Doc No</th> --}}
-                                <th scope="col">Jenis</th>
-                                <th scope="col">Berat Nota</th>
-                                <th scope="col">Berat Kotor</th>
-                                <th scope="col">Berat Bersih</th>
-                                <th scope="col">Selisih Berat</th>
-                                <th scope="col">Kadar Air</th>
-                                <th scope="col">ID Box</th>
-                                <th scope="col">Harga Nota</th>
-                                <th scope="col">Total Harga Nota</th>
-                                <th scope="col">Harga Deal</th>
-                                <th scope="col">Keterangan</th>
-                                <th scope="col">NIP Admin</th>
+                                <th scope="col" class="text-center">Jenis</th>
+                                <th scope="col" class="text-center">Berat Nota</th>
+                                <th scope="col" class="text-center">Berat Kotor</th>
+                                <th scope="col" class="text-center">Berat Bersih</th>
+                                <th scope="col" class="text-center">Selisih Berat</th>
+                                <th scope="col" class="text-center">Kadar Air</th>
+                                <th scope="col" class="text-center">ID Box</th>
+                                <th scope="col" class="text-center">Harga Nota</th>
+                                <th scope="col" class="text-center">Total Harga Nota</th>
+                                <th scope="col" class="text-center">Harga Deal</th>
+                                <th scope="col" class="text-center">Keterangan</th>
+                                <th scope="col" class="text-center">NIP Admin</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -137,7 +136,7 @@
                     </table>
                 </div>
                 <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-success" onclick="simpanData()">Simpan</button>
+                    <button type="submit" class="btn btn-success" onclick="simpanDataItem()">Simpan</button>
                 </div>
             </div>
         </div>
@@ -183,7 +182,6 @@
                     // let created_at = response.created_at;
                     generateNomorNotaInternal(inisial_supplier);
                     // generateNomorNotaInternal(created_at);
-
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -216,6 +214,7 @@
             });
         });
         // generate nomor internal
+
         function generateNomorNotaInternal(inisial_supplier) {
             const nomorNotaSupplier = $('#nomor_nota_supplier').val();
             const namaSupplier = $('#nama_supplier').val();
@@ -288,17 +287,17 @@
     <script>
         // test
         var dataArray = [];
-        var dataHeader = [];
+        // var dataHeader = [];
 
         function addRow() {
             console.log(dataArray);
             // Mengambil nilai dari input
-            let doc_no = $('#doc_no').val();
-            let nomor_po = $('#nomor_po').val();
-            let nomor_batch = $('#nomor_batch').val();
-            let nomor_nota_supplier = $('#nomor_nota_supplier').val();
-            let nomor_nota_internal = $('#nomor_nota_internal').val();
-            let nama_supplier = $('#nama_supplier').val();
+            // let doc_no = $('#doc_no').val();
+            // let nomor_po = $('#nomor_po').val();
+            // let nomor_batch = $('#nomor_batch').val();
+            // let nomor_nota_supplier = $('#nomor_nota_supplier').val();
+            // let nomor_nota_internal = $('#nomor_nota_internal').val();
+            // let nama_supplier = $('#nama_supplier').val();
             let jenis = $('#jenis').val();
             let berat_nota = $('#berat_nota').val();
             let berat_kotor = $('#berat_kotor').val();
@@ -313,12 +312,16 @@
             let user_created = $('#user_created').val();
 
             // Validasi input (sesuai kebutuhan)
-            if (nomor_po.trim() === '' || nomor_batch.trim() === '' || nomor_nota_supplier.trim() === '' ||
-                nomor_nota_internal.trim() === '' || nama_supplier.trim() === '' || jenis.trim() === '' ||
-                berat_nota.trim() === '' || berat_kotor.trim() === '' || berat_bersih.trim() === '' ||
+            if (jenis.trim() === '' ||
+                berat_nota.trim() === '' ||
+                berat_kotor.trim() === '' ||
+                berat_bersih.trim() === '' ||
                 selisih_berat.trim() === '' ||
-                kadar_air.trim() === '' || id_box.trim() === '' || harga_nota.trim() === '' || total_harga_nota.trim() ===
-                '' || harga_deal.trim() === '') {
+                kadar_air.trim() === '' ||
+                id_box.trim() === '' ||
+                harga_nota.trim() === '' ||
+                total_harga_nota.trim() === '' ||
+                harga_deal.trim() === '') {
                 alert('Harap isi semua kolom.');
                 return; // Berhenti jika ada input yang kosong
             }
@@ -343,7 +346,7 @@
 
             // Menambahkan data ke dalam array
             dataArray.push({
-                doc_no: doc_no,
+                // doc_no: doc_no,
                 jenis: jenis,
                 berat_nota: berat_nota,
                 berat_kotor: berat_kotor,
@@ -359,17 +362,17 @@
 
             });
             console.log(dataArray);
-            dataHeader = [];
-            dataHeader.push({
-                doc_no: doc_no,
-                nomor_po: nomor_po,
-                nomor_batch: nomor_batch,
-                nomor_nota_supplier: nomor_nota_supplier,
-                nomor_nota_internal: nomor_nota_internal,
-                nama_supplier: nama_supplier,
-                keterangan: keterangan,
-                user_created: user_created,
-            });
+            // dataHeader = [];
+            // dataHeader.push({
+            //     doc_no: doc_no,
+            //     nomor_po: nomor_po,
+            //     nomor_batch: nomor_batch,
+            //     nomor_nota_supplier: nomor_nota_supplier,
+            //     nomor_nota_internal: nomor_nota_internal,
+            //     nama_supplier: nama_supplier,
+            //     keterangan: keterangan,
+            //     user_created: user_created,
+            // });
             // Membersihkan nilai input setelah ditambahkan
             $('#jenis').val('');
             $('#berat_nota').val('');
@@ -389,15 +392,15 @@
             console.log(dataArray);
         }
 
-        function simpanData() {
+        function simpanDataItem() {
             console.log(dataArray);
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('prm_raw_material_input.simpanData') }}`, // Ganti dengan URL endpoint yang sesuai
+                url: `{{ route('prm_raw_material_input.simpanDataItem') }}`, // Ganti dengan URL endpoint yang sesuai
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
-                    dataHeader: JSON.stringify(dataHeader),
+                    // dataHeader: JSON.stringify(dataHeader),
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json', // payload is json,

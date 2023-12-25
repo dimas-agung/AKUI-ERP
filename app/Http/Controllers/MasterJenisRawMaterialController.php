@@ -14,7 +14,6 @@ class MasterJenisRawMaterialController extends Controller
     //index
     public function index()
     {
-
         $i = 1;
         $PrmRawMaterialInputItem = PrmRawMaterialInputItem::with('MasterJenisRawMaterial')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::all();

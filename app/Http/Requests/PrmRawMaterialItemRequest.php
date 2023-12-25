@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PrmRawMaterialRequest extends FormRequest
+class PrmRawMaterialItemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,7 @@ class PrmRawMaterialRequest extends FormRequest
     {
         return [
             //
-            'data'          => 'required',
-            'dataHeader'    => 'required',
+            'data'  => 'required'
         ];
     }
 }
