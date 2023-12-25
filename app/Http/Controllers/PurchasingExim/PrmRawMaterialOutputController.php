@@ -58,10 +58,11 @@ class PrmRawMaterialOutputController extends Controller
         PrmRawMaterialOutputService $prmRawMaterialOutputService)
     {
     $dataArray = json_decode($request->input('data'));
+    $dataStock = json_decode($request->input('dataStock'));
     $dataHeader = json_decode($request->input('dataHeader'));
 
         // $result = $this->$prmRawMaterialOutputService->sendData($dataHeader[0], $dataArray);
-        $result = $prmRawMaterialOutputService->sendData($dataHeader[0], $dataArray);
+        $result = $prmRawMaterialOutputService->sendData($dataHeader[0], $dataArray, $dataStock);
 
         if ($result['success']) {
             return response()->json($result);
@@ -132,11 +133,7 @@ class PrmRawMaterialOutputController extends Controller
         // $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
         $headers = PrmRawMaterialOutputHeader::findOrFail($id);
         $items = $headers->PrmRawMaterialOutputItem;
-        // ->where(['id'=> $id])
-        // ->first();
-        // $headers = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')
-            // Dapatkan item-item terkait menggunakan relasi PrmRawMaterialOutputItem
-        // return $items;
+
         //render view with post
         return view('purchasing_exim.PrmRawMaterialOutput.show', compact('items', 'i'));
     }

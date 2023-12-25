@@ -1,15 +1,14 @@
 <?php
-
 namespace App\Services;
-
 use App\Models\PrmRawMaterialOutputHeader;
 use App\Models\PrmRawMaterialOutputItem;
+use App\Models\PrmRawMaterialStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PrmRawMaterialOutputService
 {
-    public function sendData($dataHeader, $dataArray)
+    public function sendData($dataHeader, $dataArray, $dataStock)
     {
         try {
             DB::beginTransaction();
@@ -18,6 +17,10 @@ class PrmRawMaterialOutputService
 
             foreach ($dataArray as $item) {
                 $this->createItem($item);
+            }
+
+            foreach ( $dataStock as $itemS) {
+                $this->createStock($itemS);
             }
 
             DB::commit();
@@ -63,14 +66,50 @@ class PrmRawMaterialOutputService
             'kadar_air'     => $item->kadar_air,
             'tujuan_kirim'  => $item->tujuan_kirim,
             'letak_tujuan'  => $item->letak_tujuan,
-            'inisial_tujuan' => $item->inisial_tujuan,
+            'inisial_tujuan'=> $item->inisial_tujuan,
             'modal'         => $item->modal,
             'total_modal'   => $item->total_modal,
-            'keterangan_item' => $item->keterangan_item,
+            'keterangan_item'=> $item->keterangan_item,
             'user_created'  => $item->user_created,
             'user_updated'  => $item->user_updated,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
+    }
+
+    private function createStock($itemS)
+    {
+        $itemObject = (object)$itemS;
+        // Cari item berdasarkan id_box dan nomor_batch
+        $existingItem = PrmRawMaterialStock::where('id_box', $itemObject->id_box)
+            ->where('nomor_batch', $itemObject->nomor_batch)
+            ->first();
+            // return $existingItem
+
+
+            $dataToUpdate = [
+                'id_box'        => $itemObject->id_box,
+                'nomor_batch'   => $itemObject->nomor_batch,
+                'nama_supplier' => $itemObject->nama_supplier,
+                'jenis'         => $itemObject->jenis,
+                'berat_masuk'   => $itemObject->berat_masuk,
+                'berat_keluar'  => $itemObject->berat,
+                'sisa_berat'    => $itemObject->selisih_berat,
+                'avg_kadar_air' => $itemObject->kadar_air,
+                'modal'         => $itemObject->modal,
+                'total_modal'   => $itemObject->total_modal,
+                'keterangan'    => $itemObject->keterangan_item,
+                'user_created'  => $itemObject->user_created,
+                'user_updated'  => $itemObject->user_updated,
+                // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+            ];
+
+        if ($existingItem) {
+            // Jika item sudah ada, perbarui data
+            $existingItem->update($dataToUpdate);
+        } else {
+            // Jika item tidak ada, buat item baru
+            PrmRawMaterialStock::create($dataToUpdate);
+        }
     }
 
     public function updateItem($request, $id)
@@ -78,7 +117,6 @@ class PrmRawMaterialOutputService
         $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
 
         // Validasi form
-        $this->validateRequest($request);
 
         // Update item
         $PrmRawMOIC->update($request->all());
@@ -93,13 +131,13 @@ class PrmRawMaterialOutputService
             'nomor_bstb'   => 'required',
             'nomor_batch'  => 'required',
             'id_box'       => 'required',
-            'nama_supplier' => 'required',
+            'nama_supplier'=> 'required',
             'jenis'        => 'required',
             'berat'        => 'required',
             'kadar_air'    => 'required',
             'tujuan_kirim' => 'required',
             'letak_tujuan' => 'required',
-            'inisial_tujuan' => 'required',
+            'inisial_tujuan'=> 'required',
             'modal'        => 'required',
             'total_modal'  => 'required',
             'keterangan_item'    => '',

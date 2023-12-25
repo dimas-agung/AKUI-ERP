@@ -40,12 +40,6 @@
                                             <input type="text" id="doc_no"
                                                 class="form-control @error('doc_no') is-invalid @enderror" name="doc_no"
                                                 value="{{ old('doc_no') }}" placeholder="Masukkan Nomer Dokument">
-                                            <!-- error message untuk title -->
-                                            @error('doc_no')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <label>Nomor BTSB</label>
@@ -266,7 +260,9 @@
                                         <th class="text-center">ID</th>
                                         <th class="text-center">Nama Supplier</th>
                                         <th class="text-center">Jenis</th>
+                                        <th class="text-center">Berat Masuk</th>
                                         <th class="text-center">Berat</th>
+                                        <th class="text-center">Berat sisa</th>
                                         <th class="text-center">Kadar Air</th>
                                         <th class="text-center">Tujuan Kirim</th>
                                         <th class="text-center">Letak Tujuan</th>
@@ -337,6 +333,7 @@
 
 
         var dataArray = [];
+        var dataStock = [];
         var dataHeader = [];
 
         function addRow() {
@@ -348,7 +345,9 @@
             var id_box = $('#id_box').val();
             var nama_supplier = $('#nama_supplier').val();
             var jenis = $('#jenis').val();
+            var berat_masuk = $('#berat_masuk').val();
             var berat = $('#berat').val();
+            var selisih_berat = $('#selisih_berat').val();
             var kadar_air = $('#kadar_air').val();
             var tujuan_kirim = $('#tujuan_kirim').val();
             var letak_tujuan = $('#letak_tujuan').val();
@@ -366,8 +365,9 @@
             }
             // Menambahkan data ke dalam tabel
             var newRow = '<tr><td>' + doc_no + '</td><td>' + nomor_bstb + '</td><td>' + nomor_batch + '</td><td>' + id_box +
-                '</td><td>' + nama_supplier + '</td><td>' + jenis + '</td><td>' + berat + '</td><td>' + kadar_air +
-                '</td><td>' + tujuan_kirim + '</td><td>' + letak_tujuan + '</td><td>' + inisial_tujuan + '</td><td>' +
+                '</td><td>' + nama_supplier + '</td><td>' + jenis + '</td><td>' + berat_masuk + '</td><td>' +
+                berat + '</td><td>' + selisih_berat + '</td><td>' + kadar_air + '</td><td>' + tujuan_kirim + '</td><td>' +
+                letak_tujuan + '</td><td>' + inisial_tujuan + '</td><td>' +
                 modal + '</td><td>' + total_modal + '</td><td>' + keterangan_item + '</td><td>' + user_created +
                 '</td><td>' + user_updated + '</td></tr>';
             $('#tableBody').append(newRow);
@@ -391,7 +391,26 @@
                 user_created: user_created,
                 user_updated: user_updated
             });
-            console.log(dataArray);
+            dataStock = [];
+            dataStock.push({
+                id_box: id_box,
+                nomor_batch: nomor_batch,
+                nama_supplier: nama_supplier,
+                jenis: jenis,
+                berat_masuk: berat_masuk,
+                berat: berat,
+                selisih_berat: selisih_berat,
+                kadar_air: kadar_air,
+                tujuan_kirim: tujuan_kirim,
+                letak_tujuan: letak_tujuan,
+                inisial_tujuan: inisial_tujuan,
+                modal: modal,
+                total_modal: total_modal,
+                keterangan_item: keterangan_item,
+                user_created: user_created,
+                user_updated: user_updated
+            });
+            console.log(dataStock);
             dataHeader = [];
             dataHeader.push({
                 doc_no: doc_no,
@@ -418,6 +437,7 @@
         }
 
         function getArray() {
+            // Menampilkan array di konsol untuk tujuan debugging
             console.log(dataArray);
         }
 
@@ -429,6 +449,7 @@
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
+                    dataStock: JSON.stringify(dataStock),
                     dataHeader: JSON.stringify(dataHeader),
                     // _token: $('meta[name="csrf-token"]').attr('content')
                     _token: '{{ csrf_token() }}'
