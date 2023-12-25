@@ -6,6 +6,7 @@ namespace App\Http\Controllers\PurchasingExim;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use App\Models\PrmRawMaterialOutputHeader;
+use App\Models\PrmRawMaterialOutputItem;
 use App\Models\StockTransitGradingKasar;
 use Illuminate\Http\Request;
 
@@ -17,12 +18,13 @@ class StockTransitGradingKasarController extends Controller
     //Index
     public function index(){
         $i =1;
-        $stockTGK = StockTransitGradingKasar::with('StockTransitGradingKasar')->get();
-        $PrmRawMOH = PrmRawMaterialOutputHeader::with('StockTransitGradingKasar')->get();
-        // return $PrmRawMOH;
+        $stockTGK = StockTransitGradingKasar::with('PrmRawMaterialOutputItem')->get();
+        // $PrmRawMOH = PrmRawMaterialOutputHeader::with('StockTransitGradingKasar')->get();
+        $PrmRawMOI = PrmRawMaterialOutputItem::with('StockTransitGradingKasar')->get();
+        // return $PrmRawMOI;
         return response()->view('purchasing_exim.StockTransitGradingKasar.index', [
             'stockTGK' => $stockTGK,
-            'PrmRawMOH' => $PrmRawMOH,
+            'PrmRawMOI' => $PrmRawMOI,
             'i' => $i,
         ]);
     }
@@ -165,7 +167,4 @@ class StockTransitGradingKasarController extends Controller
         //redirect to index
         return redirect()->route('StockTransitGradingKasar.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
-
-
-
 }

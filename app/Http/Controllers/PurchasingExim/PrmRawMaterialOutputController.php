@@ -131,12 +131,14 @@ class PrmRawMaterialOutputController extends Controller
         $i =1;
         // $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
         $headers = PrmRawMaterialOutputHeader::findOrFail($id);
-        $headers = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')
-        ->where(['id'=> $id])
-        ->first();
-        // return $headers;
+        $items = $headers->PrmRawMaterialOutputItem;
+        // ->where(['id'=> $id])
+        // ->first();
+        // $headers = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')
+            // Dapatkan item-item terkait menggunakan relasi PrmRawMaterialOutputItem
+        // return $items;
         //render view with post
-        return view('purchasing_exim.PrmRawMaterialOutput.show', compact('headers', 'i'));
+        return view('purchasing_exim.PrmRawMaterialOutput.show', compact('items', 'i'));
     }
 
     /**

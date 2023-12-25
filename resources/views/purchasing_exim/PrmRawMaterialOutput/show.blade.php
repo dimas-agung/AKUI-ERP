@@ -73,7 +73,7 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            @forelse ($headers->PrmRawMaterialOutputItem as $item)
+                            @forelse ($items as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{{ $item->doc_no }}</td>

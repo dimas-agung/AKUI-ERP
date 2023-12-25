@@ -242,7 +242,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Nomor BTSB</th>
-                                {{-- <th class="text-center">Nama Supplier</th>
+                                <th class="text-center">Nama Supplier</th>
                                 <th class="text-center">Jenis</th>
                                 <th class="text-center">Berat</th>
                                 <th class="text-center">Kadar Air</th>
@@ -250,9 +250,9 @@
                                 <th class="text-center">Letak Tujuan</th>
                                 <th class="text-center">Inisial Tujuan</th>
                                 <th class="text-center">Modal</th>
-                                <th class="text-center">Total Modal</th> --}}
-                                <th class="text-center">Keterangan</th>
-                                <th class="text-center">User Created</th>
+                                <th class="text-center">Total Modal</th>
+                                {{-- <th class="text-center">Keterangan</th> --}}
+                                <th class="text-center">NIP Admin</th>
                                 <th class="text-center">User Updated</th>
                                 {{-- <th style="width: 10%" class="text-center">Action</th> --}}
                             </tr>
@@ -260,7 +260,7 @@
                         <tfoot>
                             <th class="text-center">No</th>
                             <th class="text-center">Nomor BTSB</th>
-                            {{-- <th class="text-center">Nama Supplier</th>
+                            <th class="text-center">Nama Supplier</th>
                             <th class="text-center">Jenis</th>
                             <th class="text-center">Berat</th>
                             <th class="text-center">Kadar Air</th>
@@ -268,27 +268,27 @@
                             <th class="text-center">Letak Tujuan</th>
                             <th class="text-center">Inisial Tujuan</th>
                             <th class="text-center">Modal</th>
-                            <th class="text-center">Total Modal</th> --}}
-                            <th class="text-center">Keterangan</th>
-                            <th class="text-center">User Created</th>
+                            <th class="text-center">Total Modal</th>
+                            {{-- <th class="text-center">Keterangan</th> --}}
+                            <th class="text-center">NIP Admin</th>
                             <th class="text-center">User Updated</th>
                             {{-- <th class="text-center">Action</th> --}}
                         </tfoot>
                         <tbody>
-                            @forelse ($PrmRawMOH as $post)
+                            @forelse ($PrmRawMOI as $post)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{!! $post->nomor_bstb !!}</td>
-                                    {{-- <td class="text-center">{!! $post->nama_supplier !!}</td> --}}
-                                    {{-- <td class="text-center">{!! $post->jenis !!}</td>
+                                    <td class="text-center">{!! $post->nama_supplier !!}</td>
+                                    <td class="text-center">{!! $post->jenis !!}</td>
                                     <td class="text-center">{!! $post->berat !!}</td>
                                     <td class="text-center">{!! $post->kadar_air !!}</td>
                                     <td class="text-center">{!! $post->tujuan_kirim !!}</td>
                                     <td class="text-center">{!! $post->letak_tujuan !!}</td>
                                     <td class="text-center">{!! $post->inisial_tujuan !!}</td>
                                     <td class="text-center">{!! $post->modal !!}</td>
-                                    <td class="text-center">{!! $post->total_modal !!}</td> --}}
-                                    <td class="text-center">{!! $post->keterangan !!}</td>
+                                    <td class="text-center">{!! $post->total_modal !!}</td>
+                                    {{-- <td class="text-center">{!! $post->keterangan !!}</td> --}}
                                     <td class="text-center">{!! $post->user_created !!}</td>
                                     <td class="text-center">{!! $post->user_updated !!}</td>
                                     {{-- <td class="text-center">
@@ -313,7 +313,7 @@
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Data Biaya HPP belum Tersedia.
+                                    Data Stock Transit Grading Kasar belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>

@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Services;
+
 use App\Models\PrmRawMaterialOutputHeader;
 use App\Models\PrmRawMaterialOutputItem;
 use Illuminate\Http\Request;
@@ -7,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class PrmRawMaterialOutputService
 {
-public function sendData($dataHeader, $dataArray)
+    public function sendData($dataHeader, $dataArray)
     {
         try {
             DB::beginTransaction();
@@ -61,10 +63,10 @@ public function sendData($dataHeader, $dataArray)
             'kadar_air'     => $item->kadar_air,
             'tujuan_kirim'  => $item->tujuan_kirim,
             'letak_tujuan'  => $item->letak_tujuan,
-            'inisial_tujuan'=> $item->inisial_tujuan,
+            'inisial_tujuan' => $item->inisial_tujuan,
             'modal'         => $item->modal,
             'total_modal'   => $item->total_modal,
-            'keterangan_item'=> $item->keterangan_item,
+            'keterangan_item' => $item->keterangan_item,
             'user_created'  => $item->user_created,
             'user_updated'  => $item->user_updated,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
@@ -91,13 +93,13 @@ public function sendData($dataHeader, $dataArray)
             'nomor_bstb'   => 'required',
             'nomor_batch'  => 'required',
             'id_box'       => 'required',
-            'nama_supplier'=> 'required',
+            'nama_supplier' => 'required',
             'jenis'        => 'required',
             'berat'        => 'required',
             'kadar_air'    => 'required',
             'tujuan_kirim' => 'required',
             'letak_tujuan' => 'required',
-            'inisial_tujuan'=> 'required',
+            'inisial_tujuan' => 'required',
             'modal'        => 'required',
             'total_modal'  => 'required',
             'keterangan_item'    => '',

@@ -154,6 +154,8 @@
                                                 onchange="handleChange(this.{{ old('nomor_batch') }})"
                                                 placeholder="Masukkan nomor batch">
                                         </div>
+                                    </div>
+                                    <div class="col-md-4 pr-0">
                                         <div class="form-group">
                                             <label>Nama Supplier</label>
                                             <input type="text" class="form-control" id="nama_supplier"
@@ -176,95 +178,64 @@
                                                 placeholder="Masukkan kadar air">
                                         </div>
                                         <div class="form-group">
-                                            <label>Berat</label>
-                                            <input type="text" id="berat"
-                                                class="form-control @error('berat') is-invalid @enderror" name="berat"
-                                                value="{{ old('berat') }}" placeholder="Masukkan berat">
-                                            <!-- error message untuk title -->
-                                            @error('berat')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                            <label>Berat Masuk</label>
+                                            <input type="text" class="form-control" id="berat_masuk"
+                                                name="berat_masuk" onchange="handleChange(this.{{ old('berat_masuk') }})"
+                                                placeholder="Masukkan Berat Masuk">
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
-                                            <input type="text" id="tujuan_kirim"
-                                                class="form-control @error('tujuan_kirim') is-invalid @enderror"
+                                            <input type="text" id="tujuan_kirim" class="form-control"
                                                 name="tujuan_kirim" value="{{ old('tujuan_kirim') }}"
                                                 placeholder="Masukkan tujuan kirim">
-                                            <!-- error message untuk title -->
-                                            @error('tujuan_kirim')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <label>Letak Tujuan</label>
-                                            <input type="text" id="letak_tujuan"
-                                                class="form-control @error('letak_tujuan') is-invalid @enderror"
+                                            <input type="text" id="letak_tujuan" class="form-control"
                                                 name="letak_tujuan" value="{{ old('letak_tujuan') }}"
                                                 placeholder="Masukkan letak tujuan">
-                                            <!-- error message untuk title -->
-                                            @error('letak_tujuan')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
                                         </div>
-                                    </div>
-                                    <div class="col-md-4 pr-0">
                                         <div class="form-group">
                                             <label>Inisial Tujuan</label>
-                                            <input type="text" id="inisial_tujuan"
-                                                class="form-control @error('inisial_tujuan') is-invalid @enderror"
+                                            <input type="text" id="inisial_tujuan" class="form-control"
                                                 name="inisial_tujuan" value="{{ old('inisial_tujuan') }}"
                                                 placeholder="Masukkan inisial tujuan">
-                                            <!-- error message untuk title -->
-                                            @error('inisial_tujuan')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <label>Modal</label>
-                                            <input type="text" id="modal"
-                                                class="form-control @error('modal') is-invalid @enderror" name="modal"
+                                            <input type="text" id="modal" class="form-control" name="modal"
                                                 value="{{ old('modal') }}" placeholder="Masukkan modal">
-                                            <!-- error message untuk title -->
-                                            @error('modal')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Berat Keluar</label>
+                                            <input type="text" id="berat" pattern="[0-9]*" inputmode="numeric"
+                                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                class="form-control" name="berat" value="{{ old('berat') }}"
+                                                placeholder="Masukkan berat keluar">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Sisa Berat</label>
+                                            <input type="text" id="selisih_berat" pattern="[0-9]*"
+                                                inputmode="numeric"
+                                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                class="form-control" name="selisih_berat"
+                                                value="{{ old('selisih_berat') }}" placeholder="Masukkan sisa berat">
                                         </div>
                                         <div class="form-group">
                                             <label>Total Modal</label>
-                                            <input type="text" id="total_modal"
-                                                class="form-control @error('total_modal') is-invalid @enderror"
+                                            <input type="text" id="total_modal" class="form-control"
                                                 name="total_modal" value="{{ old('total_modal') }}"
                                                 placeholder="Masukkan total modal">
-                                            <!-- error message untuk title -->
-                                            @error('total_modal')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <label>Keterangan</label>
-                                            <input type="text" id="keterangan_item"
-                                                class="form-control @error('keterangan_item') is-invalid @enderror"
+                                            <input type="text" id="keterangan_item" class="form-control"
                                                 name="keterangan_item" value="{{ old('keterangan_item') }}"
                                                 placeholder="Masukkan keterangan">
-                                            <!-- error message untuk title -->
-                                            @error('keterangan_item')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -340,12 +311,30 @@
                     $('#nama_supplier').val(response.nama_supplier);
                     $('#jenis').val(response.jenis);
                     $('#kadar_air').val(response.avg_kadar_air);
+                    $('#berat_masuk').val(response.berat_masuk);
                 },
                 error: function(error) {
                     console.error('Error:', error);
                 }
             });
         });
+
+        // Event listener untuk perubahan nilai pada berat nota atau berat bersih
+        $('#berat_masuk').on('change', updateSelisihBerat);
+        $('#berat').on('input', updateSelisihBerat);
+
+        function updateSelisihBerat() {
+            // Mendapatkan nilai berat nota dan berat bersih
+            const berat_masuk = parseFloat($('#berat_masuk').val());
+            const berat = parseFloat($('#berat').val());
+
+            // Melakukan perhitungan selisih berat
+            const selisihBerat = berat_masuk - berat;
+
+            // Memasukkan hasil perhitungan ke dalam input selisih berat
+            $('#selisih_berat').val(isNaN(selisihBerat) ? '' : selisihBerat);
+        }
+
 
         var dataArray = [];
         var dataHeader = [];
@@ -414,9 +403,11 @@
             });
             // Membersihkan nilai input setelah ditambahkan
             $('#id_box').val('<option></option>');
+            $('#nomor_batch').val('');
             $('#nama_supplier').val('');
             $('#jenis').val('');
             $('#berat').val('');
+            $('#selisih_berat').val('');
             $('#kadar_air').val('');
             $('#tujuan_kirim').val('');
             $('#letak_tujuan').val('');
@@ -427,7 +418,6 @@
         }
 
         function getArray() {
-            // Menampilkan array di konsol untuk tujuan debugging
             console.log(dataArray);
         }
 
