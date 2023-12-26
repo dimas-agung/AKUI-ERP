@@ -6,13 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>@yield('title')</title>
+    <title> {{ env('APP_TITLE') }} @yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+    {{-- <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -28,12 +33,12 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/amsify.suggestags.css') }}" rel="stylesheet" />
     <script src="{{ asset('js/jquery.amsify.suggestags.js') }}"></script>
-    <script src="{{ asset('assets/css/bootstrap.min.css') }}"></script>
-    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css">
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
     {{-- <script src="
         https://cdn.jsdelivr.net/npm/suggestags@1.27.0/js/jquery.amsify.suggestags.min.js
         "></script>
@@ -46,102 +51,111 @@
     <script src="{{ asset('js/jquery-customselect.js') }}"></script>
     <link href="{{ asset('css/jquery-customselect.css') }}" rel='stylesheet' />
     <link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css">
+
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body class="sb-nav-fixed">
-    <div class="wrapper">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="{{ route('dashboard') }}">{{ env('APP_NAME') }}</a>
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-                    class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Cari . . ." aria-label="Search for..."
-                        aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                            class="fas fa-search"></i></button>
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="{{ route('dashboard') }}">{{ env('APP_NAME') }}</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Cari . . ." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Notifikasi</a></li>
+                    <li><a class="dropdown-item" href="detail-user.html">Akun</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            {{ csrf_field() }}
+                            {{-- {{ method_field('DELETE') }} --}}
+                            <button class="dropdown-item" type="submit"
+                                onclick="confirm('Apakah Anda Yakin ingin logout?')">Logout</button>
+                        </form>
+                        {{-- <a class="dropdown-item" href="">Logout</a></li> --}}
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" href="{{ url('/') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayoutsPro" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Master
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayoutsPro" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{ url('/unit') }}">Unit</a>
+                                <a class="nav-link" href="{{ url('/work') }}">Workstation</a>
+                                <a class="nav-link" href="{{ url('/biayahpp') }}">Biaya HPP</a>
+                                <a class="nav-link" href="{{ url('/master_supplier_raw_material') }}">Supplier Raw
+                                    Material</a>
+                                <a class="nav-link" href="{{ url('/master_jenis_raw_material') }}">Jenis Raw
+                                    Material</a>
+                                <a class="nav-link" href="{{ url('/master_tujuan_kirim_raw_material') }}">Tujuan
+                                    Kirim Raw Material</a>
+                            </nav>
+                        </div>
+
+
+                    </div>
                 </div>
-            </form>
-            <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Notifikasi</a></li>
-                        <li><a class="dropdown-item" href="detail-user.html">Akun</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                {{ csrf_field() }}
-                                {{-- {{ method_field('DELETE') }} --}}
-                                <button class="dropdown-item" type="submit"
-                                    onclick="confirm('Apakah Anda Yakin ingin logout?')">Logout</button>
-                            </form>
-                            {{-- <a class="dropdown-item" href="">Logout</a></li> --}}
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="{{ url('/') }}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                data-bs-target="#collapseLayoutsPro" aria-expanded="false"
-                                aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Master
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayoutsPro" aria-labelledby="headingOne"
-                                data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{ url('/unit') }}">Unit</a>
-                                    <a class="nav-link" href="{{ url('/work') }}">Workstation</a>
-                                    <a class="nav-link" href="{{ url('/biayahpp') }}">Biaya HPP</a>
-                                    <a class="nav-link" href="{{ url('/master_supplier_raw_material') }}">Supplier
-                                        Raw
-                                        Material</a>
-                                    <a class="nav-link" href="{{ url('/master_jenis_raw_material') }}">Jenis Raw
-                                        Material</a>
-                                    <a class="nav-link" href="{{ url('/master_tujuan_kirim_raw_material') }}">Tujuan
-                                        Kirim Raw Material</a>
-                                </nav>
-                            </div>
-
-
-                        </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                {{-- Notif --}}
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
                     </div>
-                </nav>
-            </div>
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="main-panel">
-                        <div class="content">
-                            <div class="page-inner">
-                                @yield('content')
-                            </div>
-                        </div>
+                @else
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>
+                                    {{ $error }}
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
-                </main>
-            </div>
+                @endif
+                @yield('content')
+            </main>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
@@ -184,7 +198,7 @@
         $('#basic-datatables').DataTable({});
 
         $('#multi-filter-select').DataTable({
-            "pageLength": 5,
+            "pageLength": 10,
             initComplete: function() {
                 this.api().columns().every(function() {
                     var column = this;
@@ -212,7 +226,7 @@
 
         // Add Row
         $('#add-row').DataTable({
-            "pageLength": 5,
+            "pageLength": 10,
         });
         var
             action =

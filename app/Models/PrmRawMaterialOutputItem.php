@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PrmRawMaterialOutputItem extends Model
 {
     use HasFactory;
-    protected $table = '';
+
+    protected $table = 'prm_raw_material_output_items';
+
     protected $fillable = [
         'doc_no',
         'nomor_bstb',
@@ -20,14 +22,24 @@ class PrmRawMaterialOutputItem extends Model
         'kadar_air',
         'tujuan_kirim',
         'letak_tujuan',
+        'inisial_tujuan',
         'modal',
         'total_modal',
-        'keterangan',
+        'keterangan_item',
         'user_created',
         'user_updated'
     ];
+
     public function PrmRawMaterialStock()
     {
-        return $this->belongsTo(PrmRawMaterialStock::class);
+    	return $this->belongsTo(PrmRawMaterialStock::class, 'id_box', 'id_box');
+    }
+    public function PrmRawMaterialOutputHeader()
+    {
+    	return $this->hasMany(PrmRawMaterialOutputHeader::class, 'nomor_bstb', 'nomor_bstb');
+    }
+    public function StockTransitGradingKasar()
+    {
+        return $this->hasMany(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
     }
 }

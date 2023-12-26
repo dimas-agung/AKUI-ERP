@@ -1,4 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.master2')
+@section('title')
+    Unit
+@endsection
 @section('content')
     <div class="col-md-12">
         <div class="card">
@@ -12,8 +15,25 @@
                 </div>
             </div>
             <div class="card-body">
+
                 {{-- Create Data --}}
-                <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <strong>Sukses: </strong>{{ session()->get('success') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul><strong>
+                                @foreach ($errors->all() as $error)
+                                    <li> {{ $error }} </li>
+                                @endforeach
+                            </strong>
+                        </ul>
+                        <p>Mohon periksa kembali formulir Anda.</p>
+                    </div>
+                @endif
+                <div class="modal fade" id="addRowModal" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header no-bd">
@@ -34,12 +54,15 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <div class="form-group form-group-default">
-                                                <label>Workstation ID</label>
-                                                <input id="addName" type="text"
-                                                    class="form-control @error('workstation_id') is-invalid @enderror"
-                                                    name="workstation_id" value="{{ old('workstation_id') }}"
-                                                    placeholder="Masukkan Workstation ID">
+                                            <div class="form-group">
+                                                <label for="basic-usage">Pilih Workstation ID:</label>
+                                                <select class="form-control" id="basic-usage" name="workstation_id"
+                                                    multiple="single">
+                                                    @foreach ($workstation as $post)
+                                                        <option value="{{ $post->id }}">
+                                                            {{ $post->nama }}</option>
+                                                    @endforeach
+                                                </select>
 
                                                 <!-- error message untuk title -->
                                                 @error('workstation_id')
@@ -79,7 +102,8 @@
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center">ID</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Workstation</th>
                                 <th class="text-center">Nama Unit</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Tgl Buat</th>
@@ -88,25 +112,37 @@
                             </tr>
                         </thead>
                         <tfoot>
-                            <th>ID</th>
-                            <th>Nama Unit</th>
-                            <th>Status</th>
-                            <th>Tgl Buat</th>
-                            <th>Tgl Update</th>
-                            <th>Action</th>
+                            <th class="text-center">No</th>
+                            <th class="text-center">Workstation</th>
+                            <th class="text-center">Nama Unit</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Tgl Buat</th>
+                            <th class="text-center">Tgl Update</th>
+                            <th style="width: 10%" class="text-center">Action</th>
                         </tfoot>
                         <tbody>
                             @forelse ($unit as $post)
                                 <tr>
                                     <td class="text-center">{{ $post->id }}</td>
+                                    <td class="text-center">{!! $post->workstation->nama !!}</td>
                                     <td class="text-center">{!! $post->nama !!}</td>
-                                    <td class="text-center">{!! $post->status !!}</td>
+                                    {{-- <td class="text-center">{!! $post->status !!}</td> --}}
+                                    <td>
+                                        @if ($post->status == 1)
+                                            Aktif
+                                        @else
+                                            Tidak Aktif
+                                        @endif
+                                    </td>
                                     <td class="text-center">{!! $post->created_at !!}</td>
                                     <td class="text-center">{!! $post->updated_at !!}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('index.destroy', $post->id) }}" method="POST">
+                                                <a href="{{ route('index.show', $post->id) }}"
+                                                    class="btn btn-link btn-info" title="Show Task"
+                                                    data-original-title="Show"><i class="fa fa-file"></i></a>
                                                 <a href="{{ route('index.edit', $post->id) }}"
                                                     class="btn btn-link btn-primary" title="Edit Task"
                                                     data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
