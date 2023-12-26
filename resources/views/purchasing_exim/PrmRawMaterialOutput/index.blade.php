@@ -44,7 +44,6 @@
                                 <th class="text-center">Nomor Batch</th>
                                 <th class="text-center">Keterangan</th>
                                 <th class="text-center">NIP Admin</th>
-                                <th class="text-center">User Updated</th>
                                 <th style="width: 10%" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -55,7 +54,6 @@
                             <th class="text-center">Nomor Batch</th>
                             <th class="text-center">Keterangan</th>
                             <th class="text-center">NIP Admin</th>
-                            <th class="text-center">User Updated</th>
                             <th class="text-center">Action</th>
                         </tfoot>
                         <tbody>
@@ -67,7 +65,6 @@
                                     <td class="text-center">{!! $post->nomor_batch !!}</td>
                                     <td class="text-center">{!! $post->keterangan !!}</td>
                                     <td class="text-center">{!! $post->user_created !!}</td>
-                                    <td class="text-center">{!! $post->user_updated !!}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"

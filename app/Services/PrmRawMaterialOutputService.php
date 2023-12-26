@@ -136,16 +136,40 @@ class PrmRawMaterialOutputService
         }
     }
 
-    public function updateItem($request, $id)
-    {
-        $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
-
-        // Validasi form
-
-        // Update item
-        $PrmRawMOIC->update($request->all());
+    public function updateItem($request, $id) {
+        try {
+            DB::beginTransaction();
+            // Update item
+            $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
+            $stockTGK = StockTransitGradingKasar::where('id', $id)->first();
+            $PrmRawMS = PrmRawMaterialStock::where('id_box', $request->id_box);
+            $PrmRawMOIC->update($request->all());
+            $stockTGK->update($request->all());
+            $PrmRawMS->update([
+                'id_box'        => $request->id_box,
+                'nomor_batch'   => $request->nomor_batch,
+                'nama_supplier' => $request->nama_supplier,
+                'jenis'         => $request->jenis,
+                'berat_keluar'  => $request->berat,
+                'sisa_berat'    => $request->selisih_berat,
+                'avg_kadar_air' => $request->kadar_air,
+                'modal'         => $request->modal,
+                'total_modal'   => $request->total_modal,
+                'keterangan'    => $request->keterangan_item,
+                'user_created'  => $request->user_created,
+                'user_updated'  => $request->user_updated,
+                // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+            ]);
+            DB::commit();
 
         return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return [
+                'success' => false,
+                'error' => 'Gagal menyimpan data. ' . $e->getMessage(),
+            ];
+        }
     }
 
     protected function validateRequest(Request $request)

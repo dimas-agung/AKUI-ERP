@@ -152,16 +152,27 @@ class PrmRawMaterialOutputController extends Controller
     /**
      * edit
      */
-    public function edit(string $id): View
+    public function edit(string $id)
     {
         //get post by ID
-        $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
+        $PrmRawMOIC = PrmRawMaterialOutputItem::with('PrmRawMaterialStock')->find($id);
+        $PrmRawMO = PrmRawMaterialOutputItem::with('PrmRawMaterialStock')->find($id);
         $MasTujKir = MasterTujuanKirimRawMaterial::with('PrmRawMaterialOutputItem')->get();
         $PrmRawMS = PrmRawMaterialStock::with('PrmRawMaterialOutputItem')->get();
-        // return $PrmRawMOIC;
+        // return $PrmRawMO;
+        // Pastikan $PrmRawMO tidak null sebelum mengakses propertinya
+        if ($PrmRawMO !== null) {
+            // Mengakses berat_masuk dari relasi PrmRawMaterialStock
+            $beratMasuk = optional($PrmRawMO->PrmRawMaterialStock)->berat_masuk;
+            $sisaberat = optional($PrmRawMO->PrmRawMaterialStock)->sisa_berat;
+
+            // Rest of your code...
+        } else {
+            // Handle case when the record with the given $id is not found
+        }
 
         //render view with post
-        return view('purchasing_exim.PrmRawMaterialOutput.update', compact('PrmRawMOIC', 'PrmRawMS', 'MasTujKir'));
+        return view('purchasing_exim.PrmRawMaterialOutput.update', compact('PrmRawMOIC', 'PrmRawMS', 'beratMasuk', 'sisaberat', 'PrmRawMO', 'MasTujKir'));
     }
 
     /**

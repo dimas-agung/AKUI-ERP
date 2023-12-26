@@ -47,21 +47,22 @@
                                         placeholder="Masukkan user updated">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label>Id Box</label>
-                                <select id="id_box" class="form-control select2 select2-hidden-accessible"
-                                    style="width: 100%;" tabindex="-1" aria-hidden="true" name="id_box"
-                                    data-placeholder="Pilih Id Box">
-                                    <option></option>
-                                    @foreach ($PrmRawMS as $post)
-                                        <option value="{{ $post->id_box }}"
-                                            {{ $post->id_box == $PrmRawMOIC->id_box ? 'selected' : '' }}>
-                                            {{ old('id_box', $post->id_box) }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Id Box</label>
+                                    <select id="id_box" class="form-control select2 select2-hidden-accessible"
+                                        style="width: 100%;" tabindex="-1" aria-hidden="true" name="id_box"
+                                        data-placeholder="Pilih Id Box">
+                                        <option></option>
+                                        @foreach ($PrmRawMS as $post)
+                                            <option value="{{ $post->id_box }}"
+                                                {{ $post->id_box == $PrmRawMOIC->id_box ? 'selected' : '' }}>
+                                                {{ old('id_box', $post->id_box) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                            {{-- </div> --}}
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nomor Batch</label>
                                     <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
@@ -70,6 +71,16 @@
                                 </div>
                             </div>
                             {{-- </div> --}}
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Berat Masuk</label>
+                                    {{-- <input type="text" class="form-control" id="berat_masuk" name="berat_masuk"
+                                        value="{{ old('berat_masuk', $PrmRawMO->prm_raw_material_stock->berat_masuk) }})"
+                                        placeholder="Masukkan Berat Masuk"> --}}
+                                    <input type="text" class="form-control" id="berat_masuk" name="berat_masuk"
+                                        value="{{ old('berat_masuk', $beratMasuk) }}" placeholder="Masukkan Berat Masuk">
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nama Supplier</label>
@@ -87,11 +98,11 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Berat</label>
+                                    <label>Berat Keluar</label>
                                     <input type="text" id="berat" pattern="[0-9]*" inputmode="numeric"
                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                         class="form-control" name="berat" value="{{ old('berat', $PrmRawMOIC->berat) }}"
-                                        placeholder="Masukkan berat">
+                                        placeholder="Masukkan berat keluar">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -115,6 +126,15 @@
                                                 {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Sisa Berat</label>
+                                    <input type="text" id="selisih_berat" pattern="[0-9]*" inputmode="numeric"
+                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                        class="form-control" name="selisih_berat"
+                                        value="{{ old('sisa_berat', $sisaberat) }}" placeholder="Masukkan sisa berat">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -147,7 +167,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Total Modal</label>
                                     <input type="text" class="form-control @error('total_modal') is-invalid @enderror"
@@ -161,7 +181,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Keterangan</label>
                                     <input type="text" class="form-control @error('keterangan') is-invalid @enderror"
@@ -208,6 +228,7 @@
                     $('#nama_supplier').val(response.nama_supplier);
                     $('#jenis').val(response.jenis);
                     $('#kadar_air').val(response.avg_kadar_air);
+                    $('#berat_masuk').val(response.berat_masuk);
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -236,5 +257,21 @@
                 }
             });
         });
+
+        // Event listener untuk perubahan nilai pada berat nota atau berat bersih
+        $('#berat_masuk').on('change', updateSelisihBerat);
+        $('#berat').on('input', updateSelisihBerat);
+
+        function updateSelisihBerat() {
+            // Mendapatkan nilai berat nota dan berat bersih
+            const berat_masuk = parseFloat($('#berat_masuk').val());
+            const berat = parseFloat($('#berat').val());
+
+            // Melakukan perhitungan selisih berat
+            const selisihBerat = berat_masuk - berat;
+
+            // Memasukkan hasil perhitungan ke dalam input selisih berat
+            $('#selisih_berat').val(isNaN(selisihBerat) ? '' : selisihBerat);
+        }
     </script>
 @endsection
