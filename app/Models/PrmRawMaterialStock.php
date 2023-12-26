@@ -26,14 +26,14 @@ class PrmRawMaterialStock extends Model
     ];
     public function PrmRawMaterialInputItem()
     {
-        return $this->hasOne(PrmRawMaterialInputItem::class, 'id_box', 'id_box');
+        return $this->hasOne(PrmRawMaterialInputItem::class);
     }
     public function PrmRawMaterialStockHistory()
     {
         return $this->hasMany(PrmRawMaterialStockHistory::class);
     }
-    // public function PrmRawMaterialOutputItem()
-    // {
-    //     return $this->hasMany(PrmRawMaterialOutputItem::class);
-    // }
+    public function PrmRawMaterialOutputItem()
+    {
+        return $this->hasMany(PrmRawMaterialOutputItem::class, 'id_box', 'id_box');
+    }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.master1')
+@extends('layouts.master2')
 @section('content')
     <div class="container-fluid px-4">
         <h3 class="mt-4">Dashboard</h3>

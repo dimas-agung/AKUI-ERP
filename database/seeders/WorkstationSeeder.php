@@ -14,7 +14,7 @@ class WorkstationSeeder extends Seeder
     public function run(): void
     {
         Workstation::create([
-            'nama'      => 'Jokowi',
+            'nama'      => 'Joko',
             'status'    => 0,
         ]);
         Workstation::create([

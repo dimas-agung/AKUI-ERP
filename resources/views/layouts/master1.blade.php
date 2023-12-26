@@ -42,8 +42,8 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
-    {{-- <link href="{{ asset('css/amsify.suggestags.css') }}" rel="stylesheet" />
-    <script src="{{ asset('js/jquery.amsify.suggestags.js') }}"></script> --}}
+    <link href="{{ asset('css/amsify.suggestags.css') }}" rel="stylesheet" />
+    <script src="{{ asset('js/jquery.amsify.suggestags.js') }}"></script>
 
     {{-- <!-- Memuat stylesheet Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" /> --}}
@@ -52,9 +52,9 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-    {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script> --}}
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
@@ -69,7 +69,7 @@
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 
     <!-- jQuery -->
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
@@ -88,11 +88,11 @@
     <link href="{{ asset('css/jquery-customselect.css') }}" rel='stylesheet' />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
 
     {{-- Select 2 --}}
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <!-- Scripts -->
@@ -142,6 +142,85 @@
                         </form>
                     </div>
                     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+                        {{-- <li class="nav-item toggle-nav-search hidden-caret">
+                            <a class="nav-link" data-toggle="collapse" href="#search-nav" role="button"
+                                aria-expanded="false" aria-controls="search-nav">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li> --}}
+                        {{-- <li class="nav-item dropdown hidden-caret">
+                            <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                            <ul class="dropdown-menu messages-notif-box animated fadeIn"
+                                aria-labelledby="messageDropdown">
+                                <li>
+                                    <div class="dropdown-title d-flex justify-content-between align-items-center">
+                                        Messages
+                                        <a href="#" class="small">Mark all as read</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="message-notif-scroll scrollbar-outer">
+                                        <div class="notif-center">
+                                            <a href="#">
+                                                <div class="notif-img">
+                                                    <img src="../../assets/img/jm_denis.jpg" alt="Img Profile">
+                                                </div>
+                                                <div class="notif-content">
+                                                    <span class="subject">Jimmy Denis</span>
+                                                    <span class="block">
+                                                        How are you ?
+                                                    </span>
+                                                    <span class="time">5 minutes ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="notif-img">
+                                                    <img src="../../assets/img/chadengle.jpg" alt="Img Profile">
+                                                </div>
+                                                <div class="notif-content">
+                                                    <span class="subject">Chad</span>
+                                                    <span class="block">
+                                                        Ok, Thanks !
+                                                    </span>
+                                                    <span class="time">12 minutes ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="notif-img">
+                                                    <img src="../../assets/img/mlane.jpg" alt="Img Profile">
+                                                </div>
+                                                <div class="notif-content">
+                                                    <span class="subject">Jhon Doe</span>
+                                                    <span class="block">
+                                                        Ready for the meeting today...
+                                                    </span>
+                                                    <span class="time">12 minutes ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="notif-img">
+                                                    <img src="../../assets/img/talha.jpg" alt="Img Profile">
+                                                </div>
+                                                <div class="notif-content">
+                                                    <span class="subject">Talha</span>
+                                                    <span class="block">
+                                                        Hi, Apa Kabar ?
+                                                    </span>
+                                                    <span class="time">17 minutes ago</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="see-all" href="javascript:void(0);">See all messages<i
+                                            class="fa fa-angle-right"></i> </a>
+                                </li>
+                            </ul>
+                        </li> --}}
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -202,6 +281,59 @@
                                 </li>
                             </ul>
                         </li>
+                        {{-- <li class="nav-item dropdown hidden-caret">
+                            <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                                <i class="fas fa-layer-group"></i>
+                            </a>
+                            <div class="dropdown-menu quick-actions quick-actions-info animated fadeIn">
+                                <div class="quick-actions-header">
+                                    <span class="title mb-1">Quick Actions</span>
+                                    <span class="subtitle op-8">Shortcuts</span>
+                                </div>
+                                <div class="quick-actions-scroll scrollbar-outer">
+                                    <div class="quick-actions-items">
+                                        <div class="row m-0">
+                                            <a class="col-6 col-md-4 p-0" href="#">
+                                                <div class="quick-actions-item">
+                                                    <i class="flaticon-file-1"></i>
+                                                    <span class="text">Generated Report</span>
+                                                </div>
+                                            </a>
+                                            <a class="col-6 col-md-4 p-0" href="#">
+                                                <div class="quick-actions-item">
+                                                    <i class="flaticon-database"></i>
+                                                    <span class="text">Create New Database</span>
+                                                </div>
+                                            </a>
+                                            <a class="col-6 col-md-4 p-0" href="#">
+                                                <div class="quick-actions-item">
+                                                    <i class="flaticon-pen"></i>
+                                                    <span class="text">Create New Post</span>
+                                                </div>
+                                            </a>
+                                            <a class="col-6 col-md-4 p-0" href="#">
+                                                <div class="quick-actions-item">
+                                                    <i class="flaticon-interface-1"></i>
+                                                    <span class="text">Create New Task</span>
+                                                </div>
+                                            </a>
+                                            <a class="col-6 col-md-4 p-0" href="#">
+                                                <div class="quick-actions-item">
+                                                    <i class="flaticon-list"></i>
+                                                    <span class="text">Completed Tasks</span>
+                                                </div>
+                                            </a>
+                                            <a class="col-6 col-md-4 p-0" href="#">
+                                                <div class="quick-actions-item">
+                                                    <i class="flaticon-file"></i>
+                                                    <span class="text">Create New Invoice</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li> --}}
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -248,22 +380,7 @@
                                 aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
-                                <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="dashboard">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="../demo1/index.html">
-                                            <span class="sub-item">Dashboard 1</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../demo2/index.html">
-                                            <span class="sub-item">Dashboard 2</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </li>
                         <li class="nav-section">
                             <span class="sidebar-mini-icon">
@@ -328,14 +445,13 @@
                                             <span class="sub-item">Stock Transit Grading Kasar</span>
                                         </a>
                                     </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="sidebarLayouts">
+                                <ul class="nav nav-collapse">
                                     <li>
                                         <a href="{{ url('/PrmRawMaterialOutputHeader') }}">
-                                            <span class="sub-item">Prm Raw Material Output Header</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('/PrmRawMaterialOutputItem') }}">
-                                            <span class="sub-item">Prm Raw Material Output Item</span>
+                                            <span class="sub-item">Stock Transit Grading Kasar</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -498,14 +614,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
 
-    <script src="{{ asset('js/scripts.js') }}"></script>
+<<<<<<< HEAD
+    {{-- <script src="{{ asset('js/scripts.js') }}"></script> --}}
     {{-- <script src="{{ asset('js/jquery.amsify.suggestags.js') }}"></script> --}}
+=======
+    <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="{{ asset('js/jquery.amsify.suggestags.js') }}"></script>
+>>>>>>> d9dae447bc9e260a56491c57b0a11ada5e034aa1
     <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
     <script src="{{ asset('js/multi-input.js') }}"></script>
-    {{-- <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script> --}}
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
@@ -522,10 +643,10 @@
     <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    {{-- <script type="text/javascript">
+    <script type="text/javascript">
         $('.tagInput').amsifySuggestags();
         // $('input[name="variant"]')..tagsInput();;
-    </script> --}}
+    </script>
 
     {{-- Select 2 --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>

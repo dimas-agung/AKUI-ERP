@@ -1,4 +1,4 @@
-@extends('layouts.master1')
+@extends('layouts.master2')
 @section('title')
     Update Workstation
 @endsection
@@ -32,9 +32,8 @@
                         <label class="font-weight-bold">Status</label>
                         <select class="form-control @error('status') is-invalid @enderror" name="status"
                             value="{{ old('status') }}">
-                            <option value="">Silahkan Pilih</option>
-                            <option value="1">Aktif</option>
-                            <option value="0">Tidak</option>
+                            <option value="1" {{ $workstation->status == 1 ? 'selected' : '' }}>Aktif</option>
+                            <option value="0" {{ $workstation->status == 0 ? 'selected' : '' }}>Tidak Aktif</option>
                         </select>
                         <!-- error message untuk status -->
                         @error('status')
