@@ -303,6 +303,7 @@
         // test
         var dataArray = [];
         var dataHeader = [];
+        var dataStock = [];
 
         function addRow() {
             console.log(dataArray);
@@ -325,7 +326,13 @@
             let harga_deal = $('#harga_deal').val();
             let keterangan = $('#keterangan').val();
             let user_created = $('#user_created').val();
-
+            // test
+            let berat_masuk = $('#berat_bersih').val();
+            let berat_keluar = $('#berat_kotor').val();
+            let sisa_berat = $('#selisih_berat').val();
+            let avg_kadar_air = $('#kadar_air').val();
+            let modal = $('#harga_nota').val();
+            let total_modal = $('#total_harga_nota').val();
             // Validasi input (sesuai kebutuhan)
             if (nomor_po.trim() === '' || nomor_batch.trim() === '' || nomor_nota_supplier.trim() === '' ||
                 nomor_nota_internal.trim() === '' || nama_supplier.trim() === '' || jenis.trim() === '' ||
@@ -384,6 +391,22 @@
                 keterangan: keterangan,
                 user_created: user_created,
             });
+
+            dataStock = [];
+            dataStock.push({
+                id_box: id_box,
+                nomor_batch: nomor_batch,
+                nama_supplier: nama_supplier,
+                jenis: jenis,
+                berat_masuk: berat_masuk,
+                berat_keluar: berat_keluar,
+                sisa_berat: sisa_berat,
+                avg_kadar_air: avg_kadar_air,
+                modal: modal,
+                total_modal: total_modal,
+                keterangan: keterangan,
+                user_created: user_created
+            })
             // Membersihkan nilai input setelah ditambahkan
             $('#jenis').val('');
             $('#berat_nota').val('');
@@ -412,6 +435,7 @@
                 data: {
                     data: JSON.stringify(dataArray),
                     dataHeader: JSON.stringify(dataHeader),
+                    dataStock: JSON.stringify(dataStock),
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json', // payload is json,
@@ -423,7 +447,6 @@
                     console.error('Error sending data:', error);
                 }
             });
-
             // Membersihkan array setelah data dikirim
             // dataArray = [];
         }

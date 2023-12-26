@@ -64,6 +64,7 @@
                                 <th scope="col" class="text-center">Berat Masuk</th>
                                 <th scope="col" class="text-center">Berat Keluar</th>
                                 <th scope="col" class="text-center">Sisa Berat</th>
+                                <th scope="col" class="text-center">Avg Kadar Air</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
                                 <th scope="col" class="text-center">Keterangan</th>
@@ -83,6 +84,7 @@
                             <th scope="col" class="text-center">Berat Masuk</th>
                             <th scope="col" class="text-center">Berat Keluar</th>
                             <th scope="col" class="text-center">Sisa Berat</th>
+                            <th scope="col" class="text-center">Avg Kadar Air</th>
                             <th scope="col" class="text-center">Modal</th>
                             <th scope="col" class="text-center">Total Modal</th>
                             <th scope="col" class="text-center">Keterangan</th>
