@@ -1,4 +1,4 @@
-@extends('layouts.master1')
+@extends('layouts.master2')
 @section('title')
     Detail Workstation
 @endsection
@@ -29,6 +29,9 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class=" d-flex justify-content-end model-footer no-bd">
+                    <a href="{{ url('/work') }}" type="button" class="btn btn-danger" data-dismiss="modal">Close</a>
+                </div>
             </div>
         </div>
     </div>

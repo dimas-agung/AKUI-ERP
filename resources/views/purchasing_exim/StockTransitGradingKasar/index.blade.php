@@ -1,21 +1,20 @@
-@extends('layouts.master1')
+@extends('layouts.master2')
 @section('title')
-    Stock Transit Grading Kasar
+    Data Stock Transit Grading Kasar
 @endsection
 @section('content')
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Stock Transit Grading Kasar</h4>
-                    <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                    <h4 class="card-title">Data Stock Transit Grading Kasar</h4>
+                    {{-- <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                         <i class="fa fa-plus"></i>
                         Add Data
-                    </button>
+                    </button> --}}
                 </div>
             </div>
             <div class="card-body">
-
                 {{-- Create Data --}}
                 @if (session()->has('success'))
                     <div class="alert alert-success">
@@ -33,7 +32,7 @@
                         <p>Mohon periksa kembali formulir Anda.</p>
                     </div>
                 @endif
-                <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                {{-- <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-xl" role="document">
                         <div class="modal-content">
                             <div class="modal-header no-bd">
@@ -41,7 +40,7 @@
                                     <span class="fw-mediumbold">
                                         Input</span>
                                     <span class="fw-light">
-                                        Data Unit
+                                        Data Stock Transit Grading Kasar
                                     </span>
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -235,7 +234,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="table-responsive">
                     <table id="add-row" class="display table table-striped table-hover">
@@ -252,10 +251,10 @@
                                 <th class="text-center">Inisial Tujuan</th>
                                 <th class="text-center">Modal</th>
                                 <th class="text-center">Total Modal</th>
-                                <th class="text-center">Keterangan</th>
-                                <th class="text-center">User Created</th>
+                                {{-- <th class="text-center">Keterangan</th> --}}
+                                <th class="text-center">NIP Admin</th>
                                 <th class="text-center">User Updated</th>
-                                <th style="width: 10%" class="text-center">Action</th>
+                                {{-- <th style="width: 10%" class="text-center">Action</th> --}}
                             </tr>
                         </thead>
                         <tfoot>
@@ -270,10 +269,10 @@
                             <th class="text-center">Inisial Tujuan</th>
                             <th class="text-center">Modal</th>
                             <th class="text-center">Total Modal</th>
-                            <th class="text-center">Keterangan</th>
-                            <th class="text-center">User Created</th>
+                            {{-- <th class="text-center">Keterangan</th> --}}
+                            <th class="text-center">NIP Admin</th>
                             <th class="text-center">User Updated</th>
-                            <th class="text-center">Action</th>
+                            {{-- <th class="text-center">Action</th> --}}
                         </tfoot>
                         <tbody>
                             @forelse ($stockTGK as $post)
@@ -289,10 +288,10 @@
                                     <td class="text-center">{!! $post->inisial_tujuan !!}</td>
                                     <td class="text-center">{!! $post->modal !!}</td>
                                     <td class="text-center">{!! $post->total_modal !!}</td>
-                                    <td class="text-center">{!! $post->keterangan !!}</td>
+                                    {{-- <td class="text-center">{!! $post->keterangan !!}</td> --}}
                                     <td class="text-center">{!! $post->user_created !!}</td>
                                     <td class="text-center">{!! $post->user_updated !!}</td>
-                                    <td class="text-center">
+                                    {{-- <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('StockTransitGradingKasar.destroy', $post->id) }}"
@@ -310,11 +309,11 @@
                                                         class="fa fa-times"></i></button>
                                             </form>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Data Biaya HPP belum Tersedia.
+                                    Data Stock Transit Grading Kasar belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>

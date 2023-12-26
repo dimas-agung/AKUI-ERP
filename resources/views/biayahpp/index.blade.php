@@ -1,4 +1,4 @@
-@extends('layouts.master1')
+@extends('layouts.master2')
 @section('title')
     Biaya HPP
 @endsection
@@ -76,7 +76,7 @@
                                         <div class="col-md-6 pr-0">
                                             <div class="form-group form-group-default">
                                                 <label>Jenis Biaya</label>
-                                                <input id="addPosition" type="text"
+                                                <input id="addPosition" type="number"
                                                     class="form-control @error('jenis_biaya') is-invalid @enderror"
                                                     name="jenis_biaya" value="{{ old('jenis_biaya') }}"
                                                     placeholder="Masukkan Jenis Biaya">
@@ -92,7 +92,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group form-group-default">
                                                 <label>Biaya PerGram</label>
-                                                <input id="addOffice" type="text"
+                                                <input id="addOffice" type="number"
                                                     class="form-control @error('biaya_per_gram') is-invalid @enderror"
                                                     name="biaya_per_gram" value="{{ old('biaya_per_gram') }}"
                                                     placeholder="Masukkan Biaya PerGram">

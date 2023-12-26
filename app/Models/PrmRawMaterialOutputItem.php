@@ -22,22 +22,24 @@ class PrmRawMaterialOutputItem extends Model
         'kadar_air',
         'tujuan_kirim',
         'letak_tujuan',
-<<<<<<< HEAD
-
         'inisial_tujuan',
-
-=======
->>>>>>> parent of acaa9aa (menambahkan menu purching exam baru)
         'modal',
         'total_modal',
-        'keterangan',
+        'keterangan_item',
         'user_created',
         'user_updated'
     ];
 
-
+    public function PrmRawMaterialStock()
+    {
+    	return $this->belongsTo(PrmRawMaterialStock::class, 'id_box', 'id_box');
+    }
     public function PrmRawMaterialOutputHeader()
     {
-    	return $this->belongsTo(PrmRawMaterialOutputHeader::class);
+    	return $this->hasMany(PrmRawMaterialOutputHeader::class, 'nomor_bstb', 'nomor_bstb');
+    }
+    public function StockTransitGradingKasar()
+    {
+        return $this->hasMany(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
     }
 }

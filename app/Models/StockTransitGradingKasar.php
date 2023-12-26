@@ -29,9 +29,9 @@ class StockTransitGradingKasar extends Model
     {
 <<<<<<< HEAD
         return $this->hasMany(PrmRawMaterialOutputHeader::class, 'nomor_bstb', 'nomor_bstb');
-
-=======
-        return $this->hasMany(PrmRawMaterialOutputHeader::class);
->>>>>>> parent of acaa9aa (menambahkan menu purching exam baru)
+    }
+    public function PramRawMaterialOutputItems()
+    {
+        return $this->hasMany(PrmRawMaterialOutputItem::class, 'nomor_bstb', 'nomor_bstb');
     }
 }

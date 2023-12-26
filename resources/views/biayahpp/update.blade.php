@@ -1,4 +1,4 @@
-@extends('layouts.master1')
+@extends('layouts.master2')
 @section('title')
     Update Biaya HPP
 @endsection
@@ -79,11 +79,6 @@
 @endsection
 @section('script')
     <script>
-        // $(document).ready(function() {
-        //     $('.select2').select2({
-        //         closeOnSelect: false
-        //     });
-        // });
         $(document).ready(function() {
             $('.select2').select2();
         });

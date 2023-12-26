@@ -1,4 +1,4 @@
-@extends('layouts.master1')
+@extends('layouts.master2')
 @section('title')
     Unit
 @endsection
@@ -103,6 +103,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
+                                <th class="text-center">Workstation</th>
                                 <th class="text-center">Nama Unit</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Tgl Buat</th>
@@ -111,17 +112,19 @@
                             </tr>
                         </thead>
                         <tfoot>
-                            <th>ID</th>
-                            <th>Nama Unit</th>
-                            <th>Status</th>
-                            <th>Tgl Buat</th>
-                            <th>Tgl Update</th>
-                            <th>Action</th>
+                            <th class="text-center">No</th>
+                            <th class="text-center">Workstation</th>
+                            <th class="text-center">Nama Unit</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Tgl Buat</th>
+                            <th class="text-center">Tgl Update</th>
+                            <th style="width: 10%" class="text-center">Action</th>
                         </tfoot>
                         <tbody>
                             @forelse ($unit as $post)
                                 <tr>
                                     <td class="text-center">{{ $post->id }}</td>
+                                    <td class="text-center">{!! $post->workstation->nama !!}</td>
                                     <td class="text-center">{!! $post->nama !!}</td>
                                     {{-- <td class="text-center">{!! $post->status !!}</td> --}}
                                     <td>

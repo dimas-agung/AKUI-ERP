@@ -8,13 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PrmRawMaterialOutputHeader extends Model
 {
     use HasFactory;
-<<<<<<< HEAD
 
     protected $table = 'prm_raw_material_output_headers';
 
-=======
-    protected $table = 'pram_raw_material_output_headers';
->>>>>>> parent of acaa9aa (menambahkan menu purching exam baru)
     protected $fillable = [
         'doc_no',
         'nomor_bstb',
@@ -25,13 +21,21 @@ class PrmRawMaterialOutputHeader extends Model
         'user_updated',
     ];
 
+    public function PrmRawMaterialOutputItem()
+    {
+        return $this->hasMany(PrmRawMaterialOutputItem::class);
+    }
     public function StockTransitGradingKasar()
     {
-    	return $this->belongsTo(StockTransitGradingKasar::class);
+    	return $this->belongsTo(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
     }
 
     public function PrmRawMaterialOutputItem()
     {
-        return $this->hasMany(PrmRawMaterialOutputItem::class);
+        return $this->hasMany(PrmRawMaterialOutputItem::class, 'nomor_bstb', 'nomor_bstb');
+    }
+    public function StockTransitGradingKasar()
+    {
+        return $this->hasMany(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
     }
 }
