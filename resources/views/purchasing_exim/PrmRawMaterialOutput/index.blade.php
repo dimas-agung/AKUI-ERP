@@ -43,7 +43,7 @@
                                 <th class="text-center">Nomor BTSB</th>
                                 <th class="text-center">Nomor Batch</th>
                                 <th class="text-center">Keterangan</th>
-                                <th class="text-center">User Created</th>
+                                <th class="text-center">NIP Admin</th>
                                 <th class="text-center">User Updated</th>
                                 <th style="width: 10%" class="text-center">Action</th>
                             </tr>
@@ -54,7 +54,7 @@
                             <th class="text-center">Nomor BTSB</th>
                             <th class="text-center">Nomor Batch</th>
                             <th class="text-center">Keterangan</th>
-                            <th class="text-center">User Created</th>
+                            <th class="text-center">NIP Admin</th>
                             <th class="text-center">User Updated</th>
                             <th class="text-center">Action</th>
                         </tfoot>

@@ -275,7 +275,7 @@
                             {{-- <th class="text-center">Action</th> --}}
                         </tfoot>
                         <tbody>
-                            @forelse ($PrmRawMOI as $post)
+                            @forelse ($stockTGK as $post)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{!! $post->nomor_bstb !!}</td>

@@ -15,4 +15,9 @@ class MasterTujuanKirimRawMaterial extends Model
         'inisial_tujuan',
         'status',
     ];
+
+        public function PrmRawMaterialOutputItem()
+    {
+        return $this->hasMany(PrmRawMaterialOutputItem::class, 'tujuan_kirim', 'tujuan_kirim');
+    }
 }

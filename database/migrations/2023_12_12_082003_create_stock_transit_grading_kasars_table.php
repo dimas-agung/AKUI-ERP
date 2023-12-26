@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('stock_transit_grading_kasars', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_bstb');
-            $table->string('nama_supplier')->unique();
+            $table->string('nama_supplier');
             $table->string('jenis');
             $table->float('berat');
             $table->float('kadar_air');

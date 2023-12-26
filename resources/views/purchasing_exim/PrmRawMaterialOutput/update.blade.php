@@ -22,12 +22,6 @@
                                     <label>Nomor Dokument</label>
                                     <input type="text" class="form-control @error('doc_no') is-invalid @enderror"
                                         name="doc_no" value="{{ old('doc_no', $PrmRawMOIC->doc_no) }}" readonly>
-                                    <!-- error message untuk title -->
-                                    @error('doc_no')
-                                        <div class="alert alert-danger mt-2">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -35,12 +29,6 @@
                                     <label>Nomor BTSB</label>
                                     <input type="text" class="form-control @error('nomor_bstb') is-invalid @enderror"
                                         name="nomor_bstb" value="{{ old('nomor_bstb', $PrmRawMOIC->nomor_bstb) }}" readonly>
-                                    <!-- error message untuk title -->
-                                    @error('nomor_bstb')
-                                        <div class="alert alert-danger mt-2">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -49,12 +37,6 @@
                                     <input type="text" class="form-control @error('user_created') is-invalid @enderror"
                                         name="user_created" value="{{ old('user_created', $PrmRawMOIC->user_created) }}"
                                         placeholder="Masukkan user created" readonly>
-                                    <!-- error message untuk title -->
-                                    @error('user_created')
-                                        <div class="alert alert-danger mt-2">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -62,13 +44,7 @@
                                     <label>User Updated</label>
                                     <input type="text" class="form-control @error('user_updated') is-invalid @enderror"
                                         name="user_updated" value="{{ old('user_updated', $PrmRawMOIC->user_updated) }}"
-                                        placeholder="Masukkan user updated" readonly>
-                                    <!-- error message untuk title -->
-                                    @error('user_updated')
-                                        <div class="alert alert-danger mt-2">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
+                                        placeholder="Masukkan user updated">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -112,8 +88,9 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Berat</label>
-                                    <input type="text" class="form-control @error('berat') is-invalid @enderror"
-                                        name="berat" value="{{ old('berat', $PrmRawMOIC->berat) }}"
+                                    <input type="text" id="berat" pattern="[0-9]*" inputmode="numeric"
+                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                        class="form-control" name="berat" value="{{ old('berat', $PrmRawMOIC->berat) }}"
                                         placeholder="Masukkan berat">
                                 </div>
                             </div>
@@ -128,45 +105,32 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Tujuan Kirim</label>
-                                    <input type="text" class="form-control @error('tujuan_kirim') is-invalid @enderror"
-                                        name="tujuan_kirim" value="{{ old('tujuan_kirim', $PrmRawMOIC->tujuan_kirim) }}"
-                                        placeholder="Masukkan tujuan kirim">
-                                    <!-- error message untuk title -->
-                                    @error('tujuan_kirim')
-                                        <div class="alert alert-danger mt-2">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
+                                    <select id="tujuan_kirim" class="form-control select2 select2-hidden-accessible"
+                                        style="width: 100%;" tabindex="-1" aria-hidden="true" name="tujuan_kirim"
+                                        data-placeholder="Pilih Tujuan Kirim">
+                                        <option></option>
+                                        @foreach ($MasTujKir as $post)
+                                            <option value="{{ $post->tujuan_kirim }}"
+                                                {{ $post->tujuan_kirim == $PrmRawMOIC->tujuan_kirim ? 'selected' : '' }}>
+                                                {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Letak Tujuan</label>
-                                    <input type="text" class="form-control @error('letak_tujuan') is-invalid @enderror"
-                                        name="letak_tujuan" value="{{ old('letak_tujuan', $PrmRawMOIC->letak_tujuan) }}"
+                                    <input type="text" id="letak_tujuan" class="form-control" name="letak_tujuan"
+                                        value="{{ old('letak_tujuan', $PrmRawMOIC->letak_tujuan) }}"
                                         placeholder="Masukkan letak tujuan">
-                                    <!-- error message untuk title -->
-                                    @error('letak_tujuan')
-                                        <div class="alert alert-danger mt-2">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Inisial Tujuan</label>
-                                    <input type="text"
-                                        class="form-control @error('inisial_tujuan') is-invalid @enderror"
-                                        name="inisial_tujuan"
+                                    <input type="text" id="inisial_tujuan" class="form-control" name="inisial_tujuan"
                                         value="{{ old('inisial_tujuan', $PrmRawMOIC->inisial_tujuan) }}"
                                         placeholder="Masukkan inisial tujuan">
-                                    <!-- error message untuk title -->
-                                    @error('inisial_tujuan')
-                                        <div class="alert alert-danger mt-2">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -244,6 +208,28 @@
                     $('#nama_supplier').val(response.nama_supplier);
                     $('#jenis').val(response.jenis);
                     $('#kadar_air').val(response.avg_kadar_air);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        $('#tujuan_kirim').on('change', function() {
+            // Mengambil nilai id_box yang dipilih
+            let selectedPcc = $(this).val();
+            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
+            $.ajax({
+                url: `{{ route('PrmRawMaterialOutput.setpcc') }}`,
+                method: 'GET',
+                data: {
+                    tujuan_kirim: selectedPcc
+                },
+                success: function(response) {
+                    console.log(response);
+                    // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                    $('#letak_tujuan').val(response.letak_tujuan);
+                    $('#inisial_tujuan').val(response.inisial_tujuan);
                 },
                 error: function(error) {
                     console.error('Error:', error);

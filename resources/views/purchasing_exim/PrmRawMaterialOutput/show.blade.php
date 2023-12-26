@@ -50,28 +50,6 @@
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th class="text-center" scope="col">No</th>
-                                <th class="text-center" scope="col">Nomor Dokument</th>
-                                <th class="text-center" scope="col">Nomor BSTB</th>
-                                <th class="text-center">Nomor Batch</th>
-                                <th class="text-center">Id Box</th>
-                                <th class="text-center">Nama Supplier</th>
-                                <th class="text-center">Jenis</th>
-                                <th class="text-center">Berat</th>
-                                <th class="text-center">Kadar Air</th>
-                                <th class="text-center">Tujuan Kirim</th>
-                                <th class="text-center">Letak Tujuan</th>
-                                <th class="text-center">Inisial Tujuan</th>
-                                <th class="text-center">Modal</th>
-                                <th class="text-center">Total Modal</th>
-                                <th class="text-center" scope="col">Keterangan</th>
-                                <th class="text-center" scope="col">NIP Admin</th>
-                                <th class="text-center" scope="col">User Updated</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </tfoot>
                         <tbody>
                             @forelse ($items as $item)
                                 <tr>

@@ -3,12 +3,13 @@ namespace App\Services;
 use App\Models\PrmRawMaterialOutputHeader;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\PrmRawMaterialStock;
+use App\Models\StockTransitGradingKasar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PrmRawMaterialOutputService
 {
-    public function sendData($dataHeader, $dataArray, $dataStock)
+    public function sendData($dataHeader, $dataArray)
     {
         try {
             DB::beginTransaction();
@@ -17,10 +18,6 @@ class PrmRawMaterialOutputService
 
             foreach ($dataArray as $item) {
                 $this->createItem($item);
-            }
-
-            foreach ( $dataStock as $itemS) {
-                $this->createStock($itemS);
             }
 
             DB::commit();
@@ -74,17 +71,44 @@ class PrmRawMaterialOutputService
             'user_updated'  => $item->user_updated,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
-    }
 
-    private function createStock($itemS)
-    {
-        $itemObject = (object)$itemS;
-        // Cari item berdasarkan id_box dan nomor_batch
+        $itemObject = (object)$item;
+        $existingItem = StockTransitGradingKasar::where('nama_supplier', $itemObject->nama_supplier)
+            ->where('nomor_bstb', $itemObject->nomor_bstb)
+            ->first();
+            // return $existingItem
+
+            $dataToUpdate = [
+                'nomor_bstb'    => $itemObject->nomor_bstb,
+                'nama_supplier' => $itemObject->nama_supplier,
+                'jenis'         => $itemObject->jenis,
+                'berat'         => $itemObject->berat,
+                'kadar_air'     => $itemObject->kadar_air,
+                'tujuan_kirim'  => $itemObject->tujuan_kirim,
+                'letak_tujuan'  => $itemObject->letak_tujuan,
+                'inisial_tujuan'=> $itemObject->inisial_tujuan,
+                'modal'         => $itemObject->modal,
+                'total_modal'   => $itemObject->total_modal,
+                'keterangan'    => $itemObject->keterangan_item,
+                'user_created'  => $itemObject->user_created,
+                'user_updated'  => $itemObject->user_updated,
+                // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+            ];
+
+        if ($existingItem) {
+            // Jika item sudah ada, perbarui data
+            $existingItem->update($dataToUpdate);
+        } else {
+            // Jika item tidak ada, buat item baru
+            StockTransitGradingKasar::create($dataToUpdate);
+        }
+
+
+        $itemObject = (object)$item;
         $existingItem = PrmRawMaterialStock::where('id_box', $itemObject->id_box)
             ->where('nomor_batch', $itemObject->nomor_batch)
             ->first();
             // return $existingItem
-
 
             $dataToUpdate = [
                 'id_box'        => $itemObject->id_box,

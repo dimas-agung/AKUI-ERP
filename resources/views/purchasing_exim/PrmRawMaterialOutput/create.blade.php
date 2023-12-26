@@ -37,65 +37,33 @@
                                     <div class="col-md-6 pr-0">
                                         <div class="form-group">
                                             <label>Nomer Dokument</label>
-                                            <input type="text" id="doc_no"
-                                                class="form-control @error('doc_no') is-invalid @enderror" name="doc_no"
+                                            <input type="text" id="doc_no" class="form-control" name="doc_no"
                                                 value="{{ old('doc_no') }}" placeholder="Masukkan Nomer Dokument">
                                         </div>
                                         <div class="form-group">
                                             <label>Nomor BTSB</label>
-                                            <input type="text" id="nomor_bstb"
-                                                class="form-control @error('nomor_bstb') is-invalid @enderror"
-                                                name="nomor_bstb" value="{{ old('nomor_bstb') }}"
-                                                placeholder="Masukkan nomor_bstb">
-                                            <!-- error message untuk title -->
-                                            @error('nomor_bstb')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                            <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
+                                                value="{{ old('nomor_bstb') }}" placeholder="Masukkan nomor_bstb">
                                         </div>
                                     </div>
                                     <div class="col-md-6 pr-0">
                                         <div class="form-group">
                                             <label>NIP Admin</label>
-                                            <input type="text" id="user_created"
-                                                class="form-control @error('user_created') is-invalid @enderror"
-                                                name="user_created" value="{{ old('user_created') }}"
-                                                placeholder="Masukkan User Created">
-                                            <!-- error message untuk title -->
-                                            @error('user_created')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                            <input type="text" id="user_created" class="form-control" name="user_created"
+                                                value="{{ old('user_created') }}" placeholder="Masukkan User Created">
                                         </div>
                                         <div class="form-group">
                                             <label>User Updated</label>
-                                            <input type="text" id="user_updated"
-                                                class="form-control @error('user_updated') is-invalid @enderror"
-                                                name="user_updated" value="{{ old('user_updated') }}"
-                                                placeholder="Masukkan User Updated">
-                                            <!-- error message untuk title -->
-                                            @error('user_updated')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                            <input type="text" id="user_updated" class="form-control" name="user_updated"
+                                                value="{{ old('user_updated') }}" placeholder="Masukkan User Updated"
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="text-center">Keterangan</label>
-                                            <input type="text" id="keterangan"
-                                                class="form-control @error('keterangan') is-invalid @enderror"
-                                                name="keterangan" value="{{ old('keterangan') }}"
-                                                placeholder="Masukkan keterangan">
-                                            <!-- error message untuk title -->
-                                            @error('keterangan')
-                                                <div class="alert alert-danger mt-2">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                            <input type="text" id="keterangan" class="form-control" name="keterangan"
+                                                value="{{ old('keterangan') }}" placeholder="Masukkan keterangan">
                                         </div>
                                     </div>
                                 </div>
@@ -181,26 +149,36 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
-                                            <input type="text" id="tujuan_kirim" class="form-control"
-                                                name="tujuan_kirim" value="{{ old('tujuan_kirim') }}"
-                                                placeholder="Masukkan tujuan kirim">
+                                            <select id="tujuan_kirim"
+                                                class="form-control select2 select2-hidden-accessible"
+                                                style="width: 100%;" tabindex="-1" aria-hidden="true"
+                                                name="tujuan_kirim" data-placeholder="Pilih Tujuan Kirim">
+                                                <option></option>
+                                                @foreach ($MasTujKir as $post)
+                                                    <option value="{{ $post->tujuan_kirim }}">
+                                                        {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Letak Tujuan</label>
                                             <input type="text" id="letak_tujuan" class="form-control"
-                                                name="letak_tujuan" value="{{ old('letak_tujuan') }}"
+                                                name="letak_tujuan"
+                                                onchange="handleChange(this.{{ old('letak_tujuan') }})"
                                                 placeholder="Masukkan letak tujuan">
                                         </div>
                                         <div class="form-group">
                                             <label>Inisial Tujuan</label>
                                             <input type="text" id="inisial_tujuan" class="form-control"
-                                                name="inisial_tujuan" value="{{ old('inisial_tujuan') }}"
+                                                name="inisial_tujuan"
+                                                onchange="handleChange(this.{{ old('inisial_tujuan') }})"
                                                 placeholder="Masukkan inisial tujuan">
                                         </div>
                                         <div class="form-group">
-                                            <label>Modal</label>
-                                            <input type="text" id="modal" class="form-control" name="modal"
-                                                value="{{ old('modal') }}" placeholder="Masukkan modal">
+                                            <label>Keterangan</label>
+                                            <input type="text" id="keterangan_item" class="form-control"
+                                                name="keterangan_item" value="{{ old('keterangan_item') }}"
+                                                placeholder="Masukkan keterangan">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -220,16 +198,15 @@
                                                 value="{{ old('selisih_berat') }}" placeholder="Masukkan sisa berat">
                                         </div>
                                         <div class="form-group">
+                                            <label>Modal</label>
+                                            <input type="text" id="modal" class="form-control" name="modal"
+                                                value="{{ old('modal') }}" placeholder="Masukkan modal">
+                                        </div>
+                                        <div class="form-group">
                                             <label>Total Modal</label>
                                             <input type="text" id="total_modal" class="form-control"
                                                 name="total_modal" value="{{ old('total_modal') }}"
                                                 placeholder="Masukkan total modal">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Keterangan</label>
-                                            <input type="text" id="keterangan_item" class="form-control"
-                                                name="keterangan_item" value="{{ old('keterangan_item') }}"
-                                                placeholder="Masukkan keterangan">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -315,6 +292,28 @@
             });
         });
 
+        $('#tujuan_kirim').on('change', function() {
+            // Mengambil nilai id_box yang dipilih
+            let selectedPcc = $(this).val();
+            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
+            $.ajax({
+                url: `{{ route('PrmRawMaterialOutput.setpcc') }}`,
+                method: 'GET',
+                data: {
+                    tujuan_kirim: selectedPcc
+                },
+                success: function(response) {
+                    console.log(response);
+                    // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                    $('#letak_tujuan').val(response.letak_tujuan);
+                    $('#inisial_tujuan').val(response.inisial_tujuan);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
         // Event listener untuk perubahan nilai pada berat nota atau berat bersih
         $('#berat_masuk').on('change', updateSelisihBerat);
         $('#berat').on('input', updateSelisihBerat);
@@ -380,7 +379,9 @@
                 id_box: id_box,
                 nama_supplier: nama_supplier,
                 jenis: jenis,
+                berat_masuk: berat_masuk,
                 berat: berat,
+                selisih_berat: selisih_berat,
                 kadar_air: kadar_air,
                 tujuan_kirim: tujuan_kirim,
                 letak_tujuan: letak_tujuan,
@@ -449,9 +450,8 @@
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
-                    dataStock: JSON.stringify(dataStock),
+                    // dataStock: JSON.stringify(dataStock),
                     dataHeader: JSON.stringify(dataHeader),
-                    // _token: $('meta[name="csrf-token"]').attr('content')
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json', // payload is json,
@@ -460,8 +460,6 @@
                     window.location.href = response.redirectTo; // Redirect ke halaman lain
                 },
                 error: function(error) {
-                    // console.error('Error sending data:', error);
-                    // console.error('Error: ' + response.error);
                     console.error('Error:', response);
                     console.log('Validation Errors:', response.responseJSON.errors);
                 }
