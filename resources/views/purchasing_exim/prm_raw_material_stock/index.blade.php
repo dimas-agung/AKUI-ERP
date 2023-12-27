@@ -1,3 +1,17 @@
+{{-- 'id_box',
+'nomor_batch',
+'nama_supplier',
+'jenis',
+'berat_masuk',
+'berat_keluar',
+'sisa_berat',
+'avg_kadar_air',
+'modal',
+'total_modal',
+'keterangan',
+'user_created',
+'user_updated' --}}
+
 @extends('layouts.template')
 @section('Menu')
     Purchasing & EXIM
@@ -43,12 +57,16 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">No</th>
-                                <th scope="col" class="text-center">No Doc</th>
-                                <th scope="col" class="text-center">Nomor PO</th>
+                                <th scope="col" class="text-center">Id Box</th>
                                 <th scope="col" class="text-center">Nomor Batch</th>
-                                <th scope="col" class="text-center">Nomor Nota Supplier</th>
-                                <th scope="col" class="text-center">Nomor Nota Internal</th>
                                 <th scope="col" class="text-center">Nama Supplier</th>
+                                <th scope="col" class="text-center">Jenis</th>
+                                <th scope="col" class="text-center">Berat Masuk</th>
+                                <th scope="col" class="text-center">Berat Keluar</th>
+                                <th scope="col" class="text-center">Sisa Berat</th>
+                                <th scope="col" class="text-center">Avg Kadar Air</th>
+                                <th scope="col" class="text-center">Modal</th>
+                                <th scope="col" class="text-center">Total Modal</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">User Created</th>
                                 <th scope="col" class="text-center">User Updated</th>
@@ -59,12 +77,16 @@
                         </thead>
                         <tfoot>
                             <th scope="col" class="text-center">No</th>
-                            <th scope="col" class="text-center">No Doc</th>
-                            <th scope="col" class="text-center">Nomor PO</th>
+                            <th scope="col" class="text-center">Id Box</th>
                             <th scope="col" class="text-center">Nomor Batch</th>
-                            <th scope="col" class="text-center">Nomor Nota Supplier</th>
-                            <th scope="col" class="text-center">Nomor Nota Internal</th>
                             <th scope="col" class="text-center">Nama Supplier</th>
+                            <th scope="col" class="text-center">Jenis</th>
+                            <th scope="col" class="text-center">Berat Masuk</th>
+                            <th scope="col" class="text-center">Berat Keluar</th>
+                            <th scope="col" class="text-center">Sisa Berat</th>
+                            <th scope="col" class="text-center">Avg Kadar Air</th>
+                            <th scope="col" class="text-center">Modal</th>
+                            <th scope="col" class="text-center">Total Modal</th>
                             <th scope="col" class="text-center">Keterangan</th>
                             <th scope="col" class="text-center">User Created</th>
                             <th scope="col" class="text-center">User Updated</th>
@@ -73,7 +95,7 @@
                             <th scope="col" class="text-center">Actions</th>
                         </tfoot>
                         <tbody>
-                            @forelse ($prm_raw_material_inputs as $MasterPRIM)
+                            {{-- @forelse ($prm_raw_material_inputs as $MasterPRIM)
                                 <tr>
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $MasterPRIM->doc_no }}</td>
@@ -108,7 +130,7 @@
                                 <div class="alert alert-danger">
                                     Data Purchasing belum Tersedia.
                                 </div>
-                            @endforelse
+                            @endforelse --}}
                         </tbody>
                     </table>
                 </div>

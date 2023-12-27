@@ -30,20 +30,20 @@ class MasterTujuanKirimRawMaterialController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'tujuan_kirim'      => 'required',
-            'letak_tujuan'      => 'required',
-            'inisial_tujuan'    => 'required'
+            'tujuan_kirim'              => 'required',
+            'letak_tujuan'              => 'required',
+            'inisial_tujuan'            => 'required|unique:master_tujuan_kirim_raw_materials'
         ], [
-            'tujuan_kirim.required' => 'Kolom Tujuan Kirim Wajib diisi.',
-            'letak_tujuan.required' => 'Kolom Letak Tujuan Wajib diisi.',
-            'inisial_tujuan.required' => 'Kolom Inisial Tujuan Wajib diisi.'
+            'tujuan_kirim.required'     => 'Kolom Tujuan Kirim Wajib diisi.',
+            'letak_tujuan.required'     => 'Kolom Letak Tujuan Wajib diisi.',
+            'inisial_tujuan.required'   => 'Kolom Inisial Tujuan Wajib diisi.'
         ]);
 
         //create MasterSupplier
         MasterTujuanKirimRawMaterial::create([
-            'tujuan_kirim'      => $request->tujuan_kirim,
-            'letak_tujuan'      => $request->letak_tujuan,
-            'inisial_tujuan'    => $request->inisial_tujuan
+            'tujuan_kirim'              => $request->tujuan_kirim,
+            'letak_tujuan'              => $request->letak_tujuan,
+            'inisial_tujuan'            => $request->inisial_tujuan
         ]);
         //redirect to index
         return redirect()->route('master_tujuan_kirim_raw_material.index')->with(['success' => 'Data Berhasil Disimpan!']);
@@ -69,13 +69,18 @@ class MasterTujuanKirimRawMaterialController extends Controller
     {
         //get by ID
         $MasterTJRM = MasterTujuanKirimRawMaterial::findOrFail($id);
-
+        $ValidasiInisialTujuan = 'required';
+        if ($request->inisial_tujuan != $MasterTJRM->inisial_tujuan) {
+            $ValidasiInisialTujuan = 'required|unique:master_tujuan_kirim_raw_materials';
+        }
         //validate form
         $validate = $this->validate($request, [
             'tujuan_kirim'      => 'required',
             'letak_tujuan'      => 'required',
-            'inisial_tujuan'    => 'required',
+            'inisial_tujuan'    => $ValidasiInisialTujuan,
             'status'            => 'required'
+        ], [
+            'inisial_tujuan'    => 'Inisial Tujuan Sudah Digunakan'
         ]);
 
         $MasterTJRM->update([

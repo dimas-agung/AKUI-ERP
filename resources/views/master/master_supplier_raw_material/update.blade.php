@@ -11,7 +11,6 @@
                         <form action="{{ route('master_supplier_raw_material.update', $MasterSPR->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama Supplier</label>
                                 <input type="text" class="form-control @error('nama_supplier') is-invalid @enderror"
@@ -56,6 +55,7 @@
 
                             <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
+                            <button type="button" class="btn btn-danger" onclick="goBack()">CANCEL</button>
 
                         </form>
                     </div>
