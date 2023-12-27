@@ -91,16 +91,6 @@ Route::controller(App\Http\Controllers\PurchasingExim\StockTransitGradingKasarCo
     Route::delete('/StockTransitGradingKasar/destroy/{id}', 'destroy')->name('StockTransitGradingKasar.destroy');
 });
 
-<<<<<<< HEAD
-Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputHeaderController::class)->group(function () {
-    Route::get('/PrmRawMaterialOutputHeader', 'index')->name('PrmRawMaterialOutputHeader.index');
-    Route::get('/PrmRawMaterialOutputHeader/create', 'create')->name('PrmRawMaterialOutputHeader.create');
-    Route::post('/PrmRawMaterialOutputHeader/store', 'store')->name('PrmRawMaterialOutputHeader.store');
-    Route::get('/PrmRawMaterialOutputHeader/show/{id}', 'show')->name('PrmRawMaterialOutputHeader.show');
-    Route::get('/PrmRawMaterialOutputHeader/edit{id}', 'edit')->name('PrmRawMaterialOutputHeader.edit');
-    Route::put('/PrmRawMaterialOutputHeader/update{id}', 'update')->name('PrmRawMaterialOutputHeader.update');
-    Route::delete('/PrmRawMaterialOutputHeader/destroy{id}', 'destroy')->name('PrmRawMaterialOutputHeader.destroy');
-=======
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputController::class)->group(function () {
     Route::get('/PrmRawMaterialOutput', 'index')->name('PrmRawMaterialOutput.index');
     Route::get('/PrmRawMaterialOutput/create', 'create')->name('PrmRawMaterialOutput.create');
@@ -114,7 +104,6 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputContro
     // routes/web.php
     Route::get('/PrmRawMaterialOutput/get_data_id_box', 'set')->name('PrmRawMaterialOutput.set');
     Route::get('/PrmRawMaterialOutput/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
->>>>>>> d685cc3c60571d626e550a6ed33de0edc356cd53
 });
 
 Auth::routes();
