@@ -39,7 +39,7 @@
                     </div>
                 @endif
 
-                {{-- Modal --}}
+                {{-- Modal Tambah --}}
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -109,6 +109,99 @@
                         </div>
                     </div>
                 </div>
+                {{-- test start --}}
+                <!-- Modal -->
+                {{-- <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateModalLabel">UPDATE DATA MASTER TUJUAN KIRIM RAW MATERIAL
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Tujuan Kirim</label>
+                                        <input type="text"
+                                            class="form-control @error('tujuan_kirim') is-invalid @enderror"
+                                            name="tujuan_kirim" id="tujuan_kirim"
+                                            value="{{ old('tujuan_kirim', $MasterTJRM->tujuan_kirim) }}"
+                                            placeholder="Masukkan Tujuan Kirim">
+
+                                        <!-- error message untuk title -->
+                                        @error('tujuan_kirim')
+                                            <div class="alert alert-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Letak Tujuan</label>
+                                        <input type="text"
+                                            class="form-control @error('letak_tujuan') is-invalid @enderror"
+                                            name="letak_tujuan" id="letak_tujuan"
+                                            value="{{ old('letak_tujuan', $MasterTJRM->letak_tujuan) }}"
+                                            placeholder="Masukkan Letak Tujuan">
+
+                                        <!-- error message untuk title -->
+                                        @error('letak_tujuan')
+                                            <div class="alert alert-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Inisial Tujuan</label>
+                                        <input type="text"
+                                            class="form-control @error('inisial_tujuan') is-invalid @enderror"
+                                            name="inisial_tujuan" id="inisial_tujuan"
+                                            value="{{ old('inisial_tujuan', $MasterTJRM->inisial_tujuan) }}"
+                                            placeholder="Masukkan Letak Tujuan">
+
+                                        <!-- error message untuk title -->
+                                        @error('inisial_tujuan')
+                                            <div class="alert alert-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Status</label>
+                                        <select class="form-control" @error('status') is-invalid @enderror" name="status"
+                                            value="{{ old('status', $MasterTJRM->status) }}">
+                                            <option value="1" {{ $MasterTJRM->status == 1 ? 'selected' : '' }}>AKTIF
+                                            </option>
+                                            <option value="0" {{ $MasterTJRM->status == 0 ? 'selected' : '' }}>TIDAK
+                                                AKTIF
+                                            </option>
+                                        </select>
+                                        <!-- error message untuk title -->
+                                        @error('status')
+                                            <div class="alert alert-danger mt-2">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" form="updateForm" class="btn btn-primary">UPDATE</button>
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">CLOSE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+
+                {{-- test end --}}
                 <div class="table-responsive">
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>
@@ -162,6 +255,10 @@
                                                 <button type="submit" data-toggle="tooltip"
                                                     class="btn btn-link btn-danger"data-original-title="Remove"><i
                                                         class="fa fa-times"></i></button>
+                                                {{-- <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#updateModal">
+                                                    Update Data
+                                                </button> --}}
                                             </form>
                                         </div>
                                     </td>

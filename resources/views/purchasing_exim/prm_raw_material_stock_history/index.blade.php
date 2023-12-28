@@ -4,7 +4,7 @@
     Purchasing & EXIM
 @endsection
 @section('title')
-    Purchasing Raw Material Stock
+    Purchasing Raw Material Stock History
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -52,28 +52,8 @@
                                 <th scope="col" class="text-center">User Updated</th>
                                 <th scope="col" class="text-center">Created At</th>
                                 <th scope="col" class="text-center">Updated At</th>
-                                <th scope="col" class="text-center">Actions</th>
                             </tr>
                         </thead>
-                        {{-- <tfoot>
-                            <th scope="col" class="text-center">No</th>
-                            <th scope="col" class="text-center">Id Box</th>
-                            <th scope="col" class="text-center">Nomor Batch</th>
-                            <th scope="col" class="text-center">Nama Supplier</th>
-                            <th scope="col" class="text-center">Jenis</th>
-                            <th scope="col" class="text-center">Berat Masuk</th>
-                            <th scope="col" class="text-center">Berat Keluar</th>
-                            <th scope="col" class="text-center">Sisa Berat</th>
-                            <th scope="col" class="text-center">Avg Kadar Air</th>
-                            <th scope="col" class="text-center">Modal</th>
-                            <th scope="col" class="text-center">Total Modal</th>
-                            <th scope="col" class="text-center">Keterangan</th>
-                            <th scope="col" class="text-center">User Created</th>
-                            <th scope="col" class="text-center">User Updated</th>
-                            <th scope="col" class="text-center">Created At</th>
-                            <th scope="col" class="text-center">Updated At</th>
-                            <th scope="col" class="text-center">Actions</th>
-                        </tfoot> --}}
                         <tbody>
                             @forelse ($PrmRawMaterialStock as $MasterStock)
                                 <tr>
@@ -93,15 +73,22 @@
                                     <td>{{ $MasterStock->user_updated }}</td>
                                     <td>{{ $MasterStock->created_at }}</td>
                                     <td>{{ $MasterStock->updated_at }}</td>
-                                    <td class="text-center">
+                                    {{-- <td class="text-center">
                                         <div class="form-button-action">
-                                            <form action="">
-                                                <a href="{{ route('prm_raw_material_stock_history.show', $MasterStock->id) }}"
-                                                    class="btn btn-link" title="Show History"
+                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                                action="{{ route('prm_raw_material_input.destroyInput', $MasterPRIM->id) }}"
+                                                method="POST">
+                                                <a href="{{ route('prm_raw_material_input.show', $MasterPRIM->id) }}"
+                                                    class="btn btn-link" title="Show Detail"
                                                     data-original-title="Show Detail"><i class="fa fa-file"></i></a>
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" data-toggle="tooltip"
+                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
+                                                        class="fa fa-times"></i></button>
                                             </form>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">

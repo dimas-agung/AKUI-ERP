@@ -1,5 +1,5 @@
 @extends('layouts.master2')
-{{-- @extends('layouts.template') --}}
+{{-- @extends('layouts.template1') --}}
 @section('title')
     Purchasing Raw Material Input
 @endsection

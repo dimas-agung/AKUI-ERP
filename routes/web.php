@@ -99,13 +99,13 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputControl
 
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
     Route::get('/purchasing_exim/prm_raw_material_stock', 'index')->name('purchasing_exim.prm_raw_material_stock.index');
-    // Route::get('/StockTransitGradingKasar/create', 'create')->name('StockTransitGradingKasar.create');
-    // Route::post('/StockTransitGradingKasar/store', 'store')->name('StockTransitGradingKasar.store');
-    // Route::get('/StockTransitGradingKasar/show/{id}', 'show')->name('StockTransitGradingKasar.show');
-    // Route::get('/StockTransitGradingKasar/edit/{id}', 'edit')->name('StockTransitGradingKasar.edit');
-    // Route::put('/StockTransitGradingKasar/update/{id}', 'update')->name('StockTransitGradingKasar.update');
-    // Route::delete('/StockTransitGradingKasar/destroy/{id}', 'destroy')->name('StockTransitGradingKasar.destroy');
+    Route::get('/purchasing_exim/prm_raw_material_stock_history', 'show')->name('prm_raw_material_stock_history.show');
 });
+Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockHistoryController::class)->group(function () {
+    // Route::get('/purchasing_exim/prm_raw_material_stock', 'index')->name('purchasing_exim.prm_raw_material_stock.index');
+    Route::get('/purchasing_exim/prm_raw_material_stock_history', 'show')->name('prm_raw_material_stock_history.show');
+});
+
 Route::controller(App\Http\Controllers\PurchasingExim\StockTransitGradingKasarController::class)->group(function () {
     Route::get('/StockTransitGradingKasar', 'index')->name('StockTransitGradingKasar.index');
     Route::get('/StockTransitGradingKasar/create', 'create')->name('StockTransitGradingKasar.create');

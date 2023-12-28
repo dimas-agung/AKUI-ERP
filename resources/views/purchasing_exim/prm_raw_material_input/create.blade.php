@@ -305,6 +305,7 @@
         var dataArray = [];
         var dataHeader = [];
         var dataStock = [];
+        var dataStockHistory = [];
 
         function addRow() {
             console.log(dataArray);
@@ -408,6 +409,20 @@
                 keterangan: keterangan,
                 user_created: user_created
             })
+
+            dataStockHistory = [];
+            dataStockHistory.push({
+                id_box: id_box,
+                doc_no: doc_no,
+                berat_masuk: berat_masuk,
+                berat_keluar: berat_keluar,
+                sisa_berat: sisa_berat,
+                avg_kadar_air: avg_kadar_air,
+                modal: modal,
+                total_modal: total_modal,
+                keterangan: keterangan,
+                user_created: user_created
+            })
             // Membersihkan nilai input setelah ditambahkan
             $('#jenis').val('');
             $('#berat_nota').val('');
@@ -437,6 +452,7 @@
                     data: JSON.stringify(dataArray),
                     dataHeader: JSON.stringify(dataHeader),
                     dataStock: JSON.stringify(dataStock),
+                    dataStockHistory: JSON.stringify(dataStockHistory),
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json', // payload is json,

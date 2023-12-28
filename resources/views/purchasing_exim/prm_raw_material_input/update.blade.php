@@ -1,5 +1,5 @@
 @extends('layouts.master2')
-{{-- @extends('layouts.template') --}}
+{{-- @extends('layouts.template1') --}}
 @section('content')
     <div class="col-md-12">
         <div class="card mt-2">

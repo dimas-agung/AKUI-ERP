@@ -64,6 +64,22 @@ class MasterTujuanKirimRawMaterialController extends Controller
 
         return view('master.master_tujuan_kirim_raw_material.update', compact('MasterTJRM'));
     }
+
+    // public function edit(string $id)
+    // {
+    //     // $i = 1;
+    //     // $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+    //     // $MasterTujuanKirimRawMaterial = MasterTujuanKirimRawMaterial::with('PrmRawMaterialInputItem')->get();
+    //     //get by ID
+    //     // $MasterPRIM = PrmRawMaterialInput::findOrFail($id);
+    //     // $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
+    //     //     ->where(['id' => $id])
+    //     //     ->first();
+    //     //
+    //     // $MasterTJRM = MasterTujuanKirimRawMaterial::findOrFail($id);
+
+    //     // return view('master.master_tujuan_kirim_raw_material.update', compact('MasterTJRM'));
+    // }
     // update
     public function update(Request $request, $id): RedirectResponse
     {
