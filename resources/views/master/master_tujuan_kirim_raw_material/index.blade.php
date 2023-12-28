@@ -3,6 +3,7 @@
 @section('Menu')
     Master
 @endsection
+
 @section('title')
     Master Tujuan Kirim Raw Material
 @endsection
@@ -19,7 +20,7 @@
                 </div>
             </div>
             <div class="card-body">
-                @include('sweetalert::alert')
+                {{-- @include('sweetalert::alert') --}}
                 @if (session()->has('success'))
                     <div class="alert alert-success">
                         <strong>Sukses: </strong>{{ session()->get('success') }}

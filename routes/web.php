@@ -83,7 +83,6 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::c
 
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
     Route::get('/purchasing_exim/prm_raw_material_input', 'index')->name('prm_raw_material_input.index');
-    Route::get('/purchasing_exim/prm_raw_material_stock', 'indexstock')->name('prm_raw_material_stock.index');
     Route::get('/purchasing_exim/prm_raw_material_input/create', 'create')->name('prm_raw_material_input.create');
     Route::get('/purchasing_exim/prm_raw_material_input/create_item', 'createItem')->name('prm_raw_material_input.createItem');
     Route::post('/purchasing_exim/prm_raw_material_input/store', 'store')->name('prm_raw_material_input.store');
@@ -96,8 +95,33 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputControl
     Route::get('/purchasing_exim/prm_raw_material_input/getDataJenis', 'getDataJenis')->name('prm_raw_material_input.getDataJenis');
     Route::post('/purchasing_exim/prm_raw_material_input/simpanData', 'simpanData')->name('prm_raw_material_input.simpanData');
     Route::post('/purchasing_exim/prm_raw_material_input/simpanDataItem', 'simpanDataItem')->name('prm_raw_material_input.simpanDataItem');
+
+Route::controller(App\Http\Controllers\PurchasingExim\StockTransitGradingKasarController::class)->group(function () {
+    Route::get('/StockTransitGradingKasar', 'index')->name('StockTransitGradingKasar.index');
+    Route::get('/StockTransitGradingKasar/create', 'create')->name('StockTransitGradingKasar.create');
+    Route::post('/StockTransitGradingKasar/store', 'store')->name('StockTransitGradingKasar.store');
+    Route::get('/StockTransitGradingKasar/show/{id}', 'show')->name('StockTransitGradingKasar.show');
+    Route::get('/StockTransitGradingKasar/edit/{id}', 'edit')->name('StockTransitGradingKasar.edit');
+    Route::put('/StockTransitGradingKasar/update/{id}', 'update')->name('StockTransitGradingKasar.update');
+    Route::delete('/StockTransitGradingKasar/destroy/{id}', 'destroy')->name('StockTransitGradingKasar.destroy');
 });
 
-// Auth::routes();
+Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputController::class)->group(function () {
+    Route::get('/PrmRawMaterialOutput', 'index')->name('PrmRawMaterialOutput.index');
+    Route::get('/PrmRawMaterialOutput/create', 'create')->name('PrmRawMaterialOutput.create');
+    Route::post('/PrmRawMaterialOutput/store', 'store')->name('PrmRawMaterialOutput.store');
+    Route::post('/PrmRawMaterialOutput/sendData', 'sendData')->name('PrmRawMaterialOutput.sendData');
+    Route::get('/PrmRawMaterialOutput/show/{id}', 'show')->name('PrmRawMaterialOutput.show');
+    Route::get('/PrmRawMaterialOutput/edit/{id}', 'edit')->name('PrmRawMaterialOutput.edit');
+    Route::put('/PrmRawMaterialOutput/update/{id}', 'update')->name('PrmRawMaterialOutput.update');
+    Route::delete('/PrmRawMaterialOutput/destroy/{id}', 'destroy')->name('PrmRawMaterialOutput.destroy');
+    Route::delete('/PrmRawMaterialOutput/destroyHead/{id}', 'destroyHead')->name('PrmRawMaterialOutput.destroyHead');
+    // routes/web.php
+    Route::get('/PrmRawMaterialOutput/get_data_id_box', 'set')->name('PrmRawMaterialOutput.set');
+    Route::get('/PrmRawMaterialOutput/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
+});
+
+Auth::routes();
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

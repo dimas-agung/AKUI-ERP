@@ -22,10 +22,15 @@ class StockTransitGradingKasar extends Model
         'total_modal',
         'keterangan',
         'user_created',
-        'user_updated'
+        'user_updated',
     ];
-    public function PrmRawMaterialOutputHeader()
+
+    public function PramRawMaterialOutputHeaders()
     {
-        return $this->hasMany(PrmRawMaterialOutputHeader::class);
+        return $this->hasMany(PrmRawMaterialOutputHeader::class, 'nomor_bstb', 'nomor_bstb');
+    }
+    public function PramRawMaterialOutputItems()
+    {
+        return $this->hasMany(PrmRawMaterialOutputItem::class, 'nomor_bstb', 'nomor_bstb');
     }
 }
