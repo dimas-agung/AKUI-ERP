@@ -22,7 +22,7 @@ return new class extends Migration
             $table->float('modal');
             $table->float('total_modal');
             $table->text('keterangan');
-            $table->text('status');
+            $table->text('status')->default('1');
             $table->string('user_created');
             $table->timestamps();
         });

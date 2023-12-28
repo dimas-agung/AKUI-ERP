@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('prm_raw_material_output_headers', function (Blueprint $table) {
             $table->id();
             $table->string('doc_no');
-            $table->foreignId('nomor_bstb');
+            $table->string('nomor_bstb');
             $table->string('nomor_batch');
             $table->text('keterangan');
             $table->string('user_created');

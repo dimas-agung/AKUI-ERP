@@ -42,4 +42,8 @@ class PrmRawMaterialOutputItem extends Model
     {
         return $this->hasMany(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
     }
+    public function PrmRawMaterialStockHistory()
+    {
+        return $this->hasMany(PrmRawMaterialStockHistory::class, 'id_box', 'id_box');
+    }
 }

@@ -83,59 +83,6 @@ class PrmRawMaterialOutputController extends Controller
 
     }
 
-    //     //validate form
-    //     $this->validate($request, [
-    //         'doc_no.*'       => 'required',
-    //         'nomor_bstb.*'   => 'required|unique',
-    //         'nomor_batch.*'  => 'required',
-    //         'id_box'       => 'required',
-    //         'nama_supplier'=> 'required',
-    //         'jenis'        => 'required',
-    //         'berat'        => 'required',
-    //         'kadar_air'    => 'required',
-    //         'tujuan_kirim' => 'required',
-    //         'letak_tujuan' => 'required',
-    //         'inisial_tujuan'=> 'required',
-    //         'modal'        => 'required',
-    //         'total_modal'  => 'required',
-    //         'keterangan'   => 'required',
-    //         'keterangan_item'   => 'required',
-    //         'user_created.*'    => 'required',
-    //         'user_updated.*'    => 'required'
-    //     ]);
-
-    //     //create post
-    //     PrmRawMaterialOutputItem::create([
-    //         'doc_no'        => $request->doc_no,
-    //         'nomor_bstb'    => $request->nomor_bstb,
-    //         'nomor_batch'   => $request->nomor_batch,
-    //         'id_box'        => $request->id_box,
-    //         'nama_supplier' => $request->nama_supplier,
-    //         'jenis'         => $request->jenis,
-    //         'berat'         => $request->berat,
-    //         'kadar_air'     => $request->kadar_air,
-    //         'tujuan_kirim'  => $request->tujuan_kirim,
-    //         'letak_tujuan'  => $request->letak_tujuan,
-    //         'inisial_tujuan'=> $request->inisial_tujuan,
-    //         'modal'         => $request->modal,
-    //         'total_modal'   => $request->total_modal,
-    //         'keterangan_item'=> $request->keterangan_item,
-    //         'user_created'  => $request->user_created,
-    //         'user_updated'  => $request->user_updated
-    //     ]);
-    //     PrmRawMaterialOutputHeader::create([
-    //         'doc_no'        => $request->doc_no,
-    //         'nomor_bstb'    => $request->nomor_bstb,
-    //         'nomor_batch'   => $request->nomor_batch,
-    //         'keterangan'    => $request->keterangan,
-    //         'user_created'  => $request->user_created,
-    //         'user_updated'  => $request->user_updated
-    //     ]);
-
-    //     //redirect to index
-    //     return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Disimpan!']);
-    // }
-
     // Show
     public function show(string $id)
     {
@@ -196,9 +143,10 @@ class PrmRawMaterialOutputController extends Controller
     {
         //get post by ID
         $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
+        $PrmRawMO = PrmRawMaterialOutputItem::with('PrmRawMaterialStock')->find($id);
 
         //delete post
-        $PrmRawMOIC->delete();
+        $PrmRawMO->delete();
 
         //redirect to index
         return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
