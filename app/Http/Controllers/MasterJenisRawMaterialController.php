@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\PurchasingExim\PrmRawMaterialInput as PurchasingEximPrmRawMaterialInput;
 use App\Models\MasterJenisRawMaterial;
-use App\Models\PrmRawMaterialInput;
+use App\Models\PrmRawMaterialInputItem;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -14,14 +14,13 @@ class MasterJenisRawMaterialController extends Controller
     //index
     public function index()
     {
-
         $i = 1;
-        $PrmRawMaterialInput = PrmRawMaterialInput::with('master_jenis_raw_material')->get();
+        $PrmRawMaterialInputItem = PrmRawMaterialInputItem::with('MasterJenisRawMaterial')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::all();
         // return $PrmRawMaterialInput;
         // return $MasterJenisRawMaterial;
         return response()->view('master.master_jenis_raw_material.index', [
-            'PrmRawMaterialInput'    => $PrmRawMaterialInput,
+            'PrmRawMaterialInput'    => $PrmRawMaterialInputItem,
             'MasterJenisRawMaterial' => $MasterJenisRawMaterial,
             'i' => $i
         ]);
@@ -36,13 +35,14 @@ class MasterJenisRawMaterialController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'jenis'                 => 'required|unique:master_jenis_raw_materials',
-            'kategori_susut',
+            'jenis'                     => 'required|unique:master_jenis_raw_materials',
+            'kategori_susut'            => 'required',
             'upah_operator',
             'pengurangan_harga',
             'harga_estimasi',
         ], [
-            'jenis.required' => 'Kolom Jenis Wajib diisi.',
+            'jenis.required'            => 'Kolom Jenis Wajib diisi.',
+            'kategori_susut.required'   => 'Kolom Kategori Susut Wajib diisi.',
         ]);
 
         //create MasterSupplier
@@ -78,14 +78,20 @@ class MasterJenisRawMaterialController extends Controller
     {
         //get by ID
         $MasterJRM = MasterJenisRawMaterial::findOrFail($id);
+        $ValidasiJenis = 'required';
+        if ($request->jenis != $MasterJRM->jenis) {
+            $ValidasiJenis = 'required|unique:master_jenis_raw_materials';
+        }
 
         //validate form
         $validate = $this->validate($request, [
-            'jenis'                 => 'required',
-            'kategori_susut',
-            'upah_operator'         => 'numeric',
-            'pengurangan_harga'     => 'numeric',
-            'harga_estimasi'        => 'numeric'
+            'jenis'                 => $ValidasiJenis,
+            'kategori_susut'        => 'required',
+            'upah_operator',
+            'pengurangan_harga',
+            'harga_estimasi'
+        ], [
+            'jenis' => 'Jenis Sudah Digunakan'
         ]);
 
         $MasterJRM->update([

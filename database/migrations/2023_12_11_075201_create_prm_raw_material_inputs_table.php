@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('prm_raw_material_inputs', function (Blueprint $table) {
             $table->id();
-            $table->string('doc_no');
+            $table->string('doc_no')->default('1');
             $table->string('nomor_po');
             $table->string('nomor_batch');
             $table->string('nomor_nota_supplier');
             $table->string('nomor_nota_internal');
             $table->string('nama_supplier');
-            $table->text('keterangan');
+            $table->text('keterangan')->nullable();
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

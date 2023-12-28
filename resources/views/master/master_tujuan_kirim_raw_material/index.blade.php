@@ -1,4 +1,9 @@
-@extends('layouts.master2')
+
+@extends('layouts.template')
+@section('Menu')
+    Master
+@endsection
+
 @section('title')
     Master Tujuan Kirim Raw Material
 @endsection

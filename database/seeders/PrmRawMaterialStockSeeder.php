@@ -56,8 +56,7 @@ class PrmRawMaterialStockSeeder extends Seeder
             'total_modal'       => '5699',
             'keterangan'        => 'tes',
             'user_created'      => 'SPE',
-            'user_updated'      => 'SPF'
+            'user_updated'      => 'SPF',
         ]);
-
     }
 }

@@ -13,19 +13,20 @@ return new class extends Migration
     {
         Schema::create('prm_raw_material_input_items', function (Blueprint $table) {
             $table->id();
-            $table->string('doc_no');
+            $table->string('doc_no')->default('1');
             $table->string('jenis');
             $table->float('berat_nota');
             $table->float('berat_kotor');
+            $table->float('berat_bersih');
             $table->float('selisih_berat');
             $table->float('kadar_air');
             $table->string('id_box');
             $table->float('harga_nota');
             $table->float('total_harga_nota');
             $table->float('harga_deal');
-            $table->text('keterangan');
+            $table->text('keterangan')->nullable();
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

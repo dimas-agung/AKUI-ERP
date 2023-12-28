@@ -23,10 +23,11 @@ class PrmRawMaterialOutputHeader extends Model
 
     public function PrmRawMaterialOutputItem()
     {
-        return $this->hasMany(PrmRawMaterialOutputItem::class, 'nomor_bstb', 'nomor_bstb');
+        return $this->hasMany(PrmRawMaterialOutputItem::class);
     }
     public function StockTransitGradingKasar()
     {
-        return $this->hasMany(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
+    	return $this->belongsTo(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
     }
+
 }

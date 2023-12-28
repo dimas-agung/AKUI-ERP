@@ -358,6 +358,16 @@
                             <div class="collapse" id="sidebarLayouts">
                                 <ul class="nav nav-collapse">
                                     <li>
+                                        <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}">
+                                            <span class="sub-item">Prm Raw Material Input</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/purchasing_exim/prm_raw_material_stock') }}">
+                                            <span class="sub-item">Prm Raw Material Stock</span>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="{{ url('/PrmRawMaterialOutput') }}">
                                             <span class="sub-item">Prm Raw Material Output</span>
                                         </a>
