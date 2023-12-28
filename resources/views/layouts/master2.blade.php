@@ -8,10 +8,12 @@
 
     <title> {{ env('APP_TITLE') }} @yield('title')</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="../assets/img/icon.ico" type="image/x-icon" />
+    {{-- <link rel="icon" href="../assets/img/icon.ico" type="image/x-icon" /> --}}
+    <link href="{{ asset('/assets/img/icon.ico') }}" rel="stylesheet" />
 
     <!-- Fonts and icons -->
     <script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
+    {{-- <link href="{{ asset('/assets/js/plugin/webfont/webfont.min.js') }}" rel="stylesheet" /> --}}
     <script>
         WebFont.load({
             google: {
@@ -33,11 +35,14 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../../assets/css/atlantis.min.css" />
+    {{-- <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" /> --}}
+    <link href="{{ asset('/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+    {{-- <link rel="stylesheet" href="../../assets/css/atlantis.min.css" /> --}}
+    <link href="{{ asset('/assets/css/atlantis.min.css') }}" rel="stylesheet" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="../../assets/css/demo.css" />
+    {{-- <link rel="stylesheet" href="../../assets/css/demo.css" /> --}}
+    <link href="{{ asset('assets/css/demo.css') }}" rel="stylesheet" />
     <style>
         li a {
             text-decoration: none;
@@ -50,9 +55,6 @@
     {{-- Select2 CSS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-    {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script> --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
@@ -86,11 +88,9 @@
     <link href="{{ asset('css/jquery-customselect.css') }}" rel='stylesheet' />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
 
     {{-- Select 2 --}}
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <!-- Scripts -->
@@ -370,138 +370,6 @@
                                 </ul>
                             </div>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a data-toggle="collapse" href="#forms">
-                                <i class="fas fa-pen-square"></i>
-                                <p>Forms</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="forms">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="forms/forms.html">
-                                            <span class="sub-item">Basic Form</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="#tables">
-                                <i class="fas fa-table"></i>
-                                <p>Tables</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="tables">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="tables/tables.html">
-                                            <span class="sub-item">Basic Table</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="tables/datatables.html">
-                                            <span class="sub-item">Datatables</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="#maps">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>Maps</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="maps">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="maps/jqvmap.html">
-                                            <span class="sub-item">JQVMap</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="#charts">
-                                <i class="far fa-chart-bar"></i>
-                                <p>Charts</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="charts">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="charts/charts.html">
-                                            <span class="sub-item">Chart Js</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="charts/sparkline.html">
-                                            <span class="sub-item">Sparkline</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a href="widgets.html">
-                                <i class="fas fa-desktop"></i>
-                                <p>Widgets</p>
-                                <span class="badge badge-success">4</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="#submenu">
-                                <i class="fas fa-bars"></i>
-                                <p>Menu Levels</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="submenu">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a data-toggle="collapse" href="#subnav1">
-                                            <span class="sub-item">Level 1</span>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <div class="collapse" id="subnav1">
-                                            <ul class="nav nav-collapse subnav">
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">Level 2</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">Level 2</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a data-toggle="collapse" href="#subnav2">
-                                            <span class="sub-item">Level 1</span>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <div class="collapse" id="subnav2">
-                                            <ul class="nav nav-collapse subnav">
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">Level 2</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="sub-item">Level 1</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> --}}
                         <li class="mx-4 mt-2">
                             <a href="https://instagram.com/ael_ahyar" class="btn btn-primary btn-block"><span
                                     class="btn-label mr-2"> <i class="fa fa-heart"></i> </span>Revisi</a>
@@ -637,45 +505,59 @@
     </div>
     <!--   Core JS Files   -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    {{-- <script src="../../assets/js/core/jquery.3.2.1.min.js"></script> --}}
-    <script src="../../assets/js/core/popper.min.js"></script>
-    <script src="../../assets/js/core/bootstrap.min.js"></script>
+    {{-- <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script> --}}
+    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
 
     <!-- jQuery UI -->
-    <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
 
     <!-- Chart JS -->
-    <script src="../../assets/js/plugin/chart.js/chart.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/chart.js/chart.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/chart.js/chart.min.js') }}"></script>
 
     <!-- jQuery Sparkline -->
-    <script src="../../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
 
     <!-- Chart Circle -->
-    <script src="../../assets/js/plugin/chart-circle/circles.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/chart-circle/circles.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
 
     <!-- Datatables -->
-    <script src="../../assets/js/plugin/datatables/datatables.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/datatables/datatables.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/datatables/datatables.min.js') }}"></script>
 
     <!-- Bootstrap Notify -->
     {{-- <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script> --}}
 
     <!-- jQuery Vector Maps -->
-    <script src="../../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
-    <script src="../../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+    {{-- <script src="../../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
+    {{-- <script src="../../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
 
     <!-- Sweet Alert -->
-    <script src="../../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/sweetalert/sweetalert.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
     <!-- Atlantis JS -->
-    <script src="../../assets/js/atlantis.min.js"></script>
+    {{-- <script src="../../assets/js/atlantis.min.js"></script> --}}
+    <script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
 
     <!-- Atlantis DEMO methods, don't include it in your project! -->
-    <script src="../../assets/js/setting-demo.js"></script>
-    <script src="../../assets/js/demo.js"></script>
+    {{-- <script src="../../assets/js/setting-demo.js"></script> --}}
+    {{-- <script src="../../assets/js/demo.js"></script> --}}
+    <script src="{{ asset('assets/js/setting-demo.js') }}"></script>
+    <script src="{{ asset('assets/js/demo.js') }}"></script>
 
     {{-- Setingan --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
@@ -707,99 +589,6 @@
     {{-- Select2 --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script>
-        // Circles.create({
-        //     id: "circles-1",
-        //     radius: 45,
-        //     value: 60,
-        //     maxValue: 100,
-        //     width: 7,
-        //     text: 5,
-        //     colors: ["#f1f1f1", "#FF9E27"],
-        //     duration: 400,
-        //     wrpClass: "circles-wrp",
-        //     textClass: "circles-text",
-        //     styleWrapper: true,
-        //     styleText: true,
-        // });
-
-        // Circles.create({
-        //     id: "circles-2",
-        //     radius: 45,
-        //     value: 70,
-        //     maxValue: 100,
-        //     width: 7,
-        //     text: 36,
-        //     colors: ["#f1f1f1", "#2BB930"],
-        //     duration: 400,
-        //     wrpClass: "circles-wrp",
-        //     textClass: "circles-text",
-        //     styleWrapper: true,
-        //     styleText: true,
-        // });
-
-        // Circles.create({
-        //     id: "circles-3",
-        //     radius: 45,
-        //     value: 40,
-        //     maxValue: 100,
-        //     width: 7,
-        //     text: 12,
-        //     colors: ["#f1f1f1", "#F25961"],
-        //     duration: 400,
-        //     wrpClass: "circles-wrp",
-        //     textClass: "circles-text",
-        //     styleWrapper: true,
-        //     styleText: true,
-        // });
-
-        // var totalIncomeChart = document.getElementById("totalIncomeChart").getContext("2d");
-
-        // var mytotalIncomeChart = new Chart(totalIncomeChart, {
-        //     type: "bar",
-        //     data: {
-        //         labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
-        //         datasets: [{
-        //             label: "Total Income",
-        //             backgroundColor: "#ff9e27",
-        //             borderColor: "rgb(23, 125, 255)",
-        //             data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
-        //         }, ],
-        //     },
-        //     options: {
-        //         responsive: true,
-        //         maintainAspectRatio: false,
-        //         legend: {
-        //             display: false,
-        //         },
-        //         scales: {
-        //             yAxes: [{
-        //                 ticks: {
-        //                     display: false, //this will remove only the label
-        //                 },
-        //                 gridLines: {
-        //                     drawBorder: false,
-        //                     display: false,
-        //                 },
-        //             }, ],
-        //             xAxes: [{
-        //                 gridLines: {
-        //                     drawBorder: false,
-        //                     display: false,
-        //                 },
-        //             }, ],
-        //         },
-        //     },
-        // });
-
-        // $("#lineChart").sparkline([105, 103, 123, 100, 95, 105, 115], {
-        //     type: "line",
-        //     height: "70",
-        //     width: "100%",
-        //     lineWidth: "2",
-        //     lineColor: "#ffa534",
-        //     fillColor: "rgba(255, 165, 52, .14)",
-        // });
-
         // Select2
         $(document).ready(function() {
             $('#basic-datatables').DataTable({});
