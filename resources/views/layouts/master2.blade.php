@@ -309,6 +309,16 @@
                                             <span class="sub-item">Prm Raw Material Stock</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="{{ url('/PrmRawMaterialOutput') }}">
+                                            <span class="sub-item">Prm Raw Material Output</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/StockTransitGradingKasar') }}">
+                                            <span class="sub-item">Stock Transit Grading Kasar</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
