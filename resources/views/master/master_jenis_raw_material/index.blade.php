@@ -1,5 +1,5 @@
-
-@extends('layouts.template')
+@extends('layouts.master2')
+{{-- @extends('layouts.template') --}}
 @section('Menu')
     Master
 @endsection

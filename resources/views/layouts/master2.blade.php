@@ -3,15 +3,14 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Pastikan ada tag CSRF token di dalam formulir atau di dalam head -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title> {{ env('APP_TITLE') }} @yield('title')</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="../assets/img/icon.ico" type="image/x-icon" />
+    {{-- <link rel="icon" href="../assets/img/icon.ico" type="image/x-icon" /> --}}
+    <link rel="icon" href="{{ asset('img/icon.ico') }}" type="image/x-icon" />
 
     <!-- Fonts and icons -->
-    <script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/webfont/webfont.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/plugin/webfont/webfont.min.js') }}"></script>
     <script>
         WebFont.load({
             google: {
@@ -21,32 +20,21 @@
                 families: ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands",
                     "simple-line-icons"
                 ],
-                urls: ["../../assets/css/fonts.min.css"]
+                // urls: ["../../assets/css/fonts.min.css"]
+                urls: ["{{ asset('../../assets/css/fonts.min.css') }}"]
             },
             active: function() {
                 sessionStorage.fonts = true;
             },
         });
     </script>
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../../assets/css/atlantis.min.css" />
+    {{-- <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" /> --}}
+    <link rel="stylesheet" href="{{ asset('../../assets/css/bootstrap.min.css') }}" />
+    {{-- <link rel="stylesheet" href="../../assets/css/atlantis.min.css" /> --}}
+    <link rel="stylesheet" href="{{ asset('../../assets/css/atlantis.min.css') }}" />
 
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="../../assets/css/demo.css" />
-    <style>
-        li a {
-            text-decoration: none;
-        }
-
-        li a svg {
-            margin-right: 15px;
-        }
-    </style>
     {{-- Select2 CSS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
@@ -67,6 +55,7 @@
 
 
     <!-- jQuery -->
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -94,9 +83,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <!-- Scripts -->
+    {{-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+
 
 </head>
 
@@ -105,7 +95,7 @@
         <div class="main-header">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="blue">
-                <a href="../index.html" class="logo">
+                <a href="{{ asset('../index.html') }}" class="logo">
                     <img src="{{ asset('assets/img/logo akui.png') }}" alt="navbar brand"
                         class="avatar-img navbar-brand" style="width: 100px; height: 50px;">
                 </a>
@@ -174,7 +164,8 @@
                                         </a>
                                         <a href="#">
                                             <div class="notif-img">
-                                                <img src="../../assets/img/profile2.jpg" alt="Img Profile">
+                                                <img src="{{ asset('../../assets/img/profile2.jpg') }}"
+                                                    alt="Img Profile">
                                             </div>
                                             <div class="notif-content">
                                                 <span class="block">
@@ -207,7 +198,8 @@
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                     <li>
                                         <div class="user-box">
-                                            <div class="avatar-lg"><img src="../../assets/img/profile.jpg"
+                                            <div class="avatar-lg"><img
+                                                    src="{{ asset('../../assets/img/profile.jpg') }}"
                                                     alt="image profile" class="avatar-img rounded"></div>
                                             <div class="u-text">
                                                 <h4>Hizrian</h4>
@@ -221,9 +213,9 @@
                                         <a class="dropdown-item" href="#">Account Setting</a>
                                         <div class="dropdown-divider"></div>
                                         {{-- <form method="POST" action="{{ route('logout') }}">
-                                            {{ csrf_field() }} --}}
-                                        {{-- {{ method_field('DELETE') }} --}}
-                                        {{-- <button class="dropdown-item" type="submit"
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                            <button class="dropdown-item" type="submit"
                                                 onclick="confirm('Apakah Anda Yakin ingin logout?')">Logout</button>
                                         </form> --}}
                                         {{-- <a class="dropdown-item" href="">Logout</a></li> --}}
@@ -241,73 +233,23 @@
         <div class="sidebar sidebar-style-2">
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
-                    {{-- <div class="user">
-                        <div class="avatar-sm float-left mr-2">
-                            <img src="../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle" />
-                        </div>
-                        <div class="info">
-                            <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                                <span>
-                                    Hizrian
-                                    <span class="user-level">Administrator</span>
-                                    <span class="caret"></span>
-                                </span>
-                            </a>
-                            <div class="clearfix"></div>
-
-                            <div class="collapse in" id="collapseExample">
-                                <ul class="nav">
-                                    <li>
-                                        <a href="#profile">
-                                            <span class="link-collapse">My Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#edit">
-                                            <span class="link-collapse">Edit Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#settings">
-                                            <span class="link-collapse">Settings</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> --}}
                     <ul class="nav nav-primary">
                         <li class="nav-item active">
                             <a data-toggle="collapse" href="{{ url('/') }}" class="collapsed"
                                 aria-expanded="false">
-                                <i class="fas fa-home"></i>
+                                <i class="fas fa-home" style="margin-right: 10px"></i>
                                 <p>Dashboard</p>
-                                {{-- <span class="caret"></span> --}}
                             </a>
-                            {{-- <div class="collapse" id="dashboard">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="../demo1/index.html">
-                                            <span class="sub-item">Dashboard 1</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../demo2/index.html">
-                                            <span class="sub-item">Dashboard 2</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div> --}}
                         </li>
                         <li class="nav-section">
                             <span class="sidebar-mini-icon">
                                 <i class="fa fa-ellipsis-h"></i>
                             </span>
-                            <h4 class="text-section">Components</h4>
+                            <h4 class="text-section">Menu</h4>
                         </li>
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#base">
-                                <i class="fas fa-layer-group"></i>
+                                <i class="fas fa-layer-group" style="margin-right: 10px"></i>
                                 <p>Master</p>
                                 <span class="caret"></span>
                             </a>
@@ -351,7 +293,7 @@
                         </li>
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#sidebarLayouts">
-                                <i class="fas fa-th-list"></i>
+                                <i class="fas fa-th-list" style="margin-right: 10px"></i>
                                 <p>Purchasing & EXIM</p>
                                 <span class="caret"></span>
                             </a>
@@ -380,138 +322,6 @@
                                 </ul>
                             </div>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a data-toggle="collapse" href="#forms">
-                                <i class="fas fa-pen-square"></i>
-                                <p>Forms</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="forms">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="forms/forms.html">
-                                            <span class="sub-item">Basic Form</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="#tables">
-                                <i class="fas fa-table"></i>
-                                <p>Tables</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="tables">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="tables/tables.html">
-                                            <span class="sub-item">Basic Table</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="tables/datatables.html">
-                                            <span class="sub-item">Datatables</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="#maps">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>Maps</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="maps">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="maps/jqvmap.html">
-                                            <span class="sub-item">JQVMap</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="#charts">
-                                <i class="far fa-chart-bar"></i>
-                                <p>Charts</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="charts">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="charts/charts.html">
-                                            <span class="sub-item">Chart Js</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="charts/sparkline.html">
-                                            <span class="sub-item">Sparkline</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a href="widgets.html">
-                                <i class="fas fa-desktop"></i>
-                                <p>Widgets</p>
-                                <span class="badge badge-success">4</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="#submenu">
-                                <i class="fas fa-bars"></i>
-                                <p>Menu Levels</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="submenu">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a data-toggle="collapse" href="#subnav1">
-                                            <span class="sub-item">Level 1</span>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <div class="collapse" id="subnav1">
-                                            <ul class="nav nav-collapse subnav">
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">Level 2</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">Level 2</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a data-toggle="collapse" href="#subnav2">
-                                            <span class="sub-item">Level 1</span>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <div class="collapse" id="subnav2">
-                                            <ul class="nav nav-collapse subnav">
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">Level 2</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="sub-item">Level 1</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> --}}
                         <li class="mx-4 mt-2">
                             <a href="https://instagram.com/ael_ahyar" class="btn btn-primary btn-block"><span
                                     class="btn-label mr-2"> <i class="fa fa-heart"></i> </span>Revisi</a>
@@ -526,7 +336,7 @@
             <div class="content">
                 <div class="page-inner">
                     <div class="page-header">
-                        <h4 class="page-title">Master</h4>
+                        <h4 class="page-title">@yield('Menu')</h4>
                         <ul class="breadcrumbs">
                             <li class="nav-home">
                                 <a href="{{ url('/') }}">
@@ -537,13 +347,10 @@
                                 <i class="flaticon-right-arrow"></i>
                             </li>
                             <li class="nav-item">
-                                <a href="#">@yield('title')</a>
+                                <a href="{{ url('/') }}">@yield('title')</a>
                             </li>
                             <li class="separator">
                                 <i class="flaticon-right-arrow"></i>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#">Basic Form</a>
                             </li>
                         </ul>
                     </div>
@@ -646,46 +453,54 @@
         <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     {{-- <script src="../../assets/js/core/jquery.3.2.1.min.js"></script> --}}
-    <script src="../../assets/js/core/popper.min.js"></script>
-    <script src="../../assets/js/core/bootstrap.min.js"></script>
+    <script src="{{ asset('../../assets/js/core/jquery.3.2.1.min.js') }}"></script>
+    {{-- <script src="../../assets/js/core/popper.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/core/popper.min.js') }}"></script>
+    {{-- <script src="../../assets/js/core/bootstrap.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/core/bootstrap.min.js') }}"></script>
 
     <!-- jQuery UI -->
-    <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+    {{-- <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
 
     <!-- Chart JS -->
     <script src="../../assets/js/plugin/chart.js/chart.min.js"></script>
 
     <!-- jQuery Sparkline -->
-    <script src="../../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
 
     <!-- Chart Circle -->
-    <script src="../../assets/js/plugin/chart-circle/circles.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/chart-circle/circles.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/plugin/chart-circle/circles.min.js') }}"></script>
 
     <!-- Datatables -->
-    <script src="../../assets/js/plugin/datatables/datatables.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/datatables/datatables.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/plugin/datatables/datatables.min.js') }}"></script>
 
     <!-- Bootstrap Notify -->
     {{-- <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script> --}}
 
     <!-- jQuery Vector Maps -->
-    <script src="../../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
-    <script src="../../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+    {{-- <script src="../../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
+    {{-- <script src="../../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script> --}}
+    <script src="{{ asset('../../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
 
     <!-- Sweet Alert -->
-    <script src="../../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/sweetalert/sweetalert.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
     <!-- Atlantis JS -->
-    <script src="../../assets/js/atlantis.min.js"></script>
-
-    <!-- Atlantis DEMO methods, don't include it in your project! -->
-    <script src="../../assets/js/setting-demo.js"></script>
-    <script src="../../assets/js/demo.js"></script>
+    {{-- <script src="../../assets/js/atlantis.min.js"></script> --}}
+    <script src="{{ asset('../../assets/js/atlantis.min.js') }}"></script>
 
     {{-- Setingan --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
@@ -714,108 +529,21 @@
     <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
     {{-- Select2 --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script>
-        // Circles.create({
-        //     id: "circles-1",
-        //     radius: 45,
-        //     value: 60,
-        //     maxValue: 100,
-        //     width: 7,
-        //     text: 5,
-        //     colors: ["#f1f1f1", "#FF9E27"],
-        //     duration: 400,
-        //     wrpClass: "circles-wrp",
-        //     textClass: "circles-text",
-        //     styleWrapper: true,
-        //     styleText: true,
-        // });
-
-        // Circles.create({
-        //     id: "circles-2",
-        //     radius: 45,
-        //     value: 70,
-        //     maxValue: 100,
-        //     width: 7,
-        //     text: 36,
-        //     colors: ["#f1f1f1", "#2BB930"],
-        //     duration: 400,
-        //     wrpClass: "circles-wrp",
-        //     textClass: "circles-text",
-        //     styleWrapper: true,
-        //     styleText: true,
-        // });
-
-        // Circles.create({
-        //     id: "circles-3",
-        //     radius: 45,
-        //     value: 40,
-        //     maxValue: 100,
-        //     width: 7,
-        //     text: 12,
-        //     colors: ["#f1f1f1", "#F25961"],
-        //     duration: 400,
-        //     wrpClass: "circles-wrp",
-        //     textClass: "circles-text",
-        //     styleWrapper: true,
-        //     styleText: true,
-        // });
-
-        // var totalIncomeChart = document.getElementById("totalIncomeChart").getContext("2d");
-
-        // var mytotalIncomeChart = new Chart(totalIncomeChart, {
-        //     type: "bar",
-        //     data: {
-        //         labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
-        //         datasets: [{
-        //             label: "Total Income",
-        //             backgroundColor: "#ff9e27",
-        //             borderColor: "rgb(23, 125, 255)",
-        //             data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
-        //         }, ],
-        //     },
-        //     options: {
-        //         responsive: true,
-        //         maintainAspectRatio: false,
-        //         legend: {
-        //             display: false,
-        //         },
-        //         scales: {
-        //             yAxes: [{
-        //                 ticks: {
-        //                     display: false, //this will remove only the label
-        //                 },
-        //                 gridLines: {
-        //                     drawBorder: false,
-        //                     display: false,
-        //                 },
-        //             }, ],
-        //             xAxes: [{
-        //                 gridLines: {
-        //                     drawBorder: false,
-        //                     display: false,
-        //                 },
-        //             }, ],
-        //         },
-        //     },
-        // });
-
-        // $("#lineChart").sparkline([105, 103, 123, 100, 95, 105, 115], {
-        //     type: "line",
-        //     height: "70",
-        //     width: "100%",
-        //     lineWidth: "2",
-        //     lineColor: "#ffa534",
-        //     fillColor: "rgba(255, 165, 52, .14)",
-        // });
+        function goBack() {
+            window.history.back();
+        }
 
         // Select2
         $(document).ready(function() {
             $('#basic-datatables').DataTable({});
 
             $('#multi-filter-select').DataTable({
-                "pageLength": 5,
+                "pageLength": 10,
                 initComplete: function() {
                     this.api().columns().every(function() {
                         var column = this;
@@ -843,7 +571,7 @@
 
             // Add Row
             $('#add-row').DataTable({
-                "pageLength": 5,
+                "pageLength": 10,
             });
 
             var action =

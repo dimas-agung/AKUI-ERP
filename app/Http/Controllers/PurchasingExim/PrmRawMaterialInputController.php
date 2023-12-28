@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PurchasingExim;
 
 use App\Models\PrmRawMaterialInput;
 use App\Models\PrmRawMaterialInputItem;
+// use App\Models\PrmRawMaterialStock;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PrmRawMaterialRequest;
 use App\Http\Requests\PrmRawMaterialItemRequest;
@@ -36,6 +37,15 @@ class PrmRawMaterialInputController extends Controller
             'i' => $i,
         ]);
     }
+    // public function indexstock()
+    // {
+    //     $i = 1;
+    //     $PrmRawMaterialStock = PrmRawMaterialStock::all();
+    //     return response()->view('purchasing_exim.prm_raw_material_stock.index', [
+    //         'PrmRawMaterialStock' => $PrmRawMaterialStock,
+    //         'i' => $i
+    //     ]);
+    // }
     // create
     public function create()
     {

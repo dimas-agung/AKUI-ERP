@@ -363,7 +363,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}">
+                                        <a href="{{ url('/purchasing_exim/prm_raw_material_stock') }}">
                                             <span class="sub-item">Prm Raw Material Stock</span>
                                         </a>
                                     </li>
