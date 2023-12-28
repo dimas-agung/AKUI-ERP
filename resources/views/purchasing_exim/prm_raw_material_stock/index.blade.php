@@ -1,23 +1,10 @@
-{{-- 'id_box',
-'nomor_batch',
-'nama_supplier',
-'jenis',
-'berat_masuk',
-'berat_keluar',
-'sisa_berat',
-'avg_kadar_air',
-'modal',
-'total_modal',
-'keterangan',
-'user_created',
-'user_updated' --}}
-
-@extends('layouts.template')
+@extends('layouts.master2')
+{{-- @extends('layouts.template') --}}
 @section('Menu')
     Purchasing & EXIM
 @endsection
 @section('title')
-    Purchasing Raw Material Input
+    Purchasing Raw Material Stock
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -25,18 +12,11 @@
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Data Purchasing Raw Material Stock</h4>
-                    {{-- <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-                        <a href="{{ url('/purchasing_exim/prm_raw_material_input/create') }}"
-                            style="text-decoration: none; color:aliceblue">
-                            <i class="fa fa-plus"></i>
-                            <span class="sub-item">Add Data</span>
-                        </a>
-                    </button> --}}
                 </div>
             </div>
             <div class="card-body">
                 {{-- Create Data --}}
-                {{-- @if (session()->has('success'))
+                @if (session()->has('success'))
                     <div class="alert alert-success">
                         <strong>Sukses: </strong>{{ session()->get('success') }}
                     </div>
@@ -51,7 +31,7 @@
                         </ul>
                         <p>Mohon periksa kembali formulir Anda.</p>
                     </div>
-                @endif --}}
+                @endif
                 <div class="table-responsive">
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>

@@ -1,4 +1,5 @@
-@extends('layouts.template')
+@extends('layouts.master2')
+{{-- @extends('layouts.template') --}}
 @section('Menu')
     Purchasing & EXIM
 @endsection

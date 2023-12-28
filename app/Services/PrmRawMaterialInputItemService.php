@@ -72,42 +72,4 @@ class PrmRawMaterialInputItemService
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
     }
-
-    // public function updateItem($request, $id)
-    // {
-    //     $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
-
-    //     // Validasi form
-    //     $this->validateRequest($request);
-
-    //     // Update item
-    //     $PrmRawMOIC->update($request->all());
-
-    //     return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
-    // }
-
-    // protected function validateRequest(Request $request)
-    // {
-    //     $request->validate([
-    //         'doc_no'       => 'required',
-    //         'nomor_bstb'   => 'required',
-    //         'nomor_batch'  => 'required',
-    //         'id_box'       => 'required',
-    //         'nama_supplier' => 'required',
-    //         'jenis'        => 'required',
-    //         'berat'        => 'required',
-    //         'kadar_air'    => 'required',
-    //         'tujuan_kirim' => 'required',
-    //         'letak_tujuan' => 'required',
-    //         'inisial_tujuan' => 'required',
-    //         'modal'        => 'required',
-    //         'total_modal'  => 'required',
-    //         'keterangan_item'    => '',
-    //         'user_created' => '',
-    //         'user_updated' => ''
-    //     ], [
-    //         'doc_no.required' => 'Kolom Nomer Document Wajib diisi.',
-    //         'nomor_bstb.required' => 'Kolom Nomer BSTB Wajib diisi.'
-    //     ]);
-    // }
 }
