@@ -180,6 +180,22 @@ class PrmRawMaterialOutputService
                 'user_updated'  => $request->user_updated,
                 // Sesuaikan dengan kolom-kolom lain di tabel item Anda
             ]);
+
+                    // Creat Prm Raw Material Stock History
+        PrmRawMaterialStockHistory::create([
+            'id_box'        => $request->id_box,
+            'doc_no'        => $request->doc_no,
+            'berat_masuk'   => $request->berat_masuk,
+            'berat_keluar'  => $request->berat,
+            'sisa_berat'    => $request->selisih_berat,
+            'avg_kadar_air' => $request->kadar_air,
+            'modal'         => $request->modal,
+            'total_modal'   => $request->total_modal,
+            'keterangan'    => $request->keterangan_item,
+            'user_created'  => $request->user_created,
+            'user_updated'  => $request->user_updated,
+            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ]);
             DB::commit();
 
         return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);

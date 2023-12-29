@@ -1,12 +1,12 @@
 @extends('layouts.master2')
 @section('title')
-    Detail Data Prm Raw Material Output
+    Detail Data Prm Raw Material Input
 @endsection
 @section('content')
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4>Detail Data Prm Raw Material Output</h4>
+                <h4>Detail Data Prm Raw Material Input</h4>
             </div>
             <div class="card-body">
                 {{-- Create Data --}}
@@ -98,7 +98,7 @@
                     {{-- </div> --}}
                 </div>
                 <div class=" d-flex justify-content-end model-footer no-bd">
-                    <a href="{{ url('/PrmRawMaterialOutput') }}" type="button" class="btn btn-danger"
+                    <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}" type="button" class="btn btn-danger"
                         data-dismiss="modal">Close</a>
                 </div>
             </div>

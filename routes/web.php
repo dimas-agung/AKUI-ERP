@@ -102,8 +102,9 @@ Route::controller(App\Http\Controllers\PurchasingExim\StockTransitGradingKasarCo
 
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
     Route::get('/purchasing_exim/prm_raw_material_stock', 'index')->name('purchasing_exim.prm_raw_material_stock.index');
+    Route::get('/purchasing_exim/show/{id_box}', 'show')->name('prm_raw_material_stock.show');
 });
-
+// Route::get('/PrmRawMaterialStockHistory/{id_box}', 'App\Http\Controllers\PurchasingExim\PrmRawMaterialStockHistoryController@index')->name('PrmRawMaterialStockHistory.index');
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputController::class)->group(function () {
     Route::get('/PrmRawMaterialOutput', 'index')->name('PrmRawMaterialOutput.index');
     Route::get('/PrmRawMaterialOutput/create', 'create')->name('PrmRawMaterialOutput.create');

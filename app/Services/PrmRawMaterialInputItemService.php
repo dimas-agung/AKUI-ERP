@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\PrmRawMaterialInput;
 use App\Models\PrmRawMaterialInputItem;
+use App\Models\PrmRawMaterialStockHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -36,24 +37,25 @@ class PrmRawMaterialInputItemService
         }
     }
 
-    // private function createHeader($dataHeader)
-    // {
-    //     PrmRawMaterialInput::create([
-    //         // 'doc_no'                => $dataHeader[0]->doc_no,
-    //         'nomor_po'              => $dataHeader->nomor_po,
-    //         'nomor_batch'           => $dataHeader->nomor_batch,
-    //         'nomor_nota_supplier'   => $dataHeader->nomor_nota_supplier,
-    //         'nomor_nota_internal'   => $dataHeader->nomor_nota_internal,
-    //         'nama_supplier'         => $dataHeader->nama_supplier,
-    //         'keterangan'            => $dataHeader->keterangan,
-    //         'user_created'          => $dataHeader->user_created,
-    //         // 'user_updated'          => $dataHeader[0]->user_updated
-    //         // Sesuaikan dengan kolom-kolom lain di tabel header Anda
-    //     ]);
-    // }
-
     private function createItem($item)
     {
+        $defaultBeratKeluar = 0;
+        $defaultIdBox = 'Asc-1';
+        // Creat Prm Raw Material Stock History
+        PrmRawMaterialStockHistory::create([
+            'id_box'        => $item->id_box,
+            'doc_no'        => $defaultIdBox,
+            'berat_masuk'   => $item->berat_bersih,
+            'berat_keluar'  => $defaultBeratKeluar,
+            'sisa_berat'    => $item->selisih_berat,
+            'avg_kadar_air' => $item->kadar_air,
+            'modal'         => $item->harga_nota,
+            'total_modal'   => $item->total_harga_nota,
+            'keterangan'    => $item->keterangan_item,
+            'user_created'  => $item->user_created,
+            'user_updated'  => $item->user_updated,
+            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ]);
         PrmRawMaterialInputItem::create([
             // 'doc_no'            => $item->doc_no,
             'jenis'             => $item->jenis,

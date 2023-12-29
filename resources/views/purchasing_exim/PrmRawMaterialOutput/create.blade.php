@@ -55,8 +55,7 @@
                                         <div class="form-group">
                                             <label>User Updated</label>
                                             <input type="text" id="user_updated" class="form-control" name="user_updated"
-                                                value="{{ old('user_updated') }}" placeholder="Masukkan User Updated"
-                                                readonly>
+                                                value="{{ old('user_updated') }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -113,8 +112,7 @@
                                         <div class="form-group">
                                             <label>Nomor Batch</label>
                                             <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
-                                                onchange="handleChange(this.{{ old('nomor_batch') }})"
-                                                placeholder="Masukkan nomor batch">
+                                                onchange="handleChange(this.{{ old('nomor_batch') }})" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4 pr-0">
@@ -122,28 +120,24 @@
                                             <label>Nama Supplier</label>
                                             <input type="text" class="form-control" id="nama_supplier"
                                                 name="nama_supplier"
-                                                onchange="handleChange(this.{{ old('nama_supplier') }})"
-                                                placeholder="Masukkan nama supplier">
+                                                onchange="handleChange(this.{{ old('nama_supplier') }})" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Jenis</label>
                                             <input type="text" class="form-control" id="jenis" name="jenis"
-                                                onchange="handleChange(this.{{ old('jenis') }})"
-                                                placeholder="Masukkan jenis">
+                                                onchange="handleChange(this.{{ old('jenis') }})" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4 pr-0">
                                         <div class="form-group">
                                             <label>Kadar Air</label>
                                             <input type="text" class="form-control" id="kadar_air" name="kadar_air"
-                                                onchange="handleChange(this.{{ old('kadar_air') }})"
-                                                placeholder="Masukkan kadar air">
+                                                onchange="handleChange(this.{{ old('kadar_air') }})" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Berat Masuk</label>
-                                            <input type="text" class="form-control" id="berat_masuk"
-                                                name="berat_masuk" onchange="handleChange(this.{{ old('berat_masuk') }})"
-                                                placeholder="Masukkan Berat Masuk">
+                                            <input type="text" class="form-control" id="berat_masuk" name="berat_masuk"
+                                                onchange="handleChange(this.{{ old('berat_masuk') }})" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -164,15 +158,13 @@
                                             <label>Letak Tujuan</label>
                                             <input type="text" id="letak_tujuan" class="form-control"
                                                 name="letak_tujuan"
-                                                onchange="handleChange(this.{{ old('letak_tujuan') }})"
-                                                placeholder="Masukkan letak tujuan">
+                                                onchange="handleChange(this.{{ old('letak_tujuan') }})" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Inisial Tujuan</label>
                                             <input type="text" id="inisial_tujuan" class="form-control"
                                                 name="inisial_tujuan"
-                                                onchange="handleChange(this.{{ old('inisial_tujuan') }})"
-                                                placeholder="Masukkan inisial tujuan">
+                                                onchange="handleChange(this.{{ old('inisial_tujuan') }})" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Keterangan</label>
@@ -195,7 +187,8 @@
                                                 inputmode="numeric"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 class="form-control" name="selisih_berat"
-                                                value="{{ old('selisih_berat') }}" placeholder="Masukkan sisa berat">
+                                                value="{{ old('selisih_berat') }}"
+                                                placeholder="Masukkan berat keluar terlebih dahulu" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Modal</label>
@@ -426,6 +419,7 @@
             $('#nomor_batch').val('');
             $('#nama_supplier').val('');
             $('#jenis').val('');
+            $('#berat_masuk').val('');
             $('#berat').val('');
             $('#selisih_berat').val('');
             $('#kadar_air').val('');
@@ -435,6 +429,12 @@
             $('#modal').val('');
             $('#total_modal').val('');
             $('#keterangan_item').val('');
+            // Menonaktif kan nilai input ketika ditambah
+            $('#doc_no').prop('readonly', true);
+            $('#nomor_bstb').prop('readonly', true);
+            $('#nomor_batch').prop('readonly', true);
+            $('#keterangan').prop('readonly', true);
+            $('#user_created').prop('readonly', true);
         }
 
         function getArray() {

@@ -37,4 +37,12 @@ class PrmRawMaterialInputItem extends Model
     {
         return $this->belongsTo(MasterJenisRawMaterial::class);
     }
+    // public function PrmRawMaterialStockHistory()
+    // {
+    //     return $this->hasMany(PrmRawMaterialStockHistory::class, 'id_box', 'id_box');
+    // }
+    public function PrmRawMaterialStockHistory()
+    {
+        return $this->hasMany(PrmRawMaterialStockHistory::class, 'id_box', 'id_box');
+    }
 }
