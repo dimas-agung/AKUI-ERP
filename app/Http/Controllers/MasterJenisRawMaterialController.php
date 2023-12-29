@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\PurchasingExim\PrmRawMaterialInput as PurchasingEximPrmRawMaterialInput;
 use App\Models\MasterJenisRawMaterial;
 use App\Models\PrmRawMaterialInputItem;
+use App\Helpers\RupiahFormatterHelper;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -33,19 +34,26 @@ class MasterJenisRawMaterialController extends Controller
     // store
     public function store(Request $request): RedirectResponse
     {
-        //validate form
+        // Validate form
         $this->validate($request, [
-            'jenis'                     => 'required|unique:master_jenis_raw_materials',
-            'kategori_susut'            => 'required',
-            'upah_operator',
-            'pengurangan_harga',
-            'harga_estimasi',
+            'jenis'             => 'required|unique:master_jenis_raw_materials',
+            'kategori_susut'    => 'required',
+            'upah_operator'     => 'nullable|numeric', // Tambahkan validasi untuk numeric
+            'pengurangan_harga' => 'nullable|numeric', // Tambahkan validasi untuk numeric
+            'harga_estimasi'    => 'nullable|numeric', // Tambahkan validasi untuk numeric
         ], [
             'jenis.required'            => 'Kolom Jenis Wajib diisi.',
             'kategori_susut.required'   => 'Kolom Kategori Susut Wajib diisi.',
+            'upah_operator.numeric'     => 'Kolom Upah Operator harus berupa angka.',
+            'pengurangan_harga.numeric' => 'Kolom Pengurangan Harga harus berupa angka.',
+            'harga_estimasi.numeric'    => 'Kolom Harga Estimasi harus berupa angka.',
         ]);
 
-        //create MasterSupplier
+        // // Format nilai rupiah sebelum disimpan
+        // $upahOperator = $request->has('upah_operator') ? RupiahFormatterHelper::format($request->upah_operator) : null;
+        // $hargaEstimasi = $request->has('harga_estimasi') ? RupiahFormatterHelper::format($request->harga_estimasi) : null;
+
+        // Create MasterSupplier
         MasterJenisRawMaterial::create([
             'jenis'                 => $request->jenis,
             'kategori_susut'        => $request->kategori_susut,
@@ -54,7 +62,7 @@ class MasterJenisRawMaterialController extends Controller
             'harga_estimasi'        => $request->harga_estimasi,
         ]);
 
-        //redirect to index
+        // Redirect to index
         return redirect()->route('master_jenis_raw_material.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
     // show

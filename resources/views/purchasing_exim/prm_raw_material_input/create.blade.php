@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
-                        <input type="text" class="form-control" id="nomor_nota_internal">
+                        <input type="text" class="form-control" id="nomor_nota_internal" readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
@@ -58,55 +58,55 @@
                     </div>
                     <div class="col-md-3">
                         <label for="berat_nota" class="form-label">Berat Nota</label>
-                        <input type="text" pattern="[0-9]*" inputmode="numeric"
-                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                            id="berat_nota">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="berat_nota">
                     </div>
                     <div class="col-md-3">
                         <label for="berat_kotor" class="form-label">Berat Kotor</label>
-                        <input type="text" pattern="[0-9]*" inputmode="numeric"
-                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                            id="berat_kotor">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="berat_bersih" class="form-label">Berat Bersih</label>
-                        <input type="text" pattern="[0-9]*" inputmode="numeric"
-                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                            id="berat_bersih">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="selisih_berat" class="form-label">Selisih Berat</label>
-                        <input type="text" pattern="[0-9]*" inputmode="numeric"
-                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                            id="selisih_berat">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="kadar_air" class="form-label">Kadar Air</label>
-                        <input type="text" pattern="[0-9]*" inputmode="numeric"
-                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                            id="kadar_air">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="id_box" class="form-label">ID Box</label>
-                        <input type="text" class="form-control" id="id_box">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="berat_kotor">
                     </div>
                     <div class="col-md-3">
                         <label for="harga_nota" class="form-label">Harga Nota</label>
-                        <input type="text" pattern="[0-9]*" inputmode="numeric"
-                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                            id="harga_nota">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="harga_nota">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="berat_bersih" class="form-label">Berat Bersih</label>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="berat_bersih">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="selisih_berat" class="form-label">Selisih Berat</label>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="selisih_berat">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="kadar_air" class="form-label">Kadar Air</label>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="kadar_air">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="id_box" class="form-label">ID Box</label>
+                        <input type="text" class="form-control" id="id_box" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="total_harga_nota" class="form-label">Total Harga Nota</label>
-                        <input type="text" pattern="[0-9]*" inputmode="numeric"
-                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                            id="total_harga_nota">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="total_harga_nota">
                     </div>
                     <div class="col-md-3">
                         <label for="harga_deal" class="form-label">Harga Deal</label>
-                        <input type="text" pattern="[0-9]*" inputmode="numeric"
-                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                            id="harga_deal">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="harga_deal" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
@@ -181,7 +181,7 @@
         $('#berat_bersih').on('input', updateSelisihBerat);
 
         // Event listener untuk perubahan nilai pada total harga nota atau berat bersih
-        $('#total_harga_nota').on('input', updateHargaDeal);
+        $('#total_harga_nota').on('change', updateHargaDeal);
         $('#berat_bersih').on('input', updateHargaDeal);
 
         $('#nama_supplier').on('change', function() {
@@ -292,13 +292,22 @@
             const totalHargaNota = parseFloat($('#total_harga_nota').val());
             const beratBersih = parseFloat($('#berat_bersih').val());
 
-            // Melakukan perhitungan harga deal
-            const hargaDeal = beratBersih !== 0 ? totalHargaNota / beratBersih : 0;
-            // const hargaDeal = totalHargaNota / beratBersih: 0;
+            // Memeriksa jika total harga nota sudah terisi
+            if (!isNaN(totalHargaNota) && totalHargaNota !== 0) {
+                const hargaDeal = totalHargaNota / (beratBersih !== 0 ? beratBersih : 1);
 
-            // Memasukkan hasil perhitungan ke dalam input harga deal menggunakan jQuery
-            $('#harga_deal').val(isNaN(hargaDeal) ? '' : hargaDeal.toFixed(2));
+                // Memasukkan hasil perhitungan ke dalam input harga deal menggunakan jQuery
+                $('#harga_deal').val(hargaDeal.toFixed(2));
+            } else {
+                // Jika total harga nota kosong, tampilkan nilai dari berat bersih
+                $('#harga_deal').val(beratBersih !== 0 ? '0.00' : '');
+            }
         }
+
+        // Panggil fungsi updateHargaDeal saat nilai berubah pada total harga nota dan berat bersih
+        $('#total_harga_nota, #berat_bersih').on('input', function() {
+            updateHargaDeal();
+        });
     </script>
     <script>
         // test
@@ -306,6 +315,10 @@
         var dataHeader = [];
         var dataStock = [];
         var dataStockHistory = [];
+
+        // function isDuplicateData(nomorPO, nomorBatch) {
+        //     return dataHeader.some(data => data.nomor_po === nomorPO && data.nomor_batch === nomorBatch);
+        // }
 
         function addRow() {
             console.log(dataArray);
@@ -345,6 +358,17 @@
                 alert('Harap isi semua kolom.');
                 return; // Berhenti jika ada input yang kosong
             }
+            // Mengubah atribut readonly menggunakan jQuery
+            $('#nomor_po').prop('readonly', true);
+            $('#nomor_batch').prop('readonly', true);
+            $('#nomor_nota_supplier').prop('readonly', true);
+            $('#nama_supplier').prop('disabled', true); // Jika ingin menjadikan select readonly
+
+            // Pengecekan apakah data sudah ada sebelumnya
+            // if (isDuplicateData(nomor_po, nomor_batch)) {
+            //     alert('Data dengan nomor PO dan nomor batch yang sama sudah ada!');
+            //     return; // Hentikan proses input data jika sudah ada
+            // }
             // Menambahkan data ke dalam tabel
             var newRow = '<tr>' +
                 // '<td>' + doc_no + '</td>' +
@@ -424,7 +448,8 @@
                 user_created: user_created
             })
             // Membersihkan nilai input setelah ditambahkan
-            $('#jenis').val('');
+            // $('#jenis').val('');
+            $('#jenis').val(null).trigger('change');
             $('#berat_nota').val('');
             $('#berat_kotor').val('');
             $('#berat_bersih').val('');
@@ -442,30 +467,74 @@
             console.log(dataArray);
         }
 
+        // function simpanData() {
+        //     console.log(dataArray);
+        //     // Mengirim data ke server menggunakan AJAX
+        //     $.ajax({
+        //         url: `{{ route('prm_raw_material_input.simpanData') }}`, // Ganti dengan URL endpoint yang sesuai
+        //         method: 'POST',
+        //         data: {
+        //             data: JSON.stringify(dataArray),
+        //             dataHeader: JSON.stringify(dataHeader),
+        //             dataStock: JSON.stringify(dataStock),
+        //             dataStockHistory: JSON.stringify(dataStockHistory),
+        //             _token: '{{ csrf_token() }}'
+        //         },
+        //         dataType: 'json', // payload is json,
+        //         success: function(response) {
+        //             console.log('Data sent successfully:', response);
+        //             window.location.href = `{{ route('prm_raw_material_input.index') }}`;
+        //         },
+        //         error: function(error) {
+        //             console.error('Error sending data:', error);
+        //         }
+        //     });
+        //     // Membersihkan array setelah data dikirim
+        //     // dataArray = [];
+        // }
         function simpanData() {
             console.log(dataArray);
+
+            // Pengecekan duplikasi nomor PO dan nomor batch sebelum mengirim data
+            // const uniqueDataHeader = [];
+            // const checkedDuplicates = {};
+
+            // for (let i = 0; i < dataHeader.length; i++) {
+            //     const {
+            //         nomor_po,
+            //         nomor_batch
+            //     } = dataHeader[i];
+            //     const key = nomor_po + '-' + nomor_batch;
+
+            //     // Jika belum ada data dengan nomor PO dan nomor batch yang sama
+            //     if (!checkedDuplicates[key]) {
+            //         checkedDuplicates[key] = true;
+            //         uniqueDataHeader.push(dataHeader[i]);
+            //     } else {
+            //         console.warn('Duplicate data found and ignored:', dataHeader[i]);
+            //     }
+            // }
+
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('prm_raw_material_input.simpanData') }}`, // Ganti dengan URL endpoint yang sesuai
+                url: '{{ route('prm_raw_material_input.simpanData') }}',
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
-                    dataHeader: JSON.stringify(dataHeader),
+                    dataHeader: JSON.stringify(uniqueDataHeader), // Mengirim data tanpa duplikasi
                     dataStock: JSON.stringify(dataStock),
                     dataStockHistory: JSON.stringify(dataStockHistory),
                     _token: '{{ csrf_token() }}'
                 },
-                dataType: 'json', // payload is json,
+                dataType: 'json',
                 success: function(response) {
                     console.log('Data sent successfully:', response);
-                    window.location.href = `{{ route('prm_raw_material_input.index') }}`;
+                    window.location.href = '{{ route('prm_raw_material_input.index') }}';
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);
                 }
             });
-            // Membersihkan array setelah data dikirim
-            // dataArray = [];
         }
     </script>
 @endsection

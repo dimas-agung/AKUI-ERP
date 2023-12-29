@@ -44,12 +44,12 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Upah Operator</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" pattern="[0-9]*" inputmode="numeric"
-                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                    class="form-control @error('upah_operator')
+                                <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                                    step="0.01" class="form-control @error('upah_operator')
 is-invalid
-@enderror" name="upah_operator"
-                                    value="{{ old('upah_operator', $MasterJRM->upah_operator) }}"
+@enderror"
+                                    name="upah_operator" value="{{ old('upah_operator', $MasterJRM->upah_operator) }}"
                                     placeholder="Masukan Upah Operator">
 
                                 <!-- error message untuk title -->
@@ -62,8 +62,8 @@ is-invalid
                             <div class="form-group">
                                 <label class="font-weight-bold">Pengurangan Harga</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" pattern="[0-9]*" inputmode="numeric"
-                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                                     class="form-control @error('pengurangan_harga')
 is-invalid
 @enderror"
@@ -81,8 +81,8 @@ is-invalid
                             <div class="form-group">
                                 <label class="font-weight-bold">Harga Estimasi</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" pattern="[0-9]*" inputmode="numeric"
-                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                                     class="form-control @error('harga_estimasi')
 is-invalid
 @enderror" name="harga_estimasi"
