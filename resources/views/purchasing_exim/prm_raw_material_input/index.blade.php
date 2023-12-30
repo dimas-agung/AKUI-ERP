@@ -11,7 +11,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Data Purchasing Raw Material</h4>
+                    <h4 class="card-title">Data Purchasing Raw Material Input</h4>
                     <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                         <a href="{{ url('/purchasing_exim/prm_raw_material_input/create') }}"
                             style="text-decoration: none; color:aliceblue">

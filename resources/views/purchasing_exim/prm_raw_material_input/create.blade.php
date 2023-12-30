@@ -84,7 +84,7 @@
                         <label for="selisih_berat" class="form-label">Selisih Berat</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="selisih_berat">
+                            class="form-control" id="selisih_berat" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="kadar_air" class="form-label">Kadar Air</label>
@@ -467,74 +467,30 @@
             console.log(dataArray);
         }
 
-        // function simpanData() {
-        //     console.log(dataArray);
-        //     // Mengirim data ke server menggunakan AJAX
-        //     $.ajax({
-        //         url: `{{ route('prm_raw_material_input.simpanData') }}`, // Ganti dengan URL endpoint yang sesuai
-        //         method: 'POST',
-        //         data: {
-        //             data: JSON.stringify(dataArray),
-        //             dataHeader: JSON.stringify(dataHeader),
-        //             dataStock: JSON.stringify(dataStock),
-        //             dataStockHistory: JSON.stringify(dataStockHistory),
-        //             _token: '{{ csrf_token() }}'
-        //         },
-        //         dataType: 'json', // payload is json,
-        //         success: function(response) {
-        //             console.log('Data sent successfully:', response);
-        //             window.location.href = `{{ route('prm_raw_material_input.index') }}`;
-        //         },
-        //         error: function(error) {
-        //             console.error('Error sending data:', error);
-        //         }
-        //     });
-        //     // Membersihkan array setelah data dikirim
-        //     // dataArray = [];
-        // }
         function simpanData() {
             console.log(dataArray);
-
-            // Pengecekan duplikasi nomor PO dan nomor batch sebelum mengirim data
-            // const uniqueDataHeader = [];
-            // const checkedDuplicates = {};
-
-            // for (let i = 0; i < dataHeader.length; i++) {
-            //     const {
-            //         nomor_po,
-            //         nomor_batch
-            //     } = dataHeader[i];
-            //     const key = nomor_po + '-' + nomor_batch;
-
-            //     // Jika belum ada data dengan nomor PO dan nomor batch yang sama
-            //     if (!checkedDuplicates[key]) {
-            //         checkedDuplicates[key] = true;
-            //         uniqueDataHeader.push(dataHeader[i]);
-            //     } else {
-            //         console.warn('Duplicate data found and ignored:', dataHeader[i]);
-            //     }
-            // }
-
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: '{{ route('prm_raw_material_input.simpanData') }}',
+                url: `{{ route('prm_raw_material_input.simpanData') }}`, // Ganti dengan URL endpoint yang sesuai
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
-                    dataHeader: JSON.stringify(uniqueDataHeader), // Mengirim data tanpa duplikasi
+                    dataHeader: JSON.stringify(dataHeader),
                     dataStock: JSON.stringify(dataStock),
                     dataStockHistory: JSON.stringify(dataStockHistory),
                     _token: '{{ csrf_token() }}'
                 },
-                dataType: 'json',
+                dataType: 'json', // payload is json,
                 success: function(response) {
                     console.log('Data sent successfully:', response);
-                    window.location.href = '{{ route('prm_raw_material_input.index') }}';
+                    window.location.href = `{{ route('prm_raw_material_input.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);
                 }
             });
+            // Membersihkan array setelah data dikirim
+            // dataArray = [];
         }
     </script>
 @endsection
