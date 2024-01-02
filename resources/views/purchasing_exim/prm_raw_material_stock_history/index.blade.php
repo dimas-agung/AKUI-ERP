@@ -11,7 +11,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Data Purchasing Raw Material Stock</h4>
+                    <h4 class="card-title">Data Purchasing Raw Material Stock History</h4>
                 </div>
             </div>
             <div class="card-body">
@@ -38,9 +38,7 @@
                             <tr>
                                 <th scope="col" class="text-center">No</th>
                                 <th scope="col" class="text-center">Id Box</th>
-                                <th scope="col" class="text-center">Nomor Batch</th>
-                                <th scope="col" class="text-center">Nama Supplier</th>
-                                <th scope="col" class="text-center">Jenis</th>
+                                <th scope="col" class="text-center">Doc No</th>
                                 <th scope="col" class="text-center">Berat Masuk</th>
                                 <th scope="col" class="text-center">Berat Keluar</th>
                                 <th scope="col" class="text-center">Sisa Berat</th>
@@ -49,19 +47,15 @@
                                 <th scope="col" class="text-center">Total Modal</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">User Created</th>
-                                <th scope="col" class="text-center">User Updated</th>
                                 <th scope="col" class="text-center">Created At</th>
-                                <th scope="col" class="text-center">Updated At</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($PrmRawMaterialStock as $MasterStock)
+                            @forelse ($stockHistory as $MasterStock)
                                 <tr>
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $MasterStock->id_box }}</td>
-                                    <td>{{ $MasterStock->nomor_batch }}</td>
-                                    <td>{{ $MasterStock->nama_supplier }}</td>
-                                    <td>{{ $MasterStock->jenis }}</td>
+                                    <td>{{ $MasterStock->doc_no }}</td>
                                     <td>{{ $MasterStock->berat_masuk }}</td>
                                     <td>{{ $MasterStock->berat_keluar }}</td>
                                     <td>{{ $MasterStock->sisa_berat }}</td>
@@ -70,25 +64,7 @@
                                     <td>{{ $MasterStock->total_modal }}</td>
                                     <td>{{ $MasterStock->keterangan }}</td>
                                     <td>{{ $MasterStock->user_created }}</td>
-                                    <td>{{ $MasterStock->user_updated }}</td>
                                     <td>{{ $MasterStock->created_at }}</td>
-                                    <td>{{ $MasterStock->updated_at }}</td>
-                                    {{-- <td class="text-center">
-                                        <div class="form-button-action">
-                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('prm_raw_material_input.destroyInput', $MasterPRIM->id) }}"
-                                                method="POST">
-                                                <a href="{{ route('prm_raw_material_input.show', $MasterPRIM->id) }}"
-                                                    class="btn btn-link" title="Show Detail"
-                                                    data-original-title="Show Detail"><i class="fa fa-file"></i></a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" data-toggle="tooltip"
-                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
-                                                        class="fa fa-times"></i></button>
-                                            </form>
-                                        </div>
-                                    </td> --}}
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
@@ -97,6 +73,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                </div>
+                <div class=" d-flex justify-content-end model-footer no-bd">
+                    <a href="{{ url('/purchasing_exim/prm_raw_material_stock') }}" type="button" class="btn btn-danger"
+                        data-dismiss="modal">Close</a>
                 </div>
             </div>
         </div>

@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\DB;
 
 class PrmRawMaterialInputService
 {
-    public function simpanData($dataHeader, $dataArray, $dataStock, $dataStockHistory)
-    // public function simpanData($dataHeader, $dataArray)
+    // public function simpanData($dataHeader, $dataArray, $dataStock)
+    // public function simpanData($dataHeader, $dataArray, $dataStock, $dataStockHistory)
+    public function simpanData($dataHeader, $dataArray)
     {
         try {
             DB::beginTransaction();
@@ -22,13 +23,13 @@ class PrmRawMaterialInputService
             foreach ($dataArray as $item) {
                 $this->createItem($item);
             }
-            foreach ($dataStock as $itemS) {
-                $this->createStock($itemS);
-            }
+            // foreach ($dataStock as $itemS) {
+            //     $this->createStock($itemS);
+            // }
 
-            foreach ($dataStockHistory as $itemH) {
-                $this->createStockHistory($itemH);
-            }
+            // foreach ($dataStockHistory as $itemH) {
+            //     $this->createStockHistory($itemH);
+            // }
 
             DB::commit();
 
@@ -63,8 +64,46 @@ class PrmRawMaterialInputService
         ]);
     }
 
+    // private function createItem($item)
+    // {
+    //     PrmRawMaterialInputItem::create([
+    //         // 'doc_no'            => $item->doc_no,
+    //         'jenis'             => $item->jenis,
+    //         'berat_nota'        => $item->berat_nota,
+    //         'berat_kotor'       => $item->berat_kotor,
+    //         'berat_bersih'      => $item->berat_bersih,
+    //         'selisih_berat'     => $item->selisih_berat,
+    //         'kadar_air'         => $item->kadar_air,
+    //         'id_box'            => $item->id_box,
+    //         'harga_nota'        => $item->harga_nota,
+    //         'total_harga_nota'  => $item->total_harga_nota,
+    //         'harga_deal'        => $item->harga_deal,
+    //         'keterangan'        => $item->keterangan,
+    //         'user_created'      => $item->user_created,
+    //         // 'user_updated'      => $item->user_updated
+    //         // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+    //     ]);
+    // }
+
     private function createItem($item)
     {
+        $defaultBeratKeluar = 0;
+        // $defaultIdBox = '';
+        // Creat Prm Raw Material Stock History
+        PrmRawMaterialStockHistory::create([
+            'id_box'        => $item->id_box,
+            // 'doc_no'        => $defaultIdBox,
+            'berat_masuk'   => $item->berat_bersih,
+            'berat_keluar'  => $defaultBeratKeluar,
+            'sisa_berat'    => $item->selisih_berat,
+            'avg_kadar_air' => $item->kadar_air,
+            'modal'         => $item->harga_nota,
+            'total_modal'   => $item->total_harga_nota,
+            'keterangan'    => $item->keterangan,
+            'user_created'  => $item->user_created,
+            // 'user_updated'  => $item->user_updated,
+            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ]);
         PrmRawMaterialInputItem::create([
             // 'doc_no'            => $item->doc_no,
             'jenis'             => $item->jenis,
@@ -82,30 +121,7 @@ class PrmRawMaterialInputService
             // 'user_updated'      => $item->user_updated
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
-    }
-
-    private function createStockHistory($dataStockHistory)
-    {
-        PrmRawMaterialStockHistory::create([
-            'id_box'            => $dataStockHistory->id_box,
-            // 'doc_no'            => $dataStockHistory->doc_no,
-            'berat_masuk'       => $dataStockHistory->berat_masuk,
-            'berat_keluar'      => $dataStockHistory->berat_keluar,
-            'sisa_berat'        => $dataStockHistory->sisa_berat,
-            'avg_kadar_air'     => $dataStockHistory->avg_kadar_air,
-            'modal'             => $dataStockHistory->modal,
-            'total_modal'       => $dataStockHistory->total_modal,
-            'keterangan'        => $dataStockHistory->keterangan,
-            // 'status'            => $dataStockHistory->status,
-            'user_created'      => $dataStockHistory->user_created,
-            // 'user_updated'          => $dataHeader[0]->user_updated
-            // Sesuaikan dengan kolom-kolom lain di tabel header Anda
-        ]);
-    }
-
-    private function createStock($itemS)
-    {
-        $itemObject = (object)$itemS;
+        $itemObject = (object)$item;
         // Cari item berdasarkan id_box dan nomor_batch
         $existingItem = PrmRawMaterialStock::where('id_box', $itemObject->id_box)
             ->where('nomor_batch', $itemObject->nomor_batch)
@@ -117,12 +133,12 @@ class PrmRawMaterialInputService
             'nomor_batch'   => $itemObject->nomor_batch,
             'nama_supplier' => $itemObject->nama_supplier,
             'jenis'         => $itemObject->jenis,
-            'berat_masuk'   => $itemObject->berat_masuk,
-            'berat_keluar'  => $itemObject->berat_keluar,
-            'sisa_berat'    => $itemObject->sisa_berat,
-            'avg_kadar_air' => $itemObject->avg_kadar_air,
-            'modal'         => $itemObject->modal,
-            'total_modal'   => $itemObject->total_modal,
+            'berat_masuk'   => $itemObject->berat_bersih,
+            'berat_keluar'  => $itemObject->berat_keluar ?? 0,
+            'sisa_berat'    => $itemObject->sisa_berat ?? 0,
+            'avg_kadar_air' => $itemObject->kadar_air,
+            'modal'         => $itemObject->modal ?? 0,
+            'total_modal'   => $itemObject->total_modal ?? 0,
             'keterangan'    => $itemObject->keterangan,
             'user_created'  => $itemObject->user_created,
             // 'user_updated'  => $itemObject->user_updated,
@@ -137,4 +153,8 @@ class PrmRawMaterialInputService
             PrmRawMaterialStock::create($dataToUpdate);
         }
     }
+
+    // private function createStock($itemS)
+    // {
+    // }
 }

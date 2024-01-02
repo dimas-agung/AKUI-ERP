@@ -99,11 +99,7 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputControl
 
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
     Route::get('/purchasing_exim/prm_raw_material_stock', 'index')->name('purchasing_exim.prm_raw_material_stock.index');
-    Route::get('/purchasing_exim/prm_raw_material_stock_history', 'show')->name('prm_raw_material_stock_history.show');
-});
-Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockHistoryController::class)->group(function () {
-    // Route::get('/purchasing_exim/prm_raw_material_stock', 'index')->name('purchasing_exim.prm_raw_material_stock.index');
-    Route::get('/purchasing_exim/prm_raw_material_stock_history', 'show')->name('prm_raw_material_stock_history.show');
+    Route::get('/purchasing_exim/show/{id_box}', 'show')->name('prm_raw_material_stock.show');
 });
 
 Route::controller(App\Http\Controllers\PurchasingExim\StockTransitGradingKasarController::class)->group(function () {

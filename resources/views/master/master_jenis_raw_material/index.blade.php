@@ -181,14 +181,48 @@ is-invalid
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $MasterJRM->jenis }}</td>
                                     <td>{{ $MasterJRM->kategori_susut }}</td>
-                                    <td>{{ $MasterJRM->upah_operator }}</td>
+                                    {{-- <td>{{ $MasterJRM->upah_operator }}</td>
                                     <td>
                                         @if ($MasterJRM->pengurangan_harga == '')
                                         @else
                                             {{ $MasterJRM->pengurangan_harga }} %
                                         @endif
                                     </td>
-                                    <td>{{ $MasterJRM->harga_estimasi }}</td>
+                                    <td>{{ $MasterJRM->harga_estimasi }}</td> --}}
+                                    <td>Rp {{ number_format($MasterJRM->upah_operator, 0, ',', '.') }}</td>
+                                    <td>
+                                        @if ($MasterJRM->pengurangan_harga == '')
+                                        @else
+                                            {{ $MasterJRM->pengurangan_harga }} %
+                                        @endif
+                                    </td>
+                                    {{-- <td>
+                                        @if ($MasterJRM->pengurangan_harga == '')
+                                        @else
+                                            Rp {{ number_format($MasterJRM->pengurangan_harga, 2, ',', '.') }}
+                                        @endif
+                                    </td> --}}
+                                    <td>Rp {{ number_format($MasterJRM->harga_estimasi, 0, ',', '.') }}</td>
+
+                                    {{-- <td>{{ number_format($MasterJRM->upah_operator, 2) }}</td>
+                                    <td>
+                                        @if ($MasterJRM->pengurangan_harga == '')
+                                        @else
+                                            {{ number_format($MasterJRM->pengurangan_harga, 2) }} %
+                                        @endif
+                                    </td>
+                                    <td>{{ number_format($MasterJRM->harga_estimasi, 2) }}</td> --}}
+
+                                    {{-- <td>{{ number_format($MasterJRM->upah_operator, 2, '.', '') }}</td>
+                                    <td>
+                                        @if ($MasterJRM->pengurangan_harga == '')
+                                        @else
+                                            {{ number_format($MasterJRM->pengurangan_harga, 2, '.', '') }} %
+                                        @endif
+                                    </td>
+                                    <td>{{ number_format($MasterJRM->harga_estimasi, 2, '.', '') }}</td> --}}
+
+
                                     <td>
                                         @if ($MasterJRM->status == 1)
                                             Aktif

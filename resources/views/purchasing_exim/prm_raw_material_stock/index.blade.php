@@ -1,5 +1,4 @@
 @extends('layouts.master2')
-{{-- @extends('layouts.template') --}}
 @section('Menu')
     Purchasing & EXIM
 @endsection
@@ -52,28 +51,9 @@
                                 <th scope="col" class="text-center">User Updated</th>
                                 <th scope="col" class="text-center">Created At</th>
                                 <th scope="col" class="text-center">Updated At</th>
-                                <th scope="col" class="text-center">Actions</th>
+                                <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
-                        {{-- <tfoot>
-                            <th scope="col" class="text-center">No</th>
-                            <th scope="col" class="text-center">Id Box</th>
-                            <th scope="col" class="text-center">Nomor Batch</th>
-                            <th scope="col" class="text-center">Nama Supplier</th>
-                            <th scope="col" class="text-center">Jenis</th>
-                            <th scope="col" class="text-center">Berat Masuk</th>
-                            <th scope="col" class="text-center">Berat Keluar</th>
-                            <th scope="col" class="text-center">Sisa Berat</th>
-                            <th scope="col" class="text-center">Avg Kadar Air</th>
-                            <th scope="col" class="text-center">Modal</th>
-                            <th scope="col" class="text-center">Total Modal</th>
-                            <th scope="col" class="text-center">Keterangan</th>
-                            <th scope="col" class="text-center">User Created</th>
-                            <th scope="col" class="text-center">User Updated</th>
-                            <th scope="col" class="text-center">Created At</th>
-                            <th scope="col" class="text-center">Updated At</th>
-                            <th scope="col" class="text-center">Actions</th>
-                        </tfoot> --}}
                         <tbody>
                             @forelse ($PrmRawMaterialStock as $MasterStock)
                                 <tr>
@@ -96,7 +76,10 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form action="">
-                                                <a href="{{ route('prm_raw_material_stock_history.show', $MasterStock->id) }}"
+                                                {{-- <a href="{{ route('PrmRawMaterialStockHistory.index', $MasterStock->id) }}"
+                                                    class="btn btn-link" title="Show History"
+                                                    data-original-title="Show Detail"><i class="fa fa-file"></i></a> --}}
+                                                <a href="{{ route('prm_raw_material_stock.show', $MasterStock->id_box) }}"
                                                     class="btn btn-link" title="Show History"
                                                     data-original-title="Show Detail"><i class="fa fa-file"></i></a>
                                             </form>

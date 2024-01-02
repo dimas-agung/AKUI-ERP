@@ -343,11 +343,8 @@
             let user_created = $('#user_created').val();
             // test
             let berat_masuk = $('#berat_bersih').val();
-            let berat_keluar = $('#berat_kotor').val();
-            let sisa_berat = $('#selisih_berat').val();
             let avg_kadar_air = $('#kadar_air').val();
-            let modal = $('#harga_nota').val();
-            let total_modal = $('#total_harga_nota').val();
+
             // Validasi input (sesuai kebutuhan)
             if (nomor_po.trim() === '' || nomor_batch.trim() === '' || nomor_nota_supplier.trim() === '' ||
                 nomor_nota_internal.trim() === '' || nama_supplier.trim() === '' || jenis.trim() === '' ||
@@ -363,12 +360,6 @@
             $('#nomor_batch').prop('readonly', true);
             $('#nomor_nota_supplier').prop('readonly', true);
             $('#nama_supplier').prop('disabled', true); // Jika ingin menjadikan select readonly
-
-            // Pengecekan apakah data sudah ada sebelumnya
-            // if (isDuplicateData(nomor_po, nomor_batch)) {
-            //     alert('Data dengan nomor PO dan nomor batch yang sama sudah ada!');
-            //     return; // Hentikan proses input data jika sudah ada
-            // }
             // Menambahkan data ke dalam tabel
             var newRow = '<tr>' +
                 // '<td>' + doc_no + '</td>' +
@@ -390,6 +381,9 @@
 
             // Menambahkan data ke dalam array
             dataArray.push({
+                id_box: id_box,
+                nomor_batch: nomor_batch,
+                nama_supplier: nama_supplier,
                 doc_no: doc_no,
                 jenis: jenis,
                 berat_nota: berat_nota,
@@ -434,19 +428,19 @@
                 user_created: user_created
             })
 
-            dataStockHistory = [];
-            dataStockHistory.push({
-                id_box: id_box,
-                doc_no: doc_no,
-                berat_masuk: berat_masuk,
-                berat_keluar: berat_keluar,
-                sisa_berat: sisa_berat,
-                avg_kadar_air: avg_kadar_air,
-                modal: modal,
-                total_modal: total_modal,
-                keterangan: keterangan,
-                user_created: user_created
-            })
+            // dataStockHistory = [];
+            // dataStockHistory.push({
+            //     id_box: id_box,
+            //     doc_no: doc_no,
+            //     berat_masuk: berat_masuk,
+            //     berat_keluar: berat_keluar,
+            //     sisa_berat: sisa_berat,
+            //     avg_kadar_air: avg_kadar_air,
+            //     modal: modal,
+            //     total_modal: total_modal,
+            //     keterangan: keterangan,
+            //     user_created: user_created
+            // })
             // Membersihkan nilai input setelah ditambahkan
             // $('#jenis').val('');
             $('#jenis').val(null).trigger('change');
@@ -477,7 +471,7 @@
                     data: JSON.stringify(dataArray),
                     dataHeader: JSON.stringify(dataHeader),
                     dataStock: JSON.stringify(dataStock),
-                    dataStockHistory: JSON.stringify(dataStockHistory),
+                    // dataStockHistory: JSON.stringify(dataStockHistory),
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json', // payload is json,
