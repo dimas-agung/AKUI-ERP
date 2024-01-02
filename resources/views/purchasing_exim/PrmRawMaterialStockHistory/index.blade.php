@@ -11,7 +11,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Data Purchasing Raw Material Stock</h4>
+                    <h4 class="card-title">Data Purchasing Raw Material Stock Historys</h4>
                 </div>
             </div>
             <div class="card-body">

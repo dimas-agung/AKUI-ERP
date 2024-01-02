@@ -109,8 +109,8 @@ class PrmRawMaterialOutputService
         // Creat Prm Raw Material Stock History
         PrmRawMaterialStockHistory::create([
             'id_box'        => $itemObject->id_box,
-            'doc_no'   => $itemObject->doc_no,
-            'berat_masuk'   => $itemObject->berat_masuk,
+            'doc_no'        => $itemObject->doc_no,
+            'berat_masuk'   => $itemObject->berat_masuk ?? 0,
             'berat_keluar'  => $itemObject->berat,
             'sisa_berat'    => $itemObject->selisih_berat,
             'avg_kadar_air' => $itemObject->kadar_air,
@@ -119,7 +119,7 @@ class PrmRawMaterialOutputService
             'keterangan'    => $itemObject->keterangan_item,
             'user_created'  => $itemObject->user_created,
             'user_updated'  => $itemObject->user_updated,
-            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
 
 
@@ -135,7 +135,7 @@ class PrmRawMaterialOutputService
             'nomor_batch'   => $itemObject->nomor_batch,
             'nama_supplier' => $itemObject->nama_supplier,
             'jenis'         => $itemObject->jenis,
-            'berat_masuk'   => $itemObject->berat_masuk,
+            'berat_masuk'   => $itemObject->berat_masuk ?? 0,
             'berat_keluar'  => $itemObject->berat,
             'sisa_berat'    => $itemObject->selisih_berat,
             'avg_kadar_air' => $itemObject->kadar_air,

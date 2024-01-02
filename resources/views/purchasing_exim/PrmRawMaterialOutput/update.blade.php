@@ -198,7 +198,7 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
-                        <button type="reset" class="btn btn-md btn-warning">RESET</button>
+                        <button type="reset" class="btn btn-md btn-warning" onclick="reset()">RESET</button>
                     </form>
                 </div>
             </div>
@@ -235,6 +235,30 @@
                 }
             });
         });
+
+        function reset() {
+            // Membersihkan nilai input setelah ditambahkan
+            $('#id_box').val('<option></option>');
+            $('#nomor_batch').val('');
+            $('#nama_supplier').val('');
+            $('#jenis').val('');
+            $('#berat_masuk').val('');
+            $('#berat').val('');
+            $('#selisih_berat').val('');
+            $('#kadar_air').val('');
+            $('#tujuan_kirim').val('');
+            $('#letak_tujuan').val('');
+            $('#inisial_tujuan').val('');
+            $('#modal').val('');
+            $('#total_modal').val('');
+            $('#keterangan_item').val('');
+            // Menonaktif kan nilai input ketika ditambah
+            $('#doc_no').prop('readonly', true);
+            $('#nomor_bstb').prop('readonly', true);
+            $('#nomor_batch').prop('readonly', true);
+            $('#keterangan').prop('readonly', true);
+            $('#user_created').prop('readonly', true);
+        }
 
         $('#tujuan_kirim').on('change', function() {
             // Mengambil nilai id_box yang dipilih
