@@ -38,6 +38,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
+                                <th class="text-center">ID Box</th>
                                 <th class="text-center">Nomor BTSB</th>
                                 <th class="text-center">Nama Supplier</th>
                                 <th class="text-center">Jenis</th>
@@ -48,7 +49,7 @@
                                 <th class="text-center">Inisial Tujuan</th>
                                 <th class="text-center">Modal</th>
                                 <th class="text-center">Total Modal</th>
-                                {{-- <th class="text-center">Keterangan</th> --}}
+                                <th class="text-center">Keterangan</th>
                                 <th class="text-center">NIP Admin</th>
                                 <th class="text-center">User Updated</th>
                                 {{-- <th style="width: 10%" class="text-center">Action</th> --}}
@@ -56,6 +57,7 @@
                         </thead>
                         <tfoot>
                             <th class="text-center">No</th>
+                            <th class="text-center">ID Box</th>
                             <th class="text-center">Nomor BTSB</th>
                             <th class="text-center">Nama Supplier</th>
                             <th class="text-center">Jenis</th>
@@ -66,7 +68,7 @@
                             <th class="text-center">Inisial Tujuan</th>
                             <th class="text-center">Modal</th>
                             <th class="text-center">Total Modal</th>
-                            {{-- <th class="text-center">Keterangan</th> --}}
+                            <th class="text-center">Keterangan</th>
                             <th class="text-center">NIP Admin</th>
                             <th class="text-center">User Updated</th>
                             {{-- <th class="text-center">Action</th> --}}
@@ -75,6 +77,7 @@
                             @forelse ($stockTGK as $post)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
+                                    <td class="text-center">{!! $post->id_box !!}</td>
                                     <td class="text-center">{!! $post->nomor_bstb !!}</td>
                                     <td class="text-center">{!! $post->nama_supplier !!}</td>
                                     <td class="text-center">{!! $post->jenis !!}</td>
@@ -85,7 +88,7 @@
                                     <td class="text-center">{!! $post->inisial_tujuan !!}</td>
                                     <td class="text-center">{!! $post->modal !!}</td>
                                     <td class="text-center">{!! $post->total_modal !!}</td>
-                                    {{-- <td class="text-center">{!! $post->keterangan !!}</td> --}}
+                                    <td class="text-center">{!! $post->keterangan !!}</td>
                                     <td class="text-center">{!! $post->user_created !!}</td>
                                     <td class="text-center">{!! $post->user_updated !!}</td>
                                     {{-- <td class="text-center">

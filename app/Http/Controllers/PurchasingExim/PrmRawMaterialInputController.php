@@ -75,20 +75,6 @@ class PrmRawMaterialInputController extends Controller
 
         return response()->json($data);
     }
-    public function SimpanDataItem(
-        PrmRawMaterialItemRequest $request,
-        PrmRawMaterialInputItemService $PrmRawMaterialInputItemService
-    ) {
-        $dataArray = json_decode($request->input('data'));
-
-        $result = $PrmRawMaterialInputItemService->simpanDataItem($dataArray);
-
-        if ($result['success']) {
-            return response()->json($result);
-        } else {
-            return response()->json($result, 500);
-        }
-    }
 
     public function simpanData(
         PrmRawMaterialRequest $request,
@@ -97,9 +83,8 @@ class PrmRawMaterialInputController extends Controller
     // public function simpanData(Request $request)
     {
         $dataArray = json_decode($request->input('data'));
-        $dataStock = json_decode($request->input('dataStock'));
         $dataHeader = json_decode($request->input('dataHeader'));
-        $result = $PrmRawMaterialInputService->simpanData($dataHeader[0], $dataArray, $dataStock);
+        $result = $PrmRawMaterialInputService->simpanData($dataHeader[0], $dataArray);
 
         if ($result['success']) {
             return response()->json($result);
@@ -174,7 +159,7 @@ class PrmRawMaterialInputController extends Controller
         //get by ID
         $MasterPRIM = PrmRawMaterialInput::findOrFail($id);
         $items = $MasterPRIM->PrmRawMaterialInputItem;
-        // return $items;
+        // return $MasterPRIM;
 
         return response()->view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM', 'items', 'i'));
     }

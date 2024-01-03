@@ -328,11 +328,7 @@
             let user_created = $('#user_created').val();
             // test
             let berat_masuk = $('#berat_bersih').val();
-            let berat_keluar = $('#berat_kotor').val();
-            let sisa_berat = $('#selisih_berat').val();
             let avg_kadar_air = $('#kadar_air').val();
-            let modal = $('#harga_nota').val();
-            let total_modal = $('#total_harga_nota').val();
             // Validasi input (sesuai kebutuhan)
             if (nomor_po.trim() === '' || nomor_batch.trim() === '' || nomor_nota_supplier.trim() === '' ||
                 nomor_nota_internal.trim() === '' || nama_supplier.trim() === '' || jenis.trim() === '' ||
@@ -364,6 +360,9 @@
 
             // Menambahkan data ke dalam array
             dataArray.push({
+                id_box: id_box,
+                nomor_batch: nomor_batch,
+                nama_supplier: nama_supplier,
                 doc_no: doc_no,
                 jenis: jenis,
                 berat_nota: berat_nota,
@@ -377,7 +376,6 @@
                 harga_deal: harga_deal,
                 keterangan: keterangan,
                 user_created: user_created,
-
             });
             console.log(dataArray);
             dataHeader = [];
@@ -391,6 +389,7 @@
                 keterangan: keterangan,
                 user_created: user_created,
             });
+            console.log(dataArray);
 
             dataStock = [];
             dataStock.push({
@@ -435,7 +434,7 @@
                 data: {
                     data: JSON.stringify(dataArray),
                     dataHeader: JSON.stringify(dataHeader),
-                    dataStock: JSON.stringify(dataStock),
+                    // dataStock: JSON.stringify(dataStock),
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json', // payload is json,

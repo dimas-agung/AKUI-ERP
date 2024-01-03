@@ -14,9 +14,13 @@ class PrmRawMaterialStockController extends Controller
     public function index()
     {
         $i = 1;
-        $PrmRawMaterialStock = PrmRawMaterialStock::all();
+        $PrmRawMaterialInput = PrmRawMaterialInputItem::with('PrmRawMaterialStock')->get();
+        $PrmRawMaterialStock = PrmRawMaterialStock::with('PrmRawMaterialOutputItem')->get();
+
+        // return $PrmRawMaterialInput;
         return response()->view('purchasing_exim.prm_raw_material_stock.index', [
             'PrmRawMaterialStock' => $PrmRawMaterialStock,
+            'PrmRawMaterialInput' => $PrmRawMaterialInput,
             'i' => $i
         ]);
     }

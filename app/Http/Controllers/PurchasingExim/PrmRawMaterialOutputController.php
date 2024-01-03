@@ -4,7 +4,6 @@ namespace App\Http\Controllers\PurchasingExim;
 
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
-use App\Models\PrmRawMaterialOutputHeader;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\PrmRawMaterialStock;
 use App\Models\StockTransitGradingKasar;
@@ -21,12 +20,10 @@ class PrmRawMaterialOutputController extends Controller
 {
     public function index(){
         $i =1;
-        $PrmRawMOH = PrmRawMaterialOutputHeader::with('PrmRawMaterialOutputItem')->get();
-        $PrmRawMOIC = PrmRawMaterialOutputItem::with('PrmRawMaterialOutputHeader')->get();
+        $PrmRawMOIC = PrmRawMaterialOutputItem::all();
         // return $PrmRawMOIC;
         return response()->view('purchasing_exim.PrmRawMaterialOutput.index', [
             'PrmRawMOIC' => $PrmRawMOIC,
-            'PrmRawMOH' => $PrmRawMOH,
             'i' => $i,
         ]);
     }
@@ -67,33 +64,26 @@ class PrmRawMaterialOutputController extends Controller
     public function sendData(
         PrmRawMaterialOutputRequest $request,
         PrmRawMaterialOutputService $prmRawMaterialOutputService)
-    {
-    $dataArray = json_decode($request->input('data'));
-    // $dataStock = json_decode($request->input('dataStock'));
-    $dataHeader = json_decode($request->input('dataHeader'));
+    { try {
+        $dataArray = json_decode($request->input('data'));
+        // $dataStock = json_decode($request->input('dataStock'));
 
-        // $result = $this->$prmRawMaterialOutputService->sendData($dataHeader[0], $dataArray);
-        $result = $prmRawMaterialOutputService->sendData($dataHeader[0], $dataArray);
+        // Periksa apakah dekoding JSON berhasil
+        if (!$dataArray) {
+            throw new \InvalidArgumentException('Invalid JSON data.');
+        }
 
+        $result = $prmRawMaterialOutputService->sendData($dataArray);
+
+        // Periksa apakah pemrosesan berhasil
         if ($result['success']) {
             return response()->json($result);
         } else {
             return response()->json($result, 500);
         }
-
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
-
-    // Show
-    public function show(string $id)
-    {
-        //get post by ID
-        $i =1;
-        // $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
-        $headers = PrmRawMaterialOutputHeader::findOrFail($id);
-        $items = $headers->PrmRawMaterialOutputItem;
-
-        //render view with post
-        return view('purchasing_exim.PrmRawMaterialOutput.show', compact('items', 'i'));
     }
 
     /**
@@ -147,15 +137,6 @@ class PrmRawMaterialOutputController extends Controller
 
         //delete post
         $PrmRawMO->delete();
-
-        //redirect to index
-        return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
-    }
-    public function destroyHead($id): RedirectResponse
-    {
-        //get post by ID\
-        $PrmRawMOH = PrmRawMaterialOutputHeader::findOrFail($id);
-        $PrmRawMOH->delete();
 
         //redirect to index
         return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);

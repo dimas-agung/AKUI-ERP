@@ -1,6 +1,5 @@
 <?php
 namespace App\Services;
-use App\Models\PrmRawMaterialOutputHeader;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\PrmRawMaterialStock;
 use App\Models\PrmRawMaterialStockHistory;
@@ -10,16 +9,18 @@ use Illuminate\Support\Facades\DB;
 
 class PrmRawMaterialOutputService
 {
-    public function sendData($dataHeader, $dataArray)
+    public function sendData($dataArray)
     {
         try {
             DB::beginTransaction();
 
-            $this->createHeader($dataHeader);
-
             foreach ($dataArray as $item) {
                 $this->createItem($item);
             }
+
+            // foreach ($dataStock as $item) {
+            //     $this->createStock($item);
+            // }
 
             DB::commit();
 
@@ -38,18 +39,6 @@ class PrmRawMaterialOutputService
         }
     }
 
-    private function createHeader($dataHeader)
-    {
-        PrmRawMaterialOutputHeader::create([
-            'doc_no'        => $dataHeader->doc_no,
-            'nomor_bstb'    => $dataHeader->nomor_bstb,
-            'nomor_batch'   => $dataHeader->nomor_batch,
-            'keterangan'    => $dataHeader->keterangan,
-            'user_created'  => $dataHeader->user_created,
-            'user_updated'  => $dataHeader->user_updated,
-            // Sesuaikan dengan kolom-kolom lain di tabel header Anda
-        ]);
-    }
 
     private function createItem($item)
     {
@@ -69,8 +58,23 @@ class PrmRawMaterialOutputService
             'total_modal'   => $item->total_modal,
             'keterangan_item'=> $item->keterangan_item,
             'user_created'  => $item->user_created,
-            'user_updated'  => $item->user_updated,
+            'user_updated'  => $item->user_updated ?? "There isn't any",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ]);
+
+        PrmRawMaterialStockHistory::create([
+            'id_box'        => $item->id_box,
+            'doc_no'        => $item->doc_no,
+            'berat_masuk'   => $item->berat_masu ?? 0,
+            'berat_keluar'  => $item->berat,
+            'sisa_berat'    => $item->selisih_berat,
+            'avg_kadar_air' => $item->kadar_air,
+            'modal'         => $item->modal,
+            'total_modal'   => $item->total_modal,
+            'keterangan'    => $item->keterangan_item,
+            'user_created'  => $item->user_created,
+            'user_updated'  => $item->user_updated ?? "There isn't any",
+        // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
 
         // Creat Stock Transit Grading Kasar
@@ -81,6 +85,7 @@ class PrmRawMaterialOutputService
             // return $existingItem
 
         $dataToUpdate = [
+            'id_box'        => $itemObject->id_box,
             'nomor_bstb'    => $itemObject->nomor_bstb,
             'nama_supplier' => $itemObject->nama_supplier,
             'jenis'         => $itemObject->jenis,
@@ -93,7 +98,7 @@ class PrmRawMaterialOutputService
             'total_modal'   => $itemObject->total_modal,
             'keterangan'    => $itemObject->keterangan_item,
             'user_created'  => $itemObject->user_created,
-            'user_updated'  => $itemObject->user_updated,
+            'user_updated'  => $itemObject->user_updated ?? "There isn't any",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
 
@@ -104,23 +109,6 @@ class PrmRawMaterialOutputService
             // Jika item tidak ada, buat item baru
             StockTransitGradingKasar::create($dataToUpdate);
         }
-
-
-        // Creat Prm Raw Material Stock History
-        PrmRawMaterialStockHistory::create([
-            'id_box'        => $itemObject->id_box,
-            'doc_no'        => $itemObject->doc_no,
-            'berat_masuk'   => $itemObject->berat_masuk ?? 0,
-            'berat_keluar'  => $itemObject->berat,
-            'sisa_berat'    => $itemObject->selisih_berat,
-            'avg_kadar_air' => $itemObject->kadar_air,
-            'modal'         => $itemObject->modal,
-            'total_modal'   => $itemObject->total_modal,
-            'keterangan'    => $itemObject->keterangan_item,
-            'user_created'  => $itemObject->user_created,
-            'user_updated'  => $itemObject->user_updated,
-        // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-        ]);
 
 
         // Creat Prm Raw Material Stock
@@ -135,7 +123,7 @@ class PrmRawMaterialOutputService
             'nomor_batch'   => $itemObject->nomor_batch,
             'nama_supplier' => $itemObject->nama_supplier,
             'jenis'         => $itemObject->jenis,
-            'berat_masuk'   => $itemObject->berat_masuk ?? 0,
+            'berat_masuk'   => $itemObject->berat_masuk,
             'berat_keluar'  => $itemObject->berat,
             'sisa_berat'    => $itemObject->selisih_berat,
             'avg_kadar_air' => $itemObject->kadar_air,
@@ -143,7 +131,7 @@ class PrmRawMaterialOutputService
             'total_modal'   => $itemObject->total_modal,
             'keterangan'    => $itemObject->keterangan_item,
             'user_created'  => $itemObject->user_created,
-            'user_updated'  => $itemObject->user_updated,
+            'user_updated'  => $itemObject->user_updated ?? "There isn't any",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
 
@@ -155,6 +143,27 @@ class PrmRawMaterialOutputService
             PrmRawMaterialStock::create($dataToUpdate);
         }
     }
+
+    // private function createStock($item)
+    // {
+    //     // Creat Stock Transit Grading Kasar
+    //     $itemObject = (object)$item;
+    //     // Creat Prm Raw Material Stock History
+    //     PrmRawMaterialStockHistory::create([
+    //         'id_box'        => $itemObject->id_box,
+    //         'doc_no'        => $itemObject->doc_no,
+    //         'berat_masuk'   => $itemObject->berat_masuk ?? 0,
+    //         'berat_keluar'  => $itemObject->berat,
+    //         'sisa_berat'    => $itemObject->selisih_berat,
+    //         'avg_kadar_air' => $itemObject->kadar_air,
+    //         'modal'         => $itemObject->modal,
+    //         'total_modal'   => $itemObject->total_modal,
+    //         'keterangan'    => $itemObject->keterangan_item,
+    //         'user_created'  => $itemObject->user_created,
+    //         'user_updated'  => $itemObject->user_updated ?? "There isn't any",
+    //     // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+    //     ]);
+    // }
 
     public function updateItem($request, $id) {
         try {
@@ -185,7 +194,7 @@ class PrmRawMaterialOutputService
         PrmRawMaterialStockHistory::create([
             'id_box'        => $request->id_box,
             'doc_no'        => $request->doc_no,
-            'berat_masuk'   => $request->berat_masuk,
+            'berat_masuk'   => $request->berat_masuk  ?? 0,
             'berat_keluar'  => $request->berat,
             'sisa_berat'    => $request->selisih_berat,
             'avg_kadar_air' => $request->kadar_air,
