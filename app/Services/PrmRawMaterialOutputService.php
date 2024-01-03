@@ -136,34 +136,33 @@ class PrmRawMaterialOutputService
         ];
 
         if ($existingItem) {
-            // Jika item sudah ada, perbarui data
-            $existingItem->update($dataToUpdate);
+            // Ambil nilai terakhir berat_masuk dan berat_keluar
+            $lastBeratMasuk = $existingItem->berat_masuk;
+            $lastBeratKeluar = $existingItem->berat_keluar;
+
+            // Update nilai berat_masuk pada item yang sudah ada
+            $lastBeratKeluar = $existingItem->berat_keluar += $itemObject->berat;
+            $existingItem->berat_masuk = $itemObject->berat_masuk ?? $existingItem->berat_masuk ?? 0;
+
+            // Tentukan nilai sisa_berat sesuai kondisi
+            if ($existingItem->berat_keluar === null || $existingItem->berat_keluar === 0) {
+                // Jika berat_keluar belum diisi, isi sisa_berat dengan nilai berat_masuk
+                $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
+            } else {
+                // Jika berat_keluar sudah diisi, hitung sisa berat
+                $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
+            }
+
+                        $existingItem->modal = $itemObject->modal ?? $existingItem->modal ?? 0;
+            $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
+            $existingItem->keterangan = $itemObject->keterangan_item;
+            // Simpan perubahan pada stok yang sudah ada
+            $existingItem->save();
         } else {
-            // Jika item tidak ada, buat item baru
+            // Jika item tidak ada, buat item baru dalam database
             PrmRawMaterialStock::create($dataToUpdate);
         }
     }
-
-    // private function createStock($item)
-    // {
-    //     // Creat Stock Transit Grading Kasar
-    //     $itemObject = (object)$item;
-    //     // Creat Prm Raw Material Stock History
-    //     PrmRawMaterialStockHistory::create([
-    //         'id_box'        => $itemObject->id_box,
-    //         'doc_no'        => $itemObject->doc_no,
-    //         'berat_masuk'   => $itemObject->berat_masuk ?? 0,
-    //         'berat_keluar'  => $itemObject->berat,
-    //         'sisa_berat'    => $itemObject->selisih_berat,
-    //         'avg_kadar_air' => $itemObject->kadar_air,
-    //         'modal'         => $itemObject->modal,
-    //         'total_modal'   => $itemObject->total_modal,
-    //         'keterangan'    => $itemObject->keterangan_item,
-    //         'user_created'  => $itemObject->user_created,
-    //         'user_updated'  => $itemObject->user_updated ?? "There isn't any",
-    //     // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-    //     ]);
-    // }
 
     public function updateItem($request, $id) {
         try {
