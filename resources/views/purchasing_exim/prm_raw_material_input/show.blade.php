@@ -9,13 +9,13 @@
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Detail Data Purchasing Raw Material</h4>
-                    <button class="btn btn-primary btn-round ml-auto">
+                    {{-- <button class="btn btn-primary btn-round ml-auto">
                         <a href="{{ url('/purchasing_exim/prm_raw_material_input/create_item') }}"
                             style="text-decoration: none; color:aliceblue">
                             <i class="fa fa-plus"></i>
                             <span class="sub-item">Add Data</span>
                         </a>
-                    </button>
+                    </button> --}}
                 </div>
             </div>
             <div class="card-body">

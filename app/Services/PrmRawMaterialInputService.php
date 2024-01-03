@@ -121,6 +121,8 @@ class PrmRawMaterialInputService
             // 'user_updated'      => $item->user_updated
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
+
+        // stok
         $itemObject = (object)$item;
         // Cari item berdasarkan id_box dan nomor_batch
         $existingItem = PrmRawMaterialStock::where('id_box', $itemObject->id_box)
@@ -144,17 +146,37 @@ class PrmRawMaterialInputService
             // 'user_updated'  => $itemObject->user_updated,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
-
+        //
         if ($existingItem) {
-            // Jika item sudah ada, perbarui data
-            $existingItem->update($dataToUpdate);
+            // Ambil nilai terakhir berat_masuk dan berat_keluar
+            // $lastBeratMasuk = $existingItem->berat_masuk;
+            $lastBeratKeluar = $existingItem->berat_keluar;
+
+            // Update nilai berat_masuk pada item yang sudah ada
+            $lastBeratMasuk = $existingItem->berat_masuk += $itemObject->berat_bersih;
+            $existingItem->berat_keluar = $itemObject->berat_keluar ?? $existingItem->berat_keluar ?? 0;
+
+            // Tentukan nilai sisa_berat sesuai kondisi
+            if ($existingItem->berat_keluar === null || $existingItem->berat_keluar === 0) {
+                // Jika berat_keluar belum diisi, isi sisa_berat dengan nilai berat_masuk
+                $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
+            } else {
+                // Jika berat_keluar sudah diisi, hitung sisa berat
+                $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
+            }
+
+            // Update juga kolom-kolom lain yang diperlukan
+            $existingItem->avg_kadar_air = $itemObject->kadar_air;
+            $existingItem->modal = $itemObject->modal ?? $existingItem->modal ?? 0;
+            $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
+            $existingItem->keterangan = $itemObject->keterangan;
+            $existingItem->user_created = $itemObject->user_created;
+
+            // Simpan perubahan pada stok yang sudah ada
+            $existingItem->save();
         } else {
-            // Jika item tidak ada, buat item baru
+            // Jika item tidak ada, buat item baru dalam database
             PrmRawMaterialStock::create($dataToUpdate);
         }
     }
-
-    // private function createStock($itemS)
-    // {
-    // }
 }

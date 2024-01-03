@@ -74,9 +74,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div class=" d-flex justify-content-end model-footer no-bd">
+                {{-- <div class=" d-flex justify-content-end model-footer no-bd">
                     <a href="{{ url('/purchasing_exim/prm_raw_material_stock') }}" type="button" class="btn btn-danger"
                         data-dismiss="modal">Close</a>
+                </div> --}}
+                <div class="col-12 mt-2 text-end">
+                    <button type="button" class="btn btn-danger mt-2 text-end" onclick="goBack()">Cancel</button>
                 </div>
             </div>
         </div>

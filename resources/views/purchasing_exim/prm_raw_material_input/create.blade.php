@@ -412,21 +412,21 @@
                 user_created: user_created,
             });
 
-            dataStock = [];
-            dataStock.push({
-                id_box: id_box,
-                nomor_batch: nomor_batch,
-                nama_supplier: nama_supplier,
-                jenis: jenis,
-                berat_masuk: berat_masuk,
-                berat_keluar: berat_keluar,
-                sisa_berat: sisa_berat,
-                avg_kadar_air: avg_kadar_air,
-                modal: modal,
-                total_modal: total_modal,
-                keterangan: keterangan,
-                user_created: user_created
-            })
+            // dataStock = [];
+            // dataStock.push({
+            //     id_box: id_box,
+            //     nomor_batch: nomor_batch,
+            //     nama_supplier: nama_supplier,
+            //     jenis: jenis,
+            //     berat_masuk: berat_masuk,
+            //     berat_keluar: berat_keluar,
+            //     sisa_berat: sisa_berat,
+            //     avg_kadar_air: avg_kadar_air,
+            //     modal: modal,
+            //     total_modal: total_modal,
+            //     keterangan: keterangan,
+            //     user_created: user_created
+            // })
 
             // dataStockHistory = [];
             // dataStockHistory.push({

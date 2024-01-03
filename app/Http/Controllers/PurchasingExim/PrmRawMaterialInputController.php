@@ -48,16 +48,6 @@ class PrmRawMaterialInputController extends Controller
         ]);
     }
 
-    // public function createItem()
-    // {
-    //     $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
-    //     $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
-    //     return view('purchasing_exim/prm_raw_material_input.create_item', [
-    //         'master_supplier_raw_materials' => $MasterSupplierRawMaterial,
-    //         'master_jenis_raw_materials'    => $MasterJenisRawMaterial,
-    //     ]);
-    // }
-
     // get Data Supplier
     public function getDataSupplier(Request $request)
     {
@@ -77,20 +67,6 @@ class PrmRawMaterialInputController extends Controller
 
         return response()->json($data);
     }
-    // public function SimpanDataItem(
-    //     PrmRawMaterialItemRequest $request,
-    //     PrmRawMaterialInputItemService $PrmRawMaterialInputItemService
-    // ) {
-    //     $dataArray = json_decode($request->input('data'));
-
-    //     $result = $PrmRawMaterialInputItemService->simpanDataItem($dataArray);
-
-    //     if ($result['success']) {
-    //         return response()->json($result);
-    //     } else {
-    //         return response()->json($result, 500);
-    //     }
-    // }
 
     public function simpanData(
         PrmRawMaterialRequest $request,
