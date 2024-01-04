@@ -38,44 +38,74 @@
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center">No</th>
-                                <th class="text-center">Nomor Doc</th>
-                                <th class="text-center">Nomor BTSB</th>
+                                <th class="text-center" scope="col">No</th>
+                                <th class="text-center" scope="col">Nomor Dokument</th>
+                                <th class="text-center" scope="col">Nomor BSTB</th>
                                 <th class="text-center">Nomor Batch</th>
-                                <th class="text-center">Keterangan</th>
-                                <th class="text-center">NIP Admin</th>
-                                <th class="text-center">User Updated</th>
-                                <th style="width: 10%" class="text-center">Action</th>
+                                <th class="text-center">Id Box</th>
+                                <th class="text-center">Nama Supplier</th>
+                                <th class="text-center">Jenis</th>
+                                <th class="text-center">Berat</th>
+                                <th class="text-center">Kadar Air</th>
+                                <th class="text-center">Tujuan Kirim</th>
+                                <th class="text-center">Letak Tujuan</th>
+                                <th class="text-center">Inisial Tujuan</th>
+                                <th class="text-center">Modal</th>
+                                <th class="text-center">Total Modal</th>
+                                <th class="text-center" scope="col">Keterangan</th>
+                                <th class="text-center" scope="col">NIP Admin</th>
+                                <th class="text-center" scope="col">User Updated</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <th class="text-center">No</th>
-                            <th class="text-center">Nomor Doc</th>
-                            <th class="text-center">Nomor BTSB</th>
+                            <th class="text-center">Nomor Dokument</th>
+                            <th class="text-center">Nomor BSTB</th>
                             <th class="text-center">Nomor Batch</th>
+                            <th class="text-center">Id Box</th>
+                            <th class="text-center">Nama Supplier</th>
+                            <th class="text-center">Jenis</th>
+                            <th class="text-center">Berat</th>
+                            <th class="text-center">Kadar Air</th>
+                            <th class="text-center">Tujuan Kirim</th>
+                            <th class="text-center">Letak Tujuan</th>
+                            <th class="text-center">Inisial Tujuan</th>
+                            <th class="text-center">Modal</th>
+                            <th class="text-center">Total Modal</th>
                             <th class="text-center">Keterangan</th>
                             <th class="text-center">NIP Admin</th>
                             <th class="text-center">User Updated</th>
                             <th class="text-center">Action</th>
                         </tfoot>
                         <tbody>
-                            @forelse ($PrmRawMOH as $post)
+                            @forelse ($PrmRawMOIC as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{!! $post->doc_no !!}</td>
-                                    <td class="text-center">{!! $post->nomor_bstb !!}</td>
-                                    <td class="text-center">{!! $post->nomor_batch !!}</td>
-                                    <td class="text-center">{!! $post->keterangan !!}</td>
-                                    <td class="text-center">{!! $post->user_created !!}</td>
-                                    <td class="text-center">{!! $post->user_updated !!}</td>
+                                    <td class="text-center">{{ $item->doc_no }}</td>
+                                    <td class="text-center">{{ $item->nomor_bstb }}</td>
+                                    <td class="text-center">{{ $item->nomor_batch }}</td>
+                                    <td class="text-center">{{ $item->id_box }}</td>
+                                    <td class="text-center">{{ $item->nama_supplier }}</td>
+                                    <td class="text-center">{{ $item->jenis }}</td>
+                                    <td class="text-center">{{ $item->berat }}</td>
+                                    <td class="text-center">{{ $item->kadar_air }}</td>
+                                    <td class="text-center">{{ $item->tujuan_kirim }}</td>
+                                    <td class="text-center">{{ $item->letak_tujuan }}</td>
+                                    <td class="text-center">{{ $item->inisial_tujuan }}</td>
+                                    <td class="text-center">{{ $item->modal }}</td>
+                                    <td class="text-center">{{ $item->total_modal }}</td>
+                                    <td class="text-center">{{ $item->keterangan_item }}</td>
+                                    <td class="text-center">{{ $item->user_created }}</td>
+                                    <td class="text-center">{{ $item->user_updated }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('PrmRawMaterialOutput.destroyHead', $post->id) }}"
+                                                action="{{ route('PrmRawMaterialOutput.destroy', $item->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('PrmRawMaterialOutput.show', $post->id) }}"
-                                                    class="btn btn-link btn-info" title="Show Task"
-                                                    data-original-title="Show"><i class="fa fa-file"></i></a>
+                                                <a href="{{ route('PrmRawMaterialOutput.edit', $item->id) }}"
+                                                    class="btn btn-link btn-primary" title="Edit Task"
+                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" data-toggle="tooltip"

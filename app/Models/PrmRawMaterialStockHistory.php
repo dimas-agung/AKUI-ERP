@@ -18,11 +18,24 @@ class PrmRawMaterialStockHistory extends Model
         'avg_kadar_air',
         'modal',
         'total_modal',
+        'keterangan',
         'status',
         'user_created'
     ];
-    public function PrmRawMaterialStock()
+    // public function PrmRawMaterialStock()
+    // {
+    //     return $this->belongsTo(PrmRawMaterialStock::class);
+    // }
+    public function prmRawMaterialStock()
     {
-        return $this->belongsTo(PrmRawMaterialStock::class);
+        return $this->belongsTo(PrmRawMaterialStock::class, 'id_box', 'id_box');
+    }
+    public function PrmRawMaterialInputItem()
+    {
+        return $this->hasMany(PrmRawMaterialInputItem::class, 'id_box', 'id_box');
+    }
+    public function PrmRawMaterialOutputtItem()
+    {
+        return $this->hasOne(PrmRawMaterialOutputItem::class, 'id_box', 'id_box');
     }
 }

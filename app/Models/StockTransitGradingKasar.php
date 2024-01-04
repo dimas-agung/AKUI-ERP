@@ -11,6 +11,7 @@ class StockTransitGradingKasar extends Model
     protected $table = 'stock_transit_grading_kasars';
     protected $fillable = [
         'nomor_bstb',
+        'id_box',
         'nama_supplier',
         'jenis',
         'berat',
@@ -25,8 +26,8 @@ class StockTransitGradingKasar extends Model
         'user_updated',
     ];
 
-    public function PramRawMaterialOutputHeaders()
+    public function PramRawMaterialOutputItems()
     {
-        return $this->hasMany(PrmRawMaterialOutputHeader::class, 'nomor_bstb', 'nomor_bstb');
+        return $this->hasMany(PrmRawMaterialOutputItem::class, 'nomor_bstb', 'nomor_bstb');
     }
 }

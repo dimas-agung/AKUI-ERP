@@ -6,11 +6,19 @@
     <title> {{ env('APP_TITLE') }} @yield('title')</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     {{-- <link rel="icon" href="../assets/img/icon.ico" type="image/x-icon" /> --}}
+<<<<<<< HEAD
     <link rel="icon" href="{{ asset('img/icon.ico') }}" type="image/x-icon" />
 
     <!-- Fonts and icons -->
     {{-- <script src="../../assets/js/plugin/webfont/webfont.min.js"></script> --}}
     <script src="{{ asset('../../assets/js/plugin/webfont/webfont.min.js') }}"></script>
+=======
+    <link href="{{ asset('/assets/img/icon.ico') }}" rel="stylesheet" />
+
+    <!-- Fonts and icons -->
+    <script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
+    {{-- <link href="{{ asset('/assets/js/plugin/webfont/webfont.min.js') }}" rel="stylesheet" /> --}}
+>>>>>>> dev-al
     <script>
         WebFont.load({
             google: {
@@ -31,16 +39,32 @@
 
     <!-- CSS Files -->
     {{-- <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" /> --}}
+<<<<<<< HEAD
     <link rel="stylesheet" href="{{ asset('../../assets/css/bootstrap.min.css') }}" />
     {{-- <link rel="stylesheet" href="../../assets/css/atlantis.min.css" /> --}}
     <link rel="stylesheet" href="{{ asset('../../assets/css/atlantis.min.css') }}" />
 
+=======
+    <link href="{{ asset('/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+    {{-- <link rel="stylesheet" href="../../assets/css/atlantis.min.css" /> --}}
+    <link href="{{ asset('/assets/css/atlantis.min.css') }}" rel="stylesheet" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    {{-- <link rel="stylesheet" href="../../assets/css/demo.css" /> --}}
+    <link href="{{ asset('assets/css/demo.css') }}" rel="stylesheet" />
+    <style>
+        li a {
+            text-decoration: none;
+        }
+
+        li a svg {
+            margin-right: 15px;
+        }
+    </style>
+>>>>>>> dev-al
     {{-- Select2 CSS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-    {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script> --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
@@ -75,18 +99,26 @@
     <link href="{{ asset('css/jquery-customselect.css') }}" rel='stylesheet' />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
 
     {{-- Select 2 --}}
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" /> --}}
     <!-- Scripts -->
+<<<<<<< HEAD
     {{-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
 
+=======
+    {{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script> --}}
+>>>>>>> dev-al
 
 </head>
 
@@ -453,6 +485,7 @@
         <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
+<<<<<<< HEAD
     {{-- <script src="../../assets/js/core/jquery.3.2.1.min.js"></script> --}}
     <script src="{{ asset('../../assets/js/core/jquery.3.2.1.min.js') }}"></script>
     {{-- <script src="../../assets/js/core/popper.min.js"></script> --}}
@@ -469,12 +502,30 @@
     <!-- jQuery Scrollbar -->
     {{-- <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script> --}}
     <script src="{{ asset('../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+=======
+    {{-- <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script> --}}
+    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+
+    <!-- jQuery UI -->
+    {{-- <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
+
+    <!-- jQuery Scrollbar -->
+    {{-- <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+>>>>>>> dev-al
 
     <!-- Chart JS -->
-    <script src="../../assets/js/plugin/chart.js/chart.min.js"></script>
+    {{-- <script src="../../assets/js/plugin/chart.js/chart.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/chart.js/chart.min.js') }}"></script>
 
     <!-- jQuery Sparkline -->
     {{-- <script src="../../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script> --}}
+<<<<<<< HEAD
     <script src="{{ asset('../../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
 
     <!-- Chart Circle -->
@@ -484,12 +535,24 @@
     <!-- Datatables -->
     {{-- <script src="../../assets/js/plugin/datatables/datatables.min.js"></script> --}}
     <script src="{{ asset('../../assets/js/plugin/datatables/datatables.min.js') }}"></script>
+=======
+    <script src="{{ asset('assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
+
+    <!-- Chart Circle -->
+    {{-- <script src="../../assets/js/plugin/chart-circle/circles.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
+
+    <!-- Datatables -->
+    {{-- <script src="../../assets/js/plugin/datatables/datatables.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/datatables/datatables.min.js') }}"></script>
+>>>>>>> dev-al
 
     <!-- Bootstrap Notify -->
     {{-- <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script> --}}
 
     <!-- jQuery Vector Maps -->
     {{-- <script src="../../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script> --}}
+<<<<<<< HEAD
     <script src="{{ asset('../../assets/js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
     {{-- <script src="../../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script> --}}
     <script src="{{ asset('../../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
@@ -501,6 +564,25 @@
     <!-- Atlantis JS -->
     {{-- <script src="../../assets/js/atlantis.min.js"></script> --}}
     <script src="{{ asset('../../assets/js/atlantis.min.js') }}"></script>
+=======
+    <script src="{{ asset('assets/js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
+    {{-- <script src="../../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
+
+    <!-- Sweet Alert -->
+    {{-- <script src="../../assets/js/plugin/sweetalert/sweetalert.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
+
+    <!-- Atlantis JS -->
+    {{-- <script src="../../assets/js/atlantis.min.js"></script> --}}
+    <script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
+
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    {{-- <script src="../../assets/js/setting-demo.js"></script> --}}
+    {{-- <script src="../../assets/js/demo.js"></script> --}}
+    <script src="{{ asset('assets/js/setting-demo.js') }}"></script>
+    <script src="{{ asset('assets/js/demo.js') }}"></script>
+>>>>>>> dev-al
 
     {{-- Setingan --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
@@ -534,10 +616,6 @@
     {{-- Select2 --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script>
-        function goBack() {
-            window.history.back();
-        }
-
         // Select2
         $(document).ready(function() {
             $('#basic-datatables').DataTable({});
