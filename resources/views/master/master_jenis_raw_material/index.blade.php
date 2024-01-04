@@ -86,8 +86,9 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Upah Operator</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="text" pattern="[0-9]*" inputmode="numeric"
-                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                                                    step="0.01"
                                                     class="form-control @error('upah_operator')
 is-invalid
 @enderror"
@@ -103,8 +104,9 @@ is-invalid
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Pengurangan Harga</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="text" pattern="[0-9]*" inputmode="numeric"
-                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                                                    step="0.01"
                                                     class="form-control @error('pengurangan_harga')
 is-invalid
 @enderror"
@@ -120,8 +122,8 @@ is-invalid
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Harga Estimasi</label>
                                                 {{-- <select name="" id=""></select> --}}
-                                                <input type="text" pattern="[0-9]*" inputmode="numeric"
-                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                                                     class="form-control @error('harga_estimasi')
 is-invalid
 @enderror"
@@ -179,14 +181,48 @@ is-invalid
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $MasterJRM->jenis }}</td>
                                     <td>{{ $MasterJRM->kategori_susut }}</td>
-                                    <td>{{ $MasterJRM->upah_operator }}</td>
+                                    {{-- <td>{{ $MasterJRM->upah_operator }}</td>
                                     <td>
                                         @if ($MasterJRM->pengurangan_harga == '')
                                         @else
                                             {{ $MasterJRM->pengurangan_harga }} %
                                         @endif
                                     </td>
-                                    <td>{{ $MasterJRM->harga_estimasi }}</td>
+                                    <td>{{ $MasterJRM->harga_estimasi }}</td> --}}
+                                    <td>Rp {{ number_format($MasterJRM->upah_operator, 0, ',', '.') }}</td>
+                                    <td>
+                                        @if ($MasterJRM->pengurangan_harga == '')
+                                        @else
+                                            {{ $MasterJRM->pengurangan_harga }} %
+                                        @endif
+                                    </td>
+                                    {{-- <td>
+                                        @if ($MasterJRM->pengurangan_harga == '')
+                                        @else
+                                            Rp {{ number_format($MasterJRM->pengurangan_harga, 2, ',', '.') }}
+                                        @endif
+                                    </td> --}}
+                                    <td>Rp {{ number_format($MasterJRM->harga_estimasi, 0, ',', '.') }}</td>
+
+                                    {{-- <td>{{ number_format($MasterJRM->upah_operator, 2) }}</td>
+                                    <td>
+                                        @if ($MasterJRM->pengurangan_harga == '')
+                                        @else
+                                            {{ number_format($MasterJRM->pengurangan_harga, 2) }} %
+                                        @endif
+                                    </td>
+                                    <td>{{ number_format($MasterJRM->harga_estimasi, 2) }}</td> --}}
+
+                                    {{-- <td>{{ number_format($MasterJRM->upah_operator, 2, '.', '') }}</td>
+                                    <td>
+                                        @if ($MasterJRM->pengurangan_harga == '')
+                                        @else
+                                            {{ number_format($MasterJRM->pengurangan_harga, 2, '.', '') }} %
+                                        @endif
+                                    </td>
+                                    <td>{{ number_format($MasterJRM->harga_estimasi, 2, '.', '') }}</td> --}}
+
+
                                     <td>
                                         @if ($MasterJRM->status == 1)
                                             Aktif

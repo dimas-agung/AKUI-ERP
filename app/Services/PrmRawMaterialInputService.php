@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class PrmRawMaterialInputService
 {
+    // public function simpanData($dataHeader, $dataArray, $dataStock)
+    // public function simpanData($dataHeader, $dataArray, $dataStock, $dataStockHistory)
     public function simpanData($dataHeader, $dataArray)
     {
         try {
@@ -21,9 +23,12 @@ class PrmRawMaterialInputService
             foreach ($dataArray as $item) {
                 $this->createItem($item);
             }
-
             // foreach ($dataStock as $itemS) {
             //     $this->createStock($itemS);
+            // }
+
+            // foreach ($dataStockHistory as $itemH) {
+            //     $this->createStockHistory($itemH);
             // }
 
             DB::commit();
@@ -59,14 +64,35 @@ class PrmRawMaterialInputService
         ]);
     }
 
+    // private function createItem($item)
+    // {
+    //     PrmRawMaterialInputItem::create([
+    //         // 'doc_no'            => $item->doc_no,
+    //         'jenis'             => $item->jenis,
+    //         'berat_nota'        => $item->berat_nota,
+    //         'berat_kotor'       => $item->berat_kotor,
+    //         'berat_bersih'      => $item->berat_bersih,
+    //         'selisih_berat'     => $item->selisih_berat,
+    //         'kadar_air'         => $item->kadar_air,
+    //         'id_box'            => $item->id_box,
+    //         'harga_nota'        => $item->harga_nota,
+    //         'total_harga_nota'  => $item->total_harga_nota,
+    //         'harga_deal'        => $item->harga_deal,
+    //         'keterangan'        => $item->keterangan,
+    //         'user_created'      => $item->user_created,
+    //         // 'user_updated'      => $item->user_updated
+    //         // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+    //     ]);
+    // }
+
     private function createItem($item)
     {
         $defaultBeratKeluar = 0;
-        $defaultIdBox = 'Asc-1';
+        // $defaultIdBox = '';
         // Creat Prm Raw Material Stock History
         PrmRawMaterialStockHistory::create([
             'id_box'        => $item->id_box,
-            'doc_no'        => $defaultIdBox,
+            // 'doc_no'        => $defaultIdBox,
             'berat_masuk'   => $item->berat_bersih,
             'berat_keluar'  => $defaultBeratKeluar,
             'sisa_berat'    => $item->selisih_berat,
@@ -75,6 +101,7 @@ class PrmRawMaterialInputService
             'total_modal'   => $item->total_harga_nota,
             'keterangan'    => $item->keterangan,
             'user_created'  => $item->user_created,
+            // 'user_updated'  => $item->user_updated,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
         PrmRawMaterialInputItem::create([
@@ -95,7 +122,9 @@ class PrmRawMaterialInputService
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
 
+        // stok
         $itemObject = (object)$item;
+        // Cari item berdasarkan id_box dan nomor_batch
         $existingItem = PrmRawMaterialStock::where('id_box', $itemObject->id_box)
             ->where('nomor_batch', $itemObject->nomor_batch)
             ->first();
@@ -117,7 +146,7 @@ class PrmRawMaterialInputService
             // 'user_updated'  => $itemObject->user_updated,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
-
+        //
         if ($existingItem) {
             // Ambil nilai terakhir berat_masuk dan berat_keluar
             // $lastBeratMasuk = $existingItem->berat_masuk;
@@ -138,10 +167,10 @@ class PrmRawMaterialInputService
 
             // Update juga kolom-kolom lain yang diperlukan
             $existingItem->avg_kadar_air = $itemObject->kadar_air;
-            // $existingItem->modal = $itemObject->modal ?? $existingItem->modal ?? 0;
-            // $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
-            // $existingItem->keterangan = $itemObject->keterangan;
-            // $existingItem->user_created = $itemObject->user_created;
+            $existingItem->modal = $itemObject->modal ?? $existingItem->modal ?? 0;
+            $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
+            $existingItem->keterangan = $itemObject->keterangan;
+            $existingItem->user_created = $itemObject->user_created;
 
             // Simpan perubahan pada stok yang sudah ada
             $existingItem->save();

@@ -37,15 +37,6 @@ class PrmRawMaterialInputController extends Controller
             'i' => $i,
         ]);
     }
-    // public function indexstock()
-    // {
-    //     $i = 1;
-    //     $PrmRawMaterialStock = PrmRawMaterialStock::all();
-    //     return response()->view('purchasing_exim.prm_raw_material_stock.index', [
-    //         'PrmRawMaterialStock' => $PrmRawMaterialStock,
-    //         'i' => $i
-    //     ]);
-    // }
     // create
     public function create()
     {
@@ -57,15 +48,6 @@ class PrmRawMaterialInputController extends Controller
         ]);
     }
 
-    public function createItem()
-    {
-        $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
-        $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
-        return view('purchasing_exim/prm_raw_material_input.create_item', [
-            'master_supplier_raw_materials' => $MasterSupplierRawMaterial,
-            'master_jenis_raw_materials'    => $MasterJenisRawMaterial,
-        ]);
-    }
     // get Data Supplier
     public function getDataSupplier(Request $request)
     {
@@ -93,8 +75,26 @@ class PrmRawMaterialInputController extends Controller
     // public function simpanData(Request $request)
     {
         $dataArray = json_decode($request->input('data'));
+        // $dataStock = json_decode($request->input('dataStock'));
         $dataHeader = json_decode($request->input('dataHeader'));
+        // $dataStockHistory = json_decode($request->input('dataStockHistory'));
+        // $dataStockHistory = json_decode($request->input('dataStockHistory'));
+        // return $dataArray;
+        // var_dump($dataArray[0]);
+        // return $dataStock;
+        // return $dataHeader[0];
+        // return $dataStockHistory[0];
+        // Pastikan doc_no ada dan merupakan string sebelum menggunakan substr
+
+        // $result = $PrmRawMaterialInputService->simpanData($dataHeader[0], $dataArray, $dataStock);
         $result = $PrmRawMaterialInputService->simpanData($dataHeader[0], $dataArray);
+        // $result = $PrmRawMaterialInputService->simpanData($dataHeader[0], $dataArray, $dataStock, $dataStockHistory);
+
+        // if (is_array($result) && isset($result['success']) && $result['success']) {
+        //     return response()->json($result);
+        // } else {
+        //     return response()->json($result, 500);
+        // }
 
         if ($result['success']) {
             return response()->json($result);
@@ -102,64 +102,6 @@ class PrmRawMaterialInputController extends Controller
             return response()->json($result, 500);
         }
     }
-    // public function store(Request $request): RedirectResponse
-    // {
-    //     //validate form
-    //     $this->validate($request, [
-    // 'doc_no.*',
-    // 'nomor_po'               => 'required',
-    // 'nomor_batch'            => 'required',
-    // 'nomor_nota_supplier'    => 'required',
-    // 'nomor_nota_internal'    => 'required',
-    // 'nama_supplier'          => 'required',
-    // 'jenis'                  => 'required',
-    // 'berat_nota'             => 'required',
-    // 'berat_kotor'            => 'required',
-    // 'berat_bersih'           => 'required',
-    // 'selisih_berat'          => 'required',
-    // 'kadar_air'              => 'required',
-    // 'id_box'                 => 'required',
-    // 'harga_nota'             => 'required',
-    // 'total_harga_nota'       => 'required',
-    // 'harga_deal'             => 'required',
-    // 'keterangan',
-    // 'user_created',
-    // 'user_updated',
-    //     ]);
-
-    //     //create Purchasing Raw Material Input
-    //     PrmRawMaterialInput::create([
-    //         'doc_no'                => $request->doc_no,
-    //         'nomor_po'              => $request->nomor_po,
-    //         'nomor_batch'           => $request->nomor_batch,
-    //         'nomor_nota_supplier'   => $request->nomor_nota_supplier,
-    //         'nomor_nota_internal'   => $request->nomor_nota_internal,
-    //         'nama_supplier'         => $request->nama_supplier,
-    //         'keterangan'            => $request->keterangan,
-    //         'user_created'          => $request->user_created,
-    //         'user_updated'          => $request->user_updated
-    //     ]);
-    //     //create Purchasing Raw Material Item
-    //     PrmRawMaterialInputItem::create([
-    //         'doc_no'                => $request->doc_no,
-    //         'jenis'                 => $request->jenis,
-    //         'berat_nota'            => $request->berat_nota,
-    //         'berat_kotor'           => $request->berat_kotor,
-    //         'berat_bersih'          => $request->berat_bersih,
-    //         'selisih_berat'         => $request->selisih_berat,
-    //         'kadar_air'             => $request->kadar_air,
-    //         'id_box'                => $request->id_box,
-    //         'harga_nota'            => $request->harga_nota,
-    //         'total_harga_nota'      => $request->total_harga_nota,
-    //         'harga_deal'            => $request->harga_deal,
-    //         'keterangan'            => $request->keterangan,
-    //         'user_created'          => $request->user_created,
-    //         'user_updated'          => $request->user_updated
-    //     ]);
-
-    //     //redirect to index
-    //     return redirect()->route('prm_raw_material_input.index')->with(['success' => 'Data Berhasil Disimpan!']);
-    // }
     // show
     public function show(string $id)
     {
@@ -171,16 +113,25 @@ class PrmRawMaterialInputController extends Controller
         $items = $MasterPRIM->PrmRawMaterialInputItem;
         // return $MasterPRIM;
 
-        return response()->view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM', 'items', 'i'));
+
+        return response()->view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM', 'i'));
     }
     // edit
-    public function edit(string $id)
-    {
-        $MasterPRIMI = PrmRawMaterialInputItem::findOrFail($id);
-        $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
-        $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
-        return view('purchasing_exim.prm_raw_material_input.update', compact('MasterPRIMI', 'MasterJenisRawMaterial', 'MasterSupplierRawMaterial'));
-    }    public function destroyInput($id): RedirectResponse
+    // public function edit(string $id)
+    // {
+    //     $MasterPRIMI = PrmRawMaterialInputItem::findOrFail($id);
+    //     // $PrmRawMaterialInput = PrmRawMaterialInput::findOrFail($id);
+    //     $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+    //     $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
+    //     // $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
+    //     //     ->where(['id' => $id])
+    //     //     ->first();
+    //     // return $MasterPRIMI;
+    //     // return $PrmRawMaterialInput;
+    //     return view('purchasing_exim.prm_raw_material_input.update', compact('MasterPRIMI', 'MasterJenisRawMaterial', 'MasterSupplierRawMaterial'));
+    // }
+    // destroy
+    public function destroyInput($id): RedirectResponse
     {
         //get by ID
         $PrmRawMaterialInput = PrmRawMaterialInput::findOrFail($id);

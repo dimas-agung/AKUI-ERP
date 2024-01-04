@@ -1,4 +1,5 @@
 @extends('layouts.master2')
+{{-- @extends('layouts.template1') --}}
 @section('title')
     Detail Data Prm Raw Material Input
 @endsection
@@ -6,7 +7,16 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4>Detail Data Prm Raw Material Input</h4>
+                <div class="d-flex align-items-center">
+                    <h4 class="card-title">Detail Data Purchasing Raw Material</h4>
+                    {{-- <button class="btn btn-primary btn-round ml-auto">
+                        <a href="{{ url('/purchasing_exim/prm_raw_material_input/create_item') }}"
+                            style="text-decoration: none; color:aliceblue">
+                            <i class="fa fa-plus"></i>
+                            <span class="sub-item">Add Data</span>
+                        </a>
+                    </button> --}}
+                </div>
             </div>
             <div class="card-body">
                 {{-- Create Data --}}
