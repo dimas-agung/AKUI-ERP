@@ -1,4 +1,7 @@
-@extends('layouts.master2')
+@extends('layouts.master3')
+@section('Menu')
+    Stock Transit Grading
+@endsection
 @section('title')
     Data Stock Transit Grading Kasar
 @endsection
@@ -34,7 +37,7 @@
                 @endif
 
                 <div class="table-responsive">
-                    <table id="add-row" class="display table table-striped table-hover">
+                    <table id="table1" class="display table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>

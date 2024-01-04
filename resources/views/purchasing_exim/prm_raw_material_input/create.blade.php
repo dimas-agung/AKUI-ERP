@@ -1,4 +1,10 @@
-@extends('layouts.template')
+@extends('layouts.master3')
+@section('Menu')
+    Purchasing & EXIM
+@endsection
+@section('title')
+    Input Purchasing Raw Material
+@endsection
 @section('content')
     <div class="col-md-12">
         <div class="card mt-2">

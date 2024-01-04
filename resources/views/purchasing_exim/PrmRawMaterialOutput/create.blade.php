@@ -1,4 +1,7 @@
-@extends('layouts.master2')
+@extends('layouts.master3')
+@section('Menu')
+    Purchasing & EXIM
+@endsection
 @section('title')
     Input Data PRM Raw Material Output
 @endsection
@@ -32,25 +35,26 @@
                                     </div>
                                 @endif
                                 <div class="row">
-                                    <div class="col-md-6 pr-0">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nomer Dokument</label>
                                             <input type="text" id="doc_no" class="form-control" name="doc_no"
                                                 value="{{ old('doc_no') }}" placeholder="Masukkan Nomer Dokument">
                                         </div>
                                     </div>
-                                    <div class="col-md-6 pr-0">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>NIP Admin</label>
                                             <input type="text" id="user_created" class="form-control" name="user_created"
                                                 value="{{ old('user_created') }}" placeholder="Masukkan User Created">
                                         </div>
                                     </div>
-                                    <div class="col-md-4 pr-0">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Id Box</label>
-                                            <select id="id_box" class="form-control select2 select2-hidden-accessible"
-                                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="id_box"
+                                            <select id="id_box" class="choices form-select" name="id_box"
                                                 data-placeholder="Pilih Id Box">
                                                 <option></option>
                                                 @foreach ($PrmRawMS as $post)
@@ -59,15 +63,11 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Nomor Batch</label>
-                                            <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
-                                                onchange="handleChange(this.{{ old('nomor_batch') }})" readonly>
-                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
-                                            <select id="tujuan_kirim" class="form-control select2 select2-hidden-accessible"
-                                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="tujuan_kirim"
+                                            <select id="tujuan_kirim" class="choices form-select" name="tujuan_kirim"
                                                 data-placeholder="Pilih Tujuan Kirim">
                                                 <option></option>
                                                 @foreach ($MasTujKir as $post)
@@ -77,34 +77,35 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 pr-0">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Nama Supplier</label>
                                             <input type="text" class="form-control" id="nama_supplier"
                                                 name="nama_supplier"
                                                 onchange="handleChange(this.{{ old('nama_supplier') }})" readonly>
                                         </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Nomor Batch</label>
+                                            <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
+                                                onchange="handleChange(this.{{ old('nomor_batch') }})" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Jenis</label>
                                             <input type="text" class="form-control" id="jenis" name="jenis"
                                                 onchange="handleChange(this.{{ old('jenis') }})" readonly>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Letak Tujuan</label>
                                             <input type="text" id="letak_tujuan" class="form-control" name="letak_tujuan"
                                                 onchange="handleChange(this.{{ old('letak_tujuan') }})" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 pr-0">
-                                        <div class="form-group">
-                                            <label>Kadar Air</label>
-                                            <input type="text" class="form-control" id="kadar_air" name="kadar_air"
-                                                onchange="handleChange(this.{{ old('kadar_air') }})" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Berat Masuk</label>
-                                            <input type="text" class="form-control" id="berat_masuk" name="berat_masuk"
-                                                onchange="handleChange(this.{{ old('berat_masuk') }})" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Inisial Tujuan</label>
@@ -112,8 +113,6 @@
                                                 name="inisial_tujuan" value="{{ old('inisial_tujuan') }}"
                                                 onchange="handleChange(this)" readonly>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Modal</label>
                                             <input type="text" id="modal" class="form-control" name="modal"
@@ -121,12 +120,22 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Total Modal</label>
-                                            <input type="text" id="total_modal" class="form-control"
-                                                name="total_modal" value="{{ old('total_modal') }}"
-                                                placeholder="Masukkan total modal">
+                                            <input type="text" id="total_modal" class="form-control" name="total_modal"
+                                                value="{{ old('total_modal') }}" placeholder="Masukkan total modal">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Kadar Air</label>
+                                            <input type="text" class="form-control" id="kadar_air" name="kadar_air"
+                                                onchange="handleChange(this.{{ old('kadar_air') }})" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Berat Masuk</label>
+                                            <input type="text" class="form-control" id="berat_masuk"
+                                                name="berat_masuk" onchange="handleChange(this.{{ old('berat_masuk') }})"
+                                                readonly>
+                                        </div>
                                         <div class="form-group">
                                             <label>Berat Keluar</label>
                                             <input type="text" id="berat" pattern="[0-9]*" inputmode="numeric"
@@ -144,64 +153,66 @@
                                                 placeholder="Masukkan berat keluar terlebih dahulu" readonly>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Keterangan</label>
-                                            <input type="text" id="keterangan_item" class="form-control"
-                                                name="keterangan_item" value="{{ old('keterangan_item') }}"
-                                                placeholder="Masukkan keterangan">
-                                        </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Keterangan</label>
+                                        <input type="text" id="keterangan_item" class="form-control"
+                                            name="keterangan_item" value="{{ old('keterangan_item') }}"
+                                            placeholder="Masukkan keterangan">
                                     </div>
-                                    <div class="col-md-12">
-                                        <button type="button" class="btn btn-primary" onclick="addRow()">Add</button>
-                                        <a href="{{ url('/PrmRawMaterialOutput') }}" type="button"
-                                            class="btn btn-danger" data-dismiss="modal">Close</a>
-                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary" onclick="addRow()">Add</button>
+                                    <a href="{{ url('/PrmRawMaterialOutput') }}" type="button" class="btn btn-danger"
+                                        data-dismiss="modal">Close</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+        </div>
 
 
-                <div class="row">
-                    <div class="col-md-12">
-                        {{-- <div class="card"> --}}
-                        <div class="card-header">
-                            <div class="card-title">Validasi Data Input</div>
-                        </div>
-                        <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
-                            <table class="table table-striped mt-3">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">No Document</th>
-                                        <th class="text-center">No BSTB</th>
-                                        <th class="text-center">Nomor Batch</th>
-                                        <th class="text-center">ID</th>
-                                        <th class="text-center">Nama Supplier</th>
-                                        <th class="text-center">Jenis</th>
-                                        <th class="text-center">Berat Masuk</th>
-                                        <th class="text-center">Berat</th>
-                                        <th class="text-center">Berat sisa</th>
-                                        <th class="text-center">Kadar Air</th>
-                                        <th class="text-center">Tujuan Kirim</th>
-                                        <th class="text-center">Letak Tujuan</th>
-                                        <th class="text-center">Inisial Tujuan</th>
-                                        <th class="text-center">Modal</th>
-                                        <th class="text-center">Total Modal</th>
-                                        <th class="text-center">Keterangan</th>
-                                        <th class="text-center">NIP Admin</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableBody">
-                                </tbody>
-                            </table>
-                            <a href="#" class="btn btn-primary" onclick="sendData()">Submit</a>
-                        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Validasi Data Input</div>
+                    </div>
+                    <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
+                        <table class="table table-striped mt-3">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No Document</th>
+                                    <th class="text-center">No BSTB</th>
+                                    <th class="text-center">Nomor Batch</th>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Nama Supplier</th>
+                                    <th class="text-center">Jenis</th>
+                                    <th class="text-center">Berat Masuk</th>
+                                    <th class="text-center">Berat</th>
+                                    <th class="text-center">Berat sisa</th>
+                                    <th class="text-center">Kadar Air</th>
+                                    <th class="text-center">Tujuan Kirim</th>
+                                    <th class="text-center">Letak Tujuan</th>
+                                    <th class="text-center">Inisial Tujuan</th>
+                                    <th class="text-center">Modal</th>
+                                    <th class="text-center">Total Modal</th>
+                                    <th class="text-center">Keterangan</th>
+                                    <th class="text-center">NIP Admin</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                            </tbody>
+                        </table>
+                        <a href="#" class="btn btn-primary" onclick="sendData()">Submit</a>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
+        </form>
+    </div>
     </div>
 @endsection
 @section('script')
@@ -405,11 +416,26 @@
                 },
                 dataType: 'json', // payload is json,
                 success: function(response) {
-                    alert('Success: ' + response.message); // Tampilkan pesan berhasil
-                    window.location.href = response.redirectTo; // Redirect ke halaman lain
+                    // alert('Success: ' + response.message); // Tampilkan pesan berhasil
+                    // window.location.href = response.redirectTo; // Redirect ke halaman lain
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Data berhasil disimpan.',
+                        icon: 'success'
+                    }).then((result) => {
+                        // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
+                        if (result.isConfirmed) {
+                            window.location.href = response
+                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                        }
+                    });
                 },
                 error: function(error) {
-                    console.error('Error:', response);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Terjadi kesalahan. Silakan coba lagi.',
+                        icon: 'error'
+                    });
                     console.log('Validation Errors:', response.responseJSON.errors);
                 }
             });

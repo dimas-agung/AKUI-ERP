@@ -1,4 +1,7 @@
-@extends('layouts.master2')
+@extends('layouts.master3')
+@section('Menu')
+    Master
+@endsection
 @section('title')
     Detail Biaya HPP
 @endsection

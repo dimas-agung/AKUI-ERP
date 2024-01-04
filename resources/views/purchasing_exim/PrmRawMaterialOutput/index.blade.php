@@ -1,41 +1,25 @@
-@extends('layouts.master2')
+@extends('layouts.master3')
+@section('Menu')
+    Purchasing & EXIM
+@endsection
 @section('title')
     PRM Raw Material Output
 @endsection
 @section('content')
-    <div class="col-md-12">
+    <div class="section">
         <div class="card">
             <div class="card-header">
-                <div class="d-flex align-items-center">
+                <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data PRM Raw Material Output</h4>
-                    <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-                        <a href="{{ url('/PrmRawMaterialOutput/create') }}" style="text-decoration: none; color:aliceblue">
-                            <i class="fa fa-plus"></i>
-                            <span class="sub-item">Add Data</span>
-                        </a>
-                    </button>
+                    <a href="{{ url('/PrmRawMaterialOutput/create') }}" class="btn btn-outline-success rounded-pill">
+                        <i class="fa fa-plus"></i>
+                        Add Data
+                    </a>
                 </div>
             </div>
             <div class="card-body">
-                {{-- Create Data --}}
-                @if (session()->has('success'))
-                    <div class="alert alert-success">
-                        <strong>Sukses: </strong>{{ session()->get('success') }}
-                    </div>
-                @endif
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul><strong>
-                                @foreach ($errors->all() as $error)
-                                    <li> {{ $error }} </li>
-                                @endforeach
-                            </strong>
-                        </ul>
-                        <p>Mohon periksa kembali formulir Anda.</p>
-                    </div>
-                @endif
                 <div class="table-responsive">
-                    <table id="add-row" class="display table table-striped table-hover">
+                    <table id="table1" class="table">
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
@@ -100,17 +84,19 @@
                                     <td class="text-center">{{ $item->user_updated }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                            <form style="display: flex" id="deleteForm{{ $item->id }}"
                                                 action="{{ route('PrmRawMaterialOutput.destroy', $item->id) }}"
                                                 method="POST">
                                                 <a href="{{ route('PrmRawMaterialOutput.edit', $item->id) }}"
                                                     class="btn btn-link btn-primary" title="Edit Task"
-                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
+                                                    data-original-title="Edit Task"><i class="bi bi-pencil-square"></i></a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" data-toggle="tooltip"
-                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
-                                                        class="fa fa-times"></i></button>
+                                                <button type="button" class="btn btn-link btn-danger"
+                                                    data-original-title="Remove"
+                                                    onclick="confirmDelete({{ $item->id }})">
+                                                    <i class="bi bi-trash3 text-danger"></i>
+                                                </button>
                                             </form>
                                         </div>
                                     </td>
@@ -126,4 +112,25 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Anda yakin ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika dikonfirmasi, submit form
+                    document.getElementById('deleteForm' + id).submit();
+                }
+            });
+        }
+    </script>
 @endsection

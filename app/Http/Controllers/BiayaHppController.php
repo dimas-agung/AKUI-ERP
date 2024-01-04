@@ -20,6 +20,7 @@ class BiayaHppController extends Controller
         $i = 1;
         $unit = unit::with('biayahpp')->get();
         $biaya = BiayaHpp::with('unit')->get();
+        // return $unit;
         return response()->view('biayahpp.index', [
             'biaya' => $biaya,
             'unit' => $unit,
