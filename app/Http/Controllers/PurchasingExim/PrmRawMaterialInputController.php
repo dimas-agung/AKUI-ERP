@@ -110,8 +110,9 @@ class PrmRawMaterialInputController extends Controller
         // $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
         //get by ID
         $MasterPRIM = PrmRawMaterialInput::findOrFail($id);
-        $items = $MasterPRIM->PrmRawMaterialInputItem;
-        // return $MasterPRIM;
+        $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
+            ->where(['id' => $id])
+            ->first();
 
 
         return response()->view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM', 'i'));

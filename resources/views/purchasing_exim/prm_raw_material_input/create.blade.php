@@ -344,10 +344,6 @@
             // test
             let berat_masuk = $('#berat_bersih').val();
             let avg_kadar_air = $('#kadar_air').val();
-<<<<<<< HEAD
-=======
-
->>>>>>> dev-helmi
             // Validasi input (sesuai kebutuhan)
             if (nomor_po.trim() === '' || nomor_batch.trim() === '' || nomor_nota_supplier.trim() === '' ||
                 nomor_nota_internal.trim() === '' || nama_supplier.trim() === '' || jenis.trim() === '' ||

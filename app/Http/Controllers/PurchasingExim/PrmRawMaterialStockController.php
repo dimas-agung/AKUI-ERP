@@ -18,7 +18,6 @@ class PrmRawMaterialStockController extends Controller
         // return $PrmRawMaterialStock;
         return response()->view('purchasing_exim.prm_raw_material_stock.index', [
             'PrmRawMaterialStock' => $PrmRawMaterialStock,
-            'PrmRawMaterialInput' => $PrmRawMaterialInput,
             'i' => $i
         ]);
     }
