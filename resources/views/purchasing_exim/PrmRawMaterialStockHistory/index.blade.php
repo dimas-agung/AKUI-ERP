@@ -1,6 +1,6 @@
-@extends('layouts.master3')
+@extends('layouts.master1')
 @section('Menu')
-    Purchasing & EXIM
+    Purchasing & EXIM / Purchasing Raw Material Stock
 @endsection
 @section('title')
     Purchasing Raw Material Stock History
@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex align-items-center">
-                <h3 class="card-title">Data Purchasing Raw Material Stock Historys</h3>
+                <h4 class="card-title">Data Purchasing Raw Material Stock Historys</h4>
             </div>
         </div>
         <div class="card-body">

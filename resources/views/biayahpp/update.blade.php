@@ -1,4 +1,4 @@
-@extends('layouts.master3')
+@extends('layouts.master1')
 @section('Menu')
     Master
 @endsection
