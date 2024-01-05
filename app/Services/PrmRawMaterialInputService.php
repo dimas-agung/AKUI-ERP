@@ -23,13 +23,6 @@ class PrmRawMaterialInputService
             foreach ($dataArray as $item) {
                 $this->createItem($item);
             }
-            // foreach ($dataStock as $itemS) {
-            //     $this->createStock($itemS);
-            // }
-
-            // foreach ($dataStockHistory as $itemH) {
-            //     $this->createStockHistory($itemH);
-            // }
 
             DB::commit();
 
@@ -63,27 +56,6 @@ class PrmRawMaterialInputService
             // Sesuaikan dengan kolom-kolom lain di tabel header Anda
         ]);
     }
-
-    // private function createItem($item)
-    // {
-    //     PrmRawMaterialInputItem::create([
-    //         // 'doc_no'            => $item->doc_no,
-    //         'jenis'             => $item->jenis,
-    //         'berat_nota'        => $item->berat_nota,
-    //         'berat_kotor'       => $item->berat_kotor,
-    //         'berat_bersih'      => $item->berat_bersih,
-    //         'selisih_berat'     => $item->selisih_berat,
-    //         'kadar_air'         => $item->kadar_air,
-    //         'id_box'            => $item->id_box,
-    //         'harga_nota'        => $item->harga_nota,
-    //         'total_harga_nota'  => $item->total_harga_nota,
-    //         'harga_deal'        => $item->harga_deal,
-    //         'keterangan'        => $item->keterangan,
-    //         'user_created'      => $item->user_created,
-    //         // 'user_updated'      => $item->user_updated
-    //         // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-    //     ]);
-    // }
 
     private function createItem($item)
     {
@@ -139,8 +111,9 @@ class PrmRawMaterialInputService
             'berat_keluar'  => $itemObject->berat_keluar ?? 0,
             'sisa_berat'    => $itemObject->berat_bersih,
             'avg_kadar_air' => $itemObject->kadar_air,
-            'modal'         => $itemObject->modal ?? 0,
+            'modal'         => $itemObject->harga_deal,
             'total_modal'   => $itemObject->total_modal ?? 0,
+            // 'total_modal'   => $itemObject->total_modal ?? 0,
             'keterangan'    => $itemObject->keterangan,
             'user_created'  => $itemObject->user_created,
             // 'user_updated'  => $itemObject->user_updated,
@@ -151,10 +124,13 @@ class PrmRawMaterialInputService
             // Ambil nilai terakhir berat_masuk dan berat_keluar
             $BeratMasuk = $existingItem->berat_masuk;
             $lastBeratKeluar = $existingItem->berat_keluar;
+            // $totalModal = $existingItem->modal * $existingItem->sisa_berat;
 
             // Update nilai berat_masuk pada item yang sudah ada
             $lastBeratMasuk = $existingItem->berat_masuk += $itemObject->berat_bersih;
             $existingItem->berat_keluar = $itemObject->berat_keluar ?? $existingItem->berat_keluar ?? 0;
+            // $totalModal = $existingItem->modal * $existingItem->sisa_berat;
+            // $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
 
             // Tentukan nilai sisa_berat sesuai kondisi
             if ($existingItem->berat_keluar === 0 || $existingItem->berat_keluar === null) {
@@ -165,10 +141,15 @@ class PrmRawMaterialInputService
                 $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
             }
 
+            if ($existingItem->total_modal === 0 || $existingItem->total_modal === null) {
+                // tet
+                $existingItem->total_modal = $existingItem->modal * $existingItem->sisa_berat;
+            } else {
+                $existingItem->total_modal = $existingItem->modal * $existingItem->sisa_berat;
+            }
+
             // Update juga kolom-kolom lain yang diperlukan
             $existingItem->avg_kadar_air = $itemObject->kadar_air;
-            $existingItem->modal = $itemObject->modal ?? $existingItem->modal ?? 0;
-            $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
             $existingItem->keterangan = $itemObject->keterangan;
             $existingItem->user_created = $itemObject->user_created;
 
