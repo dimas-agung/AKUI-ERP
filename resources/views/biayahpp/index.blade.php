@@ -1,4 +1,4 @@
-@extends('layouts.master2')
+@extends('layouts.master1')
 @section('Menu')
     Master
 @endsection
@@ -87,10 +87,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer no-bd">
-                                    <button type="submit" class="btn btn-primary">Add</button>
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                </div>
+                            </div>
+                            <div class="modal-footer no-bd">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>

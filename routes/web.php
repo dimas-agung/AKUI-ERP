@@ -115,9 +115,13 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputContro
     Route::put('/PrmRawMaterialOutput/update/{id}', 'update')->name('PrmRawMaterialOutput.update');
     Route::delete('/PrmRawMaterialOutput/destroy/{id}', 'destroy')->name('PrmRawMaterialOutput.destroy');
     Route::delete('/PrmRawMaterialOutput/destroyHead/{id}', 'destroyHead')->name('PrmRawMaterialOutput.destroyHead');
-    // routes/web.php
     Route::get('/PrmRawMaterialOutput/get_data_id_box', 'set')->name('PrmRawMaterialOutput.set');
     Route::get('/PrmRawMaterialOutput/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
+});
+Route::controller(App\Http\Controllers\TransitGrading\GradingKasarInputController::class)->group(function(){
+    Route::get('/GradingKasarInput', 'index')->name('GradingKasarInput.index');
+    Route::get('/GradingKasarInput/create', 'create')->name('GradingKasarInput.create');
+    Route::get('/GradingKasarInput/get_data', 'set')->name('GradingKasarInput.set');
 });
 
 Auth::routes();

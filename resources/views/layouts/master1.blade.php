@@ -144,6 +144,24 @@
                                 </li>
                             </ul>
                         </li>
+                        <li
+                            class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'GradingKasarInput') ? 'active' : '' }}">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-grid-1x2-fill"></i>
+                                <span>Grading Transit</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li
+                                    class="submenu-item  {{ Request::is('StockTransitGradingKasar') ? 'active' : '' }} ">
+                                    <a href="{{ url('/StockTransitGradingKasar') }}" class="submenu-link">Stock
+                                        Transit Grading Kasar</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('GradingKasarInput') ? 'active' : '' }} ">
+                                    <a href="{{ url('/GradingKasarInput') }}" class="submenu-link">Grading Kasar
+                                        Input</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -172,20 +190,23 @@
                     </div>
                 </div>
             </div>
-            <div class="page-content">
+            <div class="page-content position-relative">
                 @yield('content')
+                <footer class=" ">
+                    <div class="top-100">
+                        <div class="float-start">
+                            <p>2023 &copy; Mazer</p>
+                        </div>
+                        <div class="float-end">
+                            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
+                                by
+                                <a href="https://saugi.me">Saugi</a>
+                            </p>
+                        </div>
+                    </div>
+                </footer>
             </div>
-            <footer>
-                <div class="footer clearfix mb-0 text-muted">
-                    <div class="float-start">
-                        <p>2023 &copy; Mazer</p>
-                    </div>
-                    <div class="float-end">
-                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                            by <a href="https://saugi.me">Saugi</a></p>
-                    </div>
-                </div>
-            </footer>
+
         </div>
     </div>
     <script src="{{ asset('assets/static/js/components/dark.js') }}"></script>

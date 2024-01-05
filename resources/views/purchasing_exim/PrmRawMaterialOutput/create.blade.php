@@ -116,12 +116,12 @@
                                         <div class="form-group">
                                             <label>Modal</label>
                                             <input type="text" id="modal" class="form-control" name="modal"
-                                                value="{{ old('modal') }}" placeholder="Masukkan modal">
+                                                value="{{ old('modal') }}" onchange="handleChange(this)" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Total Modal</label>
                                             <input type="text" id="total_modal" class="form-control" name="total_modal"
-                                                value="{{ old('total_modal') }}" placeholder="Masukkan total modal">
+                                                value="{{ old('total_modal') }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -149,8 +149,7 @@
                                                 inputmode="numeric"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 class="form-control" name="selisih_berat"
-                                                value="{{ old('selisih_berat') }}"
-                                                placeholder="Masukkan berat keluar terlebih dahulu" readonly>
+                                                value="{{ old('selisih_berat') }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -238,6 +237,7 @@
                     $('#jenis').val(response.jenis);
                     $('#kadar_air').val(response.avg_kadar_air);
                     $('#berat_masuk').val(response.berat_masuk);
+                    $('#modal').val(response.modal);
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -284,6 +284,22 @@
             // $('#hasil_nomor_bstb').text(nomor_bstb);
             return nomor_bstb;
             console.log(nomor_bstb);
+        }
+
+        // Event listener untuk perubahan nilai pada total modal
+        $('#modal').on('input', updateTotalmodal);
+        $('#berat').on('input', updateTotalmodal);
+
+        function updateTotalmodal() {
+            // Mendapatkan nilai berat nota dan berat bersih
+            const modal = parseFloat($('#modal').val());
+            const berat = parseFloat($('#berat').val());
+
+            // Melakukan perhitungan selisih berat
+            const totalmodal = berat * modal;
+
+            // Memasukkan hasil perhitungan ke dalam input selisih berat
+            $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal);
         }
 
         // Event listener untuk perubahan nilai pada berat nota atau berat bersih
