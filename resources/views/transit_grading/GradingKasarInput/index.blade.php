@@ -23,7 +23,6 @@
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
-                                <th class="text-center" scope="col">Nomor Dokument</th>
                                 <th class="text-center" scope="col">Nomor BSTB</th>
                                 <th class="text-center" scope="col">Nomor Batch</th>
                                 <th class="text-center" scope="col">Id Box</th>
@@ -42,7 +41,6 @@
                         </thead>
                         <tfoot>
                             <th class="text-center">No</th>
-                            <th class="text-center">Nomor Dokument</th>
                             <th class="text-center">Nomor BSTB</th>
                             <th class="text-center">Nomor Batch</th>
                             <th class="text-center">Id Box</th>
@@ -62,7 +60,6 @@
                             @forelse ($GradingKI as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{{ $item->doc_no }}</td>
                                     <td class="text-center">{{ $item->nomor_bstb }}</td>
                                     <td class="text-center">{{ $item->nomor_batch }}</td>
                                     <td class="text-center">{{ $item->id_box }}</td>
@@ -73,15 +70,15 @@
                                     <td class="text-center">{{ $item->nomor_grading }}</td>
                                     <td class="text-center">{{ $item->modal }}</td>
                                     <td class="text-center">{{ $item->total_modal }}</td>
-                                    <td class="text-center">{{ $item->keterangan_item }}</td>
+                                    <td class="text-center">{{ $item->keterangan }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">{{ $item->user_updated }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                action="{{ route('PrmRawMaterialOutput.destroy', $item->id) }}"
+                                                action="{{ route('GradingKasarInput.destroy', $item->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('PrmRawMaterialOutput.edit', $item->id) }}"
+                                                <a href="{{ route('GradingKasarInput.edit', $item->id) }}"
                                                     class="btn btn-link btn-primary" title="Edit Task"
                                                     data-original-title="Edit Task"><i class="bi bi-pencil-square"></i></a>
                                                 @csrf

@@ -122,6 +122,11 @@ Route::controller(App\Http\Controllers\TransitGrading\GradingKasarInputControlle
     Route::get('/GradingKasarInput', 'index')->name('GradingKasarInput.index');
     Route::get('/GradingKasarInput/create', 'create')->name('GradingKasarInput.create');
     Route::get('/GradingKasarInput/get_data', 'set')->name('GradingKasarInput.set');
+    Route::post('/GradingKasarInput/store', 'store')->name('GradingKasarInput.store');
+    Route::post('/GradingKasarInput/sendData', 'sendData')->name('GradingKasarInput.sendData');
+    Route::get('/GradingKasarInput/edit/{id}', 'edit')->name('GradingKasarInput.edit');
+    Route::put('/GradingKasarInput/update/{id}', 'update')->name('GradingKasarInput.update');
+    Route::delete('/GradingKasarInput/destroy/{id}', 'destroy')->name('GradingKasarInput.destroy');
 });
 
 Auth::routes();

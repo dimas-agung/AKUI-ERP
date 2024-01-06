@@ -87,6 +87,7 @@ class PrmRawMaterialOutputService
         $dataToUpdate = [
             'id_box'        => $itemObject->id_box,
             'nomor_bstb'    => $itemObject->nomor_bstb,
+            'nomor_batch'   => $item->nomor_batch,
             'nama_supplier' => $itemObject->nama_supplier,
             'jenis'         => $itemObject->jenis,
             'berat'         => $itemObject->berat,

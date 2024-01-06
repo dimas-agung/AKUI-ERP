@@ -26,8 +26,13 @@ class GradingKasarInput extends Model
         'user_updated',
     ];
 
-    public function StockTransitGradigKasar()
-    {
-        return $this->hasMany(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
-    }
+    // public function StockTransitGradigKasar()
+    // {
+    //     return $this->hasMany(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
+    // }
+        // Mendefinisikan hubungan dengan model StockTransitGradingKasar
+        public function stockTransitGradingKasar()
+        {
+            return $this->belongsTo(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
+        }
 }

@@ -216,9 +216,9 @@
 @endsection
 @section('script')
     <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
+        // $(document).ready(function() {
+        //     $('.select2').select2();
+        // });
         $('#id_box').on('change', function() {
             // Mengambil nilai id_box yang dipilih
             let selectedIdBox = $(this).val();

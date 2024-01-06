@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('grading_kasar_inputs', function (Blueprint $table) {
             $table->id();
-            $table->string('doc_no');
             $table->string('nomor_bstb');
             $table->string('id_box');
             $table->string('nomor_batch');

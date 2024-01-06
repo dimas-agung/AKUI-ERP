@@ -11,6 +11,7 @@ class StockTransitGradingKasar extends Model
     protected $table = 'stock_transit_grading_kasars';
     protected $fillable = [
         'nomor_bstb',
+        'nomor_batch',
         'id_box',
         'nama_supplier',
         'jenis',

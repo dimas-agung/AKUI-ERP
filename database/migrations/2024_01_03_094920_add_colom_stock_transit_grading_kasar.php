@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('stock_transit_grading_kasars', function (Blueprint $table) {
             //
             $table->string('id_box');
+            $table->string('nomor_batch');
         });
     }
 

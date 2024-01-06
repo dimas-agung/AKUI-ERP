@@ -96,7 +96,7 @@ class PrmRawMaterialOutputController extends Controller
         $PrmRawMO = PrmRawMaterialOutputItem::with('PrmRawMaterialStock')->find($id);
         $MasTujKir = MasterTujuanKirimRawMaterial::with('PrmRawMaterialOutputItem')->get();
         $PrmRawMS = PrmRawMaterialStock::with('PrmRawMaterialOutputItem')->get();
-        // return $PrmRawMO;
+        // return $PrmRawMS;
         // Pastikan $PrmRawMO tidak null sebelum mengakses propertinya
         if ($PrmRawMO !== null) {
             // Mengakses berat_masuk dari relasi PrmRawMaterialStock

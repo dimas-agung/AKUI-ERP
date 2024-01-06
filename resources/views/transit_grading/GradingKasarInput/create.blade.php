@@ -47,8 +47,8 @@
                                         <label>No BSTB</label>
                                         <select id="nomor_bstb" class="choices form-select" name="nomor_bstb"
                                             data-placeholder="Pilih No BSTB">
-                                            <option></option>
-                                            @foreach ($GradingKI as $post)
+                                            <option @readonly(true)>Pilih No BSTB</option>
+                                            @foreach ($stockTGK as $post)
                                                 <option value="{{ $post->nomor_bstb }}">
                                                     {{ old('nomor_bstb', $post->nomor_bstb) }}</option>
                                             @endforeach
@@ -120,22 +120,20 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Total Modal</label>
-                                        <input type="text" id="total_modal" class="form-control" name="total_modal"
-                                            value="{{ old('total_modal') }}" readonly>
+                                        <input type="text" id="total_modal" class="form-control" name="total_modal">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Keterangan</label>
-                                        <input type="text" id="keterangan_item" class="form-control"
-                                            name="keterangan_item" value="{{ old('keterangan_item') }}"
-                                            placeholder="Masukkan keterangan">
+                                        <input type="text" id="keterangan" class="form-control" name="keterangan"
+                                            value="{{ old('keterangan') }}" placeholder="Masukkan keterangan">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-primary" onclick="addRow()">Add</button>
-                                <a href="{{ url('/PrmRawMaterialOutput') }}" type="button" class="btn btn-danger"
+                                <a href="{{ url('/GradingKasarInput') }}" type="button" class="btn btn-danger"
                                     data-dismiss="modal">Close</a>
                             </div>
                         </div>
@@ -151,17 +149,18 @@
                 <div class="card-header">
                     <div class="card-title">Validasi Data Input</div>
                 </div>
+                <!-- Elemen dengan ID 'nomor_grading' -->
                 <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
                     <table class="table table-striped mt-3">
                         <thead>
                             <tr>
-                                <th class="text-center">ID</th>
-                                <th class="text-center">No Document</th>
                                 <th class="text-center">No BSTB</th>
                                 <th class="text-center">Nomor Batch</th>
+                                <th class="text-center">ID Box</th>
                                 <th class="text-center">Nama Supplier</th>
                                 <th class="text-center">Jenis</th>
-                                <th class="text-center">Berat</th>
+                                <th class="text-center">Berat Masuk</th>
+                                <th class="text-center">Berat Keluar</th>
                                 <th class="text-center">Kadar Air</th>
                                 <th class="text-center">Nomor Grading</th>
                                 <th class="text-center">Modal</th>
@@ -183,15 +182,15 @@
 @endsection
 @section('script')
     <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
+        // $(document).ready(function() {
+        //     $('.select2').select2();
+        // });
         $('#nomor_bstb').on('change', function() {
             // Mengambil nilai nomor_bstb yang dipilih
             let selectedIdBox = $(this).val();
             // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
             $.ajax({
-                url: `{{ route('PrmRawMaterialOutput.set') }}`,
+                url: `{{ route('GradingKasarInput.set') }}`,
                 method: 'GET',
                 data: {
                     nomor_bstb: selectedIdBox
@@ -204,7 +203,7 @@
                     $('#nama_supplier').val(response.nama_supplier);
                     $('#jenis').val(response.jenis);
                     $('#berat').val(response.berat);
-                    $('#kadar_air').val(response.avg_kadar_air);
+                    $('#kadar_air').val(response.kadar_air);
                     $('#modal').val(response.modal);
                 },
                 error: function(error) {
@@ -213,9 +212,7 @@
             });
         });
 
-        // Fungsi generateNomorBSTB (letakkan di sini atau muat dari file eksternal)
-        function generateNomorBSTB(inisial_tujuan) {
-            const inisialTujuan = document.getElementById('inisial_tujuan').value;
+        function generateNomorGrading() {
             const now = new Date();
             const tahun = now.getFullYear().toString().substr(-2);
             const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
@@ -224,42 +221,27 @@
             const menit = ('0' + now.getMinutes()).slice(-2);
             const detik = ('0' + now.getSeconds()).slice(-2);
 
-            const nomor_bstb = `BSTB_PNE_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}`;
+            const nomor_grading = `NG_UGK_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}-HIS`;
 
-            // Menampilkan hasil ke dalam elemen HTML dengan ID 'hasil_nomor_bstb'
-            // $('#hasil_nomor_bstb').text(nomor_bstb);
-            return nomor_bstb;
-            console.log(nomor_bstb);
+            // Menampilkan hasil di konsol (opsional)
+            console.log(nomor_grading);
+
+            return nomor_grading;
         }
 
         // Event listener untuk perubahan nilai pada total modal
-        $('#modal').on('input', updateTotalmodal);
-        $('#berat').on('input', updateTotalmodal);
+        $('#modal, #berat_keluar').on('input', updateTotalmodal);
 
         function updateTotalmodal() {
-            // Mendapatkan nilai berat nota dan berat bersih
-            const modal = parseFloat($('#modal').val());
-            const berat = parseFloat($('#berat').val());
+            // Mendapatkan nilai modal dan berat_keluar
+            const modal = parseFloat($('#modal').val()) || 0; // Jika nilai tidak valid, dianggap sebagai 0
+            const berat_keluar = parseFloat($('#berat_keluar').val()) || 0; // Mengganti '#berat_keluar' sebagai selector
 
-            // Melakukan perhitungan selisih berat
-            const totalmodal = berat * modal;
+            // Melakukan perhitungan total modal
+            const totalmodal = berat_keluar * modal;
 
-            // Memasukkan hasil perhitungan ke dalam input selisih berat
-            $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal);
-        }
-
-        // Event listener untuk perubahan nilai pada berat nota atau berat bersih
-        $('#berat_masuk').on('change', updateSelisihBerat);
-        $('#berat').on('input', updateSelisihBerat);
-
-        function updateSelisihBerat() {
-            // Mendapatkan nilai berat nota dan berat bersih
-            const berat_masuk = parseFloat($('#berat_masuk').val());
-            const berat = parseFloat($('#berat').val());
-            const selisihBerat = berat_masuk - berat;
-
-            // Memasukkan hasil perhitungan ke dalam input selisih berat
-            $('#selisih_berat').val(isNaN(selisihBerat) ? '' : selisihBerat);
+            // Memasukkan hasil perhitungan ke dalam input total modal
+            $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal.toFixed(2)); // Menampilkan hasil dengan dua desimal
         }
 
         var dataArray = [];
@@ -268,20 +250,21 @@
         function addRow() {
             // Mengambil nilai dari input
             var nomor_bstb = $('#nomor_bstb').val();
-            var doc_no = $('#doc_no').val();
             var nomor_batch = $('#nomor_batch').val();
             var id_box = $('#id_box').val();
             var nama_supplier = $('#nama_supplier').val();
             var jenis = $('#jenis').val();
-            var berat_masuk = $('#berat_masuk').val();
-            var berat = $('#berat_keluar').val();
-            var selisih_berat = $('#selisih_berat').val();
+            var berat_masuk = $('#berat').val();
+            var berat = $('#berat_keluar').val(); // Perbaikan: Menggunakan berat_keluar
             var kadar_air = $('#kadar_air').val();
-            var nomor_grading = $('#nomor_grading').val();
             var modal = $('#modal').val();
             var total_modal = $('#total_modal').val();
-            var keterangan_item = $('#keterangan_item').val();
-            var user_created = $('#user_created').val();
+            var keterangan = $('#keterangan').val();
+            var user_created = $('#kadar_air').val();
+
+            // Memanggil fungsi generateNomorGrading untuk mendapatkan nomor_grading
+            var nomor_grading = generateNomorGrading();
+
 
             // Validasi input (sesuai kebutuhan)
             if (!id_box || !nomor_batch) {
@@ -289,54 +272,33 @@
                 return;
             }
 
-            // Memanggil fungsi generateNomorBSTB untuk mendapatkan nomor_bstb
-            var nomor_bstb = generateNomorBSTB(inisial_tujuan);
-
             // Menambahkan data ke dalam tabel
-            var newRow = '<tr><td>' + nomor_bstb + '</td><td>' + doc_no + '</td><td>' + nomor_bstb + '</td><td>' +
-                nomor_batch + '</td><td>' + id_box +
+            var newRow = '<tr><td>' + nomor_bstb + '</td><td>' + nomor_batch + '</td><td>' + id_box +
                 '</td><td>' + nama_supplier + '</td><td>' + jenis + '</td><td>' + berat_masuk + '</td><td>' +
-                berat_keluar + '</td><td>' + selisih_berat + '</td><td>' + kadar_air + '</td><td>' + nomor_grading +
-                '</td><td>' +
-                total_modal + '</td><td>' + keterangan_item + '</td><td>' + user_created +
+                berat + '</td><td>' + kadar_air + '</td><td id="nomor_grading">' +
+                nomor_grading + '</td><td>' + modal + '</td><td>' + total_modal + '</td><td>' + keterangan + '</td><td>' +
+                user_created +
                 '</td></tr>';
 
             $('#tableBody').append(newRow);
 
             // Menambahkan data ke dalam array
             dataArray.push({
-                doc_no: doc_no,
                 nomor_bstb: nomor_bstb,
                 nomor_batch: nomor_batch,
                 id_box: id_box,
                 nama_supplier: nama_supplier,
                 jenis: jenis,
-                berat_masuk: berat_masuk,
                 berat: berat,
-                selisih_berat: selisih_berat,
                 kadar_air: kadar_air,
                 nomor_grading: nomor_grading,
                 modal: modal,
                 total_modal: total_modal,
-                keterangan_item: keterangan_item,
+                keterangan: keterangan,
                 user_created: user_created,
             });
-            dataStock = [];
-            dataStock.push({
-                id_box: id_box,
-                doc_no: doc_no,
-                // berat_masuk: berat_masuk,
-                berat: berat,
-                selisih_berat: selisih_berat,
-                kadar_air: kadar_air,
-                modal: modal,
-                total_modal: total_modal,
-                keterangan_item: keterangan_item,
-                user_created: user_created,
-            });
-            console.log(dataStock);
             // Membersihkan nilai input setelah ditambahkan
-            $('#id_box').val('<option></option>');
+            $('#id_box').val('');
             $('#nomor_batch').val('');
             $('#nama_supplier').val('');
             $('#jenis').val('');
@@ -346,16 +308,15 @@
             $('#kadar_air').val('');
             $('#tujuan_kirim').val('');
             $('#letak_tujuan').val('');
-            $('#inisial_tujuan').val('');
+            $('#nomor_grading').val('');
             $('#modal').val('');
             $('#total_modal').val('');
-            $('#keterangan_item').val('');
+            $('#keterangan').val('');
             // Menonaktif kan nilai input ketika ditambah
-            $('#doc_no').prop('readonly', true);
-            $('#nomor_bstb').prop('readonly', true);
-            $('#nomor_batch').prop('readonly', true);
-            $('#keterangan').prop('readonly', true);
-            $('#user_created').prop('readonly', true);
+            // $('#nomor_bstb').prop('readonly', true);
+            // $('#nomor_batch').prop('readonly', true);
+            // $('#keterangan').prop('readonly', true);
+            // $('#user_created').prop('readonly', true);
         }
 
         function getArray() {
@@ -367,11 +328,10 @@
             console.log(dataArray);
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('PrmRawMaterialOutput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai
+                url: `{{ route('GradingKasarInput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
-                    dataStock: JSON.stringify(dataStock),
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json', // payload is json,
