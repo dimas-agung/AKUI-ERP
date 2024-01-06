@@ -112,8 +112,7 @@ class PrmRawMaterialInputService
             'sisa_berat'    => $itemObject->berat_bersih,
             'avg_kadar_air' => $itemObject->kadar_air,
             'modal'         => $itemObject->harga_deal,
-            'total_modal'   => $itemObject->total_modal ?? 0,
-            // 'total_modal'   => $itemObject->total_modal ?? 0,
+            'total_modal'   => $itemObject->harga_deal * $itemObject->berat_bersih,
             'keterangan'    => $itemObject->keterangan,
             'user_created'  => $itemObject->user_created,
             // 'user_updated'  => $itemObject->user_updated,
@@ -124,13 +123,10 @@ class PrmRawMaterialInputService
             // Ambil nilai terakhir berat_masuk dan berat_keluar
             $BeratMasuk = $existingItem->berat_masuk;
             $lastBeratKeluar = $existingItem->berat_keluar;
-            // $totalModal = $existingItem->modal * $existingItem->sisa_berat;
 
             // Update nilai berat_masuk pada item yang sudah ada
             $lastBeratMasuk = $existingItem->berat_masuk += $itemObject->berat_bersih;
             $existingItem->berat_keluar = $itemObject->berat_keluar ?? $existingItem->berat_keluar ?? 0;
-            // $totalModal = $existingItem->modal * $existingItem->sisa_berat;
-            // $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
 
             // Tentukan nilai sisa_berat sesuai kondisi
             if ($existingItem->berat_keluar === 0 || $existingItem->berat_keluar === null) {
