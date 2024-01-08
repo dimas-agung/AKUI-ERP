@@ -1,4 +1,4 @@
-@extends('layouts.master2')
+@extends('layouts.master1')
 {{-- @extends('layouts.template') --}}
 @section('content')
     <div class="container mt-5 mb-5">

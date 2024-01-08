@@ -1,13 +1,19 @@
-@extends('layouts.master2')
-{{-- @extends('layouts.template') --}}
+@extends('layouts.master1')
+@section('menu')
+    Purchasing & EXIM
+@endsection
+@section('title')
+    Purchasing Raw Material Input
+@endsection
+
 @section('content')
     <div class="col-md-12">
         <div class="card mt-2">
             <div class="card-header">
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center mb-3">
                     <h4 class="card-title">Input Purchasing Raw Material</h4>
                 </div>
-                {{-- <form action="{{ route('purchasing_exim/prm_raw_material_input.store') }}" method="POST" class="row g-3"> --}}
+                <hr>
                 <form method="POST" class="row g-3" id="myForm">
                     @csrf
                     <div class="col-md-4">
@@ -32,11 +38,10 @@
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
-                        <select class="form-select select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
-                            aria-hidden="true" name="nama_supplier" id="nama_supplier"
-                            data-placeholder="Pilih Nama Supplier">
+                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                            name="nama_supplier" id="nama_supplier" placeholder="Pilih Nama Supplier">
+                            <option value="">Pilih Nama Supplier</option>
                             @foreach ($master_supplier_raw_materials as $MasterSPRM)
-                                <option></option>
                                 <option value="{{ $MasterSPRM->nama_supplier }}">
                                     {{ $MasterSPRM->nama_supplier }}</option>
                             @endforeach
@@ -47,10 +52,10 @@
                     </div>
                     <div class="col-md-3">
                         <label for="basic-usage" class="form-label">Pilih Jenis :</label>
-                        <select class="form-select select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
-                            aria-hidden="true" name="jenis" id="jenis" data-placeholder="Pilih Jenis">
+                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                            name="jenis" id="jenis" placeholder="Pilih Jenis">
+                            <option value="">Pilih Jenis</option>
                             @foreach ($master_jenis_raw_materials as $MasterJRM)
-                                <option></option>
                                 <option value="{{ $MasterJRM->jenis }}">
                                     {{ $MasterJRM->jenis }}</option>
                             @endforeach
@@ -100,7 +105,7 @@
                         <label for="total_harga_nota" class="form-label">Total Harga Nota</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="total_harga_nota">
+                            class="form-control" id="total_harga_nota" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="harga_deal" class="form-label">Harga Deal</label>
@@ -412,38 +417,10 @@
                 user_created: user_created,
             });
 
-            // dataStock = [];
-            // dataStock.push({
-            //     id_box: id_box,
-            //     nomor_batch: nomor_batch,
-            //     nama_supplier: nama_supplier,
-            //     jenis: jenis,
-            //     berat_masuk: berat_masuk,
-            //     berat_keluar: berat_keluar,
-            //     sisa_berat: sisa_berat,
-            //     avg_kadar_air: avg_kadar_air,
-            //     modal: modal,
-            //     total_modal: total_modal,
-            //     keterangan: keterangan,
-            //     user_created: user_created
-            // })
-
-            // dataStockHistory = [];
-            // dataStockHistory.push({
-            //     id_box: id_box,
-            //     doc_no: doc_no,
-            //     berat_masuk: berat_masuk,
-            //     berat_keluar: berat_keluar,
-            //     sisa_berat: sisa_berat,
-            //     avg_kadar_air: avg_kadar_air,
-            //     modal: modal,
-            //     total_modal: total_modal,
-            //     keterangan: keterangan,
-            //     user_created: user_created
-            // })
             // Membersihkan nilai input setelah ditambahkan
-            // $('#jenis').val('');
-            $('#jenis').val(null).trigger('change');
+            // $('#jenis').val('1');
+            // $('#jenis').val(null).trigger('change');
+            $('#jenis').val($('#jenis option:first').val()).trigger('change');
             $('#berat_nota').val('');
             $('#berat_kotor').val('');
             $('#berat_bersih').val('');
@@ -483,8 +460,6 @@
                     console.error('Error sending data:', error);
                 }
             });
-            // Membersihkan array setelah data dikirim
-            // dataArray = [];
         }
     </script>
 @endsection
