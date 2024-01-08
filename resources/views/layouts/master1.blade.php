@@ -168,6 +168,11 @@
                                         class="submenu-link">Tujuan
                                         Kirim Raw Material</a>
                                 </li>
+                                <li class="submenu-item  {{ Request::is('master_jenis_grading') ? 'active' : '' }} ">
+                                    <a href="{{ url('/master_jenis_grading') }}" class="submenu-link">Master Jenis
+                                        <br>
+                                        Grading</a>
+                                </li>
                             </ul>
                         </li>
                         <li
@@ -195,6 +200,24 @@
                                     class="submenu-item  {{ Request::is('StockTransitGradingKasar') ? 'active' : '' }} ">
                                     <a href="{{ url('/StockTransitGradingKasar') }}" class="submenu-link">Stock
                                         Transit Grading Kasar</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li
+                            class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'GradingKasarInput') ? 'active' : '' }}">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-grid-1x2-fill"></i>
+                                <span>Grading Transit</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li
+                                    class="submenu-item  {{ Request::is('StockTransitGradingKasar') ? 'active' : '' }} ">
+                                    <a href="{{ url('/StockTransitGradingKasar') }}" class="submenu-link">Stock
+                                        Transit Grading Kasar</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('GradingKasarInput') ? 'active' : '' }} ">
+                                    <a href="{{ url('/GradingKasarInput') }}" class="submenu-link">Grading Kasar
+                                        Input</a>
                                 </li>
                             </ul>
                         </li>

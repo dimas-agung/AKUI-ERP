@@ -17,11 +17,16 @@ class Unit extends Model
 
     public function workstation()
     {
-    	return $this->belongsTo(Workstation::class);
+        return $this->belongsTo(Workstation::class);
     }
 
     public function biayahpp()
     {
         return $this->hasMany(BiayaHpp::class);
+    }
+
+    public function MasterJenisGrading()
+    {
+        return $this->hasmany(MasterJenisGrading::class);
     }
 }
