@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MasterJenisGrading extends Model
+class MasterJenisGradingKasar extends Model
 {
     use HasFactory;
-    protected $table = 'master_jenis_gradings';
+    protected $table = 'master_jenis_grading_kasars';
     protected $fillable = [
         'nama',
-        'unit_id',
+        'kategori_susut',
+        'upah_operator',
+        'presentase_pengurangan_harga',
+        'harga_estimasi',
         'status',
         'user_created',
         'user_updated',
     ];
-
-    public function unit()
-    {
-        return $this->belongsTo(Unit::class);
-    }
 }

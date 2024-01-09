@@ -27,10 +27,10 @@ class MasterJenisRawMaterialController extends Controller
         ]);
     }
     // create
-    public function create()
-    {
-        return view('master.master_jenis_raw_material.create');
-    }
+    // public function create()
+    // {
+    //     return view('master.master_jenis_raw_material.create');
+    // }
     // store
     public function store(Request $request): RedirectResponse
     {

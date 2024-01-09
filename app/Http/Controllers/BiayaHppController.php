@@ -85,19 +85,19 @@ class BiayaHppController extends Controller
         $biaya = BiayaHpp::findOrFail($id);
         //validate form
         $this->validate($request, [
-            'unit_id'   => 'required',
-            'jenis_biaya'   => 'required',
-            'biaya_per_gram'   => 'required',
-            'status'   => 'required'
+            'unit_id'           => 'required',
+            'jenis_biaya'       => 'required',
+            'biaya_per_gram'    => 'required',
+            'status'            => 'required'
         ]);
 
         //get post by ID
 
         $biaya->update([
-            'unit_id'     => $request->unit_id,
-            'jenis_biaya'   => $request->jenis_biaya,
-            'biaya_per_gram'   => $request->biaya_per_gram,
-            'status'   => $request->status
+            'unit_id'           => $request->unit_id,
+            'jenis_biaya'       => $request->jenis_biaya,
+            'biaya_per_gram'    => $request->biaya_per_gram,
+            'status'            => $request->status
         ]);
         //redirect to index
         return redirect()->route('biaya.index')->with(['success' => 'Data Berhasil Diubah!']);
@@ -121,6 +121,4 @@ class BiayaHppController extends Controller
         //redirect to index
         return redirect()->route('biaya.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
-
-
 }

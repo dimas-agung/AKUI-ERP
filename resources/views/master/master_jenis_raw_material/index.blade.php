@@ -42,12 +42,16 @@
                                         <label><strong>Jenis</strong></label>
                                         <div class="form-group">
                                             <input type="text" name="jenis" placeholder="Masukkan jenis"
-                                                class="form-control @error('jenis') is-invalid @enderror">
+                                                class="form-control @error('jenis') is-invalid @enderror" required
+                                                oninvalid="this.setCustomValidity('Mohon isi Jenis')"
+                                                oninput="this.setCustomValidity('')">
                                         </div>
                                         <label><strong>Kategori Susut</strong></label>
                                         <div class="form-group">
                                             <input type="text" name="kategori_susut" placeholder="Masukan Kategori Susut"
-                                                class="form-control @error('kategori_susut') is-invalid @enderror">
+                                                class="form-control @error('kategori_susut') is-invalid @enderror" required
+                                                oninvalid="this.setCustomValidity('Mohon isi Kategori Susut')"
+                                                oninput="this.setCustomValidity('')">
                                         </div>
                                         <label><strong>Upah Operator</strong></label>
                                         <div class="form-group">

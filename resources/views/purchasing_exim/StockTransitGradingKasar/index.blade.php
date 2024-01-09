@@ -1,4 +1,4 @@
-@extends('layouts.master2')
+@extends('layouts.master1')
 @section('title')
     Data Stock Transit Grading Kasar
 @endsection

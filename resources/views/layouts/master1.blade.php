@@ -173,6 +173,13 @@
                                         <br>
                                         Grading</a>
                                 </li>
+                                <li
+                                    class="submenu-item  {{ Request::is('master_jenis_grading_kasar') ? 'active' : '' }} ">
+                                    <a href="{{ url('/master_jenis_grading_kasar') }}" class="submenu-link">Master
+                                        Jenis
+                                        <br>
+                                        Grading Kasar</a>
+                                </li>
                             </ul>
                         </li>
                         <li

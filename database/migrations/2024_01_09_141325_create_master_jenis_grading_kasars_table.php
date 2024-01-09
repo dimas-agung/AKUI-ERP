@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_jenis_gradings', function (Blueprint $table) {
+        Schema::create('master_jenis_grading_kasars', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->integer('unit_id');
+            $table->string('kategori_susut');
+            $table->float('upah_operator');
+            $table->float('presentase_pengurangan_harga');
+            $table->float('harga_estimasi');
             $table->integer('status')->default('1');
             $table->string('user_created');
             $table->string('user_updated')->nullable();
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_jenis_gradings');
+        Schema::dropIfExists('master_jenis_grading_kasars');
     }
 };

@@ -42,13 +42,17 @@
                                         <label><strong>Nama Supplier</strong></label>
                                         <div class="form-group">
                                             <input type="text" name="nama_supplier" placeholder="Masukkan Nama Supplier"
-                                                class="form-control @error('nama_supplier') is-invalid @enderror">
+                                                class="form-control @error('nama_supplier') is-invalid @enderror" required
+                                                oninvalid="this.setCustomValidity('Mohon isi Nama Supplier')"
+                                                oninput="this.setCustomValidity('')">
                                         </div>
                                         <label><strong>Inisial Supplier</strong></label>
                                         <div class="form-group">
                                             <input type="text" name="inisial_supplier"
                                                 placeholder="Masukan Inisial Supplier"
-                                                class="form-control @error('inisial_supplier') is-invalid @enderror">
+                                                class="form-control @error('inisial_supplier') is-invalid @enderror"
+                                                required oninvalid="this.setCustomValidity('Mohon isi Inisial Supplier')"
+                                                oninput="this.setCustomValidity('')">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -64,7 +68,48 @@
                             </div>
                         </div>
                     </div>
-                    {{--  --}}
+                    <!-- Modal Edit Post -->
+                    <div class="modal fade" id="editPostModal" tabindex="-1" role="dialog"
+                        aria-labelledby="editPostModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary">
+                                    <h4 class="modal-title white" id="editPostModalLabel">Edit Data Master Supplier</h4>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <i data-feather="x"></i>
+                                    </button>
+                                </div>
+                                <form id="editForm" method="POST" action="">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-body">
+                                        <label><strong>Nama Supplier</strong></label>
+                                        <div class="form-group">
+                                            <input type="text" id="editNamaSupplier" name="nama_supplier"
+                                                class="form-control @error('nama_supplier') is-invalid @enderror">
+                                        </div>
+                                        {{--  --}}
+                                        {{-- <label class="font-weight-bold">Nama Supplier</label>
+                                        <input type="text"
+                                            class="form-control @error('nama_supplier') is-invalid @enderror"
+                                            name="nama_supplier"
+                                            value="{{ old('nama_supplier', $MasterSupplierRawMaterial->nama_supplier) }}"> --}}
+                                        {{--  --}}
+                                        <label><strong>Inisial Supplier</strong></label>
+                                        <div class="form-group">
+                                            <input type="text" id="editInisialSupplier" name="inisial_supplier"
+                                                class="form-control @error('inisial_supplier') is-invalid @enderror">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                     {{-- card body --}}
                     <div class="card-body">
                         <div class="table-responsive">
@@ -105,6 +150,11 @@
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>
                                                         </a>
+                                                        <a href="#" class="btn btn-link edit-button"
+                                                            title="Edit Task" data-original-title="Edit Task"
+                                                            onclick="editSupplier({{ $MasterSPR->id }})">
+                                                            <i class="bi bi-pencil-square text-warning"></i>
+                                                        </a>
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
@@ -131,6 +181,15 @@
     </div>
 @endsection
 <script>
+    function editSupplier(id) {
+        $.get(`/master_supplier_raw_material/edit/${id}`, function(data) {
+            $('#editNamaSupplier').val(data.nama_supplier);
+            $('#editInisialSupplier').val(data.inisial_supplier);
+            $('#editForm').attr('action', `/master_supplier_raw_material/edit/${id}`);
+            $('#editPostModal').modal('show');
+        });
+    }
+
     function confirmDelete(id) {
         Swal.fire({
             title: 'Konfirmasi',
