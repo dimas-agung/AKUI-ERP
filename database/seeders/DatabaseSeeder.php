@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\MasterJenisGradingKasar;
 use App\Models\PrmRawMaterialStock;
 use App\Models\TransitGradingKasar;
 use Illuminate\Database\Seeder;

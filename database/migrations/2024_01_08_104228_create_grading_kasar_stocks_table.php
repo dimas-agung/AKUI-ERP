@@ -14,21 +14,21 @@ return new class extends Migration
         Schema::create('grading_kasar_stocks', function (Blueprint $table) {
             $table->id();
             $table->string('doc_no');
-            $table->string('id_box');
+            $table->string('id_box_grading_kasar');
             $table->string('nomor_batch');
             $table->string('nama_supplier');
             $table->string('jenis_grading');
-            $table->string('berat_masuk');
-            $table->string('berat_keluar');
-            $table->string('pcs_masuk');
-            $table->string('pcs_keluar');
+            $table->float('berat_masuk');
+            $table->float('berat_keluar');
+            $table->float('pcs_masuk');
+            $table->float('pcs_keluar');
             $table->string('avg_kadar_air');
             $table->string('nomor_grading');
-            $table->string('modal');
-            $table->string('total_modal');
-            $table->string('keterangan');
+            $table->float('modal');
+            $table->float('total_modal');
+            $table->text('keterangan');
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

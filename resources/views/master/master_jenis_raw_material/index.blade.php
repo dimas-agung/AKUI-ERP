@@ -116,26 +116,28 @@ is-invalid
                                 <tbody>
                                     @forelse ($MasterJenisRawMaterial as $MasterJRM)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $MasterJRM->jenis }}</td>
-                                            <td>{{ $MasterJRM->kategori_susut }}</td>
-                                            <td>Rp {{ number_format($MasterJRM->upah_operator, 0, ',', '.') }}</td>
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $MasterJRM->jenis }}</td>
+                                            <td class="text-center">{{ $MasterJRM->kategori_susut }}</td>
+                                            <td class="text-center">Rp
+                                                {{ number_format($MasterJRM->upah_operator, 0, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterJRM->pengurangan_harga == '')
                                                 @else
                                                     {{ $MasterJRM->pengurangan_harga }} %
                                                 @endif
                                             </td>
-                                            <td>Rp {{ number_format($MasterJRM->harga_estimasi, 0, ',', '.') }}</td>
-                                            <td>
+                                            <td class="text-center">Rp
+                                                {{ number_format($MasterJRM->harga_estimasi, 0, ',', '.') }}</td>
+                                            <td class="text-center">
                                                 @if ($MasterJRM->status == 1)
                                                     Aktif
                                                 @else
                                                     Tidak Aktif
                                                 @endif
                                             </td>
-                                            <td>{{ $MasterJRM->created_at }}</td>
-                                            <td>{{ $MasterJRM->updated_at }}</td>
+                                            <td class="text-center">{{ $MasterJRM->created_at }}</td>
+                                            <td class="text-center">{{ $MasterJRM->updated_at }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterJRM->id }}"

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('doc_no');
             $table->string('nomor_grading');
-            $table->string('id_box');
+            $table->string('id_box_grading_kasar');
             $table->string('nomor_batch');
             $table->string('nama_supplier');
             $table->string('jenis');
@@ -24,13 +24,23 @@ return new class extends Migration
             $table->string('jenis_grading');
             $table->float('berat_grading');
             $table->float('pcs_grading');
+            $table->float('susut');
             $table->float('modal');
             $table->float('total_modal');
+            $table->float('biaya_produksi');
+            $table->float('harga_estimasi');
+            $table->float('total_harga');
+            $table->float('nilai_laba_rugi');
+            $table->float('nilai_prosentase_total_keuntungan');
+            $table->float('nilai_dikurangi_keuntungan');
+            $table->float('prosentase_harga_gramasi');
+            $table->float('selisih_laba_rugi_kg');
+            $table->float('selisih_laba_rugi_gram');
             $table->float('hpp');
             $table->float('total_hpp');
             $table->text('keterangan');
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

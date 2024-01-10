@@ -136,7 +136,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('work', 'unit', 'biayahpp', 'master_supplier_raw_material', 'master_jenis_raw_material', 'master_tujuan_kirim_raw_material') ? 'active' : '' }}">
+                            class="sidebar-item  has-sub {{ Request::is('work', 'unit', 'biayahpp', 'master_supplier_raw_material', 'master_jenis_raw_material', 'master_tujuan_kirim_raw_material', 'master_jenis_grading', 'master_jenis_grading_kasar') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Master</span>
@@ -214,7 +214,7 @@
                             class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'GradingKasarInput') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
-                                <span>Grading Transit</span>
+                                <span>Grading Kasar Transit</span>
                             </a>
                             <ul class="submenu ">
                                 <li
@@ -225,6 +225,10 @@
                                 <li class="submenu-item  {{ Request::is('GradingKasarInput') ? 'active' : '' }} ">
                                     <a href="{{ url('/GradingKasarInput') }}" class="submenu-link">Grading Kasar
                                         Input</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('GradingKasarInput') ? 'active' : '' }} ">
+                                    <a href="{{ url('/GradingKasarInput') }}" class="submenu-link">Grading Kasar
+                                        Hasil</a>
                                 </li>
                             </ul>
                         </li>

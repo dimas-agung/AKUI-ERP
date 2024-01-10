@@ -24,11 +24,15 @@ class MasterJenisGradingKasarController extends Controller
         //validate form
         $this->validate($request, [
             'nama'                          => 'required',
-            'kategori_susut'                => 'required',
-            'upah_operator'                 => 'required',
-            'presentase_pengurangan_harga'  => 'required',
-            'harga_estimasi'                => 'required',
+            'kategori_susut'                => 'nullable|numeric',
+            'upah_operator'                 => 'nullable|numeric',
+            'presentase_pengurangan_harga'  => 'nullable|numeric',
+            'harga_estimasi'                => 'required|numeric',
             'user_created'                  => 'required',
+        ], [
+            'nama.required'                 => 'Kolom Jenis Wajib diisi.',
+            'harga_estimasi.numeric'        => 'Kolom Harga Estimasi Wajib diisi.',
+            'user_created.required'         => 'Kolom NIP Admin Wajib diisi.',
         ]);
         //create MasterSupplier
         MasterJenisGradingKasar::create([

@@ -47,18 +47,18 @@
                                 <tbody>
                                     @forelse ($prm_raw_material_inputs as $MasterPRIM)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $MasterPRIM->doc_no }}</td>
-                                            <td>{{ $MasterPRIM->nomor_po }}</td>
-                                            <td>{{ $MasterPRIM->nomor_batch }}</td>
-                                            <td>{{ $MasterPRIM->nomor_nota_supplier }}</td>
-                                            <td>{{ $MasterPRIM->nomor_nota_internal }}</td>
-                                            <td>{{ $MasterPRIM->nama_supplier }}</td>
-                                            <td>{{ $MasterPRIM->keterangan }}</td>
-                                            <td>{{ $MasterPRIM->user_created }}</td>
-                                            <td>{{ $MasterPRIM->user_updated }}</td>
-                                            <td>{{ $MasterPRIM->created_at }}</td>
-                                            <td>{{ $MasterPRIM->updated_at }}</td>
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->doc_no }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->nomor_po }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->nomor_batch }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->nomor_nota_supplier }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->nomor_nota_internal }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->nama_supplier }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->keterangan }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->user_created }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->user_updated }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->created_at }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->updated_at }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"

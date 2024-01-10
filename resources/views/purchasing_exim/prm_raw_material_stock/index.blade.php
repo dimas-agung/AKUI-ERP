@@ -46,22 +46,22 @@
                                 <tbody>
                                     @forelse ($PrmRawMaterialStock as $MasterStock)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $MasterStock->id_box }}</td>
-                                            <td>{{ $MasterStock->nomor_batch }}</td>
-                                            <td>{{ $MasterStock->nama_supplier }}</td>
-                                            <td>{{ $MasterStock->jenis }}</td>
-                                            <td>{{ $MasterStock->berat_masuk }}</td>
-                                            <td>{{ $MasterStock->berat_keluar }}</td>
-                                            <td>{{ $MasterStock->sisa_berat }}</td>
-                                            <td>{{ $MasterStock->avg_kadar_air }}</td>
-                                            <td>{{ $MasterStock->modal }}</td>
-                                            <td>{{ $MasterStock->total_modal }}</td>
-                                            <td>{{ $MasterStock->keterangan }}</td>
-                                            <td>{{ $MasterStock->user_created }}</td>
-                                            <td>{{ $MasterStock->user_updated }}</td>
-                                            <td>{{ $MasterStock->created_at }}</td>
-                                            <td>{{ $MasterStock->updated_at }}</td>
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $MasterStock->id_box }}</td>
+                                            <td class="text-center">{{ $MasterStock->nomor_batch }}</td>
+                                            <td class="text-center">{{ $MasterStock->nama_supplier }}</td>
+                                            <td class="text-center">{{ $MasterStock->jenis }}</td>
+                                            <td class="text-center">{{ $MasterStock->berat_masuk }}</td>
+                                            <td class="text-center">{{ $MasterStock->berat_keluar }}</td>
+                                            <td class="text-center">{{ $MasterStock->sisa_berat }}</td>
+                                            <td class="text-center">{{ $MasterStock->avg_kadar_air }}</td>
+                                            <td class="text-center">{{ $MasterStock->modal }}</td>
+                                            <td class="text-center">{{ $MasterStock->total_modal }}</td>
+                                            <td class="text-center">{{ $MasterStock->keterangan }}</td>
+                                            <td class="text-center">{{ $MasterStock->user_created }}</td>
+                                            <td class="text-center">{{ $MasterStock->user_updated }}</td>
+                                            <td class="text-center">{{ $MasterStock->created_at }}</td>
+                                            <td class="text-center">{{ $MasterStock->updated_at }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form>

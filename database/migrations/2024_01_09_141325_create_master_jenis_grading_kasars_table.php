@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('master_jenis_grading_kasars', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('kategori_susut');
-            $table->float('upah_operator');
-            $table->float('presentase_pengurangan_harga');
+            $table->string('kategori_susut')->nullable();
+            $table->float('upah_operator')->nullable();
+            $table->float('presentase_pengurangan_harga')->nullable();
             $table->float('harga_estimasi');
             $table->integer('status')->default('1');
             $table->string('user_created');

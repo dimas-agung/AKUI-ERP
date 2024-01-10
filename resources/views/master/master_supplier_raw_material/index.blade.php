@@ -128,18 +128,18 @@
                                 <tbody>
                                     @forelse ($MasterSupplierRawMaterial as $MasterSPR)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $MasterSPR->nama_supplier }}</td>
-                                            <td>{{ $MasterSPR->inisial_supplier }}</td>
-                                            <td>
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $MasterSPR->nama_supplier }}</td>
+                                            <td class="text-center">{{ $MasterSPR->inisial_supplier }}</td>
+                                            <td class="text-center">
                                                 @if ($MasterSPR->status == 1)
                                                     Aktif
                                                 @else
                                                     Tidak Aktif
                                                 @endif
                                             </td>
-                                            <td>{{ $MasterSPR->created_at }}</td>
-                                            <td>{{ $MasterSPR->updated_at }}</td>
+                                            <td class="text-center">{{ $MasterSPR->created_at }}</td>
+                                            <td class="text-center">{{ $MasterSPR->updated_at }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterSPR->id }}"

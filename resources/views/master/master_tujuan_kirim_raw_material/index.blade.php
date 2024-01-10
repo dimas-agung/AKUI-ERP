@@ -86,19 +86,19 @@
                                 <tbody>
                                     @forelse ($MasterTujuanKirimRawMaterial as $MasterTJRM)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $MasterTJRM->tujuan_kirim }}</td>
-                                            <td>{{ $MasterTJRM->letak_tujuan }}</td>
-                                            <td>{{ $MasterTJRM->inisial_tujuan }}</td>
-                                            <td>
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $MasterTJRM->tujuan_kirim }}</td>
+                                            <td class="text-center">{{ $MasterTJRM->letak_tujuan }}</td>
+                                            <td class="text-center">{{ $MasterTJRM->inisial_tujuan }}</td>
+                                            <td class="text-center">
                                                 @if ($MasterTJRM->status == 1)
                                                     Aktif
                                                 @else
                                                     Tidak Aktif
                                                 @endif
                                             </td>
-                                            <td>{{ $MasterTJRM->created_at }}</td>
-                                            <td>{{ $MasterTJRM->updated_at }}</td>
+                                            <td class="text-center">{{ $MasterTJRM->created_at }}</td>
+                                            <td class="text-center">{{ $MasterTJRM->updated_at }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterTJRM->id }}"

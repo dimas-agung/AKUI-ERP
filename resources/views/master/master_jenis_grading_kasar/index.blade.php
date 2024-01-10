@@ -42,7 +42,9 @@
                                         <label><strong>Nama</strong></label>
                                         <div class="form-group">
                                             <input type="text" name="nama" placeholder="Masukkan Nama"
-                                                class="form-control @error('nama') is-invalid @enderror">
+                                                class="form-control @error('nama') is-invalid @enderror" required
+                                                oninvalid="this.setCustomValidity('Mohon isi Nama')"
+                                                oninput="this.setCustomValidity('')">
                                         </div>
                                         <label><strong>Kategori Susut</strong></label>
                                         <div class="form-group">
@@ -76,12 +78,16 @@ is-invalid
                                                 name="harga_estimasi" placeholder="Masukkan Harga Estimasi"
                                                 class="form-control @error('harga_estimasi')
 is-invalid
-@enderror">
+@enderror" required
+                                                oninvalid="this.setCustomValidity('Mohon isi Harga Estimasi')"
+                                                oninput="this.setCustomValidity('')">
                                         </div>
                                         <label><strong>Nip Admin</strong></label>
                                         <div class="form-group">
                                             <input type="text" name="user_created" placeholder="Masukkan NIP Admin"
-                                                class="form-control @error('user_created') is-invalid @enderror">
+                                                class="form-control @error('user_created') is-invalid @enderror" required
+                                                oninvalid="this.setCustomValidity('Mohon isi NIP Admin')"
+                                                oninput="this.setCustomValidity('')">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -120,23 +126,29 @@ is-invalid
                                 <tbody>
                                     @forelse ($master_jenis_grading_kasars as $MasterJGK)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $MasterJGK->nama }}</td>
-                                            <td>{{ $MasterJGK->kategori_susut }}</td>
-                                            <td>{{ $MasterJGK->upah_operator }}</td>
-                                            <td>{{ $MasterJGK->presentase_pengurangan_harga }}</td>
-                                            <td>{{ $MasterJGK->harga_estimasi }}</td>
-                                            <td>
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $MasterJGK->nama }}</td>
+                                            <td class="text-center">{{ $MasterJGK->kategori_susut }}</td>
+                                            <td class="text-center">{{ $MasterJGK->upah_operator }}</td>
+                                            <td class="text-center">
+                                                @if ($MasterJGK->presentase_pengurangan_harga == '')
+                                                @else
+                                                    {{ $MasterJGK->presentase_pengurangan_harga }} %
+                                                @endif
+                                            </td>
+                                            {{-- <td>{{ $MasterJGK->presentase_pengurangan_harga }}</td> --}}
+                                            <td class="text-center">{{ $MasterJGK->harga_estimasi }}</td>
+                                            <td class="text-center">
                                                 @if ($MasterJGK->status == 1)
                                                     Aktif
                                                 @else
                                                     Tidak Aktif
                                                 @endif
                                             </td>
-                                            <td>{{ $MasterJGK->user_created }}</td>
-                                            <td>{{ $MasterJGK->user_updated }}</td>
-                                            <td>{{ $MasterJGK->created_at }}</td>
-                                            <td>{{ $MasterJGK->updated_at }}</td>
+                                            <td class="text-center">{{ $MasterJGK->user_created }}</td>
+                                            <td class="text-center">{{ $MasterJGK->user_updated }}</td>
+                                            <td class="text-center">{{ $MasterJGK->created_at }}</td>
+                                            <td class="text-center">{{ $MasterJGK->updated_at }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterJGK->id }}"
