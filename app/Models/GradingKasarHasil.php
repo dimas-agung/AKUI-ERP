@@ -39,4 +39,12 @@ class GradingKasarHasil extends Model
         'user_created',
         'user_updated',
     ];
+    public function MasterJenisGradingKasar()
+    {
+        return $this->hasMany(MasterJenisGradingKasar::class, 'jenis', 'nama');
+    }
+    // public function GradingKasarInput()
+    // {
+    //     return $this->hasMany(GradingKasarInput::class, 'nomor_grading', 'nomor_grading');
+    // }
 }

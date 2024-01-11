@@ -210,11 +210,70 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-item  has-sub ">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-grid-1x2-fill"></i>
+                                <span>Production</span>
+                            </a>
+                            <ul class="submenu">
+                                <li class="submenu-item has-sub ">
+                                    <a href="#" class="submenu-link">Production</a>
+                                    <ul class="submenu">
+                                        <li class="submenu-item has-sub ">
+                                            <a href="#" class="submenu-link">Bahan Baku</a>
+                                            <ul class="submenu">
+                                                <li class="submenu-item has-sub ">
+                                                    <a href="#" class="submenu-link">Grading Kasar</a>
+                                                    <ul class="submenu">
+                                                        <li class="submenu-item">
+                                                            <a href="#" class="submenu-link">Adding</a>
+                                                        </li>
+                                                        <li class="submenu-item">
+                                                            <a href="" class="submenu-link">Input</a>
+                                                        </li>
+                                                        <li class="submenu-item">
+                                                            <a href="" class="submenu-link">Stock</a>
+                                                        </li>
+                                                        <li class="submenu-item">
+                                                            <a href="" class="submenu-link">Output</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="submenu-item has-sub">
+                                                    <a href="" class="submenu-link">Pre Cleaning</a>
+                                                </li>
+                                                <li class="submenu-item has-sub">
+                                                    <a href="" class="submenu-link">Grading Halus</a>
+                                                </li>
+                                                <li class="submenu-item has-sub">
+                                                    <a href="" class="submenu-link">Pre Wash</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu-item has-sub">
+                                            <a href="" class="submenu-link">Dry A</a>
+                                        </li>
+                                        <li class="submenu-item has-sub">
+                                            <a href="" class="submenu-link">Final Grading</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="submenu-item has-sub">
+                                    <a href="" class="submenu-link">Cleaning</a>
+                                </li>
+                                <li class="submenu-item has-sub">
+                                    <a href="" class="submenu-link">Moulding</a>
+                                </li>
+                                <li class="submenu-item has-sub">
+                                    <a href="" class="submenu-link">Packing</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li
                             class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'GradingKasarInput') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
-                                <span>Grading Kasar Transit</span>
+                                <span>Grading Kasar<br>Transit</span>
                             </a>
                             <ul class="submenu ">
                                 <li
@@ -226,8 +285,10 @@
                                     <a href="{{ url('/GradingKasarInput') }}" class="submenu-link">Grading Kasar
                                         Input</a>
                                 </li>
-                                <li class="submenu-item  {{ Request::is('GradingKasarInput') ? 'active' : '' }} ">
-                                    <a href="{{ url('/GradingKasarInput') }}" class="submenu-link">Grading Kasar
+                                <li
+                                    class="submenu-item  {{ Request::is('transit_grading_kasar/grading_kasar_hasil') ? 'active' : '' }} ">
+                                    <a href="{{ url('/transit_grading_kasar/grading_kasar_hasil') }}"
+                                        class="submenu-link">Grading Kasar
                                         Hasil</a>
                                 </li>
                             </ul>
