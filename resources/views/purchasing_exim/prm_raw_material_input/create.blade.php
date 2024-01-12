@@ -387,6 +387,7 @@
             // Menambahkan data ke dalam array
             dataArray.push({
                 id_box: id_box,
+                nomor_nota_internal: nomor_nota_internal,
                 nomor_batch: nomor_batch,
                 nama_supplier: nama_supplier,
                 doc_no: doc_no,

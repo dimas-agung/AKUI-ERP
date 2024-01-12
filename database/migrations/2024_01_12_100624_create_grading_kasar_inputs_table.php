@@ -11,21 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('addings', function (Blueprint $table) {
+        Schema::create('grading_kasar_inputs', function (Blueprint $table) {
             $table->id();
+            $table->string('doc_no');
             $table->string('nomor_bstb');
             $table->string('id_box');
             $table->string('nomor_batch');
             $table->string('nama_supplier');
             $table->string('jenis');
             $table->float('berat');
-            $table->float('kadar_air');
+            $table->string('kadar_air');
             $table->string('nomor_grading');
             $table->float('modal');
             $table->float('total_modal');
             $table->text('keterangan');
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('addings');
+        Schema::dropIfExists('grading_kasar_inputs');
     }
 };

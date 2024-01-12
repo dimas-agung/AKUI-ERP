@@ -11,6 +11,7 @@ class PrmRawMaterialStock extends Model
     protected $table = 'prm_raw_material_stocks';
     protected $fillable = [
         'id_box',
+        'nomor_nota_internal',
         'nomor_batch',
         'nama_supplier',
         'jenis',

@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('menu')
+@section('Menu')
     Purchasing & EXIM
 @endsection
 @section('title')

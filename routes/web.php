@@ -130,6 +130,7 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarHasilCont
     Route::get('/transit_grading_kasar/grading_kasar_hasil/getDataJenis', 'getDataJenis')->name('grading_kasar_hasil.getDataJenis');
     Route::post('/transit_grading_kasar/grading_kasar_hasil/simpanData', 'simpanData')->name('grading_kasar_hasil.simpanData');
     Route::post('/transit_grading_kasar/grading_kasar_hasil/simpanDataItem', 'simpanDataItem')->name('grading_kasar_hasil.simpanDataItem');
+    Route::get('/transit_grading_kasar/grading_kasar_hasil/get_data_nama_jenis', 'set')->name('gradingKasarHasil.set');
 });
 
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {

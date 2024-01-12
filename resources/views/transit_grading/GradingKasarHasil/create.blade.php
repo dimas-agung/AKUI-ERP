@@ -20,15 +20,15 @@
                         <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="nomor_grading" id="nomor_grading" placeholder="Pilih Nomor Grading">
                             <option value="">Pilih Nomor Grading</option>
-                            {{-- @foreach ($master_supplier_raw_materials as $MasterSPRM)
-                                <option value="{{ $MasterSPRM->nama_supplier }}">
-                                    {{ $MasterSPRM->nama_supplier }}</option>
-                            @endforeach --}}
+                            @foreach ($GradingKasarInput as $GradingKI)
+                                <option value="{{ $GradingKI->nomor_grading }}">
+                                    {{ $GradingKI->nomor_grading }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="id_box_grading_kasar" class="form-label">ID Box Raw Material</label>
-                        <input type="text" class="form-control" id="id_box_grading_kasar" readonly>
+                        <label for="id_box_raw_material" class="form-label">ID Box Raw Material</label>
+                        <input type="text" class="form-control" id="id_box_raw_material" readonly>
                     </div>
                     <div class="col-md-6">
                         <label for="nomor_batch" class="form-label">Nomor Batch</label>
@@ -66,14 +66,14 @@
                         <hr>
                     </div>
                     <div class="col-md-4">
-                        <label for="basic-usage" class="form-label">Pilih Jenis :</label>
+                        <label for="basic-usage" class="form-label">Pilih Jenis Grading :</label>
                         <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="jenis" id="jenis" placeholder="Pilih Jenis">
-                            <option value="">Pilih Jenis</option>
-                            {{-- @foreach ($master_jenis_raw_materials as $MasterJRM)
-                                <option value="{{ $MasterJRM->jenis }}">
-                                    {{ $MasterJRM->jenis }}</option>
-                            @endforeach --}}
+                            <option value="">Pilih Jenis Grading</option>
+                            @foreach ($MasterJenisGradingKasar as $MasterJGK)
+                                <option value="{{ $MasterJGK->nama }}">
+                                    {{ $MasterJGK->nama }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -88,30 +88,31 @@
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="pcs_grading">
                     </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label for="keterangan" class="form-label">Keterangan</label>
+                            <textarea class="form-control" id="keterangan" rows="3"></textarea>
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         <label for="total_susut" class="form-label">Total Susut</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="total_susut">
+                            class="form-control" id="total_susut" readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="total_berat" class="form-label">Total Berat</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="total_berat">
+                            class="form-control" id="total_berat" readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="total_pcs" class="form-label">Total Pcs</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="total_pcs">
+                            class="form-control" id="total_pcs" readonly>
                     </div>
-                    <div class="card-body">
-                        <div class="form-group mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Keterangan</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-                    </div>
+
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" onclick="addRow()">Tambah</button>
                         {{-- <button type="submit" class="btn btn-warning" id="resetBtn">Reset</button> --}}
@@ -158,6 +159,253 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        $('#nomor_grading').on('change', function() {
+            // Mengambil nilai id_box yang dipilih
+            let selectedNomorGrading = $(this).val();
+            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
+            $.ajax({
+                url: `{{ route('gradingKasarHasil.set') }}`,
+                method: 'GET',
+                data: {
+                    nomor_grading: selectedNomorGrading
+                },
+                success: function(response) {
+                    console.log(response);
+                    // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                    $('#id_box_raw_material').val(response.id_box);
+                    $('#nomor_batch').val(response.nomor_batch);
+                    $('#nomor_nota_internal').val(response.nomor_nota_internal);
+                    $('#nama_supplier').val(response.nama_supplier);
+                    $('#jenis_adding').val(response.jenis);
+                    $('#berat_adding').val(response.berat);
+                    $('#kadar_air').val(response.kadar_air);
+                    $('#modal').val(response.modal);
+                    $('#total_modal').val(response.total_modal);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        $('#tujuan_kirim').on('change', function() {
+            // Mengambil nilai tujuan_kirim yang dipilih
+            let selectedPcc = $(this).val();
+
+            // Melakukan permintaan AJAX ke controller untuk mendapatkan data
+            $.ajax({
+                url: '{{ route('PrmRawMaterialOutput.setpcc') }}',
+                method: 'GET',
+                data: {
+                    tujuan_kirim: selectedPcc
+                },
+                success: function(response) {
+                    // Mengatur nilai elemen-elemen sesuai dengan respons dari server
+                    $('#letak_tujuan').val(response.letak_tujuan);
+                    $('#inisial_tujuan').val(response.inisial_tujuan);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        // Fungsi generateNomorBSTB (letakkan di sini atau muat dari file eksternal)
+        function generateNomorBSTB(inisial_tujuan) {
+            const inisialTujuan = document.getElementById('inisial_tujuan').value;
+            const now = new Date();
+            const tahun = now.getFullYear().toString().substr(-2);
+            const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+            const tanggal = ('0' + now.getDate()).slice(-2);
+            const jam = ('0' + now.getHours()).slice(-2);
+            const menit = ('0' + now.getMinutes()).slice(-2);
+            const detik = ('0' + now.getSeconds()).slice(-2);
+
+            const nomor_bstb = `BSTB_PNE_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}`;
+
+            // Menampilkan hasil ke dalam elemen HTML dengan ID 'hasil_nomor_bstb'
+            // $('#hasil_nomor_bstb').text(nomor_bstb);
+            return nomor_bstb;
+            console.log(nomor_bstb);
+        }
+
+        // Event listener untuk perubahan nilai pada total modal
+        $('#modal').on('input', updateTotalmodal);
+        $('#berat').on('input', updateTotalmodal);
+
+        function updateTotalmodal() {
+            // Mendapatkan nilai berat nota dan berat bersih
+            const modal = parseFloat($('#modal').val());
+            const berat = parseFloat($('#berat').val());
+
+            // Melakukan perhitungan selisih berat
+            const totalmodal = berat * modal;
+
+            // Memasukkan hasil perhitungan ke dalam input selisih berat
+            $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal);
+        }
+
+        // Event listener untuk perubahan nilai pada berat nota atau berat bersih
+        $('#berat_masuk').on('change', updateSelisihBerat);
+        $('#berat').on('input', updateSelisihBerat);
+
+        function updateSelisihBerat() {
+            // Mendapatkan nilai berat nota dan berat bersih
+            const berat_masuk = parseFloat($('#berat_masuk').val());
+            const berat = parseFloat($('#berat').val());
+            const selisihBerat = berat_masuk - berat;
+
+            // Memasukkan hasil perhitungan ke dalam input selisih berat
+            $('#selisih_berat').val(isNaN(selisihBerat) ? '' : selisihBerat);
+        }
+
+        var dataArray = [];
+        var dataStock = [];
+
+        function addRow() {
+            // Mengambil nilai dari input
+            var doc_no = $('#doc_no').val();
+            var nomor_batch = $('#nomor_batch').val();
+            var id_box = $('#id_box').val();
+            var nama_supplier = $('#nama_supplier').val();
+            var jenis = $('#jenis').val();
+            var berat_masuk = $('#berat_masuk').val();
+            var berat = $('#berat').val();
+            var selisih_berat = $('#selisih_berat').val();
+            var kadar_air = $('#kadar_air').val();
+            var tujuan_kirim = $('#tujuan_kirim').val();
+            var letak_tujuan = $('#letak_tujuan').val();
+            var inisial_tujuan = $('#inisial_tujuan').val();
+            var modal = $('#modal').val();
+            var total_modal = $('#total_modal').val();
+            var keterangan_item = $('#keterangan_item').val();
+            var user_created = $('#user_created').val();
+
+            // Validasi input (sesuai kebutuhan)
+            if (!id_box || !nomor_batch) {
+                alert('ID and nomor_batch are required.');
+                return;
+            }
+
+            // Memanggil fungsi generateNomorBSTB untuk mendapatkan nomor_bstb
+            var nomor_bstb = generateNomorBSTB(inisial_tujuan);
+
+            // Menambahkan data ke dalam tabel
+            var newRow = '<tr><td>' + doc_no + '</td><td>' + nomor_bstb + '</td><td>' + nomor_batch + '</td><td>' + id_box +
+                '</td><td>' + nama_supplier + '</td><td>' + jenis + '</td><td>' + berat_masuk + '</td><td>' +
+                berat + '</td><td>' + selisih_berat + '</td><td>' + kadar_air + '</td><td>' + tujuan_kirim + '</td><td>' +
+                letak_tujuan + '</td><td>' + inisial_tujuan + '</td><td>' +
+                modal + '</td><td>' + total_modal + '</td><td>' + keterangan_item + '</td><td>' + user_created +
+                '</td></tr>';
+
+            $('#tableBody').append(newRow);
+
+            // Menambahkan data ke dalam array
+            dataArray.push({
+                doc_no: doc_no,
+                nomor_bstb: nomor_bstb,
+                nomor_batch: nomor_batch,
+                id_box: id_box,
+                nama_supplier: nama_supplier,
+                jenis: jenis,
+                berat_masuk: berat_masuk,
+                berat: berat,
+                selisih_berat: selisih_berat,
+                kadar_air: kadar_air,
+                tujuan_kirim: tujuan_kirim,
+                letak_tujuan: letak_tujuan,
+                inisial_tujuan: inisial_tujuan,
+                modal: modal,
+                total_modal: total_modal,
+                keterangan_item: keterangan_item,
+                user_created: user_created,
+            });
+            dataStock = [];
+            dataStock.push({
+                id_box: id_box,
+                doc_no: doc_no,
+                // berat_masuk: berat_masuk,
+                berat: berat,
+                selisih_berat: selisih_berat,
+                kadar_air: kadar_air,
+                modal: modal,
+                total_modal: total_modal,
+                keterangan_item: keterangan_item,
+                user_created: user_created,
+            });
+            console.log(dataStock);
+            // Membersihkan nilai input setelah ditambahkan
+            $('#id_box').val('<option></option>');
+            $('#nomor_batch').val('');
+            $('#nama_supplier').val('');
+            $('#jenis').val('');
+            $('#berat_masuk').val('');
+            $('#berat').val('');
+            $('#selisih_berat').val('');
+            $('#kadar_air').val('');
+            $('#tujuan_kirim').val('');
+            $('#letak_tujuan').val('');
+            $('#inisial_tujuan').val('');
+            $('#modal').val('');
+            $('#total_modal').val('');
+            $('#keterangan_item').val('');
+            // Menonaktif kan nilai input ketika ditambah
+            $('#doc_no').prop('readonly', true);
+            $('#nomor_bstb').prop('readonly', true);
+            $('#nomor_batch').prop('readonly', true);
+            $('#keterangan').prop('readonly', true);
+            $('#user_created').prop('readonly', true);
+        }
+
+        function getArray() {
+            // Menampilkan array di konsol untuk tujuan debugging
+            console.log(dataArray);
+        }
+
+        function sendData() {
+            console.log(dataArray);
+            // Mengirim data ke server menggunakan AJAX
+            $.ajax({
+                url: `{{ route('PrmRawMaterialOutput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai
+                method: 'POST',
+                data: {
+                    data: JSON.stringify(dataArray),
+                    dataStock: JSON.stringify(dataStock),
+                    _token: '{{ csrf_token() }}'
+                },
+                dataType: 'json', // payload is json,
+                success: function(response) {
+                    // alert('Success: ' + response.message); // Tampilkan pesan berhasil
+                    // window.location.href = response.redirectTo; // Redirect ke halaman lain
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Data berhasil disimpan.',
+                        icon: 'success'
+                    }).then((result) => {
+                        // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
+                        if (result.isConfirmed) {
+                            window.location.href = response
+                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                        }
+                    });
+                },
+                error: function(error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Terjadi kesalahan. Silakan coba lagi.',
+                        icon: 'error'
+                    });
+                    console.log('Validation Errors:', response.responseJSON.errors);
+                }
+            });
+
+            // Membersihkan array setelah data dikirim
+            // dataArray = [];
+        }
+    </script>
 @endsection
 {{-- @section('script')
     <script>

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+// use App\Models\GradingKasarInput;
 use App\Models\MasterJenisGradingKasar;
 use App\Models\PrmRawMaterialStock;
 use App\Models\TransitGradingKasar;
@@ -31,5 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitSeeder::class);
         $this->call(BiayaHppSeeder::class);
         $this->call(PrmRawMaterialStockSeeder::class);
+        $this->call(GradingKasarInputSeeder::class);
     }
 }

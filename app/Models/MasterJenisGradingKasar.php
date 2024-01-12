@@ -19,4 +19,8 @@ class MasterJenisGradingKasar extends Model
         'user_created',
         'user_updated',
     ];
+    public function GradingKasarHasil()
+    {
+        return $this->belongsTo(GradingKasarHasil::class, 'nama', 'jenis_grading');
+    }
 }

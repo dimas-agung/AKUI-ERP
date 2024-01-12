@@ -65,6 +65,7 @@ class PrmRawMaterialInputService
         PrmRawMaterialStockHistory::create([
             'id_box'        => $item->id_box,
             // 'doc_no'        => $defaultIdBox,
+            // 'doc_no'        => $item->nomor_nota_internal,
             'berat_masuk'   => $item->berat_bersih,
             'berat_keluar'  => $defaultBeratKeluar,
             'sisa_berat'    => $item->selisih_berat,
@@ -103,18 +104,19 @@ class PrmRawMaterialInputService
         // return $existingItem
 
         $dataToUpdate = [
-            'id_box'        => $itemObject->id_box,
-            'nomor_batch'   => $itemObject->nomor_batch,
-            'nama_supplier' => $itemObject->nama_supplier,
-            'jenis'         => $itemObject->jenis,
-            'berat_masuk'   => $itemObject->berat_bersih,
-            'berat_keluar'  => $itemObject->berat_keluar ?? 0,
-            'sisa_berat'    => $itemObject->berat_bersih,
-            'avg_kadar_air' => $itemObject->kadar_air,
-            'modal'         => $itemObject->harga_deal,
-            'total_modal'   => $itemObject->harga_deal * $itemObject->berat_bersih,
-            'keterangan'    => $itemObject->keterangan,
-            'user_created'  => $itemObject->user_created,
+            'id_box'                => $itemObject->id_box,
+            'nomor_nota_internal'   => $itemObject->nomor_nota_internal,
+            'nomor_batch'           => $itemObject->nomor_batch,
+            'nama_supplier'         => $itemObject->nama_supplier,
+            'jenis'                 => $itemObject->jenis,
+            'berat_masuk'           => $itemObject->berat_bersih,
+            'berat_keluar'          => $itemObject->berat_keluar ?? 0,
+            'sisa_berat'            => $itemObject->berat_bersih,
+            'avg_kadar_air'         => $itemObject->kadar_air,
+            'modal'                 => $itemObject->harga_deal,
+            'total_modal'           => $itemObject->harga_deal * $itemObject->berat_bersih,
+            'keterangan'            => $itemObject->keterangan,
+            'user_created'          => $itemObject->user_created,
             // 'user_updated'  => $itemObject->user_updated,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
@@ -145,6 +147,7 @@ class PrmRawMaterialInputService
             }
 
             // Update juga kolom-kolom lain yang diperlukan
+            $existingItem->nomor_nota_internal = $itemObject->nomor_nota_internal;
             $existingItem->avg_kadar_air = $itemObject->kadar_air;
             $existingItem->keterangan = $itemObject->keterangan;
             $existingItem->user_created = $itemObject->user_created;

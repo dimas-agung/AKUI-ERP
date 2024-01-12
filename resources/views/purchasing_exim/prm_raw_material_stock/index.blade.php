@@ -26,6 +26,7 @@
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Id Box</th>
+                                        <th scope="col" class="text-center">Nomor Nota Internal</th>
                                         <th scope="col" class="text-center">Nomor Batch</th>
                                         <th scope="col" class="text-center">Nama Supplier</th>
                                         <th scope="col" class="text-center">Jenis</th>
@@ -48,6 +49,7 @@
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $MasterStock->id_box }}</td>
+                                            <td class="text-center">{{ $MasterStock->nomor_nota_internal }}</td>
                                             <td class="text-center">{{ $MasterStock->nomor_batch }}</td>
                                             <td class="text-center">{{ $MasterStock->nama_supplier }}</td>
                                             <td class="text-center">{{ $MasterStock->jenis }}</td>

@@ -15,7 +15,7 @@ class GradingKasarHasil extends Model
         'id_box_grading_kasar',
         'nomor_batch',
         'nama_supplier',
-        'jenis',
+        'jenis_raw_material',
         'berat',
         'kadar_air',
         'jenis_grading',
@@ -39,12 +39,20 @@ class GradingKasarHasil extends Model
         'user_created',
         'user_updated',
     ];
-    public function MasterJenisGradingKasar()
-    {
-        return $this->hasMany(MasterJenisGradingKasar::class, 'jenis', 'nama');
-    }
+    // public function MasterJenisGradingKasar()
+    // {
+    //     return $this->hasMany(MasterJenisGradingKasar::class, 'jenis', 'nama');
+    // }
     // public function GradingKasarInput()
     // {
     //     return $this->hasMany(GradingKasarInput::class, 'nomor_grading', 'nomor_grading');
     // }
+    public function GradingKasarInput()
+    {
+        return $this->hasMany(GradingKasarInput::class, 'nomor_grading', 'nomor_grading');
+    }
+    public function MasterJenisGradingKasar()
+    {
+        return $this->hasMany(MasterJenisGradingKasar::class, 'jenis_grading', 'nama');
+    }
 }
