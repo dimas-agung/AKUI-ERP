@@ -99,14 +99,31 @@
                                                 onchange="handleChange(this.{{ old('jenis') }})" readonly>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Letak Tujuan</label>
                                             <input type="text" id="letak_tujuan" class="form-control" name="letak_tujuan"
                                                 onchange="handleChange(this.{{ old('letak_tujuan') }})" readonly>
                                         </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>No Nota</label>
+                                            <input type="text" id="nomor_nota_internal" class="form-control"
+                                                name="nomor_nota_internal"
+                                                onchange="handleChange(this.{{ old('nomor_nota_internal') }})" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Kadar Air</label>
+                                            <input type="text" class="form-control" id="kadar_air" name="kadar_air"
+                                                onchange="handleChange(this.{{ old('kadar_air') }})" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Inisial Tujuan</label>
                                             <input type="text" id="inisial_tujuan" class="form-control"
@@ -120,16 +137,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Total Modal</label>
-                                            <input type="text" id="total_modal" class="form-control" name="total_modal"
-                                                value="{{ old('total_modal') }}" readonly>
+                                            <input type="text" id="total_modal" class="form-control"
+                                                name="total_modal" value="{{ old('total_modal') }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Kadar Air</label>
-                                            <input type="text" class="form-control" id="kadar_air" name="kadar_air"
-                                                onchange="handleChange(this.{{ old('kadar_air') }})" readonly>
-                                        </div>
                                         <div class="form-group">
                                             <label>Berat Masuk</label>
                                             <input type="text" class="form-control" id="berat_masuk"
@@ -238,6 +250,7 @@
                     $('#kadar_air').val(response.avg_kadar_air);
                     $('#berat_masuk').val(response.berat_masuk);
                     $('#modal').val(response.modal);
+                    $('#nomor_nota_internal').val(response.nomor_nota_internal);
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -337,6 +350,7 @@
             var total_modal = $('#total_modal').val();
             var keterangan_item = $('#keterangan_item').val();
             var user_created = $('#user_created').val();
+            var nomor_nota_internal = $('#nomor_nota_internal').val();
 
             // Validasi input (sesuai kebutuhan)
             if (!id_box || !nomor_batch) {
@@ -376,6 +390,7 @@
                 total_modal: total_modal,
                 keterangan_item: keterangan_item,
                 user_created: user_created,
+                nomor_nota_internal: nomor_nota_internal,
             });
             dataStock = [];
             dataStock.push({

@@ -100,6 +100,7 @@ class PrmRawMaterialOutputService
             'keterangan'    => $itemObject->keterangan_item,
             'user_created'  => $itemObject->user_created,
             'user_updated'  => $itemObject->user_updated ?? "There isn't any",
+            'nomor_nota_internal'   => $itemObject->nomor_nota_internal
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
 

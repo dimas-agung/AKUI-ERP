@@ -57,6 +57,7 @@ class PrmRawMaterialInputService
             // 'user_updated'          => $dataHeader[0]->user_updated
             // Sesuaikan dengan kolom-kolom lain di tabel header Anda
         ]);
+
     }
 
     private function createItem($item)
@@ -114,6 +115,7 @@ class PrmRawMaterialInputService
             'total_modal'   => $itemObject->harga_deal * $itemObject->berat_bersih,
             'keterangan'    => $itemObject->keterangan,
             'user_created'  => $itemObject->user_created,
+            'nomor_nota_internal'   => $itemObject->nomor_nota_internal,
             // 'user_updated'  => $itemObject->user_updated,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
@@ -138,10 +140,6 @@ class PrmRawMaterialInputService
 
             // Update juga kolom-kolom lain yang diperlukan
             $existingItem->avg_kadar_air = $itemObject->kadar_air;
-            // $existingItem->modal = $itemObject->modal ?? $existingItem->modal ?? 0;
-            // $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
-            // $existingItem->keterangan = $itemObject->keterangan;
-            // $existingItem->user_created = $itemObject->user_created;
 
             // Simpan perubahan pada stok yang sudah ada
             $existingItem->save();
@@ -151,7 +149,6 @@ class PrmRawMaterialInputService
         }
     }
 
-    // private function createStock($itemS)
     // {
     //     $itemObject = (object)$itemS;
     //     $existingItem = PrmRawMaterialStock::where('id_box', $itemObject->id_box)

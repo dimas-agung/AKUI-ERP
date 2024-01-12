@@ -34,4 +34,5 @@ class PrmRawMaterialInput extends Model
     {
         return $this->hasMany(PrmRawMaterialStock::class, 'id_box', 'id_box');
     }
+
 }

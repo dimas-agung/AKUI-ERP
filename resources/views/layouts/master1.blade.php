@@ -4,36 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ env('APP_TITLE') }} @yield('title')</title>
+    <title>Dashboard - Mazer Admin Dashboard</title>
 
-    <link rel="shortcut icon" href="{{ asset('assets/compiled/svg/favicon.svg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/compiled/svg/favicon.svg" type="image/x-icon">
     <link rel="shortcut icon"
         href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADRcLDBAAAEs2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjMzIgogICBleGlmOlBpeGVsWURpbWVuc2lvbj0iMzQiCiAgIGV4aWY6Q29sb3JTcGFjZT0iMSIKICAgdGlmZjpJbWFnZVdpZHRoPSIzMyIKICAgdGlmZjpJbWFnZUxlbmd0aD0iMzQiCiAgIHRpZmY6UmVzb2x1dGlvblVuaXQ9IjIiCiAgIHRpZmY6WFJlc29sdXRpb249Ijk2LjAiCiAgIHRpZmY6WVJlc29sdXRpb249Ijk2LjAiCiAgIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiCiAgIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIKICAgeG1wOk1vZGlmeURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiCiAgIHhtcDpNZXRhZGF0YURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJwcm9kdWNlZCIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWZmaW5pdHkgRGVzaWduZXIgMS4xMC4xIgogICAgICBzdEV2dDp3aGVuPSIyMDIyLTAzLTMxVDEwOjUwOjIzKzAyOjAwIi8+CiAgICA8L3JkZjpTZXE+CiAgIDwveG1wTU06SGlzdG9yeT4KICA8L3JkZjpEZXNjcmlwdGlvbj4KIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+Cjw/eHBhY2tldCBlbmQ9InIiPz5V57uAAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kc8rRFEUxz9maORHo1hYKC9hISNGTWwsRn4VFmOUX5uZZ36oeTOv954kW2WrKLHxa8FfwFZZK0WkZClrYoOe87ypmWTO7dzzud97z+nec8ETzaiaWd4NWtYyIiNhZWZ2TvE946WZSjqoj6mmPjE1HKWkfdxR5sSbgFOr9Ll/rXoxYapQVik8oOqGJTwqPL5i6Q5vCzeo6dii8KlwpyEXFL519LjLLw6nXP5y2IhGBsFTJ6ykijhexGra0ITl5bRqmWU1fx/nJTWJ7PSUxBbxJkwijBBGYYwhBgnRQ7/MIQIE6ZIVJfK7f/MnyUmuKrPOKgZLpEhj0SnqslRPSEyKnpCRYdXp/9++msneoFu9JgwVT7b91ga+LfjetO3PQ9v+PgLvI1xkC/m5A+h7F32zoLXug38dzi4LWnwHzjeg8UGPGbFfySvuSSbh9QRqZ6H+Gqrm3Z7l9zm+h+iafNUV7O5Bu5z3L/wAdthn7QIme0YAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAJTSURBVFiF7Zi9axRBGIefEw2IdxFBRQsLWUTBaywSK4ubdSGVIY1Y6HZql8ZKCGIqwX/AYLmCgVQKfiDn7jZeEQMWfsSAHAiKqPiB5mIgELWYOW5vzc3O7niHhT/YZvY37/swM/vOzJbIqVq9uQ04CYwCI8AhYAlYAB4Dc7HnrOSJWcoJcBS4ARzQ2F4BZ2LPmTeNuykHwEWgkQGAet9QfiMZjUSt3hwD7psGTWgs9pwH1hC1enMYeA7sKwDxBqjGnvNdZzKZjqmCAKh+U1kmEwi3IEBbIsugnY5avTkEtIAtFhBrQCX2nLVehqyRqFoCAAwBh3WGLAhbgCRIYYinwLolwLqKUwwi9pxV4KUlxKKKUwxC6ZElRCPLYAJxGfhSEOCz6m8HEXvOB2CyIMSk6m8HoXQTmMkJcA2YNTHm3congOvATo3tE3A29pxbpnFzQSiQPcB55IFmFNgFfEQeahaAGZMpsIJIAZWAHcDX2HN+2cT6r39GxmvC9aPNwH5gO1BOPFuBVWAZue0vA9+A12EgjPadnhCuH1WAE8ivYAQ4ohKaagV4gvxi5oG7YSA2vApsCOH60WngKrA3R9IsvQUuhIGY00K4flQG7gHH/mLytB4C42EgfrQb0mV7us8AAMeBS8mGNMR4nwHamtBB7B4QRNdaS0M8GxDEog7iyoAguvJ0QYSBuAOcAt71Kfl7wA8DcTvZ2KtOlJEr+ByyQtqqhTyHTIeB+ONeqi3brh+VgIN0fohUgWGggizZFTplu12yW8iy/YLOGWMpDMTPXnl+Az9vj2HERYqPAAAAAElFTkSuQmCC"
         type="image/png">
 
-    {{-- <link rel="stylesheet" href="assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css"> --}}
-    <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/compiled/css/app-dark.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/compiled/css/iconly.css') }}">
+    {{-- CSS --}}
+    <link rel="stylesheet"
+        href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('./assets/compiled/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('./assets/compiled/css/app-dark.css') }}">
+    <link rel="stylesheet" href="{{ asset('./assets/compiled/css/iconly.css') }}">
+    {{-- SweetAlert --}}
     <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}">
+    {{-- Choice --}}
+    <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
+    {{-- DataTable --}}
+    <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('./assets/compiled/css/table-datatable-jquery.css') }}">
+
 </head>
 
 <body>
-    {{-- <script src="assets/static/js/initTheme.js"></script> --}}
-    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
+    <script src="assets/static/js/initTheme.js"></script>
     <div id="app">
         <div id="sidebar">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            {{-- <a href="{{ url('/') }}"><img src="{{ asset('assets/compiled/png/akui.png') }}"
-                                    alt="Logo" srcset=""></a> --}}
+                            {{-- <a href="/"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a> --}}
                             <a href="{{ url('/') }}"><img src="{{ asset('assets/compiled/png/akui.png') }}"
-                                    alt="Logo" srcset=""><span style="font-size: 22px">AKUI</span></a>
+                                    alt="Logo" srcset=""><span style="font-size: 15px">AKUI-ERP</span></a>
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -71,6 +75,56 @@
                         </div>
                     </div>
                 </div>
+                {{-- <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+
+                        <li class="sidebar-item active ">
+                            <a href="/" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Dashboard</span>
+                            </a>
+
+
+                        </li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-stack"></i>
+                                <span>Master</span>
+                            </a>
+
+                            <ul class="submenu ">
+
+                                <li class="submenu-item  ">
+                                    <a href="{{ url('/master_jenis_raw_material') }}" class="submenu-link">Master
+                                        Jenis</a>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-stack"></i>
+                                <span>Purchasing & Exim</span>
+                            </a>
+
+                            <ul class="submenu ">
+
+                                <li class="submenu-item  ">
+                                    <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}"
+                                        class="submenu-link">PRM INPUT</a>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+                </div> --}}
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-item  {{ Request::is('/') ? 'active' : '' }} ">
@@ -82,7 +136,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('work', 'unit', 'biayahpp', 'master_supplier_raw_material', 'master_jenis_raw_material', 'master_tujuan_kirim_raw_material') ? 'active' : '' }}">
+                            class="sidebar-item  has-sub {{ Request::is('work', 'unit', 'biayahpp', 'master_supplier_raw_material', 'master_jenis_raw_material', 'master_tujuan_kirim_raw_material', 'master_jenis_grading', 'master_jenis_grading_kasar') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Master</span>
@@ -106,13 +160,25 @@
                                 <li
                                     class="submenu-item  {{ Request::is('master_jenis_raw_material') ? 'active' : '' }} ">
                                     <a href="{{ url('/master_jenis_raw_material') }}" class="submenu-link">Jenis Raw
-                                        Materia</a>
+                                        Material</a>
                                 </li>
                                 <li
                                     class="submenu-item  {{ Request::is('master_tujuan_kirim_raw_material') ? 'active' : '' }} ">
                                     <a href="{{ url('/master_tujuan_kirim_raw_material') }}"
                                         class="submenu-link">Tujuan
                                         Kirim Raw Material</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('master_jenis_grading') ? 'active' : '' }} ">
+                                    <a href="{{ url('/master_jenis_grading') }}" class="submenu-link">Master Jenis
+                                        <br>
+                                        Grading</a>
+                                </li>
+                                <li
+                                    class="submenu-item  {{ Request::is('master_jenis_grading_kasar') ? 'active' : '' }} ">
+                                    <a href="{{ url('/master_jenis_grading_kasar') }}" class="submenu-link">Master
+                                        Jenis
+                                        <br>
+                                        Grading Kasar</a>
                                 </li>
                             </ul>
                         </li>
@@ -144,11 +210,70 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-item  has-sub ">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-grid-1x2-fill"></i>
+                                <span>Production</span>
+                            </a>
+                            <ul class="submenu">
+                                <li class="submenu-item has-sub ">
+                                    <a href="#" class="submenu-link">Production</a>
+                                    <ul class="submenu">
+                                        <li class="submenu-item has-sub ">
+                                            <a href="#" class="submenu-link">Bahan Baku</a>
+                                            <ul class="submenu">
+                                                <li class="submenu-item has-sub ">
+                                                    <a href="#" class="submenu-link">Grading Kasar</a>
+                                                    <ul class="submenu">
+                                                        <li class="submenu-item">
+                                                            <a href="#" class="submenu-link">Adding</a>
+                                                        </li>
+                                                        <li class="submenu-item">
+                                                            <a href="" class="submenu-link">Input</a>
+                                                        </li>
+                                                        <li class="submenu-item">
+                                                            <a href="" class="submenu-link">Stock</a>
+                                                        </li>
+                                                        <li class="submenu-item">
+                                                            <a href="" class="submenu-link">Output</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="submenu-item has-sub">
+                                                    <a href="" class="submenu-link">Pre Cleaning</a>
+                                                </li>
+                                                <li class="submenu-item has-sub">
+                                                    <a href="" class="submenu-link">Grading Halus</a>
+                                                </li>
+                                                <li class="submenu-item has-sub">
+                                                    <a href="" class="submenu-link">Pre Wash</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="submenu-item has-sub">
+                                            <a href="" class="submenu-link">Dry A</a>
+                                        </li>
+                                        <li class="submenu-item has-sub">
+                                            <a href="" class="submenu-link">Final Grading</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="submenu-item has-sub">
+                                    <a href="" class="submenu-link">Cleaning</a>
+                                </li>
+                                <li class="submenu-item has-sub">
+                                    <a href="" class="submenu-link">Moulding</a>
+                                </li>
+                                <li class="submenu-item has-sub">
+                                    <a href="" class="submenu-link">Packing</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li
                             class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'GradingKasarInput') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
-                                <span>Grading Transit</span>
+                                <span>Grading Kasar<br>Transit</span>
                             </a>
                             <ul class="submenu ">
                                 <li
@@ -160,76 +285,85 @@
                                     <a href="{{ url('/GradingKasarInput') }}" class="submenu-link">Grading Kasar
                                         Input</a>
                                 </li>
+                                <li
+                                    class="submenu-item  {{ Request::is('transit_grading_kasar/grading_kasar_hasil') ? 'active' : '' }} ">
+                                    <a href="{{ url('/transit_grading_kasar/grading_kasar_hasil') }}"
+                                        class="submenu-link">Grading Kasar
+                                        Hasil</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div id="main">
+        <div id="main" class="position:relative">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
-
             <div class="page-heading">
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>@yield('title')</h3>
+                            <h3>@yield('menu')</h3>
                         </div>
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">@yield('Menu')</li>
+                                    <li class="breadcrumb-item active" aria-current="page">@yield('title')</li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="page-content position-relative">
+            {{-- Content --}}
+            <div class="page-content">
                 @yield('content')
-                <footer class=" ">
-                    <div class="top-100">
-                        <div class="float-start">
-                            <p>2023 &copy; Mazer</p>
-                        </div>
-                        <div class="float-end">
-                            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                                by
-                                <a href="https://saugi.me">Saugi</a>
-                            </p>
-                        </div>
-                    </div>
-                </footer>
             </div>
 
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2023 &copy; Mazer</p>
+                    </div>
+                    <div class="float-end">
+                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
+                            by <a href="https://saugi.me">Saugi</a></p>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
+    <script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/components/dark.js') }}"></script>
     <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+
     <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
-    {{-- Select2 --}}
-    <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
-    <script src="{{ asset('assets/static/js/pages/form-element-select.js') }}"></script>
+
     <!-- Need: Apexcharts -->
     <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script>
+    {{-- Choice --}}
+    <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
+    <script src="{{ asset('assets/static/js/pages/form-element-select.js') }}"></script>
     {{-- SweetAlert --}}
     <script src="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/sweetalert2.js') }}"></script>
-    {{-- DataTables --}}
+    {{-- DataTable --}}
     <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/datatables.js') }}"></script>
 
-    {{-- Js Boostrap4 --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        function goBack() {
+            window.history.back();
+        }
+
         @if (session('success'))
             Swal.fire({
                 title: 'Alhamdulillah!',
@@ -238,12 +372,11 @@
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 3000 // Durasi tampilan toast dalam milidetik
+                timer: 2000 // Durasi tampilan SweetAlert dalam milidetik
             });
         @endif
     </script>
     @yield('script')
-
 </body>
 
 </html>

@@ -20,6 +20,7 @@ class GradingKasarInputController extends Controller
         $i =1;
         $GradingKI = GradingKasarInput::with('StockTransitGradingKasar')->get();
         $stockTGK = StockTransitGradingKasar::with('GradingKasarInput')->get();
+
         // return $GradingKI;
         return response()->view('transit_grading.GradingKasarInput.index', [
             'GradingKI' => $GradingKI,

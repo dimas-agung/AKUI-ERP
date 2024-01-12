@@ -43,6 +43,7 @@ class GradingKasarInputService
             'nomor_batch'   => $item->nomor_batch,
             'nama_supplier' => $item->nama_supplier,
             'jenis'         => $item->jenis,
+            'nomor_nota_internal'=> $item->nomor_nota_internal,
             'kadar_air'     => $item->kadar_air,
             'berat'         => $item->berat,
             'nomor_grading'  => $item->nomor_grading,

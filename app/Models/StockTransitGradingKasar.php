@@ -15,6 +15,7 @@ class StockTransitGradingKasar extends Model
         'id_box',
         'nama_supplier',
         'jenis',
+        'nomor_nota_internal',
         'berat',
         'kadar_air',
         'tujuan_kirim',

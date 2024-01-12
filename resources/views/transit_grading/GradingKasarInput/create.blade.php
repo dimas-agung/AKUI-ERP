@@ -35,6 +35,23 @@
                                 </div>
                             @endif
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tanggal Adding</label>
+                                        <input type="date" id="tgl_add" class="form-control" name="tgl_add"
+                                            value="{{ old('tgl_add') }}" placeholder="Masukkan Tanggal Adding">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Plant</label>
+                                        <select id="plant" class="choices form-select" name="plant">
+                                            <option @readonly(true)>Pilih Plant</option>
+                                            <option>A</option>
+                                            <option>B</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>NIP Admin</label>
@@ -89,9 +106,9 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Berat</label>
-                                        <input type="text" id="berat" class="form-control" name="berat"
-                                            value="{{ old('berat') }}" onchange="handleChange(this)" readonly>
+                                        <label>No Nota Internal</label>
+                                        <input type="text" id="no_nota" class="form-control" name="no_nota"
+                                            value="{{ old('no_nota') }}" onchange="handleChange(this)" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -105,22 +122,21 @@
                                     <div class="form-group">
                                         <label>Modal</label>
                                         <input type="text" id="modal" class="form-control" name="modal"
-                                            value="{{ old('modal') }}" onchange="handleChange(this)" readonly>
+                                            onchange="handleChange()">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Berat keluar</label>
-                                        <input type="text" id="berat_keluar" pattern="[0-9]*" inputmode="numeric"
-                                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                            class="form-control" name="berat_keluar" value="{{ old('berat_keluar') }}"
-                                            placeholder="Masukkan berat_keluar">
+                                        <label>Berat</label>
+                                        <input type="text" id="berat" class="form-control" name="berat"
+                                            onchange="handleChange()">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Total Modal</label>
-                                        <input type="text" id="total_modal" class="form-control" name="total_modal">
+                                        <input type="text" id="total_modal" class="form-control" name="total_modal"
+                                            readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -182,13 +198,11 @@
 @endsection
 @section('script')
     <script>
-        // $(document).ready(function() {
-        //     $('.select2').select2();
-        // });
         $('#nomor_bstb').on('change', function() {
             // Mengambil nilai nomor_bstb yang dipilih
             let selectedIdBox = $(this).val();
-            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
+
+            // Melakukan permintaan AJAX ke controller untuk mendapatkan data
             $.ajax({
                 url: `{{ route('GradingKasarInput.set') }}`,
                 method: 'GET',
@@ -196,8 +210,7 @@
                     nomor_bstb: selectedIdBox
                 },
                 success: function(response) {
-                    console.log(response);
-                    // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                    // Mengatur nilai elemen-elemen sesuai dengan respons dari server
                     $('#id_box').val(response.id_box);
                     $('#nomor_batch').val(response.nomor_batch);
                     $('#nama_supplier').val(response.nama_supplier);
@@ -205,6 +218,10 @@
                     $('#berat').val(response.berat);
                     $('#kadar_air').val(response.kadar_air);
                     $('#modal').val(response.modal);
+                    $('#no_nota').val(response.nomor_nota_internal);
+
+                    // Memanggil fungsi untuk mengupdate total modal
+                    updateTotalmodal();
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -214,14 +231,21 @@
 
         function generateNomorGrading() {
             const now = new Date();
-            const tahun = now.getFullYear().toString().substr(-2);
-            const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
-            const tanggal = ('0' + now.getDate()).slice(-2);
+            // const tahun = now.getFullYear().toString().substr(-2);
+            // const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+            // const tanggal = ('0' + now.getDate()).slice(-2);
             const jam = ('0' + now.getHours()).slice(-2);
             const menit = ('0' + now.getMinutes()).slice(-2);
             const detik = ('0' + now.getSeconds()).slice(-2);
+            // Mengambil nilai dari input tanggal dan plant
+            const tanggal = $('#tgl_add').val();
+            const plant = $('#plant').val();
+            // Memformat tanggal menjadi ddmmyy
+            const formattedTanggal = formatDateToDdmmyy(tanggal);
 
-            const nomor_grading = `NG_UGK_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}-HIS`;
+
+            // Menggabungkan nilai-nilai tersebut untuk membentuk nomor grading
+            const nomor_grading = `NG_${formattedTanggal}-${jam}${menit}${detik}_${plant}_UGK`;
 
             // Menampilkan hasil di konsol (opsional)
             console.log(nomor_grading);
@@ -229,20 +253,32 @@
             return nomor_grading;
         }
 
-        // Event listener untuk perubahan nilai pada total modal
-        $('#modal, #berat_keluar').on('input', updateTotalmodal);
+        function formatDateToDdmmyy(inputDate) {
+            const date = new Date(inputDate);
+            const day = ('0' + date.getDate()).slice(-2);
+            const month = ('0' + (date.getMonth() + 1)).slice(-2);
+            const year = date.getFullYear().toString().substr(-2);
 
+            return `${day}${month}${year}`;
+        }
+
+        // Event listener untuk perubahan nilai pada total modal
+        $('#modal, #berat').on('input', updateTotalmodal);
+
+        // Fungsi untuk menghitung total modal
         function updateTotalmodal() {
-            // Mendapatkan nilai modal dan berat_keluar
-            const modal = parseFloat($('#modal').val()) || 0; // Jika nilai tidak valid, dianggap sebagai 0
-            const berat_keluar = parseFloat($('#berat_keluar').val()) || 0; // Mengganti '#berat_keluar' sebagai selector
+            // Mendapatkan nilai modal dan berat
+            const modal = parseFloat($('#modal').val()) || 0;
+            const berat = parseFloat($('#berat').val()) || 0;
 
             // Melakukan perhitungan total modal
-            const totalmodal = berat_keluar * modal;
+            const totalmodal = berat * modal;
 
             // Memasukkan hasil perhitungan ke dalam input total modal
-            $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal.toFixed(2)); // Menampilkan hasil dengan dua desimal
+            $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal.toFixed(2));
         }
+
+
 
         var dataArray = [];
         var dataStock = [];
@@ -255,12 +291,13 @@
             var nama_supplier = $('#nama_supplier').val();
             var jenis = $('#jenis').val();
             var berat_masuk = $('#berat').val();
-            var berat = $('#berat_keluar').val(); // Perbaikan: Menggunakan berat_keluar
+            var berat = $('#berat').val(); // Perbaikan: Menggunakan berat_keluar
             var kadar_air = $('#kadar_air').val();
             var modal = $('#modal').val();
             var total_modal = $('#total_modal').val();
             var keterangan = $('#keterangan').val();
             var user_created = $('#kadar_air').val();
+            var nomor_nota_internal = $('#no_nota').val();
 
             // Memanggil fungsi generateNomorGrading untuk mendapatkan nomor_grading
             var nomor_grading = generateNomorGrading();
@@ -274,7 +311,8 @@
 
             // Menambahkan data ke dalam tabel
             var newRow = '<tr><td>' + nomor_bstb + '</td><td>' + nomor_batch + '</td><td>' + id_box +
-                '</td><td>' + nama_supplier + '</td><td>' + jenis + '</td><td>' + berat_masuk + '</td><td>' +
+                '</td><td>' + nama_supplier + '</td><td>' + jenis + '</td><td>' +
+                berat_masuk + '</td><td>' +
                 berat + '</td><td>' + kadar_air + '</td><td id="nomor_grading">' +
                 nomor_grading + '</td><td>' + modal + '</td><td>' + total_modal + '</td><td>' + keterangan + '</td><td>' +
                 user_created +
@@ -289,6 +327,7 @@
                 id_box: id_box,
                 nama_supplier: nama_supplier,
                 jenis: jenis,
+                no_nota: no_nota,
                 berat: berat,
                 kadar_air: kadar_air,
                 nomor_grading: nomor_grading,
@@ -296,6 +335,7 @@
                 total_modal: total_modal,
                 keterangan: keterangan,
                 user_created: user_created,
+                nomor_nota_internal: nomor_nota_internal,
             });
             // Membersihkan nilai input setelah ditambahkan
             $('#id_box').val('');

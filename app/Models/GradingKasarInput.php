@@ -16,6 +16,7 @@ class GradingKasarInput extends Model
         'nomor_batch',
         'nama_supplier',
         'jenis',
+        'nomor_nota_internal',
         'berat',
         'kadar_air',
         'nomor_grading',
@@ -34,5 +35,9 @@ class GradingKasarInput extends Model
         public function stockTransitGradingKasar()
         {
             return $this->belongsTo(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
+        }
+        public function PrmRawMaterialInput()
+        {
+            return $this->belongsTo(PrmRawMaterialInput::class, 'doc_no', 'doc_no');
         }
 }

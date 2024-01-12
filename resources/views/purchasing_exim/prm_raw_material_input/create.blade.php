@@ -382,6 +382,7 @@
                 harga_deal: harga_deal,
                 keterangan: keterangan,
                 user_created: user_created,
+                nomor_nota_internal: nomor_nota_internal,
             });
             console.log(dataArray);
             dataHeader = [];
@@ -396,22 +397,6 @@
                 user_created: user_created,
             });
             console.log(dataArray);
-
-            dataStock = [];
-            dataStock.push({
-                id_box: id_box,
-                nomor_batch: nomor_batch,
-                nama_supplier: nama_supplier,
-                jenis: jenis,
-                berat_masuk: berat_masuk,
-                berat_keluar: berat_keluar,
-                sisa_berat: sisa_berat,
-                avg_kadar_air: avg_kadar_air,
-                modal: modal,
-                total_modal: total_modal,
-                keterangan: keterangan,
-                user_created: user_created
-            })
             // Membersihkan nilai input setelah ditambahkan
             $('#jenis').val('');
             $('#berat_nota').val('');
