@@ -32,12 +32,12 @@ class GradingKasarInput extends Model
     //     return $this->hasMany(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
     // }
         // Mendefinisikan hubungan dengan model StockTransitGradingKasar
-        public function stockTransitGradingKasar()
-        {
-            return $this->belongsTo(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
-        }
-        public function PrmRawMaterialInput()
-        {
-            return $this->belongsTo(PrmRawMaterialInput::class, 'doc_no', 'doc_no');
-        }
+    public function StockTransitRawMaterial()
+    {
+        return $this->belongsTo(StockTransitRawMaterial::class, 'nomor_bstb', 'nomor_bstb');
+    }
+    public function GradingKasarHasil()
+    {
+        return $this->belongsTo(GradingKasarHasil::class, 'nomor_grading', 'nomor_grading');
+    }
 }

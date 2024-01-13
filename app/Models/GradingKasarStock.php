@@ -5,30 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StockTransitGradingKasar extends Model
+class GradingKasarStock extends Model
 {
     use HasFactory;
-    protected $table ='stock_transit_grading_kasars';
+
     protected $fillable = [
-        'nomor_job',
+        'doc_no',
         'id_box_grading_kasar',
-        'nomor_bstb',
         'nomor_batch',
         'nama_supplier',
-        'id_box_raw_material',
+        'nomor_nota_internal',
         'jenis_raw_material',
         'jenis_grading',
+        'id_box_raw_material',
+        'berat_masuk',
         'berat_keluar',
+        'pcs_masuk',
         'pcs_keluar',
         'avg_kadar_air',
-        'tujuan_kirim',
         'nomor_grading',
         'modal',
         'total_modal',
-        'biaya_produksi',
-        'fix_total_modal',
         'keterangan',
         'user_created',
         'user_updated',
     ];
 }
+

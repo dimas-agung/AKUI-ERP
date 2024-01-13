@@ -3,7 +3,7 @@ namespace App\Services;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\PrmRawMaterialStock;
 use App\Models\PrmRawMaterialStockHistory;
-use App\Models\StockTransitGradingKasar;
+use App\Models\StockTransitRawMaterial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -79,7 +79,7 @@ class PrmRawMaterialOutputService
 
         // Creat Stock Transit Grading Kasar
         $itemObject = (object)$item;
-        $existingItem = StockTransitGradingKasar::where('nama_supplier', $itemObject->nama_supplier)
+        $existingItem = StockTransitRawMaterial::where('nama_supplier', $itemObject->nama_supplier)
             ->where('nomor_bstb', $itemObject->nomor_bstb)
             ->first();
             // return $existingItem
@@ -109,7 +109,7 @@ class PrmRawMaterialOutputService
             $existingItem->update($dataToUpdate);
         } else {
             // Jika item tidak ada, buat item baru
-            StockTransitGradingKasar::create($dataToUpdate);
+            StockTransitRawMaterial::create($dataToUpdate);
         }
 
 
@@ -171,7 +171,7 @@ class PrmRawMaterialOutputService
             DB::beginTransaction();
             // Update item
             $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
-            $stockTGK = StockTransitGradingKasar::where('id', $id)->first();
+            $stockTGK = StockTransitRawMaterial::where('id', $id)->first();
             $PrmRawMS = PrmRawMaterialStock::where('id_box', $request->id_box);
             $PrmRawMOIC->update($request->all());
             $stockTGK->update($request->all());

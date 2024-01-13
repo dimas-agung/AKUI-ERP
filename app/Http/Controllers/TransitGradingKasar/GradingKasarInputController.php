@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\TransitGrading;
+namespace App\Http\Controllers\TransitGradingKasar;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GradingKasarInputRequest;
 use App\Models\GradingKasarInput;
-use App\Models\StockTransitGradingKasar;
+use App\Models\StockTransitRawMaterial;
 use App\Services\GradingKasarInputService;
 use Illuminate\Http\Request;
 //return type View
@@ -18,8 +18,8 @@ class GradingKasarInputController extends Controller
 {
     public function index(){
         $i =1;
-        $GradingKI = GradingKasarInput::with('StockTransitGradingKasar')->get();
-        $stockTGK = StockTransitGradingKasar::with('GradingKasarInput')->get();
+        $GradingKI = GradingKasarInput::with('StockTransitRawMaterial')->get();
+        $stockTGK = StockTransitRawMaterial::with('GradingKasarInput')->get();
 
         // return $GradingKI;
         return response()->view('transit_grading.GradingKasarInput.index', [
@@ -33,8 +33,8 @@ class GradingKasarInputController extends Controller
      */
     public function create(): View
     {
-        $stockTGK = StockTransitGradingKasar::with('PramRawMaterialOutputItems')->get();
-        $GradingKI = GradingKasarInput::with('StockTransitGradingKasar')->get();
+        $stockTGK = StockTransitRawMaterial::with('PramRawMaterialOutputItems')->get();
+        $GradingKI = GradingKasarInput::with('StockTransitRawMaterial')->get();
         // return $PrmRawMOIC;
         return view('transit_grading.GradingKasarInput.create', compact('stockTGK', 'GradingKI'));
     }
@@ -42,7 +42,7 @@ class GradingKasarInputController extends Controller
     public function set(Request $request)
     {
         $nomor_bstb = $request->nomor_bstb;
-        $data = StockTransitGradingKasar::where('nomor_bstb',$nomor_bstb)->first();
+        $data = StockTransitRawMaterial::where('nomor_bstb',$nomor_bstb)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -80,8 +80,8 @@ class GradingKasarInputController extends Controller
     public function edit(string $id)
     {
         //get post by ID
-        $GradingKI = GradingKasarInput::with('StockTransitGradingKasar')->find($id);
-        $data = StockTransitGradingKasar::with('GradingKasarInput')->get();
+        $GradingKI = GradingKasarInput::with('StockTransitRawMaterial')->find($id);
+        $data = StockTransitRawMaterial::with('GradingKasarInput')->get();
         // return $GradingKI;
 
         //render view with post

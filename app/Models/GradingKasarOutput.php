@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StockTransitGradingKasar extends Model
+class GradingKasarOutput extends Model
 {
     use HasFactory;
-    protected $table ='stock_transit_grading_kasars';
+    protected $table ='grading_kasar_outputs';
     protected $fillable = [
-        'nomor_job',
-        'id_box_grading_kasar',
         'nomor_bstb',
+        'id_box_grading_kasar',
+        'nomor_job',
         'nomor_batch',
         'nama_supplier',
         'id_box_raw_material',
