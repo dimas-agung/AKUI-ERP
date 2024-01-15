@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('id_box');
             $table->string('nomor_batch');
             $table->string('nama_supplier');
-            $table->string('jenis');
+            $table->string('jenis_raw_material');
             $table->string('nomor_nota_internal');
             $table->float('berat');
             $table->string('kadar_air');

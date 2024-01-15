@@ -27,7 +27,7 @@
                                 <th class="text-center" scope="col">Nomor Batch</th>
                                 <th class="text-center" scope="col">Id Box</th>
                                 <th class="text-center">Nama Supplier</th>
-                                <th class="text-center">Jenis</th>
+                                <th class="text-center">Jenis Raw Material</th>
                                 <th class="text-center">Berat</th>
                                 <th class="text-center">Kadar Air</th>
                                 <th class="text-center">Nomor Grading</th>
@@ -45,7 +45,7 @@
                             <th class="text-center">Nomor Batch</th>
                             <th class="text-center">Id Box</th>
                             <th class="text-center">Nama Supplier</th>
-                            <th class="text-center">Jenis</th>
+                            <th class="text-center">Jenis Raw Material</th>
                             <th class="text-center">Berat</th>
                             <th class="text-center">Kadar Air</th>
                             <th class="text-center">Nomor Grading</th>
@@ -64,7 +64,7 @@
                                     <td class="text-center">{{ $item->nomor_batch }}</td>
                                     <td class="text-center">{{ $item->id_box }}</td>
                                     <td class="text-center">{{ $item->nama_supplier }}</td>
-                                    <td class="text-center">{{ $item->jenis }}</td>
+                                    <td class="text-center">{{ $item->jenis_raw_material }}</td>
                                     <td class="text-center">{{ $item->berat }}</td>
                                     <td class="text-center">{{ $item->kadar_air }}</td>
                                     <td class="text-center">{{ $item->nomor_grading }}</td>

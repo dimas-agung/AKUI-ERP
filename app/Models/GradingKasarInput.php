@@ -15,7 +15,7 @@ class GradingKasarInput extends Model
         'id_box',
         'nomor_batch',
         'nama_supplier',
-        'jenis',
+        'jenis_raw_material',
         'nomor_nota_internal',
         'berat',
         'kadar_air',

@@ -43,7 +43,7 @@ class GradingKasarInputService
         'id_box'               => $item->id_box,
         'nomor_batch'          => $item->nomor_batch,
         'nama_supplier'        => $item->nama_supplier,
-        'jenis'                => $item->jenis,
+        'jenis_raw_material'   => $item->jenis,
         'nomor_nota_internal'  => $item->nomor_nota_internal,
         'kadar_air'            => $item->kadar_air,
         'berat'                => $item->berat,
@@ -100,47 +100,4 @@ class GradingKasarInputService
         ]));
     }
 }
-
-
-    public function updateItem($request, $id) {
-        try {
-            DB::beginTransaction();
-            // Update item
-            $GradingKI = GradingKasarInput::findOrFail($id);
-            $stockTGK = StockTransitGradingKasar::where('id', $id)->first();
-            $GradingKI->update($request->all());
-            DB::commit();
-
-        return redirect()->route('GradingKasarInput.index')->with(['success' => 'Data Berhasil Diubah!']);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return [
-                'success' => false,
-                'error' => 'Gagal menyimpan data. ' . $e->getMessage(),
-            ];
-        }
-    }
-
-    protected function validateRequest(Request $request)
-    {
-        $request->validate([
-            'nomor_bstb'   => 'required',
-            'nomor_batch'  => 'required',
-            'id_box'       => 'required',
-            'nama_supplier'=> 'required',
-            'jenis'        => 'required',
-            'berat'        => 'required',
-            'kadar_air'    => 'required',
-            'tujuan_kirim' => 'required',
-            'letak_tujuan' => 'required',
-            'inisial_tujuan'=> 'required',
-            'modal'        => 'required',
-            'total_modal'  => 'required',
-            'keterangan_item'    => '',
-            'user_created' => '',
-            'user_updated' => ''
-        ], [
-            'nomor_bstb.required' => 'Kolom Nomer BSTB Wajib diisi.'
-        ]);
-    }
 }

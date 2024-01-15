@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GradingKasarInputRequest;
 use App\Models\GradingKasarInput;
 use App\Models\StockTransitRawMaterial;
+use App\Models\PrmRawMaterialOutputItem;
 use App\Services\GradingKasarInputService;
 use Illuminate\Http\Request;
 //return type View
@@ -117,44 +118,77 @@ class GradingKasarInputController extends Controller
     //     //redirect to index
     //     return redirect()->route('GradingKasarInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
     // }
-    public function destroy($id): RedirectResponse
-{
-    try {
-        // Gunakan transaksi database untuk memastikan konsistensi
-        DB::beginTransaction();
+    public function destroy($id): RedirectResponse {
+        try {
+            // Gunakan transaksi database untuk memastikan konsistensi
+            DB::beginTransaction();
 
-        // Ambil data GradingKasarInput yang akan dihapus
-        $gradingKI = GradingKasarInput::findOrFail($id);
+            // Ambil data GradingKasarInput yang akan dihapus
+            $gradingKI = GradingKasarInput::findOrFail($id);
 
-        // Ambil data StockPrmRawMaterial berdasarkan kriteria tertentu
-        $stockPrmRawMaterial = StockPrmRawMaterial::where('kriteria', '=', $gradingKI->kriteria)->first();
+            // Ambil data StockTransitRawMaterial berdasarkan nomor_bstb
+            $stockPrmRawMaterial = StockTransitRawMaterial::where('nomor_bstb', '=', $gradingKI->nomor_bstb)->first();
 
-        if ($stockPrmRawMaterial) {
-            // Hapus data dari StockPrmRawMaterial
-            $stockPrmRawMaterial->delete();
+            if ($stockPrmRawMaterial) {
+                // Simpan nilai sebelum dihapus
+                $beratSebelumnya = $gradingKI->berat;
+                $totalModalSebelumnya = $gradingKI->total_modal;
 
-            // Simpan data yang dihapus dari StockPrmRawMaterial ke PrmRawMaterialOutput
-            PrmRawMaterialOutput::create([
-                'kolom_1' => $stockPrmRawMaterial->kolom_1,
-                'kolom_2' => $stockPrmRawMaterial->kolom_2,
-                // ... sesuaikan dengan kolom-kolom lainnya
-            ]);
+                $dataToUpdate = [
+                    'nomor_bstb' => $gradingKI->nomor_bstb,
+                    'berat' => $beratSebelumnya,
+                    'total_modal' => $totalModalSebelumnya,
+                ];
+
+                if ($stockPrmRawMaterial) {
+                    // Ambil berat sebelumnya
+                    $beratSebelumnya = $stockPrmRawMaterial->berat;
+
+                    // Hitung total modal baru berdasarkan perbedaan berats
+                    $perbedaanBerat = $beratSebelumnya - $gradingKI->berat;
+                    $totalModalBaru = $perbedaanBerat * $gradingKI->modal;
+                    // $totalModalBaru = $stockPrmRawMaterial->total_modal + ($perbedaanBerat * $itemObject->modal);
+
+                    // Update data dengan berat dan total modal yang baru
+                    $dataToUpdate['berat'] = abs($perbedaanBerat);
+                    $dataToUpdate['total_modal'] = abs($totalModalBaru);
+
+                    // Perbarui data
+                    $stockPrmRawMaterial->update($dataToUpdate);
+                } else {
+                    // Jika item tidak ada, buat item baru dengan nilai lainnya tetap sama
+                    StockTransitRawMaterial::create(array_merge($dataToUpdate, [
+                        'id_box'               => $gradingKI->id_box,
+                        'nomor_batch'          => $gradingKI->nomor_batch,
+                        'jenis'                => $gradingKI->jenis,
+                        'kadar_air'            => $gradingKI->kadar_air,
+                        'tujuan_kirim'         => $gradingKI->tujuan_kirim,
+                        'letak_tujuan'         => $gradingKI->letak_tujuan,
+                        'inisial_tujuan'       => $gradingKI->inisial_tujuan,
+                        'modal'                => $gradingKI->modal,
+                        'keterangan'           => $gradingKI->keterangan,
+                        'user_created'         => $gradingKI->user_updated ?? "There isn't any",
+                        'nomor_nota_internal'  => $gradingKI->nomor_nota_internal,
+                        // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+                    ]));
+                }
+            }
+
+            // Hapus data GradingKasarInput
+            $gradingKI->delete();
+
+            // Commit transaksi
+            DB::commit();
+
+            // Redirect ke index dengan pesan sukses
+            return redirect()->route('GradingKasarInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::rollback();
+
+            // Redirect ke index dengan pesan error
+            return redirect()->route('GradingKasarInput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
-
-        // Hapus data GradingKasarInput
-        $gradingKI->delete();
-
-        // Commit transaksi
-        DB::commit();
-
-        // Redirect ke index dengan pesan sukses
-        return redirect()->route('GradingKasarInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
-    } catch (\Exception $e) {
-        // Rollback transaksi jika terjadi kesalahan
-        DB::rollback();
-
-        // Redirect ke index dengan pesan error
-        return redirect()->route('GradingKasarInput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
-}
+
 }
