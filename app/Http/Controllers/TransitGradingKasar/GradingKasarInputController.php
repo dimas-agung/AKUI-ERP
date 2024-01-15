@@ -9,6 +9,7 @@ use App\Models\StockTransitRawMaterial;
 use App\Services\GradingKasarInputService;
 use Illuminate\Http\Request;
 //return type View
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 //return type redirectResponse
@@ -105,15 +106,55 @@ class GradingKasarInputController extends Controller
     /**
      * destroy
      */
+    // public function destroy($id): RedirectResponse
+    // {
+    //     //get post by ID
+    //     $GradingKI = GradingKasarInput::findOrFail($id);
+
+    //     //delete post
+    //     $GradingKI->delete();
+
+    //     //redirect to index
+    //     return redirect()->route('GradingKasarInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    // }
     public function destroy($id): RedirectResponse
-    {
-        //get post by ID
-        $GradingKI = GradingKasarInput::findOrFail($id);
+{
+    try {
+        // Gunakan transaksi database untuk memastikan konsistensi
+        DB::beginTransaction();
 
-        //delete post
-        $GradingKI->delete();
+        // Ambil data GradingKasarInput yang akan dihapus
+        $gradingKI = GradingKasarInput::findOrFail($id);
 
-        //redirect to index
+        // Ambil data StockPrmRawMaterial berdasarkan kriteria tertentu
+        $stockPrmRawMaterial = StockPrmRawMaterial::where('kriteria', '=', $gradingKI->kriteria)->first();
+
+        if ($stockPrmRawMaterial) {
+            // Hapus data dari StockPrmRawMaterial
+            $stockPrmRawMaterial->delete();
+
+            // Simpan data yang dihapus dari StockPrmRawMaterial ke PrmRawMaterialOutput
+            PrmRawMaterialOutput::create([
+                'kolom_1' => $stockPrmRawMaterial->kolom_1,
+                'kolom_2' => $stockPrmRawMaterial->kolom_2,
+                // ... sesuaikan dengan kolom-kolom lainnya
+            ]);
+        }
+
+        // Hapus data GradingKasarInput
+        $gradingKI->delete();
+
+        // Commit transaksi
+        DB::commit();
+
+        // Redirect ke index dengan pesan sukses
         return redirect()->route('GradingKasarInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    } catch (\Exception $e) {
+        // Rollback transaksi jika terjadi kesalahan
+        DB::rollback();
+
+        // Redirect ke index dengan pesan error
+        return redirect()->route('GradingKasarInput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
+}
 }

@@ -30,5 +30,9 @@ class GradingKasarStock extends Model
         'user_created',
         'user_updated',
     ];
+    public function GradingKasarHasil()
+    {
+        return $this->hasMany(GradingKasarHasil::class, 'id_box_grading_kasar', 'id_box_grading_kasar');
+    }
 }
 

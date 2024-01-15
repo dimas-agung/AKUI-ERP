@@ -38,8 +38,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Tanggal Adding</label>
-                                        <input type="date" id="tgl_add" class="form-control" name="tgl_add"
-                                            value="{{ old('tgl_add') }}" placeholder="Masukkan Tanggal Adding">
+                                        <input type="date" id="tgl_add" class="form-control mb-3 flatpickr-date"
+                                            name="tgl_add" value="{{ old('tgl_add') }}"
+                                            placeholder="Masukkan Tanggal Adding">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -64,7 +65,7 @@
                                         <label>No BSTB</label>
                                         <select id="nomor_bstb" class="choices form-select" name="nomor_bstb"
                                             data-placeholder="Pilih No BSTB">
-                                            <option @readonly(true)>Pilih No BSTB</option>
+                                            <option value="">Pilih No BSTB</option>
                                             @foreach ($stockTGK as $post)
                                                 <option value="{{ $post->nomor_bstb }}">
                                                     {{ old('nomor_bstb', $post->nomor_bstb) }}</option>
@@ -198,6 +199,13 @@
 @endsection
 @section('script')
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr('.flatpickr-date', {
+                dateFormat: 'Y-m-d', // Format tanggal yang diinginkan
+                enableTime: false, // Nonaktifkan waktu
+                time_24hr: false // Gunakan format 12 jam jika diinginkan
+            });
+        });
         $('#nomor_bstb').on('change', function() {
             // Mengambil nilai nomor_bstb yang dipilih
             let selectedIdBox = $(this).val();
@@ -340,23 +348,24 @@
             // Membersihkan nilai input setelah ditambahkan
             $('#id_box').val('');
             $('#nomor_batch').val('');
+            $('#nomor_bstb').val('');
+            // Mereset form-select ke kondisi awal
+            // $('#nomor_bstb').prop('selectedIndex', 0);
             $('#nama_supplier').val('');
             $('#jenis').val('');
             $('#berat_masuk').val('');
             $('#berat').val('');
             $('#selisih_berat').val('');
             $('#kadar_air').val('');
-            $('#tujuan_kirim').val('');
-            $('#letak_tujuan').val('');
+            $('#no_nota').val('');
+            $('#tgl_add').val('');
             $('#nomor_grading').val('');
             $('#modal').val('');
             $('#total_modal').val('');
             $('#keterangan').val('');
-            // Menonaktif kan nilai input ketika ditambah
-            // $('#nomor_bstb').prop('readonly', true);
-            // $('#nomor_batch').prop('readonly', true);
-            // $('#keterangan').prop('readonly', true);
-            // $('#user_created').prop('readonly', true);
+
+            // Mereset dan memperbarui form-select Chosen
+            $('#nomor_bstb').trigger('chosen:updated');
         }
 
         function getArray() {

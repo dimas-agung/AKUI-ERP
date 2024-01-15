@@ -104,7 +104,7 @@
                             </tr>
                         @empty
                             <div class="alert alert-danger">
-                                Data Purchasing belum Tersedia.
+                                Data Purchasing Raw Material belum Tersedia.
                             </div>
                         @endforelse
                     </tbody>

@@ -39,14 +39,6 @@ class GradingKasarHasil extends Model
         'user_created',
         'user_updated',
     ];
-    // public function MasterJenisGradingKasar()
-    // {
-    //     return $this->hasMany(MasterJenisGradingKasar::class, 'jenis', 'nama');
-    // }
-    // public function GradingKasarInput()
-    // {
-    //     return $this->hasMany(GradingKasarInput::class, 'nomor_grading', 'nomor_grading');
-    // }
     public function GradingKasarInput()
     {
         return $this->hasMany(GradingKasarInput::class, 'nomor_grading', 'nomor_grading');
@@ -58,5 +50,9 @@ class GradingKasarHasil extends Model
     public function GradingKasarHasil()
     {
         return $this->belongsTo(GradingKasarHasil::class, 'nomor_grading', 'nomor_grading');
+    }
+    public function GradingKasarStock()
+    {
+        return $this->hasMany(GradingKasarStock::class, 'id_box_grading_kasar', 'id_box_grading_kasar');
     }
 }

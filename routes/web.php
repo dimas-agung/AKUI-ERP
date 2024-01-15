@@ -144,6 +144,16 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarHasilCont
     Route::post('/transit_grading_kasar/grading_kasar_hasil/simpanDataItem', 'simpanDataItem')->name('grading_kasar_hasil.simpanDataItem');
     Route::get('/transit_grading_kasar/grading_kasar_hasil/get_data_nama_jenis', 'set')->name('gradingKasarHasil.set');
 });
+Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarStockController::class)->group(function(){
+    Route::get('/GradingKasarStock', 'index')->name('GradingKasarStock.index');
+    Route::get('/GradingKasarStock/create', 'create')->name('GradingKasarStock.create');
+    Route::get('/GradingKasarStock/get_data', 'set')->name('GradingKasarStock.set');
+    Route::post('/GradingKasarStock/store', 'store')->name('GradingKasarStock.store');
+    Route::post('/GradingKasarStock/sendData', 'sendData')->name('GradingKasarStock.sendData');
+    Route::get('/GradingKasarStock/edit/{id}', 'edit')->name('GradingKasarStock.edit');
+    Route::put('/GradingKasarStock/update/{id}', 'update')->name('GradingKasarStock.update');
+    Route::delete('/GradingKasarStock/destroy/{id}', 'destroy')->name('GradingKasarStock.destroy');
+});
 
 Auth::routes();
 
