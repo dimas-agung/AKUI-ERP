@@ -28,6 +28,7 @@ class PrmRawMaterialOutputService
                 'success' => true,
                 'message' => 'Data berhasil disimpan!',
                 'redirectTo' => route('PrmRawMaterialOutput.index'), // Ganti dengan nama route yang sesuai
+                // 'redirectTo' => null,
             ];
         } catch (\Exception $e) {
             DB::rollBack();

@@ -47,7 +47,7 @@
                                     <div class="form-group">
                                         <label>Plant</label>
                                         <select id="plant" class="choices form-select" name="plant">
-                                            <option @readonly(true)>Pilih Plant</option>
+                                            <option value="">Pilih Plant</option>
                                             <option>A</option>
                                             <option>B</option>
                                         </select>
@@ -67,7 +67,8 @@
                                             data-placeholder="Pilih No BSTB">
                                             <option value="">Pilih No BSTB</option>
                                             @foreach ($stockTGK as $post)
-                                                <option value="{{ $post->nomor_bstb }}">
+                                                <option value="{{ $post->nomor_bstb }}"
+                                                    {{ old('nomor_bstb', $post->nomor_bstb) == 0 ? 'disabled' : '' }}>
                                                     {{ old('nomor_bstb', $post->nomor_bstb) }}</option>
                                             @endforeach
                                         </select>
@@ -123,14 +124,14 @@
                                     <div class="form-group">
                                         <label>Modal</label>
                                         <input type="text" id="modal" class="form-control" name="modal"
-                                            onchange="handleChange()">
+                                            onchange="handleChange()" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Berat</label>
                                         <input type="text" id="berat" class="form-control" name="berat"
-                                            onchange="handleChange()">
+                                            onchange="handleChange()" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -218,18 +219,36 @@
                     nomor_bstb: selectedIdBox
                 },
                 success: function(response) {
-                    // Mengatur nilai elemen-elemen sesuai dengan respons dari server
-                    $('#id_box').val(response.id_box);
-                    $('#nomor_batch').val(response.nomor_batch);
-                    $('#nama_supplier').val(response.nama_supplier);
-                    $('#jenis').val(response.jenis);
-                    $('#berat').val(response.berat);
-                    $('#kadar_air').val(response.kadar_air);
-                    $('#modal').val(response.modal);
-                    $('#no_nota').val(response.nomor_nota_internal);
+                    // Memeriksa apakah berat lebih dari 0 sebelum mengatur nilai elemen-elemen
+                    if (response.berat > 0) {
+                        // Mengatur nilai elemen-elemen sesuai dengan respons dari server
+                        $('#id_box').val(response.id_box);
+                        $('#nomor_batch').val(response.nomor_batch);
+                        $('#nama_supplier').val(response.nama_supplier);
+                        $('#jenis').val(response.jenis);
+                        $('#berat').val(response.berat);
+                        $('#kadar_air').val(response.kadar_air);
+                        $('#modal').val(response.modal);
+                        $('#no_nota').val(response.nomor_nota_internal);
 
-                    // Memanggil fungsi untuk mengupdate total modal
-                    updateTotalmodal();
+                        // Memanggil fungsi untuk mengupdate total modal
+                        updateTotalmodal();
+                    } else {
+                        // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
+                        // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
+                        Swal.fire({
+                            title: 'Astaghfirullah!',
+                            text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
+                            icon: 'error'
+                        }).then((result) => {
+                            // Refresh halaman saat menekan tombol "OK" pada SweetAlert
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                        // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
+                        $('#nomor_bstb').val('');
+                    }
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -239,9 +258,6 @@
 
         function generateNomorGrading() {
             const now = new Date();
-            // const tahun = now.getFullYear().toString().substr(-2);
-            // const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
-            // const tanggal = ('0' + now.getDate()).slice(-2);
             const jam = ('0' + now.getHours()).slice(-2);
             const menit = ('0' + now.getMinutes()).slice(-2);
             const detik = ('0' + now.getSeconds()).slice(-2);
@@ -250,11 +266,8 @@
             const plant = $('#plant').val();
             // Memformat tanggal menjadi ddmmyy
             const formattedTanggal = formatDateToDdmmyy(tanggal);
-
-
             // Menggabungkan nilai-nilai tersebut untuk membentuk nomor grading
             const nomor_grading = `NG_${formattedTanggal}-${jam}${menit}${detik}_${plant}_UGK`;
-
             // Menampilkan hasil di konsol (opsional)
             console.log(nomor_grading);
 
@@ -349,8 +362,6 @@
             $('#id_box').val('');
             $('#nomor_batch').val('');
             $('#nomor_bstb').val('');
-            // Mereset form-select ke kondisi awal
-            // $('#nomor_bstb').prop('selectedIndex', 0);
             $('#nama_supplier').val('');
             $('#jenis').val('');
             $('#berat_masuk').val('');
@@ -385,10 +396,8 @@
                 },
                 dataType: 'json', // payload is json,
                 success: function(response) {
-                    // alert('Success: ' + response.message); // Tampilkan pesan berhasil
-                    // window.location.href = response.redirectTo; // Redirect ke halaman lain
                     Swal.fire({
-                        title: 'Success!',
+                        title: 'Alhamdulillah!',
                         text: 'Data berhasil disimpan.',
                         icon: 'success'
                     }).then((result) => {
@@ -401,7 +410,7 @@
                 },
                 error: function(error) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Astaghfirullah!',
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });

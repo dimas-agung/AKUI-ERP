@@ -372,6 +372,7 @@
             $('#tableBody').append(newRow);
 
             // Menambahkan data ke dalam array
+            // dataArrayDocNo.push(doc_no)
             dataArray.push({
                 doc_no: doc_no,
                 nomor_bstb: nomor_bstb,
@@ -392,20 +393,6 @@
                 user_created: user_created,
                 nomor_nota_internal: nomor_nota_internal,
             });
-            dataStock = [];
-            dataStock.push({
-                id_box: id_box,
-                doc_no: doc_no,
-                // berat_masuk: berat_masuk,
-                berat: berat,
-                selisih_berat: selisih_berat,
-                kadar_air: kadar_air,
-                modal: modal,
-                total_modal: total_modal,
-                keterangan_item: keterangan_item,
-                user_created: user_created,
-            });
-            console.log(dataStock);
             // Membersihkan nilai input setelah ditambahkan
             $('#id_box').val('<option></option>');
             $('#nomor_batch').val('');
@@ -447,10 +434,8 @@
                 },
                 dataType: 'json', // payload is json,
                 success: function(response) {
-                    // alert('Success: ' + response.message); // Tampilkan pesan berhasil
-                    // window.location.href = response.redirectTo; // Redirect ke halaman lain
                     Swal.fire({
-                        title: 'Success!',
+                        title: 'Alhamdulillah!',
                         text: 'Data berhasil disimpan.',
                         icon: 'success'
                     }).then((result) => {
@@ -463,16 +448,13 @@
                 },
                 error: function(error) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Astaghfirullah!',
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });
                     console.log('Validation Errors:', response.responseJSON.errors);
                 }
             });
-
-            // Membersihkan array setelah data dikirim
-            // dataArray = [];
         }
     </script>
 @endsection

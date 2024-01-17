@@ -77,56 +77,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="sidebar-menu">
-                    <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
-
-                        <li class="sidebar-item active ">
-                            <a href="/" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
-                            </a>
-
-
-                        </li>
-
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
-                                <span>Master</span>
-                            </a>
-
-                            <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="{{ url('/master_jenis_raw_material') }}" class="submenu-link">Master
-                                        Jenis</a>
-
-                                </li>
-
-                            </ul>
-
-                        </li>
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
-                                <span>Purchasing & Exim</span>
-                            </a>
-
-                            <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}"
-                                        class="submenu-link">PRM INPUT</a>
-
-                                </li>
-
-                            </ul>
-
-                        </li>
-
-                    </ul>
-                </div> --}}
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-item  {{ Request::is('/') ? 'active' : '' }} ">

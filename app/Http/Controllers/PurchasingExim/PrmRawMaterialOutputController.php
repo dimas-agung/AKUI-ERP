@@ -64,26 +64,75 @@ class PrmRawMaterialOutputController extends Controller
     public function sendData(
         PrmRawMaterialOutputRequest $request,
         PrmRawMaterialOutputService $prmRawMaterialOutputService)
-    { try {
-        $dataArray = json_decode($request->input('data'));
-        // $dataStock = json_decode($request->input('dataStock'));
+        { try {
+            $dataArray = json_decode($request->input('data'));
+            // return $request->input('data');
+            // $dataStock = json_decode($request->input('dataStock'));
 
-        // Periksa apakah dekoding JSON berhasil
-        if (!$dataArray) {
-            throw new \InvalidArgumentException('Invalid JSON data.');
+            // Periksa apakah dekoding JSON berhasil
+            if (!$dataArray) {
+                throw new \InvalidArgumentException('Invalid JSON data.');
+            }
+
+            $result = $prmRawMaterialOutputService->sendData($dataArray);
+
+            // Periksa apakah pemrosesan berhasil
+            if ($result['success']) {
+                return response()->json($result);
+            } else {
+                return response()->json($result, 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $result = $prmRawMaterialOutputService->sendData($dataArray);
-
-        // Periksa apakah pemrosesan berhasil
-        if ($result['success']) {
-            return response()->json($result);
-        } else {
-            return response()->json($result, 500);
-        }
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
     }
+
+    public function store(Request $request)
+    {
+        //validate form
+        $this->validate($request, [
+            'unit_id'   => 'required',
+            'jenis_biaya'   => 'required',
+            'biaya_per_gram'   => 'required',
+            'doc_no'        => 'required',
+            'nomor_bstb'    => 'required',
+            'nomor_batch'   => 'required',
+            'id_box'        => 'required',
+            'nama_supplier' => 'required',
+            'jenis'         => 'required',
+            'berat'         => 'required',
+            'kadar_air'     => 'required',
+            'tujuan_kirim'  => 'required',
+            'letak_tujuan'  => 'required',
+            'inisial_tujuan'=> 'required',
+            'modal'         => 'required',
+            'total_modal'   => 'required',
+            'keterangan_item'=> 'required',
+            'user_created'  => 'required'
+        ]);
+
+        //create post
+        PrmRawMaterialOutputItem::create([
+            'doc_no'        => $request->doc_no,
+            'nomor_bstb'    => $request->nomor_bstb,
+            'nomor_batch'   => $request->nomor_batch,
+            'id_box'        => $request->id_box,
+            'nama_supplier' => $request->nama_supplier,
+            'jenis'         => $request->jenis,
+            'berat'         => $request->berat,
+            'kadar_air'     => $request->kadar_air,
+            'tujuan_kirim'  => $request->tujuan_kirim,
+            'letak_tujuan'  => $request->letak_tujuan,
+            'inisial_tujuan'=> $request->inisial_tujuan,
+            'modal'         => $request->modal,
+            'total_modal'   => $request->total_modal,
+            'keterangan_item'=> $request->keterangan_item,
+            'user_created'  => $request->user_created,
+            'user_updated'  => $request->user_updated ?? "There isn't any",
+        ]);
+
+        //redirect to index
+        return response()->json(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**
