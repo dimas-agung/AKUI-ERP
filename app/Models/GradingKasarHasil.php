@@ -12,9 +12,11 @@ class GradingKasarHasil extends Model
     protected $fillable = [
         'doc_no',
         'nomor_grading',
+        'id_box_raw_material',
         'id_box_grading_kasar',
         'nomor_batch',
         'nama_supplier',
+        'nomor_nota_internal',
         'jenis_raw_material',
         'berat',
         'kadar_air',

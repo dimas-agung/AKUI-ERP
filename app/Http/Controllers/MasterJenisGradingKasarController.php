@@ -24,7 +24,7 @@ class MasterJenisGradingKasarController extends Controller
         //validate form
         $this->validate($request, [
             'nama'                          => 'required',
-            'kategori_susut'                => 'nullable|numeric',
+            'kategori_susut'                => 'nullable',
             'upah_operator'                 => 'nullable|numeric',
             'presentase_pengurangan_harga'  => 'nullable|numeric',
             'harga_estimasi'                => 'required|numeric',

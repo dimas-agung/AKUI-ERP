@@ -2,23 +2,17 @@
 
 namespace App\Services;
 
-use App\Models\PrmRawMaterialInput;
-use App\Models\PrmRawMaterialInputItem;
-use App\Models\PrmRawMaterialStock;
-use App\Models\PrmRawMaterialStockHistory;
+use App\Models\GradingKasarHasil;
+use App\Models\MasterJenisGradingKasar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PrmRawMaterialInputService
+class GradingKasarHasilService
 {
-    // public function simpanData($dataHeader, $dataArray, $dataStock)
-    // public function simpanData($dataHeader, $dataArray, $dataStock, $dataStockHistory)
-    public function simpanData($dataHeader, $dataArray)
+    public function simpanData($dataArray)
     {
         try {
             DB::beginTransaction();
-
-            $this->createHeader($dataHeader);
 
             foreach ($dataArray as $item) {
                 $this->createItem($item);
@@ -29,7 +23,7 @@ class PrmRawMaterialInputService
             return [
                 'success' => true,
                 'message' => 'Data berhasil disimpan!',
-                'redirectTo' => route('prm_raw_material_input.index'), // Ganti dengan nama route yang sesuai
+                'redirectTo' => route('grading_kasar_hasil.index'), // Ganti dengan nama route yang sesuai
             ];
         } catch (\Exception $e) {
             DB::rollBack();
@@ -41,119 +35,90 @@ class PrmRawMaterialInputService
         }
     }
 
-    private function createHeader($dataHeader)
-    {
-        PrmRawMaterialInput::create([
-            // 'doc_no'                => $dataHeader[0]->doc_no,
-            'nomor_po'              => $dataHeader->nomor_po,
-            'nomor_batch'           => $dataHeader->nomor_batch,
-            'nomor_nota_supplier'   => $dataHeader->nomor_nota_supplier,
-            'nomor_nota_internal'   => $dataHeader->nomor_nota_internal,
-            'nama_supplier'         => $dataHeader->nama_supplier,
-            'keterangan'            => $dataHeader->keterangan,
-            'user_created'          => $dataHeader->user_created,
-            // 'user_updated'          => $dataHeader[0]->user_updated
-            // Sesuaikan dengan kolom-kolom lain di tabel header Anda
-        ]);
-    }
-
     private function createItem($item)
     {
-        $defaultBeratKeluar = 0;
-        // $defaultIdBox = '';
-        // Creat Prm Raw Material Stock History
-        PrmRawMaterialStockHistory::create([
-            'id_box'        => $item->id_box,
-            // 'doc_no'        => $defaultIdBox,
-            'berat_masuk'   => $item->berat_bersih,
-            'berat_keluar'  => $defaultBeratKeluar,
-            'sisa_berat'    => $item->selisih_berat,
-            'avg_kadar_air' => $item->kadar_air,
-            'modal'         => $item->harga_nota,
-            'total_modal'   => $item->total_harga_nota,
-            'keterangan'    => $item->keterangan,
-            'user_created'  => $item->user_created,
-            // 'user_updated'  => $item->user_updated,
-            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-        ]);
-        PrmRawMaterialInputItem::create([
-            // 'doc_no'            => $item->doc_no,
-            'jenis'             => $item->jenis,
-            'berat_nota'        => $item->berat_nota,
-            'berat_kotor'       => $item->berat_kotor,
-            'berat_bersih'      => $item->berat_bersih,
-            'selisih_berat'     => $item->selisih_berat,
-            'kadar_air'         => $item->kadar_air,
-            'id_box'            => $item->id_box,
-            'harga_nota'        => $item->harga_nota,
-            'total_harga_nota'  => $item->total_harga_nota,
-            'harga_deal'        => $item->harga_deal,
-            'keterangan'        => $item->keterangan,
-            'user_created'      => $item->user_created,
-            // 'user_updated'      => $item->user_updated
-            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-        ]);
-
         // stok
         $itemObject = (object)$item;
         // Cari item berdasarkan id_box dan nomor_batch
-        $existingItem = PrmRawMaterialStock::where('id_box', $itemObject->id_box)
-            ->where('nomor_batch', $itemObject->nomor_batch)
-            ->first();
+        // $existingItem = GradingKasarHasil::where('nomor_grading', $itemObject->nomor_grading)
+        //     ->where('nomor_batch', $itemObject->nomor_batch)
+        //     ->first();
         // return $existingItem
 
         $dataToUpdate = [
-            'id_box'        => $itemObject->id_box,
-            'nomor_batch'   => $itemObject->nomor_batch,
-            'nama_supplier' => $itemObject->nama_supplier,
-            'jenis'         => $itemObject->jenis,
-            'berat_masuk'   => $itemObject->berat_bersih,
-            'berat_keluar'  => $itemObject->berat_keluar ?? 0,
-            'sisa_berat'    => $itemObject->berat_bersih,
-            'avg_kadar_air' => $itemObject->kadar_air,
-            'modal'         => $itemObject->harga_deal,
-            'total_modal'   => $itemObject->harga_deal * $itemObject->berat_bersih,
-            'keterangan'    => $itemObject->keterangan,
-            'user_created'  => $itemObject->user_created,
-            // 'user_updated'  => $itemObject->user_updated,
+            // 'doc_no'                            => $itemObject->doc_no,
+            'nomor_grading'                     => $itemObject->nomor_grading,
+            'id_box_raw_material'               => $itemObject->id_box_raw_material,
+            'id_box_grading_kasar'              => $itemObject->id_box_grading_kasar,
+            'nomor_batch'                       => $itemObject->nomor_batch,
+            'nama_supplier'                     => $itemObject->nama_supplier,
+            'nomor_nota_internal'               => $itemObject->nomor_nota_internal,
+            'jenis_raw_material'                => $itemObject->jenis_raw_material,
+            'berat'                             => $itemObject->berat,
+            'kadar_air'                         => $itemObject->kadar_air,
+            'jenis_grading'                     => $itemObject->jenis_grading[0],
+            'berat_grading'                     => $itemObject->berat_grading,
+            'pcs_grading'                       => $itemObject->pcs_grading,
+            'susut'                             => $itemObject->susut,
+            'modal'                             => $itemObject->modal,
+            'total_modal'                       => $itemObject->total_modal,
+            'biaya_produksi'                    => $itemObject->biaya_produksi,
+            // 'harga_estimasi'                    => $itemObject->harga_estimasi,
+            'harga_estimasi'                    => $itemObject->harga_estimasi ?? 0,
+            'total_harga'                       => $itemObject->total_harga ?? 0,
+            // 'total_harga'                       => $itemObject->harga_estimasi * $itemObject->berat_grading,
+            'nilai_laba_rugi'                   => $itemObject->nilai_laba_rugi ?? 0,
+            'nilai_prosentase_total_keuntungan' => $itemObject->nilai_prosentase_total_keuntungan ?? 0,
+            'nilai_dikurangi_keuntungan'        => $itemObject->nilai_dikurangi_keuntungan ?? 0,
+            'prosentase_harga_gramasi'          => $itemObject->prosentase_harga_gramasi ?? 0,
+            'selisih_laba_rugi_kg'              => $itemObject->selisih_laba_rugi_kg ?? 0,
+            'selisih_laba_rugi_gram'            => $itemObject->selisih_laba_rugi_gram ?? 0,
+            'hpp'                               => $itemObject->hpp ?? 0,
+            'total_hpp'                         => $itemObject->total_hpp ?? 0,
+            'keterangan'                        => $itemObject->keterangan,
+            'user_created'                      => $item->user_created ?? 'Admin',
+            'user_updated'                      => $item->user_updated ?? 'Admin',
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
-        //
-        if ($existingItem) {
-            // Ambil nilai terakhir berat_masuk dan berat_keluar
-            $BeratMasuk = $existingItem->berat_masuk;
-            $lastBeratKeluar = $existingItem->berat_keluar;
+        GradingKasarHasil::create($dataToUpdate);
 
-            // Update nilai berat_masuk pada item yang sudah ada
-            $lastBeratMasuk = $existingItem->berat_masuk += $itemObject->berat_bersih;
-            $existingItem->berat_keluar = $itemObject->berat_keluar ?? $existingItem->berat_keluar ?? 0;
+        // if ($existingItem) {
 
-            // Tentukan nilai sisa_berat sesuai kondisi
-            if ($existingItem->berat_keluar === 0 || $existingItem->berat_keluar === null) {
-                // Jika berat_keluar belum diisi, isi sisa_berat dengan nilai berat_masuk
-                $existingItem->sisa_berat = (int)$BeratMasuk;
-            } else {
-                // Jika berat_keluar sudah diisi, hitung sisa berat
-                $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
-            }
+        // Update juga kolom-kolom lain yang diperlukan
+        // $existingItem->nomor_grading = $itemObject->nomor_grading;
+        // $existingItem->id_box_raw_material = $itemObject->id_box_raw_material;
+        // $existingItem->id_box_grading_kasar = $itemObject->id_box_grading_kasar;
+        // $existingItem->nomor_batch = $itemObject->nomor_batch;
+        // $existingItem->nama_supplier = $itemObject->nama_supplier;
+        // $existingItem->nomor_nota_internal = $itemObject->nomor_nota_internal;
+        // $existingItem->jenis_raw_material = $itemObject->jenis_raw_material;
+        // $existingItem->berat = $itemObject->berat;
+        // $existingItem->kadar_air = $itemObject->kadar_air;
+        // $existingItem->jenis_grading = $itemObject->jenis_grading;
+        // $existingItem->berat_grading = $itemObject->berat_grading;
+        // $existingItem->pcs_grading = $itemObject->pcs_grading;
+        // $existingItem->susut = $itemObject->susut;
+        // $existingItem->modal = $itemObject->modal;
+        // $existingItem->total_modal = $itemObject->total_modal;
+        // $existingItem->biaya_produksi = $itemObject->biaya_produksi;
+        // $existingItem->harga_estimasi = $itemObject->harga_estimasi;
+        // $existingItem->total_harga = $itemObject->total_harga;
+        // $existingItem->nilai_laba_rugi = $itemObject->nilai_laba_rugi;
+        // $existingItem->nilai_prosentase_total_keuntungan = $itemObject->nilai_prosentase_total_keuntungan;
+        // $existingItem->nilai_dikurangi_keuntungan = $itemObject->nilai_dikurangi_keuntungan;
+        // $existingItem->prosentase_harga_gramasi = $itemObject->prosentase_harga_gramasi;
+        // $existingItem->selisih_laba_rugi_kg = $itemObject->selisih_laba_rugi_kg;
+        // $existingItem->selisih_laba_rugi_gram = $itemObject->selisih_laba_rugi_gram;
+        // $existingItem->hpp = $itemObject->hpp;
+        // $existingItem->total_hpp = $itemObject->total_hpp;
+        // $existingItem->keterangan = $itemObject->keterangan;
+        // $existingItem->user_created = $itemObject->user_created;
 
-            if ($existingItem->total_modal === 0 || $existingItem->total_modal === null) {
-                // tet
-                $existingItem->total_modal = $existingItem->modal * $existingItem->sisa_berat;
-            } else {
-                $existingItem->total_modal = $existingItem->modal * $existingItem->sisa_berat;
-            }
-
-            // Update juga kolom-kolom lain yang diperlukan
-            $existingItem->avg_kadar_air = $itemObject->kadar_air;
-            $existingItem->keterangan = $itemObject->keterangan;
-            $existingItem->user_created = $itemObject->user_created;
-
-            // Simpan perubahan pada stok yang sudah ada
-            $existingItem->save();
-        } else {
-            // Jika item tidak ada, buat item baru dalam database
-            PrmRawMaterialStock::create($dataToUpdate);
-        }
+        // Simpan perubahan pada stok yang sudah ada
+        //     $existingItem->save();
+        // } else {
+        //     // Jika item tidak ada, buat item baru dalam database
+        //     GradingKasarHasil::create($dataToUpdate);
+        // }
     }
 }

@@ -202,9 +202,7 @@
                 success: function(response) {
                     console.log(response);
                     let inisial_supplier = response.inisial_supplier;
-                    // let created_at = response.created_at;
                     generateNomorNotaInternal(inisial_supplier);
-                    // generateNomorNotaInternal(created_at);
                 },
                 error: function(error) {
                     console.error('Error:', error);
