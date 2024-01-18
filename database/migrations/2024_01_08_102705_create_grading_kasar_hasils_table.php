@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('jenis_grading');
             $table->float('berat_grading');
             $table->float('pcs_grading');
-            $table->float('susut');
+            $table->float('susut', 16, 4);
             $table->float('modal');
             $table->float('total_modal');
             $table->float('biaya_produksi')->nullable();

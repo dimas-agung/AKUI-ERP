@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('master_tujuan_kirim_grading_kasars', function (Blueprint $table) {
             $table->id();
+            $table->string('tujuan_kirim');
+            $table->string('letak_tujuan');
+            $table->string('inisial_tujuan');
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }

@@ -53,7 +53,7 @@ class GradingKasarHasilService
                 'jenis_raw_material'                => $itemObject->jenis_raw_material,
                 'jenis_grading'                     => $itemObject->jenis_grading[0],
                 'id_box_raw_material'               => $itemObject->id_box_raw_material,
-                'berat_masuk'                       => $itemObject->berat,
+                'berat_masuk'                       => $itemObject->berat_grading,
                 'berat_keluar'                      => $itemObject->berat_keluar ?? 0,
                 'pcs_masuk'                         => $itemObject->pcs_grading,
                 'pcs_keluar'                        => $itemObject->pcs_keluar ?? 0,

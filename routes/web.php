@@ -81,6 +81,16 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::c
     Route::delete('/master_tujuan_kirim_raw_material/destroy/{id}', 'destroy')->name('master_tujuan_kirim_raw_material.destroy');
 });
 
+Route::controller(App\Http\Controllers\MasterTujuanKirimGradingKasarController::class)->group(function () {
+    Route::get('/master_tujuan_kirim_grading_kasar', 'index')->name('master_tujuan_kirim_grading_kasar.index');
+    Route::get('/master_tujuan_kirim_grading_kasar/create', 'create')->name('master_tujuan_kirim_grading_kasar.create');
+    Route::post('/master_tujuan_kirim_grading_kasar/store', 'store')->name('master_tujuan_kirim_grading_kasar.store');
+    Route::get('/master_tujuan_kirim_grading_kasar/show/{id}', 'show')->name('master_tujuan_kirim_grading_kasar.show');
+    Route::get('/master_tujuan_kirim_grading_kasar/edit/{id}', 'edit')->name('master_tujuan_kirim_grading_kasar.edit');
+    Route::put('/master_tujuan_kirim_grading_kasar/update/{id}', 'update')->name('master_tujuan_kirim_grading_kasar.update');
+    Route::delete('/master_tujuan_kirim_grading_kasar/destroy/{id}', 'destroy')->name('master_tujuan_kirim_grading_kasar.destroy');
+});
+
 Route::controller(App\Http\Controllers\MasterJenisGradingController::class)->group(function () {
     Route::get('/master_jenis_grading', 'index')->name('master_jenis_grading.index');
     Route::get('/master_jenis_grading/create', 'create')->name('master_jenis_grading.create');

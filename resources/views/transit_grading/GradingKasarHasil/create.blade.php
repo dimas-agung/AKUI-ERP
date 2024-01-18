@@ -219,6 +219,10 @@
                 console.log("Harga Estimasi: " + hargaEstimasi);
             });
         });
+        // hitung nilai berat
+        function hitungNilaiBerat() {
+            let totalBerat
+        }
         // hitung nilai susut
         function hitungNilaiSusut() {
             let totalBeratGrading = 0;
@@ -235,6 +239,11 @@
             if (!isNaN(totalBeratGrading) && !isNaN(beratAdding) && beratAdding !== 0) {
                 let nilaiSusut = 1 - (totalBeratGrading / beratAdding);
 
+                // nilaiSusut = nilaiSusut.toString();
+                // if (!nilaiSusut.includes('.')) {
+                //     nilaiSusut += '.';
+                // }
+                nilaiSusut = nilaiSusut.toFixed(4);
                 // console.log(nilaiSusut);
                 return nilaiSusut;
             } else {
@@ -264,10 +273,6 @@
         }
 
         let dataArray = [];
-        // let berats = [];
-        // let harga_estimasi = [];
-        // let totalModal = [];
-        // let dataStock = [];
 
         function addRow() {
 
@@ -305,6 +310,15 @@
             let biaya_produksi = 0;
             console.log("Harga Estimasi = " + harga_estimasi);
 
+            // TOTAL Berat
+            let totalBeratGrading = parseFloat($('#berat_grading').val()) || 0;
+
+            $('#dataTable tbody tr').each(function() {
+                let beratGradingValue = parseFloat($(this).find('td:eq(10)').text()) || 0;
+
+                totalBeratGrading += beratGradingValue;
+            });
+            console.log("Total Berat = " + totalBeratGrading);
             // Total Pcs
             // Inisialisasi variabel untuk menyimpan total pcs_grading
             let totalPcsGrading = parseFloat($('#pcs_grading').val()) || 0;
@@ -343,6 +357,7 @@
 
             $('#dataTable tbody').append(newRow);
             $('#total_pcs').val(totalPcsGrading);
+            $('#total_berat').val(totalBeratGrading);
             // Menambahkan data ke dalam array
             // dataArrayDocNo.push(doc_no),
             // dataArrayIDBoxRawMaterial.push(id_box_raw_material),
