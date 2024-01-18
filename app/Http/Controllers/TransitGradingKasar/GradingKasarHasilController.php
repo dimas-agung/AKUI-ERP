@@ -15,6 +15,14 @@ use Illuminate\Http\Request;
 
 class GradingKasarHasilController extends Controller
 {
+    protected $GradingKasarHasilService;
+    protected $HppService;
+
+    public function __construct(GradingKasarHasilService $GradingKasarHasilService, HppService $HppService)
+    {
+        $this->GradingKasarHasilService = $GradingKasarHasilService;
+        $this->HppService = $HppService;
+    }
     //index
     public function index()
     {
@@ -57,37 +65,46 @@ class GradingKasarHasilController extends Controller
         GradingKasarHasilRequest $request,
         GradingKasarHasilService $GradingKasarHasilService,
 
-    )
-    // public function simpanData(Request $request)
-    {
+    ) {
         $dataArray = json_decode($request->input('data'));
+        $dataColl = collect($dataArray);
+        $berats = array();
+        $harga_estimasi = array();
+        $totalModal = array();
+        // return $dataColl;
+        foreach ($dataColl as $key => $value) {
+            $berats[] = $value->berat;
+            $harga_estimasi[] = $value->harga_estimasi;
+            $totalModal[] = $value->total_modal;
+        };
+        $dataHpp = 'dataHPPService';
+        //panggil service
 
-        $result = $GradingKasarHasilService->simpanData($dataArray);
+        $result = $GradingKasarHasilService->simpanData($dataArray); //ngambil array id dari data yang diinput
+        $dataHpp = $this->HppService->calculate($berats, $harga_estimasi, $totalModal);
+        // return $result;
 
+        $arrayIds = $result['data'];
+        foreach ($arrayIds as $key => $value) {
+            // return $key;
+            $data = GradingKasarHasil::where('id', $value)->update([
+                'nilai_laba_rugi'                       => $dataHpp[$key]['nilai_laba_rugi'],
+                'nilai_prosentase_total_keuntungan'     => $dataHpp[$key]['nilai_prosentase_total_keuntungan'],
+                'nilai_dikurangi_keuntungan'            => $dataHpp[$key]['nilai_setelah_dikurangi_keuntungan'],
+                'prosentase_harga_gramasi'              => $dataHpp[$key]['prosentase_harga_gramasi'],
+                'selisih_laba_rugi_kg'                  => $dataHpp[$key]['selisih_laba_rugi_kg'],
+                'selisih_laba_rugi_gram'                => $dataHpp[$key]['selisih_laba_rugi_gram'],
+                'hpp'                                   => $dataHpp[$key]['hpp'],
+                'total_hpp'                             => $dataHpp[$key]['total_hpp'],
+            ]);
+        }
         if ($result['success']) {
             return response()->json($result);
         } else {
             return response()->json($result, 500);
         }
     }
-    // simpanData
-    // public function simpanData2(
-    //     GradingKasarHasilRequest $request,
-    //     GradingKasarHasilService $GradingKasarHasilService,
 
-    // )
-    // // public function simpanData(Request $request)
-    // {
-    //     $dataArray = json_decode($request->input('data'));
-
-    //     $result = $GradingKasarHasilService->simpanData2($dataArray2);
-
-    //     if ($result['success']) {
-    //         return response()->json($result);
-    //     } else {
-    //         return response()->json($result, 500);
-    //     }
-    // }
     // show
     // public function show(string $id)
     // {

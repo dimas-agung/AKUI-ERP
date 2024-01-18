@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class GradingKasarHasil extends Model
 {
     use HasFactory;
-    protected $table = 'grading_kasar_hasils';
+    protected $table = 'grading_kasar_hasil';
     protected $fillable = [
         'doc_no',
         'nomor_grading',

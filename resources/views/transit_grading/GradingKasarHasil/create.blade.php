@@ -236,7 +236,7 @@
             if (!isNaN(totalBeratGrading) && !isNaN(beratAdding) && beratAdding !== 0) {
                 let nilaiSusut = 1 - (totalBeratGrading / beratAdding);
 
-                console.log(nilaiSusut);
+                // console.log(nilaiSusut);
                 return nilaiSusut;
             } else {
                 console.error('Input tidak valid untuk berat_grading atau berat');
@@ -259,12 +259,15 @@
             const id_box_grading_kasar = `${nomorGrading}_${jenisGradingPertama}`;
 
             // Menampilkan hasil di konsol (opsional)
-            console.log(id_box_grading_kasar);
+            console.log("Id Box Grading Kasar = " + id_box_grading_kasar);
 
             return id_box_grading_kasar;
         }
 
         let dataArray = [];
+        // let berats = [];
+        // let harga_estimasi = [];
+        // let totalModal = [];
         // let dataStock = [];
 
         function addRow() {
@@ -298,13 +301,26 @@
             // Memanggil fungsi generateNomorBSTB untuk mendapatkan nomor_bstb
             // let nomor_bstb = generateNomorBSTB(inisial_tujuan);
             let susut = hitungNilaiSusut();
-            console.log(susut);
+            console.log("Susut = " + susut);
             let id_box_grading_kasar = generateIdBoxGradingKasar();
             let biaya_produksi = 0;
-            // let harga_estimasi = hargaEstimasi;
-            // console.log(harga_estimasi);
-            // Menambahkan data ke dalam tabel
-            console.log(harga_estimasi);
+            console.log("Harga Estimasi = " + harga_estimasi);
+
+            // Total Pcs
+            // Inisialisasi variabel untuk menyimpan total pcs_grading
+            let totalPcsGrading = parseFloat($('#pcs_grading').val()) || 0;
+
+            // Loop melalui setiap baris tabel untuk menghitung total pcs_grading
+            $('#dataTable tbody tr').each(function() {
+                // Ambil nilai dari kolom pcs_grading dalam setiap baris
+                let pcsGradingValue = parseFloat($(this).find('td:eq(11)').text()) || 0;
+
+                // Tambahkan nilai pcs_grading ke totalPcsGrading
+                totalPcsGrading += pcsGradingValue;
+            });
+            console.log("Total Pcs = " + totalPcsGrading);
+
+            //
             let newRow = '<tr>' +
                 // '<td>' + doc_no + '</td>' +
                 '<td>' + nomor_grading + '</td>' +
@@ -327,8 +343,35 @@
                 '</tr>';
 
             $('#dataTable tbody').append(newRow);
-
+            $('#total_pcs').val(totalPcsGrading);
             // Menambahkan data ke dalam array
+            // dataArrayDocNo.push(doc_no),
+            // dataArrayIDBoxRawMaterial.push(id_box_raw_material),
+            //     dataArrayIDBoxGradingKasar.push(id_box_grading_kasar),
+            //     dataArrayNomorBatch.push(nomor_batch),
+            //     dataArrayNamaSupplier.push(nama_supplier),
+            //     dataArrayNomorNotaInternal.push(nomor_nota_internal),
+            //     dataArrayJenisRawMaterial.push(jenis_raw_material),
+            //     dataArrayBerat.push(berat),
+            //     dataArrayKadarAir.push(kadar_air),
+            //     dataArrayJenisGrading.push(jenis_grading),
+            //     dataArrayBeratGrading.push(berat_grading),
+            //     dataArraySusut.push(susut),
+            //     dataArrayModal.push(modal),
+            //     dataArrayTotalModal.push(total_modal),
+            //     dataArrayBiayaProduksi.push(biaya_produksi),
+            //     dataArrayHargaEstimasi.push(harga_estimasi),
+            //     dataArrayNilaiLabaRugi.push(nilai_laba_rugi),
+            //     dataArrayNilaiProsentaseTotalKeuntungan.push(nilai_prosentase_total_keuntungan),
+            //     dataArrayNilaiDikurangiKeuntungan.push(nilai_dikurangi_keuntungan),
+            //     dataArrayProsentaseHargaGramasi.push(prosentase_harga_gramasi),
+            //     dataArraySelisihLabaRugiKg.push(selisih_laba_rugi_kg),
+            //     dataArraySelisihLabaRugiGram.push(selisih_laba_rugi_gram),
+            //     dataArrayHpp.push(hpp),
+            //     dataArrayTotalHpp.push(total_hpp),
+            //     dataArrayKeterangan.push(keterangan),
+            //     dataArrayUserCreated.push(user_created),
+            //     dataArrayUserUpdated.push(user_updated),
             dataArray.push({
                 // doc_no: doc_no,
                 nomor_grading: nomor_grading,
@@ -346,33 +389,21 @@
                 susut: susut,
                 modal: modal,
                 total_modal: total_modal,
-                biaya_produksi: biaya_produksi,
+                biaya_produksi: 0,
                 harga_estimasi: harga_estimasi,
-                // total_harga: total_harga,
-                // nilai_laba_rugi: nilai_laba_rugi,
-                // nilai_prosentase_total_keuntungan: nilai_prosentase_total_keuntungan,
-                // nilai_dikurangi_keuntungan: nilai_dikurangi_keuntungan,
-                // prosentase_harga_gramasi: prosentase_harga_gramasi,
-                // selisih_laba_rugi_kg: selisih_laba_rugi_kg,
-                // selisih_laba_rugi_gram: selisih_laba_rugi_gram,
-                // hpp: hpp,
-                // total_hpp: total_hpp,
+                total_harga: 0,
+                nilai_laba_rugi: 0,
+                nilai_prosentase_total_keuntungan: 0,
+                nilai_dikurangi_keuntungan: 0,
+                prosentase_harga_gramasi: 0,
+                selisih_laba_rugi_kg: 0,
+                selisih_laba_rugi_gram: 0,
+                hpp: 0,
+                total_hpp: 0,
                 keterangan: keterangan,
                 // user_created: user_created,
                 // user_updated: user_updated
             });
-            // dataHpp.push({
-            //     total_harga: total_harga,
-            //     nilai_laba_rugi: nilai_laba_rugi,
-            //     nilai_prosentase_total_keuntungan: nilai_prosentase_total_keuntungan,
-            //     nilai_dikurangi_keuntungan: nilai_dikurangi_keuntungan,
-            //     prosentase_harga_gramasi: prosentase_harga_gramasi,
-            //     selisih_laba_rugi_kg: selisih_laba_rugi_kg,
-            //     selisih_laba_rugi_gram: selisih_laba_rugi_gram,
-            //     hpp: hpp,
-            //     total_hpp: total_hpp,
-            // });
-
             // Membersihkan nilai input setelah ditambahkan
             // $('#nomor_grading').val();
             // $('#nomor_batch').val();
@@ -406,7 +437,32 @@
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
-                    // dataStock: JSON.stringify(dataStock),
+                    // data: JSON.stringify(dataArrayDocNo),
+                    // data: JSON.stringify(dataArrayIDBoxRawMaterial),
+                    // data: JSON.stringify(dataArrayIDBoxGradingKasar),
+                    // data: JSON.stringify(dataArrayNomorBatch),
+                    // data: JSON.stringify(dataArrayNamaSupplier),
+                    // data: JSON.stringify(dataArrayNomorNotaInternal),
+                    // data: JSON.stringify(dataArrayJenisRawMaterial),
+                    // data: JSON.stringify(dataArrayBerat),
+                    // data: JSON.stringify(dataArrayKadarAir),
+                    // data: JSON.stringify(dataArrayJenisGrading),
+                    // data: JSON.stringify(dataArrayBeratGrading),
+                    // data: JSON.stringify(dataArraySusut),
+                    // data: JSON.stringify(dataArrayTotalModal),
+                    // data: JSON.stringify(dataArrayBiayaProduksi),
+                    // data: JSON.stringify(dataArrayHargaEstimasi),
+                    // data: JSON.stringify(dataArrayNilaiLabaRugi),
+                    // data: JSON.stringify(dataArrayNilaiProsentaseTotalKeuntungan),
+                    // data: JSON.stringify(dataArrayNilaiDikurangiKeuntungan),
+                    // data: JSON.stringify(dataArrayProsentaseHargaGramasi),
+                    // data: JSON.stringify(dataArraySelisihLabaRugiKg),
+                    // data: JSON.stringify(dataArraySelisihLabaRugiGram),
+                    // data: JSON.stringify(dataArrayHpp),
+                    // data: JSON.stringify(dataArrayTotalHpp),
+                    // data: JSON.stringify(dataArrayKeterangan),
+                    // data: JSON.stringify(dataArrayUserCreated),
+                    // data: JSON.stringify(dataArrayUserUpdated),
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json', // payload is json,
@@ -434,9 +490,6 @@
                     console.log('Validation Errors:', response.responseJSON.errors);
                 }
             });
-
-            // Membersihkan array setelah data dikirim
-            // dataArray = [];
         }
     </script>
 @endsection
