@@ -76,8 +76,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <input type="hidden" id="harga_estimasi" name="harga_estimasi"
-                            value="{{ $MasterJGK->harga_estimasi }}">
+                        <input type="hidden" id="harga_estimasi" name="harga_estimasi">
                     </div>
                     <div class="col-md-4">
                         <label for="berat_grading" class="form-label">Berat Grading</label>

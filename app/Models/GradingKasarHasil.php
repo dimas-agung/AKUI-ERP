@@ -57,4 +57,8 @@ class GradingKasarHasil extends Model
     {
         return $this->hasMany(MasterJenisGradingKasar::class, 'jenis_grading', 'nama');
     }
+    public function GradingKasarStock()
+    {
+        return $this->hasMany(GradingKasarStock::class, 'id_box_grading_kasar', 'id_box_grading_kasar');
+    }
 }

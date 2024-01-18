@@ -27,13 +27,8 @@ class GradingKasarHasilController extends Controller
     public function index()
     {
         $i = 1;
-        // $MasterJenisGradingHasil = MasterJenisGradingKasar::with('GradingKasarHasil')->get();
         $GradingKasarHasil = GradingKasarHasil::all();
-        // $MasterJenisGradingKasarHasil = GradingKasarHasil::all();
-        // return $MasterJenisGradingHasil;
-        // return $GradingKasarHasil;
         return response()->view('transit_grading.GradingKasarHasil.index', [
-            // 'master_jenis_grading_hasils'   => $MasterJenisGradingHasil,
             'grading_kasar_hasils'          => $GradingKasarHasil,
             'i'                             => $i
         ]);
@@ -52,10 +47,7 @@ class GradingKasarHasilController extends Controller
     public function set(Request $request)
     {
         $nomor_grading = $request->nomor_grading;
-        // $harga_estimasi = $request->harga_estimasi;
-        // Lakukan logika untuk mengatur nomor batch berdasarkan id_box
         $data = GradingKasarInput::where('nomor_grading', $nomor_grading)->first();
-        // $data_harga = MasterJenisGradingKasar::where('harga_estimasi', $harga_estimasi)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -88,6 +80,7 @@ class GradingKasarHasilController extends Controller
         foreach ($arrayIds as $key => $value) {
             // return $key;
             $data = GradingKasarHasil::where('id', $value)->update([
+                'total_harga'                           => $dataHpp[$key]['total_harga'],
                 'nilai_laba_rugi'                       => $dataHpp[$key]['nilai_laba_rugi'],
                 'nilai_prosentase_total_keuntungan'     => $dataHpp[$key]['nilai_prosentase_total_keuntungan'],
                 'nilai_dikurangi_keuntungan'            => $dataHpp[$key]['nilai_setelah_dikurangi_keuntungan'],

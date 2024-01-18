@@ -11,10 +11,13 @@ class GradingKasarStock extends Model
     protected $table = 'grading_kasar_stocks';
     protected $fillable = [
         'doc_no',
-        'id_box',
+        'id_box_grading_kasar',
         'nomor_batch',
         'nama_supplier',
+        'nomor_nota_internal',
+        'jenis_raw_material',
         'jenis_grading',
+        'id_box_raw_material',
         'berat_masuk',
         'berat_keluar',
         'pcs_masuk',
@@ -27,4 +30,8 @@ class GradingKasarStock extends Model
         'user_created',
         'user_updated',
     ];
+    public function GradingKasarHasil()
+    {
+        return $this->hasmany(GradingKasarHasil::class);
+    }
 }

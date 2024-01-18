@@ -316,8 +316,8 @@
         // test
         var dataArray = [];
         var dataHeader = [];
-        var dataStock = [];
-        var dataStockHistory = [];
+        // var dataStock = [];
+        // var dataStockHistory = [];
 
         // function isDuplicateData(nomorPO, nomorBatch) {
         //     return dataHeader.some(data => data.nomor_po === nomorPO && data.nomor_batch === nomorBatch);
@@ -446,7 +446,7 @@
                 data: {
                     data: JSON.stringify(dataArray),
                     dataHeader: JSON.stringify(dataHeader),
-                    dataStock: JSON.stringify(dataStock),
+                    // dataStock: JSON.stringify(dataStock),
                     // dataStockHistory: JSON.stringify(dataStockHistory),
                     _token: '{{ csrf_token() }}'
                 },

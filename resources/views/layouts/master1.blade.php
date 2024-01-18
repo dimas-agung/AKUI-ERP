@@ -270,7 +270,7 @@
                             </ul>
                         </li>
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'GradingKasarInput') ? 'active' : '' }}">
+                            class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'GradingKasarInput', 'transit_grading_kasar/grading_kasar_hasil', 'transit_grading_kasar/grading_kasar_stock') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
                                 <span>Grading Kasar<br>Transit</span>
@@ -288,8 +288,12 @@
                                 <li
                                     class="submenu-item  {{ Request::is('transit_grading_kasar/grading_kasar_hasil') ? 'active' : '' }} ">
                                     <a href="{{ url('/transit_grading_kasar/grading_kasar_hasil') }}"
-                                        class="submenu-link">Grading Kasar
-                                        Hasil</a>
+                                        class="submenu-link">Grading Kasar<br>Hasil</a>
+                                </li>
+                                <li
+                                    class="submenu-item  {{ Request::is('transit_grading_kasar/grading_kasar_stock') ? 'active' : '' }} ">
+                                    <a href="{{ url('/transit_grading_kasar/grading_kasar_stock') }}"
+                                        class="submenu-link">Grading Kasar<br>Stock</a>
                                 </li>
                             </ul>
                         </li>

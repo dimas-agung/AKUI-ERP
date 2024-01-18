@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('grading_kasar_stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('doc_no');
+            $table->string('doc_no')->default('1');
             $table->string('id_box_grading_kasar');
             $table->string('nomor_batch');
             $table->string('nama_supplier');
+            $table->string('nomor_nota_internal');
+            $table->string('jenis_raw_material');
             $table->string('jenis_grading');
+            $table->string('id_box_raw_material');
             $table->float('berat_masuk');
             $table->float('berat_keluar');
             $table->float('pcs_masuk');
