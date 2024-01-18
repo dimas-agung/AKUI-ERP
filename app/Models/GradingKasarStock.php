@@ -34,5 +34,9 @@ class GradingKasarStock extends Model
     {
         return $this->hasMany(GradingKasarHasil::class, 'id_box_grading_kasar', 'id_box_grading_kasar');
     }
+    public function GradingKasarOutput()
+    {
+        return $this->hasMany(GradingKasarOutput::class, 'id_box_grading_kasar', 'id_box_grading_kasar');
+    }
 }
 

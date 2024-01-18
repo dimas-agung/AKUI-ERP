@@ -69,7 +69,7 @@
                             {{-- <th class="text-center">Action</th> --}}
                         </tfoot>
                         <tbody>
-                            @forelse ($GKstock as $item)
+                            @forelse ($grading_kasar_stocks as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{{ $item->doc_no }}</td>

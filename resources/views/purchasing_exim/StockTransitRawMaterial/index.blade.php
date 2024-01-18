@@ -1,16 +1,16 @@
 @extends('layouts.master1')
 @section('Menu')
-    Stock Transit Grading
+    Stock Transit Raw Material
 @endsection
 @section('title')
-    Data Stock Transit Grading Kasar
+    Data Stock Transit Raw Material
 @endsection
 @section('content')
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Data Stock Transit Grading Kasar</h4>
+                    <h4 class="card-title">Data Stock Transit Raw Material</h4>
                     {{-- <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                         <i class="fa fa-plus"></i>
                         Add Data

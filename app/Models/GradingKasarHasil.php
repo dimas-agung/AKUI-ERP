@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class GradingKasarHasil extends Model
 {
     use HasFactory;
-    protected $table = 'grading_kasar_hasils';
+    protected $table = 'grading_kasar_hasil';
     protected $fillable = [
         'doc_no',
         'nomor_grading',
+        'id_box_raw_material',
         'id_box_grading_kasar',
         'nomor_batch',
         'nama_supplier',
+        'nomor_nota_internal',
         'jenis_raw_material',
         'berat',
         'kadar_air',
@@ -39,6 +41,14 @@ class GradingKasarHasil extends Model
         'user_created',
         'user_updated',
     ];
+    // public function MasterJenisGradingKasar()
+    // {
+    //     return $this->hasMany(MasterJenisGradingKasar::class, 'jenis', 'nama');
+    // }
+    // public function GradingKasarInput()
+    // {
+    //     return $this->hasMany(GradingKasarInput::class, 'nomor_grading', 'nomor_grading');
+    // }
     public function GradingKasarInput()
     {
         return $this->hasMany(GradingKasarInput::class, 'nomor_grading', 'nomor_grading');
@@ -47,11 +57,7 @@ class GradingKasarHasil extends Model
     {
         return $this->hasMany(MasterJenisGradingKasar::class, 'jenis_grading', 'nama');
     }
-    public function GradingKasarHasil()
-    {
-        return $this->belongsTo(GradingKasarHasil::class, 'nomor_grading', 'nomor_grading');
-    }
-    public function GradingKasarStock()
+        public function GradingKasarStock()
     {
         return $this->hasMany(GradingKasarStock::class, 'id_box_grading_kasar', 'id_box_grading_kasar');
     }

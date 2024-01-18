@@ -3,21 +3,20 @@
 namespace App\Http\Controllers\TransitGradingKasar;
 
 use App\Http\Controllers\Controller;
-use App\Models\GradingKasarHasil;
-use App\Models\GradingKasarStock;
 use Illuminate\Http\Request;
+use App\Models\GradingKasarStock;
 
 class GradingKasarStockController extends Controller
 {
-    //Index
-    public function index(){
+    //
+    //index
+    public function index()
+    {
         $i = 1;
-        $GradingKasarHasil = GradingKasarHasil::with('GradingKasarStock')->get();
-        $GKstock = GradingKasarStock::with('GradingKasarHasil')->get();
-
+        $GradigKasarStock = GradingKasarStock::all();
         return response()->view('transit_grading.GradingKasarStock.index', [
-            'GKstock'       => $GKstock,
-            'i'             => $i
+            'grading_kasar_stocks'          => $GradigKasarStock,
+            'i'                             => $i
         ]);
     }
 }

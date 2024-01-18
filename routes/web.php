@@ -49,8 +49,6 @@ Route::controller(App\Http\Controllers\BiayaHppController::class)->group(functio
     Route::delete('/biayahpp/hapus/{id}', 'destroy')->name('biaya.destroy');
 });
 
-//route resource
-// Route::resource('/Mastersupplier', \App\Http\Controllers\MasterSupplierController::class);
 Route::controller(App\Http\Controllers\MasterSupplierRawMaterialController::class)->group(function () {
     Route::get('/master_supplier_raw_material', 'index')->name('master_supplier_raw_material.index');
     Route::get('/master_supplier_raw_material/create', 'create')->name('master_supplier_raw_material.create');
@@ -96,8 +94,9 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputControl
     Route::post('/purchasing_exim/prm_raw_material_input/simpanData', 'simpanData')->name('prm_raw_material_input.simpanData');
     Route::post('/purchasing_exim/prm_raw_material_input/simpanDataItem', 'simpanDataItem')->name('prm_raw_material_input.simpanDataItem');
 });
+
 Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->group(function () {
-    Route::get('/StockTransitGradingKasar', 'index')->name('StockTransitGradingKasar.index');
+    Route::get('/StockTransitRawMaterial', 'index')->name('StockTransitRawMaterial.index');
 });
 
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
@@ -128,6 +127,15 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputCont
     Route::put('/GradingKasarInput/update/{id}', 'update')->name('GradingKasarInput.update');
     Route::delete('/GradingKasarInput/destroy/{id}', 'destroy')->name('GradingKasarInput.destroy');
 });
+Route::controller(App\Http\Controllers\MasterJenisGradingKasarController::class)->group(function () {
+    Route::get('/master_jenis_grading_kasar', 'index')->name('master_jenis_grading_kasar.index');
+    Route::get('/master_jenis_grading_kasar/create', 'create')->name('master_jenis_grading_kasar.create');
+    Route::post('/master_jenis_grading_kasar/store', 'store')->name('master_jenis_grading_kasar.store');
+    Route::get('/master_jenis_grading_kasar/show/{id}', 'show')->name('master_jenis_grading_kasar.show');
+    Route::get('/master_jenis_grading_kasar/edit/{id}', 'edit')->name('master_jenis_grading_kasar.edit');
+    Route::put('/master_jenis_grading_kasar/update/{id}', 'update')->name('master_jenis_grading_kasar.update');
+    Route::delete('/master_jenis_grading_kasar/destroy/{id}', 'destroy')->name('master_jenis_grading_kasar.destroy');
+});
 Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarHasilController::class)->group(function () {
     Route::get('/transit_grading_kasar/grading_kasar_hasil', 'index')->name('grading_kasar_hasil.index');
     Route::get('/transit_grading_kasar/grading_kasar_hasil/create', 'create')->name('grading_kasar_hasil.create');
@@ -153,6 +161,24 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarStockCont
     Route::get('/GradingKasarStock/edit/{id}', 'edit')->name('GradingKasarStock.edit');
     Route::put('/GradingKasarStock/update/{id}', 'update')->name('GradingKasarStock.update');
     Route::delete('/GradingKasarStock/destroy/{id}', 'destroy')->name('GradingKasarStock.destroy');
+});
+
+Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarOutputController::class)->group(function () {
+    Route::get('/GradingKasarOutput', 'index')->name('GradingKasarOutput.index');
+    Route::get('/GradingKasarOutput/create', 'create')->name('GradingKasarOutput.create');
+    Route::post('/GradingKasarOutput/store', 'store')->name('GradingKasarOutput.store');
+    Route::post('/GradingKasarOutput/sendData', 'sendData')->name('GradingKasarOutput.sendData');
+    Route::get('/GradingKasarOutput/show/{id}', 'show')->name('GradingKasarOutput.show');
+    Route::get('/GradingKasarOutput/edit/{id}', 'edit')->name('GradingKasarOutput.edit');
+    Route::put('/GradingKasarOutput/update/{id}', 'update')->name('GradingKasarOutput.update');
+    Route::delete('/GradingKasarOutput/destroy/{id}', 'destroy')->name('GradingKasarOutput.destroy');
+    Route::delete('/GradingKasarOutput/destroyHead/{id}', 'destroyHead')->name('GradingKasarOutput.destroyHead');
+    Route::get('/GradingKasarOutput/get_data_id_box', 'set')->name('GradingKasarOutput.set');
+    Route::get('/GradingKasarOutput/get_pcc', 'setpcc')->name('GradingKasarOutput.setpcc');
+});
+
+Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
+    Route::get('/StockTransitGradingKasar', 'index')->name('StockTransitGradingKasar.index');
 });
 
 Auth::routes();

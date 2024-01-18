@@ -31,4 +31,9 @@ class StockTransitGradingKasar extends Model
         'user_created',
         'user_updated',
     ];
+
+    public function GradingKasarOutput()
+    {
+        return $this->hasOne(GradingKasarOutput::class, 'nomor_job', 'nomor_job');
+    }
 }

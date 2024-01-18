@@ -1,4 +1,5 @@
 @extends('layouts.master1')
+{{-- @extends('layouts.template') --}}
 @section('menu')
     Grading Kasar Transit
 @endsection
@@ -16,7 +17,8 @@
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Grading Kasar Hasil
                                 <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong>Add Data</strong>
+                                    <strong><i class="bi bi-plus-circle"></i> Add Data <i
+                                            class="bi bi-plus-circle"></i></strong>
                                 </button>
                             </div>
                         </h5>
@@ -30,10 +32,12 @@
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">No Doc</th>
                                         <th scope="col" class="text-center">Nomor Grading</th>
+                                        <th scope="col" class="text-center">Id Box Raw Material</th>
                                         <th scope="col" class="text-center">Id Box Grading Kasar</th>
                                         <th scope="col" class="text-center">Nomor Batch</th>
                                         <th scope="col" class="text-center">Nama Supplier</th>
-                                        <th scope="col" class="text-center">Jenis</th>
+                                        <th scope="col" class="text-center">Nomor Nota Internal</th>
+                                        <th scope="col" class="text-center">Jenis Raw Material</th>
                                         <th scope="col" class="text-center">Berat</th>
                                         <th scope="col" class="text-center">Kadar Air</th>
                                         <th scope="col" class="text-center">Jenis Grading</th>
@@ -62,34 +66,57 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @forelse ($prm_raw_material_inputs as $MasterPRIM)
+                                    @forelse ($grading_kasar_hasils as $GradingKH)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->doc_no }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->nomor_po }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->nomor_batch }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->nomor_nota_supplier }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->nomor_nota_internal }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->nama_supplier }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->keterangan }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->user_created }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->user_updated }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->created_at }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->updated_at }}</td>
+                                            <td class="text-center">{{ $GradingKH->doc_no }}</td>
+                                            <td class="text-center">{{ $GradingKH->nomor_grading }}</td>
+                                            <td class="text-center">{{ $GradingKH->id_box_raw_material }}</td>
+                                            <td class="text-center">{{ $GradingKH->id_box_grading_kasar }}</td>
+                                            <td class="text-center">{{ $GradingKH->nomor_batch }}</td>
+                                            <td class="text-center">{{ $GradingKH->nama_supplier }}</td>
+                                            <td class="text-center">{{ $GradingKH->nomor_nota_internal }}</td>
+                                            <td class="text-center">{{ $GradingKH->jenis_raw_material }}</td>
+                                            <td class="text-center">{{ $GradingKH->berat }}</td>
+                                            <td class="text-center">{{ $GradingKH->kadar_air }}</td>
+                                            <td class="text-center">{{ $GradingKH->jenis_grading }}</td>
+                                            <td class="text-center">{{ $GradingKH->berat_grading }}</td>
+                                            <td class="text-center">{{ $GradingKH->pcs_grading }}</td>
+                                            <td class="text-center">{{ $GradingKH->susut }}</td>
+                                            <td class="text-center">{{ $GradingKH->modal }}</td>
+                                            <td class="text-center">{{ $GradingKH->total_modal }}</td>
+                                            <td class="text-center">{{ $GradingKH->biaya_produksi }}</td>
+                                            <td class="text-center">{{ $GradingKH->harga_estimasi }}</td>
+                                            <td class="text-center">{{ $GradingKH->total_harga }}</td>
+                                            <td class="text-center">{{ $GradingKH->nilai_laba_rugi }}</td>
+                                            <td class="text-center">{{ $GradingKH->nilai_prosentase_total_keuntungan }}
+                                            </td>
+                                            <td class="text-center">{{ $GradingKH->nilai_dikurangi_keuntungan }}</td>
+                                            <td class="text-center">{{ $GradingKH->prosentase_harga_gramasi }}</td>
+                                            <td class="text-center">{{ $GradingKH->selisih_laba_rugi_kg }}</td>
+                                            <td class="text-center">{{ $GradingKH->selisih_laba_rugi_gram }}</td>
+                                            <td class="text-center">{{ $GradingKH->hpp }}</td>
+                                            <td class="text-center">{{ $GradingKH->total_hpp }}</td>
+                                            <td class="text-center">{{ $GradingKH->keterangan }}</td>
+                                            <td class="text-center">{{ $GradingKH->user_created }}</td>
+                                            <td class="text-center">{{ $GradingKH->user_updated }}</td>
+                                            <td class="text-center">{{ $GradingKH->created_at }}</td>
+                                            <td class="text-center">{{ $GradingKH->updated_at }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
-                                                        action="{{ route('prm_raw_material_input.destroyInput', $MasterPRIM->id) }}"
+                                                    <form style="display: flex" id="deleteForm{{ $GradingKH->id }}"
+                                                        action="{{ route('grading_kasar_hasil.destroyInput', $GradingKH->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('prm_raw_material_input.show', $MasterPRIM->id) }}"
-                                                            class="btn btn-link" title="View" data-original-title="View">
+                                                        <a href="{{ route('grading_kasar_hasil.show', $GradingKH->id) }}"
+                                                            class="btn btn-link" title="View"
+                                                            data-original-title="View">
                                                             <i class="bi bi-eye"></i>
                                                         </a>
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $MasterPRIM->id }})">
+                                                            onclick="confirmDelete({{ $GradingKH->id }})">
                                                             <i class="bi bi-trash3 text-danger"></i>
                                                         </button>
                                                     </form>
@@ -98,9 +125,9 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Master Supplier Raw Material belum Tersedia.
+                                            Data Grading Kasar Hasil belum Tersedia.
                                         </div>
-                                    @endforelse --}}
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

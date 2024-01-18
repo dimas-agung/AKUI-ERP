@@ -15,4 +15,8 @@ class MasterTujuanKirimGradingKasar extends Model
         'inisial_tujuan',
         'status',
     ];
+    public function GradingKasarOutput()
+    {
+        return $this->hasMany(GradingKasarOutput::class, 'tujuan_kirim', 'tujuan_kirim');
+    }
 }
