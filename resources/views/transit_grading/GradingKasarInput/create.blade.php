@@ -185,6 +185,7 @@
                                 <th class="text-center">Total Modal</th>
                                 <th class="text-center">Keterangan</th>
                                 <th class="text-center">NIP Admin</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
@@ -300,7 +301,8 @@
         }
 
 
-
+        // Variabel global untuk menyimpan indeks baris terakhir
+        var currentRowIndex = 0;
         var dataArray = [];
         var dataStock = [];
 
@@ -336,8 +338,8 @@
                 berat_masuk + '</td><td>' +
                 berat + '</td><td>' + kadar_air + '</td><td id="nomor_grading">' +
                 nomor_grading + '</td><td>' + modal + '</td><td>' + total_modal + '</td><td>' + keterangan + '</td><td>' +
-                user_created +
-                '</td></tr>';
+                user_created + '</td><td><button onclick="deleteRow(' + currentRowIndex +
+                ')" class="btn btn-danger" data-dismiss="modal">Hapus</button></td></tr>';
 
             $('#tableBody').append(newRow);
 
@@ -361,7 +363,8 @@
             // Membersihkan nilai input setelah ditambahkan
             $('#id_box').val('');
             $('#nomor_batch').val('');
-            $('#nomor_bstb').val('');
+            // $('#nomor_bstb').val('');
+            $('#nomor_bstb').val($('#nomor_bstb option:first').val());
             $('#nama_supplier').val('');
             $('#jenis').val('');
             $('#berat_masuk').val('');
@@ -375,9 +378,23 @@
             $('#total_modal').val('');
             $('#keterangan').val('');
 
-            // Mereset dan memperbarui form-select Chosen
-            $('#nomor_bstb').trigger('chosen:updated');
+            // Update indeks baris terakhir
+            currentRowIndex++;
         }
+
+        function deleteRow(rowIndex) {
+            // Hapus baris dari tabel
+            $('#tableBody tr').eq(rowIndex).remove();
+
+            // Hapus data yang sesuai dari array (diasumsikan dataArray adalah variabel global)
+            currentRowIndex.splice(rowIndex, 1);
+        }
+
+        $('#tableBody').on('click', 'button', function() {
+            // Mengambil indeks baris dari data yang disimpan di elemen
+            var rowIndex = $(this).closest('tr').index();
+            deleteRow(rowIndex);
+        });
 
         function getArray() {
             // Menampilkan array di konsol untuk tujuan debugging

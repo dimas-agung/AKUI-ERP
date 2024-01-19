@@ -10,6 +10,8 @@ use App\Services\GradingKasarOutputService;
 use App\Http\Requests\GradingKasarOutputRequest;
 use App\Models\GradingKasarStock;
 use App\Models\MasterTujuanKirimRawMaterial;
+//return type redirectResponse
+use Illuminate\Http\RedirectResponse;
 
 class GradingKasarOutputController extends Controller
 {
@@ -71,5 +73,20 @@ class GradingKasarOutputController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+        /**
+     * destroy
+     */
+    public function destroy($id): RedirectResponse
+    {
+        //get post by ID
+        $GradingKO = GradingKasarOutput::findOrFail($id);
+
+        //delete post
+        $GradingKO->delete();
+
+        //redirect to index
+        return redirect()->route('GradingKasarOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

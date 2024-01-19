@@ -212,6 +212,7 @@
                                     <th class="text-center">Total Modal</th>
                                     <th class="text-center">Keterangan</th>
                                     <th class="text-center">NIP Admin</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="tableBody">
@@ -329,6 +330,8 @@
             $('#selisih_berat').val(isNaN(selisihBerat) ? '' : selisihBerat);
         }
 
+        // Variabel global untuk menyimpan indeks baris terakhir
+        var currentRowIndex = 0;
         var dataArray = [];
         var dataStock = [];
 
@@ -367,7 +370,9 @@
                 berat + '</td><td>' + selisih_berat + '</td><td>' + kadar_air + '</td><td>' + tujuan_kirim + '</td><td>' +
                 letak_tujuan + '</td><td>' + inisial_tujuan + '</td><td>' +
                 modal + '</td><td>' + total_modal + '</td><td>' + keterangan_item + '</td><td>' + user_created +
-                '</td></tr>';
+                '</td><td><button onclick="deleteRow(' + currentRowIndex +
+                ')" class="btn btn-danger" data-dismiss="modal">Hapus</button></td></tr>';
+
 
             $('#tableBody').append(newRow);
 
@@ -402,7 +407,8 @@
             $('#berat').val('');
             $('#selisih_berat').val('');
             $('#kadar_air').val('');
-            $('#tujuan_kirim').val('');
+            $('#tujuan_kirim').val($('#tujuan_kirim option:first').val());
+            $('#nomor_nota_internal').val('');
             $('#letak_tujuan').val('');
             $('#inisial_tujuan').val('');
             $('#modal').val('');
@@ -414,7 +420,33 @@
             $('#nomor_batch').prop('readonly', true);
             $('#keterangan').prop('readonly', true);
             $('#user_created').prop('readonly', true);
+
+            // Update indeks baris terakhir
+            currentRowIndex++;
         }
+
+        function deleteRow(rowIndex) {
+            // Hapus baris dari tabel
+            $('#tableBody tr').eq(rowIndex).remove();
+
+            // Hapus data yang sesuai dari array (diasumsikan dataArray adalah variabel global)
+            currentRowIndex.splice(rowIndex, 1);
+
+            // Anda juga mungkin ingin mengaktifkan kembali input atau melakukan tindakan lain yang diperlukan
+            // Sebagai contoh, jika Anda ingin mengaktifkan kembali input:
+            $('#doc_no').prop('readonly', false);
+            $('#nomor_bstb').prop('readonly', false);
+            $('#nomor_batch').prop('readonly', false);
+            $('#keterangan').prop('readonly', false);
+            $('#user_created').prop('readonly', false);
+        }
+
+        $('#tableBody').on('click', 'button', function() {
+            // Mengambil indeks baris dari data yang disimpan di elemen
+            var rowIndex = $(this).closest('tr').index();
+            deleteRow(rowIndex);
+        });
+
 
         function getArray() {
             // Menampilkan array di konsol untuk tujuan debugging

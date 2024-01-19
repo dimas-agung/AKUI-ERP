@@ -27,13 +27,8 @@ class GradingKasarHasilController extends Controller
     public function index()
     {
         $i = 1;
-        // $MasterJenisGradingHasil = MasterJenisGradingKasar::with('GradingKasarHasil')->get();
         $GradingKasarHasil = GradingKasarHasil::all();
-        // $MasterJenisGradingKasarHasil = GradingKasarHasil::all();
-        // return $MasterJenisGradingHasil;
-        // return $GradingKasarHasil;
         return response()->view('transit_grading.GradingKasarHasil.index', [
-            // 'master_jenis_grading_hasils'   => $MasterJenisGradingHasil,
             'grading_kasar_hasils'          => $GradingKasarHasil,
             'i'                             => $i
         ]);
@@ -79,7 +74,7 @@ class GradingKasarHasilController extends Controller
 
         $result = $GradingKasarHasilService->simpanData($dataArray); //ngambil array id dari data yang diinput
         $dataHpp = $this->HppService->calculate($berats, $harga_estimasi, $totalModal);
-        return $result;
+        // return $result;
 
         $arrayIds = $result['data'];
         foreach ($arrayIds as $key => $value) {
