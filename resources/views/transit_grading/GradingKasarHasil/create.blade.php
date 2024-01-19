@@ -160,6 +160,7 @@
                                 <th scope="col" class="text-center">HPP</th>
                                 <th scope="col" class="text-center">Total HPP</th> --}}
                                 <th scope="col" class="text-center">Keterangan</th>
+                                <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -225,31 +226,33 @@
         }
         // hitung nilai susut
         function hitungNilaiSusut() {
-            let totalBeratGrading = 0;
+            let totalBeratGradingtest = parseFloat($('#berat_grading').val()) || 0;
+            // let totalBeratGradingtest = parseFloat($(this).find('td:eq(12)').text()) || 0;
+            // let totalBeratGrading = 0;
 
             $('.berat_grading').each(function() {
                 let beratGradingValue = parseFloat($(this).val());
                 if (!isNaN(beratGradingValue)) {
-                    totalBeratGrading += beratGradingValue;
+                    totalBeratGradingtest += beratGradingValue;
                 }
             });
 
+            // console.log(beratGradingValue);
             let beratAdding = parseFloat($('#berat').val());
 
-            if (!isNaN(totalBeratGrading) && !isNaN(beratAdding) && beratAdding !== 0) {
-                let nilaiSusut = 1 - (totalBeratGrading / beratAdding);
-
-                // nilaiSusut = nilaiSusut.toString();
-                // if (!nilaiSusut.includes('.')) {
-                //     nilaiSusut += '.';
-                // }
-                nilaiSusut = nilaiSusut.toFixed(4);
-                // console.log(nilaiSusut);
+            if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding) && beratAdding !== 0) {
+                // let nilaiSusut = 1 - (totalBeratGradingtest / beratAdding);
+                let nilaiSusut = (1 - totalBeratGradingtest / beratAdding).toFixed(4);
+                console.log(totalBeratGradingtest);
+                console.log(beratAdding);
+                // nilaiSusut = nilaiSusut.toFixed(4);
+                console.log(nilaiSusut);
                 return nilaiSusut;
             } else {
                 console.error('Input tidak valid untuk berat_grading atau berat');
                 return null;
             }
+
         }
 
         // generate id box grading kasar
@@ -335,7 +338,6 @@
 
             //
             let newRow = '<tr>' +
-                // '<td>' + doc_no + '</td>' +
                 '<td>' + nomor_grading + '</td>' +
                 '<td>' + id_box_raw_material + '</td>' +
                 '<td>' + id_box_grading_kasar + '</td>' +
@@ -352,12 +354,27 @@
                 '<td>' + modal + '</td>' +
                 '<td>' + total_modal + '</td>' +
                 '<td>' + keterangan + '</td>' +
-                // '<td>' + harga_estimasi + '</td>' +
+                '<td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
                 '</tr>';
 
             $('#dataTable tbody').append(newRow);
             $('#total_pcs').val(totalPcsGrading);
             $('#total_berat').val(totalBeratGrading);
+            // Total Susut
+            // let totalSusut = 0; // Inisialisasi totalSusut sebelum melakukan perulangan
+
+            $('#dataTable tbody tr').each(function() {
+                let totalSusutValue = parseInt($(this).find('td:eq(12)').text()) || 0;
+                // console.log(susut);
+                susut += totalSusutValue;
+                // console.log('Total = ' + totalSusutValue);
+                $('#total_susut').val(susut);
+            });
+
+            console.log('Total Susut: ' + susut);
+
+
+            // $('#total_susut').val(totalSusut.toFixed(4));
             // Menambahkan data ke dalam array
             // dataArrayDocNo.push(doc_no),
             // dataArrayIDBoxRawMaterial.push(id_box_raw_material),
@@ -436,6 +453,26 @@
             // $('#total_susut').val();
             // $('#total_berat').val();
             // $('#total_pcs').val();
+        }
+        //
+
+        //
+        function hapusBaris(button) {
+            // Dapatkan elemen baris terkait dengan tombol delete yang diklik
+            let row = $(button).closest('tr');
+
+            let pcsToRemove = parseFloat(row.find('td:eq(11)').text());
+            let beratToRemove = parseFloat(row.find('td:eq(10)').text());
+            let susutToRemove = parseFloat(row.find('td:eq(12)').text());
+
+            // Hapus baris dari tabel
+            row.remove();
+            // Kurangkan nilai dari total_pcs dan total_berat
+            total_pcs -= pcsToRemove;
+            total_berat -= beratToRemove;
+            total_susut -= susutToRemove;
+            // Panggil ulang fungsi hitungNilaiSusut setelah menghapus baris
+            hitungNilaiSusut();
         }
 
         function getArray() {

@@ -26,6 +26,11 @@ class GradingKasarInput extends Model
         'user_created',
         'user_updated',
     ];
+
+    // public function StockTransitRawMaterial()
+    // {
+    //     return $this->belongsTo(StockTransitRawMaterial::class, 'nomor_bstb', 'nomor_bstb');
+    // }
     public function GradingKasarHasil()
     {
         return $this->belongsTo(GradingKasarHasil::class, 'nomor_grading', 'nomor_grading');
