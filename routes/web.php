@@ -111,6 +111,16 @@ Route::controller(App\Http\Controllers\MasterJenisGradingKasarController::class)
     Route::delete('/master_jenis_grading_kasar/destroy/{id}', 'destroy')->name('master_jenis_grading_kasar.destroy');
 });
 
+Route::controller(App\Http\Controllers\MasterOperatorController::class)->group(function () {
+    Route::get('/master_operator', 'index')->name('master_operator.index');
+    Route::get('/master_operator/create', 'create')->name('master_operator.create');
+    Route::post('/master_operator/store', 'store')->name('master_operator.store');
+    Route::get('/master_operator/show/{id}', 'show')->name('master_operator.show');
+    Route::get('/master_operator/edit/{id}', 'edit')->name('master_operator.edit');
+    Route::put('/master_operator/update/{id}', 'update')->name('master_operator.update');
+    Route::delete('/master_operator/destroy/{id}', 'destroy')->name('master_operator.destroy');
+});
+
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
     Route::get('/purchasing_exim/prm_raw_material_input', 'index')->name('prm_raw_material_input.index');
     Route::get('/purchasing_exim/prm_raw_material_input/create', 'create')->name('prm_raw_material_input.create');

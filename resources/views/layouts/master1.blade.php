@@ -136,7 +136,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('work', 'unit', 'biayahpp', 'master_supplier_raw_material', 'master_jenis_raw_material', 'master_tujuan_kirim_raw_material', 'master_jenis_grading', 'master_jenis_grading_kasar', 'master_tujuan_kirim_grading_kasar') ? 'active' : '' }}">
+                            class="sidebar-item  has-sub {{ Request::is('work', 'unit', 'biayahpp', 'master_supplier_raw_material', 'master_jenis_raw_material', 'master_tujuan_kirim_raw_material', 'master_jenis_grading', 'master_jenis_grading_kasar', 'master_tujuan_kirim_grading_kasar', 'master_operator') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Master</span>
@@ -168,11 +168,11 @@
                                         class="submenu-link">Tujuan
                                         Kirim Raw Material</a>
                                 </li>
-                                <li class="submenu-item  {{ Request::is('master_jenis_grading') ? 'active' : '' }} ">
+                                {{-- <li class="submenu-item  {{ Request::is('master_jenis_grading') ? 'active' : '' }} ">
                                     <a href="{{ url('/master_jenis_grading') }}" class="submenu-link">Master Jenis
                                         <br>
                                         Grading</a>
-                                </li>
+                                </li> --}}
                                 <li
                                     class="submenu-item  {{ Request::is('master_jenis_grading_kasar') ? 'active' : '' }} ">
                                     <a href="{{ url('/master_jenis_grading_kasar') }}" class="submenu-link">Master
@@ -185,6 +185,9 @@
                                     <a href="{{ url('/master_tujuan_kirim_grading_kasar') }}"
                                         class="submenu-link">Master Tujuan<br>Kirim
                                         Grading<br>Kasar</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('master_operator') ? 'active' : '' }} ">
+                                    <a href="{{ url('/master_operator') }}" class="submenu-link">Master Operator</a>
                                 </li>
                             </ul>
                         </li>
