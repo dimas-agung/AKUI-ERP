@@ -136,7 +136,7 @@
                             </ul>
                         </li>
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('purchasing_exim/prm_raw_material_input*', 'purchasing_exim/prm_raw_material_stock*', 'PrmRawMaterialOutput*', 'StockTransitGradingKasar*') ? 'active' : '' }}">
+                            class="sidebar-item  has-sub {{ Request::is('purchasing_exim/prm_raw_material_input*', 'purchasing_exim/prm_raw_material_stock*', 'PrmRawMaterialOutput*', 'StockTransitRawMaterial*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-collection-fill"></i>
                                 <span>Purchasing & EXIM</span>
@@ -157,8 +157,8 @@
                                         Material Output</a>
                                 </li>
                                 <li
-                                    class="submenu-item  {{ Request::is('StockTransitGradingKasar*') ? 'active' : '' }} ">
-                                    <a href="{{ url('/StockTransitGradingKasar') }}" class="submenu-link">Stock
+                                    class="submenu-item  {{ Request::is('StockTransitRawMaterial*') ? 'active' : '' }} ">
+                                    <a href="{{ url('/StockTransitRawMaterial') }}" class="submenu-link">Stock
                                         Transit Raw Material</a>
                                 </li>
                             </ul>
@@ -198,6 +198,29 @@
                                     <a href="{{ url('/StockTransitGradingKasar') }}" class="submenu-link">Stock
                                         Transit
                                         <br>Grading Kasar</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li
+                            class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*') ? 'active' : '' }}">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-hexagon-fill"></i>
+                                <span>Pre-Cleaning</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li
+                                    class="submenu-item  {{ Request::is('StockTransitGradingKasar*') ? 'active' : '' }} ">
+                                    <a href="{{ url('/StockTransitGradingKasar') }}" class="submenu-link">Stock
+                                        Transit
+                                        <br>Grading Kasar</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('PreCleaningInput*') ? 'active' : '' }} ">
+                                    <a href="{{ url('/PreCleaningInput') }}" class="submenu-link">Pre-Cleaning
+                                        Input</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('PreCleaningStock*') ? 'active' : '' }} ">
+                                    <a href="{{ url('/PreCleaningStock') }}" class="submenu-link">Pre-Cleaning
+                                        Stock</a>
                                 </li>
                             </ul>
                         </li>

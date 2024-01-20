@@ -30,7 +30,7 @@ class GradingKasarInputController extends Controller
         ]);
     }
 
-        /**
+    /**
      * Create
      */
     public function create(): View
@@ -56,7 +56,6 @@ class GradingKasarInputController extends Controller
         GradingKasarInputService $prmRawMaterialOutputService)
     { try {
         $dataArray = json_decode($request->input('data'));
-        // $dataStock = json_decode($request->input('dataStock'));
 
         // Periksa apakah dekoding JSON berhasil
         if (!$dataArray) {
@@ -71,9 +70,9 @@ class GradingKasarInputController extends Controller
         } else {
             return response()->json($result, 500);
         }
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
-    }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**

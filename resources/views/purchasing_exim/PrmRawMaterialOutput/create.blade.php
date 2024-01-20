@@ -430,7 +430,7 @@
             $('#tableBody tr').eq(rowIndex).remove();
 
             // Hapus data yang sesuai dari array (diasumsikan dataArray adalah variabel global)
-            currentRowIndex.splice(rowIndex, 1);
+            dataArray.splice(rowIndex, 1);
 
             // Anda juga mungkin ingin mengaktifkan kembali input atau melakukan tindakan lain yang diperlukan
             // Sebagai contoh, jika Anda ingin mengaktifkan kembali input:

@@ -15,6 +15,7 @@ class StockTransitGradingKasar extends Model
         'nomor_bstb',
         'nomor_batch',
         'nama_supplier',
+        'nomor_nota_internal',
         'id_box_raw_material',
         'jenis_raw_material',
         'jenis_grading',
@@ -35,5 +36,9 @@ class StockTransitGradingKasar extends Model
     public function GradingKasarOutput()
     {
         return $this->hasOne(GradingKasarOutput::class, 'nomor_job', 'nomor_job');
+    }
+    public function PreCleaningInput()
+    {
+        return $this->hasMany(PreCleaningInput::class, 'nomor_job', 'nomor_job');
     }
 }

@@ -1,20 +1,20 @@
 @extends('layouts.master1')
 @section('Menu')
-    Transit Grading Kasar
+    Pre-Cleaning
 @endsection
 @section('title')
-    Input Data Grading Kasar Output
+    Data Pre-Cleaning Input
 @endsection
 @section('content')
     <div class="container">
         <div class="card mt-2">
-            <form action="{{ route('GradingKasarOutput.store') }}" method="POST">
+            <form action="{{ route('PreCleaningInput.store') }}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card border-0 shadow-sm rounded">
                             <div class="card-header">
-                                <h4>Input Data Grading Kasar Output</h4>
+                                <h4>Input Data Pre-Cleaning Input</h4>
                             </div>
                             <div class="card-body">
                                 {{-- Create Data --}}
@@ -37,50 +37,54 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Nomer BSTB</label>
-                                            <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
-                                                value="{{ old('nomor_bstb') }}" placeholder="Masukkan Nomer BSTB">
+                                            <label>Nomer Document</label>
+                                            <input type="text" id="doc_no" class="form-control" name="doc_no"
+                                                placeholder="Masukkan Nomer Document">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Nomor Job</label>
+                                            <select id="nomor_job" class="choices form-select" name="nomor_job"
+                                                data-placeholder="Pilih Nomor Job">
+                                                <option value="">Pilih Nomor Job</option>
+                                                @foreach ($stockTGK as $post)
+                                                    <option value="{{ $post->nomor_job }}">
+                                                        {{ old('nomor_job', $post->nomor_job) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>NIP Admin</label>
                                             <input type="text" id="user_created" class="form-control" name="user_created"
-                                                value="{{ old('user_created') }}" placeholder="Masukkan User Created">
+                                                placeholder="Masukkan User Created">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Nomer BSTB</label>
+                                            <input type="text" class="form-control" id="nomor_bstb" name="nomor_bstb"
+                                                onchange="handleChange(this.{{ old('nomor_bstb') }})" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Nomor Job</label>
-                                            <input type="text" class="form-control" id="nomor_job" name="nomor_job"
-                                                value="{{ old('nomor_job') }}" placeholder="Masukkan Nomor Job">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
                                             <label>ID Box Grading Kasar</label>
-                                            <select id="id_box_grading_kasar" class="choices form-select"
-                                                name="id_box_grading_kasar" data-placeholder="Pilih Tujuan Kirim">
-                                                <option></option>
-                                                @foreach ($GradingKS as $post)
-                                                    <option value="{{ $post->id_box_grading_kasar }}">
-                                                        {{ old('id_box_grading_kasar', $post->id_box_grading_kasar) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                            <input type="text" class="form-control" id="id_box_grading_kasar"
+                                                name="id_box_grading_kasar"
+                                                onchange="handleChange(this.{{ 'id_box_grading_kasar' }})" readonly>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
-                                            <select id="tujuan_kirim" class="choices form-select" name="tujuan_kirim"
-                                                data-placeholder="Pilih Tujuan Kirim">
-                                                <option></option>
-                                                @foreach ($MasTujKir as $post)
-                                                    <option value="{{ $post->tujuan_kirim }}">
-                                                        {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
-                                                @endforeach
-                                            </select>
+                                            <input type="text" class="form-control" id="tujuan_kirim" name="tujuan_kirim"
+                                                onchange="handleChange(this.{{ 'tujuan_kirim' }})" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -89,15 +93,15 @@
                                         <div class="form-group">
                                             <label>Nama Supplier</label>
                                             <input type="text" class="form-control" id="nama_supplier"
-                                                name="nama_supplier"
-                                                onchange="handleChange(this.{{ old('nama_supplier') }})" readonly>
+                                                name="nama_supplier" onchange="handleChange(this.{{ 'nama_supplier' }})"
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Nomor Batch</label>
                                             <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
-                                                onchange="handleChange(this.{{ old('nomor_batch') }})" readonly>
+                                                onchange="handleChange(this.{{ 'nomor_batch' }})" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -105,7 +109,7 @@
                                             <label>ID Box Raw Material</label>
                                             <input type="text" class="form-control" id="id_box_raw_material"
                                                 name="id_box_raw_material"
-                                                onchange="handleChange(this.{{ old('id_box_raw_material') }})" readonly>
+                                                onchange="handleChange(this.{{ 'id_box_raw_material' }})" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -113,23 +117,58 @@
                                             <label>Jenis Raw Material</label>
                                             <input type="text" class="form-control" id="jenis_raw_material"
                                                 name="jenis_raw_material"
-                                                onchange="handleChange(this.{{ old('jenis_raw_material') }})" readonly>
+                                                onchange="handleChange(this.{{ 'jenis_raw_material' }})" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Jenis Grading</label>
+                                            <label>Jenis Kirim</label>
                                             <input type="text" class="form-control" id="jenis_grading"
-                                                name="jenis_grading"
-                                                onchange="handleChange(this.{{ old('jenis_grading') }})" readonly>
+                                                name="jenis_grading" onchange="handleChange(this.{{ 'jenis_grading' }})"
+                                                readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Berat Kirim</label>
+                                            <input type="text" id="berat_keluar" class="form-control" name="berat_keluar"
+                                                onchange="handleChange(this.{{ 'berat_keluar' }})" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>PCS Kirim</label>
+                                            <input type="text" id="pcs_keluar" class="form-control" name="pcs_keluar"
+                                                onchange="handleChange(this.{{ 'pcs_keluar' }})" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>AVG Kadar Air</label>
+                                            <input type="text" class="form-control" id="avg_kadar_air"
+                                                name="avg_kadar_air" onchange="handleChange(this.{{ 'avg_kadar_air' }})"
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Nomor Grading</label>
                                             <input type="text" id="nomor_grading" class="form-control"
-                                                name="nomor_grading" value="{{ old('nomor_grading') }}"
-                                                onchange="handleChange(this)" readonly>
+                                                name="nomor_grading" onchange="handleChange(this)" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Modal</label>
+                                            <input type="text" id="modal" class="form-control" name="modal"
+                                                value="{{ 'modal' }}" onchange="handleChange(this)" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Total Modal</label>
+                                            <input type="text" id="total_modal" class="form-control"
+                                                name="total_modal" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -137,59 +176,7 @@
                                             <label>No Nota</label>
                                             <input type="text" id="nomor_nota_internal" class="form-control"
                                                 name="nomor_nota_internal"
-                                                onchange="handleChange(this.{{ old('nomor_nota_internal') }})" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>AVG Kadar Air</label>
-                                            <input type="text" class="form-control" id="avg_kadar_air"
-                                                name="avg_kadar_air"
-                                                onchange="handleChange(this.{{ old('avg_kadar_air') }})" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Modal</label>
-                                            <input type="text" id="modal" class="form-control" name="modal"
-                                                value="{{ old('modal') }}" onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Berat Keluar</label>
-                                            <input type="text" id="berat_keluar" class="form-control"
-                                                name="berat_keluar" placeholder="Masukkan berat_keluar">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>PCS Keluar</label>
-                                            <input type="text" id="pcs_keluar" class="form-control" name="pcs_keluar"
-                                                placeholder="Masukkan pcs_keluar">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Total Modal</label>
-                                            <input type="text" id="total_modal" class="form-control"
-                                                name="total_modal" placeholder="Masukkan total_modal">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Biaya Produksi</label>
-                                            <input type="text" class="form-control" id="biaya_produksi"
-                                                name="biaya_produksi" placeholder="Masukkan Biaya Produksi">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Fix Total Modal</label>
-                                            <input type="text" class="form-control" id="fix_total_modal"
-                                                name="fix_total_modal" placeholder="Masukkan Fix Total Modal">
+                                                onchange="handleChange(this.{{ 'nomor_nota_internal' }})" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -210,75 +197,81 @@
                     </div>
                 </div>
         </div>
+    </div>
 
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Validasi Data Input</div>
-                    </div>
-                    <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
-                        <table class="table table-striped mt-3">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Nomor BSTB</th>
-                                    <th class="text-center">ID Box Grading Kasar</th>
-                                    <th class="text-center">Nomor Job</th>
-                                    <th class="text-center">Nomor Batch</th>
-                                    <th class="text-center">Nama Supplier</th>
-                                    <th class="text-center">ID Box Raw Material</th>
-                                    <th class="text-center">Jenis Raw Material</th>
-                                    <th class="text-center">Jenis Grading</th>
-                                    <th class="text-center">Berat Keluar</th>
-                                    <th class="text-center">PCS Keluar</th>
-                                    <th class="text-center">AVG Kadar Air</th>
-                                    <th class="text-center">Tujuan Kirim</th>
-                                    <th class="text-center">Nomor Grading</th>
-                                    <th class="text-center">Modal</th>
-                                    <th class="text-center">Total Modal</th>
-                                    <th class="text-center">Biaya Produksi</th>
-                                    <th class="text-center">Fix Total Modal</th>
-                                    <th class="text-center">Keterangan</th>
-                                    <th class="text-center">NIP Admin</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableBody">
-                            </tbody>
-                        </table>
-                        <a href="#" class="btn btn-primary" onclick="sendData()">Submit</a>
-                    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Validasi Data Input</div>
+                </div>
+                <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Nomor Document</th>
+                                <th class="text-center">Nomor BSTB</th>
+                                <th class="text-center">ID Box Grading Kasar</th>
+                                <th class="text-center">Nomor Job</th>
+                                <th class="text-center">Nomor Batch</th>
+                                <th class="text-center">Nama Supplier</th>
+                                <th class="text-center">ID Box Raw Material</th>
+                                <th class="text-center">Jenis Raw Material</th>
+                                <th class="text-center">Jenis Grading</th>
+                                <th class="text-center">Berat Keluar</th>
+                                <th class="text-center">PCS Keluar</th>
+                                <th class="text-center">AVG Kadar Air</th>
+                                <th class="text-center">Tujuan Kirim</th>
+                                <th class="text-center">Nomor Grading</th>
+                                <th class="text-center">Modal</th>
+                                <th class="text-center">Total Modal</th>
+                                <th class="text-center">Keterangan</th>
+                                <th class="text-center">NIP Admin</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
+                    <a href="#" class="btn btn-primary" onclick="sendData()">Submit</a>
                 </div>
             </div>
         </div>
-        </form>
+    </div>
+    </form>
     </div>
     </div>
 @endsection
 @section('script')
     <script>
-        $('#id_box_grading_kasar').on('change', function() {
-            // Mengambil nilai id_box_grading_kasar yang dipilih
+        $('#nomor_job').on('change', function() {
+            // Mengambil nilai nomor_job yang dipilih
             let selectedIdBox = $(this).val();
             // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
             $.ajax({
-                url: `{{ route('GradingKasarOutput.set') }}`,
+                url: `{{ route('PreCleaningInput.set') }}`,
                 method: 'GET',
                 data: {
-                    id_box_grading_kasar: selectedIdBox
+                    nomor_job: selectedIdBox
                 },
                 success: function(response) {
                     console.log(response);
                     // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                    $('#nomor_bstb').val(response.nomor_bstb);
+                    $('#id_box_grading_kasar').val(response.id_box_grading_kasar);
                     $('#nomor_batch').val(response.nomor_batch);
                     $('#nama_supplier').val(response.nama_supplier);
                     $('#id_box_raw_material').val(response.id_box_raw_material);
                     $('#jenis_raw_material').val(response.jenis_raw_material);
+                    $('#tujuan_kirim').val(response.tujuan_kirim);
                     $('#jenis_grading').val(response.jenis_grading);
+                    $('#berat_keluar').val(response.berat_keluar);
+                    $('#pcs_keluar').val(response.pcs_keluar);
                     $('#avg_kadar_air').val(response.avg_kadar_air);
                     $('#nomor_grading').val(response.nomor_grading);
                     $('#modal').val(response.modal);
+                    $('#total_modal').val(response.total_modal);
                     $('#nomor_nota_internal').val(response.nomor_nota_internal);
                 },
                 error: function(error) {
@@ -287,21 +280,6 @@
             });
         });
 
-        // Event listener untuk perubahan nilai pada total modal
-        $('#modal').on('input', updateTotalmodal);
-        $('#berat_keluar').on('input', updateTotalmodal);
-
-        function updateTotalmodal() {
-            // Mendapatkan nilai berat_keluar nota dan berat_keluar bersih
-            const modal = parseFloat($('#modal').val());
-            const berat = parseFloat($('#berat_keluar').val());
-
-            // Melakukan perhitungan selisih berat
-            const totalmodal = berat * modal;
-
-            // Memasukkan hasil perhitungan ke dalam input selisih berat
-            $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal);
-        }
 
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;
@@ -310,6 +288,7 @@
 
         function addRow() {
             // Mengambil nilai dari input
+            var doc_no = $('#doc_no').val();
             var nomor_bstb = $('#nomor_bstb').val();
             var id_box_grading_kasar = $('#id_box_grading_kasar').val();
             var nomor_job = $('#nomor_job').val();
@@ -343,7 +322,8 @@
 
             // Menambahkan data ke dalam tabel
             var newRow =
-                '<tr><td>' + nomor_bstb +
+                '<tr><td>' + doc_no +
+                '</td><td>' + nomor_bstb +
                 '</td><td>' + id_box_grading_kasar +
                 '</td><td>' + nomor_job +
                 '</td><td>' + nomor_batch +
@@ -358,8 +338,6 @@
                 '</td><td>' + nomor_grading +
                 '</td><td>' + modal +
                 '</td><td>' + total_modal +
-                '</td><td>' + biaya_produksi +
-                '</td><td>' + fix_total_modal +
                 '</td><td>' + keterangan +
                 '</td><td>' + user_created +
                 '</td><td><button onclick="deleteRow(' + currentRowIndex +
@@ -368,31 +346,50 @@
             $('#tableBody').append(newRow);
 
             // Menambahkan data ke dalam array
-            // dataid_box_grading_kasar.push(id_box_grading_kasar)
-            dataArray.push({
-                nomor_bstb: nomor_bstb,
-                id_box_grading_kasar: id_box_grading_kasar,
-                nomor_batch: nomor_batch,
-                nomor_job: nomor_job,
-                nama_supplier: nama_supplier,
-                nomor_nota_internal: nomor_nota_internal,
-                id_box_raw_material: id_box_raw_material,
-                jenis_raw_material: jenis_raw_material,
-                jenis_grading: jenis_grading,
-                berat_keluar: berat_keluar,
-                pcs_keluar: pcs_keluar,
-                avg_kadar_air: avg_kadar_air,
-                tujuan_kirim: tujuan_kirim,
-                nomor_grading: nomor_grading,
-                biaya_produksi: biaya_produksi,
-                modal: modal,
-                total_modal: total_modal,
-                fix_total_modal: fix_total_modal,
-                keterangan: keterangan,
-                user_created: user_created
-            });
+            doc_no.push(doc_no)
+            nomor_bstb.push(nomor_bstb)
+            id_box_grading_kasar.push(id_box_grading_kasar)
+            nomor_batch.push(nomor_batch)
+            nomor_job.push(nomor_job)
+            nama_supplier.push(nama_supplier)
+            nomor_nota_internal.push(nomor_nota_internal)
+            id_box_raw_material.push(id_box_raw_material)
+            jenis_raw_material.push(jenis_raw_material)
+            jenis_grading.push(jenis_grading)
+            berat_keluar.push(berat_keluar)
+            pcs_keluar.push(pcs_keluar)
+            avg_kadar_air.push(avg_kadar_air)
+            tujuan_kirim.push(tujuan_kirim)
+            nomor_grading.push(nomor_grading)
+            modal.push(modal)
+            total_modal.push(total_modal)
+            keterangan.push(keterangan)
+            user_created.push(user_created)
+            // dataArray.push({
+            //     doc_no: doc_no,
+            //     nomor_bstb: nomor_bstb,
+            //     id_box_grading_kasar: id_box_grading_kasar,
+            //     nomor_batch: nomor_batch,
+            //     nomor_job: nomor_job,
+            //     nama_supplier: nama_supplier,
+            //     nomor_nota_internal: nomor_nota_internal,
+            //     id_box_raw_material: id_box_raw_material,
+            //     jenis_raw_material: jenis_raw_material,
+            //     jenis_grading: jenis_grading,
+            //     berat_keluar: berat_keluar,
+            //     pcs_keluar: pcs_keluar,
+            //     avg_kadar_air: avg_kadar_air,
+            //     tujuan_kirim: tujuan_kirim,
+            //     nomor_grading: nomor_grading,
+            //     biaya_produksi: biaya_produksi,
+            //     modal: modal,
+            //     total_modal: total_modal,
+            //     fix_total_modal: fix_total_modal,
+            //     keterangan: keterangan,
+            //     user_created: user_created
+            // });
             // Membersihkan nilai input setelah ditambahkan
-            $('#id_box_grading_kasar').val('<option></option>');
+            $('#id_box_grading_kasar').val('');
             $('#nomor_batch').val('');
             $('#nama_supplier').val('');
             $('#nomor_nota_internal').val('');
@@ -436,14 +433,35 @@
         }
 
         function sendData() {
-            console.log(dataArray);
+            console.log(doc_no);
+            console.log(nomor_bstb);
+            console.log(id_box_grading_kasar);
+            console.log(nomor_batch);
+            console.log(nomor_job);
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('GradingKasarOutput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai
+                url: `{{ route('PreCleaningInput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai
                 method: 'POST',
                 data: {
-                    data: JSON.stringify(dataArray),
-                    dataStock: JSON.stringify(dataStock),
+                    doc_no: JSON.stringify(doc_no),
+                    nomor_bstb: JSON.stringify(nomor_bstb),
+                    id_box_grading_kasar: JSON.stringify(id_box_grading_kasar),
+                    nomor_batch: JSON.stringify(nomor_batch),
+                    nomor_job: JSON.stringify(nomor_job),
+                    nama_supplier: JSON.stringify(nama_supplier),
+                    nomor_nota_internal: JSON.stringify(nomor_nota_internal),
+                    id_box_raw_material: JSON.stringify(id_box_raw_material),
+                    jenis_raw_material: JSON.stringify(jenis_raw_material),
+                    jenis_grading: JSON.stringify(jenis_grading),
+                    berat_keluar: JSON.stringify(berat_keluar),
+                    pcs_keluar: JSON.stringify(pcs_keluar),
+                    avg_kadar_air: JSON.stringify(avg_kadar_air),
+                    tujuan_kirim: JSON.stringify(tujuan_kirim),
+                    nomor_grading: JSON.stringify(nomor_grading),
+                    modal: JSON.stringify(modal),
+                    total_modal: JSON.stringify(total_modal),
+                    keterangan: JSON.stringify(keterangan),
+                    user_created: JSON.stringify(user_created)
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json', // payload is json,

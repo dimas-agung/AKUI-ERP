@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nomor_bstb');
             $table->string('nomor_batch');
             $table->string('nama_supplier');
+            $table->string('nomor_nota_internal');
             $table->string('id_box_raw_material');
             $table->string('jenis_raw_material');
             $table->string('jenis_grading');

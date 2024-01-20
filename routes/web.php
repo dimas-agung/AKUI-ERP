@@ -168,12 +168,19 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarOutputCon
     Route::get('/GradingKasarOutput/create', 'create')->name('GradingKasarOutput.create');
     Route::post('/GradingKasarOutput/store', 'store')->name('GradingKasarOutput.store');
     Route::post('/GradingKasarOutput/sendData', 'sendData')->name('GradingKasarOutput.sendData');
-    Route::get('/GradingKasarOutput/show/{id}', 'show')->name('GradingKasarOutput.show');
-    Route::get('/GradingKasarOutput/edit/{id}', 'edit')->name('GradingKasarOutput.edit');
-    Route::put('/GradingKasarOutput/update/{id}', 'update')->name('GradingKasarOutput.update');
     Route::delete('/GradingKasarOutput/destroy/{id}', 'destroy')->name('GradingKasarOutput.destroy');
     Route::get('/GradingKasarOutput/get_data_id_box', 'set')->name('GradingKasarOutput.set');
     Route::get('/GradingKasarOutput/get_pcc', 'setpcc')->name('GradingKasarOutput.setpcc');
+});
+
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
+    Route::get('/PreCleaningInput', 'index')->name('PreCleaningInput.index');
+    Route::get('/PreCleaningInput/create', 'create')->name('PreCleaningInput.create');
+    Route::post('/PreCleaningInput/store', 'store')->name('PreCleaningInput.store');
+    Route::post('/PreCleaningInput/sendData', 'sendData')->name('PreCleaningInput.sendData');
+    Route::delete('/PreCleaningInput/destroy/{id}', 'destroy')->name('PreCleaningInput.destroy');
+    Route::get('/PreCleaningInput/get_data_id_box', 'set')->name('PreCleaningInput.set');
+    Route::get('/PreCleaningInput/get_pcc', 'setpcc')->name('PreCleaningInput.setpcc');
 });
 
 Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {

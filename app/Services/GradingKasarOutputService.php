@@ -70,6 +70,7 @@ class GradingKasarOutputService
             'nomor_batch'           => $item->nomor_batch,
             'nomor_job'             => $item->nomor_job,
             'nama_supplier'         => $item->nama_supplier,
+            'nomor_nota_internal'   => $item->nomor_nota_internal,
             'id_box_raw_material'   => $item->id_box_raw_material,
             'jenis_raw_material'    => $item->jenis_raw_material,
             'jenis_grading'         => $item->jenis_grading,
