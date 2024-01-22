@@ -454,7 +454,6 @@
             // $('#total_berat').val();
             // $('#total_pcs').val();
         }
-        //
 
         //
         function hapusBaris(button) {
@@ -464,6 +463,10 @@
             let pcsToRemove = parseFloat(row.find('td:eq(11)').text());
             let beratToRemove = parseFloat(row.find('td:eq(10)').text());
             let susutToRemove = parseFloat(row.find('td:eq(12)').text());
+
+            // Hapus baris dari dataArray berdasarkan indeks baris di tabel
+            let rowIndex = row.index();
+            dataArray.splice(rowIndex, 1);
 
             // Hapus baris dari tabel
             row.remove();

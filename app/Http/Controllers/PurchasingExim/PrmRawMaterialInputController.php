@@ -52,9 +52,10 @@ class PrmRawMaterialInputController extends Controller
     public function getDataSupplier(Request $request)
     {
         $nama_supplier = $request->nama_supplier;
-        // Lakukan logika untuk mengatur nomor batch berdasarkan id_box
-        // $nomorBatch = $this->query('nomor_batch',$id_box);
-        $data = MasterSupplierRawMaterial::where('nama_supplier', $nama_supplier)->first();
+        // Menggunakan where untuk memfilter berdasarkan nama_supplier dan status aktif
+        $data = MasterSupplierRawMaterial::where('nama_supplier', $nama_supplier)
+            ->where('status', 'aktif') // Gantilah 'status' dengan kolom yang sesuai dengan model Anda
+            ->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);

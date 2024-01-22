@@ -41,7 +41,7 @@
                         <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="nama_supplier" id="nama_supplier" placeholder="Pilih Nama Supplier">
                             <option value="">Pilih Nama Supplier</option>
-                            @foreach ($master_supplier_raw_materials as $MasterSPRM)
+                            @foreach ($master_supplier_raw_materials->sortBy('nama_supplier') as $MasterSPRM)
                                 <option value="{{ $MasterSPRM->nama_supplier }}">
                                     {{ $MasterSPRM->nama_supplier }}</option>
                             @endforeach
@@ -55,7 +55,7 @@
                         <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="jenis" id="jenis" placeholder="Pilih Jenis">
                             <option value="">Pilih Jenis</option>
-                            @foreach ($master_jenis_raw_materials as $MasterJRM)
+                            @foreach ($master_jenis_raw_materials->sortBy('jenis') as $MasterJRM)
                                 <option value="{{ $MasterJRM->jenis }}">
                                     {{ $MasterJRM->jenis }}</option>
                             @endforeach
@@ -233,19 +233,34 @@
                 }
             });
         });
+        //
+        // Event listener untuk perubahan pada input nama_supplier
+        // $('#nama_supplier').on('change', function() {
+        //     let selectedNamaSupplier = $(this).val();
+        //     // Panggil fungsi getInisialSupplier untuk mendapatkan inisial_supplier
+        //     getInisialSupplier(selectedNamaSupplier);
+        // });
+
+        // Event listener untuk perubahan pada input nomor_nota_supplier
+        // $('#nomor_nota_supplier').on('input', function() {
+        //     let inisial_supplier = $('#inisial_supplier').val();
+        //     // Panggil fungsi generateNomorNotaInternal dengan inisial_supplier yang sudah ada
+        //     generateNomorNotaInternal(inisial_supplier);
+        // });
         // generate nomor internal
         function generateNomorNotaInternal(inisial_supplier) {
             const nomorNotaSupplier = $('#nomor_nota_supplier').val();
             const namaSupplier = $('#nama_supplier').val();
+
             // ambil tanggal, bulan, tahun
             const now = new Date();
             const tahun = now.getFullYear().toString().substr(-2); // Ambil 2 digit terakhir tahun
             const bulan = ('0' + (now.getMonth() + 1)).slice(-2); // Menambah '0' jika satu digit
             const tanggal = ('0' + now.getDate()).slice(-2);
-
+            console.log(inisial_supplier);
             // Membentuk nomor nota internal dengan menggabungkan nama supplier dan nomor nota supplier
             const nomorNotaInternal = `${inisial_supplier}_${nomorNotaSupplier}_${tanggal}${bulan}${tahun}`;
-            // console.log(nomorNotaInternal);
+            console.log(nomorNotaInternal);
 
             // Menampilkan nomor nota internal pada input nomor nota internal
             $('#nomor_nota_internal').val(nomorNotaInternal);
@@ -378,6 +393,7 @@
                 '<td>' + harga_deal + '</td>' +
                 '<td>' + keterangan + '</td>' +
                 '<td>' + user_created + '</td>' +
+                '<td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
                 '</tr>';
             $('#dataTable tbody').append(newRow);
             // $('#myForm')[0].reset();
@@ -430,6 +446,19 @@
             $('#total_harga_nota').val('');
             $('#harga_deal').val('');
             $('#keterangan').val('');
+        }
+
+        function hapusBaris(button) {
+            // Dapatkan elemen baris terkait dengan tombol delete yang diklik
+            let row = $(button).closest('tr');
+
+            // Hapus baris dari dataArray berdasarkan indeks baris di tabel
+            let rowIndex = row.index();
+            dataArray.splice(rowIndex, 1);
+            dataHeader.splice(rowIndex, 1);
+
+            // Hapus baris dari tabel
+            row.remove();
         }
 
         function getArray() {

@@ -193,6 +193,18 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputContro
     Route::get('/PrmRawMaterialOutput/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
 });
 
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningOutputController::class)->group(function () {
+    Route::get('/pre_cleaning_output', 'index')->name('pre_cleaning_output.index');
+    Route::get('/pre_cleaning_output/create', 'create')->name('pre_cleaning_output.create');
+    Route::post('/pre_cleaning_output/store', 'store')->name('pre_cleaning_output.store');
+    Route::get('/pre_cleaning_output/show/{id}', 'show')->name('pre_cleaning_output.show');
+    Route::get('/pre_cleaning_output/edit/{id}', 'edit')->name('pre_cleaning_output.edit');
+    Route::put('/pre_cleaning_output/update/{id}', 'update')->name('pre_cleaning_output.update');
+    Route::delete('/pre_cleaning_output/destroy/{id}', 'destroy')->name('pre_cleaning_output.destroy');
+    Route::get('/pre_cleaning_output/get_data_nomor_job', 'set')->name('pre_cleaning_output.set');
+    // Route::delete('/pre_cleaning_output/destroy/{id}', 'destroy')->name('pre_cleaning_output.destroy');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

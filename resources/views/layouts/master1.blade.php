@@ -282,7 +282,7 @@
                             class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'GradingKasarInput', 'transit_grading_kasar/grading_kasar_hasil', 'transit_grading_kasar/grading_kasar_stock') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
-                                <span>Grading Kasar<br>Transit</span>
+                                <span>Grading Kasar</span>
                             </a>
                             <ul class="submenu ">
                                 <li
@@ -303,6 +303,24 @@
                                     class="submenu-item  {{ Request::is('transit_grading_kasar/grading_kasar_stock') ? 'active' : '' }} ">
                                     <a href="{{ url('/transit_grading_kasar/grading_kasar_stock') }}"
                                         class="submenu-link">Grading Kasar<br>Stock</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li
+                            class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'pre_cleaning_output') ? 'active' : '' }}">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-grid-1x2-fill"></i>
+                                <span>Pre Cleaning</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li
+                                    class="submenu-item  {{ Request::is('StockTransitGradingKasar') ? 'active' : '' }} ">
+                                    <a href="{{ url('/StockTransitGradingKasar') }}" class="submenu-link">Stock
+                                        Transit Grading Kasar</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('pre_cleaning_output') ? 'active' : '' }} ">
+                                    <a href="{{ url('/pre_cleaning_output') }}" class="submenu-link">Pre
+                                        Cleaning<br>Output</a>
                                 </li>
                             </ul>
                         </li>
