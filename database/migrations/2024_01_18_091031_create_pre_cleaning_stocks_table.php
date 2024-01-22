@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('nomor_job');
             $table->string('id_box_grading_kasar');
-            $table->string('nomor_btsb');
+            $table->string('nomor_bstb');
             $table->string('nomor_batch');
             $table->string('nama_supplier');
             $table->string('nomor_nota_internal');
             $table->string('id_box_raw_material');
             $table->string('jenis_raw_material');
             $table->string('tujuan_kirim');
-            $table->string('jenis_kirm');
+            $table->string('jenis_kirim');
             $table->float('berat_masuk');
             $table->float('pcs_masuk');
             $table->float('berat_keluar');
@@ -32,8 +32,8 @@ return new class extends Migration
             $table->float('modal');
             $table->float('total_modal');
             $table->text('keterangan');
-            $table->string('user_created');            
-            $table->string('user_update');            
+            $table->string('user_created');
+            $table->string('user_update');
             $table->timestamps();
         });
     }

@@ -187,6 +187,10 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKa
     Route::get('/StockTransitGradingKasar', 'index')->name('StockTransitGradingKasar.index');
 });
 
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::class)->group(function () {
+    Route::get('/PreCleaningStock', 'index')->name('PreCleaningStock.index');
+});
+
 Auth::routes();
 
 

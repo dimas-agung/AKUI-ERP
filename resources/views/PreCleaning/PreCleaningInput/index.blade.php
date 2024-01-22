@@ -98,7 +98,7 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                action="{{ route('GradingKasarInput.destroy', $item->id) }}"
+                                                action="{{ route('PreCleaningInput.destroy', $item->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')

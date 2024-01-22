@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\PreCleaning;
 
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PreClaningInputRequest;
 use App\Models\PreCleaningInput;
 use App\Models\StockTransitGradingKasar;
+use App\Models\PreCleaningStock;
 use App\Services\PreClaningInputService;
 use Illuminate\Http\Request;
 //return type View
@@ -46,57 +48,109 @@ class PreCleaningInputController extends Controller
         return response()->json($data);
     }
 
-        // Contoh controller
-        public function sendData(
-            PreClaningInputRequest $request,
-            PreClaningInputService $PreClaningInputService
-        ) {
-            try {
-                // Mendapatkan data dari request
-                $dataArray = $request->input('data');
+    // Contoh controller
+    public function store(Request $request): RedirectResponse
+    {
+        //validate form
+        $this->validate($request, [
+            'doc_no'   => 'required',
+            'nomor_job'   => 'required',
+            'id_box_grading_kasar'   => 'required',
+            'nomor_bstb'   => 'required',
+            'nomor_batch'   => 'required',
+            'nama_supplier'   => 'required',
+            'nomor_nota_internal'   => 'required',
+            'id_box_raw_material'   => 'required',
+            'jenis_raw_material'   => 'required',
+            'jenis_grading'   => 'required',
+            'berat_keluar'   => 'required',
+            'pcs_keluar'   => 'required',
+            'avg_kadar_air'   => 'required',
+            'tujuan_kirim'   => 'required',
+            'nomor_grading'   => 'required',
+            'modal'   => 'required',
+            'total_modal'   => 'required',
+        ], [
+            'nama.required' => 'Kolom Nama Biaya Wajib diisi.',
+            'workstation_id.required' => 'Kolom Inisial Biaya Wajib diisi.'
+        ]);
 
-                // Membuat array kosong untuk menyimpan data
-                $formattedData = [];
+        //create post
+        PreCleaningInput::create([
+            'doc_no' => $request->doc_no,
+            'nomor_job' => $request->nomor_job,
+            'id_box_grading_kasar' => $request->id_box_grading_kasar,
+            'nomor_bstb' => $request->nomor_bstb,
+            'nomor_batch' => $request->nomor_batch,
+            'nama_supplier' => $request->nama_supplier,
+            'nomor_nota_internal' => $request->nomor_nota_internal,
+            'id_box_raw_material' => $request->id_box_raw_material,
+            'jenis_raw_material' => $request->jenis_raw_material,
+            'jenis_kirim' => $request->jenis_grading,
+            'berat_kirim' => $request->berat_keluar,
+            'pcs_kirim' => $request->pcs_keluar,
+            'kadar_air' => $request->avg_kadar_air,
+            'tujuan_kirim' => $request->tujuan_kirim,
+            'nomor_grading' => $request->nomor_grading,
+            'modal' => $request->modal,
+            'total_modal' => $request->total_modal,
+            'keterangan' => $request->keterangan,
+            'user_created' => $request->user_created,
+            'user_updated' => $request->user_updated ?? "There isn't any",
+        ]);
 
-                // Loop melalui setiap elemen data
-                foreach ($dataArray as $data) {
-                    // Format data sesuai kebutuhan
-                    $formattedData[] = [
-                        'doc_no' => $data['doc_no'],
-                        'nomor_bstb' => $data['nomor_bstb'],
-                        'id_box_grading_kasar' => $data['id_box_grading_kasar'],
-                        'nomor_batch' => $data['nomor_batch'],
-                        'nomor_job' => $data['nomor_job'],
-                        'nama_supplier' => $data['nama_supplier'],
-                        'nomor_nota_internal' => $data['nomor_nota_internal'],
-                        'id_box_raw_material' => $data['id_box_raw_material'],
-                        'jenis_raw_material' => $data['jenis_raw_material'],
-                        'jenis_grading' => $data['jenis_grading'],
-                        'berat_keluar' => $data['berat_keluar'],
-                        'pcs_keluar' => $data['pcs_keluar'],
-                        'avg_kadar_air' => $data['avg_kadar_air'],
-                        'tujuan_kirim' => $data['tujuan_kirim'],
-                        'nomor_grading' => $data['nomor_grading'],
-                        'biaya_produksi' => $data['biaya_produksi'],
-                        'modal' => $data['modal'],
-                        'total_modal' => $data['total_modal'],
-                        'fix_total_modal' => $data['fix_total_modal'],
-                        'keterangan' => $data['keterangan'],
-                    ];
-                }
+        // Creat Stock Transit Grading Kasar
+        $existingItem = PreCleaningStock::where('nomor_bstb', $request->nomor_bstb)
+            ->where('nomor_job', $request->nomor_job)
+            ->first();
+            // return $existingItem
 
-                // Mengirim data ke service
-                $result = $PreClaningInputService->sendData($formattedData);
+        $dataToUpdate = [
+            'nomor_job'             => $request->nomor_job,
+            'nomor_bstb'            => $request->nomor_bstb,
+            'id_box_grading_kasar'  => $request->id_box_grading_kasar,
+            'nomor_batch'           => $request->nomor_batch,
+            'nama_supplier'         => $request->nama_supplier,
+            'nomor_nota_internal'   => $request->nomor_nota_internal,
+            'id_box_raw_material'   => $request->id_box_raw_material,
+            'jenis_raw_material'    => $request->jenis_raw_material,
+            'jenis_kirim'           => $request->jenis_grading,
+            'tujuan_kirim'          => $request->tujuan_kirim,
+            'pcs_masuk'             => $request->pcs_keluar,
+            'berat_keluar'          => $request->berat_masuk ?? 0,
+            'berat_masuk'          => $request->berat_keluar,
+            'pcs_keluar'     => $request->pcs_masuk ?? 0,
+            'avg_kadar_air'  => $request->avg_kadar_air,
+            'nomor_grading'  => $request->nomor_grading,
+            'modal'         => $request->modal,
+            'total_modal'   => $request->total_modal,
+            'keterangan'    => $request->keterangan,
+            'user_created'  => $request->user_created,
+            'user_update'  => $request->user_updated ?? "There isn't any"
+            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ];
 
-                // Periksa apakah pemrosesan berhasil
-                if ($result['success']) {
-                    return response()->json($result);
-                } else {
-                    return response()->json($result, 500);
-                }
-            } catch (\Exception $e) {
-                return response()->json(['error' => $e->getMessage()], 500);
-            }
+        if ($existingItem) {
+            // Jika item sudah ada, perbarui data
+            $existingItem->update($dataToUpdate);
+        } else {
+            // Jika item tidak ada, buat item baru
+            PreCleaningStock::create($dataToUpdate);
         }
 
+        //redirect to index
+        return redirect()->route('PreCleaningInput.index')->with(['success' => 'Data Berhasil Disimpan!']);
+    }
+
+    public function destroy($id): RedirectResponse
+    {
+        //get post by ID
+        $PreCleaningI = PreCleaningInput::findOrFail($id);
+
+        //delete post
+        $PreCleaningI->delete();
+
+        //redirect to index
+        return redirect()->route('PreCleaningInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    }
 }

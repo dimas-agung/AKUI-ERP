@@ -188,59 +188,16 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-primary" onclick="addRow()">Add</button>
-                                    <a href="{{ url('/PrmRawMaterialOutput') }}" type="button" class="btn btn-danger"
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                    <a href="{{ url('/PreCleaningInput') }}" type="button" class="btn btn-danger"
                                         data-dismiss="modal">Close</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </form>
         </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">Validasi Data Input</div>
-                </div>
-                <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
-                    <table class="table table-striped mt-3">
-                        <thead>
-                            <tr>
-                                <th class="text-center">Nomor Document</th>
-                                <th class="text-center">Nomor BSTB</th>
-                                <th class="text-center">ID Box Grading Kasar</th>
-                                <th class="text-center">Nomor Job</th>
-                                <th class="text-center">Nomor Batch</th>
-                                <th class="text-center">Nama Supplier</th>
-                                <th class="text-center">ID Box Raw Material</th>
-                                <th class="text-center">Jenis Raw Material</th>
-                                <th class="text-center">Jenis Grading</th>
-                                <th class="text-center">Berat Keluar</th>
-                                <th class="text-center">PCS Keluar</th>
-                                <th class="text-center">AVG Kadar Air</th>
-                                <th class="text-center">Tujuan Kirim</th>
-                                <th class="text-center">Nomor Grading</th>
-                                <th class="text-center">Modal</th>
-                                <th class="text-center">Total Modal</th>
-                                <th class="text-center">Keterangan</th>
-                                <th class="text-center">NIP Admin</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                        </tbody>
-                    </table>
-                    <a href="#" class="btn btn-primary" onclick="sendData()">Submit</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    </form>
-    </div>
     </div>
 @endsection
 @section('script')
@@ -282,205 +239,11 @@
 
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;
-        var dataArray = [];
         var dataStock = [];
 
-        function addRow() {
-            // Mengambil nilai dari input
-            var doc_no = $('#doc_no').val();
-            var nomor_bstb = $('#nomor_bstb').val();
-            var id_box_grading_kasar = $('#id_box_grading_kasar').val();
-            var nomor_job = $('#nomor_job').val();
-            var nomor_batch = $('#nomor_batch').val();
-            var nama_supplier = $('#nama_supplier').val();
-            var id_box_raw_material = $('#id_box_raw_material').val();
-            var jenis_raw_material = $('#jenis_raw_material').val();
-            var jenis_grading = $('#jenis_grading').val();
-            var berat_keluar = $('#berat_keluar').val();
-            var pcs_keluar = $('#pcs_keluar').val();
-            var selisih_berat = $('#selisih_berat').val();
-            var avg_kadar_air = $('#avg_kadar_air').val();
-            var tujuan_kirim = $('#tujuan_kirim').val();
-            var nomor_grading = $('#nomor_grading').val();
-            var modal = $('#modal').val();
-            var total_modal = $('#total_modal').val();
-            var keterangan = $('#keterangan').val();
-            var user_created = $('#user_created').val();
-            var nomor_nota_internal = $('#nomor_nota_internal').val();
-
-            // Validasi input (sesuai kebutuhan)
-            if (!nomor_job || !nomor_batch) {
-                alert('ID and nomor_batch are required.');
-                return;
-            }
-
-            // Menambahkan data ke dalam tabel
-            var newRow = '<tr>' +
-                '<td>' + doc_no + '</td>' +
-                '<td>' + nomor_bstb + '</td>' +
-                '<td>' + id_box_grading_kasar + '</td>' +
-                '<td>' + nomor_job + '</td>' +
-                '<td>' + nomor_batch + '</td>' +
-                '<td>' + nama_supplier + '</td>' +
-                '<td>' + id_box_raw_material + '</td>' +
-                '<td>' + jenis_raw_material + '</td>' +
-                '<td>' + jenis_grading + '</td>' +
-                '<td>' + berat_keluar + '</td>' +
-                '<td>' + pcs_keluar + '</td>' +
-                '<td>' + avg_kadar_air + '</td>' +
-                '<td>' + tujuan_kirim + '</td>' +
-                '<td>' + nomor_grading + '</td>' +
-                '<td>' + modal + '</td>' +
-                '<td>' + total_modal + '</td>' +
-                '<td>' + keterangan + '</td>' +
-                '<td>' + user_created + '</td>' +
-                '<td><button onclick="deleteRow(' + currentRowIndex +
-                ')" class="btn btn-danger" data-dismiss="modal">Hapus</button></td>' +
-                '</tr>';
-
-            $('#tableBody').append(newRow);
-
-            // Mendefinisikan array jika belum
-            if (typeof doc_no === 'undefined') {
-                var doc_no = [];
-                var nomor_bstb = [];
-                var id_box_grading_kasar = [];
-                var nomor_job = [];
-                var nama_supplier = [];
-                var nomor_nota_internal = [];
-                var id_box_raw_material = [];
-                var jenis_raw_material = [];
-                var jenis_grading = [];
-                var berat_keluar = [];
-                var pcs_keluar = [];
-                var avg_kadar_air = [];
-                var tujuan_kirim = [];
-                var nomor_grading = [];
-                var modal = [];
-                var total_modal = [];
-                var keterangan = [];
-                var user_created = [];
-                // ... definisikan array lainnya sesuai kebutuhan
-            }
-
-            doc_no.push(doc_no)
-            nomor_bstb.push(nomor_bstb)
-            id_box_grading_kasar.push(id_box_grading_kasar)
-            nomor_batch.push(nomor_batch)
-            nomor_job.push(nomor_job)
-            nama_supplier.push(nama_supplier)
-            nomor_nota_internal.push(nomor_nota_internal)
-            id_box_raw_material.push(id_box_raw_material)
-            jenis_raw_material.push(jenis_raw_material)
-            jenis_grading.push(jenis_grading)
-            berat_keluar.push(berat_keluar)
-            pcs_keluar.push(pcs_keluar)
-            avg_kadar_air.push(avg_kadar_air)
-            tujuan_kirim.push(tujuan_kirim)
-            nomor_grading.push(nomor_grading)
-            modal.push(modal)
-            total_modal.push(total_modal)
-            keterangan.push(keterangan)
-            user_created.push(user_created)
-
-            // Membersihkan nilai input setelah ditambahkan
-            $('#id_box_grading_kasar').val('');
-            $('#nomor_batch').val('');
-            $('#nama_supplier').val('');
-            $('#nomor_nota_internal').val('');
-            $('#jenis').val('');
-            $('#berat_masuk').val('');
-            $('#berat').val('');
-            $('#selisih_berat').val('');
-            $('#kadar_air').val('');
-            $('#tujuan_kirim').val('');
-            $('#letak_tujuan').val('');
-            $('#inisial_tujuan').val('');
-            $('#modal').val('');
-            $('#total_modal').val('');
-            $('#keterangan').val('');
-
-            // Menonaktifkan nilai input ketika ditambah
-            $('#nomor_bstb').prop('readonly', true);
-            $('#nomor_batch').prop('readonly', true);
-            $('#user_created').prop('readonly', true);
-
-            // Memperbarui indeks baris terakhir
-            currentRowIndex++;
-        }
-
-
-        function getArray() {
-            // Menampilkan array di konsol untuk tujuan debugging
-            console.log(dataArray);
-        }
-
-        function deleteRow(rowIndex) {
-            // Hapus baris dari tabel
-            $('#tableBody tr').eq(rowIndex).remove();
-
-            // Hapus data yang sesuai dari array (diasumsikan dataArray adalah variabel global)
-            currentRowIndex.splice(rowIndex, 1);
-
-            // Anda juga mungkin ingin mengaktifkan kembali input atau melakukan tindakan lain yang diperlukan
-            // Sebagai contoh, jika Anda ingin mengaktifkan kembali input:
-            $('#nomor_bstb').prop('readonly', false);
-            $('#nomor_batch').prop('readonly', false);
-            $('#keterangan').prop('readonly', false);
-            $('#user_created').prop('readonly', false);
-        }
-
-        function sendData() {
-            console.log(dataArray);
-            // Mengirim data ke server menggunakan AJAX
-            $.ajax({
-                url: `{{ route('PreCleaningInput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai
-                method: 'POST',
-                data: {
-                    doc_no: JSON.stringify(doc_no),
-                    nomor_bstb: JSON.stringify(nomor_bstb),
-                    id_box_grading_kasar: JSON.stringify(id_box_grading_kasar),
-                    nomor_batch: JSON.stringify(nomor_batch),
-                    nomor_job: JSON.stringify(nomor_job),
-                    nama_supplier: JSON.stringify(nama_supplier),
-                    nomor_nota_internal: JSON.stringify(nomor_nota_internal),
-                    id_box_raw_material: JSON.stringify(id_box_raw_material),
-                    jenis_raw_material: JSON.stringify(jenis_raw_material),
-                    jenis_grading: JSON.stringify(jenis_grading),
-                    berat_keluar: JSON.stringify(berat_keluar),
-                    pcs_keluar: JSON.stringify(pcs_keluar),
-                    avg_kadar_air: JSON.stringify(avg_kadar_air),
-                    tujuan_kirim: JSON.stringify(tujuan_kirim),
-                    nomor_grading: JSON.stringify(nomor_grading),
-                    modal: JSON.stringify(modal),
-                    total_modal: JSON.stringify(total_modal),
-                    keterangan: JSON.stringify(keterangan),
-                    user_created: JSON.stringify(user_created),
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json', // payload is json,
-                success: function(response) {
-                    Swal.fire({
-                        title: 'Alhamdulillah!',
-                        text: 'Data berhasil disimpan.',
-                        icon: 'success'
-                    }).then((result) => {
-                        // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
-                        if (result.isConfirmed) {
-                            window.location.href = response
-                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
-                        }
-                    });
-                },
-                error: function(error) {
-                    Swal.fire({
-                        title: 'Astaghfirullah!',
-                        text: 'Terjadi kesalahan. Silakan coba lagi.',
-                        icon: 'error'
-                    });
-                    console.log('Validation Errors:', response.responseJSON.errors);
-                }
-            });
+        // Mendefinisikan array jika belum
+        if (typeof dataArray === 'undefined') {
+            var dataArray = [];
         }
     </script>
 @endsection

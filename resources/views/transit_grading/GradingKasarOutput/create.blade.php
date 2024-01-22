@@ -415,24 +415,34 @@
             currentRowIndex++;
         }
 
-        function getArray() {
-            // Menampilkan array di konsol untuk tujuan debugging
-            console.log(dataArray);
-        }
+        // Ambil indeks terakhir sebelum menghapus baris
+        var lastRowIndex = currentRowIndex;
 
         function deleteRow(rowIndex) {
             // Hapus baris dari tabel
             $('#tableBody tr').eq(rowIndex).remove();
 
-            // Hapus data yang sesuai dari array (diasumsikan dataArray adalah variabel global)
-            currentRowIndex.splice(rowIndex, 1);
+            // Periksa apakah dataArray adalah variabel global yang didefinisikan di tempat lain
+            if (typeof dataArray !== 'undefined') {
+                // Periksa apakah rowIndex valid
+                if (rowIndex < dataArray.length) {
+                    // Hapus data yang sesuai dari array
+                    dataArray.splice(rowIndex, 1);
 
-            // Anda juga mungkin ingin mengaktifkan kembali input atau melakukan tindakan lain yang diperlukan
-            // Sebagai contoh, jika Anda ingin mengaktifkan kembali input:
-            $('#nomor_bstb').prop('readonly', false);
-            $('#nomor_batch').prop('readonly', false);
-            $('#keterangan').prop('readonly', false);
-            $('#user_created').prop('readonly', false);
+                    // Update indeks baris terakhir setelah menghapus data
+                    currentRowIndex = lastRowIndex;
+                } else {
+                    console.error("Error: Index baris tidak valid.");
+                }
+            } else {
+                console.error("Error: Variabel dataArray tidak didefinisikan atau tidak dapat diakses.");
+            }
+
+        }
+
+        function getArray() {
+            // Menampilkan array di konsol untuk tujuan debugging
+            console.log(dataArray);
         }
 
         function sendData() {

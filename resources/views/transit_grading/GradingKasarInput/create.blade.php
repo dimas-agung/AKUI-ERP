@@ -332,6 +332,7 @@
                 return;
             }
 
+
             // Menambahkan data ke dalam tabel
             var newRow = '<tr><td>' + nomor_bstb + '</td><td>' + nomor_batch + '</td><td>' + id_box +
                 '</td><td>' + nama_supplier + '</td><td>' + jenis + '</td><td>' +
@@ -382,19 +383,33 @@
             currentRowIndex++;
         }
 
+        // Ambil indeks terakhir sebelum menghapus baris
+        var lastRowIndex = currentRowIndex;
+
         function deleteRow(rowIndex) {
             // Hapus baris dari tabel
             $('#tableBody tr').eq(rowIndex).remove();
 
-            // Hapus data yang sesuai dari array (diasumsikan dataArray adalah variabel global)
-            currentRowIndex.splice(rowIndex, 1);
+            // Periksa apakah dataArray adalah variabel global yang didefinisikan di tempat lain
+            if (typeof dataArray !== 'undefined') {
+                // Periksa apakah rowIndex valid
+                if (rowIndex < dataArray.length) {
+                    // Hapus data yang sesuai dari array
+                    dataArray.splice(rowIndex, 1);
+
+                    // Update indeks baris terakhir setelah menghapus data
+                    currentRowIndex = lastRowIndex;
+                } else {
+                    console.error("Error: Index baris tidak valid.");
+                }
+            } else {
+                console.error("Error: Variabel dataArray tidak didefinisikan atau tidak dapat diakses.");
+            }
+
         }
 
-        $('#tableBody').on('click', 'button', function() {
-            // Mengambil indeks baris dari data yang disimpan di elemen
-            var rowIndex = $(this).closest('tr').index();
-            deleteRow(rowIndex);
-        });
+
+
 
         function getArray() {
             // Menampilkan array di konsol untuk tujuan debugging
