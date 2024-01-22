@@ -300,7 +300,6 @@
             $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal.toFixed(2));
         }
 
-
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;
         var dataArray = [];
@@ -405,11 +404,7 @@
             } else {
                 console.error("Error: Variabel dataArray tidak didefinisikan atau tidak dapat diakses.");
             }
-
         }
-
-
-
 
         function getArray() {
             // Menampilkan array di konsol untuk tujuan debugging

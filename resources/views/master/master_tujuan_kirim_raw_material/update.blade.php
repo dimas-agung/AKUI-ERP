@@ -1,4 +1,10 @@
-@extends('layouts.template')
+@extends('layouts.master1')
+@section('Menu')
+    Master
+@endsection
+@section('title')
+    UPDATE DATA MASTER TUJUAN KIRIM RAW MATERIAL
+@endsection
 @section('content')
     <div class="container mt-5 mb-5">
         <div class="row">

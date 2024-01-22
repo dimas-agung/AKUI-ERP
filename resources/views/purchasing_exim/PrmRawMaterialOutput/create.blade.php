@@ -54,10 +54,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Id Box</label>
-                                            <select id="id_box" class="choices form-select" name="id_box"
-                                                data-placeholder="Pilih Id Box">
-                                                <option></option>
-                                                @foreach ($PrmRawMS as $post)
+                                            <select id="id_box" class="choices form-select" name="id_box">
+                                                <option value="">Pilih Id Box</option>
+                                                @foreach ($PrmRawMS->sortBy('id_box') as $post)
                                                     <option value="{{ $post->id_box }}">
                                                         {{ old('id_box', $post->id_box) }}</option>
                                                 @endforeach
@@ -67,12 +66,12 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
-                                            <select id="tujuan_kirim" class="choices form-select" name="tujuan_kirim"
-                                                data-placeholder="Pilih Tujuan Kirim">
-                                                <option></option>
-                                                @foreach ($MasTujKir as $post)
+                                            <select id="tujuan_kirim" class="choices form-select" name="tujuan_kirim">
+                                                <option value="">Pilih Tujuan Kirim</option>
+                                                @foreach ($MasTujKir->sortBy('tujuan_kirim') as $post)
                                                     <option value="{{ $post->tujuan_kirim }}">
-                                                        {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
+                                                        {{ old('tujuan_kirim', $post->tujuan_kirim) }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -243,15 +242,27 @@
                     id_box: selectedIdBox
                 },
                 success: function(response) {
-                    console.log(response);
-                    // Mengatur nilai Nomor Batch sesuai dengan respons dari server
-                    $('#nomor_batch').val(response.nomor_batch);
-                    $('#nama_supplier').val(response.nama_supplier);
-                    $('#jenis').val(response.jenis);
-                    $('#kadar_air').val(response.avg_kadar_air);
-                    $('#berat_masuk').val(response.berat_masuk);
-                    $('#modal').val(response.modal);
-                    $('#nomor_nota_internal').val(response.nomor_nota_internal);
+                    if (response.berat_masuk > 0) {
+                        console.log(response);
+                        // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                        $('#nomor_batch').val(response.nomor_batch);
+                        $('#nama_supplier').val(response.nama_supplier);
+                        $('#jenis').val(response.jenis);
+                        $('#kadar_air').val(response.avg_kadar_air);
+                        $('#berat_masuk').val(response.berat_masuk);
+                        $('#modal').val(response.modal);
+                        $('#nomor_nota_internal').val(response.nomor_nota_internal);
+                    } else {
+                        // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
+                        // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
+                        Swal.fire({
+                            title: 'Astaghfirullah!',
+                            text: 'Berat ID Box tidak boleh 0. Pilih ID Box lain.',
+                            icon: 'error'
+                        });
+                        // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
+                        $('#nomor_bstb').val('');
+                    }
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -271,9 +282,21 @@
                     tujuan_kirim: selectedPcc
                 },
                 success: function(response) {
-                    // Mengatur nilai elemen-elemen sesuai dengan respons dari server
-                    $('#letak_tujuan').val(response.letak_tujuan);
-                    $('#inisial_tujuan').val(response.inisial_tujuan);
+                    if (response.status > 0) {
+                        // Mengatur nilai elemen-elemen sesuai dengan respons dari server
+                        $('#letak_tujuan').val(response.letak_tujuan);
+                        $('#inisial_tujuan').val(response.inisial_tujuan);
+                    } else {
+                        // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
+                        // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
+                        Swal.fire({
+                            title: 'Astaghfirullah!',
+                            text: 'Tujuan Kirim tidak boleh tidak aktif. Pilih Tujuan Kirim lain.',
+                            icon: 'error'
+                        });
+                        // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
+                        $('#nomor_bstb').val('');
+                    }
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -447,7 +470,6 @@
             } else {
                 console.error("Error: Variabel dataArray tidak didefinisikan atau tidak dapat diakses.");
             }
-
         }
 
 

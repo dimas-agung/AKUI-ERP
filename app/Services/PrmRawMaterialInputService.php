@@ -22,10 +22,6 @@ class PrmRawMaterialInputService
                 $this->createItem($item);
             }
 
-            // foreach ($dataStock as $itemS) {
-            //     $this->createStock($itemS);
-            // }
-
             DB::commit();
 
             return [

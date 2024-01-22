@@ -122,48 +122,55 @@ class PrmRawMaterialOutputService
             // return $existingItem
 
         $dataToUpdate = [
-            'id_box'        => $itemObject->id_box,
-            'nomor_batch'   => $itemObject->nomor_batch,
-            'nama_supplier' => $itemObject->nama_supplier,
-            'jenis'         => $itemObject->jenis,
-            'berat_masuk'   => $itemObject->berat_masuk,
+            'berat_masuk'   => $itemObject->berat_masuks ?? 0,
             'berat_keluar'  => $itemObject->berat,
             'sisa_berat'    => $itemObject->selisih_berat,
-            'avg_kadar_air' => $itemObject->kadar_air,
-            'modal'         => $itemObject->modal,
             'total_modal'   => $itemObject->total_modal,
             'keterangan'    => $itemObject->keterangan_item,
-            'user_created'  => $itemObject->user_created,
-            'user_updated'  => $itemObject->user_updated ?? "There isn't any",
+            'user_updated'  => $itemObject->user_created ?? "There isn't any",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
 
         if ($existingItem) {
             // Ambil nilai terakhir berat_masuk dan berat_keluar
-            $lastBeratMasuk = $existingItem->berat_masuk;
-            $lastBeratKeluar = $existingItem->berat_keluar;
+            // $lastBeratMasuk = $existingItem->berat_masuk;
+            // $lastBeratKeluar = $existingItem->berat_keluar;
+            $beratSebelumnya = $existingItem->berat_masuk;
 
+            $perbedaanBerat = $beratSebelumnya - $itemObject->berat;
+            $totalModalBaru = $perbedaanBerat * $itemObject->modal;
+
+            $dataToUpdate['sisa_berat'] = $perbedaanBerat;
+            $dataToUpdate['total_modal'] = $totalModalBaru;
             // Update nilai berat_masuk pada item yang sudah ada
-            $lastBeratKeluar = $existingItem->berat_keluar += $itemObject->berat;
-            $existingItem->berat_masuk = $itemObject->berat_masuk ?? $existingItem->berat_masuk ?? 0;
+            // $lastBeratKeluar = $existingItem->berat_keluar += $itemObject->berat;
+            // $existingItem->berat_masuk = $itemObject->berat_masuk ?? $existingItem->berat_masuk ?? 0;
 
-            // Tentukan nilai sisa_berat sesuai kondisi
-            if ($existingItem->berat_keluar === null || $existingItem->berat_keluar === 0) {
-                // Jika berat_keluar belum diisi, isi sisa_berat dengan nilai berat_masuk
-                $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
-            } else {
-                // Jika berat_keluar sudah diisi, hitung sisa berat
-                $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
-            }
+            // // Tentukan nilai sisa_berat sesuai kondisi
+            // if ($existingItem->berat_keluar === null || $existingItem->berat_keluar === 0) {
+            //     // Jika berat_keluar belum diisi, isi sisa_berat dengan nilai berat_masuk
+            //     $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
+            // } else {
+            //     // Jika berat_keluar sudah diisi, hitung sisa berat
+            //     $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
+            // }
 
-                        $existingItem->modal = $itemObject->modal ?? $existingItem->modal ?? 0;
-            $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
-            $existingItem->keterangan = $itemObject->keterangan_item;
+            //             $existingItem->modal = $itemObject->modal ?? $existingItem->modal ?? 0;
+            // $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
+            // $existingItem->keterangan = $itemObject->keterangan_item;
             // Simpan perubahan pada stok yang sudah ada
-            $existingItem->save();
+            $existingItem->update($dataToUpdate);
         } else {
             // Jika item tidak ada, buat item baru dalam database
-            PrmRawMaterialStock::create($dataToUpdate);
+            PrmRawMaterialStock::create(array_merge($dataToUpdate, [
+                'id_box'        => $itemObject->id_box,
+                'nomor_batch'   => $itemObject->nomor_batch,
+                'nama_supplier' => $itemObject->nama_supplier,
+                'jenis'         => $itemObject->jenis,
+                'avg_kadar_air' => $itemObject->kadar_air,
+                'modal'         => $itemObject->modal,
+                'user_created'  => $itemObject->user_created
+            ]));
         }
     }
 
