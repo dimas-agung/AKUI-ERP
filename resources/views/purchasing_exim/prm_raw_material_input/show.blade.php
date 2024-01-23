@@ -69,11 +69,11 @@
                                                     <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
                                                         action="{{ route('prm_raw_material_input.destroyItem', $MasterPRIM->id) }}"
                                                         method="POST">
-                                                        {{-- <a href="{{ route('prm_raw_material_input.edit', $MasterPRIM->id) }}"
+                                                        <a href="{{ route('prm_raw_material_input.edit', $MasterPRIM->id) }}"
                                                             class="btn btn-link" title="Edit Task"
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>
-                                                        </a> --}}
+                                                        </a>
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
@@ -92,6 +92,10 @@
                                     @endforelse
                                 </tbody>
                             </table>
+                        </div>
+                        <div class=" d-flex justify-content-end model-footer no-bd">
+                            <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}" type="button"
+                                class="btn btn-danger mt-3" data-dismiss="modal">Close</a>
                         </div>
                     </div>
                 </div>

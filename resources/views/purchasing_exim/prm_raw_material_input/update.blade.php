@@ -1,5 +1,10 @@
-@extends('layouts.master2')
-{{-- @extends('layouts.template1') --}}
+@extends('layouts.master1')
+@section('menu')
+    Purchasing & EXIM
+@endsection
+@section('title')
+    Purchasing Raw Material Input
+@endsection
 @section('content')
     <div class="col-md-12">
         <div class="card mt-2">
@@ -7,8 +12,8 @@
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Input Purchasing Raw Material</h4>
                 </div>
-                <form action="{{ route('prm_raw_material_input.update', $MasterPRIMI->id) }} " method="POST" class="row g-3">
-                    {{-- <form method="POST" class="row g-3" id="myForm"> --}}
+                <form action="{{ route('prm_raw_material_input.update', $prm_raw_material_input_items->id) }} " method="POST"
+                    class="row g-3">
                     @csrf
                     <div class="col-md-4">
                         <label for="no_doc" class="form-label">Nomor DOC</label>
@@ -16,30 +21,35 @@
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_po" class="form-label">Nomor PO</label>
-                        <input type="text" class="form-control" id="nomor_po" readonly>
+                        <input type="text" class="form-control" id="nomor_po"
+                            value="{{ old('nomor_po', $prm_raw_material_inputs->nomor_po) }}" readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_batch" class="form-label">Nomor Batch</label>
-                        <input type="text" class="form-control" id="nomor_batch" readonly>
+                        <input type="text" class="form-control" id="nomor_batch"
+                            value="{{ old('nomor_batch', $prm_raw_material_inputs->nomor_batch) }}" readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_nota_supplier" class="form-label">Nomor Nota Supplier</label>
-                        <input type="text" class="form-control" id="nomor_nota_supplier" readonly>
+                        <input type="text" class="form-control" id="nomor_nota_supplier"
+                            value="{{ old('nomor_nota_internal', $prm_raw_material_inputs->nomor_nota_internal) }}"
+                            readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
-                        <input type="text" class="form-control" id="nomor_nota_internal" readonly>
+                        <input type="text" class="form-control" id="nomor_nota_internal"
+                            value="{{ old('nomor_nota_internal', $prm_raw_material_inputs->nomor_nota_internal) }}"
+                            readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
-                        <select class="form-select select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
-                            aria-hidden="true" name="nama_supplier" id="nama_supplier"
-                            data-placeholder="Pilih Nama Supplier" readonly>
-                            @foreach ($MasterSupplierRawMaterial as $MasterSPRM)
-                                <option></option>
+                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                            name="nama_supplier" id="nama_supplier" data-placeholder="Pilih Nama Supplier" readonly>
+                            <option value="">Pilih Nama Supplier</option>
+                            @foreach ($master_supplier_raw_materials as $MasterSPRM)
                                 <option value="{{ $MasterSPRM->nama_supplier }}"
-                                    {{ $MasterSPRM->nama_supplier == $MasterSPRM->nama_supplier ? 'selected' : '' }}>
-                                    {{ old('nama_supplier', $MasterSPRM->nama_supplier) }}</option>
+                                    {{ old('nama_supplier', $prm_raw_material_inputs->nama_supplier) == $MasterSPRM->nama_supplier ? 'selected' : '' }}>
+                                    {{ $MasterSPRM->nama_supplier }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -48,78 +58,74 @@
                     </div>
                     <div class="col-md-3">
                         <label for="basic-usage" class="form-label">Pilih Jenis :</label>
-                        <select class="form-select select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
-                            aria-hidden="true" name="jenis" id="jenis" data-placeholder="Pilih Jenis">
-                            @foreach ($MasterJenisRawMaterial as $MasterJRM)
-                                {{-- <option></option> --}}
+                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                            name="jenis" id="jenis" data-placeholder="Pilih Jenis">
+                            <option value="">Pilih Jenis</option>
+                            @foreach ($master_jenis_raw_materials as $MasterJRM)
                                 <option value="{{ $MasterJRM->jenis }}"
-                                    {{ $MasterJRM->jenis == $MasterPRIMI->jenis ? 'selected' : '' }}>
-                                    {{ old('jenis', $MasterJRM->jenis) }}</option>
-                                {{-- <option value="{{ old('jenis', $MasterPRIMI->jenis) }}"></option> --}}
+                                    {{ old('jenis', $prm_raw_material_input_items->jenis) == $MasterJRM->jenis ? 'selected' : '' }}>
+                                    {{ $MasterJRM->jenis }}</option>
                             @endforeach
-                            {{-- @foreach ($PrmRawMS as $post)
-                                <option value="{{ $post->id_box }}" {{ $post->id_box == $post->id_box ? 'selected' : '' }}>
-                                    {{ old('id_box', $post->id_box) }}</option>
-                            @endforeach --}}
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="berat_nota" class="form-label">Berat Nota</label>
                         <input type="number" class="form-control" id="berat_nota"
-                            value="{{ old('nomor_po', $MasterPRIMI->berat_nota) }}">
+                            value="{{ old('berat_nota', $prm_raw_material_input_items->berat_nota) }}" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="berat_kotor" class="form-label">Berat Kotor</label>
                         <input type="number" class="form-control" id="berat_kotor"
-                            value="{{ old('nomor_po', $MasterPRIMI->berat_kotor) }}">
+                            value="{{ old('berat_kotor', $prm_raw_material_input_items->berat_kotor) }}" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="berat_bersih" class="form-label">Berat Bersih</label>
                         <input type="number" class="form-control" id="berat_bersih"
-                            value="{{ old('nomor_po', $MasterPRIMI->berat_bersih) }}">
+                            value="{{ old('berat_bersih', $prm_raw_material_input_items->berat_bersih) }}" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="selisih_berat" class="form-label">Selisih Berat</label>
                         <input type="number" class="form-control" id="selisih_berat"
-                            value="{{ old('nomor_po', $MasterPRIMI->selisih_berat) }}">
+                            value="{{ old('selisih_berat', $prm_raw_material_input_items->selisih_berat) }}" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="kadar_air" class="form-label">Kadar Air</label>
                         <input type="number" class="form-control" id="kadar_air"
-                            value="{{ old('nomor_po', $MasterPRIMI->kadar_air) }}">
+                            value="{{ old('kadar_air', $prm_raw_material_input_items->kadar_air) }}" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="id_box" class="form-label">ID Box</label>
                         <input type="text" class="form-control" id="id_box"
-                            value="{{ old('nomor_po', $MasterPRIMI->id_box) }}">
+                            value="{{ old('id_box', $prm_raw_material_input_items->id_box) }}" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="harga_nota" class="form-label">Harga Nota</label>
                         <input type="number" class="form-control" id="harga_nota"
-                            value="{{ old('nomor_po', $MasterPRIMI->harga_nota) }}">
+                            value="{{ old('harga_nota', $prm_raw_material_input_items->harga_nota) }}" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="total_harga_nota" class="form-label">Total Harga Nota</label>
                         <input type="number" class="form-control" id="total_harga_nota"
-                            value="{{ old('nomor_po', $MasterPRIMI->total_harga_nota) }}">
+                            value="{{ old('total_harga_nota', $prm_raw_material_input_items->total_harga_nota) }}"
+                            readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="harga_deal" class="form-label">Harga Deal</label>
                         <input type="number" class="form-control" id="harga_deal"
-                            value="{{ old('nomor_po', $MasterPRIMI->harga_deal) }}">
+                            value="{{ old('harga_deal', $prm_raw_material_input_items->harga_deal) }}" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <input type="text" class="form-control" id="keterangan"
-                            value="{{ old('nomor_po', $MasterPRIMI->keterangan) }}">
+                            value="{{ old('keterangan', $prm_raw_material_input_items->keterangan) }}" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="user_created" class="form-label">NIP Admin</label>
                         <input type="text" class="form-control" id="user_created"
-                            value="{{ old('nomor_po', $MasterPRIMI->user_created) }}">
+                            value="{{ old('user_created', $prm_raw_material_input_items->user_created) }}" readonly>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
+                        {{-- <button type="submit" class="btn btn-md btn-primary">UPDATE</button> --}}
                         {{-- <button type="button" class="btn btn-warning" onclick="addRow()">Update</button> --}}
                         <button type="button" class="btn btn-danger" onclick="goBack()">Cancel</button>
                     </div>
@@ -128,46 +134,9 @@
 
         </div>
     </div>
-
-    {{-- table --}}
-    {{-- <div class="col-md-12">
-        <div class="card mt-2">
-            <div class="card-header">
-                <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
-                    <table class="table" id="dataTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">Doc No</th>
-                                <th scope="col">Jenis</th>
-                                <th scope="col">Berat Nota</th>
-                                <th scope="col">Berat Kotor</th>
-                                <th scope="col">Berat Bersih</th>
-                                <th scope="col">Selisih Berat</th>
-                                <th scope="col">Kadar Air</th>
-                                <th scope="col">ID Box</th>
-                                <th scope="col">Harga Nota</th>
-                                <th scope="col">Total Harga Nota</th>
-                                <th scope="col">Harga Deal</th>
-                                <th scope="col">Keterangan</th>
-                                <th scope="col">NIP Admin</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-success" onclick="simpanData()">Simpan</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 @endsection
 @section('script')
     <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
         // Menambahkan event listener untuk perubahan nilai pada input nomor nota supplier dan select nama supplier
         $('#nomor_nota_supplier').on('input', generateNomorNotaInternal);
         $('#nama_supplier').on('change', generateNomorNotaInternal);
@@ -303,135 +272,6 @@
 
             // Memasukkan hasil perhitungan ke dalam input harga deal menggunakan jQuery
             $('#harga_deal').val(isNaN(hargaDeal) ? '' : hargaDeal.toFixed(2));
-        }
-    </script>
-    <script>
-        // test
-        var dataArray = [];
-        var dataHeader = [];
-
-        function addRow() {
-            console.log(dataArray);
-            // Mengambil nilai dari input
-            let doc_no = $('#doc_no').val();
-            let nomor_po = $('#nomor_po').val();
-            let nomor_batch = $('#nomor_batch').val();
-            let nomor_nota_supplier = $('#nomor_nota_supplier').val();
-            let nomor_nota_internal = $('#nomor_nota_internal').val();
-            let nama_supplier = $('#nama_supplier').val();
-            let jenis = $('#jenis').val();
-            let berat_nota = $('#berat_nota').val();
-            let berat_kotor = $('#berat_kotor').val();
-            let berat_bersih = $('#berat_bersih').val();
-            let selisih_berat = $('#selisih_berat').val();
-            let kadar_air = $('#kadar_air').val();
-            let id_box = $('#id_box').val();
-            let harga_nota = $('#harga_nota').val();
-            let total_harga_nota = $('#total_harga_nota').val();
-            let harga_deal = $('#harga_deal').val();
-            let keterangan = $('#keterangan').val();
-            let user_created = $('#user_created').val();
-
-            // Validasi input (sesuai kebutuhan)
-            if (nomor_po.trim() === '' || nomor_batch.trim() === '' || nomor_nota_supplier.trim() === '' ||
-                nomor_nota_internal.trim() === '' || nama_supplier.trim() === '' || jenis.trim() === '' ||
-                berat_nota.trim() === '' || berat_kotor.trim() === '' || berat_bersih.trim() === '' ||
-                selisih_berat.trim() === '' ||
-                kadar_air.trim() === '' || id_box.trim() === '' || harga_nota.trim() === '' || total_harga_nota.trim() ===
-                '' || harga_deal.trim() === '') {
-                alert('Harap isi semua kolom.');
-                return; // Berhenti jika ada input yang kosong
-            }
-            // Menambahkan data ke dalam tabel
-            var newRow = '<tr>' +
-                // '<td>' + doc_no + '</td>' +
-                '<td>' + jenis + '</td>' +
-                '<td>' + berat_nota + '</td>' +
-                '<td>' + berat_kotor + '</td>' +
-                '<td>' + berat_bersih + '</td>' +
-                '<td>' + selisih_berat + '</td>' +
-                '<td>' + kadar_air + '</td>' +
-                '<td>' + id_box + '</td>' +
-                '<td>' + harga_nota + '</td>' +
-                '<td>' + total_harga_nota + '</td>' +
-                '<td>' + harga_deal + '</td>' +
-                '<td>' + keterangan + '</td>' +
-                '<td>' + user_created + '</td>' +
-                '</tr>';
-            $('#dataTable tbody').append(newRow);
-            // $('#myForm')[0].reset();
-
-            // Menambahkan data ke dalam array
-            dataArray.push({
-                doc_no: doc_no,
-                jenis: jenis,
-                berat_nota: berat_nota,
-                berat_kotor: berat_kotor,
-                berat_bersih: berat_bersih,
-                selisih_berat: selisih_berat,
-                kadar_air: kadar_air,
-                id_box: id_box,
-                harga_nota: harga_nota,
-                total_harga_nota: total_harga_nota,
-                harga_deal: harga_deal,
-                keterangan: keterangan,
-                user_created: user_created,
-
-            });
-            console.log(dataArray);
-            dataHeader = [];
-            dataHeader.push({
-                doc_no: doc_no,
-                nomor_po: nomor_po,
-                nomor_batch: nomor_batch,
-                nomor_nota_supplier: nomor_nota_supplier,
-                nomor_nota_internal: nomor_nota_internal,
-                nama_supplier: nama_supplier,
-                keterangan: keterangan,
-                user_created: user_created,
-            });
-            // Membersihkan nilai input setelah ditambahkan
-            $('#jenis').val('');
-            $('#berat_nota').val('');
-            $('#berat_kotor').val('');
-            $('#berat_bersih').val('');
-            $('#selisih_berat').val('');
-            $('#kadar_air').val('');
-            $('#id_box').val('');
-            $('#harga_nota').val('');
-            $('#total_harga_nota').val('');
-            $('#harga_deal').val('');
-            $('#keterangan').val('');
-        }
-
-        function getArray() {
-            // Menampilkan array di konsol untuk tujuan debugging
-            console.log(dataArray);
-        }
-
-        function simpanData() {
-            console.log(dataArray);
-            // Mengirim data ke server menggunakan AJAX
-            $.ajax({
-                url: `{{ route('prm_raw_material_input.simpanData') }}`, // Ganti dengan URL endpoint yang sesuai
-                method: 'POST',
-                data: {
-                    data: JSON.stringify(dataArray),
-                    dataHeader: JSON.stringify(dataHeader),
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json', // payload is json,
-                success: function(response) {
-                    console.log('Data sent successfully:', response);
-                    window.location.href = `{{ route('prm_raw_material_input.index') }}`;
-                },
-                error: function(error) {
-                    console.error('Error sending data:', error);
-                }
-            });
-
-            // Membersihkan array setelah data dikirim
-            // dataArray = [];
         }
     </script>
 @endsection

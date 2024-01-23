@@ -4,7 +4,7 @@ namespace App\Http\Controllers\PurchasingExim;
 
 use App\Models\PrmRawMaterialInput;
 use App\Models\PrmRawMaterialInputItem;
-// use App\Models\PrmRawMaterialStock;
+use App\Models\PrmRawMaterialStock;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PrmRawMaterialRequest;
 use App\Http\Requests\PrmRawMaterialItemRequest;
@@ -54,7 +54,7 @@ class PrmRawMaterialInputController extends Controller
         $nama_supplier = $request->nama_supplier;
         // Menggunakan where untuk memfilter berdasarkan nama_supplier dan status aktif
         $data = MasterSupplierRawMaterial::where('nama_supplier', $nama_supplier)
-            ->where('status', 'aktif') // Gantilah 'status' dengan kolom yang sesuai dengan model Anda
+            ->where('status', 1) // Gantilah 'status' dengan kolom yang sesuai dengan model Anda
             ->first();
 
         // Kembalikan nomor batch sebagai respons
@@ -64,7 +64,9 @@ class PrmRawMaterialInputController extends Controller
     public function getDataJenis(Request $request)
     {
         $jenis = $request->jenis;
-        $data = MasterJenisRawMaterial::where('jenis', $jenis)->first();
+        $data = MasterJenisRawMaterial::where('jenis', $jenis)
+            ->where('status', 1)
+            ->first();
 
         return response()->json($data);
     }
@@ -119,26 +121,27 @@ class PrmRawMaterialInputController extends Controller
         return response()->view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM', 'i'));
     }
     // edit
-    // public function edit(string $id)
-    // {
-    //     $MasterPRIMI = PrmRawMaterialInputItem::findOrFail($id);
-    //     // $PrmRawMaterialInput = PrmRawMaterialInput::findOrFail($id);
-    //     $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
-    //     $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
-    //     // $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
-    //     //     ->where(['id' => $id])
-    //     //     ->first();
-    //     // return $MasterPRIMI;
-    //     // return $PrmRawMaterialInput;
-    //     return view('purchasing_exim.prm_raw_material_input.update', compact('MasterPRIMI', 'MasterJenisRawMaterial', 'MasterSupplierRawMaterial'));
-    // }
+    public function edit(string $id)
+    {
+        $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+        $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
+        $PrmRawMaterialInputItem = PrmRawMaterialInputItem::with('PrmRawMaterialInput')->find($id);
+        $PrmRawMaterialInput = PrmRawMaterialInput::with('MasterSupplierRawMaterial')->find($id);
+        // return $MasterPRM;
+        return view('purchasing_exim.prm_raw_material_input.update', [
+            'master_supplier_raw_materials'    => $MasterSupplierRawMaterial,
+            'master_jenis_raw_materials'       => $MasterJenisRawMaterial,
+            'prm_raw_material_input_items'     => $PrmRawMaterialInputItem,
+            'prm_raw_material_inputs'          => $PrmRawMaterialInput,
+        ]);
+    }
     // destroy
     public function destroyInput($id): RedirectResponse
     {
         //get by ID
         $PrmRawMaterialInput = PrmRawMaterialInput::findOrFail($id);
 
-        //delete
+        // //delete
         $PrmRawMaterialInput->delete();
 
         //redirect to index

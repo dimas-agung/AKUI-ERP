@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class PrmRawMaterialInputService
 {
-    // public function simpanData($dataHeader, $dataArray, $dataStock)
-    // public function simpanData($dataHeader, $dataArray, $dataStock, $dataStockHistory)
     public function simpanData($dataHeader, $dataArray)
     {
         try {
