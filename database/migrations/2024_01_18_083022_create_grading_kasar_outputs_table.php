@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('avg_kadar_air');
             $table->string('tujuan_kirim');
             $table->string('nomor_grading');
-            $table->float('modal');
-            $table->float('total_modal');
+            $table->float('modal', 16, 4);
+            $table->float('total_modal', 16, 4);
             $table->float('biaya_produksi');
             $table->float('fix_total_modal');
             $table->text('keterangan');

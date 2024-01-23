@@ -180,14 +180,82 @@ class PrmRawMaterialOutputController extends Controller
      */
     public function destroy($id): RedirectResponse
     {
-        //get post by ID
-        $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
-        $PrmRawMO = PrmRawMaterialOutputItem::with('PrmRawMaterialStock')->find($id);
+        try {
+            // Gunakan transaksi database untuk memastikan konsistensi
+            DB::beginTransaction();
 
-        //delete post
-        $PrmRawMO->delete();
+            // Ambil data GradingKasarInput yang akan dihapus
+            $gradingKI = PrmRawMaterialOutputItem::findOrFail($id);
 
-        //redirect to index
-        return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            // Ambil data StockTransitRawMaterial berdasarkan nomor_bstb
+            $stockPrmRawMaterial = PrmRawMaterialStock::where('id_box', '=', $gradingKI->id_box)->first();
+
+            if ($stockPrmRawMaterial) {
+                // Simpan nilai sebelum dihapus
+                $beratSebelumnya = $gradingKI->berat;
+                $beratMasuk = $gradingKI->berat_masuk;
+                $totalModalSebelumnya = $gradingKI->total_modal;
+                $sisaBerat = $beratMasuk - $beratSebelumnya;
+
+                $dataToUpdate = [
+                    'id_box' => $gradingKI->id_box,
+                    'total_modal' => $totalModalSebelumnya,
+                    'berat_keluar' => $gradingKI->berats ?? 0,
+                    'sisa_berat' => $sisaBerat,
+                ];
+
+                if ($stockPrmRawMaterial) {
+                    // Ambil berat sebelumnya
+                    $beratSebelumnya = $stockPrmRawMaterial->berat;
+                    $beratMasuk = $stockPrmRawMaterial->berat_masuk;
+
+                    // Hitung total modal baru berdasarkan perbedaan berats
+                    $perbedaanBerat = $beratSebelumnya - $gradingKI->berat;
+                    $totalModalBaru = $perbedaanBerat * $gradingKI->modal;
+                    $sisaBerat = $beratMasuk - $beratSebelumnya;
+
+                    // Update data dengan berat dan total modal yang baru
+                    $dataToUpdate['berat'] = abs($perbedaanBerat);
+                    $dataToUpdate['total_modal'] = abs($totalModalBaru);
+                    $dataToUpdate['sisa_berat'] = abs($sisaBerat);
+
+                    // Perbarui data
+                    $stockPrmRawMaterial->update($dataToUpdate);
+                } else {
+                    // Jika item tidak ada, buat item baru dengan nilai lainnya tetap sama
+                    PrmRawMaterialStock::create(array_merge($dataToUpdate, [
+                        'id_box'               => $gradingKI->id_box,
+                        'nomor_batch'          => $gradingKI->nomor_batch,
+                        'berat_masuk'          => $gradingKI->berat_masuk,
+                        'jenis'                => $gradingKI->jenis,
+                        'kadar_air'            => $gradingKI->kadar_air,
+                        'tujuan_kirim'         => $gradingKI->tujuan_kirim,
+                        'letak_tujuan'         => $gradingKI->letak_tujuan,
+                        'inisial_tujuan'       => $gradingKI->inisial_tujuan,
+                        'modal'                => $gradingKI->modal,
+                        'keterangan'           => $gradingKI->keterangan,
+                        'user_created'         => $gradingKI->user_updated ?? "There isn't any",
+                        'nomor_nota_internal'  => $gradingKI->nomor_nota_internal,
+                        // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+                    ]));
+                }
+            }
+
+
+            // Hapus data GradingKasarInput
+            $gradingKI->delete();
+
+            // Commit transaksi
+            DB::commit();
+
+            // Redirect ke index dengan pesan sukses
+            return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::rollback();
+
+            // Redirect ke index dengan pesan error
+            return redirect()->route('PrmRawMaterialOutput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 }
