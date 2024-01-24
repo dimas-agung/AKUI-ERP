@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PreCleaning;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterOperator;
 use App\Models\PreCleaningOutput;
 use App\Models\PreCleaningStock;
 use Illuminate\Http\Request;
@@ -24,9 +25,11 @@ class PreCleaningOutputController extends Controller
     {
         $PreCleaningStock = PreCleaningStock::with('PreCleaningOutput')->get();
         $PreCleaningOutput = PreCleaningOutput::with('PreCleaningStock')->get();
+        $MasterOperator = MasterOperator::with('PreCleaningOutput')->get();
         return view('pre_cleaning.pre_cleaning_output.create', [
             'pre_cleaning_outputs'      => $PreCleaningOutput,
             'pre_cleaning_stocks'       => $PreCleaningStock,
+            'master_operators'          => $MasterOperator,
         ]);
     }
     // set
@@ -34,7 +37,7 @@ class PreCleaningOutputController extends Controller
     {
         $nomor_job = $request->nomor_job;
         $data = PreCleaningStock::where('nomor_job', $nomor_job)->first();
-
+        return $data;
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
     }

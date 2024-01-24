@@ -10,16 +10,16 @@
         <div class="card mt-2">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Input Purchasing Raw Material</h4>
+                    <h4 class="card-title">View Purchasing Raw Material</h4>
                 </div>
                 <form action="{{ route('prm_raw_material_input.update', $prm_raw_material_input_items->id) }} " method="POST"
                     class="row g-3">
                     @csrf
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4">
                         <label for="no_doc" class="form-label">Nomor DOC</label>
                         <input type="text" class="form-control" id="no_doc" value="1" readonly>
-                    </div>
-                    <div class="col-md-4">
+                    </div> --}}
+                    {{-- <div class="col-md-4">
                         <label for="nomor_po" class="form-label">Nomor PO</label>
                         <input type="text" class="form-control" id="nomor_po"
                             value="{{ old('nomor_po', $prm_raw_material_inputs->nomor_po) }}" readonly>
@@ -52,7 +52,7 @@
                                     {{ $MasterSPRM->nama_supplier }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="col-md-flex">
                         <hr>
                     </div>

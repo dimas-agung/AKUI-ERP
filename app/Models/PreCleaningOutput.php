@@ -45,6 +45,16 @@ class PreCleaningOutput extends Model
     {
         return $this->belongsTo(PreCleaningStock::class, 'nomor_job', 'nomor_job');
     }
+    public function MasterOperator()
+    {
+        return $this->belongsTo(MasterOperator::class, 'nip', 'operator_sikat_kompresor');
+    }
+    // public function MasterOperator()
+    // {
+    //     return $this->belongsTo(PreCleaningOutput::class, 'operator_sikat_kompresor', 'nip')
+    //         ->orWhere('operator_flek_poles', 'nip')
+    //         ->orWhere('operator_flek_cutter', 'nip');
+    // }
 
     // public function sikatKompresorOperator()
     // {

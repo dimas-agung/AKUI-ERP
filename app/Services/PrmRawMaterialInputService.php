@@ -50,7 +50,7 @@ class PrmRawMaterialInputService
             'nama_supplier'         => $dataHeader->nama_supplier,
             'keterangan'            => $dataHeader->keterangan,
             'user_created'          => $dataHeader->user_created,
-            // 'user_updated'          => $dataHeader[0]->user_updated
+            'user_updated'          => $dataHeader->user_updated ?? 'Admin123'
             // Sesuaikan dengan kolom-kolom lain di tabel header Anda
         ]);
     }
@@ -72,26 +72,73 @@ class PrmRawMaterialInputService
             'total_modal'   => $item->total_harga_nota,
             'keterangan'    => $item->keterangan,
             'user_created'  => $item->user_created,
-            // 'user_updated'  => $item->user_updated,
+            'user_updated'  => $item->user_updated ?? 'Admin123',
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
-        PrmRawMaterialInputItem::create([
-            // 'doc_no'            => $item->doc_no,
-            'jenis'             => $item->jenis,
-            'berat_nota'        => $item->berat_nota,
-            'berat_kotor'       => $item->berat_kotor,
-            'berat_bersih'      => $item->berat_bersih,
-            'selisih_berat'     => $item->selisih_berat,
-            'kadar_air'         => $item->kadar_air,
-            'id_box'            => $item->id_box,
-            'harga_nota'        => $item->harga_nota,
-            'total_harga_nota'  => $item->total_harga_nota,
-            'harga_deal'        => $item->harga_deal,
-            'keterangan'        => $item->keterangan,
-            'user_created'      => $item->user_created,
-            // 'user_updated'      => $item->user_updated
-            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-        ]);
+        // $inputItem = (object)$item;
+        // // Cari item berdasarkan id_box dan nomor_batch
+        // $existingItem = PrmRawMaterialInputItem::where('jenis', $inputItem->jenis)
+        //     ->where('id_box', $inputItem->id_box)
+        //     ->first();
+        // PrmRawMaterialInputItem::create([
+        //     // 'doc_no'            => $item->doc_no,
+        //     'jenis'             => $item->jenis,
+        //     'berat_nota'        => $item->berat_nota,
+        //     'berat_kotor'       => $item->berat_kotor,
+        //     'berat_bersih'      => $item->berat_bersih,
+        //     'selisih_berat'     => $item->selisih_berat,
+        //     'kadar_air'         => $item->kadar_air,
+        //     'id_box'            => $item->id_box,
+        //     'harga_nota'        => $item->harga_nota,
+        //     'total_harga_nota'  => $item->total_harga_nota,
+        //     'harga_deal'        => $item->harga_deal,
+        //     'keterangan'        => $item->keterangan,
+        //     'user_created'      => $item->user_created,
+        //     'user_updated'      => $item->user_updated ?? 'Admin123'
+        //     // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        // ]);
+        $inputItem = (object) $item;
+
+        // Cari item berdasarkan jenis dan id_box
+        $existingItem = PrmRawMaterialInputItem::where('jenis', $inputItem->jenis)
+            ->where('id_box', $inputItem->id_box)
+            ->first();
+
+        if ($existingItem) {
+            // Jika item sudah ada, update data
+            $existingItem->update([
+                'berat_nota'        => $inputItem->berat_nota,
+                'berat_kotor'       => $inputItem->berat_kotor,
+                'berat_bersih'      => $inputItem->berat_bersih,
+                'selisih_berat'     => $inputItem->selisih_berat,
+                'kadar_air'         => $inputItem->kadar_air,
+                'harga_nota'        => $inputItem->harga_nota,
+                'total_harga_nota'  => $inputItem->total_harga_nota,
+                'harga_deal'        => $inputItem->harga_deal,
+                'keterangan'        => $inputItem->keterangan,
+                'user_updated'      => $inputItem->user_updated ?? 'Admin123',
+                // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+            ]);
+        } else {
+            // Jika item belum ada, buat item baru
+            PrmRawMaterialInputItem::create([
+                'jenis'             => $inputItem->jenis,
+                'berat_nota'        => $inputItem->berat_nota,
+                'berat_kotor'       => $inputItem->berat_kotor,
+                'berat_bersih'      => $inputItem->berat_bersih,
+                'selisih_berat'     => $inputItem->selisih_berat,
+                'kadar_air'         => $inputItem->kadar_air,
+                'id_box'            => $inputItem->id_box,
+                'harga_nota'        => $inputItem->harga_nota,
+                'total_harga_nota'  => $inputItem->total_harga_nota,
+                'harga_deal'        => $inputItem->harga_deal,
+                'keterangan'        => $inputItem->keterangan,
+                'user_created'      => $inputItem->user_created,
+                'user_updated'      => $inputItem->user_updated ?? 'Admin123',
+                // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+            ]);
+        }
+
 
         // stok
         $itemObject = (object)$item;
@@ -115,7 +162,7 @@ class PrmRawMaterialInputService
             'total_modal'           => $itemObject->harga_deal * $itemObject->berat_bersih,
             'keterangan'            => $itemObject->keterangan,
             'user_created'          => $itemObject->user_created,
-            // 'user_updated'  => $itemObject->user_updated,
+            'user_updated'          => $itemObject->user_updated ?? 'Admin123',
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
         //
@@ -148,7 +195,7 @@ class PrmRawMaterialInputService
             $existingItem->nomor_nota_internal = $itemObject->nomor_nota_internal;
             $existingItem->avg_kadar_air = $itemObject->kadar_air;
             $existingItem->keterangan = $itemObject->keterangan;
-            $existingItem->user_created = $itemObject->user_created;
+            $existingItem->user_created = $itemObject->user_created ?? 'Admin123';
 
             // Simpan perubahan pada stok yang sudah ada
             $existingItem->save();

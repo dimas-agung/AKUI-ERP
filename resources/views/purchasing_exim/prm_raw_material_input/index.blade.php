@@ -16,10 +16,17 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Purchasing Raw Material Input
-                                <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong><i class="bi bi-plus-circle"></i> Add Data <i
-                                            class="bi bi-plus-circle"></i></strong>
-                                </button>
+                                <div>
+                                    <button onclick="redirectToPage('detail')" type="button"
+                                        class="btn btn-outline-warning rounded-pill">
+                                        <strong><i class="bi bi-eye"></i> Detail Data </strong>
+                                    </button>
+                                    <button onclick="redirectToPage('create')" type="button"
+                                        class="btn btn-outline-success rounded-pill">
+                                        <strong><i class="bi bi-plus-circle"></i> Add Data
+                                            <i class="bi bi-plus-circle"></i></strong>
+                                    </button>
+                                </div>
                             </div>
                         </h5>
                     </div>
@@ -94,8 +101,12 @@
     </div>
 @endsection
 <script>
-    function redirectToPage() {
-        window.location.href = "{{ url('/purchasing_exim/prm_raw_material_input/create') }}";
+    function redirectToPage(pageType) {
+        if (pageType === 'create') {
+            window.location.href = "{{ url('/purchasing_exim/prm_raw_material_input/create') }}";
+        } else if (pageType === 'detail') {
+            window.location.href = "{{ url('/purchasing_exim/prm_raw_material_input/detail') }}";
+        }
     }
 
     function confirmDelete(id) {

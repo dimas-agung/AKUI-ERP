@@ -124,7 +124,7 @@ Route::controller(App\Http\Controllers\MasterOperatorController::class)->group(f
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
     Route::get('/purchasing_exim/prm_raw_material_input', 'index')->name('prm_raw_material_input.index');
     Route::get('/purchasing_exim/prm_raw_material_input/create', 'create')->name('prm_raw_material_input.create');
-    Route::get('/purchasing_exim/prm_raw_material_input/create_item', 'createItem')->name('prm_raw_material_input.createItem');
+    Route::get('/purchasing_exim/prm_raw_material_input/detail', 'detail')->name('prm_raw_material_input.detail');
     Route::post('/purchasing_exim/prm_raw_material_input/store', 'store')->name('prm_raw_material_input.store');
     Route::get('/purchasing_exim/prm_raw_material_input/show/{id}', 'show')->name('prm_raw_material_input.show');
     Route::get('/purchasing_exim/prm_raw_material_input/edit/{id}', 'edit')->name('prm_raw_material_input.edit');
@@ -201,7 +201,7 @@ Route::controller(App\Http\Controllers\PreCleaning\PreCleaningOutputController::
     Route::get('/pre_cleaning_output/edit/{id}', 'edit')->name('pre_cleaning_output.edit');
     Route::put('/pre_cleaning_output/update/{id}', 'update')->name('pre_cleaning_output.update');
     Route::delete('/pre_cleaning_output/destroy/{id}', 'destroy')->name('pre_cleaning_output.destroy');
-    Route::get('/pre_cleaning_output/get_data_nomor_job', 'set')->name('pre_cleaning_output.set');
+    Route::get('/pre_cleaning_output/get_data_nomor_job', 'set')->name('preCleaningOutput.set');
     // Route::delete('/pre_cleaning_output/destroy/{id}', 'destroy')->name('pre_cleaning_output.destroy');
 });
 

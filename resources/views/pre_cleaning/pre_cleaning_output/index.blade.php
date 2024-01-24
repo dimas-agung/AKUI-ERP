@@ -65,27 +65,27 @@
                                         <td class="text-center"></td>
                                         <td class="text-center"></td>
                                         <!-- <td class="text-center">
-                                                                        <div class="form-button-action">
-                                                                            {{-- <form style="display: flex" id="deleteForm{{ $GradingKH->id }}" --}}
-                                                                                action=""
-                                                                                method="POST">
-                                                                                <a href=""
-                                                                                    class="btn btn-link" title="View"
-                                                                                    data-original-title="View">
-                                                                                    <i class="bi bi-eye"></i>
-                                                                                </a>
-                                                                                <button type="button" class="btn btn-link"
-                                                                                    data-original-title="Remove"
-                                                                                    onclick="">
-                                                                                    <i class="bi bi-trash3 text-danger"></i>
-                                                                                </button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </td> -->
+                                                                                    <div class="form-button-action">
+                                                                                        {{-- <form style="display: flex" id="deleteForm{{ $GradingKH->id }}" --}}
+                                                                                            action=""
+                                                                                            method="POST">
+                                                                                            <a href=""
+                                                                                                class="btn btn-link" title="View"
+                                                                                                data-original-title="View">
+                                                                                                <i class="bi bi-eye"></i>
+                                                                                            </a>
+                                                                                            <button type="button" class="btn btn-link"
+                                                                                                data-original-title="Remove"
+                                                                                                onclick="">
+                                                                                                <i class="bi bi-trash3 text-danger"></i>
+                                                                                            </button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </td> -->
                                     </tr>
-                                    <!-- <div class="alert alert-danger">
-                                                                    Data Grading Kasar Hasil belum Tersedia.
-                                                                </div> -->
+                                    <div class="alert alert-danger">
+                                        Data Pre Cleaning Output belum Tersedia.
+                                    </div>
                                 </tbody>
                             </table>
                         </div>

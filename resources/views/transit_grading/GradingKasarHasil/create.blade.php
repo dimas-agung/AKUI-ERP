@@ -133,6 +133,7 @@
                     <table class="table" id="dataTable">
                         <thead>
                             <tr>
+                                {{-- <th scope="col" class="text-center">No</th> --}}
                                 <th scope="col" class="text-center">Nomor Grading</th>
                                 <th scope="col" class="text-center">ID Box Raw Material</th>
                                 <th scope="col" class="text-center">ID Box Grading Kasar</th>
@@ -227,8 +228,6 @@
         // hitung nilai susut
         function hitungNilaiSusut() {
             let totalBeratGradingtest = parseFloat($('#berat_grading').val()) || 0;
-            // let totalBeratGradingtest = parseFloat($(this).find('td:eq(12)').text()) || 0;
-            // let totalBeratGrading = 0;
 
             $('.berat_grading').each(function() {
                 let beratGradingValue = parseFloat($(this).val());
@@ -241,7 +240,6 @@
             let beratAdding = parseFloat($('#berat').val());
 
             if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding) && beratAdding !== 0) {
-                // let nilaiSusut = 1 - (totalBeratGradingtest / beratAdding);
                 let nilaiSusut = (1 - totalBeratGradingtest / beratAdding).toFixed(4);
                 console.log(totalBeratGradingtest);
                 console.log(beratAdding);
@@ -338,30 +336,28 @@
 
             //
             let newRow = '<tr>' +
-                '<td>' + nomor_grading + '</td>' +
-                '<td>' + id_box_raw_material + '</td>' +
-                '<td>' + id_box_grading_kasar + '</td>' +
-                '<td>' + nomor_batch + '</td>' +
-                '<td>' + nama_supplier + '</td>' +
-                '<td>' + nomor_nota_internal + '</td>' +
-                '<td>' + jenis_raw_material + '</td>' +
-                '<td>' + berat + '</td>' +
-                '<td>' + kadar_air + '</td>' +
-                '<td>' + jenis_grading[0] + '</td>' +
-                '<td>' + berat_grading + '</td>' +
-                '<td>' + pcs_grading + '</td>' +
-                '<td>' + susut + '</td>' +
-                '<td>' + modal + '</td>' +
-                '<td>' + total_modal + '</td>' +
-                '<td>' + keterangan + '</td>' +
-                '<td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
+                '<td class="text-center">' + nomor_grading + '</td>' +
+                '<td class="text-center">' + id_box_raw_material + '</td>' +
+                '<td class="text-center">' + id_box_grading_kasar + '</td>' +
+                '<td class="text-center">' + nomor_batch + '</td>' +
+                '<td class="text-center">' + nama_supplier + '</td>' +
+                '<td class="text-center">' + nomor_nota_internal + '</td>' +
+                '<td class="text-center">' + jenis_raw_material + '</td>' +
+                '<td class="text-center">' + berat + '</td>' +
+                '<td class="text-center">' + kadar_air + '</td>' +
+                '<td class="text-center">' + jenis_grading[0] + '</td>' +
+                '<td class="text-center">' + berat_grading + '</td>' +
+                '<td class="text-center">' + pcs_grading + '</td>' +
+                '<td class="text-center">' + susut + '</td>' +
+                '<td class="text-center">' + modal + '</td>' +
+                '<td class="text-center">' + total_modal + '</td>' +
+                '<td class="text-center">' + keterangan + '</td>' +
+                '<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
                 '</tr>';
 
             $('#dataTable tbody').append(newRow);
             $('#total_pcs').val(totalPcsGrading);
             $('#total_berat').val(totalBeratGrading);
-            // Total Susut
-            // let totalSusut = 0; // Inisialisasi totalSusut sebelum melakukan perulangan
 
             $('#dataTable tbody tr').each(function() {
                 let totalSusutValue = parseInt($(this).find('td:eq(12)').text()) || 0;
@@ -485,65 +481,65 @@
 
         function simpanData() {
             console.log(dataArray);
+            // Cek apakah data kosong
+            if (dataArray.length === 0) {
+                // Menampilkan SweetAlert untuk pesan error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Astagfirullah',
+                    text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
+                });
+                return; // Menghentikan eksekusi fungsi jika data kosong
+            }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('grading_kasar_hasil.simpanData') }}`, // Ganti dengan URL endpoint yang sesuai
+                url: `{{ route('grading_kasar_hasil.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
-                    // data: JSON.stringify(dataArrayDocNo),
-                    // data: JSON.stringify(dataArrayIDBoxRawMaterial),
-                    // data: JSON.stringify(dataArrayIDBoxGradingKasar),
-                    // data: JSON.stringify(dataArrayNomorBatch),
-                    // data: JSON.stringify(dataArrayNamaSupplier),
-                    // data: JSON.stringify(dataArrayNomorNotaInternal),
-                    // data: JSON.stringify(dataArrayJenisRawMaterial),
-                    // data: JSON.stringify(dataArrayBerat),
-                    // data: JSON.stringify(dataArrayKadarAir),
-                    // data: JSON.stringify(dataArrayJenisGrading),
-                    // data: JSON.stringify(dataArrayBeratGrading),
-                    // data: JSON.stringify(dataArraySusut),
-                    // data: JSON.stringify(dataArrayTotalModal),
-                    // data: JSON.stringify(dataArrayBiayaProduksi),
-                    // data: JSON.stringify(dataArrayHargaEstimasi),
-                    // data: JSON.stringify(dataArrayNilaiLabaRugi),
-                    // data: JSON.stringify(dataArrayNilaiProsentaseTotalKeuntungan),
-                    // data: JSON.stringify(dataArrayNilaiDikurangiKeuntungan),
-                    // data: JSON.stringify(dataArrayProsentaseHargaGramasi),
-                    // data: JSON.stringify(dataArraySelisihLabaRugiKg),
-                    // data: JSON.stringify(dataArraySelisihLabaRugiGram),
-                    // data: JSON.stringify(dataArrayHpp),
-                    // data: JSON.stringify(dataArrayTotalHpp),
-                    // data: JSON.stringify(dataArrayKeterangan),
-                    // data: JSON.stringify(dataArrayUserCreated),
-                    // data: JSON.stringify(dataArrayUserUpdated),
                     _token: '{{ csrf_token() }}'
                 },
-                dataType: 'json', // payload is json,
-                success: function(response) {
-                    // alert('Success: ' + response.message); // Tampilkan pesan berhasil
-                    // window.location.href = response.redirectTo; // Redirect ke halaman lain
+                dataType: 'json',
+                beforeSend: function() {
+                    // Menampilkan SweetAlert sebagai indikator loading sebelum permintaan dikirimkan
                     Swal.fire({
-                        title: 'Success!',
-                        text: 'Data berhasil disimpan.',
-                        icon: 'success'
-                    }).then((result) => {
-                        // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
-                        if (result.isConfirmed) {
-                            window.location.href = response
-                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                        title: 'Loading...',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
                         }
                     });
                 },
-                error: function(error) {
+                success: function(response) {
+                    console.log('Data sent successfully:', response);
+
+                    // Menampilkan SweetAlert untuk pesan sukses
                     Swal.fire({
-                        title: 'Error!',
-                        text: 'Terjadi kesalahan. Silakan coba lagi.',
-                        icon: 'error'
+                        icon: 'success',
+                        title: 'Alhamdulillah',
+                        text: 'Data berhasil dikirim.'
                     });
-                    console.log('Validation Errors:', response.responseJSON.errors);
+
+                    // Redirect atau lakukan tindakan lain setelah berhasil
+                    window.location.href = `{{ route('grading_kasar_hasil.index') }}`;
+                },
+                error: function(error) {
+                    console.error('Error sending data:', error);
+
+                    // Menampilkan SweetAlert untuk pesan error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
+                    });
+                },
+                complete: function() {
+                    // Menutup SweetAlert setelah permintaan selesai, terlepas dari berhasil atau gagal
+                    Swal.close();
                 }
             });
+
         }
     </script>
 @endsection

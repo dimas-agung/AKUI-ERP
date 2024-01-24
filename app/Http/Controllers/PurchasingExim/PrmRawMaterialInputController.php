@@ -14,6 +14,7 @@ use App\Models\MasterSupplierRawMaterial;
 use Illuminate\Http\RedirectResponse;
 use App\Services\PrmRawMaterialInputService;
 use App\Services\PrmRawMaterialInputItemService;
+use Illuminate\Support\Facades\DB;
 
 
 class PrmRawMaterialInputController extends Controller
@@ -45,6 +46,17 @@ class PrmRawMaterialInputController extends Controller
         return view('purchasing_exim/prm_raw_material_input.create', [
             'master_supplier_raw_materials' => $MasterSupplierRawMaterial,
             'master_jenis_raw_materials'    => $MasterJenisRawMaterial,
+        ]);
+    }
+    public function detail()
+    {
+        $i = 1;
+
+        $PrmRawMaterialInputItem = PrmRawMaterialInputItem::all();
+
+        return response()->view('purchasing_exim.prm_raw_material_input.detail', [
+            'prm_raw_material_input_items'  => $PrmRawMaterialInputItem,
+            'i' => $i,
         ]);
     }
 
@@ -138,25 +150,53 @@ class PrmRawMaterialInputController extends Controller
     // destroy
     public function destroyInput($id): RedirectResponse
     {
-        //get by ID
-        $PrmRawMaterialInput = PrmRawMaterialInput::findOrFail($id);
+        try {
+            // Temukan record berdasarkan ID
+            $PrmRawMaterialInput = PrmRawMaterialInput::findOrFail($id);
 
-        // //delete
-        $PrmRawMaterialInput->delete();
+            // Hapus semua item terkait
+            $PrmRawMaterialInput->PrmRawMaterialInputItem()->delete();
+            $PrmRawMaterialInput->PrmRawMaterialStock()->delete();
+            $PrmRawMaterialInput->PrmRawMaterialStockHistory()->delete();
 
-        //redirect to index
-        return redirect()->route('prm_raw_material_input.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            // Hapus record utama
+            $PrmRawMaterialInput->delete();
+
+            // Jika tidak ada kesalahan, komit transaksi
+            DB::commit();
+
+            return redirect()->route('prm_raw_material_input.index')->with('success', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, rollback transaksi
+            DB::rollback();
+
+            return redirect()->route('prm_raw_material_input.index')->with('error', 'Gagal menghapus data');
+        }
     }
     public function destroyItem($id): RedirectResponse
     {
-        //get by ID
-        $PrmRawMaterialInputItem = PrmRawMaterialInputItem::findOrFail($id);
+        try {
+            // Temukan record berdasarkan ID
+            $PrmRawMaterialInputItem = PrmRawMaterialInputItem::findOrFail($id);
 
-        //delete
-        $PrmRawMaterialInputItem->delete();
+            // Hapus semua item terkait
+            $PrmRawMaterialInputItem->PrmRawMaterialStock()->delete();
+            $PrmRawMaterialInputItem->PrmRawMaterialStockHistory()->delete();
 
-        //redirect to index
-        return redirect()->route('prm_raw_material_input.index')->with(['success' => 'Data Berhasil Dihapus!']);
-        // return redirect()->route('prm_raw_material_input.show')->with(['success' => 'Data Berhasil Dihapus!']);
+            // Hapus record utama
+            $PrmRawMaterialInputItem->delete();
+
+            // Jika tidak ada kesalahan, komit transaksi
+            DB::commit();
+
+            return redirect()->route('prm_raw_material_input.index')->with('success', 'Data berhasil dihapus');
+            // return redirect()->route('prm_raw_material_input.show')->with('success', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, rollback transaksi
+            DB::rollback();
+
+            return redirect()->route('prm_raw_material_input.index')->with('error', 'Gagal menghapus data');
+            // return redirect()->route('prm_raw_material_input.show')->with('error', 'Gagal menghapus data');
+        }
     }
 }
