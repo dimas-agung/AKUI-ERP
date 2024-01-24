@@ -121,11 +121,6 @@
                                         class="submenu-link">Tujuan
                                         Kirim Raw Material</a>
                                 </li>
-                                <li class="submenu-item  {{ Request::is('master_jenis_grading*') ? 'active' : '' }} ">
-                                    <a href="{{ url('/master_jenis_grading') }}" class="submenu-link">Master Jenis
-                                        <br>
-                                        Grading</a>
-                                </li>
                                 <li
                                     class="submenu-item  {{ Request::is('master_jenis_grading_kasar') ? 'active' : '' }} ">
                                     <a href="{{ url('/master_jenis_grading_kasar') }}" class="submenu-link">Master
@@ -226,7 +221,7 @@
                         </li>
                         <li class="sidebar-item  has-sub ">
                             <a href="#" class='sidebar-link'>
-                                <i class="bi bi-grid-1x2-fill"></i>
+                                <i class="bi bi-three-dots"></i>
                                 <span>Production</span>
                             </a>
                             <ul class="submenu">
@@ -236,20 +231,48 @@
                                         <li class="submenu-item has-sub ">
                                             <a href="#" class="submenu-link">Bahan Baku</a>
                                             <ul class="submenu">
-                                                <li class="submenu-item has-sub ">
-                                                    <a href="#" class="submenu-link">Grading Kasar</a>
-                                                    <ul class="submenu">
-                                                        <li class="submenu-item">
-                                                            <a href="#" class="submenu-link">Adding</a>
+                                                <li
+                                                    class="submenu-item  has-sub {{ Request::is('StockTransitRawMaterial', 'StockTransitGradingKasar*', 'GradingKasarInput*', 'transit_grading_kasar/grading_kasar_hasil*', 'GradingKasarStock*', 'GradingKasarOutput*') ? 'active' : '' }}">
+                                                    <a href="#" class='sidebar-link'>
+                                                        Grading Kasar Transit
+                                                    </a>
+                                                    <ul class="submenu ">
+                                                        <li
+                                                            class="submenu-item  {{ Request::is('StockTransitRawMaterial*') ? 'active' : '' }} ">
+                                                            <a href="{{ url('/StockTransitRawMaterial') }}"
+                                                                class="submenu-link">Stock
+                                                                Transit Raw Material</a>
                                                         </li>
-                                                        <li class="submenu-item">
-                                                            <a href="" class="submenu-link">Input</a>
+                                                        <li
+                                                            class="submenu-item  {{ Request::is('GradingKasarInput*') ? 'active' : '' }} ">
+                                                            <a href="{{ url('/GradingKasarInput') }}"
+                                                                class="submenu-link">Grading Kasar
+                                                                Input</a>
                                                         </li>
-                                                        <li class="submenu-item">
-                                                            <a href="" class="submenu-link">Stock</a>
+                                                        <li
+                                                            class="submenu-item  {{ Request::is('transit_grading_kasar/grading_kasar_hasil*') ? 'active' : '' }} ">
+                                                            <a href="{{ url('/transit_grading_kasar/grading_kasar_hasil') }}"
+                                                                class="submenu-link">Grading Kasar
+                                                                Hasil</a>
                                                         </li>
-                                                        <li class="submenu-item">
-                                                            <a href="" class="submenu-link">Output</a>
+                                                        <li
+                                                            class="submenu-item  {{ Request::is('GradingKasarStock*') ? 'active' : '' }} ">
+                                                            <a href="{{ url('/GradingKasarStock') }}"
+                                                                class="submenu-link">Grading Kasar
+                                                                <br> Stock</a>
+                                                        </li>
+                                                        <li
+                                                            class="submenu-item  {{ Request::is('GradingKasarOutput*') ? 'active' : '' }} ">
+                                                            <a href="{{ url('/GradingKasarOutput') }}"
+                                                                class="submenu-link">Grading Kasar
+                                                                <br> Output</a>
+                                                        </li>
+                                                        <li
+                                                            class="submenu-item  {{ Request::is('StockTransitGradingKasar*') ? 'active' : '' }} ">
+                                                            <a href="{{ url('/StockTransitGradingKasar') }}"
+                                                                class="submenu-link">Stock
+                                                                Transit
+                                                                <br>Grading Kasar</a>
                                                         </li>
                                                     </ul>
                                                 </li>

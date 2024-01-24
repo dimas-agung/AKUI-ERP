@@ -87,9 +87,9 @@
                                             <form style="display: flex" id="deleteForm{{ $item->id }}"
                                                 action="{{ route('PrmRawMaterialOutput.destroy', $item->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('PrmRawMaterialOutput.edit', $item->id) }}"
+                                                {{-- <a href="{{ route('PrmRawMaterialOutput.edit', $item->id) }}"
                                                     class="btn btn-link btn-primary" title="Edit Task"
-                                                    data-original-title="Edit Task"><i class="bi bi-pencil-square"></i></a>
+                                                    data-original-title="Edit Task"><i class="bi bi-pencil-square"></i></a> --}}
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn btn-link btn-danger"

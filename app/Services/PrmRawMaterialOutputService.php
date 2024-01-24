@@ -80,37 +80,49 @@ class PrmRawMaterialOutputService
 
         // Creat Stock Transit Grading Kasar
         $itemObject = (object)$item;
-        $existingItem = StockTransitRawMaterial::where('nama_supplier', $itemObject->nama_supplier)
-            ->where('nomor_bstb', $itemObject->nomor_bstb)
+        $existingItem = StockTransitRawMaterial::where('tujuan_kirim', $itemObject->tujuan_kirim)
+            ->where('id_box', $itemObject->id_box)
             ->first();
             // return $existingItem
 
         $dataToUpdate = [
             'id_box'        => $itemObject->id_box,
-            'nomor_bstb'    => $itemObject->nomor_bstb,
-            'nomor_batch'   => $item->nomor_batch,
-            'nama_supplier' => $itemObject->nama_supplier,
-            'jenis'         => $itemObject->jenis,
             'berat'         => $itemObject->berat,
-            'kadar_air'     => $itemObject->kadar_air,
-            'tujuan_kirim'  => $itemObject->tujuan_kirim,
-            'letak_tujuan'  => $itemObject->letak_tujuan,
-            'inisial_tujuan'=> $itemObject->inisial_tujuan,
-            'modal'         => $itemObject->modal,
             'total_modal'   => $itemObject->total_modal,
             'keterangan'    => $itemObject->keterangan_item,
-            'user_created'  => $itemObject->user_created,
-            'user_updated'  => $itemObject->user_updated ?? "There isn't any",
-            'nomor_nota_internal'   => $itemObject->nomor_nota_internal
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
 
         if ($existingItem) {
             // Jika item sudah ada, perbarui data
+            $beratSebelumnya = $existingItem->berat;
+
+            // Hitung total modal baru berdasarkan perbedaan berats
+            $perbedaanBerat = $beratSebelumnya + $itemObject->berat;
+            $totalModalBaru = $perbedaanBerat * $itemObject->modal;
+            // $totalModalBaru = $existingItem->total_modal + ($perbedaanBerat * $itemObject->modal);
+
+            // Update data dengan berat dan total modal yang baru
+            $dataToUpdate['berat'] = $perbedaanBerat;
+            $dataToUpdate['total_modal'] = $totalModalBaru;
+
             $existingItem->update($dataToUpdate);
         } else {
             // Jika item tidak ada, buat item baru
-            StockTransitRawMaterial::create($dataToUpdate);
+            StockTransitRawMaterial::create(array_merge($dataToUpdate, [
+                'nomor_bstb'    => $itemObject->nomor_bstb,
+                'nomor_batch'   => $item->nomor_batch,
+                'nama_supplier' => $itemObject->nama_supplier,
+                'jenis'         => $itemObject->jenis,
+                'kadar_air'     => $itemObject->kadar_air,
+                'tujuan_kirim'  => $itemObject->tujuan_kirim,
+                'letak_tujuan'  => $itemObject->letak_tujuan,
+                'inisial_tujuan'=> $itemObject->inisial_tujuan,
+                'modal'         => $itemObject->modal,
+                'user_created'  => $itemObject->user_created,
+                'user_updated'  => $itemObject->user_updated ?? "There isn't any",
+                'nomor_nota_internal'   => $itemObject->nomor_nota_internal
+            ]));
         }
 
 
@@ -134,31 +146,16 @@ class PrmRawMaterialOutputService
         if ($existingItem) {
             // Ambil nilai terakhir berat_masuk dan berat_keluar
             // $lastBeratMasuk = $existingItem->berat_masuk;
-            // $lastBeratKeluar = $existingItem->berat_keluar;
+            $lastBeratKeluar = $existingItem->berat_keluar;
             $beratSebelumnya = $existingItem->berat_masuk;
 
-            $perbedaanBerat = $beratSebelumnya - $itemObject->berat;
+            $tambahBeratKeluar = $lastBeratKeluar + $itemObject->berat;
+            $perbedaanBerat = $beratSebelumnya - $tambahBeratKeluar;
             $totalModalBaru = $perbedaanBerat * $itemObject->modal;
 
+            $dataToUpdate['berat_keluar'] = $tambahBeratKeluar;
             $dataToUpdate['sisa_berat'] = $perbedaanBerat;
             $dataToUpdate['total_modal'] = $totalModalBaru;
-            // Update nilai berat_masuk pada item yang sudah ada
-            // $lastBeratKeluar = $existingItem->berat_keluar += $itemObject->berat;
-            // $existingItem->berat_masuk = $itemObject->berat_masuk ?? $existingItem->berat_masuk ?? 0;
-
-            // // Tentukan nilai sisa_berat sesuai kondisi
-            // if ($existingItem->berat_keluar === null || $existingItem->berat_keluar === 0) {
-            //     // Jika berat_keluar belum diisi, isi sisa_berat dengan nilai berat_masuk
-            //     $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
-            // } else {
-            //     // Jika berat_keluar sudah diisi, hitung sisa berat
-            //     $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
-            // }
-
-            //             $existingItem->modal = $itemObject->modal ?? $existingItem->modal ?? 0;
-            // $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
-            // $existingItem->keterangan = $itemObject->keterangan_item;
-            // Simpan perubahan pada stok yang sudah ada
             $existingItem->update($dataToUpdate);
         } else {
             // Jika item tidak ada, buat item baru dalam database

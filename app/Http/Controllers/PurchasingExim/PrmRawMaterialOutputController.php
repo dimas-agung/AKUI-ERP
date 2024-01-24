@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\PrmRawMaterialStock;
+use App\Models\StockTransitRawMaterial;
 use App\Models\StockTransitGradingKasar;
 use App\Services\PrmRawMaterialOutputService;
 use App\Http\Requests\PrmRawMaterialOutputRequest;
@@ -192,54 +193,84 @@ class PrmRawMaterialOutputController extends Controller
 
             if ($stockPrmRawMaterial) {
                 // Simpan nilai sebelum dihapus
-                $beratSebelumnya = $gradingKI->berat;
-                $beratMasuk = $gradingKI->berat_masuk;
-                $totalModalSebelumnya = $gradingKI->total_modal;
-                $sisaBerat = $beratMasuk - $beratSebelumnya;
+                $beratTadi = $gradingKI->berat;
+                $beratSebelumnya = $stockPrmRawMaterial->berat_keluar;
+                $beratMasuk = $stockPrmRawMaterial->berat_masuk;
+                $Modal = $gradingKI->modal;
+                $Beratkeluar = $beratSebelumnya - $beratTadi;
+                $sisaBerat = $beratMasuk - $Beratkeluar;
+                $TotalModal = $Beratkeluar * $Modal;
 
+                // Update data pada PrmRawMaterialStock
                 $dataToUpdate = [
-                    'id_box' => $gradingKI->id_box,
-                    'total_modal' => $totalModalSebelumnya,
-                    'berat_keluar' => $gradingKI->berats ?? 0,
+                    'berat_keluar' => $Beratkeluar,
                     'sisa_berat' => $sisaBerat,
+                    'total_modal' => $TotalModal,
                 ];
 
-                if ($stockPrmRawMaterial) {
+                // Perbarui data pada PrmRawMaterialStock
+                $stockPrmRawMaterial->update($dataToUpdate);
+            }
+
+            $stockPRM = StockTransitRawMaterial::where('tujuan_kirim', '=', $gradingKI->tujuan_kirim)
+            ->where('id_box', $gradingKI->id_box)
+            ->first();
+
+        if ($stockPRM) {
+            $beratSebelumnya = $stockPRM->berat;
+            $beratMasuk = $gradingKI->berat_masuk;
+            $totalModalSebelumnya = $gradingKI->total_modal;
+            $sisaBerat = $beratMasuk - $beratSebelumnya;
+
+            $dataToUpdate = [
+                'id_box'        => $gradingKI->id_box,
+                'berat'         => $gradingKI->berat,
+                'total_modal'   => $gradingKI->total_modal,
+                'keterangan'    => $gradingKI->keterangan_item,
+            ];
+
+            // Jika berat stock melebihi berat yang dimasukkan
+            if ($beratSebelumnya > 1) {
+                if ($stockPRM) {
                     // Ambil berat sebelumnya
-                    $beratSebelumnya = $stockPrmRawMaterial->berat;
-                    $beratMasuk = $stockPrmRawMaterial->berat_masuk;
+                    $beratSebelumnya = $stockPRM->berat;
+                    $beratMasuk = $stockPRM->berat_masuk;
 
                     // Hitung total modal baru berdasarkan perbedaan berats
                     $perbedaanBerat = $beratSebelumnya - $gradingKI->berat;
-                    $totalModalBaru = $perbedaanBerat * $gradingKI->modal;
                     $sisaBerat = $beratMasuk - $beratSebelumnya;
+                    $totalModalBaru = $sisaBerat * $gradingKI->modal;
 
                     // Update data dengan berat dan total modal yang baru
                     $dataToUpdate['berat'] = abs($perbedaanBerat);
                     $dataToUpdate['total_modal'] = abs($totalModalBaru);
-                    $dataToUpdate['sisa_berat'] = abs($sisaBerat);
 
                     // Perbarui data
-                    $stockPrmRawMaterial->update($dataToUpdate);
+                    $stockPRM->update($dataToUpdate);
                 } else {
                     // Jika item tidak ada, buat item baru dengan nilai lainnya tetap sama
-                    PrmRawMaterialStock::create(array_merge($dataToUpdate, [
-                        'id_box'               => $gradingKI->id_box,
-                        'nomor_batch'          => $gradingKI->nomor_batch,
-                        'berat_masuk'          => $gradingKI->berat_masuk,
-                        'jenis'                => $gradingKI->jenis,
-                        'kadar_air'            => $gradingKI->kadar_air,
-                        'tujuan_kirim'         => $gradingKI->tujuan_kirim,
-                        'letak_tujuan'         => $gradingKI->letak_tujuan,
-                        'inisial_tujuan'       => $gradingKI->inisial_tujuan,
-                        'modal'                => $gradingKI->modal,
-                        'keterangan'           => $gradingKI->keterangan,
-                        'user_created'         => $gradingKI->user_updated ?? "There isn't any",
-                        'nomor_nota_internal'  => $gradingKI->nomor_nota_internal,
+                    StockTransitRawMaterial::create(array_merge($dataToUpdate, [
+                        'nomor_bstb'    => $gradingKI->nomor_bstb,
+                        'nomor_batch'   => $gradingKI->nomor_batch,
+                        'nama_supplier' => $gradingKI->nama_supplier,
+                        'jenis'         => $gradingKI->jenis,
+                        'kadar_air'     => $gradingKI->kadar_air,
+                        'tujuan_kirim'  => $gradingKI->tujuan_kirim,
+                        'letak_tujuan'  => $gradingKI->letak_tujuan,
+                        'inisial_tujuan'=> $gradingKI->inisial_tujuan,
+                        'modal'         => $gradingKI->modal,
+                        'user_created'  => $gradingKI->user_created,
+                        'user_updated'  => $gradingKI->user_updated ?? "There isn't any",
+                        'nomor_nota_internal'   => $gradingKI->nomor_nota_internal
                         // Sesuaikan dengan kolom-kolom lain di tabel item Anda
                     ]));
                 }
+            } else {
+                // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
+                $stockPRM->delete();
             }
+        }
+
 
 
             // Hapus data GradingKasarInput
