@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\TransitGradingKasar;
 
+use App\Models\StockTransitGradingKasar;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use App\Models\GradingKasarOutput;
@@ -82,9 +83,39 @@ class GradingKasarOutputController extends Controller
     {
         //get post by ID
         $GradingKO = GradingKasarOutput::findOrFail($id);
+        $stockPRM = StockTransitGradingKasar::where('id_box_raw_material', '=', $GradingKO->id_box_raw_material)
+        ->where('created_at', $GradingKO->created_at)
+        ->first();
+
+        // Ambil data StockTransitRawMaterial berdasarkan nomor_bstb
+        $stockGradingKasar = GradingKasarStock::where('id_box_raw_material', '=', $GradingKO->id_box_raw_material)->first();
+
+        if ($stockGradingKasar) {
+            // Simpan nilai sebelum dihapus
+            $beratTadi = $GradingKO->berat_keluar;
+            $beratSebelumnya = $stockGradingKasar->berat_keluar;
+            $PcsTadi = $GradingKO->pcs_keluar;
+            $PcsSebelumnya = $stockGradingKasar->pcs_keluar;
+            $Modal = $GradingKO->modal;
+
+            $Beratkeluar = $beratSebelumnya - $beratTadi;
+            $PcsKeluar = $PcsSebelumnya - $PcsTadi;
+            $TotalModal = $Beratkeluar * $Modal;
+
+            // Update data pada PrmRawMaterialStock
+            $dataToUpdate = [
+                'berat_keluar' => $Beratkeluar,
+                'pcs_keluar' => $PcsKeluar,
+                'total_modal' => $TotalModal,
+            ];
+
+            // Perbarui data pada PrmRawMaterialStock
+            $stockGradingKasar->update($dataToUpdate);
+        }
 
         //delete post
         $GradingKO->delete();
+        $stockPRM->delete();
 
         //redirect to index
         return redirect()->route('GradingKasarOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);

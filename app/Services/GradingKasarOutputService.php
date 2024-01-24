@@ -1,8 +1,7 @@
 <?php
 namespace App\Services;
 use App\Models\GradingKasarOutput;
-use App\Models\PrmRawMaterialStock;
-use App\Models\PrmRawMaterialStockHistory;
+use App\Models\GradingKasarStock;
 use App\Models\StockTransitGradingKasar;
 use App\Models\StockTransitRawMaterial;
 use Illuminate\Http\Request;
@@ -88,5 +87,56 @@ class GradingKasarOutputService
             'user_updated'      => $item->user_updated ?? "There isn't any",
         // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
+
+        // Creat Prm Raw Material Stock
+        $itemObject = (object)$item;
+        $existingItem = GradingKasarStock::where('id_box_grading_kasar', $itemObject->id_box_grading_kasar)
+            ->where('id_box_raw_material', $itemObject->id_box_raw_material)
+            ->first();
+            // return $existingItem
+
+        $dataToUpdate = [
+            'berat_keluar'  => $itemObject->berat_keluar,
+            'pcs_keluar'    => $itemObject->pcs_keluar,
+            'total_modal'   => $itemObject->total_modal,
+            'keterangan'    => $itemObject->keterangan,
+            'user_updated'  => $itemObject->user_created ?? "There isn't any",
+            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ];
+
+        if ($existingItem) {
+            // Ambil nilai terakhir berat_masuk dan berat_keluar
+            // $lastBeratMasuk = $existingItem->berat_masuk;
+            $lastBeratKeluar = $existingItem->berat_keluar;
+            $lastPcsKeluar = $existingItem->pcs_keluar;
+
+            $tambahBeratKeluar = $lastBeratKeluar + $itemObject->berat_keluar;
+            $perbedaanBerat = $lastPcsKeluar + $itemObject->pcs_keluar;
+            $totalModalBaru = $tambahBeratKeluar * $itemObject->modal;
+
+            $dataToUpdate['berat_keluar'] = $tambahBeratKeluar;
+            $dataToUpdate['pcs_keluar'] = $perbedaanBerat;
+            $dataToUpdate['total_modal'] = $totalModalBaru;
+            $existingItem->update($dataToUpdate);
+        } else {
+            // Jika item tidak ada, buat item baru dalam database
+            GradingKasarStock::create(array_merge($dataToUpdate, [
+            'id_box_grading_kasar'              => $itemObject->id_box_grading_kasar,
+            'nomor_batch'                       => $itemObject->nomor_batch,
+            'nama_supplier'                     => $itemObject->nama_supplier,
+            'nomor_nota_internal'               => $itemObject->nomor_nota_internal,
+            'jenis_raw_material'                => $itemObject->jenis_raw_material,
+            'jenis_grading'                     => $itemObject->jenis_grading[0],
+            'id_box_raw_material'               => $itemObject->id_box_raw_material,
+            'berat_masuk'                       => $itemObject->berat_grading ?? 0,
+            'pcs_masuk'                         => $itemObject->pcs_grading  ?? 0,
+            'avg_kadar_air'                     => $itemObject->kadar_air,
+            'nomor_grading'                     => $itemObject->nomor_grading,
+            'modal'                             => $itemObject->modal,
+            'total_modal'                       => $itemObject->total_modal,
+            'keterangan'                        => $itemObject->keterangan,
+            'user_created'                      => $itemObject->user_created ?? 'Admin',
+            ]));
+        }
     }
 }

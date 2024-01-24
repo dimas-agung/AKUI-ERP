@@ -44,13 +44,13 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Nomor Job</label>
-                                            <select id="nomor_job" class="choices form-select" name="nomor_job"
+                                            <label>Nomer BSTB</label>
+                                            <select id="nomor_bstb" class="choices form-select" name="nomor_bstb"
                                                 data-placeholder="Pilih Nomor Job">
                                                 <option value="">Pilih Nomor Job</option>
                                                 @foreach ($stockTGK as $post)
-                                                    <option value="{{ $post->nomor_job }}">
-                                                        {{ old('nomor_job', $post->nomor_job) }}
+                                                    <option value="{{ $post->nomor_bstb }}">
+                                                        {{ old('nomor_bstb', $post->nomor_bstb) }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -67,24 +67,23 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Nomer BSTB</label>
-                                            <input type="text" class="form-control" id="nomor_bstb" name="nomor_bstb"
-                                                onchange="handleChange(this.{{ 'nomor_bstb' }})" readonly>
+                                            <label>Nomor Job</label>
+                                            <input type="text" class="form-control" id="nomor_job" name="nomor_job"
+                                                onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>ID Box Grading Kasar</label>
                                             <input type="text" class="form-control" id="id_box_grading_kasar"
-                                                name="id_box_grading_kasar"
-                                                onchange="handleChange(this.{{ 'id_box_grading_kasar' }})" readonly>
+                                                name="id_box_grading_kasar" onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
                                             <input type="text" class="form-control" id="tujuan_kirim" name="tujuan_kirim"
-                                                onchange="handleChange(this.{{ 'tujuan_kirim' }})" readonly>
+                                                onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -93,61 +92,56 @@
                                         <div class="form-group">
                                             <label>Nama Supplier</label>
                                             <input type="text" class="form-control" id="nama_supplier"
-                                                name="nama_supplier" onchange="handleChange(this.{{ 'nama_supplier' }})"
-                                                readonly>
+                                                name="nama_supplier" onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Nomor Batch</label>
                                             <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
-                                                onchange="handleChange(this.{{ 'nomor_batch' }})" readonly>
+                                                onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>ID Box Raw Material</label>
                                             <input type="text" class="form-control" id="id_box_raw_material"
-                                                name="id_box_raw_material"
-                                                onchange="handleChange(this.{{ 'id_box_raw_material' }})" readonly>
+                                                name="id_box_raw_material" onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Jenis Raw Material</label>
                                             <input type="text" class="form-control" id="jenis_raw_material"
-                                                name="jenis_raw_material"
-                                                onchange="handleChange(this.{{ 'jenis_raw_material' }})" readonly>
+                                                name="jenis_raw_material" onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Jenis Grading</label>
                                             <input type="text" class="form-control" id="jenis_grading"
-                                                name="jenis_grading" onchange="handleChange(this.{{ 'jenis_grading' }})"
-                                                readonly>
+                                                name="jenis_grading" onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Berat Keluar</label>
                                             <input type="text" id="berat_keluar" class="form-control" name="berat_keluar"
-                                                onchange="handleChange(this.{{ 'berat_keluar' }})" readonly>
+                                                onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>PCS Keluar</label>
                                             <input type="text" id="pcs_keluar" class="form-control" name="pcs_keluar"
-                                                onchange="handleChange(this.{{ 'pcs_keluar' }})" readonly>
+                                                onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>AVG Kadar Air</label>
                                             <input type="text" class="form-control" id="avg_kadar_air"
-                                                name="avg_kadar_air" onchange="handleChange(this.{{ 'avg_kadar_air' }})"
-                                                readonly>
+                                                name="avg_kadar_air" onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -202,20 +196,20 @@
 @endsection
 @section('script')
     <script>
-        $('#nomor_job').on('change', function() {
-            // Mengambil nilai nomor_job yang dipilih
+        $('#nomor_bstb').on('change', function() {
+            // Mengambil nilai nomor_bstb yang dipilih
             let selectedIdBox = $(this).val();
             // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
             $.ajax({
                 url: `{{ route('PreCleaningInput.set') }}`,
                 method: 'GET',
                 data: {
-                    nomor_job: selectedIdBox
+                    nomor_bstb: selectedIdBox
                 },
                 success: function(response) {
                     console.log(response);
                     // Mengatur nilai Nomor Batch sesuai dengan respons dari server
-                    $('#nomor_bstb').val(response.nomor_bstb);
+                    $('#nomor_job').val(response.nomor_job);
                     $('#id_box_grading_kasar').val(response.id_box_grading_kasar);
                     $('#nomor_batch').val(response.nomor_batch);
                     $('#nama_supplier').val(response.nama_supplier);

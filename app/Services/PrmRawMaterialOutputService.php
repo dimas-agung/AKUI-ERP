@@ -125,7 +125,6 @@ class PrmRawMaterialOutputService
             ]));
         }
 
-
         // Creat Prm Raw Material Stock
         $itemObject = (object)$item;
         $existingItem = PrmRawMaterialStock::where('id_box', $itemObject->id_box)

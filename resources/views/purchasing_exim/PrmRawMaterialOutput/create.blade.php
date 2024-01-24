@@ -791,22 +791,8 @@
             }
         }
 
-
         // Ambil indeks terakhir sebelum menghapus baris
         var lastRowIndex = currentRowIndex;
-
-        function deleteRow(button) {
-            // Hapus baris dari tabel
-            let row = $(button).closest('tr');
-
-            // Hapus baris dari dataArray berdasarkan indeks baris di tabel
-            let rowIndex = row.index();
-            dataArray.splice(rowIndex, 1);
-            dataHeader.splice(rowIndex, 1);
-
-            // Hapus baris dari tabel
-            row.remove();
-        }
 
         function hapusBaris(button) {
             // Dapatkan elemen baris terkait dengan tombol delete yang diklik

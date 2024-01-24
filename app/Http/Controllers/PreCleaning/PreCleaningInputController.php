@@ -41,8 +41,8 @@ class PreCleaningInputController extends Controller
 
     public function set(Request $request)
     {
-        $nomor_job = $request->nomor_job;
-        $data = StockTransitGradingKasar::where('nomor_job',$nomor_job)->first();
+        $nomor_bstb = $request->nomor_bstb;
+        $data = StockTransitGradingKasar::where('nomor_bstb',$nomor_bstb)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);

@@ -19,7 +19,7 @@ class WorkstationFactory extends Factory
         return [
             //
             'nama' => $this->faker->unique()->company,
-            'status' => $this->faker->randomNumber(1),
+            'status' => $this->faker->randomElement([0, 1]),
         ];
     }
 }

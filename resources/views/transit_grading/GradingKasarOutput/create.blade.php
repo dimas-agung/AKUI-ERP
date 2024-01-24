@@ -173,7 +173,7 @@
                                         <div class="form-group">
                                             <label>Total Modal</label>
                                             <input type="text" id="total_modal" class="form-control"
-                                                name="total_modal" placeholder="Masukkan total_modal">
+                                                name="total_modal" placeholder="Masukkan total_modal" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +189,7 @@
                                         <div class="form-group">
                                             <label>Fix Total Modal</label>
                                             <input type="text" class="form-control" id="fix_total_modal"
-                                                name="fix_total_modal" placeholder="Masukkan Fix Total Modal">
+                                                name="fix_total_modal" onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -279,6 +279,7 @@
                     $('#avg_kadar_air').val(response.avg_kadar_air);
                     $('#nomor_grading').val(response.nomor_grading);
                     $('#modal').val(response.modal);
+                    $('#fix_total_modal').val(response.total_modal);
                     $('#nomor_nota_internal').val(response.nomor_nota_internal);
                 },
                 error: function(error) {
@@ -362,8 +363,7 @@
                 '</td><td>' + fix_total_modal +
                 '</td><td>' + keterangan +
                 '</td><td>' + user_created +
-                '</td><td><button onclick="deleteRow(' + currentRowIndex +
-                ')" class="btn btn-danger" data-dismiss="modal">Hapus</button></td></tr>';
+                '</td><td><button onclick="deleteRow(this)" class="btn btn-danger">Hapus</button></td></tr>';
 
             $('#tableBody').append(newRow);
 
@@ -393,17 +393,19 @@
             });
             // Membersihkan nilai input setelah ditambahkan
             $('#id_box_grading_kasar').val('<option></option>');
+            $('#id_box_raw_material').val('');
             $('#nomor_batch').val('');
             $('#nama_supplier').val('');
             $('#nomor_nota_internal').val('');
-            $('#jenis').val('');
+            $('#jenis_raw_material').val('');
+            $('#jenis_grading').val('');
             $('#berat_masuk').val('');
-            $('#berat').val('');
-            $('#selisih_berat').val('');
-            $('#kadar_air').val('');
-            $('#tujuan_kirim').val('');
-            $('#letak_tujuan').val('');
-            $('#inisial_tujuan').val('');
+            $('#berat_keluar').val('');
+            $('#pcs_keluar').val('');
+            $('#avg_kadar_air').val('');
+            $('#biaya_produksi').val('');
+            $('#nomor_grading').val('');
+            $('#fix_total_modal').val('');
             $('#modal').val('');
             $('#total_modal').val('');
             $('#keterangan').val('');
@@ -418,26 +420,19 @@
         // Ambil indeks terakhir sebelum menghapus baris
         var lastRowIndex = currentRowIndex;
 
-        function deleteRow(rowIndex) {
+        function deleteRow(button) {
+            // Dapatkan elemen baris terkait dengan tombol delete yang diklik
+            let row = $(button).closest('tr');
+
+            // Hapus baris dari dataArray berdasarkan indeks baris di tabel
+            let rowIndex = row.index();
+            dataArray.splice(rowIndex, 1);
+
             // Hapus baris dari tabel
-            $('#tableBody tr').eq(rowIndex).remove();
+            row.remove();
 
-            // Periksa apakah dataArray adalah variabel global yang didefinisikan di tempat lain
-            if (typeof dataArray !== 'undefined') {
-                // Periksa apakah rowIndex valid
-                if (rowIndex < dataArray.length) {
-                    // Hapus data yang sesuai dari array
-                    dataArray.splice(rowIndex, 1);
-
-                    // Update indeks baris terakhir setelah menghapus data
-                    currentRowIndex = lastRowIndex;
-                } else {
-                    console.error("Error: Index baris tidak valid.");
-                }
-            } else {
-                console.error("Error: Variabel dataArray tidak didefinisikan atau tidak dapat diakses.");
-            }
-
+            // Update indeks baris terakhir
+            currentRowIndex--;
         }
 
         function getArray() {

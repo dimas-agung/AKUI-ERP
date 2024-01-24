@@ -24,7 +24,7 @@ class BiayaHppFactory extends Factory
             'unit_id' => $unit->id,
             'jenis_biaya' => $this->faker->randomNumber(2),
             'biaya_per_gram' => $this->faker->randomNumber(2),
-            'status' => $this->faker->randomNumber(1),
+            'status' => $this->faker->randomElement([0, 1]),
         ];
     }
 }
