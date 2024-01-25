@@ -1,4 +1,4 @@
-@extends('layouts.master2')
+@extends('layouts.master1')
 @section('Menu')
     Purchasing & EXIM
 @endsection
@@ -32,12 +32,13 @@
                     </div>
                 @endif
                 <div class="table-responsive">
-                    <table id="add-row" class="display table table-striped table-hover">
+                    <table id="table1" class="display table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">No</th>
                                 <th scope="col" class="text-center">Id Box</th>
                                 <th scope="col" class="text-center">Nomor Batch</th>
+                                <th scope="col" class="text-center">Nomor Nota</th>
                                 <th scope="col" class="text-center">Nama Supplier</th>
                                 <th scope="col" class="text-center">Jenis</th>
                                 <th scope="col" class="text-center">Berat Masuk</th>
@@ -60,6 +61,7 @@
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $MasterStock->id_box }}</td>
                                     <td>{{ $MasterStock->nomor_batch }}</td>
+                                    <td>{{ $MasterStock->nomor_nota_internal }}</td>
                                     <td>{{ $MasterStock->nama_supplier }}</td>
                                     <td>{{ $MasterStock->jenis }}</td>
                                     <td>{{ $MasterStock->berat_masuk }}</td>
@@ -76,19 +78,16 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form action="">
-                                                {{-- <a href="{{ route('PrmRawMaterialStockHistory.index', $MasterStock->id) }}"
-                                                    class="btn btn-link" title="Show History"
-                                                    data-original-title="Show Detail"><i class="fa fa-file"></i></a> --}}
                                                 <a href="{{ route('prm_raw_material_stock.show', $MasterStock->id_box) }}"
-                                                    class="btn btn-link" title="Show History"
-                                                    data-original-title="Show Detail"><i class="fa fa-file"></i></a>
+                                                    class="btn btn-link btn-info" title="Show History"
+                                                    data-original-title="Show Detail"><i class="bi bi-file-earmark"></i></a>
                                             </form>
                                         </div>
                                     </td>
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Data Purchasing belum Tersedia.
+                                    Data Purchasing Raw Material Stock belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>

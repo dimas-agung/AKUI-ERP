@@ -21,9 +21,9 @@ return new class extends Migration
             $table->float('selisih_berat');
             $table->float('kadar_air');
             $table->string('id_box');
-            $table->float('harga_nota');
-            $table->float('total_harga_nota');
-            $table->float('harga_deal');
+            $table->float('harga_nota', 16, 4);
+            $table->float('total_harga_nota', 16, 4);
+            $table->float('harga_deal', 16, 4);
             $table->text('keterangan')->nullable();
             $table->string('user_created');
             $table->string('user_updated')->nullable();

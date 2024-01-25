@@ -14,17 +14,6 @@ class BiayaHppSeeder extends Seeder
      */
     public function run()
     {
-        BiayaHpp::create([
-            'unit_id' => 1,
-            'jenis_biaya' => 1,
-            'biaya_per_gram' => 1,
-            'status' => 1,
-        ]);
-        BiayaHpp::create([
-            'unit_id' => 2,
-            'jenis_biaya' => 2,
-            'biaya_per_gram' => 2,
-            'status' => 2,
-        ]);
+        \App\Models\BiayaHpp::factory(5)->create();
     }
 }

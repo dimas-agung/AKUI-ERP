@@ -1,4 +1,7 @@
-@extends('layouts.master2')
+@extends('layouts.master1')
+@section('Menu')
+    Master
+@endsection
 @section('title')
     Update Biaya HPP
 @endsection
@@ -17,8 +20,7 @@
 
                     <div class="form-group">
                         <label for="basic-usage" class="font-weight-bold">Pilih Unit ID:</label>
-                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
-                            aria-hidden="true" name="unit_id" data-placeholder="Pilih Unit ID">
+                        <select class="choices form-select" name="unit_id" data-placeholder="Pilih Unit ID">
                             @foreach ($unit as $post)
                                 <option value="{{ $post->id }}" {{ $biaya->unit_id == $post->id ? 'selected' : '' }}>
                                     {{ old('unit_id', $post->nama) }}</option>

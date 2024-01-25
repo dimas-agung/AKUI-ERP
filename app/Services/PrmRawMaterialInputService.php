@@ -23,13 +23,6 @@ class PrmRawMaterialInputService
             foreach ($dataArray as $item) {
                 $this->createItem($item);
             }
-            // foreach ($dataStock as $itemS) {
-            //     $this->createStock($itemS);
-            // }
-
-            // foreach ($dataStockHistory as $itemH) {
-            //     $this->createStockHistory($itemH);
-            // }
 
             DB::commit();
 
@@ -62,6 +55,7 @@ class PrmRawMaterialInputService
             // 'user_updated'          => $dataHeader[0]->user_updated
             // Sesuaikan dengan kolom-kolom lain di tabel header Anda
         ]);
+
     }
 
     // private function createItem($item)
@@ -139,10 +133,11 @@ class PrmRawMaterialInputService
             'berat_keluar'  => $itemObject->berat_keluar ?? 0,
             'sisa_berat'    => $itemObject->berat_bersih,
             'avg_kadar_air' => $itemObject->kadar_air,
-            'modal'         => $itemObject->modal ?? 0,
-            'total_modal'   => $itemObject->total_modal ?? 0,
+            'modal'         => $itemObject->harga_deal,
+            'total_modal'   => $itemObject->harga_deal * $itemObject->berat_bersih,
             'keterangan'    => $itemObject->keterangan,
             'user_created'  => $itemObject->user_created,
+            'nomor_nota_internal'   => $itemObject->nomor_nota_internal,
             // 'user_updated'  => $itemObject->user_updated,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
@@ -167,10 +162,6 @@ class PrmRawMaterialInputService
 
             // Update juga kolom-kolom lain yang diperlukan
             $existingItem->avg_kadar_air = $itemObject->kadar_air;
-            $existingItem->modal = $itemObject->modal ?? $existingItem->modal ?? 0;
-            $existingItem->total_modal = $itemObject->total_modal ?? $existingItem->total_modal ?? 0;
-            $existingItem->keterangan = $itemObject->keterangan;
-            $existingItem->user_created = $itemObject->user_created;
 
             // Simpan perubahan pada stok yang sudah ada
             $existingItem->save();
@@ -179,75 +170,4 @@ class PrmRawMaterialInputService
             PrmRawMaterialStock::create($dataToUpdate);
         }
     }
-
-    // private function createStock($itemS)
-    // {
-    //     $itemObject = (object)$itemS;
-    //     $existingItem = PrmRawMaterialStock::where('id_box', $itemObject->id_box)
-    //         ->where('nomor_batch', $itemObject->nomor_batch)
-    //         ->first();
-    //     // return $existingItem
-
-    //     $dataToUpdate = [
-    //         'id_box'        => $itemObject->id_box,
-    //         'nomor_batch'   => $itemObject->nomor_batch,
-    //         'nama_supplier' => $itemObject->nama_supplier,
-    //         'jenis'         => $itemObject->jenis,
-    //         'berat_masuk'   => $itemObject->berat_masuk,
-    //         'berat_keluar'  => $itemObject->berat_keluar,
-    //         'sisa_berat'    => $itemObject->sisa_berat,
-    //         'avg_kadar_air' => $itemObject->avg_kadar_air,
-    //         'modal'         => $itemObject->modal,
-    //         'total_modal'   => $itemObject->total_modal,
-    //         'keterangan'    => $itemObject->keterangan,
-    //         'user_created'  => $itemObject->user_created,
-    //         // 'user_updated'  => $itemObject->user_updated,
-    //         // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-    //     ];
-
-    //     if ($existingItem) {
-    //         // Jika item sudah ada, perbarui data
-    //         $existingItem->update($dataToUpdate);
-    //     } else {
-    //         // Jika item tidak ada, buat item baru
-    //         PrmRawMaterialStock::create($dataToUpdate);
-    //     }
-    // }
-    // public function updateItem($request, $id)
-    // {
-    //     $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
-
-    //     // Validasi form
-    //     $this->validateRequest($request);
-
-    //     // Update item
-    //     $PrmRawMOIC->update($request->all());
-
-    //     return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
-    // }
-
-    // protected function validateRequest(Request $request)
-    // {
-    //     $request->validate([
-    //         'doc_no'       => 'required',
-    //         'nomor_bstb'   => 'required',
-    //         'nomor_batch'  => 'required',
-    //         'id_box'       => 'required',
-    //         'nama_supplier' => 'required',
-    //         'jenis'        => 'required',
-    //         'berat'        => 'required',
-    //         'kadar_air'    => 'required',
-    //         'tujuan_kirim' => 'required',
-    //         'letak_tujuan' => 'required',
-    //         'inisial_tujuan' => 'required',
-    //         'modal'        => 'required',
-    //         'total_modal'  => 'required',
-    //         'keterangan_item'    => '',
-    //         'user_created' => '',
-    //         'user_updated' => ''
-    //     ], [
-    //         'doc_no.required' => 'Kolom Nomer Document Wajib diisi.',
-    //         'nomor_bstb.required' => 'Kolom Nomer BSTB Wajib diisi.'
-    //     ]);
-    // }
 }

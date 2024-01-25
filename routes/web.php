@@ -49,8 +49,6 @@ Route::controller(App\Http\Controllers\BiayaHppController::class)->group(functio
     Route::delete('/biayahpp/hapus/{id}', 'destroy')->name('biaya.destroy');
 });
 
-//route resource
-// Route::resource('/Mastersupplier', \App\Http\Controllers\MasterSupplierController::class);
 Route::controller(App\Http\Controllers\MasterSupplierRawMaterialController::class)->group(function () {
     Route::get('/master_supplier_raw_material', 'index')->name('master_supplier_raw_material.index');
     Route::get('/master_supplier_raw_material/create', 'create')->name('master_supplier_raw_material.create');
@@ -97,13 +95,8 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputControl
     Route::post('/purchasing_exim/prm_raw_material_input/simpanDataItem', 'simpanDataItem')->name('prm_raw_material_input.simpanDataItem');
 });
 
-Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
-    Route::get('/purchasing_exim/prm_raw_material_stock', 'index')->name('purchasing_exim.prm_raw_material_stock.index');
-    Route::get('/purchasing_exim/show/{id_box}', 'show')->name('prm_raw_material_stock.show');
-});
-
-Route::controller(App\Http\Controllers\PurchasingExim\StockTransitGradingKasarController::class)->group(function () {
-    Route::get('/StockTransitGradingKasar', 'index')->name('StockTransitGradingKasar.index');
+Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->group(function () {
+    Route::get('/StockTransitRawMaterial', 'index')->name('StockTransitRawMaterial.index');
 });
 
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
@@ -121,9 +114,81 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputContro
     Route::put('/PrmRawMaterialOutput/update/{id}', 'update')->name('PrmRawMaterialOutput.update');
     Route::delete('/PrmRawMaterialOutput/destroy/{id}', 'destroy')->name('PrmRawMaterialOutput.destroy');
     Route::delete('/PrmRawMaterialOutput/destroyHead/{id}', 'destroyHead')->name('PrmRawMaterialOutput.destroyHead');
-    // routes/web.php
     Route::get('/PrmRawMaterialOutput/get_data_id_box', 'set')->name('PrmRawMaterialOutput.set');
     Route::get('/PrmRawMaterialOutput/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
+});
+Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputController::class)->group(function(){
+    Route::get('/GradingKasarInput', 'index')->name('GradingKasarInput.index');
+    Route::get('/GradingKasarInput/create', 'create')->name('GradingKasarInput.create');
+    Route::get('/GradingKasarInput/get_data', 'set')->name('GradingKasarInput.set');
+    Route::post('/GradingKasarInput/store', 'store')->name('GradingKasarInput.store');
+    Route::post('/GradingKasarInput/sendData', 'sendData')->name('GradingKasarInput.sendData');
+    Route::get('/GradingKasarInput/edit/{id}', 'edit')->name('GradingKasarInput.edit');
+    Route::put('/GradingKasarInput/update/{id}', 'update')->name('GradingKasarInput.update');
+    Route::delete('/GradingKasarInput/destroy/{id}', 'destroy')->name('GradingKasarInput.destroy');
+});
+Route::controller(App\Http\Controllers\MasterJenisGradingKasarController::class)->group(function () {
+    Route::get('/master_jenis_grading_kasar', 'index')->name('master_jenis_grading_kasar.index');
+    Route::get('/master_jenis_grading_kasar/create', 'create')->name('master_jenis_grading_kasar.create');
+    Route::post('/master_jenis_grading_kasar/store', 'store')->name('master_jenis_grading_kasar.store');
+    Route::get('/master_jenis_grading_kasar/show/{id}', 'show')->name('master_jenis_grading_kasar.show');
+    Route::get('/master_jenis_grading_kasar/edit/{id}', 'edit')->name('master_jenis_grading_kasar.edit');
+    Route::put('/master_jenis_grading_kasar/update/{id}', 'update')->name('master_jenis_grading_kasar.update');
+    Route::delete('/master_jenis_grading_kasar/destroy/{id}', 'destroy')->name('master_jenis_grading_kasar.destroy');
+});
+Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarHasilController::class)->group(function () {
+    Route::get('/transit_grading_kasar/grading_kasar_hasil', 'index')->name('grading_kasar_hasil.index');
+    Route::get('/transit_grading_kasar/grading_kasar_hasil/create', 'create')->name('grading_kasar_hasil.create');
+    Route::get('/transit_grading_kasar/grading_kasar_hasil/create_item', 'createItem')->name('grading_kasar_hasil.createItem');
+    Route::post('/transit_grading_kasar/grading_kasar_hasil/store', 'store')->name('grading_kasar_hasil.store');
+    Route::get('/transit_grading_kasar/grading_kasar_hasil/show/{id}', 'show')->name('grading_kasar_hasil.show');
+    Route::get('/transit_grading_kasar/grading_kasar_hasil/edit/{id}', 'edit')->name('grading_kasar_hasil.edit');
+    Route::post('/transit_grading_kasar/grading_kasar_hasil/update/{id}', 'update')->name('grading_kasar_hasil.update');
+    Route::delete('/transit_grading_kasar/grading_kasar_hasil/destroyInput/{id}', 'destroyInput')->name('grading_kasar_hasil.destroyInput');
+    Route::delete('/transit_grading_kasar/grading_kasar_hasil/destroyItem/{id}', 'destroyItem')->name('grading_kasar_hasil.destroyItem');
+    Route::get('/transit_grading_kasar/grading_kasar_hasil/getDataSupplier', 'getDataSupplier')->name('grading_kasar_hasil.getDataSupplier');
+    Route::get('/transit_grading_kasar/grading_kasar_hasil/getDataJenis', 'getDataJenis')->name('grading_kasar_hasil.getDataJenis');
+    Route::post('/transit_grading_kasar/grading_kasar_hasil/simpanData', 'simpanData')->name('grading_kasar_hasil.simpanData');
+    Route::post('/transit_grading_kasar/grading_kasar_hasil/simpanDataItem', 'simpanDataItem')->name('grading_kasar_hasil.simpanDataItem');
+    Route::get('/transit_grading_kasar/grading_kasar_hasil/get_data_nama_jenis', 'set')->name('gradingKasarHasil.set');
+});
+Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarStockController::class)->group(function(){
+    Route::get('/GradingKasarStock', 'index')->name('GradingKasarStock.index');
+    Route::get('/GradingKasarStock/create', 'create')->name('GradingKasarStock.create');
+    Route::get('/GradingKasarStock/get_data', 'set')->name('GradingKasarStock.set');
+    Route::post('/GradingKasarStock/store', 'store')->name('GradingKasarStock.store');
+    Route::post('/GradingKasarStock/sendData', 'sendData')->name('GradingKasarStock.sendData');
+    Route::get('/GradingKasarStock/edit/{id}', 'edit')->name('GradingKasarStock.edit');
+    Route::put('/GradingKasarStock/update/{id}', 'update')->name('GradingKasarStock.update');
+    Route::delete('/GradingKasarStock/destroy/{id}', 'destroy')->name('GradingKasarStock.destroy');
+});
+
+Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarOutputController::class)->group(function () {
+    Route::get('/GradingKasarOutput', 'index')->name('GradingKasarOutput.index');
+    Route::get('/GradingKasarOutput/create', 'create')->name('GradingKasarOutput.create');
+    Route::post('/GradingKasarOutput/store', 'store')->name('GradingKasarOutput.store');
+    Route::post('/GradingKasarOutput/sendData', 'sendData')->name('GradingKasarOutput.sendData');
+    Route::delete('/GradingKasarOutput/destroy/{id}', 'destroy')->name('GradingKasarOutput.destroy');
+    Route::get('/GradingKasarOutput/get_data_id_box', 'set')->name('GradingKasarOutput.set');
+    Route::get('/GradingKasarOutput/get_pcc', 'setpcc')->name('GradingKasarOutput.setpcc');
+});
+
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
+    Route::get('/PreCleaningInput', 'index')->name('PreCleaningInput.index');
+    Route::get('/PreCleaningInput/create', 'create')->name('PreCleaningInput.create');
+    Route::post('/PreCleaningInput/store', 'store')->name('PreCleaningInput.store');
+    Route::post('/PreCleaningInput/sendData', 'sendData')->name('PreCleaningInput.sendData');
+    Route::delete('/PreCleaningInput/destroy/{id}', 'destroy')->name('PreCleaningInput.destroy');
+    Route::get('/PreCleaningInput/get_data_id_box', 'set')->name('PreCleaningInput.set');
+    Route::get('/PreCleaningInput/get_pcc', 'setpcc')->name('PreCleaningInput.setpcc');
+});
+
+Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
+    Route::get('/StockTransitGradingKasar', 'index')->name('StockTransitGradingKasar.index');
+});
+
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::class)->group(function () {
+    Route::get('/PreCleaningStock', 'index')->name('PreCleaningStock.index');
 });
 
 Auth::routes();
