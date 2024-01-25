@@ -53,20 +53,6 @@
                         <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
                         <input type="text" class="form-control" id="nomor_nota_internal" readonly>
                     </div>
-<<<<<<< HEAD
-                    <div class="col-md-4">
-                        <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
-                            name="nama_supplier" id="nama_supplier" placeholder="Pilih Nama Supplier">
-                            <option value="">Pilih Nama Supplier</option>
-                            @foreach ($master_supplier_raw_materials as $MasterSPRM)
-                                <option value="{{ $MasterSPRM->nama_supplier }}">
-                                    {{ $MasterSPRM->nama_supplier }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-=======
->>>>>>> dev-helmi
                     <div class="col-md-flex">
                         <hr>
                     </div>
@@ -75,11 +61,6 @@
                         <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="jenis" id="jenis" placeholder="Pilih Jenis">
                             <option value="">Pilih Jenis</option>
-<<<<<<< HEAD
-                            @foreach ($master_jenis_raw_materials as $MasterJRM)
-                                <option value="{{ $MasterJRM->jenis }}">
-                                    {{ $MasterJRM->jenis }}</option>
-=======
                             @foreach ($master_jenis_raw_materials->sortBy('jenis') as $MasterJRM)
                                 @if ($MasterJRM->status == 1)
                                     <option value="{{ $MasterJRM->jenis }}">
@@ -88,7 +69,6 @@
                                 @endif
                                 {{-- <option value="{{ $MasterJRM->jenis }}">
                                     {{ $MasterJRM->jenis }}</option> --}}
->>>>>>> dev-helmi
                             @endforeach
                         </select>
                     </div>

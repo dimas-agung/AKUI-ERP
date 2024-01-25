@@ -88,71 +88,6 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('work*', 'unit*', 'biayahpp*', 'master_supplier_raw_material*', 'master_jenis_raw_material*', 'master_tujuan_kirim_raw_material*', 'master_jenis_grading*', 'master_jenis_grading_kasar*') ? 'active' : '' }}">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
-                                <span>Master</span>
-                            </a>
-
-                            <ul class="submenu ">
-                                <li class="submenu-item  {{ Request::is('work*') ? 'active' : '' }} ">
-                                    <a href="{{ url('/work') }}" class="submenu-link">Workstation</a>
-                                </li>
-                                <li class="submenu-item  {{ Request::is('unit*') ? 'active' : '' }} ">
-                                    <a href="{{ url('/unit') }}" class="submenu-link">Unit</a>
-                                </li>
-                                <li class="submenu-item  {{ Request::is('biayahpp*') ? 'active' : '' }} ">
-                                    <a href="{{ url('/biayahpp') }}" class="submenu-link">Biaya HPP</a>
-                                </li>
-                                <li
-                                    class="submenu-item  {{ Request::is('master_supplier_raw_material*') ? 'active' : '' }} ">
-                                    <a href="{{ url('/master_supplier_raw_material') }}"
-                                        class="submenu-link">Supplier
-                                        Raw Material</a>
-                                </li>
-                                <li
-                                    class="submenu-item  {{ Request::is('master_jenis_raw_material*') ? 'active' : '' }} ">
-
-                                <li class="submenu-item  ">
-                                    <a href="{{ url('/master_jenis_raw_material') }}" class="submenu-link">Master
-                                        Jenis</a>
-
-                                </li>
-
-                            </ul>
-
-                        </li>
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
-                                <span>Purchasing & Exim</span>
-                            </a>
-
-                            <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}"
-                                        class="submenu-link">PRM INPUT</a>
-
-                                </li>
-
-                            </ul>
-
-                        </li>
-
-                    </ul>
-                </div>
-                <div class="sidebar-menu">
-                    <ul class="menu">
-                        <li class="sidebar-item  {{ Request::is('/') ? 'active' : '' }} ">
-                            <a href="{{ url('/') }}" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-title">Menu</li>
-
-                        <li
                             class="sidebar-item  has-sub {{ Request::is('work', 'unit', 'biayahpp', 'master_supplier_raw_material', 'master_jenis_raw_material', 'master_tujuan_kirim_raw_material', 'master_jenis_grading', 'master_jenis_grading_kasar', 'master_tujuan_kirim_grading_kasar', 'master_operator') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
@@ -208,11 +143,12 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-title">Purchasing & EXIM</li>
                         <li
                             class="sidebar-item  has-sub {{ Request::is('purchasing_exim/prm_raw_material_input', 'purchasing_exim/prm_raw_material_stock', 'PrmRawMaterialOutput', 'StockTransitGradingKasar') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-collection-fill"></i>
-                                <span>Purchasing & EXIM</span>
+                                <span>Purchasing & EXIM Raw Material</span>
                             </a>
                             <ul class="submenu ">
                                 <li
@@ -236,11 +172,12 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-title">Production</li>
                         <li
                             class="sidebar-item  has-sub {{ Request::is('StockTransitRawMaterial', 'StockTransitGradingKasar*', 'GradingKasarInput*', 'transit_grading_kasar/grading_kasar_hasil*', 'GradingKasarStock*', 'GradingKasarOutput*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
-                                <span>Grading Kasar Transit</span>
+                                <span>Grading Kasar</span>
                             </a>
                             <ul class="submenu ">
                                 <li
@@ -297,7 +234,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="sidebar-item  has-sub ">
+                        {{-- <li class="sidebar-item  has-sub ">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
                                 <span>Production</span>
@@ -383,7 +320,7 @@
                                     <a href="" class="submenu-link">Packing</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </div>
