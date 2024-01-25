@@ -217,6 +217,11 @@
                                     <a href="{{ url('/StockTransitGradingKasar') }}" class="submenu-link">Stock
                                         Transit Grading Kasar</a>
                                 </li>
+                                <li
+                                    class="submenu-item  {{ Request::is('StockTransitRawMaterial') ? 'active' : '' }} ">
+                                    <a href="{{ url('/StockTransitRawMaterial') }}" class="submenu-link">Stock
+                                        Transit Raw Material</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-item  has-sub ">

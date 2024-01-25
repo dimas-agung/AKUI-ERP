@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\PrmRawMaterialStock;
+use App\Models\StockTransitRawMaterial;
 use App\Models\StockTransitGradingKasar;
 use App\Services\PrmRawMaterialOutputService;
 use App\Http\Requests\PrmRawMaterialOutputRequest;
@@ -68,6 +69,7 @@ class PrmRawMaterialOutputController extends Controller
     ) {
         try {
             $dataArray = json_decode($request->input('data'));
+            // return $request->input('data');
             // $dataStock = json_decode($request->input('dataStock'));
 
             // Periksa apakah dekoding JSON berhasil
@@ -86,6 +88,54 @@ class PrmRawMaterialOutputController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function store(Request $request)
+    {
+        //validate form
+        $this->validate($request, [
+            'unit_id'   => 'required',
+            'jenis_biaya'   => 'required',
+            'biaya_per_gram'   => 'required',
+            'doc_no'        => 'required',
+            'nomor_bstb'    => 'required',
+            'nomor_batch'   => 'required',
+            'id_box'        => 'required',
+            'nama_supplier' => 'required',
+            'jenis'         => 'required',
+            'berat'         => 'required',
+            'kadar_air'     => 'required',
+            'tujuan_kirim'  => 'required',
+            'letak_tujuan'  => 'required',
+            'inisial_tujuan' => 'required',
+            'modal'         => 'required',
+            'total_modal'   => 'required',
+            'keterangan_item' => 'required',
+            'user_created'  => 'required'
+        ]);
+
+        //create post
+        PrmRawMaterialOutputItem::create([
+            'doc_no'        => $request->doc_no,
+            'nomor_bstb'    => $request->nomor_bstb,
+            'nomor_batch'   => $request->nomor_batch,
+            'id_box'        => $request->id_box,
+            'nama_supplier' => $request->nama_supplier,
+            'jenis'         => $request->jenis,
+            'berat'         => $request->berat,
+            'kadar_air'     => $request->kadar_air,
+            'tujuan_kirim'  => $request->tujuan_kirim,
+            'letak_tujuan'  => $request->letak_tujuan,
+            'inisial_tujuan' => $request->inisial_tujuan,
+            'modal'         => $request->modal,
+            'total_modal'   => $request->total_modal,
+            'keterangan_item' => $request->keterangan_item,
+            'user_created'  => $request->user_created,
+            'user_updated'  => $request->user_updated ?? "There isn't any",
+        ]);
+
+        //redirect to index
+        return response()->json(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**
@@ -133,14 +183,110 @@ class PrmRawMaterialOutputController extends Controller
      */
     public function destroy($id): RedirectResponse
     {
-        //get post by ID
-        $PrmRawMOIC = PrmRawMaterialOutputItem::findOrFail($id);
-        $PrmRawMO = PrmRawMaterialOutputItem::with('PrmRawMaterialStock')->find($id);
+        try {
+            // Gunakan transaksi database untuk memastikan konsistensi
+            DB::beginTransaction();
 
-        //delete post
-        $PrmRawMO->delete();
+            // Ambil data GradingKasarInput yang akan dihapus
+            $gradingKI = PrmRawMaterialOutputItem::findOrFail($id);
 
-        //redirect to index
-        return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            // Ambil data StockTransitRawMaterial berdasarkan nomor_bstb
+            $stockPrmRawMaterial = PrmRawMaterialStock::where('id_box', '=', $gradingKI->id_box)->first();
+
+            if ($stockPrmRawMaterial) {
+                // Simpan nilai sebelum dihapus
+                $beratTadi = $gradingKI->berat;
+                $beratSebelumnya = $stockPrmRawMaterial->berat_keluar;
+                $beratMasuk = $stockPrmRawMaterial->berat_masuk;
+                $Modal = $gradingKI->modal;
+                $Beratkeluar = $beratSebelumnya - $beratTadi;
+                $sisaBerat = $beratMasuk - $Beratkeluar;
+                $TotalModal = $Beratkeluar * $Modal;
+
+                // Update data pada PrmRawMaterialStock
+                $dataToUpdate = [
+                    'berat_keluar' => $Beratkeluar,
+                    'sisa_berat' => $sisaBerat,
+                    'total_modal' => $TotalModal,
+                ];
+
+                // Perbarui data pada PrmRawMaterialStock
+                $stockPrmRawMaterial->update($dataToUpdate);
+            }
+
+            $stockPRM = StockTransitRawMaterial::where('tujuan_kirim', '=', $gradingKI->tujuan_kirim)
+                ->where('id_box', $gradingKI->id_box)
+                ->first();
+
+            if ($stockPRM) {
+                $beratSebelumnya = $stockPRM->berat;
+                $beratMasuk = $gradingKI->berat_masuk;
+                $totalModalSebelumnya = $gradingKI->total_modal;
+                $sisaBerat = $beratMasuk - $beratSebelumnya;
+
+                $dataToUpdate = [
+                    'id_box'        => $gradingKI->id_box,
+                    'berat'         => $gradingKI->berat,
+                    'total_modal'   => $gradingKI->total_modal,
+                    'keterangan'    => $gradingKI->keterangan_item,
+                ];
+
+                // Jika berat stock melebihi berat yang dimasukkan
+                if ($beratSebelumnya > 1) {
+                    if ($stockPRM) {
+                        // Ambil berat sebelumnya
+                        $beratSebelumnya = $stockPRM->berat;
+                        $beratMasuk = $stockPRM->berat_masuk;
+
+                        // Hitung total modal baru berdasarkan perbedaan berats
+                        $perbedaanBerat = $beratSebelumnya - $gradingKI->berat;
+                        $sisaBerat = $beratMasuk - $beratSebelumnya;
+                        $totalModalBaru = $sisaBerat * $gradingKI->modal;
+
+                        // Update data dengan berat dan total modal yang baru
+                        $dataToUpdate['berat'] = abs($perbedaanBerat);
+                        $dataToUpdate['total_modal'] = abs($totalModalBaru);
+
+                        // Perbarui data
+                        $stockPRM->update($dataToUpdate);
+                    } else {
+                        // Jika item tidak ada, buat item baru dengan nilai lainnya tetap sama
+                        StockTransitRawMaterial::create(array_merge($dataToUpdate, [
+                            'nomor_bstb'    => $gradingKI->nomor_bstb,
+                            'nomor_batch'   => $gradingKI->nomor_batch,
+                            'nama_supplier' => $gradingKI->nama_supplier,
+                            'jenis'         => $gradingKI->jenis,
+                            'kadar_air'     => $gradingKI->kadar_air,
+                            'tujuan_kirim'  => $gradingKI->tujuan_kirim,
+                            'letak_tujuan'  => $gradingKI->letak_tujuan,
+                            'inisial_tujuan' => $gradingKI->inisial_tujuan,
+                            'modal'         => $gradingKI->modal,
+                            'user_created'  => $gradingKI->user_created,
+                            'user_updated'  => $gradingKI->user_updated ?? "There isn't any",
+                            'nomor_nota_internal'   => $gradingKI->nomor_nota_internal
+                            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+                        ]));
+                    }
+                } else {
+                    // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
+                    $stockPRM->delete();
+                }
+            }
+
+            // Hapus data GradingKasarInput
+            $gradingKI->delete();
+
+            // Commit transaksi
+            DB::commit();
+
+            // Redirect ke index dengan pesan sukses
+            return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::rollback();
+
+            // Redirect ke index dengan pesan error
+            return redirect()->route('PrmRawMaterialOutput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 }

@@ -203,6 +203,7 @@ Route::controller(App\Http\Controllers\PreCleaning\PreCleaningOutputController::
     Route::delete('/pre_cleaning_output/destroy/{id}', 'destroy')->name('pre_cleaning_output.destroy');
     Route::get('/pre_cleaning_output/get_data_nomor_job', 'set')->name('preCleaningOutput.set');
     // Route::delete('/pre_cleaning_output/destroy/{id}', 'destroy')->name('pre_cleaning_output.destroy');
+    Route::post('/pre_cleaning_output/simpanData', 'simpanData')->name('pre_cleaning_output.simpanData');
 });
 
 Auth::routes();

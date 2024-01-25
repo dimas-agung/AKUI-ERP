@@ -167,7 +167,8 @@
                         <input type="text" class="form-control" id="susut">
                     </div>
                     <div class="col-12">
-                        <button type="button" class="btn btn-primary">Tambah</button>
+                        <button type="button" class="btn btn-primary" onclick="addRow()">Tambah</button>
+                        {{-- <button type="submit" class="btn btn-warning" id="resetBtn">Reset</button> --}}
                     </div>
                 </form>
             </div>
@@ -180,7 +181,7 @@
                     <table class="table" id="dataTable">
                         <thead>
                             <tr>
-                                <th scope="col" class="text-center">No</th>
+                                {{-- <th scope="col" class="text-center">No</th> --}}
                                 <th scope="col" class="text-center">Nomor Job</th>
                                 <th scope="col" class="text-center">ID Box Grading Kasar</th>
                                 <th scope="col" class="text-center">Nomor BSTB</th>
@@ -212,7 +213,7 @@
 @endsection
 @section('script')
     <script>
-        //
+        // Nomor JOB
         $('#nomor_job').on('change', function() {
             // Mengambil nilai id_box yang dipilih
             let selectedNomorJob = $(this).val();
@@ -227,10 +228,9 @@
                     console.log(response);
                     // Mengatur nilai Nomor Batch sesuai dengan respons dari server
                     $('#id_box_grading_kasar').val(response.id_box_grading_kasar);
-                    $('#nomor_bstb').val(response.nomor_bstb);
+                    // $('#nomor_bstb').val(response.nomor_bstb);
                     $('#id_box_raw_material').val(response.id_box_raw_material);
                     $('#nomor_batch').val(response.nomor_batch);
-                    $('#nomor_nota_internal').val(response.nomor_nota_internal);
                     $('#nomor_nota_internal').val(response.nomor_nota_internal);
                     $('#nama_supplier').val(response.nama_supplier);
                     $('#jenis_raw_material').val(response.jenis_raw_material);
@@ -247,5 +247,204 @@
                 }
             });
         });
+
+        // Generate BSTB OUTPUT
+        $(document).ready(function() {
+            // Menangani perubahan pada dropdown nomor_job
+            $('#nomor_job').on('change', function() {
+                // Mengambil nilai dari dropdown nomor_job
+                var nomorJobValue = $(this).val();
+                var nomorJobWithoutLast4 = nomorJobValue.slice(0, -4);
+
+                // Menghitung nomor_bstb berdasarkan rumus nomor_job + UPC (contoh)
+                var nomorBSTB = "BSTB_" + nomorJobWithoutLast4 + "_UPC";
+
+                // Memasukkan nilai yang dihasilkan ke dalam input nomor_bstb
+                $('#nomor_bstb').val(nomorBSTB);
+            });
+        });
+
+        let dataArray = [];
+        // ADD ROW
+        function addRow() {
+            // Mengambil nilai dari input
+            let nomor_job = $('#nomor_job').val();
+            let id_box_grading_kasar = $('#id_box_grading_kasar').val();
+            let nomor_bstb = $('#nomor_bstb').val();
+            let id_box_raw_material = $('#id_box_raw_material').val();
+            let nomor_batch = $('#nomor_batch').val();
+            let nomor_nota_internal = $('#nomor_nota_internal').val();
+            let nama_supplier = $('#nama_supplier').val();
+            let jenis_raw_material = $('#jenis_raw_material').val();
+            let jenis_kirim = $('#jenis_kirim').val();
+            let tujuan_kirim = $('#tujuan_kirim').val();
+            let modal = $('#modal').val();
+            let total_modal = $('#total_modal').val();
+            let kadar_air = $('#kadar_air').val();
+            let pcs_kirim = $('#pcs_kirim').val();
+            let berat_kirim = $('#berat_kirim').val();
+            let operator_sikat_dan_kompresor = $('#operator_sikat_dan_kompresor').val();
+            let operator_flex_dan_poles = $('#operator_flex_dan_poles').val();
+            let operator_cutter = $('#operator_cutter').val();
+            let kuningan = $('#kuningan').val();
+            let Sterofoam = $('#Sterofoam').val();
+            let karat = $('#karat').val();
+            let rontokan_flex = $('#rontokan_flex').val();
+            let rontokan_bahan = $('#rontokan_bahan').val();
+            let ws = $('#ws').val();
+            let berat_precleaning = $('#berat_precleaning').val();
+            let pcs = $('#pcs').val();
+            let susut = $('#susut').val();
+
+            // Validasi input (sesuai kebutuhan)
+            if (!nomor_job || !id_box_grading_kasar) {
+                alert('Nomor Job Dan ID Box Grading Kasar Required.');
+                return;
+            }
+
+            let newRow = '<tr>' +
+                '<td class="text-center">' + nomor_job + '</td>' +
+                '<td class="text-center">' + id_box_grading_kasar + '</td>' +
+                '<td class="text-center">' + nomor_bstb + '</td>' +
+                '<td class="text-center">' + id_box_raw_material + '</td>' +
+                '<td class="text-center">' + nomor_batch + '</td>' +
+                '<td class="text-center">' + nomor_nota_internal + '</td>' +
+                '<td class="text-center">' + nama_supplier + '</td>' +
+                '<td class="text-center">' + jenis_raw_material + '</td>' +
+                '<td class="text-center">' + kadar_air + '</td>' +
+                '<td class="text-center">' + jenis_kirim + '</td>' +
+                '<td class="text-center">' + berat_kirim + '</td>' +
+                '<td class="text-center">' + pcs_kirim + '</td>' +
+                '<td class="text-center">' + tujuan_kirim + '</td>' +
+                '<td class="text-center">' + modal + '</td>' +
+                '<td class="text-center">' + total_modal + '</td>' +
+                '<td class="text-center">' + "sisa_berat" + '</td>' +
+                '<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
+                '</tr>';
+            // Tambahkan Kedalam Tabel
+            $('#dataTable tbody').append(newRow);
+
+            dataArray.push({
+                nomor_job: nomor_job,
+                id_box_grading_kasar: id_box_grading_kasar,
+                nomor_bstb: nomor_bstb,
+                id_box_raw_material: id_box_raw_material,
+                nomor_batch: nomor_batch,
+                nomor_nota_internal: nomor_nota_internal,
+                nama_supplier: nama_supplier,
+                jenis_raw_material: jenis_raw_material,
+                kadar_air: kadar_air,
+                jenis_kirim: jenis_kirim,
+                berat_kirim: berat_kirim,
+                pcs_kirim: pcs_kirim,
+                tujuan_kirim: tujuan_kirim,
+                modal: modal,
+                total_modal: total_modal,
+                operator_sikat_dan_kompresor: operator_sikat_dan_kompresor,
+                operator_flex_dan_poles: operator_flex_dan_poles,
+                operator_cutter: operator_cutter,
+                kuningan: kuningan,
+                Sterofoam: Sterofoam,
+                karat: karat,
+                rontokan_flex: rontokan_flex,
+                rontokan_bahan: rontokan_bahan,
+                ws: ws,
+                berat_precleaning: berat_precleaning,
+                pcs: pcs,
+                susut: susut,
+            });
+
+            // Membersihkan nilai input setelah ditambahkan
+            $('#nomor_job').val('').trigger('change');
+            // $('#nomor_job').val($('#nomor_job option:first').val()).trigger('change');
+            $('#id_box_grading_kasar').val();
+            $('#nomor_bstb').val();
+            $('#id_box_raw_material').val();
+            $('#nomor_batch').val();
+            $('#nomor_nota_internal').val();
+            $('#nama_supplier').val();
+            $('#jenis_raw_material').val();
+            $('#jenis_kirim').val();
+            $('#tujuan_kirim').val();
+            $('#modal').val();
+            $('#total_modal').val();
+            $('#kadar_air').val();
+            $('#pcs_kirim').val();
+            $('#berat_kirim').val();
+        }
+
+        function hapusBaris(button) {
+            // Dapatkan elemen baris terkait dengan tombol delete yang diklik
+            let row = $(button).closest('tr');
+
+            // Hapus baris dari dataArray berdasarkan indeks baris di tabel
+            let rowIndex = row.index();
+            dataArray.splice(rowIndex, 1);
+
+            // Hapus baris dari tabel
+            row.remove();
+        }
+
+        function simpanData() {
+            console.log(dataArray);
+            // Cek apakah data kosong
+            if (dataArray.length === 0) {
+                // Menampilkan SweetAlert untuk pesan error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Astagfirullah',
+                    text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
+                });
+                return; // Menghentikan eksekusi fungsi jika data kosong
+            }
+            // Mengirim data ke server menggunakan AJAX
+            $.ajax({
+                url: `{{ route('pre_cleaning_output.simpanData') }}`,
+                method: 'POST',
+                data: {
+                    data: JSON.stringify(dataArray),
+                    _token: '{{ csrf_token() }}'
+                },
+                dataType: 'json',
+                beforeSend: function() {
+                    // Menampilkan SweetAlert sebagai indikator loading sebelum permintaan dikirimkan
+                    Swal.fire({
+                        title: 'Loading...',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
+                success: function(response) {
+                    console.log('Data sent successfully:', response);
+
+                    // Menampilkan SweetAlert untuk pesan sukses
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Alhamdulillah',
+                        text: 'Data berhasil dikirim.'
+                    });
+
+                    // Redirect atau lakukan tindakan lain setelah berhasil
+                    window.location.href = `{{ route('pre_cleaning_output.index') }}`;
+                },
+                error: function(error) {
+                    console.error('Error sending data:', error);
+
+                    // Menampilkan SweetAlert untuk pesan error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
+                    });
+                },
+                complete: function() {
+                    // Menutup SweetAlert setelah permintaan selesai, terlepas dari berhasil atau gagal
+                    Swal.close();
+                }
+            });
+        }
     </script>
 @endsection

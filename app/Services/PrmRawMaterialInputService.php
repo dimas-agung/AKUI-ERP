@@ -66,7 +66,7 @@ class PrmRawMaterialInputService
             // 'doc_no'        => $item->nomor_nota_internal,
             'berat_masuk'   => $item->berat_bersih,
             'berat_keluar'  => $defaultBeratKeluar,
-            'sisa_berat'    => $item->selisih_berat,
+            'sisa_berat'    => $item->berat_bersih,
             'avg_kadar_air' => $item->kadar_air,
             'modal'         => $item->harga_nota,
             'total_modal'   => $item->total_harga_nota,

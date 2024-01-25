@@ -122,13 +122,22 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label><strong>Job</strong></label>
+                                                {{-- <label><strong>Job</strong></label>
                                                 <div class="form-group">
                                                     <input type="text" name="job" placeholder="Masukan Job"
                                                         class="form-control @error('job') is-invalid @enderror" required
                                                         oninvalid="this.setCustomValidity('Mohon isi Job')"
                                                         oninput="this.setCustomValidity('')">
-                                                </div>
+                                                </div> --}}
+                                                <label class="font-weight-bold">Job</label>
+                                                <select class="form-control @error('job') is-invalid @enderror" required
+                                                    name="job" oninvalid="this.setCustomValidity('Mohon Pilih Job')"
+                                                    oninput="this.setCustomValidity('')">
+                                                    <option></option>
+                                                    <option value="Sikat + Kompresor">Sikat + Kompresor</option>
+                                                    <option value="Flek + Poles">Flek + Poles</option>
+                                                    <option value="Cutter">Cutter</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

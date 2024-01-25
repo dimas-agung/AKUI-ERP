@@ -180,9 +180,6 @@
 @endsection
 @section('script')
     <script>
-        // $(document).ready(function() {
-        //     $('.select2').select2();
-        // });
         // Menambahkan event listener untuk perubahan nilai pada input nomor nota supplier dan select nama supplier
         $('#nomor_nota_supplier').on('input', generateNomorNotaInternal);
         $('#nama_supplier').on('change', generateNomorNotaInternal);
@@ -246,20 +243,6 @@
                 }
             });
         });
-        //
-        // // Event listener untuk perubahan pada input nama_supplier
-        // $('#nama_supplier').on('change', function() {
-        //     let selectedNamaSupplier = $(this).val();
-        //     // Panggil fungsi getInisialSupplier untuk mendapatkan inisial_supplier
-        //     getInisialSupplier(selectedNamaSupplier);
-        // });
-
-        // // Event listener untuk perubahan pada input nomor_nota_supplier
-        // $('#nomor_nota_supplier').on('input', function() {
-        //     let inisial_supplier = $('#inisial_supplier').val();
-        //     // Panggil fungsi generateNomorNotaInternal dengan inisial_supplier yang sudah ada
-        //     generateNomorNotaInternal(inisial_supplier);
-        // });
         // generate nomor internal
         function generateNomorNotaInternal(inisial_supplier) {
             const nomorNotaSupplier = $('#nomor_nota_supplier').val();

@@ -539,7 +539,6 @@
                     Swal.close();
                 }
             });
-
         }
     </script>
 @endsection

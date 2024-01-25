@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PreCleaning;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PreCleaningOutputRequest;
 use App\Models\MasterOperator;
 use App\Models\PreCleaningOutput;
 use App\Models\PreCleaningStock;
@@ -40,5 +41,20 @@ class PreCleaningOutputController extends Controller
         return $data;
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
+    }
+
+    public function simpanData(
+        PreCleaningOutputRequest $request,
+        PreCleaningOutput $PreCleaningOutput
+    ) {
+        $dataArray = json_decode($request->input('data'));
+
+        $result = $PreCleaningOutput->simpanData($dataArray);
+
+        if ($result['success']) {
+            return response()->json($result);
+        } else {
+            return response()->json($result, 500);
+        }
     }
 }
