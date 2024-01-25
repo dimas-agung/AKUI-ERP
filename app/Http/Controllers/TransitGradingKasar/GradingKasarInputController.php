@@ -18,8 +18,9 @@ use Illuminate\Http\RedirectResponse;
 
 class GradingKasarInputController extends Controller
 {
-    public function index(){
-        $i =1;
+    public function index()
+    {
+        $i = 1;
         $GradingKI = GradingKasarInput::with('StockTransitRawMaterial')->get();
         $stockTGK = StockTransitRawMaterial::with('GradingKasarInput')->get();
 
@@ -44,7 +45,7 @@ class GradingKasarInputController extends Controller
     public function set(Request $request)
     {
         $nomor_bstb = $request->nomor_bstb;
-        $data = StockTransitRawMaterial::where('nomor_bstb',$nomor_bstb)->first();
+        $data = StockTransitRawMaterial::where('nomor_bstb', $nomor_bstb)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -53,23 +54,25 @@ class GradingKasarInputController extends Controller
     // Contoh controller
     public function sendData(
         GradingKasarInputRequest $request,
-        GradingKasarInputService $prmRawMaterialOutputService)
-    { try {
-        $dataArray = json_decode($request->input('data'));
+        GradingKasarInputService $prmRawMaterialOutputService
+    ) {
+        try {
+            $dataArray = json_decode($request->input('data'));
+            // $dataStock = json_decode($request->input('dataStock'));
 
-        // Periksa apakah dekoding JSON berhasil
-        if (!$dataArray) {
-            throw new \InvalidArgumentException('Invalid JSON data.');
-        }
+            // Periksa apakah dekoding JSON berhasil
+            if (!$dataArray) {
+                throw new \InvalidArgumentException('Invalid JSON data.');
+            }
 
-        $result = $prmRawMaterialOutputService->sendData($dataArray);
+            $result = $prmRawMaterialOutputService->sendData($dataArray);
 
-        // Periksa apakah pemrosesan berhasil
-        if ($result['success']) {
-            return response()->json($result);
-        } else {
-            return response()->json($result, 500);
-        }
+            // Periksa apakah pemrosesan berhasil
+            if ($result['success']) {
+                return response()->json($result);
+            } else {
+                return response()->json($result, 500);
+            }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -117,7 +120,8 @@ class GradingKasarInputController extends Controller
     //     //redirect to index
     //     return redirect()->route('GradingKasarInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
     // }
-    public function destroy($id): RedirectResponse {
+    public function destroy($id): RedirectResponse
+    {
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
@@ -189,5 +193,4 @@ class GradingKasarInputController extends Controller
             return redirect()->route('GradingKasarInput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
-
 }

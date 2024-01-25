@@ -386,6 +386,8 @@
                 </div>
             </div>
         </div>
+        </form>
+    </div>
     </div>
 @endsection
 @section('script')
@@ -840,7 +842,7 @@
                 dataType: 'json', // payload is json,
                 success: function(response) {
                     Swal.fire({
-                        title: 'Alhamdulillah!',
+                        title: 'Sukses!',
                         text: 'Data berhasil disimpan.',
                         icon: 'success'
                     }).then((result) => {

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\PrmRawMaterialStock;
@@ -54,10 +55,10 @@ class PrmRawMaterialOutputService
             'kadar_air'     => $item->kadar_air,
             'tujuan_kirim'  => $item->tujuan_kirim,
             'letak_tujuan'  => $item->letak_tujuan,
-            'inisial_tujuan'=> $item->inisial_tujuan,
+            'inisial_tujuan' => $item->inisial_tujuan,
             'modal'         => $item->modal,
             'total_modal'   => $item->total_modal,
-            'keterangan_item'=> $item->keterangan_item,
+            'keterangan_item' => $item->keterangan_item,
             'user_created'  => $item->user_created,
             'user_updated'  => $item->user_updated ?? "There isn't any",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
@@ -83,7 +84,7 @@ class PrmRawMaterialOutputService
         $existingItem = StockTransitRawMaterial::where('tujuan_kirim', $itemObject->tujuan_kirim)
             ->where('id_box', $itemObject->id_box)
             ->first();
-            // return $existingItem
+        // return $existingItem
 
         $dataToUpdate = [
             'id_box'        => $itemObject->id_box,
@@ -130,7 +131,7 @@ class PrmRawMaterialOutputService
         $existingItem = PrmRawMaterialStock::where('id_box', $itemObject->id_box)
             ->where('nomor_batch', $itemObject->nomor_batch)
             ->first();
-            // return $existingItem
+        // return $existingItem
 
         $dataToUpdate = [
             'berat_masuk'   => $itemObject->berat_masuk,
@@ -229,13 +230,13 @@ class PrmRawMaterialOutputService
             'nomor_bstb'   => 'required',
             'nomor_batch'  => 'required',
             'id_box'       => 'required',
-            'nama_supplier'=> 'required',
+            'nama_supplier' => 'required',
             'jenis'        => 'required',
             'berat'        => 'required',
             'kadar_air'    => 'required',
             'tujuan_kirim' => 'required',
             'letak_tujuan' => 'required',
-            'inisial_tujuan'=> 'required',
+            'inisial_tujuan' => 'required',
             'modal'        => 'required',
             'total_modal'  => 'required',
             'keterangan_item'    => '',

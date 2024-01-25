@@ -32,7 +32,7 @@ class PrmRawMaterialOutputItem extends Model
 
     public function PrmRawMaterialStock()
     {
-    	return $this->belongsTo(PrmRawMaterialStock::class, 'id_box', 'id_box');
+        return $this->belongsTo(PrmRawMaterialStock::class, 'id_box', 'id_box');
     }
     public function PrmRawMaterialStockHistory()
     {

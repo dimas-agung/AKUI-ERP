@@ -45,7 +45,7 @@ class PrmRawMaterialOutputController extends Controller
     {
         $id_box = $request->id_box;
         // Lakukan logika untuk mengatur nomor batch berdasarkan id_box
-        $data = PrmRawMaterialStock::where('id_box',$id_box)->first();
+        $data = PrmRawMaterialStock::where('id_box', $id_box)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -55,7 +55,7 @@ class PrmRawMaterialOutputController extends Controller
     {
         $tujuan_kirim = $request->tujuan_kirim;
         // Lakukan logika untuk mengatur nomor batch berdasarkan tujuan_kirim
-        $data = MasterTujuanKirimRawMaterial::where('tujuan_kirim',$tujuan_kirim)->first();
+        $data = MasterTujuanKirimRawMaterial::where('tujuan_kirim', $tujuan_kirim)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);

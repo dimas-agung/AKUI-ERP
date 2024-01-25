@@ -21,10 +21,10 @@ class MasterSupplierRawMaterialController extends Controller
         ]);
     }
     // create
-    public function create()
-    {
-        return view('master.master_supplier_raw_material.create');
-    }
+    // public function create()
+    // {
+    //     return view('master.master_supplier_raw_material.create');
+    // }
     // store
     public function store(Request $request): RedirectResponse
     {
