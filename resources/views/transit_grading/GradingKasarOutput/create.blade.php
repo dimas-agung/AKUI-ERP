@@ -60,8 +60,8 @@
                                         <div class="form-group">
                                             <label>ID Box Grading Kasar</label>
                                             <select id="id_box_grading_kasar" class="choices form-select"
-                                                name="id_box_grading_kasar" data-placeholder="Pilih Tujuan Kirim">
-                                                <option></option>
+                                                name="id_box_grading_kasar">
+                                                <option value="">Pilih ID Box Grading Kasar</option>
                                                 @foreach ($GradingKS as $post)
                                                     <option value="{{ $post->id_box_grading_kasar }}">
                                                         {{ old('id_box_grading_kasar', $post->id_box_grading_kasar) }}
@@ -73,9 +73,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
-                                            <select id="tujuan_kirim" class="choices form-select" name="tujuan_kirim"
-                                                data-placeholder="Pilih Tujuan Kirim">
-                                                <option></option>
+                                            <select id="tujuan_kirim" class="choices form-select" name="tujuan_kirim">
+                                                <option value="">Pilih Tujuan Kirim</option>
                                                 @foreach ($MasTujKir as $post)
                                                     <option value="{{ $post->tujuan_kirim }}">
                                                         {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
@@ -278,8 +277,7 @@
                     $('#jenis_grading').val(response.jenis_grading);
                     $('#avg_kadar_air').val(response.avg_kadar_air);
                     $('#nomor_grading').val(response.nomor_grading);
-                    $('#modal').val(response.modal);
-                    $('#fix_total_modal').val(response.total_modal);
+                    $('#modal, #fix_total_modal').val(response.modal);
                     $('#nomor_nota_internal').val(response.nomor_nota_internal);
                 },
                 error: function(error) {
@@ -363,7 +361,7 @@
                 '</td><td>' + fix_total_modal +
                 '</td><td>' + keterangan +
                 '</td><td>' + user_created +
-                '</td><td><button onclick="deleteRow(this)" class="btn btn-danger">Hapus</button></td></tr>';
+                '</td><td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
 
             $('#tableBody').append(newRow);
 
@@ -420,7 +418,7 @@
         // Ambil indeks terakhir sebelum menghapus baris
         var lastRowIndex = currentRowIndex;
 
-        function deleteRow(button) {
+        function hapusBaris(button) {
             // Dapatkan elemen baris terkait dengan tombol delete yang diklik
             let row = $(button).closest('tr');
 

@@ -14,7 +14,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Purchasing Input Item
+                                Detail Data Purchasing Input Item
                             </div>
                         </h5>
                     </div>
@@ -41,11 +41,10 @@
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
-                                        <th scope="col" class="text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($MasterPRIM->PrmRawMaterialInputItem as $MasterPRIM)
+                                    @forelse ($prm_raw_material_input_items as $MasterPRIM)
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $MasterPRIM->doc_no }}</td>
@@ -64,7 +63,7 @@
                                             <td>{{ $MasterPRIM->user_updated }}</td>
                                             <td>{{ $MasterPRIM->created_at }}</td>
                                             <td>{{ $MasterPRIM->updated_at }}</td>
-                                            <td class="text-center">
+                                            {{-- <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
                                                         action="{{ route('prm_raw_material_input.destroyItem', $MasterPRIM->id) }}"
@@ -83,11 +82,11 @@
                                                         </button>
                                                     </form>
                                                 </div>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Purchasing Input belum Tersedia.
+                                            Detail Data Purchasing Input Item belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -103,22 +102,3 @@
         </div>
     </div>
 @endsection
-<script>
-    function confirmDelete(id) {
-        Swal.fire({
-            title: 'Konfirmasi',
-            text: 'Anda yakin ingin menghapus data ini?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d61609',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, Hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Jika dikonfirmasi, submit form
-                document.getElementById('deleteForm' + id).submit();
-            }
-        });
-    }
-</script>

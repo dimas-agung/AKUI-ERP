@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('prm_raw_material_stock_histories', function (Blueprint $table) {
             $table->id();
             $table->string('id_box');
-            $table->string('doc_no');
+            $table->string('doc_no')->default('1');
             $table->float('berat_masuk');
             $table->float('berat_keluar');
             $table->float('sisa_berat');

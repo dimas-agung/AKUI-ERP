@@ -32,20 +32,26 @@
                         <label for="nomor_nota_supplier" class="form-label">Nomor Nota Supplier</label>
                         <input type="text" class="form-control" id="nomor_nota_supplier">
                     </div>
-                    <div class="col-md-4">
-                        <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
-                        <input type="text" class="form-control" id="nomor_nota_internal" readonly>
-                    </div>
+
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
                         <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="nama_supplier" id="nama_supplier" placeholder="Pilih Nama Supplier">
                             <option value="">Pilih Nama Supplier</option>
-                            @foreach ($master_supplier_raw_materials as $MasterSPRM)
-                                <option value="{{ $MasterSPRM->nama_supplier }}">
-                                    {{ $MasterSPRM->nama_supplier }}</option>
+                            @foreach ($master_supplier_raw_materials->sortBy('nama_supplier') as $MasterSPRM)
+                                @if ($MasterSPRM->status == 1)
+                                    <option value="{{ $MasterSPRM->nama_supplier }}">
+                                        {{ $MasterSPRM->nama_supplier }}
+                                    </option>
+                                @endif
+                                {{-- <option value="{{ $MasterSPRM->nama_supplier }}">
+                                    {{ $MasterSPRM->nama_supplier }}</option> --}}
                             @endforeach
                         </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
+                        <input type="text" class="form-control" id="nomor_nota_internal" readonly>
                     </div>
                     <div class="col-md-flex">
                         <hr>
@@ -55,9 +61,14 @@
                         <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="jenis" id="jenis" placeholder="Pilih Jenis">
                             <option value="">Pilih Jenis</option>
-                            @foreach ($master_jenis_raw_materials as $MasterJRM)
-                                <option value="{{ $MasterJRM->jenis }}">
-                                    {{ $MasterJRM->jenis }}</option>
+                            @foreach ($master_jenis_raw_materials->sortBy('jenis') as $MasterJRM)
+                                @if ($MasterJRM->status == 1)
+                                    <option value="{{ $MasterJRM->jenis }}">
+                                        {{ $MasterJRM->jenis }}
+                                    </option>
+                                @endif
+                                {{-- <option value="{{ $MasterJRM->jenis }}">
+                                    {{ $MasterJRM->jenis }}</option> --}}
                             @endforeach
                         </select>
                     </div>
@@ -135,6 +146,7 @@
     <div class="col-md-12">
         <div class="card mt-2">
             <div class="card-header">
+                <div class="card-title">Validasi</div>
                 <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
                     <table class="table" id="dataTable">
                         <thead>
@@ -152,6 +164,7 @@
                                 <th scope="col" class="text-center">Harga Deal</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
+                                <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -167,9 +180,9 @@
 @endsection
 @section('script')
     <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
+        // $(document).ready(function() {
+        //     $('.select2').select2();
+        // });
         // Menambahkan event listener untuk perubahan nilai pada input nomor nota supplier dan select nama supplier
         $('#nomor_nota_supplier').on('input', generateNomorNotaInternal);
         $('#nama_supplier').on('change', generateNomorNotaInternal);
@@ -202,9 +215,7 @@
                 success: function(response) {
                     console.log(response);
                     let inisial_supplier = response.inisial_supplier;
-                    // let created_at = response.created_at;
                     generateNomorNotaInternal(inisial_supplier);
-                    // generateNomorNotaInternal(created_at);
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -235,19 +246,34 @@
                 }
             });
         });
+        //
+        // // Event listener untuk perubahan pada input nama_supplier
+        // $('#nama_supplier').on('change', function() {
+        //     let selectedNamaSupplier = $(this).val();
+        //     // Panggil fungsi getInisialSupplier untuk mendapatkan inisial_supplier
+        //     getInisialSupplier(selectedNamaSupplier);
+        // });
+
+        // // Event listener untuk perubahan pada input nomor_nota_supplier
+        // $('#nomor_nota_supplier').on('input', function() {
+        //     let inisial_supplier = $('#inisial_supplier').val();
+        //     // Panggil fungsi generateNomorNotaInternal dengan inisial_supplier yang sudah ada
+        //     generateNomorNotaInternal(inisial_supplier);
+        // });
         // generate nomor internal
         function generateNomorNotaInternal(inisial_supplier) {
             const nomorNotaSupplier = $('#nomor_nota_supplier').val();
             const namaSupplier = $('#nama_supplier').val();
+
             // ambil tanggal, bulan, tahun
             const now = new Date();
             const tahun = now.getFullYear().toString().substr(-2); // Ambil 2 digit terakhir tahun
             const bulan = ('0' + (now.getMonth() + 1)).slice(-2); // Menambah '0' jika satu digit
             const tanggal = ('0' + now.getDate()).slice(-2);
-
+            console.log(inisial_supplier);
             // Membentuk nomor nota internal dengan menggabungkan nama supplier dan nomor nota supplier
             const nomorNotaInternal = `${inisial_supplier}_${nomorNotaSupplier}_${tanggal}${bulan}${tahun}`;
-            // console.log(nomorNotaInternal);
+            console.log(nomorNotaInternal);
 
             // Menampilkan nomor nota internal pada input nomor nota internal
             $('#nomor_nota_internal').val(nomorNotaInternal);
@@ -318,12 +344,6 @@
         // test
         var dataArray = [];
         var dataHeader = [];
-        var dataStock = [];
-        var dataStockHistory = [];
-
-        // function isDuplicateData(nomorPO, nomorBatch) {
-        //     return dataHeader.some(data => data.nomor_po === nomorPO && data.nomor_batch === nomorBatch);
-        // }
 
         function addRow() {
             console.log(dataArray);
@@ -357,7 +377,12 @@
                 selisih_berat.trim() === '' ||
                 kadar_air.trim() === '' || id_box.trim() === '' || harga_nota.trim() === '' || total_harga_nota.trim() ===
                 '' || harga_deal.trim() === '') {
-                alert('Harap isi semua kolom.');
+                // Menampilkan SweetAlert untuk pesan error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Harap isi semua kolom.'
+                });
                 return; // Berhenti jika ada input yang kosong
             }
             // Mengubah atribut readonly menggunakan jQuery
@@ -380,9 +405,9 @@
                 '<td>' + harga_deal + '</td>' +
                 '<td>' + keterangan + '</td>' +
                 '<td>' + user_created + '</td>' +
+                '<td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
                 '</tr>';
             $('#dataTable tbody').append(newRow);
-            // $('#myForm')[0].reset();
 
             // Menambahkan data ke dalam array
             dataArray.push({
@@ -390,7 +415,7 @@
                 nomor_nota_internal: nomor_nota_internal,
                 nomor_batch: nomor_batch,
                 nama_supplier: nama_supplier,
-                doc_no: doc_no,
+                // doc_no: doc_no,
                 jenis: jenis,
                 berat_nota: berat_nota,
                 berat_kotor: berat_kotor,
@@ -408,7 +433,7 @@
             console.log(dataArray);
             dataHeader = [];
             dataHeader.push({
-                doc_no: doc_no,
+                // doc_no: doc_no,
                 nomor_po: nomor_po,
                 nomor_batch: nomor_batch,
                 nomor_nota_supplier: nomor_nota_supplier,
@@ -419,7 +444,6 @@
             });
 
             // Membersihkan nilai input setelah ditambahkan
-            // $('#jenis').val('1');
             // $('#jenis').val(null).trigger('change');
             $('#jenis').val($('#jenis option:first').val()).trigger('change');
             $('#berat_nota').val('');
@@ -434,6 +458,19 @@
             $('#keterangan').val('');
         }
 
+        function hapusBaris(button) {
+            // Dapatkan elemen baris terkait dengan tombol delete yang diklik
+            let row = $(button).closest('tr');
+
+            // Hapus baris dari dataArray berdasarkan indeks baris di tabel
+            let rowIndex = row.index();
+            dataArray.splice(rowIndex, 1);
+            dataHeader.splice(rowIndex, 1);
+
+            // Hapus baris dari tabel
+            row.remove();
+        }
+
         function getArray() {
             // Menampilkan array di konsol untuk tujuan debugging
             console.log(dataArray);
@@ -441,26 +478,66 @@
 
         function simpanData() {
             console.log(dataArray);
+            // Cek apakah data kosong
+            if (dataArray.length === 0) {
+                // Menampilkan SweetAlert untuk pesan error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Astagfirullah',
+                    text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
+                });
+                return; // Menghentikan eksekusi fungsi jika data kosong
+            }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('prm_raw_material_input.simpanData') }}`, // Ganti dengan URL endpoint yang sesuai
+                url: `{{ route('prm_raw_material_input.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
                     dataHeader: JSON.stringify(dataHeader),
-                    dataStock: JSON.stringify(dataStock),
-                    // dataStockHistory: JSON.stringify(dataStockHistory),
                     _token: '{{ csrf_token() }}'
                 },
-                dataType: 'json', // payload is json,
+                dataType: 'json',
+                beforeSend: function() {
+                    // Menampilkan SweetAlert sebagai indikator loading sebelum permintaan dikirimkan
+                    Swal.fire({
+                        title: 'Loading...',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
                 success: function(response) {
                     console.log('Data sent successfully:', response);
+
+                    // Menampilkan SweetAlert untuk pesan sukses
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Alhamdulillah',
+                        text: 'Data berhasil dikirim.'
+                    });
+
+                    // Redirect atau lakukan tindakan lain setelah berhasil
                     window.location.href = `{{ route('prm_raw_material_input.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);
+
+                    // Menampilkan SweetAlert untuk pesan error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
+                    });
+                },
+                complete: function() {
+                    // Menutup SweetAlert setelah permintaan selesai, terlepas dari berhasil atau gagal
+                    Swal.close();
                 }
             });
+
         }
     </script>
 @endsection

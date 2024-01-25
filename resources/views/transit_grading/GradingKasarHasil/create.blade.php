@@ -133,6 +133,7 @@
                     <table class="table" id="dataTable">
                         <thead>
                             <tr>
+                                {{-- <th scope="col" class="text-center">No</th> --}}
                                 <th scope="col" class="text-center">Nomor Grading</th>
                                 <th scope="col" class="text-center">ID Box Raw Material</th>
                                 <th scope="col" class="text-center">ID Box Grading Kasar</th>
@@ -160,6 +161,7 @@
                                 <th scope="col" class="text-center">HPP</th>
                                 <th scope="col" class="text-center">Total HPP</th> --}}
                                 <th scope="col" class="text-center">Keterangan</th>
+                                <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -219,28 +221,36 @@
                 console.log("Harga Estimasi: " + hargaEstimasi);
             });
         });
+        // hitung nilai berat
+        function hitungNilaiBerat() {
+            let totalBerat
+        }
         // hitung nilai susut
         function hitungNilaiSusut() {
-            let totalBeratGrading = 0;
+            let totalBeratGradingtest = parseFloat($('#berat_grading').val()) || 0;
 
             $('.berat_grading').each(function() {
                 let beratGradingValue = parseFloat($(this).val());
                 if (!isNaN(beratGradingValue)) {
-                    totalBeratGrading += beratGradingValue;
+                    totalBeratGradingtest += beratGradingValue;
                 }
             });
 
+            // console.log(beratGradingValue);
             let beratAdding = parseFloat($('#berat').val());
 
-            if (!isNaN(totalBeratGrading) && !isNaN(beratAdding) && beratAdding !== 0) {
-                let nilaiSusut = 1 - (totalBeratGrading / beratAdding);
-
-                // console.log(nilaiSusut);
+            if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding) && beratAdding !== 0) {
+                let nilaiSusut = (1 - totalBeratGradingtest / beratAdding).toFixed(4);
+                console.log(totalBeratGradingtest);
+                console.log(beratAdding);
+                // nilaiSusut = nilaiSusut.toFixed(4);
+                console.log(nilaiSusut);
                 return nilaiSusut;
             } else {
                 console.error('Input tidak valid untuk berat_grading atau berat');
                 return null;
             }
+
         }
 
         // generate id box grading kasar
@@ -301,6 +311,15 @@
             let biaya_produksi = 0;
             console.log("Harga Estimasi = " + harga_estimasi);
 
+            // TOTAL Berat
+            let totalBeratGrading = parseFloat($('#berat_grading').val()) || 0;
+
+            $('#dataTable tbody tr').each(function() {
+                let beratGradingValue = parseFloat($(this).find('td:eq(10)').text()) || 0;
+
+                totalBeratGrading += beratGradingValue;
+            });
+            console.log("Total Berat = " + totalBeratGrading);
             // Total Pcs
             // Inisialisasi variabel untuk menyimpan total pcs_grading
             let totalPcsGrading = parseFloat($('#pcs_grading').val()) || 0;
@@ -317,27 +336,69 @@
 
             //
             let newRow = '<tr>' +
-                // '<td>' + doc_no + '</td>' +
-                '<td>' + nomor_grading + '</td>' +
-                '<td>' + id_box_raw_material + '</td>' +
-                '<td>' + id_box_grading_kasar + '</td>' +
-                '<td>' + nomor_batch + '</td>' +
-                '<td>' + nama_supplier + '</td>' +
-                '<td>' + nomor_nota_internal + '</td>' +
-                '<td>' + jenis_raw_material + '</td>' +
-                '<td>' + berat + '</td>' +
-                '<td>' + kadar_air + '</td>' +
-                '<td>' + jenis_grading[0] + '</td>' +
-                '<td>' + berat_grading + '</td>' +
-                '<td>' + pcs_grading + '</td>' +
-                '<td>' + susut + '</td>' +
-                '<td>' + modal + '</td>' +
-                '<td>' + total_modal + '</td>' +
-                '<td>' + keterangan + '</td>' +
+                '<td class="text-center">' + nomor_grading + '</td>' +
+                '<td class="text-center">' + id_box_raw_material + '</td>' +
+                '<td class="text-center">' + id_box_grading_kasar + '</td>' +
+                '<td class="text-center">' + nomor_batch + '</td>' +
+                '<td class="text-center">' + nama_supplier + '</td>' +
+                '<td class="text-center">' + nomor_nota_internal + '</td>' +
+                '<td class="text-center">' + jenis_raw_material + '</td>' +
+                '<td class="text-center">' + berat + '</td>' +
+                '<td class="text-center">' + kadar_air + '</td>' +
+                '<td class="text-center">' + jenis_grading[0] + '</td>' +
+                '<td class="text-center">' + berat_grading + '</td>' +
+                '<td class="text-center">' + pcs_grading + '</td>' +
+                '<td class="text-center">' + susut + '</td>' +
+                '<td class="text-center">' + modal + '</td>' +
+                '<td class="text-center">' + total_modal + '</td>' +
+                '<td class="text-center">' + keterangan + '</td>' +
+                '<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
                 '</tr>';
 
             $('#dataTable tbody').append(newRow);
             $('#total_pcs').val(totalPcsGrading);
+            $('#total_berat').val(totalBeratGrading);
+
+            $('#dataTable tbody tr').each(function() {
+                let totalSusutValue = parseInt($(this).find('td:eq(12)').text()) || 0;
+                // console.log(susut);
+                susut += totalSusutValue;
+                // console.log('Total = ' + totalSusutValue);
+                $('#total_susut').val(susut);
+            });
+
+            console.log('Total Susut: ' + susut);
+
+
+            // $('#total_susut').val(totalSusut.toFixed(4));
+            // Menambahkan data ke dalam array
+            // dataArrayDocNo.push(doc_no),
+            // dataArrayIDBoxRawMaterial.push(id_box_raw_material),
+            //     dataArrayIDBoxGradingKasar.push(id_box_grading_kasar),
+            //     dataArrayNomorBatch.push(nomor_batch),
+            //     dataArrayNamaSupplier.push(nama_supplier),
+            //     dataArrayNomorNotaInternal.push(nomor_nota_internal),
+            //     dataArrayJenisRawMaterial.push(jenis_raw_material),
+            //     dataArrayBerat.push(berat),
+            //     dataArrayKadarAir.push(kadar_air),
+            //     dataArrayJenisGrading.push(jenis_grading),
+            //     dataArrayBeratGrading.push(berat_grading),
+            //     dataArraySusut.push(susut),
+            //     dataArrayModal.push(modal),
+            //     dataArrayTotalModal.push(total_modal),
+            //     dataArrayBiayaProduksi.push(biaya_produksi),
+            //     dataArrayHargaEstimasi.push(harga_estimasi),
+            //     dataArrayNilaiLabaRugi.push(nilai_laba_rugi),
+            //     dataArrayNilaiProsentaseTotalKeuntungan.push(nilai_prosentase_total_keuntungan),
+            //     dataArrayNilaiDikurangiKeuntungan.push(nilai_dikurangi_keuntungan),
+            //     dataArrayProsentaseHargaGramasi.push(prosentase_harga_gramasi),
+            //     dataArraySelisihLabaRugiKg.push(selisih_laba_rugi_kg),
+            //     dataArraySelisihLabaRugiGram.push(selisih_laba_rugi_gram),
+            //     dataArrayHpp.push(hpp),
+            //     dataArrayTotalHpp.push(total_hpp),
+            //     dataArrayKeterangan.push(keterangan),
+            //     dataArrayUserCreated.push(user_created),
+            //     dataArrayUserUpdated.push(user_updated),
             dataArray.push({
                 // doc_no: doc_no,
                 nomor_grading: nomor_grading,
@@ -366,13 +427,51 @@
                 selisih_laba_rugi_gram: 0,
                 hpp: 0,
                 total_hpp: 0,
-                keterangan: keterangan
+                keterangan: keterangan,
+                // user_created: user_created,
+                // user_updated: user_updated
             });
-
+            // Membersihkan nilai input setelah ditambahkan
+            // $('#nomor_grading').val();
+            // $('#nomor_batch').val();
+            // $('#id_box_raw_material').val();
+            // $('#nomor_nota_internal').val();
+            // $('#nama_supplier').val();
+            // $('#jenis_adding').val();
+            // $('#berat_adding').val();
+            // $('#kadar_air').val();
+            // $('#modal').val();
+            // $('#total_modal').val();
             $('#jenis').val('');
             $('#berat_grading').val('');
             $('#pcs_grading').val('');
             $('#keterangan').val('');
+            // $('#total_susut').val();
+            // $('#total_berat').val();
+            // $('#total_pcs').val();
+        }
+
+        //
+        function hapusBaris(button) {
+            // Dapatkan elemen baris terkait dengan tombol delete yang diklik
+            let row = $(button).closest('tr');
+
+            let pcsToRemove = parseFloat(row.find('td:eq(11)').text());
+            let beratToRemove = parseFloat(row.find('td:eq(10)').text());
+            let susutToRemove = parseFloat(row.find('td:eq(12)').text());
+
+            // Hapus baris dari dataArray berdasarkan indeks baris di tabel
+            let rowIndex = row.index();
+            dataArray.splice(rowIndex, 1);
+
+            // Hapus baris dari tabel
+            row.remove();
+            // Kurangkan nilai dari total_pcs dan total_berat
+            total_pcs -= pcsToRemove;
+            total_berat -= beratToRemove;
+            total_susut -= susutToRemove;
+            // Panggil ulang fungsi hitungNilaiSusut setelah menghapus baris
+            hitungNilaiSusut();
         }
 
         function getArray() {
@@ -382,39 +481,65 @@
 
         function simpanData() {
             console.log(dataArray);
+            // Cek apakah data kosong
+            if (dataArray.length === 0) {
+                // Menampilkan SweetAlert untuk pesan error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Astagfirullah',
+                    text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
+                });
+                return; // Menghentikan eksekusi fungsi jika data kosong
+            }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('grading_kasar_hasil.simpanData') }}`, // Ganti dengan URL endpoint yang sesuai
+                url: `{{ route('grading_kasar_hasil.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
                     _token: '{{ csrf_token() }}'
                 },
-                dataType: 'json', // payload is json,
-                success: function(response) {
-                    // alert('Success: ' + response.message); // Tampilkan pesan berhasil
-                    // window.location.href = response.redirectTo; // Redirect ke halaman lain
+                dataType: 'json',
+                beforeSend: function() {
+                    // Menampilkan SweetAlert sebagai indikator loading sebelum permintaan dikirimkan
                     Swal.fire({
-                        title: 'Success!',
-                        text: 'Data berhasil disimpan.',
-                        icon: 'success'
-                    }).then((result) => {
-                        // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
-                        if (result.isConfirmed) {
-                            window.location.href = response
-                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                        title: 'Loading...',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
                         }
                     });
                 },
-                error: function(error) {
+                success: function(response) {
+                    console.log('Data sent successfully:', response);
+
+                    // Menampilkan SweetAlert untuk pesan sukses
                     Swal.fire({
-                        title: 'Error!',
-                        text: 'Terjadi kesalahan. Silakan coba lagi.',
-                        icon: 'error'
+                        icon: 'success',
+                        title: 'Alhamdulillah',
+                        text: 'Data berhasil dikirim.'
                     });
-                    console.log('Validation Errors:', response.responseJSON.errors);
+
+                    // Redirect atau lakukan tindakan lain setelah berhasil
+                    window.location.href = `{{ route('grading_kasar_hasil.index') }}`;
+                },
+                error: function(error) {
+                    console.error('Error sending data:', error);
+
+                    // Menampilkan SweetAlert untuk pesan error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
+                    });
+                },
+                complete: function() {
+                    // Menutup SweetAlert setelah permintaan selesai, terlepas dari berhasil atau gagal
+                    Swal.close();
                 }
             });
+
         }
     </script>
 @endsection

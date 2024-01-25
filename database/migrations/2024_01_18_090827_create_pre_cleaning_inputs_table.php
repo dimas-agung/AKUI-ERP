@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('id_box_raw_material');
             $table->string('jenis_raw_material');
             $table->string('jenis_kirim');
-            $table->float('berat_kirim');
-            $table->float('pcs_kirim');
+            $table->string('berat_kirim');
+            $table->string('pcs_kirim');
             $table->string('kadar_air');
             $table->string('tujuan_kirim');
             $table->string('nomor_grading');
