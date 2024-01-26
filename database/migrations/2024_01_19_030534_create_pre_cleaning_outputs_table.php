@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pre_cleaning_outputs', function (Blueprint $table) {
             $table->id();
-            $table->string('doc_no');
+            $table->string('doc_no')->default('1');
             $table->string('nomor_job');
             $table->string('id_box_grading_kasar');
             $table->string('nomor_bstb');

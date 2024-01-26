@@ -16,12 +16,13 @@
                 <form method="POST" class="row g-3" id="myForm">
                     <div class="col-md-12">
                         <label for="basic-usage" class="form-label">Nomor Job</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
-                            name="nomor_job" id="nomor_job" placeholder="Pilih Nomor Job">
+                        <select class="choices form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
+                            placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($pre_cleaning_stocks as $PreCS)
                                 <option value="{{ $PreCS->nomor_job }}">
-                                    {{ $PreCS->nomor_job }}</option>
+                                    {{ $PreCS->nomor_job }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -31,7 +32,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_bstb" class="form-label">Nomor BSTB</label>
-                        <input type="text" class="form-control" id="nomor_bstb" readonly>
+                        <input type="text" class="form-control" id="nomor_bstb">
                     </div>
                     <div class="col-md-4">
                         <label for="id_box_raw_material" class="form-label">ID Box Raw Material</label>
@@ -99,9 +100,8 @@
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Flex & Poles</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
-                            name="operator_flex_dan_poles" id="operator_flex_dan_poles"
-                            placeholder="Pilih Operator Flex & Poles">
+                        <select class="choices form-select" style="width: 100%;" name="operator_flex_dan_poles"
+                            id="operator_flex_dan_poles" placeholder="Pilih Operator Flex & Poles">
                             <option value="">Pilih Operator Flex & Poles</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
                                 @if ($MasterSPRM->job == 'Flek + Poles')
@@ -112,10 +112,11 @@
                             @endforeach
                         </select>
                     </div>
+
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Cutter</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
-                            name="operator_cutter" id="operator_cutter" placeholder="Pilih Operator Cutter">
+                        <select class="choices form-select" style="width: 100%;" name="operator_cutter"
+                            id="operator_cutter" data-placeholder="Pilih Operator Cutter">
                             <option value="">Pilih Operator Cutter</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
                                 @if ($MasterSPRM->job == 'Cutter')
@@ -198,6 +199,21 @@
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
                                 <th scope="col" class="text-center">Sisa Berat</th>
+                                <th scope="col" class="text-center">Operator Flek & Kompresor</th>
+                                <th scope="col" class="text-center">Operator Flek & Poles</th>
+                                <th scope="col" class="text-center">Operator Cutter</th>
+                                <th scope="col" class="text-center">Kuningan</th>
+                                <th scope="col" class="text-center">Sterofoam</th>
+                                <th scope="col" class="text-center">Karat</th>
+                                <th scope="col" class="text-center">Rontokan Bahan</th>
+                                <th scope="col" class="text-center">Rontokan Serabut</th>
+                                <th scope="col" class="text-center">WS-0-0-0</th>
+                                <th scope="col" class="text-center">Berat Pre Cleaning</th>
+                                <th scope="col" class="text-center">Pcs</th>
+                                <th scope="col" class="text-center">Susut</th>
+                                {{-- <th scope="col" class="text-center">User Created</th>
+                                <th scope="col" class="text-center">User Updated</th> --}}
+                                <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -247,21 +263,36 @@
                 }
             });
         });
-
-        // Generate BSTB OUTPUT
         $(document).ready(function() {
             // Menangani perubahan pada dropdown nomor_job
             $('#nomor_job').on('change', function() {
-                // Mengambil nilai dari dropdown nomor_job
-                var nomorJobValue = $(this).val();
-                var nomorJobWithoutLast4 = nomorJobValue.slice(0, -4);
+                // Memanggil fungsi generateNomorBSTB ketika nomor_job berubah
+                generateNomorBSTB();
+            });
 
-                // Menghitung nomor_bstb berdasarkan rumus nomor_job + UPC (contoh)
-                var nomorBSTB = "BSTB_" + nomorJobWithoutLast4 + "_UPC";
+            // Fungsi untuk generate nomor_bstb
+            function generateNomorBSTB() {
+                const now = new Date();
+                const tahun = now.getFullYear().toString().substr(-2);
+                const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+                const tanggal = ('0' + now.getDate()).slice(-2);
+                const jam = ('0' + now.getHours()).slice(-2);
+                const menit = ('0' + now.getMinutes()).slice(-2);
+                const detik = ('0' + now.getSeconds()).slice(-2);
+
+                // Mengambil nilai dari dropdown nomor_job
+                const nomorJobValue = $('#nomor_job').val().split('_');
+
+                // Mengambil bagian ketiga (indeks 2) dari array hasil split
+                const bagianKetiga = nomorJobValue[2];
+
+                // Menghasilkan nomor_bstb berdasarkan rumus yang diinginkan
+                const nomor_bstb = `BSTB_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_${bagianKetiga}_UPC`;
 
                 // Memasukkan nilai yang dihasilkan ke dalam input nomor_bstb
-                $('#nomor_bstb').val(nomorBSTB);
-            });
+                $('#nomor_bstb').val(nomor_bstb);
+                console.log(nomor_bstb);
+            }
         });
 
         let dataArray = [];
@@ -284,16 +315,17 @@
             let pcs_kirim = $('#pcs_kirim').val();
             let berat_kirim = $('#berat_kirim').val();
             let operator_sikat_dan_kompresor = $('#operator_sikat_dan_kompresor').val();
-            let operator_flex_dan_poles = $('#operator_flex_dan_poles').val();
-            let operator_cutter = $('#operator_cutter').val();
+            let operator_flek_dan_poles = $('#operator_flex_dan_poles').val();
+            let operator_flek_cutter = $('#operator_cutter').val();
             let kuningan = $('#kuningan').val();
-            let Sterofoam = $('#Sterofoam').val();
+            let sterofoam = $('#Sterofoam').val();
             let karat = $('#karat').val();
-            let rontokan_flex = $('#rontokan_flex').val();
+            let rontokan_fisik = $('#rontokan_flex').val();
             let rontokan_bahan = $('#rontokan_bahan').val();
-            let ws = $('#ws').val();
+            let rontokan_serabut = $('#rontokan_serabut').val();
+            let ws_0_0_0 = $('#ws').val();
             let berat_precleaning = $('#berat_precleaning').val();
-            let pcs = $('#pcs').val();
+            let pcs_pre_cleaning = $('#pcs').val();
             let susut = $('#susut').val();
 
             // Validasi input (sesuai kebutuhan)
@@ -318,7 +350,20 @@
                 '<td class="text-center">' + tujuan_kirim + '</td>' +
                 '<td class="text-center">' + modal + '</td>' +
                 '<td class="text-center">' + total_modal + '</td>' +
-                '<td class="text-center">' + "sisa_berat" + '</td>' +
+                '<td class="text-center">' + operator_sikat_dan_kompresor + '</td>' +
+                '<td class="text-center">' + operator_flek_dan_poles + '</td>' +
+                '<td class="text-center">' + operator_flek_cutter + '</td>' +
+                '<td class="text-center">' + kuningan + '</td>' +
+                '<td class="text-center">' + sterofoam + '</td>' +
+                '<td class="text-center">' + karat + '</td>' +
+                '<td class="text-center">' + rontokan_fisik + '</td>' +
+                '<td class="text-center">' + rontokan_bahan + '</td>' +
+                '<td class="text-center">' + rontokan_serabut + '</td>' +
+                '<td class="text-center">' + ws_0_0_0 + '</td>' +
+                '<td class="text-center">' + berat_precleaning + '</td>' +
+                '<td class="text-center">' + pcs_pre_cleaning + '</td>' +
+                '<td class="text-center">' + susut + '</td>' +
+                // '<td class="text-center">' + "sisa_berat" + '</td>' +
                 '<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
                 '</tr>';
             // Tambahkan Kedalam Tabel
@@ -341,36 +386,24 @@
                 modal: modal,
                 total_modal: total_modal,
                 operator_sikat_dan_kompresor: operator_sikat_dan_kompresor,
-                operator_flex_dan_poles: operator_flex_dan_poles,
-                operator_cutter: operator_cutter,
+                operator_flek_dan_poles: operator_flek_dan_poles,
+                operator_flek_cutter: operator_flek_cutter,
                 kuningan: kuningan,
-                Sterofoam: Sterofoam,
+                sterofoam: sterofoam,
                 karat: karat,
-                rontokan_flex: rontokan_flex,
+                rontokan_fisik: rontokan_fisik,
                 rontokan_bahan: rontokan_bahan,
-                ws: ws,
+                rontokan_serabut: rontokan_serabut,
+                ws_0_0_0: ws_0_0_0,
                 berat_precleaning: berat_precleaning,
-                pcs: pcs,
+                pcs_pre_cleaning: pcs_pre_cleaning,
                 susut: susut,
             });
 
-            // Membersihkan nilai input setelah ditambahkan
-            $('#nomor_job').val('').trigger('change');
-            // $('#nomor_job').val($('#nomor_job option:first').val()).trigger('change');
-            $('#id_box_grading_kasar').val();
-            $('#nomor_bstb').val();
-            $('#id_box_raw_material').val();
-            $('#nomor_batch').val();
-            $('#nomor_nota_internal').val();
-            $('#nama_supplier').val();
-            $('#jenis_raw_material').val();
-            $('#jenis_kirim').val();
-            $('#tujuan_kirim').val();
-            $('#modal').val();
-            $('#total_modal').val();
-            $('#kadar_air').val();
-            $('#pcs_kirim').val();
-            $('#berat_kirim').val();
+            // Mengosongkan nilai dropdown nomor_job
+            $('#nomor_job, #id_box_grading_kasar, #nomor_bstb, #id_box_raw_material, #nomor_batch, #nomor_nota_internal, #nama_supplier, #jenis_raw_material, #jenis_kirim, #tujuan_kirim, #modal, #total_modal, #kadar_air, #pcs_kirim, #berat_kirim, #operator_sikat_dan_kompresor, #operator_flex_dan_poles, #operator_cutter, #kuningan, #Sterofoam, #karat, #rontokan_flex, #rontokan_bahan,#rontokan_serabut, #ws, #berat_precleaning, #pcs, #susut')
+                .val('');
+
         }
 
         function hapusBaris(button) {

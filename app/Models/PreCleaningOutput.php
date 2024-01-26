@@ -43,11 +43,11 @@ class PreCleaningOutput extends Model
 
     public function PreCleaningStock()
     {
-        return $this->belongsTo(PreCleaningStock::class, 'nomor_job', 'nomor_job');
+        return $this->hasMany(PreCleaningStock::class, 'nomor_job', 'nomor_job');
     }
     public function MasterOperator()
     {
-        return $this->belongsTo(MasterOperator::class, 'nip', 'operator_sikat_kompresor');
+        return $this->hasMany(MasterOperator::class, 'nip', 'operator_sikat_kompresor');
     }
     // public function MasterOperator()
     // {
