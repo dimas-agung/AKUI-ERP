@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitSeeder::class);
         $this->call(BiayaHppSeeder::class);
         $this->call(MsterJenisGradingKasarSeeder::class);
-        // $this->call(PrmRawMaterialOutputSeeder::class);
+        $this->call(PrmRawMaterialStockSeeder::class);
+        $this->call(PrmRawMaterialOutputSeeder::class);
+        $this->call(StockTransitRawMaterialSeeder::class);
     }
 }

@@ -130,6 +130,7 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-title">Purchasing & EXIM</li>
                         <li
                             class="sidebar-item  has-sub {{ Request::is('purchasing_exim/prm_raw_material_input*', 'purchasing_exim/prm_raw_material_stock*', 'PrmRawMaterialOutput*', 'StockTransitRawMaterial*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
@@ -158,6 +159,7 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-title">Production</li>
                         <li
                             class="sidebar-item  has-sub {{ Request::is('StockTransitRawMaterial', 'StockTransitGradingKasar*', 'GradingKasarInput*', 'transit_grading_kasar/grading_kasar_hasil*', 'GradingKasarStock*', 'GradingKasarOutput*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>

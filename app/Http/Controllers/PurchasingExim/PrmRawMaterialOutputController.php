@@ -271,8 +271,6 @@ class PrmRawMaterialOutputController extends Controller
             }
         }
 
-
-
             // Hapus data GradingKasarInput
             $gradingKI->delete();
 

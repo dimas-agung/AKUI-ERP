@@ -75,28 +75,6 @@ class PrmRawMaterialInputService
             'user_updated'  => $item->user_updated ?? 'Admin123',
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
-        // $inputItem = (object)$item;
-        // // Cari item berdasarkan id_box dan nomor_batch
-        // $existingItem = PrmRawMaterialInputItem::where('jenis', $inputItem->jenis)
-        //     ->where('id_box', $inputItem->id_box)
-        //     ->first();
-        // PrmRawMaterialInputItem::create([
-        //     // 'doc_no'            => $item->doc_no,
-        //     'jenis'             => $item->jenis,
-        //     'berat_nota'        => $item->berat_nota,
-        //     'berat_kotor'       => $item->berat_kotor,
-        //     'berat_bersih'      => $item->berat_bersih,
-        //     'selisih_berat'     => $item->selisih_berat,
-        //     'kadar_air'         => $item->kadar_air,
-        //     'id_box'            => $item->id_box,
-        //     'harga_nota'        => $item->harga_nota,
-        //     'total_harga_nota'  => $item->total_harga_nota,
-        //     'harga_deal'        => $item->harga_deal,
-        //     'keterangan'        => $item->keterangan,
-        //     'user_created'      => $item->user_created,
-        //     'user_updated'      => $item->user_updated ?? 'Admin123'
-        //     // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-        // ]);
         $inputItem = (object) $item;
 
         // Cari item berdasarkan jenis dan id_box

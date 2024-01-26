@@ -72,116 +72,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Nomor Job</label>
-                                            <input type="text" class="form-control" id="nomor_job" name="nomor_job"
-                                                onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>ID Box Grading Kasar</label>
-                                            <input type="text" class="form-control" id="id_box_grading_kasar"
-                                                name="id_box_grading_kasar" onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Tujuan Kirim</label>
-                                            <input type="text" class="form-control" id="tujuan_kirim" name="tujuan_kirim"
-                                                onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Nama Supplier</label>
-                                            <input type="text" class="form-control" id="nama_supplier"
-                                                name="nama_supplier" onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Nomor Batch</label>
-                                            <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
-                                                onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>ID Box Raw Material</label>
-                                            <input type="text" class="form-control" id="id_box_raw_material"
-                                                name="id_box_raw_material" onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Jenis Raw Material</label>
-                                            <input type="text" class="form-control" id="jenis_raw_material"
-                                                name="jenis_raw_material" onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Jenis Grading</label>
-                                            <input type="text" class="form-control" id="jenis_grading"
-                                                name="jenis_grading" onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Berat Keluar</label>
-                                            <input type="text" id="berat_keluar" class="form-control" name="berat_keluar"
-                                                onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>PCS Keluar</label>
-                                            <input type="text" id="pcs_keluar" class="form-control" name="pcs_keluar"
-                                                onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>AVG Kadar Air</label>
-                                            <input type="text" class="form-control" id="avg_kadar_air"
-                                                name="avg_kadar_air" onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Nomor Grading</label>
-                                            <input type="text" id="nomor_grading" class="form-control"
-                                                name="nomor_grading" onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Modal</label>
-                                            <input type="text" id="modal" class="form-control" name="modal"
-                                                value="{{ 'modal' }}" onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Total Modal</label>
-                                            <input type="text" id="total_modal" class="form-control"
-                                                name="total_modal" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>No Nota</label>
-                                            <input type="text" id="nomor_nota_internal" class="form-control"
-                                                name="nomor_nota_internal"
-                                                onchange="handleChange(this.{{ 'nomor_nota_internal' }})" readonly>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Keterangan</label>
@@ -189,43 +79,44 @@
                                             placeholder="Masukkan keterangan">
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    {{-- <button type="submit" class="btn btn-primary">Add</button> --}}
-                                    <a href="#" class="btn btn-primary" onclick="sendData()">Submit</a>
-                                    <a href="{{ url('/PreCleaningInput') }}" type="button" class="btn btn-danger"
-                                        data-dismiss="modal">Close</a>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
+                                                <table class="table table-striped mt-3">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">Nomor BSTB</th>
+                                                            <th class="text-center">ID Box Grading Kasar</th>
+                                                            <th class="text-center">Nomor Job</th>
+                                                            <th class="text-center">Nomor Batch</th>
+                                                            <th class="text-center">Nama Supplier</th>
+                                                            <th class="text-center">ID Box Raw Material</th>
+                                                            <th class="text-center">Jenis Raw Material</th>
+                                                            <th class="text-center">Jenis Grading</th>
+                                                            <th class="text-center">Berat Keluar</th>
+                                                            <th class="text-center">PCS Keluar</th>
+                                                            <th class="text-center">AVG Kadar Air</th>
+                                                            <th class="text-center">Tujuan Kirim</th>
+                                                            <th class="text-center">Nomor Grading</th>
+                                                            <th class="text-center">Modal</th>
+                                                            <th class="text-center">Total Modal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tableBody">
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-md-12">
+                                                    {{-- <button type="submit" class="btn btn-primary">Add</button> --}}
+                                                    <a href="#" class="btn btn-primary"
+                                                        onclick="sendData()">Submit</a>
+                                                    <a href="{{ url('/PreCleaningInput') }}" type="button"
+                                                        class="btn btn-danger" data-dismiss="modal">Close</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
-                                <table class="table table-striped mt-3">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">Nomor BSTB</th>
-                                            <th class="text-center">ID Box Grading Kasar</th>
-                                            <th class="text-center">Nomor Job</th>
-                                            <th class="text-center">Nomor Batch</th>
-                                            <th class="text-center">Nama Supplier</th>
-                                            <th class="text-center">ID Box Raw Material</th>
-                                            <th class="text-center">Jenis Raw Material</th>
-                                            <th class="text-center">Jenis Grading</th>
-                                            <th class="text-center">Berat Keluar</th>
-                                            <th class="text-center">PCS Keluar</th>
-                                            <th class="text-center">AVG Kadar Air</th>
-                                            <th class="text-center">Tujuan Kirim</th>
-                                            <th class="text-center">Nomor Grading</th>
-                                            <th class="text-center">Modal</th>
-                                            <th class="text-center">Total Modal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableBody">
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -237,7 +128,7 @@
 @section('script')
     <script>
         // Inisialisasi dataArray
-        var dataArray = {};
+        var dataArray = [];
         $('#nomor_bstb').on('change', function() {
             // Mengambil nilai nomor_bstb yang dipilih
             let selectedIdBox = $(this).val();
@@ -249,23 +140,6 @@
                     nomor_bstb: selectedIdBox
                 },
                 success: function(response) {
-                    console.log(response[0]);
-                    // Mengatur nilai Nomor Batch sesuai dengan respons dari server
-                    $('#nomor_job').val(response[0].nomor_job);
-                    $('#id_box_grading_kasar').val(response[0].id_box_grading_kasar);
-                    $('#nomor_batch').val(response[0].nomor_batch);
-                    $('#nama_supplier').val(response[0].nama_supplier);
-                    $('#id_box_raw_material').val(response[0].id_box_raw_material);
-                    $('#jenis_raw_material').val(response[0].jenis_raw_material);
-                    $('#tujuan_kirim').val(response[0].tujuan_kirim);
-                    $('#jenis_grading').val(response[0].jenis_grading);
-                    $('#berat_keluar').val(response[0].berat_keluar);
-                    $('#pcs_keluar').val(response[0].pcs_keluar);
-                    $('#avg_kadar_air').val(response[0].avg_kadar_air);
-                    $('#nomor_grading').val(response[0].nomor_grading);
-                    $('#modal').val(response[0].modal);
-                    $('#total_modal').val(response[0].total_modal);
-                    $('#nomor_nota_internal').val(response[0].nomor_nota_internal);
                     // Contoh: Menampilkan data dalam tabel dengan jQuery
                     var tableBody = $(
                         '#tableBody'); // Ganti dengan ID atau selector yang sesuai dengan tabel Anda
@@ -274,7 +148,9 @@
                     tableBody.empty();
                     // Loop melalui setiap baris data
                     $.each(response, function(index, rowData) {
+                        console.log(rowData);
                         var newRow = $('<tr>');
+                        newRow.append('<td>' + rowData.nomor_bstb + '</td>');
                         newRow.append('<td>' + rowData.nomor_job + '</td>');
                         newRow.append('<td>' + rowData.id_box_grading_kasar + '</td>');
                         newRow.append('<td>' + rowData.nomor_batch + '</td>');
@@ -295,7 +171,7 @@
                         // Tambahkan baris ke dalam tabel
                         tableBody.append(newRow);
                         // Menyimpan data dalam dataArray
-                        dataArray = {
+                        dataArray.push({
                             nomor_bstb: rowData.nomor_bstb,
                             nomor_job: rowData.nomor_job,
                             jenis_kirim: rowData.jenis_kirim,
@@ -305,16 +181,16 @@
                             id_box_raw_material: rowData.id_box_raw_material,
                             jenis_raw_material: rowData.jenis_raw_material,
                             tujuan_kirim: rowData.tujuan_kirim,
-                            jenis_grading: rowData.jenis_grading,
-                            berat_keluar: rowData.berat_keluar,
-                            pcs_keluar: rowData.pcs_keluar,
-                            avg_kadar_air: rowData.avg_kadar_air,
+                            jenis_kirim: rowData.jenis_grading,
+                            berat_kirim: rowData.berat_keluar,
+                            pcs_kirim: rowData.pcs_keluar,
+                            kadar_air: rowData.avg_kadar_air,
                             nomor_grading: rowData.nomor_grading,
                             modal: rowData.modal,
                             total_modal: rowData.total_modal,
                             nomor_nota_internal: rowData.nomor_nota_internal,
                             // ... tambahkan properti lain sesuai kebutuhan
-                        };
+                        });
                     });
 
                 },
@@ -327,11 +203,10 @@
         function sendData() {
             var doc_no = $('#doc_no').val() || '';
             var keterangan = $('#keterangan').val() || '';
-            var user_created = $('#user_created').val() || '';
-            console.log(dataArray);
+
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('PreCleaningInput.store') }}`, // Ganti dengan URL endpoint yang sesuai
+                url: '{{ route('PreCleaningInput.store') }}',
                 method: 'POST',
                 beforeSend: function() {
                     Swal.fire({
@@ -344,25 +219,10 @@
                     });
                 },
                 data: {
-                    nomor_bstb: dataArray.nomor_bstb,
-                    nomor_job: dataArray.nomor_job,
-                    id_box_grading_kasar: dataArray.id_box_grading_kasar,
-                    nomor_batch: dataArray.nomor_batch,
-                    nama_supplier: dataArray.nama_supplier,
-                    id_box_raw_material: dataArray.id_box_raw_material,
-                    jenis_raw_material: dataArray.jenis_raw_material,
-                    tujuan_kirim: dataArray.tujuan_kirim,
-                    jenis_kirim: dataArray.jenis_grading,
-                    berat_kirim: dataArray.berat_keluar,
-                    pcs_kirim: dataArray.pcs_keluar,
-                    kadar_air: dataArray.avg_kadar_air,
-                    nomor_grading: dataArray.nomor_grading,
-                    modal: dataArray.modal,
-                    total_modal: dataArray.total_modal,
-                    nomor_nota_internal: dataArray.nomor_nota_internal,
+                    dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
                     doc_no: doc_no,
                     keterangan: keterangan,
-                    user_created: user_created,
+                    user_created: $('#user_created').val() || '',
                     user_updated: 'Asc-186',
                     _token: '{{ csrf_token() }}'
                 },
@@ -382,13 +242,14 @@
                 error: function(error) {
                     Swal.fire({
                         title: 'Astaghfirullah!',
-                        text: 'Terjadi kesalahan. Silakan coba lagi.',
+                        text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
                         icon: 'error'
                     });
-                    console.log('Validation Errors:', response.responseJSON.errors);
+                    console.log('Error:', error);
                 }
             });
         }
+
 
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;
