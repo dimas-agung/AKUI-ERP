@@ -7,7 +7,7 @@ use App\Models\PreCleaningStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PrmRawMaterialInputService
+class PreCleaningOutputService
 {
     public function simpanData($dataArray)
     {
@@ -43,6 +43,7 @@ class PrmRawMaterialInputService
             'id_box_grading_kasar'              => $dataArray->id_box_grading_kasar,
             'nomor_bstb'                        => $dataArray->nomor_bstb,
             'id_box_raw_material'               => $dataArray->id_box_raw_material,
+            'nomor_batch'                       => $dataArray->nomor_batch,
             'nomor_nota_internal'               => $dataArray->nomor_nota_internal,
             'nama_supplier'                     => $dataArray->nama_supplier,
             'jenis_raw_material'                => $dataArray->jenis_raw_material,
@@ -53,19 +54,21 @@ class PrmRawMaterialInputService
             'kadar_air'                         => $dataArray->kadar_air,
             'pcs_kirim'                         => $dataArray->pcs_kirim,
             'berat_kirim'                       => $dataArray->berat_kirim,
-            'operator_sikat_dan_kompresor'      => $dataArray->operator_sikat_dan_kompresor,
-            'operator_flek_dan_poles'           => $dataArray->operator_flex_dan_poles,
-            'operator_flek_cutter'              => $dataArray->operator_cutter,
+            'operator_sikat_kompresor'          => $dataArray->operator_sikat_kompresor,
+            'operator_flek_poles'               => $dataArray->operator_flek_poles,
+            'operator_flek_cutter'              => $dataArray->operator_flek_cutter,
             'kuningan'                          => $dataArray->kuningan,
-            'sterofoam'                         => $dataArray->Sterofoam,
+            'sterofoam'                         => $dataArray->sterofoam,
             'karat'                             => $dataArray->karat,
-            'rontokan_fisik'                    => $dataArray->rontokan_flex,
+            'rontokan_fisik'                    => $dataArray->rontokan_fisik,
             'rontokan_bahan'                    => $dataArray->rontokan_bahan,
-            'rontokan_serabut'                  => $dataArray->rontokan_bahan,
-            'ws_0_0_0'                                => $dataArray->ws,
-            'berat_precleaning'                 => $dataArray->berat_precleaning,
-            'pcs_pre_cleaning'                               => $dataArray->pcs,
-            'susut'                             => $dataArray->susut,
+            'rontokan_serabut'                  => $dataArray->rontokan_serabut,
+            'ws_0_0_0'                          => $dataArray->ws_0_0_0,
+            'berat_pre_cleaning'                => $dataArray->berat_pre_cleaning,
+            'pcs_pre_cleaning'                  => $dataArray->pcs_pre_cleaning,
+            'susut'                             => $dataArray->susutTabel,
+            'user_created'                      => $dataArray->user_created ?? 'Admin123',
+            'user_updated'                      => $dataArray->user_updated ?? 'Admin123',
         ]);
     }
 }

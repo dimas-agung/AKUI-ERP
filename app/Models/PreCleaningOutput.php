@@ -38,7 +38,7 @@ class PreCleaningOutput extends Model
         'pcs_pre_cleaning',
         'susut',
         'user_created',
-        'user_update',
+        'user_updated',
     ];
 
     public function PreCleaningStock()

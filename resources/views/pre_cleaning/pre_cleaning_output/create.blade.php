@@ -26,43 +26,43 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-4">
-                        <label for="id_box_grading_kasar" class="form-label">ID Box Grading Kasar</label>
-                        <input type="text" class="form-control" id="id_box_grading_kasar" readonly>
-                    </div>
+                    {{-- <div class="col-md-4"> --}}
+                    {{-- <label for="id_box_grading_kasar" class="form-label">ID Box Grading Kasar</label> --}}
+                    <input type="hidden" class="form-control" id="id_box_grading_kasar" readonly>
+                    {{-- </div> --}}
                     <div class="col-md-4">
                         <label for="nomor_bstb" class="form-label">Nomor BSTB</label>
                         <input type="text" class="form-control" id="nomor_bstb">
                     </div>
-                    <div class="col-md-4">
-                        <label for="id_box_raw_material" class="form-label">ID Box Raw Material</label>
-                        <input type="text" class="form-control" id="id_box_raw_material" readonly>
-                    </div>
+                    {{-- <div class="col-md-4"> --}}
+                    {{-- <label for="id_box_raw_material" class="form-label">ID Box Raw Material</label> --}}
+                    <input type="hidden" class="form-control" id="id_box_raw_material" readonly>
+                    {{-- </div> --}}
                     <div class="col-md-4">
                         <label for="nomor_batch" class="form-label">Nomor Batch</label>
                         <input type="text" class="form-control" id="nomor_batch" readonly>
                     </div>
-                    <div class="col-md-4">
-                        <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
-                        <input type="text" class="form-control" id="nomor_nota_internal" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="nama_supplier" class="form-label">Nama Supplier</label>
-                        <input type="text" class="form-control" id="nama_supplier" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="jenis_raw_material" class="form-label">Jenis Raw Material</label>
-                        <input type="text" class="form-control" id="jenis_raw_material" readonly>
-                    </div>
+                    {{-- <div class="col-md-4"> --}}
+                    {{-- <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label> --}}
+                    <input type="hidden" class="form-control" id="nomor_nota_internal" readonly>
+                    {{-- </div> --}}
+                    {{-- <div class="col-md-4"> --}}
+                    {{-- <label for="nama_supplier" class="form-label">Nama Supplier</label> --}}
+                    <input type="hidden" class="form-control" id="nama_supplier" readonly>
+                    {{-- </div> --}}
+                    {{-- <div class="col-md-4"> --}}
+                    {{-- <label for="jenis_raw_material" class="form-label">Jenis Raw Material</label> --}}
+                    <input type="hidden" class="form-control" id="jenis_raw_material" readonly>
+                    {{-- </div> --}}
                     <div class="col-md-4">
                         <label for="jenis_kirim" class="form-label">Jenis Kirim</label>
                         <input type="text" class="form-control" id="jenis_kirim" readonly>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="berat_kirim" class="form-label">Berat Kirim</label>
                         <input type="text" class="form-control" id="berat_kirim" readonly>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="pcs_kirim" class="form-label">Pcs Kirim</label>
                         <input type="text" class="form-control" id="pcs_kirim" readonly>
                     </div>
@@ -71,18 +71,18 @@
                         <input type="text" class="form-control" id="tujuan_kirim" readonly>
                     </div>
 
-                    <div class="col-md-3">
-                        <label for="modal" class="form-label">Modal</label>
-                        <input type="text" class="form-control" id="modal" readonly>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="total_modal" class="form-label">Total Modal</label>
-                        <input type="text" class="form-control" id="total_modal" readonly>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="kadar_air" class="form-label">Kadar Air</label>
-                        <input type="text" class="form-control" id="kadar_air" readonly>
-                    </div>
+                    {{-- <div class="col-md-3"> --}}
+                    {{-- <label for="modal" class="form-label">Modal</label> --}}
+                    <input type="hidden" class="form-control" id="modal" readonly>
+                    {{-- </div> --}}
+                    {{-- <div class="col-md-3"> --}}
+                    {{-- <label for="total_modal" class="form-label">Total Modal</label> --}}
+                    <input type="hidden" class="form-control" id="total_modal" readonly>
+                    {{-- </div> --}}
+                    {{-- <div class="col-md-2"> --}}
+                    {{-- <label for="kadar_air" class="form-label">Kadar Air</label> --}}
+                    <input type="hidden" class="form-control" id="kadar_air" readonly>
+                    {{-- </div> --}}
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Sikat & Kompresor</label>
                         <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
@@ -90,7 +90,7 @@
                             placeholder="Pilih Operator Sikat & Kompresor">
                             <option value="">Pilih Operator Sikat & Kompresor</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Sikat + Kompresor')
+                                @if ($MasterSPRM->job == 'Sikat + Kompresor' && $MasterSPRM->status == 1)
                                     <option value="{{ $MasterSPRM->nama }}">
                                         {{ $MasterSPRM->nama }}
                                     </option>
@@ -104,7 +104,7 @@
                             id="operator_flex_dan_poles" placeholder="Pilih Operator Flex & Poles">
                             <option value="">Pilih Operator Flex & Poles</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Flek + Poles')
+                                @if ($MasterSPRM->job == 'Flek + Poles' && $MasterSPRM->status == 1)
                                     <option value="{{ $MasterSPRM->nama }}">
                                         {{ $MasterSPRM->nama }}
                                     </option>
@@ -119,7 +119,7 @@
                             id="operator_cutter" data-placeholder="Pilih Operator Cutter">
                             <option value="">Pilih Operator Cutter</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Cutter')
+                                @if ($MasterSPRM->job == 'Cutter' && $MasterSPRM->status == 1)
                                     <option value="{{ $MasterSPRM->nama }}">
                                         {{ $MasterSPRM->nama }}
                                     </option>
@@ -165,7 +165,19 @@
                     </div>
                     <div class="col-md-3">
                         <label for="susut" class="form-label">Susut</label>
-                        <input type="text" class="form-control" id="susut">
+                        <input type="text" class="form-control" id="susut" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="susut" class="form-label">Total Box</label>
+                        <input type="text" class="form-control" id="total_box" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="susut" class="form-label">Total Berat</label>
+                        <input type="text" class="form-control" id="total_berat" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="susut" class="form-label">Total Pcs</label>
+                        <input type="text" class="form-control" id="total_pcs" readonly>
                     </div>
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" onclick="addRow()">Tambah</button>
@@ -198,13 +210,14 @@
                                 <th scope="col" class="text-center">Tujuan Kirim</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
-                                <th scope="col" class="text-center">Sisa Berat</th>
+                                {{-- <th scope="col" class="text-center">Sisa Berat</th> --}}
                                 <th scope="col" class="text-center">Operator Flek & Kompresor</th>
                                 <th scope="col" class="text-center">Operator Flek & Poles</th>
                                 <th scope="col" class="text-center">Operator Cutter</th>
                                 <th scope="col" class="text-center">Kuningan</th>
                                 <th scope="col" class="text-center">Sterofoam</th>
                                 <th scope="col" class="text-center">Karat</th>
+                                <th scope="col" class="text-center">Rontokan Flex</th>
                                 <th scope="col" class="text-center">Rontokan Bahan</th>
                                 <th scope="col" class="text-center">Rontokan Serabut</th>
                                 <th scope="col" class="text-center">WS-0-0-0</th>
@@ -294,6 +307,37 @@
                 console.log(nomor_bstb);
             }
         });
+        // Fungsi untuk menghitung persentase susut
+        function hitungPersentaseSusut(nilaiAwal, nilaiAkhir) {
+            // Menghitung nilai susut
+            var nilaiSusut = nilaiAwal - nilaiAkhir;
+
+            // Menghitung persentase susut
+            var persentaseSusut = (nilaiSusut / nilaiAwal) * 100;
+
+            // Mengembalikan hasil
+            return persentaseSusut;
+        }
+
+        // Event listener untuk menghitung persentase susut saat input berubah
+        $("#berat_precleaning").on("input", function() {
+            // Mendapatkan nilai awal dan nilai akhir dari input
+            var nilaiAwal = parseFloat($("#berat_kirim").val()) || 0; // Jika tidak valid, asumsi nilai 0
+            var nilaiAkhir = parseFloat($(this).val()) || 0; // Jika tidak valid, asumsi nilai 0
+
+            // Memastikan nilai akhir tidak nol untuk menghindari pembagian oleh nol
+            if (nilaiAkhir !== 0) {
+                // Menghitung persentase susut
+                var persentaseSusut = hitungPersentaseSusut(nilaiAwal, nilaiAkhir);
+
+                // Menampilkan hasil pada input susut
+                $("#susut").val(persentaseSusut.toFixed(2) +
+                    "%"); // Menampilkan hasil dengan dua desimal dan tambahkan simbol persen
+            } else {
+                // Jika nilai akhir nol, tampilkan pesan atau ambil tindakan lain
+                $("#susut").val("Tidak dapat melakukan pembagian oleh nol");
+            }
+        });
 
         let dataArray = [];
         // ADD ROW
@@ -314,8 +358,8 @@
             let kadar_air = $('#kadar_air').val();
             let pcs_kirim = $('#pcs_kirim').val();
             let berat_kirim = $('#berat_kirim').val();
-            let operator_sikat_dan_kompresor = $('#operator_sikat_dan_kompresor').val();
-            let operator_flek_dan_poles = $('#operator_flex_dan_poles').val();
+            let operator_sikat_kompresor = $('#operator_sikat_dan_kompresor').val();
+            let operator_flek_poles = $('#operator_flex_dan_poles').val();
             let operator_flek_cutter = $('#operator_cutter').val();
             let kuningan = $('#kuningan').val();
             let sterofoam = $('#Sterofoam').val();
@@ -324,9 +368,11 @@
             let rontokan_bahan = $('#rontokan_bahan').val();
             let rontokan_serabut = $('#rontokan_serabut').val();
             let ws_0_0_0 = $('#ws').val();
-            let berat_precleaning = $('#berat_precleaning').val();
+            let berat_pre_cleaning = $('#berat_precleaning').val();
             let pcs_pre_cleaning = $('#pcs').val();
             let susut = $('#susut').val();
+            let susutTabel = parseFloat(susut).toFixed(2);
+            susutTabel = susutTabel.replace('.', '');
 
             // Validasi input (sesuai kebutuhan)
             if (!nomor_job || !id_box_grading_kasar) {
@@ -350,8 +396,8 @@
                 '<td class="text-center">' + tujuan_kirim + '</td>' +
                 '<td class="text-center">' + modal + '</td>' +
                 '<td class="text-center">' + total_modal + '</td>' +
-                '<td class="text-center">' + operator_sikat_dan_kompresor + '</td>' +
-                '<td class="text-center">' + operator_flek_dan_poles + '</td>' +
+                '<td class="text-center">' + operator_sikat_kompresor + '</td>' +
+                '<td class="text-center">' + operator_flek_poles + '</td>' +
                 '<td class="text-center">' + operator_flek_cutter + '</td>' +
                 '<td class="text-center">' + kuningan + '</td>' +
                 '<td class="text-center">' + sterofoam + '</td>' +
@@ -360,14 +406,40 @@
                 '<td class="text-center">' + rontokan_bahan + '</td>' +
                 '<td class="text-center">' + rontokan_serabut + '</td>' +
                 '<td class="text-center">' + ws_0_0_0 + '</td>' +
-                '<td class="text-center">' + berat_precleaning + '</td>' +
+                '<td class="text-center">' + berat_pre_cleaning + '</td>' +
                 '<td class="text-center">' + pcs_pre_cleaning + '</td>' +
-                '<td class="text-center">' + susut + '</td>' +
+                '<td class="text-center">' + susutTabel + '</td>' +
                 // '<td class="text-center">' + "sisa_berat" + '</td>' +
                 '<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
                 '</tr>';
             // Tambahkan Kedalam Tabel
             $('#dataTable tbody').append(newRow);
+
+            let totalPcsKirim = 0;
+            $('#dataTable tbody tr').each(function() {
+                let pcsKirim = parseFloat($(this).find('td:eq(11)')
+                    .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
+                if (!isNaN(pcsKirim)) {
+                    totalPcsKirim += pcsKirim;
+                }
+            });
+
+            $('#total_pcs').val(totalPcsKirim);
+
+            let totalBeratKirim = 0;
+            $('#dataTable tbody tr').each(function() {
+                let beratKirim = parseFloat($(this).find('td:eq(10)')
+                    .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
+                if (!isNaN(beratKirim)) {
+                    totalBeratKirim += beratKirim;
+                }
+            });
+
+            $('#total_berat').val(totalBeratKirim);
+
+            let jumlahBaris = $('#dataTable tbody tr').length;
+            // Tampilkan Jumlah Baris di Input dengan ID "total_box"
+            $('#total_box').val(jumlahBaris);
 
             dataArray.push({
                 nomor_job: nomor_job,
@@ -385,8 +457,8 @@
                 tujuan_kirim: tujuan_kirim,
                 modal: modal,
                 total_modal: total_modal,
-                operator_sikat_dan_kompresor: operator_sikat_dan_kompresor,
-                operator_flek_dan_poles: operator_flek_dan_poles,
+                operator_sikat_kompresor: operator_sikat_kompresor,
+                operator_flek_poles: operator_flek_poles,
                 operator_flek_cutter: operator_flek_cutter,
                 kuningan: kuningan,
                 sterofoam: sterofoam,
@@ -395,9 +467,9 @@
                 rontokan_bahan: rontokan_bahan,
                 rontokan_serabut: rontokan_serabut,
                 ws_0_0_0: ws_0_0_0,
-                berat_precleaning: berat_precleaning,
+                berat_pre_cleaning: berat_pre_cleaning,
                 pcs_pre_cleaning: pcs_pre_cleaning,
-                susut: susut,
+                susutTabel: susutTabel,
             });
 
             // Mengosongkan nilai dropdown nomor_job
@@ -413,9 +485,33 @@
             // Hapus baris dari dataArray berdasarkan indeks baris di tabel
             let rowIndex = row.index();
             dataArray.splice(rowIndex, 1);
-
             // Hapus baris dari tabel
             row.remove();
+
+            let totalBeratKirim = 0;
+            $('#dataTable tbody tr').each(function() {
+                let beratKirim = parseFloat($(this).find('td:eq(10)')
+                    .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
+                if (!isNaN(beratKirim)) {
+                    totalBeratKirim += beratKirim;
+                }
+            });
+
+            $('#total_berat').val(totalBeratKirim);
+
+            let totalPcsKirim = 0;
+            $('#dataTable tbody tr').each(function() {
+                let pcsKirim = parseFloat($(this).find('td:eq(11)')
+                    .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
+                if (!isNaN(pcsKirim)) {
+                    totalPcsKirim += pcsKirim;
+                }
+            });
+
+            $('#total_pcs').val(totalPcsKirim);
+
+            let jumlahBaris = $('#dataTable tbody tr').length;
+            $('#total_box').val(jumlahBaris);
         }
 
         function simpanData() {

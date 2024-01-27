@@ -27,6 +27,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Doc NO</th>
                                         <th scope="col" class="text-center">Nomor Job</th>
                                         <th scope="col" class="text-center">ID Box Grading Kasar</th>
                                         <th scope="col" class="text-center">Nomor BSTB</th>
@@ -35,57 +36,98 @@
                                         <th scope="col" class="text-center">Nomor Nota Internal</th>
                                         <th scope="col" class="text-center">Nama Supplier</th>
                                         <th scope="col" class="text-center">Jenis Raw Material</th>
-                                        <th scope="col" class="text-center">Kadar Air</th>
+                                        {{-- <th scope="col" class="text-center">Kadar Air</th> --}}
                                         <th scope="col" class="text-center">Jenis Kirim</th>
                                         <th scope="col" class="text-center">Berat Kirim</th>
                                         <th scope="col" class="text-center">Pcs Kirim</th>
-                                        <th scope="col" class="text-center">Tujuan Kirim</th>
+                                        {{-- <th scope="col" class="text-center">Tujuan Kirim</th> --}}
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
-                                        <th scope="col" class="text-center">Sisa Berat</th>
+                                        {{-- <th scope="col" class="text-center">Sisa Berat</th> --}}
+                                        {{-- <th scope="col" class="text-center">Sisa Berat</th> --}}
+                                        <th scope="col" class="text-center">Operator Flek & Kompresor</th>
+                                        <th scope="col" class="text-center">Operator Flek & Poles</th>
+                                        <th scope="col" class="text-center">Operator Cutter</th>
+                                        <th scope="col" class="text-center">Kuningan</th>
+                                        <th scope="col" class="text-center">Sterofoam</th>
+                                        <th scope="col" class="text-center">Karat</th>
+                                        <th scope="col" class="text-center">Rontokan Fisik</th>
+                                        <th scope="col" class="text-center">Rontokan Bahan</th>
+                                        <th scope="col" class="text-center">Rontokan Serabut</th>
+                                        <th scope="col" class="text-center">WS-0-0-0</th>
+                                        <th scope="col" class="text-center">Berat Pre Cleaning</th>
+                                        <th scope="col" class="text-center">Pcs</th>
+                                        <th scope="col" class="text-center">Susut</th>
+                                        <th scope="col" class="text-center">User Created</th>
+                                        <th scope="col" class="text-center">User Updated</th>
+                                        <th scope="col" class="text-center">Created At</th>
+                                        <th scope="col" class="text-center">Updated At</th>
+                                        <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <!-- <td class="text-center">
-                                                                                    <div class="form-button-action">
-                                                                                        {{-- <form style="display: flex" id="deleteForm{{ $GradingKH->id }}" --}}
-                                                                                            action=""
-                                                                                            method="POST">
-                                                                                            <a href=""
-                                                                                                class="btn btn-link" title="View"
-                                                                                                data-original-title="View">
-                                                                                                <i class="bi bi-eye"></i>
-                                                                                            </a>
-                                                                                            <button type="button" class="btn btn-link"
-                                                                                                data-original-title="Remove"
-                                                                                                onclick="">
-                                                                                                <i class="bi bi-trash3 text-danger"></i>
-                                                                                            </button>
-                                                                                        </form>
-                                                                                    </div>
-                                                                                </td> -->
-                                    </tr>
-                                    <div class="alert alert-danger">
-                                        Data Pre Cleaning Output belum Tersedia.
-                                    </div>
+                                    @forelse ($pre_cleaning_outputs as $PCO)
+                                        <tr>
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $PCO->doc_no }}</td>
+                                            <td class="text-center">{{ $PCO->nomor_job }}</td>
+                                            <td class="text-center">{{ $PCO->id_box_grading_kasar }}</td>
+                                            <td class="text-center">{{ $PCO->nomor_bstb }}</td>
+                                            <td class="text-center">{{ $PCO->id_box_raw_material }}</td>
+                                            <td class="text-center">{{ $PCO->nomor_batch }}</td>
+                                            <td class="text-center">{{ $PCO->nomor_nota_internal }}</td>
+                                            <td class="text-center">{{ $PCO->nama_supplier }}</td>
+                                            <td class="text-center">{{ $PCO->jenis_raw_material }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->kadar_air }}</td> --}}
+                                            <td class="text-center">{{ $PCO->jenis_kirim }}</td>
+                                            <td class="text-center">{{ $PCO->berat_kirim }}</td>
+                                            <td class="text-center">{{ $PCO->pcs_kirim }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->tujuan_kirim }}</td> --}}
+                                            <td class="text-center">{{ $PCO->modal }}</td>
+                                            <td class="text-center">{{ $PCO->total_modal }}</td>
+                                            <td class="text-center">{{ $PCO->operator_sikat_kompresor }}</td>
+                                            <td class="text-center">{{ $PCO->operator_flek_poles }}</td>
+                                            <td class="text-center">{{ $PCO->operator_flek_cutter }}</td>
+                                            <td class="text-center">{{ $PCO->kuningan }}</td>
+                                            <td class="text-center">{{ $PCO->sterofoam }}</td>
+                                            <td class="text-center">{{ $PCO->karat }}</td>
+                                            <td class="text-center">{{ $PCO->rontokan_fisik }}</td>
+                                            <td class="text-center">{{ $PCO->rontokan_bahan }}</td>
+                                            <td class="text-center">{{ $PCO->rontokan_serabut }}</td>
+                                            <td class="text-center">{{ $PCO->ws_0_0_0 }}</td>
+                                            <td class="text-center">{{ $PCO->berat_pre_cleaning }}</td>
+                                            <td class="text-center">{{ $PCO->pcs_pre_cleaning }}</td>
+                                            <td class="text-center">{{ $PCO->susut }}</td>
+                                            <td class="text-center">{{ $PCO->user_created }}</td>
+                                            <td class="text-center">{{ $PCO->user_updated }}</td>
+                                            <td class="text-center">{{ $PCO->created_at }}</td>
+                                            <td class="text-center">{{ $PCO->updated_at }}</td>
+                                            <td class="text-center">
+                                                <div class="form-button-action">
+                                                    <form style="display: flex" id="deleteForm{{ $PCO->id }}"
+                                                        action="{{ route('pre_cleaning_output.destroy', $PCO->id) }}"
+                                                        method="POST">
+                                                        <a href="{{ route('pre_cleaning_output.show', $PCO->id) }}"
+                                                            class="btn btn-link" title="View"
+                                                            data-original-title="View">
+                                                            <i class="bi bi-eye"></i>
+                                                        </a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-link"
+                                                            data-original-title="Remove"
+                                                            onclick="confirmDelete({{ $PCO->id }})">
+                                                            <i class="bi bi-trash3 text-danger"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <div class="alert alert-danger">
+                                            Data Master Supplier Raw Material belum Tersedia.
+                                        </div>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
