@@ -24,7 +24,7 @@ class StockTransitRawMaterialFactory extends Factory
             'id_box' => $this->faker->unique()->randomNumber(3),
             'nama_supplier' => $this->faker->unique()->company,
             'jenis' => $this->faker->word,
-            'nomor_nota_internal' => $this->faker->unique()->text(10),
+            'nomor_nota_internal' => $this->faker->unique()->randomNumber(7),
             'berat' => $this->faker->randomFloat(2, 1, 100),
             'kadar_air' => $this->faker->randomFloat(2, 1, 100),
             'tujuan_kirim' => $this->faker->sentence,

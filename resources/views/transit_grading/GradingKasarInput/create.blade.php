@@ -372,7 +372,6 @@
             $('#selisih_berat').val('');
             $('#kadar_air').val('');
             $('#no_nota').val('');
-            $('#tgl_add').val('');
             $('#nomor_grading').val('');
             $('#modal').val('');
             $('#total_modal').val('');
