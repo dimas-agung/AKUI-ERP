@@ -193,6 +193,20 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputContro
     Route::get('/PrmRawMaterialOutput/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
 });
 
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
+    Route::get('/PreCleaningInput', 'index')->name('PreCleaningInput.index');
+    Route::get('/PreCleaningInput/create', 'create')->name('PreCleaningInput.create');
+    Route::post('/PreCleaningInput/store', 'store')->name('PreCleaningInput.store');
+    Route::post('/PreCleaningInput/sendData', 'sendData')->name('PreCleaningInput.sendData');
+    Route::delete('/PreCleaningInput/destroy/{id}', 'destroy')->name('PreCleaningInput.destroy');
+    Route::get('/PreCleaningInput/get_data_id_box', 'set')->name('PreCleaningInput.set');
+    Route::get('/PreCleaningInput/get_pcc', 'setpcc')->name('PreCleaningInput.setpcc');
+});
+
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::class)->group(function () {
+    Route::get('/pre_cleaning_stock', 'index')->name('pre_cleaning_stock.index');
+});
+
 Route::controller(App\Http\Controllers\PreCleaning\PreCleaningOutputController::class)->group(function () {
     Route::get('/pre_cleaning_output', 'index')->name('pre_cleaning_output.index');
     Route::get('/pre_cleaning_output/create', 'create')->name('pre_cleaning_output.create');
@@ -203,6 +217,16 @@ Route::controller(App\Http\Controllers\PreCleaning\PreCleaningOutputController::
     Route::delete('/pre_cleaning_output/destroy/{id}', 'destroy')->name('pre_cleaning_output.destroy');
     Route::get('/pre_cleaning_output/get_data_nomor_job', 'set')->name('preCleaningOutput.set');
     Route::post('/pre_cleaning_output/simpanData', 'simpanData')->name('pre_cleaning_output.simpanData');
+});
+
+Route::controller(App\Http\Controllers\PreCleaning\TransitPreCleaningStockController::class)->group(function () {
+    Route::get('/transit_pre_cleaning_stock', 'index')->name('transit_pre_cleaning_stock.index');
+    Route::get('/transit_pre_cleaning_stock/create', 'create')->name('transit_pre_cleaning_stock.create');
+    Route::post('/transit_pre_cleaning_stock/store', 'store')->name('transit_pre_cleaning_stock.store');
+    Route::get('/transit_pre_cleaning_stock/show/{id}', 'show')->name('transit_pre_cleaning_stock.show');
+    Route::get('/transit_pre_cleaning_stock/edit/{id}', 'edit')->name('transit_pre_cleaning_stock.edit');
+    Route::put('/transit_pre_cleaning_stock/update/{id}', 'update')->name('transit_pre_cleaning_stock.update');
+    Route::delete('/transit_pre_cleaning_stock/destroy/{id}', 'destroy')->name('transit_pre_cleaning_stock.destroy');
 });
 
 Auth::routes();

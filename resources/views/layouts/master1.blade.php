@@ -310,7 +310,7 @@
                             </ul>
                         </li>
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'pre_cleaning_output') ? 'active' : '' }}">
+                            class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'pre_cleaning_output', 'transit_pre_cleaning_stock') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
                                 <span>Pre Cleaning</span>
@@ -323,7 +323,21 @@
                                 </li>
                                 <li class="submenu-item  {{ Request::is('pre_cleaning_output') ? 'active' : '' }} ">
                                     <a href="{{ url('/pre_cleaning_output') }}" class="submenu-link">Pre
+                                        Cleaning<br>Input</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('pre_cleaning_stock') ? 'active' : '' }} ">
+                                    <a href="{{ url('/pre_cleaning_stock') }}" class="submenu-link">Pre
+                                        Cleaning<br>Stock</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('pre_cleaning_output') ? 'active' : '' }} ">
+                                    <a href="{{ url('/pre_cleaning_output') }}" class="submenu-link">Pre
                                         Cleaning<br>Output</a>
+                                </li>
+                                <li
+                                    class="submenu-item  {{ Request::is('transit_pre_cleaning_stock') ? 'active' : '' }} ">
+                                    <a href="{{ url('/transit_pre_cleaning_stock') }}" class="submenu-link">Transit
+                                        Pre
+                                        <br> Cleaning Stock</a>
                                 </li>
                             </ul>
                         </li>

@@ -7,6 +7,7 @@ use App\Http\Requests\PreCleaningOutputRequest;
 use App\Models\MasterOperator;
 use App\Models\PreCleaningOutput;
 use App\Models\PreCleaningStock;
+use App\Models\TransitPreCleaningStock;
 use App\Services\PreCleaningOutputService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -28,7 +29,7 @@ class PreCleaningOutputController extends Controller
     public function create()
     {
         $PreCleaningStock = PreCleaningStock::with('PreCleaningOutput')->get();
-        $PreCleaningOutput = PreCleaningOutput::with('PreCleaningStock')->get();
+        $PreCleaningOutput = PreCleaningOutput::with('PreCleaningStock')->whereRaw('berat_masuk - berat_keluar != 0');
         $MasterOperator = MasterOperator::with('PreCleaningOutput')->get();
         return view('pre_cleaning.pre_cleaning_output.create', [
             'pre_cleaning_outputs'      => $PreCleaningOutput,
@@ -40,9 +41,11 @@ class PreCleaningOutputController extends Controller
     public function set(Request $request)
     {
         $nomor_job = $request->nomor_job;
-        $data = PreCleaningStock::where('nomor_job', $nomor_job)->first();
+        $data = PreCleaningStock::where('nomor_job', $nomor_job)
+            ->whereRaw('berat_masuk - berat_keluar != 0') // Tambahkan kondisi ini
+            ->first();
         return $data;
-        // Kembalikan nomor batch sebagai respons
+        // Kembalikan nomor job sebagai respons
         return response()->json($data);
     }
 
@@ -66,7 +69,9 @@ class PreCleaningOutputController extends Controller
         try {
             // Temukan record berdasarkan ID
             $PreCleaningOutput = PreCleaningOutput::findOrFail($id);
-
+            // $TransitPreCleaningStock = TransitPreCleaningStock::findOrFail($id)
+            // Hapus semua item terkait
+            $PreCleaningOutput->TransitPreCleaningStock()->delete();
             // Hapus record utama
             $PreCleaningOutput->delete();
 

@@ -125,7 +125,7 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Master Supplier Raw Material belum Tersedia.
+                                            Data Pre Cleaning Output belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>

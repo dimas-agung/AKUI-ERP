@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\PreCleaningOutput;
 use App\Models\PreCleaningStock;
+use App\Models\TransitPreCleaningStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,40 +36,107 @@ class PreCleaningOutputService
         }
     }
 
-    private function createItem($dataArray)
+    private function createItem($item)
     {
         PreCleaningOutput::create([
             // 'doc_no'                         => $dataArray[0]->doc_no,
-            'nomor_job'                         => $dataArray->nomor_job,
-            'id_box_grading_kasar'              => $dataArray->id_box_grading_kasar,
-            'nomor_bstb'                        => $dataArray->nomor_bstb,
-            'id_box_raw_material'               => $dataArray->id_box_raw_material,
-            'nomor_batch'                       => $dataArray->nomor_batch,
-            'nomor_nota_internal'               => $dataArray->nomor_nota_internal,
-            'nama_supplier'                     => $dataArray->nama_supplier,
-            'jenis_raw_material'                => $dataArray->jenis_raw_material,
-            'jenis_kirim'                       => $dataArray->jenis_kirim,
-            'tujuan_kirim'                      => $dataArray->tujuan_kirim,
-            'modal'                             => $dataArray->modal,
-            'total_modal'                       => $dataArray->total_modal,
-            'kadar_air'                         => $dataArray->kadar_air,
-            'pcs_kirim'                         => $dataArray->pcs_kirim,
-            'berat_kirim'                       => $dataArray->berat_kirim,
-            'operator_sikat_kompresor'          => $dataArray->operator_sikat_kompresor,
-            'operator_flek_poles'               => $dataArray->operator_flek_poles,
-            'operator_flek_cutter'              => $dataArray->operator_flek_cutter,
-            'kuningan'                          => $dataArray->kuningan,
-            'sterofoam'                         => $dataArray->sterofoam,
-            'karat'                             => $dataArray->karat,
-            'rontokan_fisik'                    => $dataArray->rontokan_fisik,
-            'rontokan_bahan'                    => $dataArray->rontokan_bahan,
-            'rontokan_serabut'                  => $dataArray->rontokan_serabut,
-            'ws_0_0_0'                          => $dataArray->ws_0_0_0,
-            'berat_pre_cleaning'                => $dataArray->berat_pre_cleaning,
-            'pcs_pre_cleaning'                  => $dataArray->pcs_pre_cleaning,
-            'susut'                             => $dataArray->susutTabel,
-            'user_created'                      => $dataArray->user_created ?? 'Admin123',
-            'user_updated'                      => $dataArray->user_updated ?? 'Admin123',
+            'nomor_job'                         => $item->nomor_job,
+            'id_box_grading_kasar'              => $item->id_box_grading_kasar,
+            'nomor_bstb'                        => $item->nomor_bstb,
+            'id_box_raw_material'               => $item->id_box_raw_material,
+            'nomor_batch'                       => $item->nomor_batch,
+            'nomor_nota_internal'               => $item->nomor_nota_internal,
+            'nama_supplier'                     => $item->nama_supplier,
+            'jenis_raw_material'                => $item->jenis_raw_material,
+            'jenis_kirim'                       => $item->jenis_kirim,
+            'tujuan_kirim'                      => $item->tujuan_kirim,
+            'modal'                             => $item->modal,
+            'total_modal'                       => $item->total_modal,
+            'kadar_air'                         => $item->kadar_air,
+            'pcs_kirim'                         => $item->pcs_kirim,
+            'berat_kirim'                       => $item->berat_kirim,
+            'operator_sikat_kompresor'          => $item->operator_sikat_kompresor,
+            'operator_flek_poles'               => $item->operator_flek_poles,
+            'operator_flek_cutter'              => $item->operator_flek_cutter,
+            'kuningan'                          => $item->kuningan,
+            'sterofoam'                         => $item->sterofoam,
+            'karat'                             => $item->karat,
+            'rontokan_fisik'                    => $item->rontokan_fisik,
+            'rontokan_bahan'                    => $item->rontokan_bahan,
+            'rontokan_serabut'                  => $item->rontokan_serabut,
+            'ws_0_0_0'                          => $item->ws_0_0_0,
+            'berat_pre_cleaning'                => $item->berat_pre_cleaning,
+            'pcs_pre_cleaning'                  => $item->pcs_pre_cleaning,
+            'susut'                             => $item->susutTabel,
+            'user_created'                      => $item->user_created ?? 'Admin123',
+            'user_updated'                      => $item->user_updated ?? 'Admin123',
         ]);
+
+        // PrmRawMaterialStockHistory::create([
+        //     'id_box'        => $item->id_box,
+        //     'doc_no'        => $item->doc_no,
+        //     'berat_masuk'   => $item->berat_masu ?? 0,
+        //     'berat_keluar'  => $item->berat,
+        //     'sisa_berat'    => $item->selisih_berat,
+        //     'avg_kadar_air' => $item->kadar_air,
+        //     'modal'         => $item->modal,
+        //     'total_modal'   => $item->total_modal,
+        //     'keterangan'    => $item->keterangan_item,
+        //     'user_created'  => $item->user_created,
+        //     'user_updated'  => $item->user_updated ?? "There isn't any",
+        //     // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        // ]);
+
+        // Creat Transit Pre Cleaning Stock
+        $itemObject = (object)$item;
+        $existingItem = TransitPreCleaningStock::where('nomor_job', $itemObject->nomor_job)
+            ->first();
+        // return $existingItem
+
+        $dataToUpdate = [
+            'berat_kirim'               => $itemObject->berat_kirim,
+            'pcs_kirim'                 => $itemObject->pcs_kirim,
+            'modal'                     => $itemObject->modal,
+            'total_modal'               => $itemObject->total_modal,
+            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ];
+
+        if ($existingItem) {
+            // Ambil nilai terakhir berat_masuk dan berat_keluar
+            $lastBeratMasuk = $existingItem->berat_kirim;
+            // $lastBeratKeluar = $existingItem->berat_keluar;
+            $lastPcsKirim = $existingItem->pcs_kirim;
+
+            $tambahBeratMasuk = $lastBeratMasuk + $itemObject->berat_kirim;
+            $perbedaanBerat = $lastPcsKirim + $itemObject->pcs_kirim;
+            $totalModalBaru = $tambahBeratMasuk * $itemObject->modal;
+
+            $dataToUpdate['berat_kirim'] = $tambahBeratMasuk;
+            $dataToUpdate['pcs_kirim'] = $perbedaanBerat;
+            $dataToUpdate['total_modal'] = $totalModalBaru;
+            $existingItem->update($dataToUpdate);
+        } else {
+            // Jika item tidak ada, buat item baru
+            TransitPreCleaningStock::create(array_merge($dataToUpdate, [
+                'nomor_job'                 => $itemObject->nomor_job,
+                'id_box_grading_kasar'      => $itemObject->id_box_grading_kasar,
+                'nomor_bstb'                => $itemObject->nomor_bstb,
+                'nama_supplier'             => $itemObject->nama_supplier,
+                'nomor_nota_internal'       => $itemObject->nomor_nota_internal,
+                'id_box_raw_material'       => $itemObject->id_box_raw_material,
+                'jenis_raw_material'        => $itemObject->jenis_raw_material,
+                'jenis_kirim'               => $itemObject->jenis_kirim,
+                // 'berat_kirim'               => $itemObject->berat_kirim,
+                // 'pcs_kirim'                 => $itemObject->pcs_kirim,
+                'kadar_air'                 => $itemObject->kadar_air,
+                'tujuan_kirim'              => $itemObject->tujuan_kirim,
+                'nomor_grading'             => $itemObject->nomor_grading ?? "Belum Tersedia",
+                'modal'                     => $itemObject->modal,
+                // 'total_modal'               => $itemObject->total_modal,
+                'keterangan'                => $itemObject->keterangan ?? "Tes",
+                'user_created'              => $itemObject->user_created ?? "There isn't any",
+                'user_updated'              => $itemObject->user_updated ?? "There isn't any",
+            ]));
+        }
     }
 }

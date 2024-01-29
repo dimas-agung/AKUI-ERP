@@ -26,6 +26,7 @@
                             @endforeach
                         </select>
                     </div>
+                    {{-- <input type="hidden" id="sisa_berat"> --}}
                     {{-- <div class="col-md-4"> --}}
                     {{-- <label for="id_box_grading_kasar" class="form-label">ID Box Grading Kasar</label> --}}
                     <input type="hidden" class="form-control" id="id_box_grading_kasar" readonly>
@@ -244,9 +245,8 @@
     <script>
         // Nomor JOB
         $('#nomor_job').on('change', function() {
-            // Mengambil nilai id_box yang dipilih
             let selectedNomorJob = $(this).val();
-            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
+
             $.ajax({
                 url: `{{ route('preCleaningOutput.set') }}`,
                 method: 'GET',
@@ -255,27 +255,60 @@
                 },
                 success: function(response) {
                     console.log(response);
-                    // Mengatur nilai Nomor Batch sesuai dengan respons dari server
-                    $('#id_box_grading_kasar').val(response.id_box_grading_kasar);
-                    // $('#nomor_bstb').val(response.nomor_bstb);
-                    $('#id_box_raw_material').val(response.id_box_raw_material);
-                    $('#nomor_batch').val(response.nomor_batch);
-                    $('#nomor_nota_internal').val(response.nomor_nota_internal);
-                    $('#nama_supplier').val(response.nama_supplier);
-                    $('#jenis_raw_material').val(response.jenis_raw_material);
-                    $('#jenis_kirim').val(response.jenis_kirim);
-                    $('#tujuan_kirim').val(response.tujuan_kirim);
-                    $('#modal').val(response.modal);
-                    $('#total_modal').val(response.total_modal);
-                    $('#kadar_air').val(response.avg_kadar_air);
-                    $('#pcs_kirim').val(response.pcs_masuk);
-                    $('#berat_kirim').val(response.berat_masuk);
+
+                    // Menghitung berat_masuk - berat_keluar
+                    let sisaBerat = response.berat_masuk - response.berat_keluar;
+
+                    // Pemeriksaan jika sisaBerat tidak sama dengan 0
+                    if (sisaBerat !== 0) {
+                        // Menyimpan sisaBerat dalam variabel baru
+                        let sisaBeratFormatted = parseFloat(sisaBerat).toFixed(2);
+                        // let sisaBeratFormatted = sisaBerat;
+
+                        // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                        $('#id_box_grading_kasar').val(response.id_box_grading_kasar);
+                        $('#id_box_raw_material').val(response.id_box_raw_material);
+                        $('#nomor_batch').val(response.nomor_batch);
+                        $('#nomor_nota_internal').val(response.nomor_nota_internal);
+                        $('#nama_supplier').val(response.nama_supplier);
+                        $('#jenis_raw_material').val(response.jenis_raw_material);
+                        $('#jenis_kirim').val(response.jenis_kirim);
+                        $('#tujuan_kirim').val(response.tujuan_kirim);
+                        $('#modal').val(response.modal);
+                        $('#total_modal').val(response.total_modal);
+                        $('#kadar_air').val(response.avg_kadar_air);
+                        $('#pcs_kirim').val(response.pcs_masuk);
+                        $('#berat_kirim').val(response.berat_masuk);
+                        if (!isNaN(sisaBeratFormatted)) {
+                            $('#sisa_berat').val(sisaBeratFormatted);
+                        } else {
+                            // console.error('Nilai sisa berat tidak valid.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Sisa Berat Nomor Job Ini 0. Pilih nomor job lain.',
+                            });
+
+                        }
+                    } else {
+                        // Jika sisaBerat === 0, hapus opsi dan reset nilai input
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Berat masuk - berat keluar sama dengan 0. Pilih nomor job lain.',
+                        }).then(() => {
+                            // Reset nilai input
+                            $('#nomor_job').val('').trigger('change');
+                        });
+                    }
                 },
                 error: function(error) {
                     console.error('Error:', error);
                 }
             });
         });
+
+
         $(document).ready(function() {
             // Menangani perubahan pada dropdown nomor_job
             $('#nomor_job').on('change', function() {
@@ -373,6 +406,7 @@
             let susut = $('#susut').val();
             let susutTabel = parseFloat(susut).toFixed(2);
             susutTabel = susutTabel.replace('.', '');
+            susutTabel = susutTabel.padStart(4, '0');
 
             // Validasi input (sesuai kebutuhan)
             if (!nomor_job || !id_box_grading_kasar) {
