@@ -380,6 +380,7 @@
     <script src="{{ asset('assets/static/js/pages/datatables.js') }}"></script>
 
     <script>
+        // SweetAler
         function goBack() {
             window.history.back();
         }
@@ -395,6 +396,31 @@
                 timer: 2000 // Durasi tampilan SweetAlert dalam milidetik
             });
         @endif
+        // Dapatkan notifikasi dari session
+        var notification = @json(session('notification'));
+
+        // Cek apakah notifikasi ada
+        if (notification) {
+            // Gunakan SweetAlert untuk menampilkan notifikasi
+            Swal.fire({
+                icon: notification.type,
+                title: notification.title,
+                text: notification.text,
+            });
+        }
+
+        // allow Select2 Changes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi Choices pada semua elemen dengan class "choices"
+            const selectElements = document.querySelectorAll('.choices');
+
+            selectElements.forEach((select) => {
+                new Choices(select, {
+                    // ... Opsi lainnya ...
+                    allowHTML: true, // Atur allowHTML ke true untuk merender HTML
+                });
+            });
+        });
     </script>
     @yield('script')
 </body>

@@ -84,15 +84,13 @@
                                     <td class="text-center">{{ $item->user_updated }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
+                                            <!-- Ubah ID form dan fungsi onclick -->
                                             <form style="display: flex" id="deleteForm{{ $item->id }}"
                                                 action="{{ route('PrmRawMaterialOutput.destroy', $item->id) }}"
                                                 method="POST">
-                                                {{-- <a href="{{ route('PrmRawMaterialOutput.edit', $item->id) }}"
-                                                    class="btn btn-link btn-primary" title="Edit Task"
-                                                    data-original-title="Edit Task"><i class="bi bi-pencil-square"></i></a> --}}
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="btn btn-link btn-danger"
+                                                <button type="button" class="btn btn-link btn-danger delete-button"
                                                     data-original-title="Remove"
                                                     onclick="confirmDelete({{ $item->id }})">
                                                     <i class="bi bi-trash3 text-danger"></i>

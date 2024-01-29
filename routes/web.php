@@ -116,6 +116,7 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputContro
     Route::delete('/PrmRawMaterialOutput/destroyHead/{id}', 'destroyHead')->name('PrmRawMaterialOutput.destroyHead');
     Route::get('/PrmRawMaterialOutput/get_data_id_box', 'set')->name('PrmRawMaterialOutput.set');
     Route::get('/PrmRawMaterialOutput/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
+    Route::get('/getBerat/{id}', 'getBerat')->name('PrmRawMaterialOutput.getBerat');
 });
 Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputController::class)->group(function(){
     Route::get('/GradingKasarInput', 'index')->name('GradingKasarInput.index');
@@ -178,7 +179,7 @@ Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::c
     Route::get('/PreCleaningInput/create', 'create')->name('PreCleaningInput.create');
     Route::post('/PreCleaningInput/store', 'store')->name('PreCleaningInput.store');
     Route::post('/PreCleaningInput/sendData', 'sendData')->name('PreCleaningInput.sendData');
-    Route::delete('/PreCleaningInput/destroy/{id}', 'destroy')->name('PreCleaningInput.destroy');
+    Route::delete('/PreCleaningInput/destroy/{nomor_bstb}', 'destroy')->name('PreCleaningInput.destroy');
     Route::get('/PreCleaningInput/get_data_id_box', 'set')->name('PreCleaningInput.set');
     Route::get('/PreCleaningInput/get_pcc', 'setpcc')->name('PreCleaningInput.setpcc');
 });

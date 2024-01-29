@@ -53,15 +53,28 @@
                                                 @endphp
                                                 @foreach ($stockTGK as $post)
                                                     @if ($selectedNomorBSTB != $post->nomor_bstb)
-                                                        <option value="{{ $post->nomor_bstb }}">
-                                                            {{ old('nomor_bstb', $post->nomor_bstb) }}
-                                                        </option>
+                                                        @php
+                                                            $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
+                                                        @endphp
+                                                        @foreach ($stockTGK as $innerPost)
+                                                            @if ($innerPost->nomor_bstb == $post->nomor_bstb && $innerPost->berat_keluar > 0)
+                                                                @if (!$beratMasukShown)
+                                                                    <option value="{{ $innerPost->nomor_bstb }}">
+                                                                        {{ old('nomor_bstb', $innerPost->nomor_bstb) }}
+                                                                    </option>
+                                                                    @php
+                                                                        $beratMasukShown = true; // Set nilai variabel untuk menandai bahwa berat_masuk sudah ditampilkan
+                                                                    @endphp
+                                                                @endif
+                                                            @endif
+                                                        @endforeach
                                                         @php
                                                             $selectedNomorBSTB = $post->nomor_bstb; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
                                                         @endphp
                                                     @endif
                                                 @endforeach
                                             </select>
+
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -90,6 +103,7 @@
                                                             <th class="text-center">ID Box Grading Kasar</th>
                                                             <th class="text-center">Nomor Job</th>
                                                             <th class="text-center">Nomor Batch</th>
+                                                            <th class="text-center">Nomor nota internal</th>
                                                             <th class="text-center">Nama Supplier</th>
                                                             <th class="text-center">ID Box Raw Material</th>
                                                             <th class="text-center">Jenis Raw Material</th>
@@ -157,18 +171,18 @@
                             newRow.append('<td>' + rowData.nomor_job + '</td>');
                             newRow.append('<td>' + rowData.id_box_grading_kasar + '</td>');
                             newRow.append('<td>' + rowData.nomor_batch + '</td>');
+                            newRow.append('<td>' + rowData.nomor_nota_internal + '</td>');
                             newRow.append('<td>' + rowData.nama_supplier + '</td>');
                             newRow.append('<td>' + rowData.id_box_raw_material + '</td>');
                             newRow.append('<td>' + rowData.jenis_raw_material + '</td>');
-                            newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
                             newRow.append('<td>' + rowData.jenis_grading + '</td>');
                             newRow.append('<td>' + rowData.berat_keluar + '</td>');
                             newRow.append('<td>' + rowData.pcs_keluar + '</td>');
                             newRow.append('<td>' + rowData.avg_kadar_air + '</td>');
+                            newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
                             newRow.append('<td>' + rowData.nomor_grading + '</td>');
                             newRow.append('<td>' + rowData.modal + '</td>');
                             newRow.append('<td>' + rowData.total_modal + '</td>');
-                            newRow.append('<td>' + rowData.nomor_nota_internal + '</td>');
                             // Lanjutkan dengan kolom-kolom lain sesuai kebutuhan
 
                             // Tambahkan baris ke dalam tabel
