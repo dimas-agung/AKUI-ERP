@@ -1,5 +1,7 @@
 <?php
 namespace App\Services;
+
+use App\Models\GradingKasarHasil;
 use App\Models\GradingKasarOutput;
 use App\Models\GradingKasarStock;
 use App\Models\StockTransitGradingKasar;
@@ -62,31 +64,6 @@ class GradingKasarOutputService
             'user_updated'      => $item->user_updated ?? "There isn't any",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
-
-        // StockTransitGradingKasar::create([
-        //     'nomor_bstb'            => $item->nomor_bstb,
-        //     'id_box_grading_kasar'  => $item->id_box_grading_kasar,
-        //     'nomor_batch'           => $item->nomor_batch,
-        //     'nomor_job'             => $item->nomor_job,
-        //     'nama_supplier'         => $item->nama_supplier,
-        //     'nomor_nota_internal'   => $item->nomor_nota_internal,
-        //     'id_box_raw_material'   => $item->id_box_raw_material,
-        //     'jenis_raw_material'    => $item->jenis_raw_material,
-        //     'jenis_grading'         => $item->jenis_grading,
-        //     'berat_keluar'          => $item->berat_keluar,
-        //     'pcs_keluar'            => $item->pcs_keluar,
-        //     'avg_kadar_air'         => $item->avg_kadar_air,
-        //     'tujuan_kirim'      => $item->tujuan_kirim,
-        //     'nomor_grading'     => $item->nomor_grading,
-        //     'biaya_produksi'    => $item->biaya_produksi,
-        //     'modal'             => $item->modal,
-        //     'total_modal'       => $item->total_modal,
-        //     'fix_total_modal'   => $item->fix_total_modal,
-        //     'keterangan'        => $item->keterangan,
-        //     'user_created'      => $item->user_created,
-        //     'user_updated'      => $item->user_updated ?? "There isn't any",
-        // // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-        // ]);
 
         // Creat Prm Raw Material Stock
         $itemObject = (object)$item;
@@ -190,6 +167,21 @@ class GradingKasarOutputService
             'keterangan'                        => $itemObject->keterangan,
             'user_created'                      => $itemObject->user_created ?? 'Admin',
             ]));
+        }
+
+
+        $itemObject = (object) $item;
+        $existingItem = GradingKasarHasil::where('nama_supplier', $itemObject->nama_supplier)
+            ->where('nomor_batch', $itemObject->nomor_batch)
+            ->first();
+
+        $dataToUpdate = [
+            'status'                => $itemObject->status ?? 0,
+        ];
+
+        if ($existingItem) {
+            // Perbarui data
+            $existingItem->update($dataToUpdate);
         }
     }
 }

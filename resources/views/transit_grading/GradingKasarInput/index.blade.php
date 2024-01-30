@@ -75,17 +75,28 @@
                                     {{-- <td class="text-center">{{ $item->user_updated }}</td> --}}
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                action="{{ route('GradingKasarInput.destroy', $item->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-link btn-danger"
-                                                    data-original-title="Remove"
-                                                    onclick="confirmDelete({{ $item->id }})">
-                                                    <i class="bi bi-trash3 text-danger"></i>
-                                                </button>
-                                            </form>
+                                            @php
+                                                $gradingKasarHasilCount = $GradingKH
+                                                    ? $GradingKH
+                                                        ->where('id_box_raw_material', $item->id_box)
+                                                        ->where('nomor_grading', $item->nomor_grading)
+                                                        ->count()
+                                                    : 0;
+                                            @endphp
+
+                                            @if ($gradingKasarHasilCount === 0)
+                                                <form style="display: flex" id="deleteForm{{ $item->id }}"
+                                                    action="{{ route('GradingKasarInput.destroy', $item->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-link btn-danger"
+                                                        data-original-title="Remove"
+                                                        onclick="confirmDelete({{ $item->id }})">
+                                                        <i class="bi bi-trash3 text-danger"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

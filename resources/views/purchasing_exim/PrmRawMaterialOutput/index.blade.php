@@ -28,6 +28,7 @@
                                 <th class="text-center">Nomor Batch</th>
                                 <th class="text-center">Id Box</th>
                                 <th class="text-center">Nama Supplier</th>
+                                <th class="text-center">Status</th>
                                 <th class="text-center">Jenis</th>
                                 <th class="text-center">Berat</th>
                                 <th class="text-center">Kadar Air</th>
@@ -38,7 +39,6 @@
                                 <th class="text-center">Total Modal</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
-                                <th class="text-center" scope="col">User Updated</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -49,6 +49,7 @@
                             <th class="text-center">Nomor Batch</th>
                             <th class="text-center">Id Box</th>
                             <th class="text-center">Nama Supplier</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Jenis</th>
                             <th class="text-center">Berat</th>
                             <th class="text-center">Kadar Air</th>
@@ -59,7 +60,6 @@
                             <th class="text-center">Total Modal</th>
                             <th class="text-center">Keterangan</th>
                             <th class="text-center">NIP Admin</th>
-                            <th class="text-center">User Updated</th>
                             <th class="text-center">Action</th>
                         </tfoot>
                         <tbody>
@@ -71,6 +71,14 @@
                                     <td class="text-center">{{ $item->nomor_batch }}</td>
                                     <td class="text-center">{{ $item->id_box }}</td>
                                     <td class="text-center">{{ $item->nama_supplier }}</td>
+                                    <td class="text-center">
+                                        @if ($item->status == 1)
+                                            <span>Aktif</span>
+                                        @elseif($item->status == 0)
+                                            <span class="badge badge-secondary"
+                                                style="text-shadow: 1px 1px 6px #000000;">Tidak Aktif</span>
+                                        @endif
+                                    </td>
                                     <td class="text-center">{{ $item->jenis }}</td>
                                     <td class="text-center">{{ $item->berat }}</td>
                                     <td class="text-center">{{ $item->kadar_air }}</td>
@@ -81,21 +89,21 @@
                                     <td class="text-center">{{ $item->total_modal }}</td>
                                     <td class="text-center">{{ $item->keterangan_item }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
-                                    <td class="text-center">{{ $item->user_updated }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <!-- Ubah ID form dan fungsi onclick -->
-                                            <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                action="{{ route('PrmRawMaterialOutput.destroy', $item->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-link btn-danger delete-button"
-                                                    data-original-title="Remove"
-                                                    onclick="confirmDelete({{ $item->id }})">
-                                                    <i class="bi bi-trash3 text-danger"></i>
-                                                </button>
-                                            </form>
+                                            @if ($item->status == 1)
+                                                <form style="display: flex" id="deleteForm{{ $item->id }}"
+                                                    action="{{ route('PrmRawMaterialOutput.destroy', $item->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-link btn-danger delete-button"
+                                                        data-original-title="Remove"
+                                                        onclick="confirmDelete({{ $item->id }})">
+                                                        <i class="bi bi-trash3 text-danger"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

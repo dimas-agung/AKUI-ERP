@@ -64,12 +64,27 @@
                                     <div class="form-group">
                                         <label>No BSTB</label>
                                         <select id="nomor_bstb" class="choices form-select" name="nomor_bstb"
-                                            data-placeholder="Pilih No BSTB">
-                                            <option value="">Pilih No BSTB</option>
+                                            data-placeholder="Pilih Nomor Job">
+                                            <option value="">Pilih Nomor BSTB</option>
                                             @foreach ($stockTGK as $post)
-                                                <option value="{{ $post->nomor_bstb }}"
-                                                    {{ old('nomor_bstb', $post->nomor_bstb) == 0 ? 'disabled' : '' }}>
-                                                    {{ old('nomor_bstb', $post->nomor_bstb) }}</option>
+                                                @php
+                                                    $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
+                                                @endphp
+                                                @foreach ($stockTGK as $innerPost)
+                                                    @if ($innerPost->nomor_bstb == $post->nomor_bstb && $innerPost->berat > 0)
+                                                        @if (!$beratMasukShown)
+                                                            <option value="{{ $innerPost->nomor_bstb }}">
+                                                                {{ old('nomor_bstb', $innerPost->nomor_bstb) }}
+                                                            </option>
+                                                            @php
+                                                                $beratMasukShown = true; // Set nilai variabel untuk menandai bahwa berat_masuk sudah ditampilkan
+                                                            @endphp
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                                @php
+                                                    $selectedNomorBSTB = $post->nomor_bstb; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
+                                                @endphp
                                             @endforeach
                                         </select>
                                     </div>
@@ -307,6 +322,8 @@
 
         function addRow() {
             // Mengambil nilai dari input
+            var tgl_add = $('#tgl_add').val();
+            var plant = $('#plant').val();
             var nomor_bstb = $('#nomor_bstb').val();
             var nomor_batch = $('#nomor_batch').val();
             var id_box = $('#id_box').val();
@@ -318,16 +335,33 @@
             var modal = $('#modal').val();
             var total_modal = $('#total_modal').val();
             var keterangan = $('#keterangan').val();
-            var user_created = $('#kadar_air').val();
+            var user_created = $('#user_created').val();
             var nomor_nota_internal = $('#no_nota').val();
 
             // Memanggil fungsi generateNomorGrading untuk mendapatkan nomor_grading
             var nomor_grading = generateNomorGrading();
 
 
-            // Validasi input (sesuai kebutuhan)
-            if (!id_box || !nomor_batch) {
-                alert('ID and nomor_batch are required.');
+            // Inisialisasi array untuk menyimpan field yang belum terisi
+            let fieldsNotFilled = [];
+            // Periksa setiap field
+            if (!nomor_bstb) fieldsNotFilled.push('Nomor BSTB');
+            if (!nama_supplier) fieldsNotFilled.push('Nama Supllier');
+            if (!tgl_add) fieldsNotFilled.push('Tanggal Add');
+            if (!plant) fieldsNotFilled.push('Plant');
+            if (!user_created) fieldsNotFilled.push('NIP Admin');
+            if (!keterangan) fieldsNotFilled.push('Keterangan');
+
+            // Cek apakah ada field yang belum terisi
+            if (fieldsNotFilled.length > 0) {
+                // Membuat pesan teks yang mencantumkan field yang belum terisi
+                let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
+
+                Swal.fire({
+                    title: 'Innalillahi!',
+                    text: message,
+                    icon: 'warning'
+                });
                 return;
             }
 

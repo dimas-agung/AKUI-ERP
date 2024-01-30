@@ -4,6 +4,7 @@ namespace App\Http\Controllers\TransitGradingKasar;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GradingKasarInputRequest;
+use App\Models\GradingKasarHasil;
 use App\Models\GradingKasarInput;
 use App\Models\StockTransitRawMaterial;
 use App\Models\PrmRawMaterialOutputItem;
@@ -21,11 +22,13 @@ class GradingKasarInputController extends Controller
     public function index(){
         $i =1;
         $GradingKI = GradingKasarInput::with('StockTransitRawMaterial')->get();
-        $stockTGK = StockTransitRawMaterial::with('GradingKasarInput')->get();
+        $GradingKH = GradingKasarHasil::with('GradingKasarInput')->first();
+        // return $GradingKH;
 
         // return $GradingKI;
         return response()->view('transit_grading.GradingKasarInput.index', [
             'GradingKI' => $GradingKI,
+            'GradingKH' => $GradingKH,
             'i' => $i,
         ]);
     }
@@ -106,17 +109,6 @@ class GradingKasarInputController extends Controller
     /**
      * destroy
      */
-    // public function destroy($id): RedirectResponse
-    // {
-    //     //get post by ID
-    //     $GradingKI = GradingKasarInput::findOrFail($id);
-
-    //     //delete post
-    //     $GradingKI->delete();
-
-    //     //redirect to index
-    //     return redirect()->route('GradingKasarInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
-    // }
     public function destroy($id): RedirectResponse {
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
@@ -125,6 +117,21 @@ class GradingKasarInputController extends Controller
             // Ambil data GradingKasarInput yang akan dihapus
             $gradingKI = GradingKasarInput::findOrFail($id);
 
+             // Periksa apakah nomor_bstb sudah ada di GradingKasarHasil
+            $gradingKasarHasil = GradingKasarHasil::where('id_box_raw_material', $gradingKI->id_box)->first();
+            if ($gradingKasarHasil) {
+                // Rollback transaksi jika nomor_bstb sudah ada di GradingKasarHasil
+                DB::rollback();
+                // return redirect()->route('GradingKasarInput.index')->with(['error' => 'Nomor BSTB sudah berada di GradingKasarHasil. Data tidak dapat dihapus.']);
+                return redirect()->route('GradingKasarInput.index')->with([
+                    'success' => false,
+                    'notification' => [
+                        'type' => 'error',
+                        'title' => 'Gagal Menghapus Data',
+                        'text' => 'Data sudah berada di Grading Kasar Hasil. Data tidak dapat dihapus.'
+                    ]
+                ]);
+            }
             // Ambil data StockTransitRawMaterial berdasarkan nomor_bstb
             $stockPrmRawMaterial = StockTransitRawMaterial::where('nomor_bstb', '=', $gradingKI->nomor_bstb)->first();
 

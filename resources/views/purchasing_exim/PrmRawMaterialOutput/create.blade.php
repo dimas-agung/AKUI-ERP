@@ -577,12 +577,25 @@
             var user_created = $('#user_created').val();
             var nomor_nota_internal = $('#nomor_nota_internal').val();
 
-            // Validasi input (sesuai kebutuhan)
-            if (!id_box || !nomor_batch || !nama_supplier || !jenis || !berat_masuk || !berat || !selisih_berat || !
-                kadar_air || !tujuan_kirim || !letak_tujuan || !inisial_tujuan || !modal || !total_modal || !user_created) {
+
+            // Inisialisasi array untuk menyimpan field yang belum terisi
+            let fieldsNotFilled = [];
+            // Periksa setiap field
+            if (!id_box) fieldsNotFilled.push('ID Box');
+            if (!nama_supplier) fieldsNotFilled.push('Nama Supllier');
+            if (!tujuan_kirim) fieldsNotFilled.push('Tujuan Kirim');
+            if (!letak_tujuan) fieldsNotFilled.push('Inisial Kirim');
+            if (!user_created) fieldsNotFilled.push('NIP Admin');
+            if (!berat || berat <= 0) fieldsNotFilled.push('Berat Keluar');
+
+            // Cek apakah ada field yang belum terisi
+            if (fieldsNotFilled.length > 0) {
+                // Membuat pesan teks yang mencantumkan field yang belum terisi
+                let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
+
                 Swal.fire({
                     title: 'Innalillahi!',
-                    text: 'Data belum di inputkan semuanya, Silakan coba lagi.',
+                    text: message,
                     icon: 'warning'
                 });
                 return;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\PreCleaning;
 
+use App\Models\GradingKasarOutput;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Models\PreCleaningInput;
@@ -138,6 +139,22 @@ class PreCleaningInputController extends Controller
                             'user_updated' => $itemObject->user_created ?? "There isn't any",
                         ]);
                     }
+
+
+                    $itemObject = (object) $mergedData;
+                    $existingItem = GradingKasarOutput::where('nama_supplier', $itemObject->nama_supplier)
+                        ->where('nomor_bstb', $itemObject->nomor_bstb)
+                        ->first();
+
+                    $dataToUpdate = [
+                        'status'                => $itemObject->status ?? 0,
+                    ];
+
+                    if ($existingItem) {
+                        // Perbarui data
+                        $existingItem->update($dataToUpdate);
+                    }
+
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollBack();

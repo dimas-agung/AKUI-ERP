@@ -15,6 +15,7 @@ class GradingKasarOutput extends Model
         'nomor_job',
         'nomor_batch',
         'nama_supplier',
+        'status',
         'id_box_raw_material',
         'jenis_raw_material',
         'jenis_grading',

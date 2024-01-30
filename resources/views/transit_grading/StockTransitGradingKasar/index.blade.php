@@ -67,35 +67,39 @@
                             {{-- <th class="text-center">Action</th> --}}
                         </tfoot>
                         <tbody>
-                            @forelse ($stockTGK as $post)
-                                <tr>
-                                    <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{!! $post->nomor_job !!}</td>
-                                    <td class="text-center">{!! $post->id_box_grading_kasar !!}</td>
-                                    <td class="text-center">{!! $post->nomor_bstb !!}</td>
-                                    <td class="text-center">{!! $post->nomor_batch !!}</td>
-                                    <td class="text-center">{!! $post->nama_supplier !!}</td>
-                                    <td class="text-center">{!! $post->id_box_raw_material !!}</td>
-                                    <td class="text-center">{!! $post->jenis_raw_material !!}</td>
-                                    <td class="text-center">{!! $post->jenis_grading !!}</td>
-                                    <td class="text-center">{!! $post->berat_keluar !!}</td>
-                                    <td class="text-center">{!! $post->pcs_keluar !!}</td>
-                                    <td class="text-center">{!! $post->avg_kadar_air !!}</td>
-                                    <td class="text-center">{!! $post->tujuan_kirim !!}</td>
-                                    <td class="text-center">{!! $post->nomor_grading !!}</td>
-                                    <td class="text-center">{!! $post->modal !!}</td>
-                                    <td class="text-center">{!! $post->total_modal !!}</td>
-                                    <td class="text-center">{!! $post->biaya_produksi !!}</td>
-                                    <td class="text-center">{!! $post->fix_total_modal !!}</td>
-                                    <td class="text-center">{!! $post->keterangan !!}</td>
-                                    <td class="text-center">{!! $post->user_created !!}</td>
-                                    <td class="text-center">{!! $post->user_updated !!}</td>
-                                </tr>
-                            @empty
-                                <div class="alert alert-danger">
-                                    Data Stock Transit Grading Kasar belum Tersedia.
-                                </div>
-                            @endforelse
+                            <?php $i = 1; ?>
+                            <?php foreach ($stockTGK as $post): ?>
+                            <?php if($post->berat_keluar != 0 || $post->total_modal != 0): ?>
+                            <tr>
+                                <td class="text-center">{{ $i++ }}</td>
+                                <td class="text-center">{!! $post->nomor_job !!}</td>
+                                <td class="text-center">{!! $post->id_box_grading_kasar !!}</td>
+                                <td class="text-center">{!! $post->nomor_bstb !!}</td>
+                                <td class="text-center">{!! $post->nomor_batch !!}</td>
+                                <td class="text-center">{!! $post->nama_supplier !!}</td>
+                                <td class="text-center">{!! $post->id_box_raw_material !!}</td>
+                                <td class="text-center">{!! $post->jenis_raw_material !!}</td>
+                                <td class="text-center">{!! $post->jenis_grading !!}</td>
+                                <td class="text-center">{!! $post->berat_keluar !!}</td>
+                                <td class="text-center">{!! $post->pcs_keluar !!}</td>
+                                <td class="text-center">{!! $post->avg_kadar_air !!}</td>
+                                <td class="text-center">{!! $post->tujuan_kirim !!}</td>
+                                <td class="text-center">{!! $post->nomor_grading !!}</td>
+                                <td class="text-center">{!! $post->modal !!}</td>
+                                <td class="text-center">{!! $post->total_modal !!}</td>
+                                <td class="text-center">{!! $post->biaya_produksi !!}</td>
+                                <td class="text-center">{!! $post->fix_total_modal !!}</td>
+                                <td class="text-center">{!! $post->keterangan !!}</td>
+                                <td class="text-center">{!! $post->user_created !!}</td>
+                                <td class="text-center">{!! $post->user_updated !!}</td>
+                            </tr>
+                            <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php if (empty($stockTGK)): ?>
+                            <div class="alert alert-danger">
+                                Data Stock Transit Grading Kasar belum Tersedia.
+                            </div>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

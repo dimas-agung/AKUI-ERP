@@ -28,6 +28,7 @@
                                 <th class="text-center" scope="col">Nomor Job</th>
                                 <th class="text-center" scope="col">Nomor Batch</th>
                                 <th class="text-center" scope="col">Nama Supplier</th>
+                                <th class="text-center" scope="col">Status</th>
                                 <th class="text-center" scope="col">ID Box Raw Material</th>
                                 <th class="text-center" scope="col">Jenis Raw Material</th>
                                 <th class="text-center" scope="col">Jenis Grading</th>
@@ -53,6 +54,7 @@
                             <th class="text-center">Nomor Job</th>
                             <th class="text-center">Nomor Batch</th>
                             <th class="text-center">Nama Supplier</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">ID Box Raw Material</th>
                             <th class="text-center">Jenis Raw Material</th>
                             <th class="text-center">Jenis Grading</th>
@@ -79,6 +81,14 @@
                                     <td class="text-center">{!! $item->nomor_job !!}</td>
                                     <td class="text-center">{!! $item->nomor_batch !!}</td>
                                     <td class="text-center">{!! $item->nama_supplier !!}</td>
+                                    <td class="text-center">
+                                        @if ($item->status == 1)
+                                            <span>Aktif</span>
+                                        @elseif($item->status == 0)
+                                            <span class="badge badge-secondary"
+                                                style="text-shadow: 1px 1px 6px #000000;">Tidak Aktif</span>
+                                        @endif
+                                    </td>
                                     <td class="text-center">{!! $item->id_box_raw_material !!}</td>
                                     <td class="text-center">{!! $item->jenis_raw_material !!}</td>
                                     <td class="text-center">{!! $item->jenis_grading !!}</td>
@@ -96,17 +106,19 @@
                                     <td class="text-center">{!! $item->user_updated !!}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                action="{{ route('GradingKasarOutput.destroy', $item->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-link btn-danger"
-                                                    data-original-title="Remove"
-                                                    onclick="confirmDelete({{ $item->id }})">
-                                                    <i class="bi bi-trash3 text-danger"></i>
-                                                </button>
-                                            </form>
+                                            @if ($item->status == 1)
+                                                <form style="display: flex" id="deleteForm{{ $item->id }}"
+                                                    action="{{ route('GradingKasarOutput.destroy', $item->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-link btn-danger delete-button"
+                                                        data-original-title="Remove"
+                                                        onclick="confirmDelete({{ $item->id }})">
+                                                        <i class="bi bi-trash3 text-danger"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

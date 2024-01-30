@@ -16,23 +16,24 @@ class StockTransitRawMaterialFactory extends Factory
      */
     public function definition(): array
     {
-        // Create a new Unit or get an existing one
-        $PrmRawOut = PrmRawMaterialOutputItem::factory()->create();
+        // Get existing PrmRawMaterialOutputItem or create a new one
+        $PrmRawOut = PrmRawMaterialOutputItem::inRandomOrder()->first() ?? PrmRawMaterialOutputItem::factory()->create();
+
         return [
-            'nomor_bstb' => $PrmRawOut->nomor_bstb,
-            'nomor_batch' => $this->faker->unique()->randomNumber(5),
-            'id_box' => $this->faker->unique()->randomNumber(3),
-            'nama_supplier' => $this->faker->unique()->company,
-            'jenis' => $this->faker->word,
+            'nomor_bstb'    => $PrmRawOut->nomor_bstb,
+            'nomor_batch'   => $PrmRawOut->nomor_batch,
+            'id_box'        => $PrmRawOut->id_box,
+            'nama_supplier' => $PrmRawOut->nama_supplier,
+            'jenis'         =>$PrmRawOut->jenis,
             'nomor_nota_internal' => $this->faker->unique()->randomNumber(7),
-            'berat' => $this->faker->randomFloat(2, 1, 100),
-            'kadar_air' => $this->faker->randomFloat(2, 1, 100),
-            'tujuan_kirim' => $this->faker->sentence,
-            'letak_tujuan' => $this->faker->sentence,
-            'inisial_tujuan' => $this->faker->word,
-            'modal' => $this->faker->randomNumber(3),
-            'total_modal' => $this->faker->randomNumber(6),
-            'keterangan' => $this->faker->text(15),
+            'berat'         => $PrmRawOut->berat,
+            'kadar_air'     => $PrmRawOut->kadar_air,
+            'tujuan_kirim'  => $PrmRawOut->tujuan_kirim,
+            'letak_tujuan'  => $PrmRawOut->letak_tujuan,
+            'inisial_tujuan' =>$PrmRawOut->inisial_tujuan,
+            'modal' => $PrmRawOut->modal,
+            'total_modal' => $PrmRawOut->total_modal,
+            'keterangan' => $PrmRawOut->keterangan_item,
             'user_created' => $this->faker->userName,
             'user_updated' => $this->faker->userName,
         ];

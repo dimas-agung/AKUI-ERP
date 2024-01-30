@@ -36,6 +36,7 @@
                                         <th scope="col" class="text-center">Id Box Grading Kasar</th>
                                         <th scope="col" class="text-center">Nomor Batch</th>
                                         <th scope="col" class="text-center">Nama Supplier</th>
+                                        <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">Nomor Nota Internal</th>
                                         <th scope="col" class="text-center">Jenis Raw Material</th>
                                         <th scope="col" class="text-center">Berat</th>
@@ -75,6 +76,14 @@
                                             <td class="text-center">{{ $GradingKH->id_box_grading_kasar }}</td>
                                             <td class="text-center">{{ $GradingKH->nomor_batch }}</td>
                                             <td class="text-center">{{ $GradingKH->nama_supplier }}</td>
+                                            <td class="text-center">
+                                                @if ($GradingKH->status == 1)
+                                                    <span>Aktif</span>
+                                                @elseif($GradingKH->status == 0)
+                                                    <span class="badge badge-secondary"
+                                                        style="text-shadow: 1px 1px 6px #000000;">Tidak Aktif</span>
+                                                @endif
+                                            </td>
                                             <td class="text-center">{{ $GradingKH->nomor_nota_internal }}</td>
                                             <td class="text-center">{{ $GradingKH->jenis_raw_material }}</td>
                                             <td class="text-center">{{ $GradingKH->berat }}</td>
@@ -102,7 +111,7 @@
                                             <td class="text-center">{{ $GradingKH->user_updated }}</td>
                                             <td class="text-center">{{ $GradingKH->created_at }}</td>
                                             <td class="text-center">{{ $GradingKH->updated_at }}</td>
-                                            <td class="text-center">
+                                            {{-- <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $GradingKH->id }}"
                                                         action="{{ route('grading_kasar_hasil.destroyInput', $GradingKH->id) }}"
@@ -120,6 +129,28 @@
                                                             <i class="bi bi-trash3 text-danger"></i>
                                                         </button>
                                                     </form>
+                                                </div>
+                                            </td> --}}
+                                            <td class="text-center">
+                                                <div class="form-button-action">
+                                                    @if ($GradingKH->status == 1)
+                                                        <form style="display: flex" id="deleteForm{{ $GradingKH->id }}"
+                                                            action="{{ route('grading_kasar_hasil.destroyInput', $GradingKH->id) }}"
+                                                            method="POST">
+                                                            <a href="{{ route('grading_kasar_hasil.show', $GradingKH->id) }}"
+                                                                class="btn btn-link" title="View"
+                                                                data-original-title="View">
+                                                                <i class="bi bi-eye"></i>
+                                                            </a>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-link"
+                                                                data-original-title="Remove"
+                                                                onclick="confirmDelete({{ $GradingKH->id }})">
+                                                                <i class="bi bi-trash3 text-danger"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

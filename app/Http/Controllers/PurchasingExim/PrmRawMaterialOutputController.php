@@ -213,39 +213,39 @@ class PrmRawMaterialOutputController extends Controller
             }
 
             // Ambil data StockTransitRawMaterial berdasarkan tujuan_kirim dan id_box
-    $stockPRM = StockTransitRawMaterial::where('tujuan_kirim', '=', $gradingKI->tujuan_kirim)
-    ->where('id_box', $gradingKI->id_box)
-    ->first();
+            $stockPRM = StockTransitRawMaterial::where('tujuan_kirim', '=', $gradingKI->tujuan_kirim)
+            ->where('id_box', $gradingKI->id_box)
+            ->first();
 
-if ($stockPRM) {
-    // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka tidak bisa dihapus
-    if ($stockPRM->berat <= 0 || $stockPRM->total_modal <= 0) {
-        throw new \Exception('Data tidak dapat dihapus karena berat atau total modal dari StockTransitRawMaterial bernilai 0.');
-    }
+            if ($stockPRM) {
+                // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka tidak bisa dihapus
+                if ($stockPRM->berat <= 0 || $stockPRM->total_modal <= 0) {
+                    throw new \Exception('Data tidak dapat dihapus karena berat atau total modal dari StockTransitRawMaterial bernilai 0.');
+                }
 
-    // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
-    if ($gradingKI->berat_masuk >= $stockPRM->berat) {
-        $stockPRM->delete();
-    } else {
-        // Ambil berat sebelumnya
-        $beratSebelumnya = $stockPRM->berat;
-        $beratMasuk = $stockPRM->berat_masuk;
+                // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
+                if ($gradingKI->berat_masuk >= $stockPRM->berat) {
+                    $stockPRM->delete();
+                } else {
+                    // Ambil berat sebelumnya
+                    $beratSebelumnya = $stockPRM->berat;
+                    $beratMasuk = $stockPRM->berat_masuk;
 
-        // Hitung total modal baru berdasarkan perbedaan berats
-        $perbedaanBerat = $beratSebelumnya - $gradingKI->berat;
-        $sisaBerat = $beratMasuk - $beratSebelumnya;
-        $totalModalBaru = $sisaBerat * $gradingKI->modal;
+                    // Hitung total modal baru berdasarkan perbedaan berats
+                    $perbedaanBerat = $beratSebelumnya - $gradingKI->berat;
+                    $sisaBerat = $beratMasuk - $beratSebelumnya;
+                    $totalModalBaru = $sisaBerat * $gradingKI->modal;
 
-        // Update data dengan berat dan total modal yang baru
-        $dataToUpdate = [
-            'berat' => abs($perbedaanBerat),
-            'total_modal' => abs($totalModalBaru),
-        ];
+                    // Update data dengan berat dan total modal yang baru
+                    $dataToUpdate = [
+                        'berat' => abs($perbedaanBerat),
+                        'total_modal' => abs($totalModalBaru),
+                    ];
 
-        // Perbarui data
-        $stockPRM->update($dataToUpdate);
-    }
-}
+                    // Perbarui data
+                    $stockPRM->update($dataToUpdate);
+                }
+            }
 
             // Hapus data GradingKasarInput
             $gradingKI->delete();

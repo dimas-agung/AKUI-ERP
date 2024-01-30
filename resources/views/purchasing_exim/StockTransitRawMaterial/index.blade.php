@@ -74,51 +74,35 @@
                             <th class="text-center">Keterangan</th>
                             <th class="text-center">NIP Admin</th>
                             <th class="text-center">User Updated</th>
-                            {{-- <th class="text-center">Action</th> --}}
                         </tfoot>
                         <tbody>
-                            @forelse ($stockTGK as $post)
-                                <tr>
-                                    <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{!! $post->id_box !!}</td>
-                                    <td class="text-center">{!! $post->nomor_bstb !!}</td>
-                                    <td class="text-center">{!! $post->nama_supplier !!}</td>
-                                    <td class="text-center">{!! $post->jenis !!}</td>
-                                    <td class="text-center">{!! $post->berat !!}</td>
-                                    <td class="text-center">{!! $post->kadar_air !!}</td>
-                                    <td class="text-center">{!! $post->tujuan_kirim !!}</td>
-                                    <td class="text-center">{!! $post->letak_tujuan !!}</td>
-                                    <td class="text-center">{!! $post->inisial_tujuan !!}</td>
-                                    <td class="text-center">{!! $post->modal !!}</td>
-                                    <td class="text-center">{!! $post->total_modal !!}</td>
-                                    <td class="text-center">{!! $post->keterangan !!}</td>
-                                    <td class="text-center">{!! $post->user_created !!}</td>
-                                    <td class="text-center">{!! $post->user_updated !!}</td>
-                                    {{-- <td class="text-center">
-                                        <div class="form-button-action">
-                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('StockTransitGradingKasar.destroy', $post->id) }}"
-                                                method="POST">
-                                                <a href="{{ route('StockTransitGradingKasar.show', $post->id) }}"
-                                                    class="btn btn-link btn-info" title="Show Task"
-                                                    data-original-title="Show"><i class="fa fa-file"></i></a>
-                                                <a href="{{ route('StockTransitGradingKasar.edit', $post->id) }}"
-                                                    class="btn btn-link btn-primary" title="Edit Task"
-                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" data-toggle="tooltip"
-                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
-                                                        class="fa fa-times"></i></button>
-                                            </form>
-                                        </div>
-                                    </td> --}}
-                                </tr>
-                            @empty
-                                <div class="alert alert-danger">
-                                    Data Stock Transit Grading Kasar belum Tersedia.
-                                </div>
-                            @endforelse
+                            <?php $i = 1; ?>
+                            <?php foreach ($stockTGK as $post): ?>
+                            <?php if($post->berat != 0 || $post->total_modal != 0): ?>
+                            <tr>
+                                <td class="text-center">{{ $i++ }}</td>
+                                <td class="text-center">{!! $post->id_box !!}</td>
+                                <td class="text-center">{!! $post->nomor_bstb !!}</td>
+                                <td class="text-center">{!! $post->nama_supplier !!}</td>
+                                <td class="text-center">{!! $post->jenis !!}</td>
+                                <td class="text-center">{!! $post->berat !!}</td>
+                                <td class="text-center">{!! $post->kadar_air !!}</td>
+                                <td class="text-center">{!! $post->tujuan_kirim !!}</td>
+                                <td class="text-center">{!! $post->letak_tujuan !!}</td>
+                                <td class="text-center">{!! $post->inisial_tujuan !!}</td>
+                                <td class="text-center">{!! $post->modal !!}</td>
+                                <td class="text-center">{!! $post->total_modal !!}</td>
+                                <td class="text-center">{!! $post->keterangan !!}</td>
+                                <td class="text-center">{!! $post->user_created !!}</td>
+                                <td class="text-center">{!! $post->user_updated !!}</td>
+                            </tr>
+                            <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php if (empty($stockTGK)): ?>
+                            <div class="alert alert-danger">
+                                Data Stock Transit Grading Kasar belum Tersedia.
+                            </div>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
