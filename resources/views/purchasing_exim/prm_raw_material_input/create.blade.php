@@ -5,7 +5,6 @@
 @section('title')
     Purchasing Raw Material Input
 @endsection
-
 @section('content')
     <div class="col-md-12">
         <div class="card mt-2">
@@ -44,8 +43,6 @@
                                         {{ $MasterSPRM->nama_supplier }}
                                     </option>
                                 @endif
-                                {{-- <option value="{{ $MasterSPRM->nama_supplier }}">
-                                    {{ $MasterSPRM->nama_supplier }}</option> --}}
                             @endforeach
                         </select>
                     </div>
@@ -67,8 +64,6 @@
                                         {{ $MasterJRM->jenis }}
                                     </option>
                                 @endif
-                                {{-- <option value="{{ $MasterJRM->jenis }}">
-                                    {{ $MasterJRM->jenis }}</option> --}}
                             @endforeach
                         </select>
                     </div>
@@ -83,12 +78,6 @@
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="berat_kotor">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="harga_nota" class="form-label">Harga Nota</label>
-                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
-                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="harga_nota">
                     </div>
                     <div class="col-md-3">
                         <label for="berat_bersih" class="form-label">Berat Bersih</label>
@@ -107,6 +96,12 @@
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="kadar_air">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="harga_nota" class="form-label">Harga Nota</label>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="harga_nota">
                     </div>
                     <div class="col-md-3">
                         <label for="id_box" class="form-label">ID Box</label>
@@ -162,6 +157,7 @@
                                 <th scope="col" class="text-center">Harga Nota</th>
                                 <th scope="col" class="text-center">Total Harga Nota</th>
                                 <th scope="col" class="text-center">Harga Deal</th>
+                                <th scope="col" class="text-center">Fix Harga Deal</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
@@ -291,14 +287,17 @@
 
         function updateTotalHarga() {
             // Mendapatkan nilai berat nota dan harga nota menggunakan jQuery
-            const beratNota = parseFloat($('#berat_nota').val());
-            const hargaNota = parseFloat($('#harga_nota').val());
+            const beratNota = parseFloat($('#berat_nota').val()) || 0;
+            const hargaNota = parseFloat($('#harga_nota').val()) || 0;
 
             // Melakukan perhitungan total harga nota
-            const totalHargaNota = beratNota * hargaNota;
+            let totalHargaNota = beratNota * hargaNota;
 
             // Memasukkan hasil perhitungan ke dalam input total harga nota menggunakan jQuery
-            $('#total_harga_nota').val(isNaN(totalHargaNota) ? '' : totalHargaNota.toFixed(2));
+            $('#total_harga_nota').val(isFinite(totalHargaNota) ? totalHargaNota.toFixed(2) : '');
+
+            // Memanggil updateHargaDeal setiap kali updateTotalHarga terjadi
+            updateHargaDeal();
         }
 
         function updateHargaDeal() {
@@ -317,11 +316,6 @@
                 $('#harga_deal').val(beratBersih !== 0 ? '0.00' : '');
             }
         }
-
-        // Panggil fungsi updateHargaDeal saat nilai berubah pada total harga nota dan berat bersih
-        $('#total_harga_nota, #berat_bersih').on('input', function() {
-            updateHargaDeal();
-        });
     </script>
     <script>
         // test
@@ -368,27 +362,72 @@
                 });
                 return; // Berhenti jika ada input yang kosong
             }
+
             // Mengubah atribut readonly menggunakan jQuery
             $('#nomor_po').prop('readonly', true);
             $('#nomor_batch').prop('readonly', true);
             $('#nomor_nota_supplier').prop('readonly', true);
             $('#nama_supplier').prop('disabled', true); // Jika ingin menjadikan select readonly
+
+            let totalHargaNota = 0;
+            let totalHargaBersih = 0;
+            let fix_harga_deal = 0;
+
+            // Simpan nilai awal
+            let totalHargaNotaAwal = totalHargaNota;
+            let totalHargaBersihAwal = totalHargaBersih;
+
+            $('#dataTable tbody tr').each(function() {
+                let totalHargaNotaValue = parseFloat($(this).find('td:eq(8)').text()) || 0;
+                let hargaBersihValue = parseFloat($(this).find('td:eq(3)').text()) || 0;
+
+                totalHargaNota += totalHargaNotaValue;
+                totalHargaBersih += hargaBersihValue;
+
+                console.log("Harga Nota Value = " + totalHargaNotaValue);
+                console.log("Harga Bersih Value = " + hargaBersihValue);
+
+                console.log("Harga Nota = " + totalHargaNota);
+                console.log("Harga Bersih = " + totalHargaBersih);
+            });
+
+            // Gunakan nilai awal untuk inputan pertama
+            let totalHargaNotaPertama = totalHargaNota - totalHargaNotaAwal;
+            let totalHargaBersihPertama = totalHargaBersih - totalHargaBersihAwal;
+
+            // Pastikan tidak ada pembagian oleh nol
+            if (totalHargaBersih !== 0) {
+                fix_harga_deal = totalHargaNota / totalHargaBersih;
+            }
+
+            console.log('Total Harga Nota = ' + totalHargaNota);
+            console.log('Total Harga Bersih = ' + totalHargaBersih);
+            console.log('Fix Harga Deal = ' + fix_harga_deal);
+
+            console.log('Total Harga Nota Pertama = ' + totalHargaNotaPertama);
+            console.log('Total Harga Bersih Pertama = ' + totalHargaBersihPertama);
+
+
+
+            // let fix_harga_deal = parseFloat(total_harga_nota) / parseFloat(harga_deal);
             // Menambahkan data ke dalam tabel
             var newRow = '<tr>' +
                 // '<td>' + doc_no + '</td>' +
-                '<td>' + jenis + '</td>' +
-                '<td>' + berat_nota + '</td>' +
-                '<td>' + berat_kotor + '</td>' +
-                '<td>' + berat_bersih + '</td>' +
-                '<td>' + selisih_berat + '</td>' +
-                '<td>' + kadar_air + '</td>' +
-                '<td>' + id_box + '</td>' +
-                '<td>' + harga_nota + '</td>' +
-                '<td>' + total_harga_nota + '</td>' +
-                '<td>' + harga_deal + '</td>' +
-                '<td>' + keterangan + '</td>' +
-                '<td>' + user_created + '</td>' +
-                '<td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
+                '<td class="text-center">' + jenis + '</td>' +
+                '<td class="text-center">' + berat_nota + '</td>' +
+                '<td class="text-center">' + berat_kotor + '</td>' +
+                '<td class="text-center">' + berat_bersih + '</td>' +
+                '<td class="text-center">' + selisih_berat + '</td>' +
+                '<td class="text-center">' + kadar_air + '</td>' +
+                '<td class="text-center">' + id_box + '</td>' +
+                '<td class="text-center">' + harga_nota + '</td>' +
+                '<td class="text-center">' + total_harga_nota + '</td>' +
+                '<td class="text-center">' + harga_deal + '</td>' +
+                '<td class="text-center">' + fix_harga_deal.toFixed(2) + '</td>' +
+                // '<td class="text-center">' + fix_harga_deal.toFixed(2) + '</td>' +
+                '<td class="text-center">' + keterangan + '</td>' +
+                '<td class="text-center">' + user_created + '</td>' +
+                '<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
                 '</tr>';
             $('#dataTable tbody').append(newRow);
 
@@ -409,6 +448,7 @@
                 harga_nota: harga_nota,
                 total_harga_nota: total_harga_nota,
                 harga_deal: harga_deal,
+                // fix_harga_deal: fix_harga_deal,
                 keterangan: keterangan,
                 user_created: user_created,
 

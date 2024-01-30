@@ -50,7 +50,7 @@ class PrmRawMaterialInputService
             'nama_supplier'         => $dataHeader->nama_supplier,
             'keterangan'            => $dataHeader->keterangan,
             'user_created'          => $dataHeader->user_created,
-            'user_updated'          => $dataHeader->user_updated ?? 'Admin123'
+            'user_updated'          => $dataHeader->user_updated ?? ''
             // Sesuaikan dengan kolom-kolom lain di tabel header Anda
         ]);
     }
@@ -72,7 +72,7 @@ class PrmRawMaterialInputService
             'total_modal'   => $item->total_harga_nota,
             'keterangan'    => $item->keterangan,
             'user_created'  => $item->user_created,
-            'user_updated'  => $item->user_updated ?? 'Admin123',
+            'user_updated'  => $item->user_updated ?? '',
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
         // $inputItem = (object)$item;
@@ -116,7 +116,7 @@ class PrmRawMaterialInputService
                 'total_harga_nota'  => $inputItem->total_harga_nota,
                 'harga_deal'        => $inputItem->harga_deal,
                 'keterangan'        => $inputItem->keterangan,
-                'user_updated'      => $inputItem->user_updated ?? 'Admin123',
+                'user_updated'      => $inputItem->user_updated ?? '',
                 // Sesuaikan dengan kolom-kolom lain di tabel item Anda
             ]);
         } else {
@@ -134,7 +134,7 @@ class PrmRawMaterialInputService
                 'harga_deal'        => $inputItem->harga_deal,
                 'keterangan'        => $inputItem->keterangan,
                 'user_created'      => $inputItem->user_created,
-                'user_updated'      => $inputItem->user_updated ?? 'Admin123',
+                'user_updated'      => $inputItem->user_updated ?? '',
                 // Sesuaikan dengan kolom-kolom lain di tabel item Anda
             ]);
         }
@@ -162,7 +162,7 @@ class PrmRawMaterialInputService
             'total_modal'           => $itemObject->harga_deal * $itemObject->berat_bersih,
             'keterangan'            => $itemObject->keterangan,
             'user_created'          => $itemObject->user_created,
-            'user_updated'          => $itemObject->user_updated ?? 'Admin123',
+            'user_updated'          => $itemObject->user_updated ?? '',
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
         //
@@ -195,7 +195,7 @@ class PrmRawMaterialInputService
             $existingItem->nomor_nota_internal = $itemObject->nomor_nota_internal;
             $existingItem->avg_kadar_air = $itemObject->kadar_air;
             $existingItem->keterangan = $itemObject->keterangan;
-            $existingItem->user_created = $itemObject->user_created ?? 'Admin123';
+            $existingItem->user_created = $itemObject->user_created ?? '';
 
             // Simpan perubahan pada stok yang sudah ada
             $existingItem->save();

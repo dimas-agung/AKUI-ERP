@@ -521,7 +521,7 @@
             dataArray.splice(rowIndex, 1);
             // Hapus baris dari tabel
             row.remove();
-
+            // Total Berat
             let totalBeratKirim = 0;
             $('#dataTable tbody tr').each(function() {
                 let beratKirim = parseFloat($(this).find('td:eq(10)')
@@ -530,9 +530,8 @@
                     totalBeratKirim += beratKirim;
                 }
             });
-
             $('#total_berat').val(totalBeratKirim);
-
+            // Total Pcs
             let totalPcsKirim = 0;
             $('#dataTable tbody tr').each(function() {
                 let pcsKirim = parseFloat($(this).find('td:eq(11)')
@@ -541,7 +540,6 @@
                     totalPcsKirim += pcsKirim;
                 }
             });
-
             $('#total_pcs').val(totalPcsKirim);
 
             let jumlahBaris = $('#dataTable tbody tr').length;
