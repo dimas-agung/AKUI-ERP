@@ -18,6 +18,7 @@ class PrmRawMaterialStockHistory extends Model
         'avg_kadar_air',
         'modal',
         'total_modal',
+        'fix_harga_deal',
         'keterangan',
         'status',
         'user_created'

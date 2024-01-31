@@ -157,10 +157,10 @@
                                 <th scope="col" class="text-center">Harga Nota</th>
                                 <th scope="col" class="text-center">Total Harga Nota</th>
                                 <th scope="col" class="text-center">Harga Deal</th>
-                                <th scope="col" class="text-center">Fix Harga Deal</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
+                                <th scope="col" class="text-center">Fix Harga Deal</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -319,8 +319,9 @@
     </script>
     <script>
         // test
-        var dataArray = [];
-        var dataHeader = [];
+        let dataArray = [];
+        let dataHeader = [];
+        let idBoxGroups = [];
 
         function addRow() {
             console.log(dataArray);
@@ -369,67 +370,87 @@
             $('#nomor_nota_supplier').prop('readonly', true);
             $('#nama_supplier').prop('disabled', true); // Jika ingin menjadikan select readonly
 
+            // Memeriksa apakah id_box sudah ada di objek idBoxGroups
+            if (id_box in idBoxGroups) {
+                // Jika sudah ada, update nilai total-harga-nominal dan total-berat-bersih
+                idBoxGroups[id_box].totalHargaNota += parseFloat(total_harga_nota);
+                idBoxGroups[id_box].totalBeratBersih += parseFloat(berat_bersih);
+            } else {
+                // Jika belum ada, tambahkan id_box baru ke objek
+                idBoxGroups[id_box] = {
+                    totalHargaNota: parseFloat(total_harga_nota),
+                    totalBeratBersih: parseFloat(berat_bersih),
+                };
+            }
+
             let totalHargaNota = 0;
             let totalHargaBersih = 0;
-            let fix_harga_deal = 0;
-
-            // Simpan nilai awal
-            let totalHargaNotaAwal = totalHargaNota;
-            let totalHargaBersihAwal = totalHargaBersih;
-
             $('#dataTable tbody tr').each(function() {
-                let totalHargaNotaValue = parseFloat($(this).find('td:eq(8)').text()) || 0;
-                let hargaBersihValue = parseFloat($(this).find('td:eq(3)').text()) || 0;
+                let totalHargaNotaValue = parseInt($(this).find('td:eq(8)').text()) || 0;
+                let hargaBersihValue = parseInt($(this).find('td:eq(3)').text()) || 0;
+
+                console.log("------------------------------");
+                console.log("Harga Nota Value = " + totalHargaNotaValue);
+                console.log("Harga Bersih Value = " + hargaBersihValue);
+                console.log("------------------------------");
 
                 totalHargaNota += totalHargaNotaValue;
                 totalHargaBersih += hargaBersihValue;
 
-                console.log("Harga Nota Value = " + totalHargaNotaValue);
-                console.log("Harga Bersih Value = " + hargaBersihValue);
-
+                console.log("------------------------------");
                 console.log("Harga Nota = " + totalHargaNota);
                 console.log("Harga Bersih = " + totalHargaBersih);
+                console.log("------------------------------");
+
+                let jumlahTotal = totalHargaNota / totalHargaBersih;
+
+                console.log("------------------------------");
+                console.log("Jumlah Total = " + jumlahTotal);
+                console.log("------------------------------");
             });
 
-            // Gunakan nilai awal untuk inputan pertama
-            let totalHargaNotaPertama = totalHargaNota - totalHargaNotaAwal;
-            let totalHargaBersihPertama = totalHargaBersih - totalHargaBersihAwal;
-
-            // Pastikan tidak ada pembagian oleh nol
-            if (totalHargaBersih !== 0) {
-                fix_harga_deal = totalHargaNota / totalHargaBersih;
+            // Menampilkan total-harga-nominal dan total-berat-bersih untuk setiap id_box
+            for (let idBox in idBoxGroups) {
+                console.log("ID Box: " + idBox);
+                console.log("Total Harga Nota: " + idBoxGroups[idBox].totalHargaNota);
+                console.log("Total Berat Bersih: " + idBoxGroups[idBox].totalBeratBersih);
+                console.log("Fix harga Modal: " + idBoxGroups[idBox].totalHargaNota / idBoxGroups[idBox].totalBeratBersih);
+                console.log("------------------------------");
+                fix_harga_deal_clg = idBoxGroups[idBox].totalHargaNota / idBoxGroups[idBox].totalBeratBersih;
+                console.log(fix_harga_deal_clg.toFixed(2));
             }
+            let fixHargaDealForRow = idBoxGroups[id_box].totalHargaNota / idBoxGroups[id_box].totalBeratBersih;
 
-            console.log('Total Harga Nota = ' + totalHargaNota);
-            console.log('Total Harga Bersih = ' + totalHargaBersih);
-            console.log('Fix Harga Deal = ' + fix_harga_deal);
-
-            console.log('Total Harga Nota Pertama = ' + totalHargaNotaPertama);
-            console.log('Total Harga Bersih Pertama = ' + totalHargaBersihPertama);
-
-
-
-            // let fix_harga_deal = parseFloat(total_harga_nota) / parseFloat(harga_deal);
-            // Menambahkan data ke dalam tabel
-            var newRow = '<tr>' +
-                // '<td>' + doc_no + '</td>' +
-                '<td class="text-center">' + jenis + '</td>' +
-                '<td class="text-center">' + berat_nota + '</td>' +
-                '<td class="text-center">' + berat_kotor + '</td>' +
-                '<td class="text-center">' + berat_bersih + '</td>' +
-                '<td class="text-center">' + selisih_berat + '</td>' +
-                '<td class="text-center">' + kadar_air + '</td>' +
-                '<td class="text-center">' + id_box + '</td>' +
-                '<td class="text-center">' + harga_nota + '</td>' +
-                '<td class="text-center">' + total_harga_nota + '</td>' +
-                '<td class="text-center">' + harga_deal + '</td>' +
-                '<td class="text-center">' + fix_harga_deal.toFixed(2) + '</td>' +
-                // '<td class="text-center">' + fix_harga_deal.toFixed(2) + '</td>' +
-                '<td class="text-center">' + keterangan + '</td>' +
-                '<td class="text-center">' + user_created + '</td>' +
-                '<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
-                '</tr>';
-            $('#dataTable tbody').append(newRow);
+            // Menambahkan atau mengupdate data ke dalam tabel
+            let existingRow = $('#dataTable tbody tr[data-idbox="' + id_box + '"]');
+            if (existingRow.length > 0) {
+                // Jika baris sudah ada, update nilai fix_harga_deal
+                existingRow.find('td:eq(12)').text(fixHargaDealForRow.toFixed(2));
+            } else {
+                // Menambahkan data ke dalam tabel
+                var newRow = `<tr>` +
+                    `<td class="text-center">${jenis}</td>` +
+                    `<td class="text-center">${berat_nota}</td>` +
+                    `<td class="text-center">${berat_kotor}</td>` +
+                    `<td class="text-center">${berat_bersih}</td>` +
+                    `<td class="text-center">${selisih_berat}</td>` +
+                    `<td class="text-center">${kadar_air}</td>` +
+                    `<td class="text-center">${id_box}</td>` +
+                    `<td class="text-center">${harga_nota}</td>` +
+                    `<td class="text-center">${total_harga_nota}</td>` +
+                    `<td class="text-center">${harga_deal}</td>` +
+                    `<td class="text-center">${keterangan}</td>` +
+                    `<td class="text-center">${user_created}</td>` +
+                    `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
+                    `<td class="text-center">${fixHargaDealForRow.toFixed(4)}</td>` +
+                    `</tr>`
+                $('#dataTable tbody').append(newRow);
+            }
+            // Update nilai fix_harga_deal di dalam objek dataArray
+            let dataIndex = dataArray.findIndex(item => item.id_box === id_box);
+            if (dataIndex !== -1) {
+                dataArray[dataIndex].fix_harga_deal = fixHargaDealForRow;
+            }
 
             // Menambahkan data ke dalam array
             dataArray.push({
@@ -448,7 +469,7 @@
                 harga_nota: harga_nota,
                 total_harga_nota: total_harga_nota,
                 harga_deal: harga_deal,
-                // fix_harga_deal: fix_harga_deal,
+                fixHargaDealForRow: fixHargaDealForRow,
                 keterangan: keterangan,
                 user_created: user_created,
 
