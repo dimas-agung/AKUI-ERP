@@ -4,6 +4,7 @@ namespace App\Http\Controllers\TransitGradingKasar;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GradingKasarInputRequest;
+use App\Models\GradingKasarHasil;
 use App\Models\GradingKasarInput;
 use App\Models\StockTransitRawMaterial;
 use App\Models\PrmRawMaterialOutputItem;
@@ -18,15 +19,16 @@ use Illuminate\Http\RedirectResponse;
 
 class GradingKasarInputController extends Controller
 {
-    public function index()
-    {
-        $i = 1;
+    public function index(){
+        $i =1;
         $GradingKI = GradingKasarInput::with('StockTransitRawMaterial')->get();
-        $stockTGK = StockTransitRawMaterial::with('GradingKasarInput')->get();
+        $GradingKH = GradingKasarHasil::with('GradingKasarInput')->first();
+        // return $GradingKH;
 
         // return $GradingKI;
         return response()->view('transit_grading.GradingKasarInput.index', [
             'GradingKI' => $GradingKI,
+            'GradingKH' => $GradingKH,
             'i' => $i,
         ]);
     }
@@ -45,7 +47,7 @@ class GradingKasarInputController extends Controller
     public function set(Request $request)
     {
         $nomor_bstb = $request->nomor_bstb;
-        $data = StockTransitRawMaterial::where('nomor_bstb', $nomor_bstb)->first();
+        $data = StockTransitRawMaterial::where('nomor_bstb',$nomor_bstb)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -54,25 +56,23 @@ class GradingKasarInputController extends Controller
     // Contoh controller
     public function sendData(
         GradingKasarInputRequest $request,
-        GradingKasarInputService $prmRawMaterialOutputService
-    ) {
-        try {
-            $dataArray = json_decode($request->input('data'));
-            // $dataStock = json_decode($request->input('dataStock'));
+        GradingKasarInputService $prmRawMaterialOutputService)
+    { try {
+        $dataArray = json_decode($request->input('data'));
 
-            // Periksa apakah dekoding JSON berhasil
-            if (!$dataArray) {
-                throw new \InvalidArgumentException('Invalid JSON data.');
-            }
+        // Periksa apakah dekoding JSON berhasil
+        if (!$dataArray) {
+            throw new \InvalidArgumentException('Invalid JSON data.');
+        }
 
-            $result = $prmRawMaterialOutputService->sendData($dataArray);
+        $result = $prmRawMaterialOutputService->sendData($dataArray);
 
-            // Periksa apakah pemrosesan berhasil
-            if ($result['success']) {
-                return response()->json($result);
-            } else {
-                return response()->json($result, 500);
-            }
+        // Periksa apakah pemrosesan berhasil
+        if ($result['success']) {
+            return response()->json($result);
+        } else {
+            return response()->json($result, 500);
+        }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -109,19 +109,7 @@ class GradingKasarInputController extends Controller
     /**
      * destroy
      */
-    // public function destroy($id): RedirectResponse
-    // {
-    //     //get post by ID
-    //     $GradingKI = GradingKasarInput::findOrFail($id);
-
-    //     //delete post
-    //     $GradingKI->delete();
-
-    //     //redirect to index
-    //     return redirect()->route('GradingKasarInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
-    // }
-    public function destroy($id): RedirectResponse
-    {
+    public function destroy($id): RedirectResponse {
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
@@ -129,6 +117,21 @@ class GradingKasarInputController extends Controller
             // Ambil data GradingKasarInput yang akan dihapus
             $gradingKI = GradingKasarInput::findOrFail($id);
 
+             // Periksa apakah nomor_bstb sudah ada di GradingKasarHasil
+            $gradingKasarHasil = GradingKasarHasil::where('id_box_raw_material', $gradingKI->id_box)->first();
+            if ($gradingKasarHasil) {
+                // Rollback transaksi jika nomor_bstb sudah ada di GradingKasarHasil
+                DB::rollback();
+                // return redirect()->route('GradingKasarInput.index')->with(['error' => 'Nomor BSTB sudah berada di GradingKasarHasil. Data tidak dapat dihapus.']);
+                return redirect()->route('GradingKasarInput.index')->with([
+                    'success' => false,
+                    'notification' => [
+                        'type' => 'error',
+                        'title' => 'Gagal Menghapus Data',
+                        'text' => 'Data sudah berada di Grading Kasar Hasil. Data tidak dapat dihapus.'
+                    ]
+                ]);
+            }
             // Ambil data StockTransitRawMaterial berdasarkan nomor_bstb
             $stockPrmRawMaterial = StockTransitRawMaterial::where('nomor_bstb', '=', $gradingKI->nomor_bstb)->first();
 

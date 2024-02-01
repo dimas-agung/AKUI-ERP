@@ -38,36 +38,20 @@ class PreCleaningOutput extends Model
         'pcs_pre_cleaning',
         'susut',
         'user_created',
-        'user_update',
+        'user_updated',
     ];
 
     public function PreCleaningStock()
     {
-        return $this->belongsTo(PreCleaningStock::class, 'nomor_job', 'nomor_job');
+        return $this->hasMany(PreCleaningStock::class, 'nomor_job', 'nomor_job');
     }
     public function MasterOperator()
     {
-        return $this->belongsTo(MasterOperator::class, 'nip', 'operator_sikat_kompresor');
+        return $this->hasMany(MasterOperator::class, 'nip', 'operator_sikat_kompresor');
     }
-    // public function MasterOperator()
-    // {
-    //     return $this->belongsTo(PreCleaningOutput::class, 'operator_sikat_kompresor', 'nip')
-    //         ->orWhere('operator_flek_poles', 'nip')
-    //         ->orWhere('operator_flek_cutter', 'nip');
-    // }
 
-    // public function sikatKompresorOperator()
-    // {
-    //     return $this->belongsTo(MasterOperator::class, 'operator_sikat_kompresor', 'nip');
-    // }
-
-    // public function flekPolesOperator()
-    // {
-    //     return $this->belongsTo(MasterOperator::class, 'operator_flek_poles', 'nip');
-    // }
-
-    // public function flekCutterOperator()
-    // {
-    //     return $this->belongsTo(MasterOperator::class, 'operator_flek_cutter', 'nip');
-    // }
+    public function TransitPreCleaningStock()
+    {
+        return $this->hasMany(TransitPreCleaningStock::class, 'nomor_job', 'nomor_job');
+    }
 }

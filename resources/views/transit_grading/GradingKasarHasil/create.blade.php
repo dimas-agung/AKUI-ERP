@@ -250,6 +250,10 @@
                 console.error('Input tidak valid untuk berat_grading atau berat');
                 return null;
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> ca36b40387cf871fbdccc1c8e7f02fe7211691ab
         }
 
         // generate id box grading kasar
@@ -302,8 +306,7 @@
                 return;
             }
 
-            // Memanggil fungsi generateNomorBSTB untuk mendapatkan nomor_bstb
-            // let nomor_bstb = generateNomorBSTB(inisial_tujuan);
+            // Total Susut
             let susut = hitungNilaiSusut();
             console.log("Susut = " + susut);
             let id_box_grading_kasar = generateIdBoxGradingKasar();
@@ -312,17 +315,15 @@
 
             // TOTAL Berat
             let totalBeratGrading = parseFloat($('#berat_grading').val()) || 0;
-
             $('#dataTable tbody tr').each(function() {
                 let beratGradingValue = parseFloat($(this).find('td:eq(10)').text()) || 0;
 
                 totalBeratGrading += beratGradingValue;
             });
-            console.log("Total Berat = " + totalBeratGrading);
+            // console.log("Total Berat = " + totalBeratGrading);
+            $('#total_berat').val(totalBeratGrading);
             // Total Pcs
-            // Inisialisasi variabel untuk menyimpan total pcs_grading
             let totalPcsGrading = parseFloat($('#pcs_grading').val()) || 0;
-
             // Loop melalui setiap baris tabel untuk menghitung total pcs_grading
             $('#dataTable tbody tr').each(function() {
                 // Ambil nilai dari kolom pcs_grading dalam setiap baris
@@ -331,8 +332,25 @@
                 // Tambahkan nilai pcs_grading ke totalPcsGrading
                 totalPcsGrading += pcsGradingValue;
             });
-            console.log("Total Pcs = " + totalPcsGrading);
+            // console.log("Total Pcs = " + totalPcsGrading);
+            $('#total_pcs').val(totalPcsGrading);
 
+            //
+            // Pastikan untuk mendefinisikan variabel susut sebelumnya
+            // let susut = 0;
+
+            $('#dataTable tbody tr').each(function() {
+                // Ganti koma dengan titik sebagai tanda desimal
+                let totalSusutValue = parseInt($(this).find('td:eq(12)').text().replace(',', '.')) || 0;
+                console.log('TotalSusut = ' + totalSusutValue);
+
+                susut += totalSusutValue;
+            });
+
+            console.log('Total = ' + susut);
+
+            // Tetapkan nilai susut ke elemen dengan ID 'total_susut'
+            $('#total_susut').val(susut);
             //
             let newRow = '<tr>' +
                 '<td class="text-center">' + nomor_grading + '</td>' +
@@ -355,49 +373,13 @@
                 '</tr>';
 
             $('#dataTable tbody').append(newRow);
-            $('#total_pcs').val(totalPcsGrading);
-            $('#total_berat').val(totalBeratGrading);
+            // $('#total_pcs').val(totalPcsGrading);
+            // $('#total_berat').val(totalBeratGrading);
 
-            $('#dataTable tbody tr').each(function() {
-                let totalSusutValue = parseInt($(this).find('td:eq(12)').text()) || 0;
-                // console.log(susut);
-                susut += totalSusutValue;
-                // console.log('Total = ' + totalSusutValue);
-                $('#total_susut').val(susut);
-            });
+            // let susut = hitungNilaiSusut();
 
-            console.log('Total Susut: ' + susut);
+            // console.log('Total Susut: ' + susut);
 
-
-            // $('#total_susut').val(totalSusut.toFixed(4));
-            // Menambahkan data ke dalam array
-            // dataArrayDocNo.push(doc_no),
-            // dataArrayIDBoxRawMaterial.push(id_box_raw_material),
-            //     dataArrayIDBoxGradingKasar.push(id_box_grading_kasar),
-            //     dataArrayNomorBatch.push(nomor_batch),
-            //     dataArrayNamaSupplier.push(nama_supplier),
-            //     dataArrayNomorNotaInternal.push(nomor_nota_internal),
-            //     dataArrayJenisRawMaterial.push(jenis_raw_material),
-            //     dataArrayBerat.push(berat),
-            //     dataArrayKadarAir.push(kadar_air),
-            //     dataArrayJenisGrading.push(jenis_grading),
-            //     dataArrayBeratGrading.push(berat_grading),
-            //     dataArraySusut.push(susut),
-            //     dataArrayModal.push(modal),
-            //     dataArrayTotalModal.push(total_modal),
-            //     dataArrayBiayaProduksi.push(biaya_produksi),
-            //     dataArrayHargaEstimasi.push(harga_estimasi),
-            //     dataArrayNilaiLabaRugi.push(nilai_laba_rugi),
-            //     dataArrayNilaiProsentaseTotalKeuntungan.push(nilai_prosentase_total_keuntungan),
-            //     dataArrayNilaiDikurangiKeuntungan.push(nilai_dikurangi_keuntungan),
-            //     dataArrayProsentaseHargaGramasi.push(prosentase_harga_gramasi),
-            //     dataArraySelisihLabaRugiKg.push(selisih_laba_rugi_kg),
-            //     dataArraySelisihLabaRugiGram.push(selisih_laba_rugi_gram),
-            //     dataArrayHpp.push(hpp),
-            //     dataArrayTotalHpp.push(total_hpp),
-            //     dataArrayKeterangan.push(keterangan),
-            //     dataArrayUserCreated.push(user_created),
-            //     dataArrayUserUpdated.push(user_updated),
             dataArray.push({
                 // doc_no: doc_no,
                 nomor_grading: nomor_grading,
@@ -441,7 +423,8 @@
             // $('#kadar_air').val();
             // $('#modal').val();
             // $('#total_modal').val();
-            $('#jenis').val('');
+            $('#jenis').val($('#jenis option:first').val()).trigger('change');
+            // $('#jenis').val('');
             $('#berat_grading').val('');
             $('#pcs_grading').val('');
             $('#keterangan').val('');
@@ -455,10 +438,6 @@
             // Dapatkan elemen baris terkait dengan tombol delete yang diklik
             let row = $(button).closest('tr');
 
-            let pcsToRemove = parseFloat(row.find('td:eq(11)').text());
-            let beratToRemove = parseFloat(row.find('td:eq(10)').text());
-            let susutToRemove = parseFloat(row.find('td:eq(12)').text());
-
             // Hapus baris dari dataArray berdasarkan indeks baris di tabel
             let rowIndex = row.index();
             dataArray.splice(rowIndex, 1);
@@ -466,11 +445,27 @@
             // Hapus baris dari tabel
             row.remove();
             // Kurangkan nilai dari total_pcs dan total_berat
-            total_pcs -= pcsToRemove;
-            total_berat -= beratToRemove;
-            total_susut -= susutToRemove;
-            // Panggil ulang fungsi hitungNilaiSusut setelah menghapus baris
             hitungNilaiSusut();
+            // Total Berat
+            let totalBeratGrading = 0;
+            $('#dataTable tbody tr').each(function() {
+                let beratGradingValue = parseFloat($(this).find('td:eq(10)')
+                    .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
+                if (!isNaN(beratGradingValue)) {
+                    totalBeratGrading += beratGradingValue;
+                }
+            });
+            $('#total_berat').val(totalBeratGrading);
+            // Total Pcs
+            let totalPcsGrading = 0;
+            // Loop melalui setiap baris tabel untuk menghitung total pcs_grading
+            $('#dataTable tbody tr').each(function() {
+                // Ambil nilai dari kolom pcs_grading dalam setiap baris
+                let pcsGradingValue = parseFloat($(this).find('td:eq(11)').text()) || 0;
+                totalPcsGrading += pcsGradingValue;
+            });
+            $('#total_pcs').val(totalPcsGrading);
+
         }
 
         function getArray() {
@@ -538,7 +533,13 @@
                     Swal.close();
                 }
             });
+<<<<<<< HEAD
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> dev-helmi
+>>>>>>> ca36b40387cf871fbdccc1c8e7f02fe7211691ab
         }
     </script>
 @endsection

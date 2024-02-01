@@ -33,6 +33,6 @@ class GradingKasarInput extends Model
     }
     public function GradingKasarHasil()
     {
-        return $this->belongsTo(GradingKasarHasil::class, 'nomor_grading', 'nomor_grading');
+        return $this->hasMany(GradingKasarHasil::class, 'nomor_grading', 'nomor_grading');
     }
 }

@@ -386,8 +386,6 @@
                 </div>
             </div>
         </div>
-        </form>
-    </div>
     </div>
 @endsection
 @section('script')
@@ -452,9 +450,8 @@
             });
         });
 
-
-        $('#tujuan_kirim, #tujuan_kirim_edit').on('change', function() {
-            // Mengambil nilai tujuan_kirim yang dipilih
+        $('#tujuan_kirim').on('change', function() {
+            // Mengambil nilai id_box yang dipilih
             let selectedPcc = $(this).val();
 
             // Melakukan permintaan AJAX ke controller untuk mendapatkan data
@@ -578,16 +575,10 @@
             var total_modal = $('#total_modal').val();
             var keterangan_item = $('#keterangan_item').val();
             var user_created = $('#user_created').val();
-            var nomor_nota_internal = $('#nomor_nota_internal').val();
-
+            var user_updated = $('#user_updated').val();
             // Validasi input (sesuai kebutuhan)
-            if (!id_box || !nomor_batch || !nama_supplier || !jenis || !berat_masuk || !berat || !selisih_berat || !
-                kadar_air || !tujuan_kirim || !letak_tujuan || !inisial_tujuan || !modal || !total_modal || !user_created) {
-                Swal.fire({
-                    title: 'Innalillahi!',
-                    text: 'Data belum di inputkan semuanya, Silakan coba lagi.',
-                    icon: 'warning'
-                });
+            if (!id_box || !nomor_batch) {
+                alert('ID and nomor_batch are required.');
                 return;
             }
 
@@ -842,7 +833,7 @@
                 dataType: 'json', // payload is json,
                 success: function(response) {
                     Swal.fire({
-                        title: 'Sukses!',
+                        title: 'Alhamdulillah!',
                         text: 'Data berhasil disimpan.',
                         icon: 'success'
                     }).then((result) => {

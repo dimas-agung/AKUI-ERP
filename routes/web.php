@@ -134,6 +134,7 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputControl
     Route::post('/purchasing_exim/prm_raw_material_input/simpanData', 'simpanData')->name('prm_raw_material_input.simpanData');
     Route::post('/purchasing_exim/prm_raw_material_input/simpanDataItem', 'simpanDataItem')->name('prm_raw_material_input.simpanDataItem');
 });
+<<<<<<< HEAD
 Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarHasilController::class)->group(function () {
     Route::get('/transit_grading_kasar/grading_kasar_hasil', 'index')->name('grading_kasar_hasil.index');
     Route::get('/transit_grading_kasar/grading_kasar_hasil/create', 'create')->name('grading_kasar_hasil.create');
@@ -160,6 +161,8 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarStockCont
     Route::get('/transit_grading_kasar/grading_kasar_stock/getDataJenis', 'getDataJenis')->name('grading_kasar_stock.getDataJenis');
     Route::post('/transit_grading_kasar/grading_kasar_stock/simpanData', 'simpanData')->name('grading_kasar_stock.simpanData');
 });
+=======
+>>>>>>> ca36b40387cf871fbdccc1c8e7f02fe7211691ab
 
 Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->group(function () {
     Route::get('/StockTransitRawMaterial', 'index')->name('StockTransitRawMaterial.index');
@@ -182,6 +185,7 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputContro
     Route::delete('/PrmRawMaterialOutput/destroyHead/{id}', 'destroyHead')->name('PrmRawMaterialOutput.destroyHead');
     Route::get('/PrmRawMaterialOutput/get_data_id_box', 'set')->name('PrmRawMaterialOutput.set');
     Route::get('/PrmRawMaterialOutput/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
+    Route::get('/getBerat/{id}', 'getBerat')->name('PrmRawMaterialOutput.getBerat');
 });
 Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputController::class)->group(function(){
     Route::get('/GradingKasarInput', 'index')->name('GradingKasarInput.index');
@@ -244,7 +248,7 @@ Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::c
     Route::get('/PreCleaningInput/create', 'create')->name('PreCleaningInput.create');
     Route::post('/PreCleaningInput/store', 'store')->name('PreCleaningInput.store');
     Route::post('/PreCleaningInput/sendData', 'sendData')->name('PreCleaningInput.sendData');
-    Route::delete('/PreCleaningInput/destroy/{id}', 'destroy')->name('PreCleaningInput.destroy');
+    Route::delete('/PreCleaningInput/destroy/{nomor_bstb}', 'destroy')->name('PreCleaningInput.destroy');
     Route::get('/PreCleaningInput/get_data_id_box', 'set')->name('PreCleaningInput.set');
     Route::get('/PreCleaningInput/get_pcc', 'setpcc')->name('PreCleaningInput.setpcc');
 });
@@ -257,6 +261,20 @@ Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::c
     Route::get('/PreCleaningStock', 'index')->name('PreCleaningStock.index');
 });
 
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
+    Route::get('/PreCleaningInput', 'index')->name('PreCleaningInput.index');
+    Route::get('/PreCleaningInput/create', 'create')->name('PreCleaningInput.create');
+    Route::post('/PreCleaningInput/store', 'store')->name('PreCleaningInput.store');
+    Route::post('/PreCleaningInput/sendData', 'sendData')->name('PreCleaningInput.sendData');
+    Route::delete('/PreCleaningInput/destroy/{id}', 'destroy')->name('PreCleaningInput.destroy');
+    Route::get('/PreCleaningInput/get_data_id_box', 'set')->name('PreCleaningInput.set');
+    Route::get('/PreCleaningInput/get_pcc', 'setpcc')->name('PreCleaningInput.setpcc');
+});
+
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::class)->group(function () {
+    Route::get('/pre_cleaning_stock', 'index')->name('pre_cleaning_stock.index');
+});
+
 Route::controller(App\Http\Controllers\PreCleaning\PreCleaningOutputController::class)->group(function () {
     Route::get('/pre_cleaning_output', 'index')->name('pre_cleaning_output.index');
     Route::get('/pre_cleaning_output/create', 'create')->name('pre_cleaning_output.create');
@@ -266,7 +284,17 @@ Route::controller(App\Http\Controllers\PreCleaning\PreCleaningOutputController::
     Route::put('/pre_cleaning_output/update/{id}', 'update')->name('pre_cleaning_output.update');
     Route::delete('/pre_cleaning_output/destroy/{id}', 'destroy')->name('pre_cleaning_output.destroy');
     Route::get('/pre_cleaning_output/get_data_nomor_job', 'set')->name('preCleaningOutput.set');
-    // Route::delete('/pre_cleaning_output/destroy/{id}', 'destroy')->name('pre_cleaning_output.destroy');
+    Route::post('/pre_cleaning_output/simpanData', 'simpanData')->name('pre_cleaning_output.simpanData');
+});
+
+Route::controller(App\Http\Controllers\PreCleaning\TransitPreCleaningStockController::class)->group(function () {
+    Route::get('/transit_pre_cleaning_stock', 'index')->name('transit_pre_cleaning_stock.index');
+    Route::get('/transit_pre_cleaning_stock/create', 'create')->name('transit_pre_cleaning_stock.create');
+    Route::post('/transit_pre_cleaning_stock/store', 'store')->name('transit_pre_cleaning_stock.store');
+    Route::get('/transit_pre_cleaning_stock/show/{id}', 'show')->name('transit_pre_cleaning_stock.show');
+    Route::get('/transit_pre_cleaning_stock/edit/{id}', 'edit')->name('transit_pre_cleaning_stock.edit');
+    Route::put('/transit_pre_cleaning_stock/update/{id}', 'update')->name('transit_pre_cleaning_stock.update');
+    Route::delete('/transit_pre_cleaning_stock/destroy/{id}', 'destroy')->name('transit_pre_cleaning_stock.destroy');
 });
 
 Auth::routes();

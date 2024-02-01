@@ -97,14 +97,14 @@
                                     {{-- <td class="text-center">{{ $item->user_updated }}</td> --}}
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                action="{{ route('PreCleaningInput.destroy', $item->id) }}"
+                                            <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
+                                                action="{{ route('PreCleaningInput.destroy', $item->nomor_bstb) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn btn-link btn-danger"
                                                     data-original-title="Remove"
-                                                    onclick="confirmDelete({{ $item->id }})">
+                                                    onclick="confirmDelete('{{ $item->nomor_bstb }}')">
                                                     <i class="bi bi-trash3 text-danger"></i>
                                                 </button>
                                             </form>

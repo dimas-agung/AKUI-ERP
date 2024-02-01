@@ -28,7 +28,7 @@ class PrmRawMaterialStock extends Model
     ];
     public function PrmRawMaterialInputItem()
     {
-        return $this->hasmany(PrmRawMaterialInputItem::class);
+        return $this->hasMany(PrmRawMaterialInputItem::class, 'id_box', 'id_box');
     }
     public function PrmRawMaterialStockHistory()
     {

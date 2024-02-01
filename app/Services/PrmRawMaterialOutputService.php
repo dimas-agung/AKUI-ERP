@@ -84,7 +84,7 @@ class PrmRawMaterialOutputService
         $existingItem = StockTransitRawMaterial::where('tujuan_kirim', $itemObject->tujuan_kirim)
             ->where('id_box', $itemObject->id_box)
             ->first();
-        // return $existingItem
+            // return $existingItem
 
         $dataToUpdate = [
             'id_box'        => $itemObject->id_box,

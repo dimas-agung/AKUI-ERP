@@ -21,14 +21,14 @@ class PrmRawMaterialInputItem extends Model
         'harga_nota',
         'total_harga_nota',
         'harga_deal',
+        'fix_harga_deal',
         'keterangan',
         'user_created',
         'user_updated'
     ];
     public function PrmRawMaterialInput()
     {
-        // return $this->belongsTo(PrmRawMaterialInput::class, 'doc_no', 'doc_no');
-        return $this->belongsTo(PrmRawMaterialInput::class, 'created_at', 'created_at');
+        return $this->belongsTo(PrmRawMaterialInput::class, 'doc_no', 'doc_no');
     }
     public function PrmRawMaterialStock()
     {

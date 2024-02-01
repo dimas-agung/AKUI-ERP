@@ -17,6 +17,7 @@ class PrmRawMaterialOutputItem extends Model
         'nomor_batch',
         'id_box',
         'nama_supplier',
+        'status',
         'jenis',
         'berat',
         'kadar_air',

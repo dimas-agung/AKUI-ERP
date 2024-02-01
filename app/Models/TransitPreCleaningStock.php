@@ -5,24 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GradingKasarStock extends Model
+class TransitPreCleaningStock extends Model
 {
     use HasFactory;
-    protected $table = 'grading_kasar_stocks';
+    protected $table = 'transit_pre_cleaning_stocks';
     protected $fillable = [
-        'doc_no',
+        'nomor_job',
         'id_box_grading_kasar',
-        'nomor_batch',
+        'nomor_bstb',
         'nama_supplier',
         'nomor_nota_internal',
-        'jenis_raw_material',
-        'jenis_grading',
         'id_box_raw_material',
-        'berat_masuk',
-        'berat_keluar',
-        'pcs_masuk',
-        'pcs_keluar',
-        'avg_kadar_air',
+        'jenis_raw_material',
+        'jenis_kirim',
+        'berat_kirim',
+        'pcs_kirim',
+        'kadar_air',
+        'tujuan_kirim',
         'nomor_grading',
         'modal',
         'total_modal',
@@ -30,8 +29,8 @@ class GradingKasarStock extends Model
         'user_created',
         'user_updated',
     ];
-    public function GradingKasarHasil()
+    public function PreCleaningOutput()
     {
-        return $this->hasmany(GradingKasarHasil::class);
+        return $this->hasMany(PreCleaningOutput::class, 'nomor_job', 'nomor_job');
     }
 }

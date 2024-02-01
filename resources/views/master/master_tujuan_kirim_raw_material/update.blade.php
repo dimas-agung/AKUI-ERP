@@ -1,9 +1,9 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Master
 @endsection
 @section('title')
-    UPDATE DATA MASTER TUJUAN KIRIM RAW MATERIAL
+    Update Master Tujuan Kirim Raw Material
 @endsection
 @section('content')
     <div class="container">

@@ -4,7 +4,7 @@
     Purchasing & EXIM
 @endsection
 @section('title')
-    Purchasing Raw Material
+    Purchasing Raw Material Input
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -99,7 +99,6 @@
             </div>
         </div>
     </div>
-    {{-- </div> --}}
 @endsection
 <script>
     function redirectToPage(pageType) {

@@ -10,6 +10,7 @@ use App\Services\GradingKasarHasilService;
 use App\Services\HppService;
 use App\Http\Requests\GradingKasarHasilRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -48,6 +49,7 @@ class GradingKasarHasilController extends Controller
     {
         $nomor_grading = $request->nomor_grading;
         $data = GradingKasarInput::where('nomor_grading', $nomor_grading)->first();
+        // return $data;
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
     }
@@ -55,7 +57,6 @@ class GradingKasarHasilController extends Controller
     public function simpanData(
         GradingKasarHasilRequest $request,
         GradingKasarHasilService $GradingKasarHasilService,
-
     ) {
         $dataArray = json_decode($request->input('data'));
         $dataColl = collect($dataArray);
@@ -97,31 +98,27 @@ class GradingKasarHasilController extends Controller
         }
     }
 
-    // show
-    // public function show(string $id)
-    // {
-    //     $i = 1;
-    //     // $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
-    //     // $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
-    //     //get by ID
-    //     $MasterGKH = PrmRawMaterialInput::findOrFail($id);
-    //     $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
-    //         ->where(['id' => $id])
-    //         ->first();
-
-
-    //     return response()->view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM', 'i'));
-    // }
-    // destroy
     public function destroyInput($id): RedirectResponse
     {
-        //get by ID
-        $GradingKasarHasil = GradingKasarHasil::findOrFail($id);
+        try {
+            // Temukan record berdasarkan ID
+            $GradingKasarHasil = GradingKasarHasil::findOrFail($id);
 
-        //delete
-        $GradingKasarHasil->delete();
+            // Hapus semua item terkait
+            $GradingKasarHasil->GradingKasarStock()->delete();
 
-        //redirect to index
-        return redirect()->route('grading_kasar_hasil.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            // Hapus record utama
+            $GradingKasarHasil->delete();
+
+            // Jika tidak ada kesalahan, komit transaksi
+            DB::commit();
+
+            return redirect()->route('grading_kasar_hasil.index')->with('success', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, rollback transaksi
+            DB::rollback();
+
+            return redirect()->route('grading_kasar_hasil.index')->with('error', 'Gagal menghapus data');
+        }
     }
 }
