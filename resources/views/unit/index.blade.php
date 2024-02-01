@@ -17,7 +17,7 @@
                 </button>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="overflow: auto;">
             {{-- Create Data --}}
             <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
                 aria-hidden="true">
@@ -83,9 +83,8 @@
                     </div>
                 </div>
             </div>
-
             <div class="table-responsive">
-                <table id="add-row" class="display table table-striped table-hover">
+                <table id="table1" class="display" style="width:100%">
                     <thead>
                         <tr>
                             <th class="text-center">No</th>

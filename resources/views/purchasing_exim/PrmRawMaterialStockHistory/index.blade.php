@@ -13,26 +13,9 @@
                 <h4 class="card-title">Data Purchasing Raw Material Stock Historys</h4>
             </div>
         </div>
-        <div class="card-body">
-            {{-- Create Data --}}
-            @if (session()->has('success'))
-                <div class="alert alert-success">
-                    <strong>Sukses: </strong>{{ session()->get('success') }}
-                </div>
-            @endif
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul><strong>
-                            @foreach ($errors->all() as $error)
-                                <li> {{ $error }} </li>
-                            @endforeach
-                        </strong>
-                    </ul>
-                    <p>Mohon periksa kembali formulir Anda.</p>
-                </div>
-            @endif
+        <div class="card-body" style="overflow: auto;">
             <div class="table-responsive">
-                <table id="table1" class="table">
+                <table id="table1" class="display" style="width:100%">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">No</th>

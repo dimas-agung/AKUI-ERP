@@ -13,9 +13,9 @@
                     <h4 class="card-title">Data Grading Kasar Stock</h4>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="overflow: auto;">
                 <div class="table-responsive">
-                    <table id="table1" class="table">
+                    <table id="table1" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
@@ -43,31 +43,6 @@
                                 {{-- <th class="text-center">Action</th> --}}
                             </tr>
                         </thead>
-                        <tfoot>
-                            <th class="text-center">No</th>
-                            <th class="text-center">Nomor Job</th>
-                            <th class="text-center">Nomor BSTB</th>
-                            <th class="text-center">Id Box Grading Kasar</th>
-                            <th class="text-center">Nomor Batch</th>
-                            <th class="text-center">Nama Supplier</th>
-                            <th class="text-center">Nomor Nota Internal</th>
-                            <th class="text-center">Id Box Raw Material</th>
-                            <th class="text-center">Jenis Raw Material</th>
-                            <th class="text-center">Jenis Kirim</th>
-                            <th class="text-center">Berat Masuk</th>
-                            <th class="text-center">Berat Keluar</th>
-                            <th class="text-center">Pcs Masuk</th>
-                            <th class="text-center">Pcs Keluar</th>
-                            <th class="text-center">Avg Kadar Air</th>
-                            <th class="text-center">Nomor Grading</th>
-                            <th class="text-center">Tujuan Kirim</th>
-                            <th class="text-center">Modal</th>
-                            <th class="text-center">Total Modal</th>
-                            <th class="text-center">Keterangan</th>
-                            <th class="text-center">NIP Admin</th>
-                            <th class="text-center">User Updated</th>
-                            {{-- <th class="text-center">Action</th> --}}
-                        </tfoot>
                         <tbody>
                             @forelse ($PCStock as $item)
                                 <tr>

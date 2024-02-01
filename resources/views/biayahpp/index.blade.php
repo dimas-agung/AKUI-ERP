@@ -18,7 +18,7 @@
                 </button>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="overflow: auto;">
             {{-- Create Data --}}
             <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
                 aria-hidden="true">
@@ -96,9 +96,8 @@
                     </div>
                 </div>
             </div>
-
             <div class="table-responsive">
-                <table id="table1" class="display table table-striped table-hover">
+                <table id="table1" class="display" style="width:100%">
                     <thead>
                         <tr>
                             <th class="text-center">No</th>
@@ -111,16 +110,6 @@
                             <th style="width: 10%" class="text-center">Action</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <th>No</th>
-                        <th>Nama Unit</th>
-                        <th>Jenis Biaya</th>
-                        <th>Biaya PerGram</th>
-                        <th>Status</th>
-                        <th>Tgl Buat</th>
-                        <th>Tgl Update</th>
-                        <th>Action</th>
-                    </tfoot>
                     <tbody>
                         @forelse ($biaya as $post)
                             <tr>
