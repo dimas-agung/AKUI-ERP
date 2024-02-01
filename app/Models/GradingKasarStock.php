@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class GradingKasarStock extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'doc_no',
         'id_box_grading_kasar',
@@ -32,6 +31,7 @@ class GradingKasarStock extends Model
     ];
     public function GradingKasarHasil()
     {
+<<<<<<< HEAD
         return $this->hasMany(GradingKasarHasil::class, 'id_box_grading_kasar', 'id_box_grading_kasar');
     }
     public function GradingKasarOutput()
@@ -40,3 +40,8 @@ class GradingKasarStock extends Model
     }
 }
 
+=======
+        return $this->hasmany(GradingKasarHasil::class);
+    }
+}
+>>>>>>> dev-helmi

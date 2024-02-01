@@ -21,16 +21,16 @@ class MasterSupplierRawMaterialController extends Controller
         ]);
     }
     // create
-    public function create()
-    {
-        return view('master.master_supplier_raw_material.create');
-    }
+    // public function create()
+    // {
+    //     return view('master.master_supplier_raw_material.create');
+    // }
     // store
     public function store(Request $request): RedirectResponse
     {
         //validate form
         $this->validate($request, [
-            'nama_supplier'             => 'required|unique:master_supplier_raw_materials',
+            'nama_supplier'             => 'required',
             'inisial_supplier'          => 'required|unique:master_supplier_raw_materials'
         ], [
             'nama_supplier.required'    => 'Kolom Nama Supplier Wajib diisi.',
@@ -67,21 +67,21 @@ class MasterSupplierRawMaterialController extends Controller
     {
         //get by ID
         $MasterSPR = MasterSupplierRawMaterial::findOrFail($id);
-        $ValidasiNamaSupplier = 'required';
+        // $ValidasiNamaSupplier = 'required';
         $ValidasiInisialSupplier = 'required';
-        if ($request->nama_supplier != $MasterSPR->nama_supplier) {
-            $ValidasiNamaSupplier = 'required|unique:master_supplier_raw_materials';
-        }
+        // if ($request->nama_supplier != $MasterSPR->nama_supplier) {
+        //     $ValidasiNamaSupplier = 'required|unique:master_supplier_raw_materials';
+        // }
         if ($request->inisial_supplier != $MasterSPR->inisial_supplier) {
             $ValidasiInisialSupplier = 'required|unique:master_supplier_raw_materials';
         }
         // validate form
         $this->validate($request, [
-            'nama_supplier'      => $ValidasiNamaSupplier,
+            // 'nama_supplier'      => $ValidasiNamaSupplier,
+            'nama_supplier'      => 'required',
             'inisial_supplier'   => $ValidasiInisialSupplier,
             'status'             => 'required',
         ], [
-            'nama_supplier'     => 'Nama Supplier Sudah Digunakan',
             'inisial_supplier'  => 'Inisial Supplier Sudah Digunakan',
 
         ]);

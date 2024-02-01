@@ -64,7 +64,6 @@ class GradingKasarHasilService
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
         GradingKasarStock::create($dataToUpdate);
-
         $GradingKasarHasil = GradingKasarHasil::create([
             // 'doc_no'            => $item->doc_no,
             'nomor_grading'                     => $item->nomor_grading,

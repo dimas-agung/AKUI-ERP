@@ -450,8 +450,8 @@
             });
         });
 
-        $('#tujuan_kirim, #tujuan_kirim_edit').on('change', function() {
-            // Mengambil nilai tujuan_kirim yang dipilih
+        $('#tujuan_kirim').on('change', function() {
+            // Mengambil nilai id_box yang dipilih
             let selectedPcc = $(this).val();
 
             // Melakukan permintaan AJAX ke controller untuk mendapatkan data
@@ -575,29 +575,10 @@
             var total_modal = $('#total_modal').val();
             var keterangan_item = $('#keterangan_item').val();
             var user_created = $('#user_created').val();
-            var nomor_nota_internal = $('#nomor_nota_internal').val();
-
-
-            // Inisialisasi array untuk menyimpan field yang belum terisi
-            let fieldsNotFilled = [];
-            // Periksa setiap field
-            if (!id_box) fieldsNotFilled.push('ID Box');
-            if (!nama_supplier) fieldsNotFilled.push('Nama Supllier');
-            if (!tujuan_kirim) fieldsNotFilled.push('Tujuan Kirim');
-            if (!letak_tujuan) fieldsNotFilled.push('Inisial Kirim');
-            if (!user_created) fieldsNotFilled.push('NIP Admin');
-            if (!berat || berat <= 0) fieldsNotFilled.push('Berat Keluar');
-
-            // Cek apakah ada field yang belum terisi
-            if (fieldsNotFilled.length > 0) {
-                // Membuat pesan teks yang mencantumkan field yang belum terisi
-                let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
-
-                Swal.fire({
-                    title: 'Innalillahi!',
-                    text: message,
-                    icon: 'warning'
-                });
+            var user_updated = $('#user_updated').val();
+            // Validasi input (sesuai kebutuhan)
+            if (!id_box || !nomor_batch) {
+                alert('ID and nomor_batch are required.');
                 return;
             }
 

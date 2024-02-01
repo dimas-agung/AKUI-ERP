@@ -57,7 +57,6 @@ class GradingKasarHasilController extends Controller
     public function simpanData(
         GradingKasarHasilRequest $request,
         GradingKasarHasilService $GradingKasarHasilService,
-
     ) {
         $dataArray = json_decode($request->input('data'));
         $dataColl = collect($dataArray);

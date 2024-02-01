@@ -18,6 +18,7 @@ class PrmRawMaterialStockHistory extends Model
         'avg_kadar_air',
         'modal',
         'total_modal',
+        'fix_harga_deal',
         'keterangan',
         'status',
         'user_created'
@@ -33,9 +34,12 @@ class PrmRawMaterialStockHistory extends Model
     public function PrmRawMaterialInputItem()
     {
         return $this->hasMany(PrmRawMaterialInputItem::class, 'id_box', 'id_box');
+<<<<<<< HEAD
     }
     public function PrmRawMaterialOutputtItem()
     {
         return $this->hasOne(PrmRawMaterialOutputItem::class, 'id_box', 'id_box');
+=======
+>>>>>>> dev-helmi
     }
 }

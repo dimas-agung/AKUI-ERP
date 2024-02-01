@@ -14,7 +14,7 @@ class PreCleaningStockController extends Controller
         $i = 1;
         $PCStock = PreCleaningStock::all();
         // dd($PCStock);
-        return response()->view('PreCleaning.PreCleaningStock.index', [
+        return response()->view('pre_cleaning.pre_cleaning_stock.index', [
             'PCStock'       => $PCStock,
             'i'             => $i
         ]);

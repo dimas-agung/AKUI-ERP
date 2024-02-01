@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Purchasing & EXIM
 @endsection
 @section('title')
@@ -14,10 +14,14 @@
                 </div>
             </div>
             <div class="card-body">
-                {{-- Create Data --}}
-                @if (session()->has('success'))
-                    <div class="alert alert-success">
-                        <strong>Sukses: </strong>{{ session()->get('success') }}
+                <div class="card">
+                    {{-- card header --}}
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            <div class="col-sm-12 d-flex justify-content-between">
+                                Data Purchasing Raw Material Stock
+                            </div>
+                        </h5>
                     </div>
                 @endif
                 @if ($errors->any())
@@ -97,3 +101,22 @@
         </div>
     </div>
 @endsection
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Anda yakin ingin menghapus data ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d61609',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika dikonfirmasi, submit form
+                document.getElementById('deleteForm' + id).submit();
+            }
+        });
+    }
+</script>

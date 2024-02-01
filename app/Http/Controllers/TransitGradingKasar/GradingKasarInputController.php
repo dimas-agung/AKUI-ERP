@@ -196,5 +196,4 @@ class GradingKasarInputController extends Controller
             return redirect()->route('GradingKasarInput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
-
 }

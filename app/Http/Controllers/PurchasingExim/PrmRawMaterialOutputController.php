@@ -19,8 +19,9 @@ use Illuminate\Support\Facades\DB;
 
 class PrmRawMaterialOutputController extends Controller
 {
-    public function index(){
-        $i =1;
+    public function index()
+    {
+        $i = 1;
         $PrmRawMOIC = PrmRawMaterialOutputItem::all();
         // return $PrmRawMOIC;
         return response()->view('purchasing_exim.PrmRawMaterialOutput.index', [
@@ -45,7 +46,7 @@ class PrmRawMaterialOutputController extends Controller
     {
         $id_box = $request->id_box;
         // Lakukan logika untuk mengatur nomor batch berdasarkan id_box
-        $data = PrmRawMaterialStock::where('id_box',$id_box)->first();
+        $data = PrmRawMaterialStock::where('id_box', $id_box)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -55,7 +56,7 @@ class PrmRawMaterialOutputController extends Controller
     {
         $tujuan_kirim = $request->tujuan_kirim;
         // Lakukan logika untuk mengatur nomor batch berdasarkan tujuan_kirim
-        $data = MasterTujuanKirimRawMaterial::where('tujuan_kirim',$tujuan_kirim)->first();
+        $data = MasterTujuanKirimRawMaterial::where('tujuan_kirim', $tujuan_kirim)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -64,8 +65,9 @@ class PrmRawMaterialOutputController extends Controller
     // Contoh controller
     public function sendData(
         PrmRawMaterialOutputRequest $request,
-        PrmRawMaterialOutputService $prmRawMaterialOutputService)
-        { try {
+        PrmRawMaterialOutputService $prmRawMaterialOutputService
+    ) {
+        try {
             $dataArray = json_decode($request->input('data'));
             // return $request->input('data');
             // $dataStock = json_decode($request->input('dataStock'));
@@ -105,10 +107,10 @@ class PrmRawMaterialOutputController extends Controller
             'kadar_air'     => 'required',
             'tujuan_kirim'  => 'required',
             'letak_tujuan'  => 'required',
-            'inisial_tujuan'=> 'required',
+            'inisial_tujuan' => 'required',
             'modal'         => 'required',
             'total_modal'   => 'required',
-            'keterangan_item'=> 'required',
+            'keterangan_item' => 'required',
             'user_created'  => 'required'
         ]);
 
@@ -124,10 +126,10 @@ class PrmRawMaterialOutputController extends Controller
             'kadar_air'     => $request->kadar_air,
             'tujuan_kirim'  => $request->tujuan_kirim,
             'letak_tujuan'  => $request->letak_tujuan,
-            'inisial_tujuan'=> $request->inisial_tujuan,
+            'inisial_tujuan' => $request->inisial_tujuan,
             'modal'         => $request->modal,
             'total_modal'   => $request->total_modal,
-            'keterangan_item'=> $request->keterangan_item,
+            'keterangan_item' => $request->keterangan_item,
             'user_created'  => $request->user_created,
             'user_updated'  => $request->user_updated ?? "There isn't any",
         ]);

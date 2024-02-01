@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
+use App\Services\GradingKasarHasilService;
+use App\Services\HppService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,6 +16,12 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        $this->app->bind(GradingKasarHasilService::class, function ($app) {
+            return new GradingKasarHasilService();
+        });
+        $this->app->bind(HppService::class, function ($app) {
+            return new HppService();
+        });
     }
 
     /**

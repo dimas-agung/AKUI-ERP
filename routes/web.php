@@ -79,6 +79,46 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::c
     Route::delete('/master_tujuan_kirim_raw_material/destroy/{id}', 'destroy')->name('master_tujuan_kirim_raw_material.destroy');
 });
 
+Route::controller(App\Http\Controllers\MasterTujuanKirimGradingKasarController::class)->group(function () {
+    Route::get('/master_tujuan_kirim_grading_kasar', 'index')->name('master_tujuan_kirim_grading_kasar.index');
+    Route::get('/master_tujuan_kirim_grading_kasar/create', 'create')->name('master_tujuan_kirim_grading_kasar.create');
+    Route::post('/master_tujuan_kirim_grading_kasar/store', 'store')->name('master_tujuan_kirim_grading_kasar.store');
+    Route::get('/master_tujuan_kirim_grading_kasar/show/{id}', 'show')->name('master_tujuan_kirim_grading_kasar.show');
+    Route::get('/master_tujuan_kirim_grading_kasar/edit/{id}', 'edit')->name('master_tujuan_kirim_grading_kasar.edit');
+    Route::put('/master_tujuan_kirim_grading_kasar/update/{id}', 'update')->name('master_tujuan_kirim_grading_kasar.update');
+    Route::delete('/master_tujuan_kirim_grading_kasar/destroy/{id}', 'destroy')->name('master_tujuan_kirim_grading_kasar.destroy');
+});
+
+Route::controller(App\Http\Controllers\MasterJenisGradingController::class)->group(function () {
+    Route::get('/master_jenis_grading', 'index')->name('master_jenis_grading.index');
+    Route::get('/master_jenis_grading/create', 'create')->name('master_jenis_grading.create');
+    Route::post('/master_jenis_grading/store', 'store')->name('master_jenis_grading.store');
+    Route::get('/master_jenis_grading/show/{id}', 'show')->name('master_jenis_grading.show');
+    Route::get('/master_jenis_grading/edit/{id}', 'edit')->name('master_jenis_grading.edit');
+    Route::put('/master_jenis_grading/update/{id}', 'update')->name('master_jenis_grading.update');
+    Route::delete('/master_jenis_grading/destroy/{id}', 'destroy')->name('master_jenis_grading.destroy');
+});
+
+Route::controller(App\Http\Controllers\MasterJenisGradingKasarController::class)->group(function () {
+    Route::get('/master_jenis_grading_kasar', 'index')->name('master_jenis_grading_kasar.index');
+    Route::get('/master_jenis_grading_kasar/create', 'create')->name('master_jenis_grading_kasar.create');
+    Route::post('/master_jenis_grading_kasar/store', 'store')->name('master_jenis_grading_kasar.store');
+    Route::get('/master_jenis_grading_kasar/show/{id}', 'show')->name('master_jenis_grading_kasar.show');
+    Route::get('/master_jenis_grading_kasar/edit/{id}', 'edit')->name('master_jenis_grading_kasar.edit');
+    Route::put('/master_jenis_grading_kasar/update/{id}', 'update')->name('master_jenis_grading_kasar.update');
+    Route::delete('/master_jenis_grading_kasar/destroy/{id}', 'destroy')->name('master_jenis_grading_kasar.destroy');
+});
+
+Route::controller(App\Http\Controllers\MasterOperatorController::class)->group(function () {
+    Route::get('/master_operator', 'index')->name('master_operator.index');
+    Route::get('/master_operator/create', 'create')->name('master_operator.create');
+    Route::post('/master_operator/store', 'store')->name('master_operator.store');
+    Route::get('/master_operator/show/{id}', 'show')->name('master_operator.show');
+    Route::get('/master_operator/edit/{id}', 'edit')->name('master_operator.edit');
+    Route::put('/master_operator/update/{id}', 'update')->name('master_operator.update');
+    Route::delete('/master_operator/destroy/{id}', 'destroy')->name('master_operator.destroy');
+});
+
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
     Route::get('/purchasing_exim/prm_raw_material_input', 'index')->name('prm_raw_material_input.index');
     Route::get('/purchasing_exim/prm_raw_material_input/create', 'create')->name('prm_raw_material_input.create');
@@ -192,7 +232,42 @@ Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::c
     Route::get('/PreCleaningStock', 'index')->name('PreCleaningStock.index');
 });
 
-Auth::routes();
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
+    Route::get('/PreCleaningInput', 'index')->name('PreCleaningInput.index');
+    Route::get('/PreCleaningInput/create', 'create')->name('PreCleaningInput.create');
+    Route::post('/PreCleaningInput/store', 'store')->name('PreCleaningInput.store');
+    Route::post('/PreCleaningInput/sendData', 'sendData')->name('PreCleaningInput.sendData');
+    Route::delete('/PreCleaningInput/destroy/{id}', 'destroy')->name('PreCleaningInput.destroy');
+    Route::get('/PreCleaningInput/get_data_id_box', 'set')->name('PreCleaningInput.set');
+    Route::get('/PreCleaningInput/get_pcc', 'setpcc')->name('PreCleaningInput.setpcc');
+});
 
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::class)->group(function () {
+    Route::get('/pre_cleaning_stock', 'index')->name('pre_cleaning_stock.index');
+});
+
+Route::controller(App\Http\Controllers\PreCleaning\PreCleaningOutputController::class)->group(function () {
+    Route::get('/pre_cleaning_output', 'index')->name('pre_cleaning_output.index');
+    Route::get('/pre_cleaning_output/create', 'create')->name('pre_cleaning_output.create');
+    Route::post('/pre_cleaning_output/store', 'store')->name('pre_cleaning_output.store');
+    Route::get('/pre_cleaning_output/show/{id}', 'show')->name('pre_cleaning_output.show');
+    Route::get('/pre_cleaning_output/edit/{id}', 'edit')->name('pre_cleaning_output.edit');
+    Route::put('/pre_cleaning_output/update/{id}', 'update')->name('pre_cleaning_output.update');
+    Route::delete('/pre_cleaning_output/destroy/{id}', 'destroy')->name('pre_cleaning_output.destroy');
+    Route::get('/pre_cleaning_output/get_data_nomor_job', 'set')->name('preCleaningOutput.set');
+    Route::post('/pre_cleaning_output/simpanData', 'simpanData')->name('pre_cleaning_output.simpanData');
+});
+
+Route::controller(App\Http\Controllers\PreCleaning\TransitPreCleaningStockController::class)->group(function () {
+    Route::get('/transit_pre_cleaning_stock', 'index')->name('transit_pre_cleaning_stock.index');
+    Route::get('/transit_pre_cleaning_stock/create', 'create')->name('transit_pre_cleaning_stock.create');
+    Route::post('/transit_pre_cleaning_stock/store', 'store')->name('transit_pre_cleaning_stock.store');
+    Route::get('/transit_pre_cleaning_stock/show/{id}', 'show')->name('transit_pre_cleaning_stock.show');
+    Route::get('/transit_pre_cleaning_stock/edit/{id}', 'edit')->name('transit_pre_cleaning_stock.edit');
+    Route::put('/transit_pre_cleaning_stock/update/{id}', 'update')->name('transit_pre_cleaning_stock.update');
+    Route::delete('/transit_pre_cleaning_stock/destroy/{id}', 'destroy')->name('transit_pre_cleaning_stock.destroy');
+});
+
+Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -32,8 +32,12 @@ class PreCleaningStock extends Model
         'user_created',
         'user_update',
     ];
-    public function preCleaningInputs()
+    // public function preCleaningInputs()
+    // {
+    //     return $this->belongsTo(PreCleaningInput::class, 'nomor_job', 'nomor_job');
+    // }
+    public function PreCleaningOutput()
     {
-        return $this->belongsTo(PreCleaningInput::class, 'nomor_job', 'nomor_job');
+        return $this->hasMany(PreCleaningOutput::class, 'nomor_job', 'nomor_job');
     }
 }
