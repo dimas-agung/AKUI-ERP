@@ -134,35 +134,6 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputControl
     Route::post('/purchasing_exim/prm_raw_material_input/simpanData', 'simpanData')->name('prm_raw_material_input.simpanData');
     Route::post('/purchasing_exim/prm_raw_material_input/simpanDataItem', 'simpanDataItem')->name('prm_raw_material_input.simpanDataItem');
 });
-<<<<<<< HEAD
-Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarHasilController::class)->group(function () {
-    Route::get('/transit_grading_kasar/grading_kasar_hasil', 'index')->name('grading_kasar_hasil.index');
-    Route::get('/transit_grading_kasar/grading_kasar_hasil/create', 'create')->name('grading_kasar_hasil.create');
-    Route::get('/transit_grading_kasar/grading_kasar_hasil/create_item', 'createItem')->name('grading_kasar_hasil.createItem');
-    Route::post('/transit_grading_kasar/grading_kasar_hasil/store', 'store')->name('grading_kasar_hasil.store');
-    Route::get('/transit_grading_kasar/grading_kasar_hasil/show/{id}', 'show')->name('grading_kasar_hasil.show');
-    Route::get('/transit_grading_kasar/grading_kasar_hasil/edit/{id}', 'edit')->name('grading_kasar_hasil.edit');
-    Route::post('/transit_grading_kasar/grading_kasar_hasil/update/{id}', 'update')->name('grading_kasar_hasil.update');
-    Route::delete('/transit_grading_kasar/grading_kasar_hasil/destroyInput/{id}', 'destroyInput')->name('grading_kasar_hasil.destroyInput');
-    Route::delete('/transit_grading_kasar/grading_kasar_hasil/destroyItem/{id}', 'destroyItem')->name('grading_kasar_hasil.destroyItem');
-    Route::get('/transit_grading_kasar/grading_kasar_hasil/getDataSupplier', 'getDataSupplier')->name('grading_kasar_hasil.getDataSupplier');
-    Route::get('/transit_grading_kasar/grading_kasar_hasil/getDataJenis', 'getDataJenis')->name('grading_kasar_hasil.getDataJenis');
-    Route::post('/transit_grading_kasar/grading_kasar_hasil/simpanData', 'simpanData')->name('grading_kasar_hasil.simpanData');
-    Route::get('/transit_grading_kasar/grading_kasar_hasil/get_data_nama_jenis', 'set')->name('gradingKasarHasil.set');
-});
-
-Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarStockController::class)->group(function () {
-    Route::get('/transit_grading_kasar/grading_kasar_stock', 'index')->name('grading_kasar_stock.index');
-    Route::get('/transit_grading_kasar/grading_kasar_stock/create', 'create')->name('grading_kasar_stock.create');
-    Route::post('/transit_grading_kasar/grading_kasar_stock/store', 'store')->name('grading_kasar_stock.store');
-    Route::get('/transit_grading_kasar/grading_kasar_stock/show/{id}', 'show')->name('grading_kasar_stock.show');
-    Route::get('/transit_grading_kasar/grading_kasar_stock/edit/{id}', 'edit')->name('grading_kasar_stock.edit');
-    Route::post('/transit_grading_kasar/grading_kasar_stock/update/{id}', 'update')->name('grading_kasar_stock.update');
-    Route::get('/transit_grading_kasar/grading_kasar_stock/getDataJenis', 'getDataJenis')->name('grading_kasar_stock.getDataJenis');
-    Route::post('/transit_grading_kasar/grading_kasar_stock/simpanData', 'simpanData')->name('grading_kasar_stock.simpanData');
-});
-=======
->>>>>>> ca36b40387cf871fbdccc1c8e7f02fe7211691ab
 
 Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->group(function () {
     Route::get('/StockTransitRawMaterial', 'index')->name('StockTransitRawMaterial.index');
