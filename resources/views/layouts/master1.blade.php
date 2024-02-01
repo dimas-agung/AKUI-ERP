@@ -20,9 +20,14 @@
     {{-- Choice --}}
     <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
     {{-- DataTable --}}
-    <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('./assets/compiled/css/table-datatable-jquery.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css') }}">
+    <style>
+        .dataTables_wrapper {
+            overflow-x: hidden;
+        }
+    </style>
 </head>
 
 <body>
@@ -131,8 +136,7 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="sidebar-title">Menu</li>
-
+                        <li class="sidebar-title">Master</li>
                         <li
                             class="sidebar-item  has-sub {{ Request::is('work', 'unit', 'biayahpp', 'master_supplier_raw_material', 'master_jenis_raw_material', 'master_tujuan_kirim_raw_material', 'master_jenis_grading', 'master_jenis_grading_kasar', 'master_tujuan_kirim_grading_kasar', 'master_operator') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
@@ -189,6 +193,7 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-title">Purchasing & EXIM</li>
                         <li
                             class="sidebar-item  has-sub {{ Request::is('purchasing_exim/prm_raw_material_input', 'purchasing_exim/prm_raw_material_stock', 'PrmRawMaterialOutput', 'StockTransitGradingKasar') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
@@ -222,65 +227,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="sidebar-item  has-sub ">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-grid-1x2-fill"></i>
-                                <span>Production</span>
-                            </a>
-                            <ul class="submenu">
-                                <li class="submenu-item has-sub ">
-                                    <a href="#" class="submenu-link">Production</a>
-                                    <ul class="submenu">
-                                        <li class="submenu-item has-sub ">
-                                            <a href="#" class="submenu-link">Bahan Baku</a>
-                                            <ul class="submenu">
-                                                <li class="submenu-item has-sub ">
-                                                    <a href="#" class="submenu-link">Grading Kasar</a>
-                                                    <ul class="submenu">
-                                                        <li class="submenu-item">
-                                                            <a href="#" class="submenu-link">Adding</a>
-                                                        </li>
-                                                        <li class="submenu-item">
-                                                            <a href="" class="submenu-link">Input</a>
-                                                        </li>
-                                                        <li class="submenu-item">
-                                                            <a href="" class="submenu-link">Stock</a>
-                                                        </li>
-                                                        <li class="submenu-item">
-                                                            <a href="" class="submenu-link">Output</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="submenu-item has-sub">
-                                                    <a href="" class="submenu-link">Pre Cleaning</a>
-                                                </li>
-                                                <li class="submenu-item has-sub">
-                                                    <a href="" class="submenu-link">Grading Halus</a>
-                                                </li>
-                                                <li class="submenu-item has-sub">
-                                                    <a href="" class="submenu-link">Pre Wash</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="submenu-item has-sub">
-                                            <a href="" class="submenu-link">Dry A</a>
-                                        </li>
-                                        <li class="submenu-item has-sub">
-                                            <a href="" class="submenu-link">Final Grading</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="submenu-item has-sub">
-                                    <a href="" class="submenu-link">Cleaning</a>
-                                </li>
-                                <li class="submenu-item has-sub">
-                                    <a href="" class="submenu-link">Moulding</a>
-                                </li>
-                                <li class="submenu-item has-sub">
-                                    <a href="" class="submenu-link">Packing</a>
-                                </li>
-                            </ul>
-                        </li>
+                        <li class="sidebar-title">Production</li>
                         <li
                             class="sidebar-item  has-sub {{ Request::is('StockTransitGradingKasar', 'GradingKasarInput', 'transit_grading_kasar/grading_kasar_hasil', 'transit_grading_kasar/grading_kasar_stock') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
@@ -404,15 +351,37 @@
     <script src="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/sweetalert2.js') }}"></script>
     {{-- DataTable --}}
-    <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/extensions/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('assets/static/js/pages/datatables.js') }}"></script>
+    <script src="{{ asset('https://code.jquery.com/jquery-3.7.0.js') }}"></script>
+    <script src="{{ asset('https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js') }}"></script>
+    <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js') }}"></script>
 
     <script>
         function goBack() {
             window.history.back();
         }
+
+        $(document).ready(function() {
+            $('#table1').DataTable({
+                dom: '<"row"<"col-md-2"l><"col-md-6"B><"col-md-4"f>>tip',
+                buttons: [{
+                        extend: 'pdfHtml5',
+                        title: 'Data Tabel',
+                        pageSize: 'A4', // Set ukuran kertas PDF menjadi A4
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    'csv', 'excel', 'pdf', 'print', 'copy'
+                ],
+                scrollX: true,
+            });
+        });
+
 
         @if (session('success'))
             Swal.fire({

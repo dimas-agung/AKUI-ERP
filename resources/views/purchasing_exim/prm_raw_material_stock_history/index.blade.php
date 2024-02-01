@@ -13,9 +13,9 @@
                 <h4 class="card-title">Data Purchasing Raw Material Stock History</h4>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="overflow: auto;">
             <div class="table-responsive">
-                <table id="table1" class="table">
+                <table id="table1" class="display" style="width:100%">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">No</th>

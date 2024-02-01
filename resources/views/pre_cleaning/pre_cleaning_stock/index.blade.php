@@ -13,9 +13,9 @@
                     <h4 class="card-title">Data Grading Kasar Stock</h4>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="overflow: auto;">
                 <div class="table-responsive">
-                    <table id="table1" class="table">
+                    <table id="table1" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>

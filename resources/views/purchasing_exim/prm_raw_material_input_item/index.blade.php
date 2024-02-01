@@ -157,10 +157,32 @@
                         </div>
                     </div>
                 </div> --}}
-                <div class="table-responsive">
-                    <table id="add-row" class="display table table-striped table-hover">
-                        <thead>
-                            <tr>
+                <div class="card-body" style="overflow: auto;">
+                    <div class="table-responsive">
+                        <table id="table1" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">No Doc</th>
+                                    <th scope="col">Jenis</th>
+                                    <th scope="col">Berat Nota</th>
+                                    <th scope="col">Berat Kotor</th>
+                                    <th scope="col">Berat Bersih</th>
+                                    <th scope="col">Selisih Berat</th>
+                                    <th scope="col">Kadar Air</th>
+                                    <th scope="col">Id Box</th>
+                                    <th scope="col">Harga Nota</th>
+                                    <th scope="col">Total Harga Nota</th>
+                                    <th scope="col">Harga Deal</th>
+                                    <th scope="col">Keterangan</th>
+                                    <th scope="col">User Created</th>
+                                    <th scope="col">User Updated</th>
+                                    <th scope="col">Created At</th>
+                                    <th scope="col">Updated At</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
                                 <th scope="col">No</th>
                                 <th scope="col">No Doc</th>
                                 <th scope="col">Jenis</th>
@@ -179,74 +201,54 @@
                                 <th scope="col">Created At</th>
                                 <th scope="col">Updated At</th>
                                 <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <th scope="col">No</th>
-                            <th scope="col">No Doc</th>
-                            <th scope="col">Jenis</th>
-                            <th scope="col">Berat Nota</th>
-                            <th scope="col">Berat Kotor</th>
-                            <th scope="col">Berat Bersih</th>
-                            <th scope="col">Selisih Berat</th>
-                            <th scope="col">Kadar Air</th>
-                            <th scope="col">Id Box</th>
-                            <th scope="col">Harga Nota</th>
-                            <th scope="col">Total Harga Nota</th>
-                            <th scope="col">Harga Deal</th>
-                            <th scope="col">Keterangan</th>
-                            <th scope="col">User Created</th>
-                            <th scope="col">User Updated</th>
-                            <th scope="col">Created At</th>
-                            <th scope="col">Updated At</th>
-                            <th scope="col">Actions</th>
-                        </tfoot>
-                        <tbody>
-                            @forelse ($prm_raw_material_input_items as $MasterPRIMI)
-                                <tr>
-                                    <td>{{ $i++ }}</td>
-                                    <td>{{ $MasterPRIMI->no_doc }}</td>
-                                    <td>{{ $MasterPRIMI->jenis }}</td>
-                                    <td>{{ $MasterPRIMI->berat_nota }}</td>
-                                    <td>{{ $MasterPRIMI->berat_kotor }}</td>
-                                    <td>{{ $MasterPRIMI->berat_bersih }}</td>
-                                    <td>{{ $MasterPRIMI->selisih_berat }}</td>
-                                    <td>{{ $MasterPRIMI->kadar_air }}</td>
-                                    <td>{{ $MasterPRIMI->id_box }}</td>
-                                    <td>{{ $MasterPRIMI->harga_nota }}</td>
-                                    <td>{{ $MasterPRIMI->total_harga_nota }}</td>
-                                    <td>{{ $MasterPRIMI->harga_deal }}</td>
-                                    <td>{{ $MasterPRIMI->keterangan }}</td>
-                                    <td>{{ $MasterPRIMI->user_created }}</td>
-                                    <td>{{ $MasterPRIMI->user_updated }}</td>
-                                    <td>{{ $MasterPRIMI->created_at }}</td>
-                                    <td>{{ $MasterPRIMI->updated_at }}</td>
-                                    <td class="text-center">
-                                        <div class="form-button-action">
-                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('purchasingexim/prm_raw_material_input.destroy', $MasterPRIMI->id) }}"
-                                                method="POST">
-                                                <a href="{{ route('purchasingexim/prm_raw_material_input.edit', $MasterPRIMI->id) }}"
-                                                    class="btn btn-link" title="Edit Task"
-                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" data-toggle="tooltip"
-                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
-                                                        class="fa fa-times"></i></button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <div class="alert alert-danger">
-                                    Data Master Jenis Raw Material belum Tersedia.
-                                </div>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </tfoot>
+                            <tbody>
+                                @forelse ($prm_raw_material_input_items as $MasterPRIMI)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $MasterPRIMI->no_doc }}</td>
+                                        <td>{{ $MasterPRIMI->jenis }}</td>
+                                        <td>{{ $MasterPRIMI->berat_nota }}</td>
+                                        <td>{{ $MasterPRIMI->berat_kotor }}</td>
+                                        <td>{{ $MasterPRIMI->berat_bersih }}</td>
+                                        <td>{{ $MasterPRIMI->selisih_berat }}</td>
+                                        <td>{{ $MasterPRIMI->kadar_air }}</td>
+                                        <td>{{ $MasterPRIMI->id_box }}</td>
+                                        <td>{{ $MasterPRIMI->harga_nota }}</td>
+                                        <td>{{ $MasterPRIMI->total_harga_nota }}</td>
+                                        <td>{{ $MasterPRIMI->harga_deal }}</td>
+                                        <td>{{ $MasterPRIMI->keterangan }}</td>
+                                        <td>{{ $MasterPRIMI->user_created }}</td>
+                                        <td>{{ $MasterPRIMI->user_updated }}</td>
+                                        <td>{{ $MasterPRIMI->created_at }}</td>
+                                        <td>{{ $MasterPRIMI->updated_at }}</td>
+                                        <td class="text-center">
+                                            <div class="form-button-action">
+                                                <form style="display: flex"
+                                                    onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                                    action="{{ route('purchasingexim/prm_raw_material_input.destroy', $MasterPRIMI->id) }}"
+                                                    method="POST">
+                                                    <a href="{{ route('purchasingexim/prm_raw_material_input.edit', $MasterPRIMI->id) }}"
+                                                        class="btn btn-link" title="Edit Task"
+                                                        data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" data-toggle="tooltip"
+                                                        class="btn btn-link btn-danger"data-original-title="Remove"><i
+                                                            class="fa fa-times"></i></button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <div class="alert alert-danger">
+                                        Data Master Jenis Raw Material belum Tersedia.
+                                    </div>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
