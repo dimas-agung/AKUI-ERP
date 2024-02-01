@@ -12,11 +12,12 @@ class MasterSupplierRawMaterialController extends Controller
     //index
     public function index()
     {
-
+        $i = 1;
         $MasterSupplierRawMaterial = MasterSupplierRawMaterial::all();
         // return $MasterSupplier;
         return response()->view('master.master_supplier_raw_material.index', [
             'MasterSupplierRawMaterial' => $MasterSupplierRawMaterial,
+            'i' => $i
         ]);
     }
     // create
@@ -29,14 +30,17 @@ class MasterSupplierRawMaterialController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'nama_supplier'     => 'required',
-            'inisial_supplier'  => 'required'
+            'nama_supplier'             => 'required|unique:master_supplier_raw_materials',
+            'inisial_supplier'          => 'required|unique:master_supplier_raw_materials'
+        ], [
+            'nama_supplier.required'    => 'Kolom Nama Supplier Wajib diisi.',
+            'inisial_supplier.required' => 'Kolom Inisial Supplier Wajib diisi.',
         ]);
 
         //create MasterSupplier
         MasterSupplierRawMaterial::create([
-            'nama_supplier'     => $request->nama_supplier,
-            'inisial_supplier'  => $request->inisial_supplier
+            'nama_supplier'             => $request->nama_supplier,
+            'inisial_supplier'          => $request->inisial_supplier
         ]);
 
         //redirect to index
@@ -63,18 +67,28 @@ class MasterSupplierRawMaterialController extends Controller
     {
         //get by ID
         $MasterSPR = MasterSupplierRawMaterial::findOrFail($id);
+        $ValidasiNamaSupplier = 'required';
+        $ValidasiInisialSupplier = 'required';
+        if ($request->nama_supplier != $MasterSPR->nama_supplier) {
+            $ValidasiNamaSupplier = 'required|unique:master_supplier_raw_materials';
+        }
+        if ($request->inisial_supplier != $MasterSPR->inisial_supplier) {
+            $ValidasiInisialSupplier = 'required|unique:master_supplier_raw_materials';
+        }
+        // validate form
+        $this->validate($request, [
+            'nama_supplier'      => $ValidasiNamaSupplier,
+            'inisial_supplier'   => $ValidasiInisialSupplier,
+            'status'             => 'required',
+        ], [
+            'nama_supplier'     => 'Nama Supplier Sudah Digunakan',
+            'inisial_supplier'  => 'Inisial Supplier Sudah Digunakan',
 
-        //validate form
-        $validate = $this->validate($request, [
-            'nama_supplier'     => 'required',
-            'inisial_supplier'  => 'required',
-            'status'            => 'required'
         ]);
-
         $MasterSPR->update([
             'nama_supplier'     => $request->nama_supplier,
             'inisial_supplier'  => $request->inisial_supplier,
-            'status'            => $request->status
+            'status'            => $request->status,
         ]);
 
         //redirect to index

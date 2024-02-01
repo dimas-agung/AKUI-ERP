@@ -14,4 +14,8 @@ class MasterSupplierRawMaterial extends Model
         'inisial_supplier',
         'status',
     ];
+    public function PrmRawMaterialInput()
+    {
+        return $this->hasMany(PrmRawMaterialInput::class, 'nama_supplier', 'nama_supplier');
+    }
 }

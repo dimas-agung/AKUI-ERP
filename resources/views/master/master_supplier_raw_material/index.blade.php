@@ -1,17 +1,40 @@
-@extends('layouts.admin')
+@extends('layouts.template')
+@section('Menu')
+    Master
+@endsection
+@section('title')
+    Master Supplier Raw Material
+@endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card">
+        <div class="card mt-2">
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Data Master Supplier Raw Material</h4>
                     <button href="{{ route('master_supplier_raw_material.create') }}"
                         class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-                        <i class="fa fa-plus"> Tambah Data </i>
+                        <i class="fa fa-plus"></i> Tambah Data
                     </button>
                 </div>
             </div>
             <div class="card-body">
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <strong>Sukses: </strong>{{ session()->get('success') }}
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul><strong>
+                                @foreach ($errors->all() as $error)
+                                    <li> {{ $error }} </li>
+                                @endforeach
+                            </strong>
+                        </ul>
+                        <p>Mohon periksa kembali formulir Anda.</p>
+                    </div>
+                @endif
                 {{-- Modal --}}
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -30,7 +53,7 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <div class="form-group">
+                                            <div class="form-group form-group-default">
                                                 <label class="font-weight-bold">Nama Supplier</label>
                                                 <input type="text"
                                                     class="form-control @error('nama_supplier') is-invalid @enderror"
@@ -72,57 +95,53 @@
                     <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Nama Supplier</th>
-                                <th scope="col">Inisial supplier</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Tanggal Buat</th>
-                                <th scope="col">Tanggal Update</th>
-                                <th scope="col">AKSI</th>
+                                <th scope="col" class="text-center">No</th>
+                                <th scope="col" class="text-center">Nama Supplier</th>
+                                <th scope="col" class="text-center">Inisial supplier</th>
+                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col" class="text-center">Tanggal Buat</th>
+                                <th scope="col" class="text-center">Tanggal Update</th>
+                                <th scope="col" class="text-center">AKSI</th>
                             </tr>
                         </thead>
                         <tfoot>
-                            <th scope="col">No</th>
-                            <th scope="col">Nama Supplier</th>
-                            <th scope="col">Inisial supplier</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Tanggal Buat</th>
-                            <th scope="col">Tanggal Update</th>
-                            <th scope="col">AKSI</th>
+                            <th scope="col" class="text-center">No</th>
+                            <th scope="col" class="text-center">Nama Supplier</th>
+                            <th scope="col" class="text-center">Inisial supplier</th>
+                            <th scope="col" class="text-center">Status</th>
+                            <th scope="col" class="text-center">Tanggal Buat</th>
+                            <th scope="col" class="text-center">Tanggal Update</th>
+                            <th scope="col" class="text-center">AKSI</th>
                         </tfoot>
                         <tbody>
                             @forelse ($MasterSupplierRawMaterial as $MasterSPR)
                                 <tr>
-                                    <td>{{ $MasterSPR->id }}</td>
+                                    <td>{{ $i++ }}</td>
                                     <td>{{ $MasterSPR->nama_supplier }}</td>
                                     <td>{{ $MasterSPR->inisial_supplier }}</td>
-                                    <td>{{ $MasterSPR->status }}</td>
+                                    <td>
+                                        @if ($MasterSPR->status == 1)
+                                            Aktif
+                                        @else
+                                            Tidak Aktif
+                                        @endif
+                                    </td>
                                     <td>{{ $MasterSPR->created_at }}</td>
                                     <td>{{ $MasterSPR->updated_at }}</td>
-                                    <td class="text-center">
+                                    <td>
                                         <div class="form-button-action">
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                 action="{{ route('master_supplier_raw_material.destroy', $MasterSPR->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('master_supplier_raw_material.show', $MasterSPR->id) }}"
-                                                    class="btn btn-sm btn-dark">SHOW</a>
                                                 <a href="{{ route('master_supplier_raw_material.edit', $MasterSPR->id) }}"
-                                                    class="btn btn-sm btn-primary">EDIT</a>
+                                                    class="btn btn-link" title="Edit Task"
+                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                                <button type="submit" data-toggle="tooltip"
+                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
+                                                        class="fa fa-times"></i></button>
                                             </form>
-                                        </div>
-                                        <div class="form-button-action">
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"
-                                                data-target="#UpModal">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" data-toggle="tooltip" title=""
-                                                class="btn btn-link btn-danger" data-original-title="Remove">
-                                                <i class="fa fa-times"></i>
-                                            </button>
                                         </div>
                                     </td>
                                 </tr>

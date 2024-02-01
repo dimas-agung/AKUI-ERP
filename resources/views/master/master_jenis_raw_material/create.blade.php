@@ -41,7 +41,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Upah Operator</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" class="form-control @error('upah_operator') is-invalid @enderror"
+                                <input type="number" class="form-control @error('upah_operator') is-invalid @enderror"
                                     name="upah_operator" placeholder="Masukan Upah Operator">
 
                                 <!-- error message untuk title -->
@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Pengurangan Harga</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" class="form-control @error('pengurangan_harga') is-invalid @enderror"
+                                <input type="number" class="form-control @error('pengurangan_harga') is-invalid @enderror"
                                     name="pengurangan_harga" placeholder="Masukan Pengurangan Harga">
 
                                 <!-- error message untuk title -->
@@ -67,7 +67,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Harga Estimasi</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" class="form-control @error('harga_estimasi') is-invalid @enderror"
+                                <input type="number" class="form-control @error('harga_estimasi') is-invalid @enderror"
                                     name="harga_estimasi" placeholder="Masukan Harga Estimasi">
 
                                 <!-- error message untuk title -->

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.template')
 @section('content')
     <div class="container mt-5 mb-5">
         <div class="row">
@@ -43,8 +43,12 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Upah Operator</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" class="form-control @error('upah_operator') is-invalid @enderror"
-                                    name="upah_operator" value="{{ old('upah_operator', $MasterJRM->upah_operator) }}"
+                                <input type="text" pattern="[0-9]*" inputmode="numeric"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                    class="form-control @error('upah_operator')
+is-invalid
+@enderror" name="upah_operator"
+                                    value="{{ old('upah_operator', $MasterJRM->upah_operator) }}"
                                     placeholder="Masukan Upah Operator">
 
                                 <!-- error message untuk title -->
@@ -57,7 +61,11 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Pengurangan Harga</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" class="form-control @error('pengurangan_harga') is-invalid @enderror"
+                                <input type="text" pattern="[0-9]*" inputmode="numeric"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                    class="form-control @error('pengurangan_harga')
+is-invalid
+@enderror"
                                     name="pengurangan_harga"
                                     value="{{ old('pengurangan_harga', $MasterJRM->pengurangan_harga) }}"
                                     placeholder="Masukan Pengurangan Harga">
@@ -72,8 +80,12 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Harga Estimasi</label>
                                 {{-- <select name="" id=""></select> --}}
-                                <input type="text" class="form-control @error('harga_estimasi') is-invalid @enderror"
-                                    name="harga_estimasi" value="{{ old('harga_estimasi', $MasterJRM->harga_estimasi) }}"
+                                <input type="text" pattern="[0-9]*" inputmode="numeric"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                    class="form-control @error('harga_estimasi')
+is-invalid
+@enderror" name="harga_estimasi"
+                                    value="{{ old('harga_estimasi', $MasterJRM->harga_estimasi) }}"
                                     placeholder="Masukan Harga Estimasi">
 
                                 <!-- error message untuk title -->
@@ -86,10 +98,10 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Status</label>
-                                <select class="form-control" @error('status') is-invalid @enderror" name="status"
-                                    value="{{ old('status', $MasterJRM->status) }}">
-                                    <option value=1>AKTIF</option>
-                                    <option value=0>TIDAK AKTIF</option>
+                                <select class="form-control" @error('status') is-invalid @enderror" name="status">
+                                    <option value="1" {{ $MasterJRM->status == 1 ? 'selected' : '' }}> AKTIF </option>
+                                    <option value="0" {{ $MasterJRM->status == 0 ? 'selected' : '' }}> TIDAK AKTIF
+                                    </option>
                                 </select>
                                 <!-- error message untuk title -->
                                 @error('status')
@@ -99,8 +111,10 @@
                                 @enderror
                             </div>
 
+
                             <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
+                            <button type="button" class="btn btn-danger" onclick="goBack()">CANCEL</button>
 
                         </form>
                     </div>

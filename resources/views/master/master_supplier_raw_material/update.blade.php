@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.template')
 @section('content')
     <div class="container mt-5 mb-5">
         <div class="row">
@@ -11,7 +11,6 @@
                         <form action="{{ route('master_supplier_raw_material.update', $MasterSPR->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama Supplier</label>
                                 <input type="text" class="form-control @error('nama_supplier') is-invalid @enderror"
@@ -41,10 +40,10 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Status</label>
-                                <select class="form-control" @error('status') is-invalid @enderror" name="status"
-                                    value="{{ old('status', $MasterSPR->status) }}">
-                                    <option value=1>AKTIF</option>
-                                    <option value=0>TIDAK AKTIF</option>
+                                <select class="form-control" @error('status') is-invalid @enderror" name="status">
+                                    <option value="1" {{ $MasterSPR->status == 1 ? 'selected' : '' }}>AKTIF</option>
+                                    <option value="0" {{ $MasterSPR->status == 0 ? 'selected' : '' }}>TIDAK AKTIF
+                                    </option>
                                 </select>
                                 <!-- error message untuk title -->
                                 @error('status')
@@ -56,6 +55,7 @@
 
                             <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
+                            <button type="button" class="btn btn-danger" onclick="goBack()">CANCEL</button>
 
                         </form>
                     </div>
