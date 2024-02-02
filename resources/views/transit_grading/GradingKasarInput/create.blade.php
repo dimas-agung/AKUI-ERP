@@ -253,7 +253,7 @@
                         // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
                         // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
                         Swal.fire({
-                            title: 'Astaghfirullah!',
+                            title: 'Warning!',
                             text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
                             icon: 'error'
                         }).then((result) => {
@@ -350,7 +350,6 @@
             if (!tgl_add) fieldsNotFilled.push('Tanggal Add');
             if (!plant) fieldsNotFilled.push('Plant');
             if (!user_created) fieldsNotFilled.push('NIP Admin');
-            if (!keterangan) fieldsNotFilled.push('Keterangan');
 
             // Cek apakah ada field yang belum terisi
             if (fieldsNotFilled.length > 0) {
@@ -358,7 +357,7 @@
                 let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
 
                 Swal.fire({
-                    title: 'Innalillahi!',
+                    title: 'Warning!',
                     text: message,
                     icon: 'warning'
                 });
@@ -457,7 +456,7 @@
                 dataType: 'json', // payload is json,
                 success: function(response) {
                     Swal.fire({
-                        title: 'Alhamdulillah!',
+                        title: 'Success!',
                         text: 'Data berhasil disimpan.',
                         icon: 'success'
                     }).then((result) => {
@@ -470,7 +469,7 @@
                 },
                 error: function(error) {
                     Swal.fire({
-                        title: 'Astaghfirullah!',
+                        title: 'Error!',
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });

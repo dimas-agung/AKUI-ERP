@@ -19,6 +19,7 @@ class PrmRawMaterialInputItem extends Model
         'kadar_air',
         'id_box',
         'harga_nota',
+        'fix_harga_deal',
         'total_harga_nota',
         'harga_deal',
         'keterangan',

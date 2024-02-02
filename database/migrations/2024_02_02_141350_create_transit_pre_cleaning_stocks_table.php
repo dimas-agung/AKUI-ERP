@@ -11,20 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grading_kasar_inputs', function (Blueprint $table) {
+        Schema::create('transit_pre_cleaning_stocks', function (Blueprint $table) {
             $table->id();
+            $table->string('nomor_job');
+            $table->string('id_box_grading_kasar');
             $table->string('nomor_bstb');
-            $table->string('id_box');
-            $table->string('nomor_batch');
             $table->string('nama_supplier');
-            $table->string('jenis_raw_material');
             $table->string('nomor_nota_internal');
-            $table->float('berat');
-            $table->string('kadar_air');
+            $table->string('id_box_raw_material');
+            $table->string('jenis_raw_material');
+            $table->string('jenis_kirim');
+            $table->float('berat_kirim');
+            $table->float('pcs_kirim');
+            $table->float('kadar_air');
+            $table->string('tujuan_kirim');
             $table->string('nomor_grading');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->text('keterangan')->nullable();
+            $table->text('keterangan');
             $table->string('user_created');
             $table->string('user_updated');
             $table->timestamps();
@@ -36,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grading_kasar_inputs');
+        Schema::dropIfExists('transit_pre_cleaning_stocks');
     }
 };

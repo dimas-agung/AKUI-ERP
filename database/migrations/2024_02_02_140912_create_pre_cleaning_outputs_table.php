@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock_transit_grading_kasars', function (Blueprint $table) {
+        Schema::create('pre_cleaning_outputs', function (Blueprint $table) {
             $table->id();
+            $table->string('doc_no')->default(1);
             $table->string('nomor_job');
             $table->string('id_box_grading_kasar');
             $table->string('nomor_bstb');
@@ -21,17 +22,24 @@ return new class extends Migration
             $table->string('nomor_nota_internal');
             $table->string('id_box_raw_material');
             $table->string('jenis_raw_material');
-            $table->string('jenis_grading');
-            $table->float('berat_keluar');
-            $table->float('pcs_keluar');
-            $table->string('avg_kadar_air');
-            $table->string('tujuan_kirim');
-            $table->string('nomor_grading');
+            $table->string('jenis_kirim');
+            $table->float('berat_kirim', 16, 4);
+            $table->float('pcs_kirim', 16, 4);
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->float('biaya_produksi');
-            $table->float('fix_total_modal');
-            $table->text('keterangan')->nullable();
+            $table->string('operator_sikat_kompresor');
+            $table->string('operator_flek_poles');
+            $table->string('operator_flek_cutter');
+            $table->float('kuningan', 16, 4);
+            $table->float('sterofoam', 16, 4);
+            $table->float('karat', 16, 4);
+            $table->float('rontokan_fisik', 16, 4);
+            $table->float('rontokan_bahan', 16, 4);
+            $table->float('rontokan_serabut', 16, 4);
+            $table->float('ws_0_0_0', 16, 4);
+            $table->float('berat_pre_cleaning', 16, 4);
+            $table->float('pcs_pre_cleaning', 16, 4);
+            $table->float('susut', 16, 4);
             $table->string('user_created');
             $table->string('user_updated');
             $table->timestamps();
@@ -43,6 +51,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_transit_grading_kasars');
+        Schema::dropIfExists('pre_cleaning_outputs');
     }
 };

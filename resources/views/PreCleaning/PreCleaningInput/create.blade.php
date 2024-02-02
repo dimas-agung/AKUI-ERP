@@ -212,7 +212,7 @@
                         // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
                         // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
                         Swal.fire({
-                            title: 'Astaghfirullah!',
+                            title: 'Failed!',
                             text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
                             icon: 'error'
                         }).then((result) => {
@@ -249,30 +249,38 @@
                         }
                     });
                 },
-                data: {
-                    dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
-                    doc_no: doc_no,
-                    keterangan: keterangan,
-                    user_created: $('#user_created').val() || '',
-                    user_updated: 'Asc-186',
-                    _token: '{{ csrf_token() }}'
-                },
+                data: function() {
+                    var postData = {
+                        dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
+                        doc_no: doc_no,
+                        user_created: $('#user_created').val() || '',
+                        user_updated: 'Asc-186',
+                        _token: '{{ csrf_token() }}'
+                    };
+
+                    // Hanya mengirim keterangan jika memiliki nilai
+                    if (keterangan.trim() !== '') {
+                        postData.keterangan = keterangan;
+                    }
+
+                    return postData;
+                }(),
                 success: function(response) {
                     Swal.fire({
-                        title: 'Alhamdulillah!',
+                        title: 'Success!',
                         text: 'Data berhasil disimpan.',
                         icon: 'success'
                     }).then((result) => {
                         // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
                         if (result.isConfirmed) {
                             window.location.href = response
-                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                            .redirectTo; // Ganti dengan URL tujuan redirect Anda
                         }
                     });
                 },
                 error: function(error) {
                     Swal.fire({
-                        title: 'Astaghfirullah!',
+                        title: 'Failed!',
                         text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
                         icon: 'error'
                     });
@@ -280,6 +288,7 @@
                 }
             });
         }
+
 
 
         // Variabel global untuk menyimpan indeks baris terakhir

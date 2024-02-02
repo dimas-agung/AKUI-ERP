@@ -369,36 +369,6 @@
 
             console.log('Total Susut: ' + susut);
 
-
-            // $('#total_susut').val(totalSusut.toFixed(4));
-            // Menambahkan data ke dalam array
-            // dataArrayDocNo.push(doc_no),
-            // dataArrayIDBoxRawMaterial.push(id_box_raw_material),
-            //     dataArrayIDBoxGradingKasar.push(id_box_grading_kasar),
-            //     dataArrayNomorBatch.push(nomor_batch),
-            //     dataArrayNamaSupplier.push(nama_supplier),
-            //     dataArrayNomorNotaInternal.push(nomor_nota_internal),
-            //     dataArrayJenisRawMaterial.push(jenis_raw_material),
-            //     dataArrayBerat.push(berat),
-            //     dataArrayKadarAir.push(kadar_air),
-            //     dataArrayJenisGrading.push(jenis_grading),
-            //     dataArrayBeratGrading.push(berat_grading),
-            //     dataArraySusut.push(susut),
-            //     dataArrayModal.push(modal),
-            //     dataArrayTotalModal.push(total_modal),
-            //     dataArrayBiayaProduksi.push(biaya_produksi),
-            //     dataArrayHargaEstimasi.push(harga_estimasi),
-            //     dataArrayNilaiLabaRugi.push(nilai_laba_rugi),
-            //     dataArrayNilaiProsentaseTotalKeuntungan.push(nilai_prosentase_total_keuntungan),
-            //     dataArrayNilaiDikurangiKeuntungan.push(nilai_dikurangi_keuntungan),
-            //     dataArrayProsentaseHargaGramasi.push(prosentase_harga_gramasi),
-            //     dataArraySelisihLabaRugiKg.push(selisih_laba_rugi_kg),
-            //     dataArraySelisihLabaRugiGram.push(selisih_laba_rugi_gram),
-            //     dataArrayHpp.push(hpp),
-            //     dataArrayTotalHpp.push(total_hpp),
-            //     dataArrayKeterangan.push(keterangan),
-            //     dataArrayUserCreated.push(user_created),
-            //     dataArrayUserUpdated.push(user_updated),
             dataArray.push({
                 // doc_no: doc_no,
                 nomor_grading: nomor_grading,
@@ -486,7 +456,7 @@
                 // Menampilkan SweetAlert untuk pesan error
                 Swal.fire({
                     icon: 'error',
-                    title: 'Astagfirullah',
+                    title: 'Warning!',
                     text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
                 });
                 return; // Menghentikan eksekusi fungsi jika data kosong
@@ -517,7 +487,7 @@
                     // Menampilkan SweetAlert untuk pesan sukses
                     Swal.fire({
                         icon: 'success',
-                        title: 'Alhamdulillah',
+                        title: 'Success!',
                         text: 'Data berhasil dikirim.'
                     });
 
@@ -530,7 +500,7 @@
                     // Menampilkan SweetAlert untuk pesan error
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
+                        title: 'Failed!',
                         text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
                     });
                 },

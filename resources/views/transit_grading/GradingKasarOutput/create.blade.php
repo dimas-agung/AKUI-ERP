@@ -332,8 +332,27 @@
             var nomor_nota_internal = $('#nomor_nota_internal').val();
 
             // Validasi input (sesuai kebutuhan)
-            if (!nomor_job || !nomor_batch) {
-                alert('ID and nomor_batch are required.');
+            // Inisialisasi array untuk menyimpan field yang belum terisi
+            let fieldsNotFilled = [];
+            // Periksa setiap field
+            if (!nomor_bstb) fieldsNotFilled.push('Nomor BSTB');
+            if (!id_box_grading_kasar) fieldsNotFilled.push('ID box grading kasar');
+            if (!nama_supplier) fieldsNotFilled.push('Nama supllier');
+            if (!nomor_job) fieldsNotFilled.push('Nomor job');
+            if (!berat_keluar) fieldsNotFilled.push('Berat keluar');
+            if (!pcs_keluar) fieldsNotFilled.push('Pcs keluar');
+            if (!user_created) fieldsNotFilled.push('NIP Admin');
+
+            // Cek apakah ada field yang belum terisi
+            if (fieldsNotFilled.length > 0) {
+                // Membuat pesan teks yang mencantumkan field yang belum terisi
+                let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
+
+                Swal.fire({
+                    title: 'Warning!',
+                    text: message,
+                    icon: 'warning'
+                });
                 return;
             }
 
@@ -452,7 +471,7 @@
                 dataType: 'json', // payload is json,
                 success: function(response) {
                     Swal.fire({
-                        title: 'Alhamdulillah!',
+                        title: 'Success!',
                         text: 'Data berhasil disimpan.',
                         icon: 'success'
                     }).then((result) => {
@@ -465,7 +484,7 @@
                 },
                 error: function(error) {
                     Swal.fire({
-                        title: 'Astaghfirullah!',
+                        title: 'Failed!',
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });
