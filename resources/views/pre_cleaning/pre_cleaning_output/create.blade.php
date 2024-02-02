@@ -130,39 +130,57 @@
                     </div>
                     <div class="col-md-2">
                         <label for="kuningan" class="form-label">Kuningan</label>
-                        <input type="text" class="form-control" id="kuningan">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="kuningan">
                     </div>
                     <div class="col-md-2">
                         <label for="Sterofoam" class="form-label">Sterofoam</label>
-                        <input type="text" class="form-control" id="Sterofoam">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="Sterofoam">
                     </div>
                     <div class="col-md-2">
                         <label for="karat" class="form-label">Karat</label>
-                        <input type="text" class="form-control" id="karat">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="karat">
                     </div>
                     <div class="col-md-2">
                         <label for="rontokan_flex" class="form-label">Rontokan Flex</label>
-                        <input type="text" class="form-control" id="rontokan_flex">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="rontokan_flex">
                     </div>
                     <div class="col-md-2">
                         <label for="rontokan_bahan" class="form-label">Rontokan Bahan</label>
-                        <input type="text" class="form-control" id="rontokan_bahan">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="rontokan_bahan">
                     </div>
                     <div class="col-md-2">
                         <label for="rontokan_serabut" class="form-label">Rontokan Serabut</label>
-                        <input type="text" class="form-control" id="rontokan_serabut">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="rontokan_serabut">
                     </div>
                     <div class="col-md-3">
                         <label for="ws" class="form-label">WS-0-0-0</label>
-                        <input type="text" class="form-control" id="ws">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="ws">
                     </div>
                     <div class="col-md-3">
                         <label for="berat_precleaning" class="form-label">Berat Precleaning</label>
-                        <input type="text" class="form-control" id="berat_precleaning">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="berat_precleaning">
                     </div>
                     <div class="col-md-3">
                         <label for="pcs" class="form-label">Pcs</label>
-                        <input type="text" class="form-control" id="pcs">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="pcs">
                     </div>
                     <div class="col-md-3">
                         <label for="susut" class="form-label">Susut</label>

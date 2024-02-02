@@ -164,7 +164,7 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarStockCont
 });
 
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
-    Route::get('/purchasing_exim/prm_raw_material_stock', 'index')->name('purchasing_exim.prm_raw_material_stock.index');
+    Route::get('/purchasing_exim/prm_raw_material_stock', 'index')->name('prm_raw_material_stock.index');
     Route::get('/purchasing_exim/show/{id_box}', 'show')->name('prm_raw_material_stock.show');
 });
 
@@ -191,16 +191,6 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputContro
     // routes/web.php
     Route::get('/PrmRawMaterialOutput/get_data_id_box', 'set')->name('PrmRawMaterialOutput.set');
     Route::get('/PrmRawMaterialOutput/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
-});
-
-Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
-    Route::get('/PreCleaningInput', 'index')->name('PreCleaningInput.index');
-    Route::get('/PreCleaningInput/create', 'create')->name('PreCleaningInput.create');
-    Route::post('/PreCleaningInput/store', 'store')->name('PreCleaningInput.store');
-    Route::post('/PreCleaningInput/sendData', 'sendData')->name('PreCleaningInput.sendData');
-    Route::delete('/PreCleaningInput/destroy/{id}', 'destroy')->name('PreCleaningInput.destroy');
-    Route::get('/PreCleaningInput/get_data_id_box', 'set')->name('PreCleaningInput.set');
-    Route::get('/PreCleaningInput/get_pcc', 'setpcc')->name('PreCleaningInput.setpcc');
 });
 
 Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::class)->group(function () {
