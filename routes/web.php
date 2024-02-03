@@ -224,6 +224,26 @@ Route::controller(App\Http\Controllers\PreCleaning\TransitPreCleaningStockContro
     Route::delete('/transit_pre_cleaning_stock/destroy/{id}', 'destroy')->name('transit_pre_cleaning_stock.destroy');
 });
 
+Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusInputController::class)->group(function () {
+    Route::get('/PreGradingHalus', 'index')->name('PreGradingHalus.index');
+    Route::get('/PreGradingHalus/create', 'create')->name('PreGradingHalus.create');
+    Route::post('/PreGradingHalus/store', 'store')->name('PreGradingHalus.store');
+    Route::get('/PreGradingHalus/show/{id}', 'show')->name('PreGradingHalus.show');
+    Route::get('/PreGradingHalus/edit/{id}', 'edit')->name('PreGradingHalus.edit');
+    Route::put('/PreGradingHalus/update/{id}', 'update')->name('PreGradingHalus.update');
+    Route::delete('/PreGradingHalus/destroy/{id}', 'destroy')->name('PreGradingHalus.destroy');
+});
+
+Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusStockController::class)->group(function () {
+    Route::get('/PreGradingHalusStock', 'index')->name('PreGradingHalusStock.index');
+    Route::get('/PreGradingHalusStock/create', 'create')->name('PreGradingHalusStock.create');
+    Route::post('/PreGradingHalusStock/store', 'store')->name('PreGradingHalusStock.store');
+    Route::get('/PreGradingHalusStock/show/{id}', 'show')->name('PreGradingHalusStock.show');
+    Route::get('/PreGradingHalusStock/edit/{id}', 'edit')->name('PreGradingHalusStock.edit');
+    Route::put('/PreGradingHalusStock/update/{id}', 'update')->name('PreGradingHalusStock.update');
+    Route::delete('/PreGradingHalusStock/destroy/{id}', 'destroy')->name('PreGradingHalusStock.destroy');
+});
+
 Auth::routes();
 
 
