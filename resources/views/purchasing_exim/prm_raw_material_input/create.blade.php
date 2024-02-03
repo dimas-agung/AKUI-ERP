@@ -160,7 +160,7 @@
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
-                                <th scope="col" class="text-center">Fix Harga Deal</th>
+                                {{-- <th scope="col" class="text-center">Fix Harga Deal</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -416,8 +416,8 @@
                 console.log("Total Berat Bersih: " + idBoxGroups[idBox].totalBeratBersih);
                 console.log("Fix harga Modal: " + idBoxGroups[idBox].totalHargaNota / idBoxGroups[idBox].totalBeratBersih);
                 console.log("------------------------------");
-                fix_harga_deal_clg = idBoxGroups[idBox].totalHargaNota / idBoxGroups[idBox].totalBeratBersih;
-                console.log(fix_harga_deal_clg.toFixed(2));
+                fix_harga_deal = idBoxGroups[idBox].totalHargaNota / idBoxGroups[idBox].totalBeratBersih;
+                console.log(fix_harga_deal.toFixed(2));
             }
             let fixHargaDealForRow = idBoxGroups[id_box].totalHargaNota / idBoxGroups[id_box].totalBeratBersih;
 
@@ -442,7 +442,7 @@
                     `<td class="text-center">${keterangan}</td>` +
                     `<td class="text-center">${user_created}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
-                    `<td class="text-center">${fixHargaDealForRow.toFixed(4)}</td>` +
+                    // `<td class="text-center">${fixHargaDealForRow.toFixed(4)}</td>` +
                     `</tr>`
                 $('#dataTable tbody').append(newRow);
             }
@@ -470,6 +470,7 @@
                 total_harga_nota: total_harga_nota,
                 harga_deal: harga_deal,
                 fixHargaDealForRow: fixHargaDealForRow,
+                fix_harga_deal: fix_harga_deal,
                 keterangan: keterangan,
                 user_created: user_created,
 
