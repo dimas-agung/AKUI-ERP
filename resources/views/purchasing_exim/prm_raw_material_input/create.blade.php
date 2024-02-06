@@ -34,7 +34,7 @@
 
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="nama_supplier" id="nama_supplier" placeholder="Pilih Nama Supplier">
                             <option value="">Pilih Nama Supplier</option>
                             @foreach ($master_supplier_raw_materials->sortBy('nama_supplier') as $MasterSPRM)
@@ -53,7 +53,7 @@
                     <div class="col-md-flex">
                         <hr>
                     </div>
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <label for="basic-usage" class="form-label">Pilih Jenis :</label>
                         <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="jenis" id="jenis" placeholder="Pilih Jenis">
@@ -66,10 +66,10 @@
                                 @endif
                             @endforeach
                         </select>
-                    </div>
-                    {{-- <div class="col-md-3">
+                    </div> --}}
+                    <div class="col-md-3">
                         <label for="basic-usage" class="form-label">Pilih Jenis :</label>
-                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                        <select class="select2 form-control" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="jenis" id="jenis" placeholder="Pilih Jenis">
                             <option value="">Pilih Jenis</option>
                             @foreach ($master_jenis_raw_materials->sortBy('jenis') as $MasterJRM)
@@ -80,7 +80,7 @@
                                 @endif
                             @endforeach
                         </select>
-                    </div> --}}
+                    </div>
 
                     <div class="col-md-3">
                         <label for="berat_nota" class="form-label">Berat Nota</label>
@@ -191,6 +191,9 @@
 @endsection
 @section('script')
     <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
         // $(document).ready(function() {
         //     // Inisialisasi Select2 pada elemen dengan class select2
         //     $('#jenis').select2({

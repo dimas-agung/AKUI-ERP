@@ -12,3 +12,4 @@ for (let i = 0; i < choices.length; i++) {
     initChoice = new Choices(choices[i])
   }
 }
+
