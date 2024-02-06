@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('nama_supplier');
             $table->string('jenis_raw_material');
             $table->float('kadar_air');
+            $table->float('berat_adding');
             $table->float('pcs_adding');
             $table->float('modal');
             $table->float('total_modal');

@@ -36,5 +36,6 @@ class DatabaseSeeder extends Seeder
         $this->call(GradingKasarInputSeeder::class);
         $this->call(PreCleaningStockSeeder::class);
         $this->call(MasterOperatorSeeder::class);
+        $this->call(PreGradingHalusStockSeeder::class);
     }
 }

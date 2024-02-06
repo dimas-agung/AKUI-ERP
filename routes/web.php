@@ -219,6 +219,27 @@ Route::controller(App\Http\Controllers\PreCleaning\TransitPreCleaningStockContro
     Route::delete('/transit_pre_cleaning_stock/destroy/{id}', 'destroy')->name('transit_pre_cleaning_stock.destroy');
 });
 
+Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusAddingController::class)->group(function () {
+    Route::get('/pre_grading_halus_adding', 'index')->name('pre_grading_halus_adding.index');
+    Route::get('/pre_grading_halus_adding/create', 'create')->name('pre_grading_halus_adding.create');
+    Route::post('/pre_grading_halus_adding/store', 'store')->name('pre_grading_halus_adding.store');
+    Route::get('/pre_grading_halus_adding/show/{id}', 'show')->name('pre_grading_halus_adding.show');
+    Route::get('/pre_grading_halus_adding/edit/{id}', 'edit')->name('pre_grading_halus_adding.edit');
+    Route::put('/pre_grading_halus_adding/update/{id}', 'update')->name('pre_grading_halus_adding.update');
+    Route::delete('/pre_grading_halus_adding/destroy/{id}', 'destroy')->name('pre_grading_halus_adding.destroy');
+    Route::get('/pre_grading_halus_adding/get_data_nomor_job', 'set')->name('preGradingHalusAdding.set');
+    Route::post('/pre_grading_halus_adding/simpanData', 'simpanData')->name('preGradingHalusAdding.simpanData');
+});
+Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusAddingStockController::class)->group(function () {
+    Route::get('/pre_grading_halus_adding_stock', 'index')->name('pre_grading_halus_adding_stock.index');
+    Route::get('/pre_grading_halus_adding_stock/create', 'create')->name('pre_grading_halus_adding_stock.create');
+    Route::post('/pre_grading_halus_adding_stock/store', 'store')->name('pre_grading_halus_adding_stock.store');
+    Route::get('/pre_grading_halus_adding_stock/show/{id}', 'show')->name('pre_grading_halus_adding_stock.show');
+    Route::get('/pre_grading_halus_adding_stock/edit/{id}', 'edit')->name('pre_grading_halus_adding_stock.edit');
+    Route::put('/pre_grading_halus_adding_stock/update/{id}', 'update')->name('pre_grading_halus_adding_stock.update');
+    Route::delete('/pre_grading_halus_adding_stock/destroy/{id}', 'destroy')->name('pre_grading_halus_adding_stock.destroy');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

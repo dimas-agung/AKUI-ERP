@@ -67,6 +67,21 @@
                             @endforeach
                         </select>
                     </div>
+                    {{-- <div class="col-md-3">
+                        <label for="basic-usage" class="form-label">Pilih Jenis :</label>
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                            name="jenis" id="jenis" placeholder="Pilih Jenis">
+                            <option value="">Pilih Jenis</option>
+                            @foreach ($master_jenis_raw_materials->sortBy('jenis') as $MasterJRM)
+                                @if ($MasterJRM->status == 1)
+                                    <option value="{{ $MasterJRM->jenis }}">
+                                        {{ $MasterJRM->jenis }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div> --}}
+
                     <div class="col-md-3">
                         <label for="berat_nota" class="form-label">Berat Nota</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
@@ -176,6 +191,14 @@
 @endsection
 @section('script')
     <script>
+        // $(document).ready(function() {
+        //     // Inisialisasi Select2 pada elemen dengan class select2
+        //     $('#jenis').select2({
+        //         placeholder: 'Pilih Jenis',
+        //         width: '100%',
+        //         theme: 'bootstrap' // Jika Anda menggunakan tema Bootstrap
+        //     });
+        // });
         // Menambahkan event listener untuk perubahan nilai pada input nomor nota supplier dan select nama supplier
         $('#nomor_nota_supplier').on('input', generateNomorNotaInternal);
         $('#nama_supplier').on('change', generateNomorNotaInternal);

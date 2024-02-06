@@ -42,7 +42,7 @@ class PrmRawMaterialInputService
     private function createHeader($dataHeader)
     {
         PrmRawMaterialInput::create([
-            // 'doc_no'                => $dataHeader[0]->doc_no,
+            // 'doc_no'                => $dataHeader->doc_no,
             'nomor_po'              => $dataHeader->nomor_po,
             'nomor_batch'           => $dataHeader->nomor_batch,
             'nomor_nota_supplier'   => $dataHeader->nomor_nota_supplier,
@@ -68,7 +68,7 @@ class PrmRawMaterialInputService
             'berat_keluar'  => $defaultBeratKeluar,
             'sisa_berat'    => $item->berat_bersih,
             'avg_kadar_air' => $item->kadar_air,
-            'modal'         => $item->fixHargaDealForRow,
+            'modal'         => $item->fix_harga_deal,
             'total_modal'   => $item->total_harga_nota,
             // 'fix_harga_deal' => $item->fixHargaDealForRow,
             'fix_harga_deal' => $item->fix_harga_deal,
@@ -77,74 +77,25 @@ class PrmRawMaterialInputService
             'user_updated'  => $item->user_updated ?? '',
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
-        // $inputItem = (object)$item;
-        // // Cari item berdasarkan id_box dan nomor_batch
-        // $existingItem = PrmRawMaterialInputItem::where('jenis', $inputItem->jenis)
-        //     ->where('id_box', $inputItem->id_box)
-        //     ->first();
-        // PrmRawMaterialInputItem::create([
-        //     // 'doc_no'            => $item->doc_no,
-        //     'jenis'             => $item->jenis,
-        //     'berat_nota'        => $item->berat_nota,
-        //     'berat_kotor'       => $item->berat_kotor,
-        //     'berat_bersih'      => $item->berat_bersih,
-        //     'selisih_berat'     => $item->selisih_berat,
-        //     'kadar_air'         => $item->kadar_air,
-        //     'id_box'            => $item->id_box,
-        //     'harga_nota'        => $item->harga_nota,
-        //     'total_harga_nota'  => $item->total_harga_nota,
-        //     'harga_deal'        => $item->harga_deal,
-        //     'keterangan'        => $item->keterangan,
-        //     'user_created'      => $item->user_created,
-        //     'user_updated'      => $item->user_updated ?? 'Admin123'
-        //     // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-        // ]);
-        $inputItem = (object) $item;
-
-        // Cari item berdasarkan jenis dan id_box
-        $existingItem = PrmRawMaterialInputItem::where('jenis', $inputItem->jenis)
-            ->where('id_box', $inputItem->id_box)
-            ->first();
-
-        if ($existingItem) {
-            // Jika item sudah ada, update data
-            $existingItem->update([
-                'berat_nota'        => $inputItem->berat_nota,
-                'berat_kotor'       => $inputItem->berat_kotor,
-                'berat_bersih'      => $inputItem->berat_bersih,
-                'selisih_berat'     => $inputItem->selisih_berat,
-                'kadar_air'         => $inputItem->kadar_air,
-                'harga_nota'        => $inputItem->harga_nota,
-                'total_harga_nota'  => $inputItem->total_harga_nota,
-                'harga_deal'        => $inputItem->harga_deal,
-                'fix_harga_deal'    => $inputItem->fix_harga_deal,
-                // 'fix_harga_deal'    => $inputItem->fixHargaDealForRow,
-                'keterangan'        => $inputItem->keterangan,
-                'user_updated'      => $inputItem->user_updated ?? '',
-                // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-            ]);
-        } else {
-            // Jika item belum ada, buat item baru
-            PrmRawMaterialInputItem::create([
-                'jenis'             => $inputItem->jenis,
-                'berat_nota'        => $inputItem->berat_nota,
-                'berat_kotor'       => $inputItem->berat_kotor,
-                'berat_bersih'      => $inputItem->berat_bersih,
-                'selisih_berat'     => $inputItem->selisih_berat,
-                'kadar_air'         => $inputItem->kadar_air,
-                'id_box'            => $inputItem->id_box,
-                'harga_nota'        => $inputItem->harga_nota,
-                'total_harga_nota'  => $inputItem->total_harga_nota,
-                'harga_deal'        => $inputItem->harga_deal,
-                'fix_harga_deal'    => $inputItem->fix_harga_deal,
-                // 'fix_harga_deal'    => $inputItem->fixHargaDealForRow,
-                'keterangan'        => $inputItem->keterangan,
-                'user_created'      => $inputItem->user_created,
-                'user_updated'      => $inputItem->user_updated ?? '',
-                // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-            ]);
-        }
-
+        // Input Item
+        PrmRawMaterialInputItem::create([
+            'jenis'             => $item->jenis,
+            'id_box'            => $item->id_box,
+            'berat_nota'        => $item->berat_nota,
+            'berat_kotor'       => $item->berat_kotor,
+            'berat_bersih'      => $item->berat_bersih,
+            'selisih_berat'     => $item->selisih_berat,
+            'kadar_air'         => $item->kadar_air,
+            'harga_nota'        => $item->harga_nota,
+            'total_harga_nota'  => $item->total_harga_nota,
+            'harga_deal'        => $item->harga_deal,
+            'fix_harga_deal'    => $item->fix_harga_deal,
+            // 'fix_harga_deal'    => $inputItem->fixHargaDealForRow,
+            'keterangan'        => $item->keterangan,
+            'user_created'      => $item->user_created,
+            'user_updated'      => $item->user_updated ?? '',
+            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ]);
 
         // stok
         $itemObject = (object)$item;
@@ -164,12 +115,8 @@ class PrmRawMaterialInputService
             'berat_keluar'          => $itemObject->berat_keluar ?? 0,
             'sisa_berat'            => $itemObject->berat_bersih,
             'avg_kadar_air'         => $itemObject->kadar_air,
-            // 'modal'                 => $itemObject->fixHargaDealForRow,
-            // 'total_modal'           => $itemObject->fixHargaDealForRow * $itemObject->berat_bersih,
             'modal'                 => $itemObject->fix_harga_deal,
             'total_modal'           => $itemObject->fix_harga_deal * $itemObject->berat_bersih,
-            // 'total_modal'           => $itemObject->harga_deal * $itemObject->berat_bersih,
-            // 'fix_harga_deal'        => $itemObject->fixHargaDealForRow,
             'keterangan'            => $itemObject->keterangan,
             'user_created'          => $itemObject->user_created,
             'user_updated'          => $itemObject->user_updated ?? '',
@@ -184,6 +131,7 @@ class PrmRawMaterialInputService
             // Update nilai berat_masuk pada item yang sudah ada
             $lastBeratMasuk = $existingItem->berat_masuk += $itemObject->berat_bersih;
             $existingItem->berat_keluar = $itemObject->berat_keluar ?? $existingItem->berat_keluar ?? 0;
+            $existingItem->avg_kadar_air = $itemObject->avg_kadar_air ?? $existingItem->avg_kadar_air ?? 0;
 
             // Tentukan nilai sisa_berat sesuai kondisi
             if ($existingItem->berat_keluar === 0 || $existingItem->berat_keluar === null) {
