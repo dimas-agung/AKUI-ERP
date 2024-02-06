@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}">
     {{-- Choice --}}
     <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
+    <link rel="stylesheet" href="{{ asset('path/to/choices.min.css') }}">
+    <script src="{{ asset('path/to/choices.min.js') }}"></script>
     {{-- DataTable --}}
     <link rel="stylesheet" href="{{ asset('https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css') }}">
     <link rel="stylesheet"
@@ -264,7 +266,7 @@
                                         </li>
                                         <li
                                             class="submenu-item {{ Request::is('PreGradingHalusInput*') ? 'active' : '' }}">
-                                            <a href="{{ route('PreGradingHalus.index') }}"
+                                            <a href="{{ route('PreGradingHalusInput.index') }}"
                                                 class="submenu-link">Pre-Grading Halus Input</a>
                                         </li>
                                         <li

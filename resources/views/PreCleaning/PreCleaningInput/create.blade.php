@@ -212,7 +212,7 @@
                         // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
                         // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
                         Swal.fire({
-                            title: 'Failed!',
+                            title: 'Warning!',
                             text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
                             icon: 'error'
                         }).then((result) => {
@@ -274,7 +274,7 @@
                         // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
                         if (result.isConfirmed) {
                             window.location.href = response
-                            .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
                         }
                     });
                 },

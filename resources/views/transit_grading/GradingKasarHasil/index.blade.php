@@ -111,26 +111,6 @@
                                             <td class="text-center">{{ $GradingKH->user_updated }}</td>
                                             <td class="text-center">{{ $GradingKH->created_at }}</td>
                                             <td class="text-center">{{ $GradingKH->updated_at }}</td>
-                                            {{-- <td class="text-center">
-                                                <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $GradingKH->id }}"
-                                                        action="{{ route('grading_kasar_hasil.destroyInput', $GradingKH->id) }}"
-                                                        method="POST">
-                                                        <a href="{{ route('grading_kasar_hasil.show', $GradingKH->id) }}"
-                                                            class="btn btn-link" title="View"
-                                                            data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $GradingKH->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td> --}}
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     @if ($GradingKH->status == 1)

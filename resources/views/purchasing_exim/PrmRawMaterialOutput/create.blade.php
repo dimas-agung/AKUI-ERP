@@ -449,7 +449,7 @@
                     } else {
                         // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
                         Swal.fire({
-                            title: 'Innalillahi!',
+                            title: 'Warning!',
                             text: 'Berat ID Box tidak boleh 0. Pilih ID Box lain.',
                             icon: 'warning'
                         });
@@ -490,7 +490,7 @@
                         // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
                         // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
                         Swal.fire({
-                            title: 'Innalillahi!',
+                            title: 'Warning!',
                             text: 'Tujuan Kirim tidak boleh tidak aktif. Pilih Tujuan Kirim lain.',
                             icon: 'warning'
                         });

@@ -64,7 +64,7 @@
                                     <div class="form-group">
                                         <label>No BSTB</label>
                                         <select id="nomor_bstb" class="choices form-select" name="nomor_bstb"
-                                            data-placeholder="Pilih Nomor Job">
+                                            data-placeholder="Pilih Nomor Job" multiple>
                                             <option value="">Pilih Nomor BSTB</option>
                                             @foreach ($stockTGK as $post)
                                                 @php
@@ -223,6 +223,7 @@
                 time_24hr: false // Gunakan format 12 jam jika diinginkan
             });
         });
+
         $('#nomor_bstb').on('change', function() {
             // Mengambil nilai nomor_bstb yang dipilih
             let selectedIdBox = $(this).val();

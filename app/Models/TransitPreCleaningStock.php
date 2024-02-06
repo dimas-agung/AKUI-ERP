@@ -14,6 +14,7 @@ class TransitPreCleaningStock extends Model
         'id_box_grading_kasar',
         'nomor_bstb',
         'nama_supplier',
+        'nomor_batch',
         'nomor_nota_internal',
         'id_box_raw_material',
         'jenis_raw_material',
@@ -32,5 +33,9 @@ class TransitPreCleaningStock extends Model
     public function PreCleaningOutput()
     {
         return $this->hasMany(PreCleaningOutput::class, 'nomor_job', 'nomor_job');
+    }
+    public function PreGradingHalusInput()
+    {
+        return $this->hasMany(PreGradingHalusInput::class, 'nomor_bstb', 'nomor_bstb');
     }
 }

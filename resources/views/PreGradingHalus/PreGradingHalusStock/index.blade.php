@@ -1,9 +1,9 @@
 @extends('layouts.master1')
 @section('menu')
-    Pre Cleaning
+    Pre Grading Halus
 @endsection
 @section('title')
-    Transit Pre Cleaning Stock
+    Transit Pre Grading Halus Stock
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Transit Pre Cleaning Stock
+                                Data Transit Pre Grading Halus Stock
                             </div>
                         </h5>
                     </div>
@@ -32,22 +32,20 @@
                                         <th scope="col" class="text-center">ID Box Raw Material</th>
                                         <th scope="col" class="text-center">Jenis Raw Material</th>
                                         <th scope="col" class="text-center">Jenis Kirim</th>
-                                        <th scope="col" class="text-center">Berat Kirim</th>
-                                        <th scope="col" class="text-center">Pcs Kirim</th>
+                                        <th scope="col" class="text-center">Berat Masuk</th>
+                                        <th scope="col" class="text-center">Pcs Masuk</th>
+                                        <th scope="col" class="text-center">Berat Keluar</th>
+                                        <th scope="col" class="text-center">Pcs Keluar</th>
+                                        <th scope="col" class="text-center">Sisa Berat</th>
+                                        <th scope="col" class="text-center">Sisa Pcs</th>
                                         <th scope="col" class="text-center">Kadar Air</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
-                                        <th scope="col" class="text-center">Nomor Grading</th>
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
-                                        <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center">User Created</th>
-                                        <th scope="col" class="text-center">User Updated</th>
-                                        <th scope="col" class="text-center">Created At</th>
-                                        <th scope="col" class="text-center">Updated At</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($transit_pre_cleaning_stocks as $TPCS)
+                                    @forelse ($TransitPre as $TPCS)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $TPCS->nomor_job }}</td>
@@ -59,22 +57,20 @@
                                             <td class="text-center">{{ $TPCS->id_box_raw_material }}</td>
                                             <td class="text-center">{{ $TPCS->jenis_raw_material }}</td>
                                             <td class="text-center">{{ $TPCS->jenis_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->berat_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->pcs_kirim }}</td>
+                                            <td class="text-center">{{ $TPCS->berat_masuk }}</td>
+                                            <td class="text-center">{{ $TPCS->pcs_masuk }}</td>
+                                            <td class="text-center">{{ $TPCS->berat_keluar }}</td>
+                                            <td class="text-center">{{ $TPCS->pcs_keluar }}</td>
+                                            <td class="text-center">{{ $TPCS->sisa_berat }}</td>
+                                            <td class="text-center">{{ $TPCS->sisa_pcs }}</td>
                                             <td class="text-center">{{ $TPCS->kadar_air }}</td>
                                             <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_grading }}</td>
                                             <td class="text-center">{{ $TPCS->modal }}</td>
                                             <td class="text-center">{{ $TPCS->total_modal }}</td>
-                                            <td class="text-center">{{ $TPCS->keterangan }}</td>
-                                            <td class="text-center">{{ $TPCS->user_created }}</td>
-                                            <td class="text-center">{{ $TPCS->user_updated }}</td>
-                                            <td class="text-center">{{ $TPCS->created_at }}</td>
-                                            <td class="text-center">{{ $TPCS->updated_at }}</td>
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Pre Cleaning Output belum Tersedia.
+                                            Data Pre Grading Halus Output belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>

@@ -17,6 +17,7 @@ class PreGradingHalusInput extends Model
         'nomor_batch',
         'nomor_nota_internal',
         'nama_supplier',
+        'status',
         'jenis_raw_material',
         'kadar_air',
         'jenis_kirim',

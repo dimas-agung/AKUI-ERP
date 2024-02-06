@@ -11,7 +11,7 @@
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data Pre-Grading Halus Input</h4>
-                    <a href="{{ route('PreGradingHalus.create') }}" class="btn btn-outline-success rounded-pill">
+                    <a href="{{ route('PreGradingHalusInput.create') }}" class="btn btn-outline-success rounded-pill">
                         <i class="fa fa-plus"></i>
                         Add Data
                     </a>
@@ -30,6 +30,7 @@
                                 <th class="text-center" scope="col">Nomor Batch</th>
                                 <th class="text-center" scope="col">Nomor Nota Internal</th>
                                 <th class="text-center" scope="col">Nama Supplier</th>
+                                <th class="text-center" scope="col">Status</th>
                                 <th class="text-center" scope="col">Jenis Raw Material</th>
                                 <th class="text-center" scope="col">Kadar Air</th>
                                 <th class="text-center" scope="col">Jenis Kirim</th>
@@ -53,6 +54,14 @@
                                     <td class="text-center">{{ $item->nomor_batch }}</td>
                                     <td class="text-center">{{ $item->nomor_nota_internal }}</td>
                                     <td class="text-center">{{ $item->nama_supplier }}</td>
+                                    <td class="text-center">
+                                        @if ($item->status == 1)
+                                            <span>Aktif</span>
+                                        @elseif($item->status == 0)
+                                            <span class="badge badge-secondary"
+                                                style="text-shadow: 1px 1px 6px #000000;">Tidak Aktif</span>
+                                        @endif
+                                    </td>
                                     <td class="text-center">{{ $item->jenis_raw_material }}</td>
                                     <td class="text-center">{{ $item->kadar_air }}</td>
                                     <td class="text-center">{{ $item->jenis_kirim }}</td>
@@ -64,24 +73,14 @@
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            @php
-                                                $gradingKasarHasilCount = $GradingKH
-                                                    ? $GradingKH
-                                                        ->where('id_box_raw_material', $item->id_box)
-                                                        ->where('nomor_grading', $item->nomor_grading)
-                                                        ->count()
-                                                    : 0;
-                                            @endphp
-
-                                            @if ($gradingKasarHasilCount === 0)
-                                                <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                    action="{{ route('GradingKasarInput.destroy', $item->id) }}"
+                                            @if ($item->status == 1)
+                                                <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
+                                                    action="{{ route('PreGradingHalusInput.destroy', $item->nomor_bstb) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-link btn-danger"
-                                                        data-original-title="Remove"
-                                                        onclick="confirmDelete({{ $item->id }})">
+                                                    <button type="button" class="btn btn-link" data-original-title="Remove"
+                                                        onclick="confirmDelete({{ $item->nomor_bstb }})">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
                                                 </form>
@@ -116,7 +115,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Jika dikonfirmasi, submit form
-                    document.getElementById('deleteForm' + id).submit();
+                    document.getElementById('deleteForm' + nomor_bstb).submit();
                 }
             });
         }

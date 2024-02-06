@@ -123,6 +123,7 @@ class PreCleaningOutputService
                 'nomor_bstb'                => $itemObject->nomor_bstb,
                 'nama_supplier'             => $itemObject->nama_supplier,
                 'nomor_nota_internal'       => $itemObject->nomor_nota_internal,
+                'nomor_batch'               => $itemObject->nomor_batch,
                 'id_box_raw_material'       => $itemObject->id_box_raw_material,
                 'jenis_raw_material'        => $itemObject->jenis_raw_material,
                 'jenis_kirim'               => $itemObject->jenis_kirim,
