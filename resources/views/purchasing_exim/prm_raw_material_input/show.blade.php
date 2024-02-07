@@ -45,6 +45,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{-- @forelse ($PrmInput->PrmRawMaterialInputItem as $MasterPRIM) --}}
                                     @forelse ($MasterPRIM->PrmRawMaterialInputItem as $MasterPRIM)
                                         <tr>
                                             <td>{{ $i++ }}</td>

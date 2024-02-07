@@ -29,9 +29,13 @@ class PrmRawMaterialInput extends Model
     {
         return $this->hasMany(PrmRawMaterialInputItem::class, 'created_at', 'created_at');
     }
+    // public function PrmRawMaterialInputItem()
+    // {
+    //     return $this->hasMany(PrmRawMaterialInputItem::class, 'id_box', 'nomor_nota_internal');
+    // }
     public function PrmRawMaterialStock()
     {
-        return $this->hasMany(PrmRawMaterialStock::class, 'nomor_batch', 'nomor_batch');
+        return $this->hasMany(PrmRawMaterialStock::class, 'created_at', 'nomor_nota_internal');
     }
     public function PrmRawMaterialStockHistory()
     {

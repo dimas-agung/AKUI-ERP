@@ -191,17 +191,6 @@
 @endsection
 @section('script')
     <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
-        // $(document).ready(function() {
-        //     // Inisialisasi Select2 pada elemen dengan class select2
-        //     $('#jenis').select2({
-        //         placeholder: 'Pilih Jenis',
-        //         width: '100%',
-        //         theme: 'bootstrap' // Jika Anda menggunakan tema Bootstrap
-        //     });
-        // });
         // Menambahkan event listener untuk perubahan nilai pada input nomor nota supplier dan select nama supplier
         $('#nomor_nota_supplier').on('input', generateNomorNotaInternal);
         $('#nama_supplier').on('change', generateNomorNotaInternal);
@@ -342,6 +331,7 @@
                 $('#harga_deal').val(beratBersih !== 0 ? '0.00' : '');
             }
         }
+        // Fungsi untuk menghitung jumlah dan rata-rata kadar air berdasarkan id_box yang sama
     </script>
     <script>
         // test
@@ -528,6 +518,7 @@
             $('#harga_deal').val('');
             $('#keterangan').val('');
         }
+
 
         function hapusBaris(button) {
             // Dapatkan elemen baris terkait dengan tombol delete yang diklik

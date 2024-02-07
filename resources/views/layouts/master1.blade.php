@@ -18,9 +18,6 @@
     {{-- SweetAlert --}}
     <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}">
     {{-- Choice --}}
-    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
-    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{ asset('assets/extensions/select2/css/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
     {{-- DataTable --}}
@@ -389,8 +386,8 @@
     <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
 
     <!-- Need: Apexcharts -->
-    <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script>
+    {{-- <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script> --}}
     {{-- Choice --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
@@ -412,6 +409,10 @@
         function goBack() {
             window.history.back();
         }
+
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
 
         $(document).ready(function() {
             $('#table1').DataTable({

@@ -17,6 +17,9 @@ class PrmRawMaterialInputService
             DB::beginTransaction();
 
             $this->createHeader($dataHeader);
+            // foreach ($dataHeader as $header) {
+            //     $this->createHeader($header);
+            // }
 
             foreach ($dataArray as $item) {
                 $this->createItem($item);
@@ -39,21 +42,66 @@ class PrmRawMaterialInputService
         }
     }
 
-    private function createHeader($dataHeader)
+    private function createHeader($header)
     {
-        PrmRawMaterialInput::create([
+        // PrmRawMaterialInput::create([
+        //     // 'doc_no'                => $dataHeader->doc_no,
+        //     'nomor_po'              => $dataHeader->nomor_po,
+        //     'nomor_batch'           => $dataHeader->nomor_batch,
+        //     'nomor_nota_supplier'   => $dataHeader->nomor_nota_supplier,
+        //     'nomor_nota_internal'   => $dataHeader->nomor_nota_internal,
+        //     'nama_supplier'         => $dataHeader->nama_supplier,
+        //     'keterangan'            => $dataHeader->keterangan,
+        //     'user_created'          => $dataHeader->user_created,
+        //     'user_updated'          => $dataHeader->user_updated ?? ''
+        //     // Sesuaikan dengan kolom-kolom lain di tabel header Anda
+        // ]);
+
+        // stok
+        $itemObject = (object)$header;
+        // Cari item berdasarkan id_box dan nomor_batch
+        $existingItem = PrmRawMaterialInput::where('nomor_nota_internal', $itemObject->nomor_nota_internal)
+            ->where('created_at')
+            ->first();
+        // return $existingItem
+
+        $dataToUpdate = [
             // 'doc_no'                => $dataHeader->doc_no,
-            'nomor_po'              => $dataHeader->nomor_po,
-            'nomor_batch'           => $dataHeader->nomor_batch,
-            'nomor_nota_supplier'   => $dataHeader->nomor_nota_supplier,
-            'nomor_nota_internal'   => $dataHeader->nomor_nota_internal,
-            'nama_supplier'         => $dataHeader->nama_supplier,
-            'keterangan'            => $dataHeader->keterangan,
-            'user_created'          => $dataHeader->user_created,
-            'user_updated'          => $dataHeader->user_updated ?? ''
+            'nomor_po'              => $header->nomor_po,
+            'nomor_batch'           => $header->nomor_batch,
+            'nomor_nota_supplier'   => $header->nomor_nota_supplier,
+            'nomor_nota_internal'   => $header->nomor_nota_internal,
+            'nama_supplier'         => $header->nama_supplier,
+            'keterangan'            => $header->keterangan,
+            'user_created'          => $header->user_created,
+            'user_updated'          => $header->user_updated ?? ''
             // Sesuaikan dengan kolom-kolom lain di tabel header Anda
-        ]);
+        ];
+        //
+        if ($existingItem) {
+
+            // Simpan perubahan pada stok yang sudah ada
+            $existingItem->save();
+        } else {
+            // Jika item tidak ada, buat item baru dalam database
+            PrmRawMaterialInput::create($dataToUpdate);
+        }
+        // // Ubah objek header menjadi array agar lebih mudah diakses
+        // $headerArray = (array)$header;
+
+        // // Cari header berdasarkan nomor nota internal
+        // $existingHeader = PrmRawMaterialInput::where('nomor_nota_internal', $headerArray['nomor_nota_internal'])->first();
+
+        // if ($existingHeader) {
+        //     // Jika header sudah ada, update data yang ada
+        //     $existingHeader->update($headerArray);
+        // } else {
+        //     // Jika header belum ada, buat header baru
+        //     PrmRawMaterialInput::create($headerArray);
+        // }
     }
+
+
 
     private function createItem($item)
     {
