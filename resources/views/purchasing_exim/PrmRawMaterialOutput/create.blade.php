@@ -56,7 +56,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Id Box</label>
-                                            <select id="id_box" class="choices form-select" name="id_box">
+                                            <select id="id_box" class="select2 form-select" name="id_box"
+                                                removeActiveItemsByValue>
                                                 <option value="">Pilih Id Box</option>
                                                 @foreach ($PrmRawMS->sortBy('id_box') as $post)
                                                     <option value="{{ $post->id_box }}">
@@ -68,7 +69,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
-                                            <select id="tujuan_kirim" class="choices form-select" name="tujuan_kirim">
+                                            <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim"
+                                                searchable="true">
                                                 <option value="">Pilih Tujuan Kirim</option>
                                                 @foreach ($MasTujKir->sortBy('tujuan_kirim') as $post)
                                                     <option value="{{ $post->tujuan_kirim }}">
@@ -403,6 +405,10 @@
 @endsection
 @section('script')
     <script>
+        // $(document).ready(function() {
+        //     $('.select2').select2();
+        // });
+
         function handleChange(input) {
             // Hapus atribut readonly
             input.removeAttribute('readonly');
@@ -665,7 +671,8 @@
                 nomor_nota_internal: nomor_nota_internal,
             });
             // Membersihkan nilai input setelah ditambahkan
-            $('#id_box').val('<option></option>');
+            $('#id_box').val('');
+            $('#tujuan_kirim').val('');
             $('#nomor_batch').val('');
             $('#nama_supplier').val('');
             $('#jenis').val('');

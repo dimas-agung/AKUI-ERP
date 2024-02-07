@@ -63,8 +63,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>No BSTB</label>
-                                        <select id="nomor_bstb" class="choices form-select" name="nomor_bstb"
-                                            data-placeholder="Pilih Nomor Job" multiple>
+                                        <select id="nomor_bstb" class="select2 form-select" name="nomor_bstb"
+                                            data-placeholder="Pilih Nomor Job">
                                             <option value="">Pilih Nomor BSTB</option>
                                             @foreach ($stockTGK as $post)
                                                 @php
@@ -236,36 +236,18 @@
                     nomor_bstb: selectedIdBox
                 },
                 success: function(response) {
-                    // Memeriksa apakah berat lebih dari 0 sebelum mengatur nilai elemen-elemen
-                    if (response.berat > 0) {
-                        // Mengatur nilai elemen-elemen sesuai dengan respons dari server
-                        $('#id_box').val(response.id_box);
-                        $('#nomor_batch').val(response.nomor_batch);
-                        $('#nama_supplier').val(response.nama_supplier);
-                        $('#jenis').val(response.jenis);
-                        $('#berat').val(response.berat);
-                        $('#kadar_air').val(response.kadar_air);
-                        $('#modal').val(response.modal);
-                        $('#no_nota').val(response.nomor_nota_internal);
+                    // Mengatur nilai elemen-elemen sesuai dengan respons dari server
+                    $('#id_box').val(response.id_box);
+                    $('#nomor_batch').val(response.nomor_batch);
+                    $('#nama_supplier').val(response.nama_supplier);
+                    $('#jenis').val(response.jenis);
+                    $('#berat').val(response.berat);
+                    $('#kadar_air').val(response.kadar_air);
+                    $('#modal').val(response.modal);
+                    $('#no_nota').val(response.nomor_nota_internal);
 
-                        // Memanggil fungsi untuk mengupdate total modal
-                        updateTotalmodal();
-                    } else {
-                        // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
-                        // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
-                        Swal.fire({
-                            title: 'Warning!',
-                            text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
-                            icon: 'error'
-                        }).then((result) => {
-                            // Refresh halaman saat menekan tombol "OK" pada SweetAlert
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                        // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
-                        $('#nomor_bstb').val('');
-                    }
+                    // Memanggil fungsi untuk mengupdate total modal
+                    updateTotalmodal();
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -397,8 +379,8 @@
             // Membersihkan nilai input setelah ditambahkan
             $('#id_box').val('');
             $('#nomor_batch').val('');
-            // $('#nomor_bstb').val('');
-            $('#nomor_bstb').val($('#nomor_bstb option:first').val());
+            // $('#nomor_bstb').val($('#nomor_bstb option:first').val()).trigger('change');
+            $('#nomor_bstb').val('').trigger('change');
             $('#nama_supplier').val('');
             $('#jenis').val('');
             $('#berat_masuk').val('');

@@ -134,9 +134,7 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputCont
     Route::get('/GradingKasarInput/get_data', 'set')->name('GradingKasarInput.set');
     Route::post('/GradingKasarInput/store', 'store')->name('GradingKasarInput.store');
     Route::post('/GradingKasarInput/sendData', 'sendData')->name('GradingKasarInput.sendData');
-    Route::get('/GradingKasarInput/edit/{id}', 'edit')->name('GradingKasarInput.edit');
-    Route::put('/GradingKasarInput/update/{id}', 'update')->name('GradingKasarInput.update');
-    Route::delete('/GradingKasarInput/destroy/{id}', 'destroy')->name('GradingKasarInput.destroy');
+    Route::delete('/GradingKasarInput/destroy/{nomor_bstb}', 'destroy')->name('GradingKasarInput.destroy');
 });
 Route::controller(App\Http\Controllers\MasterJenisGradingKasarController::class)->group(function () {
     Route::get('/master_jenis_grading_kasar', 'index')->name('master_jenis_grading_kasar.index');

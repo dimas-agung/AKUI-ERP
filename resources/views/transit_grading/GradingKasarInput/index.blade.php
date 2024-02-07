@@ -68,14 +68,14 @@
                                             @endphp
 
                                             @if ($gradingKasarHasilCount === 0)
-                                                <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                    action="{{ route('GradingKasarInput.destroy', $item->id) }}"
+                                                <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
+                                                    action="{{ route('GradingKasarInput.destroy', $item->nomor_bstb) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-link btn-danger"
                                                         data-original-title="Remove"
-                                                        onclick="confirmDelete({{ $item->id }})">
+                                                        onclick="confirmDelete('{{ $item->nomor_bstb }}')">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
                                                 </form>
@@ -84,9 +84,13 @@
                                     </td>
                                 </tr>
                             @empty
-                                <div class="alert alert-danger">
-                                    Data Grading Kasar Input belum Tersedia.
-                                </div>
+                                <tr>
+                                    <td colspan="13">
+                                        <div class="alert alert-danger">
+                                            Data Grading Kasar Input belum Tersedia.
+                                        </div>
+                                    </td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -97,22 +101,10 @@
 @endsection
 @section('script')
     <script>
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Anda yakin ingin menghapus data ini?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Jika dikonfirmasi, submit form
-                    document.getElementById('deleteForm' + id).submit();
-                }
-            });
+        function confirmDelete(nomor_bstb) {
+            if (confirm('Apakah Anda yakin ingin menghapus item dengan nomor_bstb: ' + nomor_bstb + '?')) {
+                document.getElementById('deleteForm' + nomor_bstb).submit();
+            }
         }
     </script>
 @endsection

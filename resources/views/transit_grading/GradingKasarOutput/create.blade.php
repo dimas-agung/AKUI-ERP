@@ -59,7 +59,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ID Box Grading Kasar</label>
-                                            <select id="id_box_grading_kasar" class="choices form-select"
+                                            <select id="id_box_grading_kasar" class="select2 form-select"
                                                 name="id_box_grading_kasar">
                                                 <option value="">Pilih ID Box Grading Kasar</option>
                                                 @foreach ($GradingKS as $post)
@@ -73,7 +73,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
-                                            <select id="tujuan_kirim" class="choices form-select" name="tujuan_kirim">
+                                            <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim">
                                                 <option value="">Pilih Tujuan Kirim</option>
                                                 @foreach ($MasTujKir as $post)
                                                     <option value="{{ $post->tujuan_kirim }}">
@@ -409,7 +409,8 @@
                 user_created: user_created
             });
             // Membersihkan nilai input setelah ditambahkan
-            $('#id_box_grading_kasar').val('<option></option>');
+            $('#id_box_grading_kasar').val('').trigger('change');
+            $('#tujuan_kirim').val('').trigger('change');
             $('#id_box_raw_material').val('');
             $('#nomor_batch').val('');
             $('#nama_supplier').val('');

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\PreCleaningInput;
 use App\Models\PreCleaningOutput;
 use App\Models\PreCleaningStock;
 use App\Models\TransitPreCleaningStock;
@@ -72,21 +73,6 @@ class PreCleaningOutputService
             'user_updated'                      => $item->user_updated ?? 'Admin123',
         ]);
 
-        // PrmRawMaterialStockHistory::create([
-        //     'id_box'        => $item->id_box,
-        //     'doc_no'        => $item->doc_no,
-        //     'berat_masuk'   => $item->berat_masu ?? 0,
-        //     'berat_keluar'  => $item->berat,
-        //     'sisa_berat'    => $item->selisih_berat,
-        //     'avg_kadar_air' => $item->kadar_air,
-        //     'modal'         => $item->modal,
-        //     'total_modal'   => $item->total_modal,
-        //     'keterangan'    => $item->keterangan_item,
-        //     'user_created'  => $item->user_created,
-        //     'user_updated'  => $item->user_updated ?? "There isn't any",
-        //     // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-        // ]);
-
         // Creat Transit Pre Cleaning Stock
         $itemObject = (object)$item;
         $existingItem = TransitPreCleaningStock::where('nomor_job', $itemObject->nomor_job)
@@ -138,6 +124,21 @@ class PreCleaningOutputService
                 'user_created'              => $itemObject->user_created ?? "There isn't any",
                 'user_updated'              => $itemObject->user_updated ?? "There isn't any",
             ]));
+        }
+
+
+        $itemObject = (object) $item;
+        $existingItem = PreCleaningInput::where('nomor_job', $itemObject->nomor_job)
+            ->where('id_box_raw_material', $itemObject->id_box_raw_material)
+            ->first();
+
+        $dataToUpdate = [
+            'status'                => $itemObject->status ?? 0,
+        ];
+
+        if ($existingItem) {
+            // Perbarui data
+            $existingItem->update($dataToUpdate);
         }
     }
 }

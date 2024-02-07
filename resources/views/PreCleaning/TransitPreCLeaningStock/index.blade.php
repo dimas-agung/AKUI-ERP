@@ -47,36 +47,40 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($transit_pre_cleaning_stocks as $TPCS)
-                                        <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_job }}</td>
-                                            <td class="text-center">{{ $TPCS->id_box_grading_kasar }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_bstb }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_batch }}</td>
-                                            <td class="text-center">{{ $TPCS->nama_supplier }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_nota_internal }}</td>
-                                            <td class="text-center">{{ $TPCS->id_box_raw_material }}</td>
-                                            <td class="text-center">{{ $TPCS->jenis_raw_material }}</td>
-                                            <td class="text-center">{{ $TPCS->jenis_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->berat_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->pcs_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->kadar_air }}</td>
-                                            <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_grading }}</td>
-                                            <td class="text-center">{{ $TPCS->modal }}</td>
-                                            <td class="text-center">{{ $TPCS->total_modal }}</td>
-                                            <td class="text-center">{{ $TPCS->keterangan }}</td>
-                                            <td class="text-center">{{ $TPCS->user_created }}</td>
-                                            <td class="text-center">{{ $TPCS->user_updated }}</td>
-                                            <td class="text-center">{{ $TPCS->created_at }}</td>
-                                            <td class="text-center">{{ $TPCS->updated_at }}</td>
-                                        </tr>
-                                    @empty
-                                        <div class="alert alert-danger">
-                                            Data Pre Cleaning Output belum Tersedia.
-                                        </div>
-                                    @endforelse
+                                    <?php $i = 1; ?>
+                                    <?php foreach ($transit_pre_cleaning_stocks as $TPCS): ?>
+                                    <?php if($TPCS->berat_kirim != 0 || $TPCS->total_modal != 0): ?>
+                                    <tr>
+                                        <td class="text-center">{{ $i++ }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_job }}</td>
+                                        <td class="text-center">{{ $TPCS->id_box_grading_kasar }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_bstb }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_batch }}</td>
+                                        <td class="text-center">{{ $TPCS->nama_supplier }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_nota_internal }}</td>
+                                        <td class="text-center">{{ $TPCS->id_box_raw_material }}</td>
+                                        <td class="text-center">{{ $TPCS->jenis_raw_material }}</td>
+                                        <td class="text-center">{{ $TPCS->jenis_kirim }}</td>
+                                        <td class="text-center">{{ $TPCS->berat_kirim }}</td>
+                                        <td class="text-center">{{ $TPCS->pcs_kirim }}</td>
+                                        <td class="text-center">{{ $TPCS->kadar_air }}</td>
+                                        <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_grading }}</td>
+                                        <td class="text-center">{{ $TPCS->modal }}</td>
+                                        <td class="text-center">{{ $TPCS->total_modal }}</td>
+                                        <td class="text-center">{{ $TPCS->keterangan }}</td>
+                                        <td class="text-center">{{ $TPCS->user_created }}</td>
+                                        <td class="text-center">{{ $TPCS->user_updated }}</td>
+                                        <td class="text-center">{{ $TPCS->created_at }}</td>
+                                        <td class="text-center">{{ $TPCS->updated_at }}</td>
+                                    </tr>
+                                    <?php endif; ?>
+                                    <?php endforeach; ?>
+                                    <?php if (empty($transit_pre_cleaning_stocks)): ?>
+                                    <div class="alert alert-danger">
+                                        Data Pre Cleaning Output belum Tersedia.
+                                    </div>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>

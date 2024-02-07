@@ -45,9 +45,9 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Nomer BSTB</label>
-                                            <select id="nomor_bstb" class="choices form-select" name="nomor_bstb"
-                                                data-placeholder="Pilih Nomor Job">
-                                                <option value="">Pilih Nomor Job</option>
+                                            <select id="nomor_bstb" class="select2 form-select" name="nomor_bstb"
+                                                data-placeholder="Pilih Nomor BSTB">
+                                                <option value="">Pilih Nomor BSTB</option>
                                                 @php
                                                     $selectedNomorBSTB = ''; // Inisialisasi variabel untuk menyimpan nomor_bstb yang sudah ditampilkan
                                                 @endphp
