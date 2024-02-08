@@ -480,7 +480,7 @@
                 // Menampilkan SweetAlert untuk pesan error
                 Swal.fire({
                     icon: 'error',
-                    title: 'Astagfirullah',
+                    title: 'Warning!',
                     text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
                 });
                 return; // Menghentikan eksekusi fungsi jika data kosong
@@ -511,7 +511,7 @@
                     // Menampilkan SweetAlert untuk pesan sukses
                     Swal.fire({
                         icon: 'success',
-                        title: 'Alhamdulillah',
+                        title: 'Success!',
                         text: 'Data berhasil dikirim.'
                     });
 
@@ -524,7 +524,7 @@
                     // Menampilkan SweetAlert untuk pesan error
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
+                        title: 'Failed!',
                         text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
                     });
                 },

@@ -63,7 +63,7 @@ class PreCleaningInputController extends Controller
             'doc_no' => 'required',
             'user_created' => 'required',
             'user_updated' => 'required',
-            'keterangan' => 'required',
+            'keterangan' => 'sometimes',
         ]);
 
         // Check if $dataArray is empty
@@ -116,7 +116,7 @@ class PreCleaningInputController extends Controller
                         'nomor_grading'     => $mergedData['nomor_grading'],
                         'modal'             => $mergedData['modal'],
                         'total_modal'       => $mergedData['total_modal'],
-                        'keterangan'        => $mergedData['keterangan'],
+                        'keterangan'        => $mergedData['keterangan'] ?? 0,
                         'user_created'  => $mergedData['user_created'],
                         'user_update'   => $mergedData['user_updated'] ?? `"There isn't any"`,
                         'nomor_nota_internal'   => $mergedData['nomor_nota_internal']

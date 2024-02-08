@@ -1,6 +1,6 @@
 @extends('layouts.master1')
-@section('Menu')
-    Purchasing & EXIM / Purchasing Raw Material Stock
+@section('menu')
+    Purchasing & EXIM
 @endsection
 @section('title')
     Purchasing Raw Material Stock History
@@ -10,29 +10,12 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex align-items-center">
-                <h4 class="card-title">Data Purchasing Raw Material Stock Historys</h4>
+                <h4 class="card-title">Data Purchasing Raw Material Stock History</h4>
             </div>
         </div>
-        <div class="card-body">
-            {{-- Create Data --}}
-            @if (session()->has('success'))
-                <div class="alert alert-success">
-                    <strong>Sukses: </strong>{{ session()->get('success') }}
-                </div>
-            @endif
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul><strong>
-                            @foreach ($errors->all() as $error)
-                                <li> {{ $error }} </li>
-                            @endforeach
-                        </strong>
-                    </ul>
-                    <p>Mohon periksa kembali formulir Anda.</p>
-                </div>
-            @endif
+        <div class="card-body" style="overflow: auto;">
             <div class="table-responsive">
-                <table id="table1" class="table">
+                <table id="table1" class="display" style="width:100%">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">No</th>
@@ -52,18 +35,18 @@
                     <tbody>
                         @forelse ($stockHistory as $MasterStock)
                             <tr>
-                                <td>{{ $i++ }}</td>
-                                <td>{{ $MasterStock->id_box }}</td>
-                                <td>{{ $MasterStock->doc_no }}</td>
-                                <td>{{ $MasterStock->berat_masuk }}</td>
-                                <td>{{ $MasterStock->berat_keluar }}</td>
-                                <td>{{ $MasterStock->sisa_berat }}</td>
-                                <td>{{ $MasterStock->avg_kadar_air }}</td>
-                                <td>{{ $MasterStock->modal }}</td>
-                                <td>{{ $MasterStock->total_modal }}</td>
-                                <td>{{ $MasterStock->keterangan }}</td>
-                                <td>{{ $MasterStock->user_created }}</td>
-                                <td>{{ $MasterStock->created_at }}</td>
+                                <td class="text-center">{{ $i++ }}</td>
+                                <td class="text-center">{{ $MasterStock->id_box }}</td>
+                                <td class="text-center">{{ $MasterStock->doc_no }}</td>
+                                <td class="text-center">{{ $MasterStock->berat_masuk }}</td>
+                                <td class="text-center">{{ $MasterStock->berat_keluar }}</td>
+                                <td class="text-center">{{ $MasterStock->sisa_berat }}</td>
+                                <td class="text-center">{{ $MasterStock->avg_kadar_air }}</td>
+                                <td class="text-center">{{ $MasterStock->modal }}</td>
+                                <td class="text-center">{{ $MasterStock->total_modal }}</td>
+                                <td class="text-center">{{ $MasterStock->keterangan }}</td>
+                                <td class="text-center">{{ $MasterStock->user_created }}</td>
+                                <td class="text-center">{{ $MasterStock->created_at }}</td>
                             </tr>
                         @empty
                             <div class="alert alert-danger">
@@ -79,5 +62,4 @@
             </div>
         </div>
     </div>
-    {{-- </div> --}}
 @endsection

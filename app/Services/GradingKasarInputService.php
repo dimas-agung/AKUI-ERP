@@ -102,17 +102,13 @@ class GradingKasarInputService
         }
 
         $itemObject = (object) $item;
-        $existingItem = PrmRawMaterialOutputItem::where('nama_supplier', $itemObject->nama_supplier)
-            ->where('nomor_bstb', $itemObject->nomor_bstb)
-            ->first();
+        $existingItems = PrmRawMaterialOutputItem::where('nama_supplier', $itemObject->nama_supplier)
+            ->where('id_box', $itemObject->id_box)
+            ->get();
 
-        $dataToUpdate = [
-            'status'                => $itemObject->status ?? 0,
-        ];
-
-        if ($existingItem) {
-            // Perbarui data
-            $existingItem->update($dataToUpdate);
-        }
+            foreach ($existingItems as $existingItem) {
+                // Perbarui data untuk setiap item yang ada
+                $existingItem->update(['status' => 0]);
+            }
     }
 }

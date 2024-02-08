@@ -45,9 +45,9 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Nomer BSTB</label>
-                                            <select id="nomor_bstb" class="choices form-select" name="nomor_bstb"
-                                                data-placeholder="Pilih Nomor Job">
-                                                <option value="">Pilih Nomor Job</option>
+                                            <select id="nomor_bstb" class="select2 form-select" name="nomor_bstb"
+                                                data-placeholder="Pilih Nomor BSTB">
+                                                <option value="">Pilih Nomor BSTB</option>
                                                 @php
                                                     $selectedNomorBSTB = ''; // Inisialisasi variabel untuk menyimpan nomor_bstb yang sudah ditampilkan
                                                 @endphp
@@ -212,7 +212,7 @@
                         // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
                         // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
                         Swal.fire({
-                            title: 'Astaghfirullah!',
+                            title: 'Warning!',
                             text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
                             icon: 'error'
                         }).then((result) => {
@@ -249,17 +249,25 @@
                         }
                     });
                 },
-                data: {
-                    dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
-                    doc_no: doc_no,
-                    keterangan: keterangan,
-                    user_created: $('#user_created').val() || '',
-                    user_updated: 'Asc-186',
-                    _token: '{{ csrf_token() }}'
-                },
+                data: function() {
+                    var postData = {
+                        dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
+                        doc_no: doc_no,
+                        user_created: $('#user_created').val() || '',
+                        user_updated: 'Asc-186',
+                        _token: '{{ csrf_token() }}'
+                    };
+
+                    // Hanya mengirim keterangan jika memiliki nilai
+                    if (keterangan.trim() !== '') {
+                        postData.keterangan = keterangan;
+                    }
+
+                    return postData;
+                }(),
                 success: function(response) {
                     Swal.fire({
-                        title: 'Alhamdulillah!',
+                        title: 'Success!',
                         text: 'Data berhasil disimpan.',
                         icon: 'success'
                     }).then((result) => {
@@ -272,7 +280,7 @@
                 },
                 error: function(error) {
                     Swal.fire({
-                        title: 'Astaghfirullah!',
+                        title: 'Failed!',
                         text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
                         icon: 'error'
                     });
@@ -280,6 +288,7 @@
                 }
             });
         }
+
 
 
         // Variabel global untuk menyimpan indeks baris terakhir

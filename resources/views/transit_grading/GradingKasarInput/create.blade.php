@@ -63,7 +63,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>No BSTB</label>
-                                        <select id="nomor_bstb" class="choices form-select" name="nomor_bstb"
+                                        <select id="nomor_bstb" class="select2 form-select" name="nomor_bstb"
                                             data-placeholder="Pilih Nomor Job">
                                             <option value="">Pilih Nomor BSTB</option>
                                             @foreach ($stockTGK as $post)
@@ -223,6 +223,7 @@
                 time_24hr: false // Gunakan format 12 jam jika diinginkan
             });
         });
+
         $('#nomor_bstb').on('change', function() {
             // Mengambil nilai nomor_bstb yang dipilih
             let selectedIdBox = $(this).val();
@@ -235,36 +236,18 @@
                     nomor_bstb: selectedIdBox
                 },
                 success: function(response) {
-                    // Memeriksa apakah berat lebih dari 0 sebelum mengatur nilai elemen-elemen
-                    if (response.berat > 0) {
-                        // Mengatur nilai elemen-elemen sesuai dengan respons dari server
-                        $('#id_box').val(response.id_box);
-                        $('#nomor_batch').val(response.nomor_batch);
-                        $('#nama_supplier').val(response.nama_supplier);
-                        $('#jenis').val(response.jenis);
-                        $('#berat').val(response.berat);
-                        $('#kadar_air').val(response.kadar_air);
-                        $('#modal').val(response.modal);
-                        $('#no_nota').val(response.nomor_nota_internal);
+                    // Mengatur nilai elemen-elemen sesuai dengan respons dari server
+                    $('#id_box').val(response.id_box);
+                    $('#nomor_batch').val(response.nomor_batch);
+                    $('#nama_supplier').val(response.nama_supplier);
+                    $('#jenis').val(response.jenis);
+                    $('#berat').val(response.berat);
+                    $('#kadar_air').val(response.kadar_air);
+                    $('#modal').val(response.modal);
+                    $('#no_nota').val(response.nomor_nota_internal);
 
-                        // Memanggil fungsi untuk mengupdate total modal
-                        updateTotalmodal();
-                    } else {
-                        // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
-                        // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
-                        Swal.fire({
-                            title: 'Astaghfirullah!',
-                            text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
-                            icon: 'error'
-                        }).then((result) => {
-                            // Refresh halaman saat menekan tombol "OK" pada SweetAlert
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                        // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
-                        $('#nomor_bstb').val('');
-                    }
+                    // Memanggil fungsi untuk mengupdate total modal
+                    updateTotalmodal();
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -350,7 +333,6 @@
             if (!tgl_add) fieldsNotFilled.push('Tanggal Add');
             if (!plant) fieldsNotFilled.push('Plant');
             if (!user_created) fieldsNotFilled.push('NIP Admin');
-            if (!keterangan) fieldsNotFilled.push('Keterangan');
 
             // Cek apakah ada field yang belum terisi
             if (fieldsNotFilled.length > 0) {
@@ -358,7 +340,7 @@
                 let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
 
                 Swal.fire({
-                    title: 'Innalillahi!',
+                    title: 'Warning!',
                     text: message,
                     icon: 'warning'
                 });
@@ -397,8 +379,8 @@
             // Membersihkan nilai input setelah ditambahkan
             $('#id_box').val('');
             $('#nomor_batch').val('');
-            // $('#nomor_bstb').val('');
-            $('#nomor_bstb').val($('#nomor_bstb option:first').val());
+            // $('#nomor_bstb').val($('#nomor_bstb option:first').val()).trigger('change');
+            $('#nomor_bstb').val('').trigger('change');
             $('#nama_supplier').val('');
             $('#jenis').val('');
             $('#berat_masuk').val('');
@@ -457,7 +439,7 @@
                 dataType: 'json', // payload is json,
                 success: function(response) {
                     Swal.fire({
-                        title: 'Alhamdulillah!',
+                        title: 'Success!',
                         text: 'Data berhasil disimpan.',
                         icon: 'success'
                     }).then((result) => {
@@ -470,7 +452,7 @@
                 },
                 error: function(error) {
                     Swal.fire({
-                        title: 'Astaghfirullah!',
+                        title: 'Error!',
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });

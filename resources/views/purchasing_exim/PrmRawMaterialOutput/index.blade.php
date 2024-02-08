@@ -17,9 +17,9 @@
                     </a>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="overflow: auto;">
                 <div class="table-responsive">
-                    <table id="table1" class="table">
+                    <table id="table1" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
@@ -42,26 +42,6 @@
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <th class="text-center">No</th>
-                            <th class="text-center">Nomor Dokument</th>
-                            <th class="text-center">Nomor BSTB</th>
-                            <th class="text-center">Nomor Batch</th>
-                            <th class="text-center">Id Box</th>
-                            <th class="text-center">Nama Supplier</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Jenis</th>
-                            <th class="text-center">Berat</th>
-                            <th class="text-center">Kadar Air</th>
-                            <th class="text-center">Tujuan Kirim</th>
-                            <th class="text-center">Letak Tujuan</th>
-                            <th class="text-center">Inisial Tujuan</th>
-                            <th class="text-center">Modal</th>
-                            <th class="text-center">Total Modal</th>
-                            <th class="text-center">Keterangan</th>
-                            <th class="text-center">NIP Admin</th>
-                            <th class="text-center">Action</th>
-                        </tfoot>
                         <tbody>
                             @forelse ($PrmRawMOIC as $item)
                                 <tr>

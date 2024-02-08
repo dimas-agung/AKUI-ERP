@@ -43,8 +43,6 @@
                                         {{ $MasterSPRM->nama_supplier }}
                                     </option>
                                 @endif
-                                {{-- <option value="{{ $MasterSPRM->nama_supplier }}">
-                                    {{ $MasterSPRM->nama_supplier }}</option> --}}
                             @endforeach
                         </select>
                     </div>
@@ -241,20 +239,6 @@
                 }
             });
         });
-        //
-        // // Event listener untuk perubahan pada input nama_supplier
-        // $('#nama_supplier').on('change', function() {
-        //     let selectedNamaSupplier = $(this).val();
-        //     // Panggil fungsi getInisialSupplier untuk mendapatkan inisial_supplier
-        //     getInisialSupplier(selectedNamaSupplier);
-        // });
-
-        // // Event listener untuk perubahan pada input nomor_nota_supplier
-        // $('#nomor_nota_supplier').on('input', function() {
-        //     let inisial_supplier = $('#inisial_supplier').val();
-        //     // Panggil fungsi generateNomorNotaInternal dengan inisial_supplier yang sudah ada
-        //     generateNomorNotaInternal(inisial_supplier);
-        // });
         // generate nomor internal
         function generateNomorNotaInternal(inisial_supplier) {
             const nomorNotaSupplier = $('#nomor_nota_supplier').val();
@@ -332,11 +316,6 @@
                 $('#harga_deal').val(beratBersih !== 0 ? '0.00' : '');
             }
         }
-
-        // Panggil fungsi updateHargaDeal saat nilai berubah pada total harga nota dan berat bersih
-        $('#total_harga_nota, #berat_bersih').on('input', function() {
-            updateHargaDeal();
-        });
     </script>
     <script>
         // test
@@ -384,6 +363,7 @@
                 });
                 return; // Berhenti jika ada input yang kosong
             }
+
             // Mengubah atribut readonly menggunakan jQuery
             $('#nomor_po').prop('readonly', true);
             $('#nomor_batch').prop('readonly', true);
@@ -497,7 +477,7 @@
             console.log(dataArray);
             dataHeader = [];
             dataHeader.push({
-                // doc_no: doc_no,
+                doc_no: doc_no,
                 nomor_po: nomor_po,
                 nomor_batch: nomor_batch,
                 nomor_nota_supplier: nomor_nota_supplier,

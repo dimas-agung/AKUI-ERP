@@ -59,7 +59,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ID Box Grading Kasar</label>
-                                            <select id="id_box_grading_kasar" class="choices form-select"
+                                            <select id="id_box_grading_kasar" class="select2 form-select"
                                                 name="id_box_grading_kasar">
                                                 <option value="">Pilih ID Box Grading Kasar</option>
                                                 @foreach ($GradingKS as $post)
@@ -73,7 +73,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
-                                            <select id="tujuan_kirim" class="choices form-select" name="tujuan_kirim">
+                                            <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim">
                                                 <option value="">Pilih Tujuan Kirim</option>
                                                 @foreach ($MasTujKir as $post)
                                                     <option value="{{ $post->tujuan_kirim }}">
@@ -332,8 +332,27 @@
             var nomor_nota_internal = $('#nomor_nota_internal').val();
 
             // Validasi input (sesuai kebutuhan)
-            if (!nomor_job || !nomor_batch) {
-                alert('ID and nomor_batch are required.');
+            // Inisialisasi array untuk menyimpan field yang belum terisi
+            let fieldsNotFilled = [];
+            // Periksa setiap field
+            if (!nomor_bstb) fieldsNotFilled.push('Nomor BSTB');
+            if (!id_box_grading_kasar) fieldsNotFilled.push('ID box grading kasar');
+            if (!nama_supplier) fieldsNotFilled.push('Nama supllier');
+            if (!nomor_job) fieldsNotFilled.push('Nomor job');
+            if (!berat_keluar) fieldsNotFilled.push('Berat keluar');
+            if (!pcs_keluar) fieldsNotFilled.push('Pcs keluar');
+            if (!user_created) fieldsNotFilled.push('NIP Admin');
+
+            // Cek apakah ada field yang belum terisi
+            if (fieldsNotFilled.length > 0) {
+                // Membuat pesan teks yang mencantumkan field yang belum terisi
+                let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
+
+                Swal.fire({
+                    title: 'Warning!',
+                    text: message,
+                    icon: 'warning'
+                });
                 return;
             }
 
@@ -390,7 +409,8 @@
                 user_created: user_created
             });
             // Membersihkan nilai input setelah ditambahkan
-            $('#id_box_grading_kasar').val('<option></option>');
+            $('#id_box_grading_kasar').val('').trigger('change');
+            $('#tujuan_kirim').val('').trigger('change');
             $('#id_box_raw_material').val('');
             $('#nomor_batch').val('');
             $('#nama_supplier').val('');
@@ -452,7 +472,7 @@
                 dataType: 'json', // payload is json,
                 success: function(response) {
                     Swal.fire({
-                        title: 'Alhamdulillah!',
+                        title: 'Success!',
                         text: 'Data berhasil disimpan.',
                         icon: 'success'
                     }).then((result) => {
@@ -465,7 +485,7 @@
                 },
                 error: function(error) {
                     Swal.fire({
-                        title: 'Astaghfirullah!',
+                        title: 'Failed!',
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });

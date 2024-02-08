@@ -40,7 +40,7 @@ return new class extends Migration
             $table->float('selisih_laba_rugi_gram', 16, 4);
             $table->float('hpp', 16, 4);
             $table->float('total_hpp', 16, 4);
-            $table->text('keterangan');
+            $table->text('keterangan')->nullable();
             $table->string('user_created');
             $table->string('user_updated')->nullable();
             $table->timestamps();

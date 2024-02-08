@@ -20,7 +20,7 @@ class PreCleaningOutputController extends Controller
     {
         $i = 1;
         $PreCleaningOutput = PreCleaningOutput::all();
-        return response()->view('pre_cleaning.pre_cleaning_output.index', [
+        return response()->view('PreCleaning.PreCleaningOutput.index', [
             'pre_cleaning_outputs' => $PreCleaningOutput,
             'i' => $i,
         ]);
@@ -31,7 +31,7 @@ class PreCleaningOutputController extends Controller
         $PreCleaningStock = PreCleaningStock::with('PreCleaningOutput')->get();
         $PreCleaningOutput = PreCleaningOutput::with('PreCleaningStock')->whereRaw('berat_masuk - berat_keluar != 0');
         $MasterOperator = MasterOperator::with('PreCleaningOutput')->get();
-        return view('pre_cleaning.pre_cleaning_output.create', [
+        return view('PreCleaning.PreCleaningOutput.create', [
             'pre_cleaning_outputs'      => $PreCleaningOutput,
             'pre_cleaning_stocks'       => $PreCleaningStock,
             'master_operators'          => $MasterOperator,
@@ -44,7 +44,7 @@ class PreCleaningOutputController extends Controller
         $data = PreCleaningStock::where('nomor_job', $nomor_job)
             ->whereRaw('berat_masuk - berat_keluar != 0') // Tambahkan kondisi ini
             ->first();
-        return $data;
+        // return $data;
         // Kembalikan nomor job sebagai respons
         return response()->json($data);
     }

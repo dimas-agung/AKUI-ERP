@@ -17,9 +17,9 @@
                     </a>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="overflow: auto;">
                 <div class="table-responsive">
-                    <table id="table1" class="table">
+                    <table id="table1" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
@@ -29,6 +29,7 @@
                                 <th class="text-center" scope="col">Nomor BTSB</th>
                                 <th class="text-center" scope="col">Nomor Batch</th>
                                 <th class="text-center" scope="col">Nama Supplier</th>
+                                <th class="text-center" scope="col">Status</th>
                                 <th class="text-center" scope="col">Nomor Nota Internal</th>
                                 <th class="text-center" scope="col">ID Box Raw Material</th>
                                 <th class="text-center" scope="col">Jenis Raw Material</th>
@@ -46,30 +47,6 @@
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <th class="text-center">No</th>
-                            <th class="text-center">Nomor Doc</th>
-                            <th class="text-center">Nomor Job</th>
-                            <th class="text-center">ID Box Grading Kasar</th>
-                            <th class="text-center">Nomor BTSB</th>
-                            <th class="text-center">Nomor Batch</th>
-                            <th class="text-center">Nama Supplier</th>
-                            <th class="text-center">Nomor Nota Internal</th>
-                            <th class="text-center">ID Box Raw Material</th>
-                            <th class="text-center">Jenis Raw Material</th>
-                            <th class="text-center">Jenis Kirim</th>
-                            <th class="text-center">Berat Kirim</th>
-                            <th class="text-center">PCS Kirim</th>
-                            <th class="text-center">Kadar Air</th>
-                            <th class="text-center">Tujuan Kirim</th>
-                            <th class="text-center">Nomor Grading</th>
-                            <th class="text-center">Modal</th>
-                            <th class="text-center">Total Modal</th>
-                            <th class="text-center">Keterangan</th>
-                            <th class="text-center">NIP Admin</th>
-                            <th class="text-center">User Updated</th>
-                            <th class="text-center">Action</th>
-                        </tfoot>
                         <tbody>
                             @forelse ($PreCleaningI as $item)
                                 <tr>
@@ -80,6 +57,14 @@
                                     <td class="text-center">{!! $item->nomor_bstb !!}</td>
                                     <td class="text-center">{!! $item->nomor_batch !!}</td>
                                     <td class="text-center">{!! $item->nama_supplier !!}</td>
+                                    <td class="text-center">
+                                        @if ($item->status == 1)
+                                            <span>Aktif</span>
+                                        @elseif($item->status == 0)
+                                            <span class="badge badge-secondary"
+                                                style="text-shadow: 1px 1px 6px #000000;">Tidak Aktif</span>
+                                        @endif
+                                    </td>
                                     <td class="text-center">{!! $item->nomor_nota_internal !!}</td>
                                     <td class="text-center">{!! $item->id_box_raw_material !!}</td>
                                     <td class="text-center">{!! $item->jenis_raw_material !!}</td>
@@ -97,17 +82,19 @@
                                     {{-- <td class="text-center">{{ $item->user_updated }}</td> --}}
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
-                                                action="{{ route('PreCleaningInput.destroy', $item->nomor_bstb) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-link btn-danger"
-                                                    data-original-title="Remove"
-                                                    onclick="confirmDelete('{{ $item->nomor_bstb }}')">
-                                                    <i class="bi bi-trash3 text-danger"></i>
-                                                </button>
-                                            </form>
+                                            @if ($item->status == 1)
+                                                <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
+                                                    action="{{ route('PreCleaningInput.destroy', $item->nomor_bstb) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-link btn-danger"
+                                                        data-original-title="Remove"
+                                                        onclick="confirmDelete('{{ $item->nomor_bstb }}')">
+                                                        <i class="bi bi-trash3 text-danger"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

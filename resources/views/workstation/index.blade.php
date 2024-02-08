@@ -19,7 +19,7 @@
                 </button>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="overflow: auto;">
             <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -65,10 +65,8 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="table-responsive">
-                <table id="table1" class="table">
+                <table id="table1" class="display" style="width:100%">
                     <thead>
                         <tr>
                             <th class="text-center" scope="col">ID</th>
