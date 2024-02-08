@@ -250,10 +250,6 @@
                 console.error('Input tidak valid untuk berat_grading atau berat');
                 return null;
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> ca36b40387cf871fbdccc1c8e7f02fe7211691ab
         }
 
         // generate id box grading kasar
@@ -533,13 +529,6 @@
                     Swal.close();
                 }
             });
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-=======
-=======
->>>>>>> dev-helmi
->>>>>>> ca36b40387cf871fbdccc1c8e7f02fe7211691ab
         }
     </script>
 @endsection
