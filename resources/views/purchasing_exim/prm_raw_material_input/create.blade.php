@@ -581,14 +581,6 @@
                     Swal.close();
                 }
             });
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> dev-helmi
-=======
-
->>>>>>> ca36b40387cf871fbdccc1c8e7f02fe7211691ab
         }
     </script>
 @endsection
