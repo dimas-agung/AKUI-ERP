@@ -35,7 +35,6 @@
                                 <th class="text-center">Total Modal</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
-                                {{-- <th class="text-center" scope="col">User Updated</th> --}}
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -55,7 +54,6 @@
                                     <td class="text-center">{{ $item->total_modal }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
-                                    {{-- <td class="text-center">{{ $item->user_updated }}</td> --}}
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @php
@@ -67,7 +65,7 @@
                                                     : 0;
                                             @endphp
 
-                                            @if ($gradingKasarHasilCount === 0)
+                                            @if ($gradingKasarHasilCount == 0)
                                                 <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
                                                     action="{{ route('GradingKasarInput.destroy', $item->nomor_bstb) }}"
                                                     method="POST">
@@ -84,13 +82,9 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
-                                    <td colspan="13">
-                                        <div class="alert alert-danger">
-                                            Data Grading Kasar Input belum Tersedia.
-                                        </div>
-                                    </td>
-                                </tr>
+                                <div class="alert alert-danger">
+                                    Data Grading Kasar Input belum Tersedia.
+                                </div>
                             @endforelse
                         </tbody>
                     </table>
@@ -101,10 +95,22 @@
 @endsection
 @section('script')
     <script>
-        function confirmDelete(nomor_bstb) {
-            if (confirm('Apakah Anda yakin ingin menghapus item dengan nomor_bstb: ' + nomor_bstb + '?')) {
-                document.getElementById('deleteForm' + nomor_bstb).submit();
-            }
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Anda yakin ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika dikonfirmasi, submit form
+                    document.getElementById('deleteForm' + id).submit();
+                }
+            });
         }
     </script>
 @endsection

@@ -22,7 +22,9 @@ class PrmRawMaterialOutputController extends Controller
     public function index(){
         $i =1;
         $PrmRawMOIC = PrmRawMaterialOutputItem::all();
-        // return $PrmRawMOIC;
+        // $jumlahData = PrmRawMaterialOutputItem::distinct('nomor_bstb')->count('id_box');
+
+        // return $jumlahData;
         return response()->view('purchasing_exim.PrmRawMaterialOutput.index', [
             'PrmRawMOIC' => $PrmRawMOIC,
             'i' => $i,
@@ -213,9 +215,15 @@ class PrmRawMaterialOutputController extends Controller
             }
 
             // Ambil data StockTransitRawMaterial berdasarkan tujuan_kirim dan id_box
-            $stockPRM = StockTransitRawMaterial::where('tujuan_kirim', '=', $gradingKI->tujuan_kirim)
+            $stockPRM = StockTransitRawMaterial::where('tujuan_kirim', $gradingKI->tujuan_kirim)
             ->where('id_box', $gradingKI->id_box)
             ->first();
+
+            // Hitung jumlah data PrmRawMaterialOutputItem yang memiliki nomor_bstb unik
+            $jumlahData = PrmRawMaterialOutputItem::where('tujuan_kirim', $gradingKI->tujuan_kirim)
+            ->where('id_box', $gradingKI->id_box)
+            ->distinct('nomor_bstb')
+            ->count('id_box');
 
             if ($stockPRM) {
                 // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
@@ -228,16 +236,26 @@ class PrmRawMaterialOutputController extends Controller
                     } else {
                         // Ambil berat sebelumnya
                         $beratSebelumnya = $stockPRM->berat;
-                        $beratMasuk = $stockPRM->berat;
+                        $total_kadar_air = $gradingKI->sum('kadar_air');
 
                         // Hitung total modal baru berdasarkan perbedaan berats
                         $perbedaanBerat = $beratSebelumnya - $gradingKI->berat;
                         $totalModalBaru = $perbedaanBerat * $gradingKI->modal;
+                        // Hitung rata-rata kadar air baru
+                        $banyakData = max(1, $jumlahData); // Hindari pembagian dengan nol
+                        // $avgKadarAirBaru = ($total_kadar_air) / $banyakData;
+                        // Hitung rata-rata kadar air
+                        if ($banyakData > 0) {
+                            $avgKadarAirBaru = $total_kadar_air / $banyakData;
+                        } else {
+                            $avgKadarAirBaru = 0; // Menghindari pembagian oleh nol
+                        }
 
                         // Update data dengan berat dan total modal yang baru
                         $dataToUpdate = [
                             'berat' => abs($perbedaanBerat),
                             'total_modal' => abs($totalModalBaru),
+                            'kadar_air' => abs($avgKadarAirBaru),
                         ];
 
                         // Perbarui data
@@ -245,42 +263,6 @@ class PrmRawMaterialOutputController extends Controller
                     }
                 }
             }
-
-            // if ($stockPRM) {
-            //     // Jika berat dari StockTransitRawMaterial bernilai 0, maka hapus data
-            //     if ($stockPRM->berat === 0) {
-            //         $stockPRM->delete();
-            //     } else {
-            //         // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
-            //         if ($gradingKI->berat_masuk >= $stockPRM->berat) {
-            //             $stockPRM->delete();
-            //         } else {
-            //             // Ambil berat sebelumnya
-            //             $beratSebelumnya = $stockPRM->berat;
-            //             $beratMasuk = $stockPRM->berat_masuk;
-
-            //             // Hitung total modal baru berdasarkan perbedaan berats
-            //             $perbedaanBerat = $gradingKI->berat_masuk - $beratSebelumnya;
-            //             $sisaBerat = $beratMasuk - $beratSebelumnya;
-            //             $totalModalBaru = $sisaBerat * $gradingKI->modal;
-
-            //             // Periksa apakah berat setelah perubahan menjadi 0, jika ya, hapus data
-            //             if ($beratSebelumnya + $perbedaanBerat === 0) {
-            //                 $stockPRM->delete();
-            //             } else {
-            //                 // Update data dengan berat dan total modal yang baru
-            //                 $dataToUpdate = [
-            //                     'berat' => abs($beratSebelumnya + $perbedaanBerat),
-            //                     'total_modal' => abs($totalModalBaru),
-            //                 ];
-
-            //                 // Perbarui data
-            //                 $stockPRM->update($dataToUpdate);
-            //             }
-            //         }
-            //     }
-            // }
-
 
 
             // Hapus data GradingKasarInput
