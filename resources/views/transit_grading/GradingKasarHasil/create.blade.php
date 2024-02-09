@@ -463,7 +463,7 @@
             }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('grading_kasar_hasil.simpanData') }}`,
+                url: `{{ route('GradingKasarHasil.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
@@ -492,7 +492,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('grading_kasar_hasil.index') }}`;
+                    window.location.href = `{{ route('GradingKasarHasil.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);

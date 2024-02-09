@@ -87,6 +87,9 @@ class PrmRawMaterialOutputService
             ->first();
 
         $jumlahData = PrmRawMaterialOutputItem::distinct('nomor_bstb')->count('id_box');
+        $jumlahKadarAir = PrmRawMaterialOutputItem::groupBy('id_box')
+                    ->selectRaw('id_box, sum(kadar_air) as total_kadar_air')
+                    ->pluck('total_kadar_air');
 
 
         $dataToUpdate = [
@@ -104,12 +107,19 @@ class PrmRawMaterialOutputService
             $avgairSebelumnya = $existingItem->kadar_air;
             $banyakData = $jumlahData;
 
-            // Hitung total modal baru berdasarkan perbedaan berats
+            // Menghitung rata-rata kadar air baru
+            if (isset($jumlahKadarAir[$itemObject->id_box])) {
+                $banyakKadarAir = $jumlahKadarAir[$itemObject->id_box];
+                $avgKadarAirBaru = $banyakKadarAir / $banyakData;
+            } else {
+                // Jika id_box tidak ditemukan dalam array jumlahKadarAir,
+                // hitung rata-rata kadar air baru berdasarkan data sebelumnya dan data baru
+                $avgKadarAirBaru = ($avgairSebelumnya * ($banyakData - 1) + $itemObject->kadar_air) / $banyakData;
+            }
+
+            // Hitung total modal baru berdasarkan perbedaan berat
             $perbedaanBerat = $beratSebelumnya + $itemObject->berat;
             $totalModalBaru = $perbedaanBerat * $itemObject->modal;
-            // Hitung rata-rata kadar air baru
-            $avgKadarAirBaru = ($avgairSebelumnya * ($banyakData - 1) + $itemObject->kadar_air) / $banyakData;
-
 
             // Update data dengan berat dan total modal yang baru
             $dataToUpdate['berat'] = $perbedaanBerat;

@@ -22,9 +22,13 @@ class PrmRawMaterialOutputController extends Controller
     public function index(){
         $i =1;
         $PrmRawMOIC = PrmRawMaterialOutputItem::all();
-        // $jumlahData = PrmRawMaterialOutputItem::distinct('nomor_bstb')->count('id_box');
+        // $jumlahKadarAir = PrmRawMaterialOutputItem::groupBy('id_box')
+        //             ->selectRaw('id_box, sum(kadar_air) as total_kadar_air')
+        //             ->get()
+        //             ->pluck('total_kadar_air');
 
-        // return $jumlahData;
+
+        // return $jumlahKadarAir;
         return response()->view('purchasing_exim.PrmRawMaterialOutput.index', [
             'PrmRawMOIC' => $PrmRawMOIC,
             'i' => $i,
@@ -219,14 +223,8 @@ class PrmRawMaterialOutputController extends Controller
             ->where('id_box', $gradingKI->id_box)
             ->first();
 
-            // Hitung jumlah data PrmRawMaterialOutputItem yang memiliki nomor_bstb unik
-            $jumlahData = PrmRawMaterialOutputItem::where('tujuan_kirim', $gradingKI->tujuan_kirim)
-            ->where('id_box', $gradingKI->id_box)
-            ->distinct('nomor_bstb')
-            ->count('id_box');
-
             if ($stockPRM) {
-                // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
+            // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
                 if ($stockPRM->berat === 0) {
                     $stockPRM->delete();
                 } else {
@@ -234,22 +232,28 @@ class PrmRawMaterialOutputController extends Controller
                     if ($gradingKI->berat >= $stockPRM->berat) {
                         $stockPRM->delete();
                     } else {
+                        // Hitung jumlah data PrmRawMaterialOutputItem yang memiliki nomor_bstb unik dengan id_box yang sama
+                        $jumlahData = PrmRawMaterialOutputItem::where('tujuan_kirim', $gradingKI->tujuan_kirim)
+                        ->where('id_box', $gradingKI->id_box)
+                        ->whereNotIn('id', [$gradingKI->id]) // Mengecualikan ID dari data yang akan dihapus
+                        ->distinct('nomor_bstb')
+                        ->count('id_box');
+                        // Hitung total kadar air, mengambil data kecuali data yang akan dihapus
+                        $total_kadar_airs = PrmRawMaterialOutputItem::where('tujuan_kirim', $gradingKI->tujuan_kirim)
+                        ->where('id_box', $gradingKI->id_box)
+                        ->whereNotIn('id', [$gradingKI->id]) // Mengecualikan ID dari data yang akan dihapus
+                        ->sum('kadar_air');
                         // Ambil berat sebelumnya
                         $beratSebelumnya = $stockPRM->berat;
-                        $total_kadar_air = $gradingKI->sum('kadar_air');
+                        $total_kadar_air = $total_kadar_airs;
 
-                        // Hitung total modal baru berdasarkan perbedaan berats
+
+                        $banyakData = $jumlahData; // Hindari pembagian dengan nol
+
+                        // Hitung total modal baru berdasarkan perbedaan berat
                         $perbedaanBerat = $beratSebelumnya - $gradingKI->berat;
                         $totalModalBaru = $perbedaanBerat * $gradingKI->modal;
-                        // Hitung rata-rata kadar air baru
-                        $banyakData = max(1, $jumlahData); // Hindari pembagian dengan nol
-                        // $avgKadarAirBaru = ($total_kadar_air) / $banyakData;
-                        // Hitung rata-rata kadar air
-                        if ($banyakData > 0) {
-                            $avgKadarAirBaru = $total_kadar_air / $banyakData;
-                        } else {
-                            $avgKadarAirBaru = 0; // Menghindari pembagian oleh nol
-                        }
+                        $avgKadarAirBaru = $total_kadar_air / $banyakData;
 
                         // Update data dengan berat dan total modal yang baru
                         $dataToUpdate = [

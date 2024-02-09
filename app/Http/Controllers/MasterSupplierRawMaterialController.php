@@ -44,7 +44,7 @@ class MasterSupplierRawMaterialController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('master_supplier_raw_material.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('MasterSupplierRawMaterial.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
     // show
     public function show(string $id)
@@ -92,7 +92,7 @@ class MasterSupplierRawMaterialController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('master_supplier_raw_material.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('MasterSupplierRawMaterial.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     // destroy
     public function destroy($id): RedirectResponse
@@ -104,6 +104,6 @@ class MasterSupplierRawMaterialController extends Controller
         $MasterSPR->delete();
 
         //redirect to index
-        return redirect()->route('master_supplier_raw_material.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('MasterSupplierRawMaterial.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

@@ -37,7 +37,7 @@
                     </tbody>
                 </table>
                 <div class=" d-flex justify-content-end model-footer no-bd">
-                    <a href="{{ url('/unit') }}" type="button" style="width: 100px;" class="btn btn-danger"
+                    <a href="{{ Route('Unit.index') }}" type="button" style="width: 100px;" class="btn btn-danger"
                         data-dismiss="modal">Close</a>
                 </div>
             </div>

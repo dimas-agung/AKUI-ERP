@@ -78,12 +78,12 @@ class PreCleaningOutputController extends Controller
             // Jika tidak ada kesalahan, komit transaksi
             DB::commit();
 
-            return redirect()->route('pre_cleaning_output.index')->with('success', 'Data berhasil dihapus');
+            return redirect()->route('PreCleaningOutput.index')->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, rollback transaksi
             DB::rollback();
 
-            return redirect()->route('pre_cleaning_output.index')->with('error', 'Gagal menghapus data');
+            return redirect()->route('PreCleaningOutput.index')->with('error', 'Gagal menghapus data');
         }
     }
 }

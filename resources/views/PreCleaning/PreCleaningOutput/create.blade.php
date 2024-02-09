@@ -560,7 +560,7 @@
             }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('pre_cleaning_output.simpanData') }}`,
+                url: `{{ route('PreCleaningOutput.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
@@ -589,7 +589,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('pre_cleaning_output.index') }}`;
+                    window.location.href = `{{ route('PreCleaningOutput.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);

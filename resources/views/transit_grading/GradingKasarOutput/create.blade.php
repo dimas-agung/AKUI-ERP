@@ -35,27 +35,6 @@
                                     </div>
                                 @endif
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Nomer BSTB</label>
-                                            <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
-                                                value="{{ old('nomor_bstb') }}" placeholder="Masukkan Nomer BSTB">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>NIP Admin</label>
-                                            <input type="text" id="user_created" class="form-control" name="user_created"
-                                                value="{{ old('user_created') }}" placeholder="Masukkan User Created">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Nomor Job</label>
-                                            <input type="text" class="form-control" id="nomor_job" name="nomor_job"
-                                                value="{{ old('nomor_job') }}" placeholder="Masukkan Nomor Job">
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ID Box Grading Kasar</label>
@@ -80,6 +59,20 @@
                                                         {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nomer BSTB</label>
+                                            <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
+                                                value="{{ old('nomor_bstb') }}" placeholder="Masukkan Nomer BSTB">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nomor Job</label>
+                                            <input type="text" class="form-control" id="nomor_job" name="nomor_job"
+                                                value="{{ old('nomor_job') }}" placeholder="Masukkan Nomor Job">
                                         </div>
                                     </div>
                                 </div>
@@ -191,12 +184,20 @@
                                                 name="fix_total_modal" onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Keterangan</label>
-                                        <input type="text" id="keterangan" class="form-control" name="keterangan"
-                                            placeholder="Masukkan keterangan">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>NIP Admin</label>
+                                            <input type="text" id="user_created" class="form-control"
+                                                name="user_created" value="{{ old('user_created') }}"
+                                                placeholder="Masukkan User Created">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Keterangan</label>
+                                            <input type="text" id="keterangan" class="form-control" name="keterangan"
+                                                placeholder="Masukkan keterangan">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">

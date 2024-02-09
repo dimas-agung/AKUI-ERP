@@ -44,7 +44,8 @@
                     </tbody>
                 </table>
                 <div class=" d-flex justify-content-end model-footer no-bd">
-                    <a href="{{ url('/biayahpp') }}" type="button" class="btn btn-danger" data-dismiss="modal">Close</a>
+                    <a href="{{ Route('BiayaHpp.index') }}" type="button" class="btn btn-danger"
+                        data-dismiss="modal">Close</a>
                 </div>
             </div>
         </div>

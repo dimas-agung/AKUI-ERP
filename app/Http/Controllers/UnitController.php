@@ -16,12 +16,14 @@ class UnitController extends Controller
 {
     public function index()
     {
+        $i = 1;
         $workstation = Workstation::with('unit')->get();
         $unit = unit::with('workstation')->get();
         // return $workstation;
         return response()->view('unit.index', [
             'unit' => $unit,
             'workstation' => $workstation,
+            'i' => $i,
         ]);
     }
 
@@ -50,7 +52,7 @@ class UnitController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('index.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('Unit.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
 
@@ -93,7 +95,7 @@ class UnitController extends Controller
             'status'   => $request->status
         ]);
         //redirect to index
-        return redirect()->route('index.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('Unit.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
 
@@ -106,12 +108,12 @@ class UnitController extends Controller
     public function destroy($id): RedirectResponse
     {
         //get post by ID
-        $unit = unit::findOrFail($id);
+        $Unit = Unit::findOrFail($id);
 
         //delete post
-        $unit->delete();
+        $Unit->delete();
 
         //redirect to index
-        return redirect()->route('index.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('Unit.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

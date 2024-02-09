@@ -11,8 +11,8 @@
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Data Master Supplier Raw Material</h4>
-                    <button href="{{ route('master_supplier_raw_material.create') }}"
-                        class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                    <button href="{{ route('MasterSupplierRawMaterial.create') }}" class="btn btn-primary btn-round ml-auto"
+                        data-toggle="modal" data-target="#addRowModal">
                         <i class="fa fa-plus"></i> Tambah Data
                     </button>
                 </div>
@@ -49,7 +49,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('master_supplier_raw_material.store') }}" method="POST">
+                                <form action="{{ route('MasterSupplierRawMaterial.store') }}" method="POST">
                                     @csrf
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -131,9 +131,9 @@
                                     <td>
                                         <div class="form-button-action">
                                             <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('master_supplier_raw_material.destroy', $MasterSPR->id) }}"
+                                                action="{{ route('MasterSupplierRawMaterial.destroy', $MasterSPR->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('master_supplier_raw_material.edit', $MasterSPR->id) }}"
+                                                <a href="{{ route('MasterSupplierRawMaterial.edit', $MasterSPR->id) }}"
                                                     class="btn btn-link" title="Edit Task"
                                                     data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
                                                 @csrf

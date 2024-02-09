@@ -46,7 +46,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Plant</label>
-                                        <select id="plant" class="choices form-select" name="plant">
+                                        <select id="plant" class="select2 form-select" name="plant">
                                             <option value="">Pilih Plant</option>
                                             <option>A</option>
                                             <option>B</option>

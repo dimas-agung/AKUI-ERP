@@ -12,7 +12,7 @@
                 <h4>Update Data Unit</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('unit.update', $unit->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('Unit.update', $unit->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 

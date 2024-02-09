@@ -11,7 +11,7 @@
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data Grading Kasar Input</h4>
-                    <a href="{{ url('/GradingKasarInput/create') }}" class="btn btn-outline-success rounded-pill">
+                    <a href="{{ Route('GradingKasarInput.create') }}" class="btn btn-outline-success rounded-pill">
                         <i class="fa fa-plus"></i>
                         Add Data
                     </a>

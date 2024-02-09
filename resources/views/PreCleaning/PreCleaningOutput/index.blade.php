@@ -105,13 +105,8 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $PCO->id }}"
-                                                        action="{{ route('pre_cleaning_output.destroy', $PCO->id) }}"
+                                                        action="{{ route('PreCleaningOutput.destroy', $PCO->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('pre_cleaning_output.show', $PCO->id) }}"
-                                                            class="btn btn-link" title="View"
-                                                            data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a>
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
@@ -140,7 +135,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ url('/pre_cleaning_output/create') }}";
+            window.location.href = "{{ Route('PreCleaningOutput.create') }}";
         }
 
         function confirmDelete(id) {
