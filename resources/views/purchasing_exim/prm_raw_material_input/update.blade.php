@@ -12,7 +12,7 @@
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">View Purchasing Raw Material</h4>
                 </div>
-                <form action="{{ route('prm_raw_material_input.update', $prm_raw_material_input_items->id) }} " method="POST"
+                <form action="{{ route('PrmRawMaterialInput.update', $prm_raw_material_input_items->id) }} " method="POST"
                     class="row g-3">
                     @csrf
                     {{-- <div class="col-md-4">
@@ -186,7 +186,7 @@
             let selectedJenis = $(this).val();
             // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
             $.ajax({
-                url: `{{ route('prm_raw_material_input.getDataJenis') }}`,
+                url: `{{ route('PrmRawMaterialInput.getDataJenis') }}`,
                 method: 'GET',
                 data: {
                     jenis: selectedJenis

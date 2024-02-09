@@ -93,8 +93,8 @@
                             </table>
                         </div>
                         <div class=" d-flex justify-content-end model-footer no-bd">
-                            <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}" type="button"
-                                class="btn btn-danger mt-3" data-dismiss="modal">Close</a>
+                            <a href="{{ url('/prm_raw_material_input') }}" type="button" class="btn btn-danger mt-3"
+                                data-dismiss="modal">Close</a>
                         </div>
                     </div>
                 </div>

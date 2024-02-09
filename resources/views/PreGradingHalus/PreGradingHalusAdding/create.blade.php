@@ -16,7 +16,7 @@
                 <form method="POST" class="row g-3" id="myForm">
                     <div class="col-md-12">
                         <label for="basic-usage" class="form-label">Nomor Job</label>
-                        <select class="choices form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
+                        <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($pre_grading_halus_stocks as $PreGHS)
@@ -434,7 +434,7 @@
             }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('pre_cleaning_output.simpanData') }}`,
+                url: `{{ route('PreCleaningOutput.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
@@ -463,7 +463,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('pre_cleaning_output.index') }}`;
+                    window.location.href = `{{ route('PreCleaningOutput.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);

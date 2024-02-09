@@ -50,7 +50,7 @@ class MasterOperatorController extends Controller
         ]);
 
         // Redirect to index
-        return redirect()->route('master_operator.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('MasterOperator.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
     // edit
     public function edit(string $id)
@@ -92,7 +92,7 @@ class MasterOperatorController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('master_operator.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('MasterOperator.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     // destroy
     public function destroy($id): RedirectResponse
@@ -104,6 +104,6 @@ class MasterOperatorController extends Controller
         $MasterOP->delete();
 
         //redirect to index
-        return redirect()->route('master_operator.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('MasterOperator.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

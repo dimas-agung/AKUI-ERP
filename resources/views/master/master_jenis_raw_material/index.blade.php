@@ -16,7 +16,7 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Master Jenis Raw Material
-                                <button href="{{ route('master_jenis_raw_material.create') }}" type="button"
+                                <button href="{{ route('MasterJenisRawMaterial.create') }}" type="button"
                                     class="btn btn-outline-success rounded-pill" data-bs-toggle="modal"
                                     data-bs-target="#inlineForm">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
@@ -36,7 +36,7 @@
                                         <i data-feather="x"></i>
                                     </button>
                                 </div>
-                                <form action="{{ route('master_jenis_raw_material.store') }}" method="POST">
+                                <form action="{{ route('MasterJenisRawMaterial.store') }}" method="POST">
                                     <div class="modal-body">
                                         @csrf
                                         <label><strong>Jenis</strong></label>
@@ -141,9 +141,9 @@ is-invalid
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterJRM->id }}"
-                                                        action="{{ route('master_jenis_raw_material.destroy', $MasterJRM->id) }}"
+                                                        action="{{ route('MasterJenisRawMaterial.destroy', $MasterJRM->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('master_jenis_raw_material.edit', $MasterJRM->id) }}"
+                                                        <a href="{{ route('MasterJenisRawMaterial.edit', $MasterJRM->id) }}"
                                                             class="btn btn-link" title="Edit Task"
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>

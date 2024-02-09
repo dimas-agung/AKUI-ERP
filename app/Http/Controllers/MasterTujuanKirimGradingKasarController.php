@@ -41,7 +41,7 @@ class MasterTujuanKirimGradingKasarController extends Controller
             'inisial_tujuan'            => $request->inisial_tujuan
         ]);
         //redirect to index
-        return redirect()->route('master_tujuan_kirim_grading_kasar.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('MasterTujuanKirimGradingKasar.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
     // show
     public function show(string $id)
@@ -87,7 +87,7 @@ class MasterTujuanKirimGradingKasarController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('master_tujuan_kirim_grading_kasar.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('MasterTujuanKirimGradingKasar.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     // destroy
     public function destroy($id): RedirectResponse
@@ -99,6 +99,6 @@ class MasterTujuanKirimGradingKasarController extends Controller
         $MasterTJGK->delete();
 
         //redirect to index
-        return redirect()->route('master_tujuan_kirim_grading_kasar.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('MasterTujuanKirimGradingKasar.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

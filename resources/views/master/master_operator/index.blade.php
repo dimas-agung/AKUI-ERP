@@ -16,7 +16,7 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Master Operator
-                                <button href="{{ route('master_operator.create') }}" type="button"
+                                <button href="{{ route('MasterOperator.create') }}" type="button"
                                     class="btn btn-outline-success rounded-pill" data-bs-toggle="modal"
                                     data-bs-target="#inlineForm">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
@@ -36,7 +36,7 @@
                                         <i data-feather="x"></i>
                                     </button>
                                 </div>
-                                <form action="{{ route('master_operator.store') }}" method="POST">
+                                <form action="{{ route('MasterOperator.store') }}" method="POST">
                                     <div class="modal-body">
                                         @csrf
                                         <div class="row">
@@ -201,9 +201,9 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterOP->id }}"
-                                                        action="{{ route('master_operator.destroy', $MasterOP->id) }}"
+                                                        action="{{ route('MasterOperator.destroy', $MasterOP->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('master_operator.edit', $MasterOP->id) }}"
+                                                        <a href="{{ route('MasterOperator.edit', $MasterOP->id) }}"
                                                             class="btn btn-link" title="Edit Task"
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>

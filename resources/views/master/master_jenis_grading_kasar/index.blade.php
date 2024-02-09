@@ -36,7 +36,7 @@
                                         <i data-feather="x"></i>
                                     </button>
                                 </div>
-                                <form action="{{ route('master_jenis_grading_kasar.store') }}" method="POST">
+                                <form action="{{ route('MasterJenisGradingKasar.store') }}" method="POST">
                                     <div class="modal-body">
                                         @csrf
                                         <label><strong>Nama</strong></label>
@@ -152,9 +152,9 @@ is-invalid
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterJGK->id }}"
-                                                        action="{{ route('master_jenis_grading_kasar.destroy', $MasterJGK->id) }}"
+                                                        action="{{ route('MasterJenisGradingKasar.destroy', $MasterJGK->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('master_jenis_grading_kasar.edit', $MasterJGK->id) }}"
+                                                        <a href="{{ route('MasterJenisGradingKasar.edit', $MasterJGK->id) }}"
                                                             class="btn btn-link" title="Edit Task"
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>

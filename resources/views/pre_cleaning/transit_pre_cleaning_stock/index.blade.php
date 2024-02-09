@@ -77,9 +77,9 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $TPCS->id }}"
-                                                        action="{{ route('transit_pre_cleaning_stock.destroy', $TPCS->id) }}"
+                                                        action="{{ route('TransitPreCleaningStock.destroy', $TPCS->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('transit_pre_cleaning_stock.show', $TPCS->id) }}"
+                                                        <a href="{{ route('TransitPreCleaningStock.show', $TPCS->id) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
                                                         </a>

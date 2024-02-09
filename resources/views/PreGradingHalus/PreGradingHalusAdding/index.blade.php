@@ -73,9 +73,9 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $PGHA->id }}"
-                                                        action="{{ route('pre_grading_halus_adding.destroy', $PGHA->id) }}"
+                                                        action="{{ route('PreGradingHalusAdding.destroy', $PGHA->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('pre_grading_halus_adding.show', $PGHA->id) }}"
+                                                        <a href="{{ route('PreGradingHalusAdding.show', $PGHA->id) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
                                                         </a>

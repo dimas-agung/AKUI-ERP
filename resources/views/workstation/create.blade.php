@@ -8,7 +8,7 @@
                         <h4>Input Data Workstation AKUI-ERP</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('workstation.store') }}" method="POST">
+                        <form action="{{ route('Workstation.store') }}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama</label>

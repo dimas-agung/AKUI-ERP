@@ -16,7 +16,7 @@
                 <form method="POST" class="row g-3" id="myForm">
                     <div class="col-md-12">
                         <label for="basic-usage" class="form-label">Nomor Job</label>
-                        <select class="choices form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
+                        <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($pre_cleaning_stocks as $PreCS)
@@ -86,7 +86,7 @@
                     {{-- </div> --}}
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Sikat & Kompresor</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="operator_sikat_dan_kompresor" id="operator_sikat_dan_kompresor"
                             placeholder="Pilih Operator Sikat & Kompresor">
                             <option value="">Pilih Operator Sikat & Kompresor</option>
@@ -101,7 +101,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Flex & Poles</label>
-                        <select class="choices form-select" style="width: 100%;" name="operator_flex_dan_poles"
+                        <select class="select2 form-select" style="width: 100%;" name="operator_flex_dan_poles"
                             id="operator_flex_dan_poles" placeholder="Pilih Operator Flex & Poles">
                             <option value="">Pilih Operator Flex & Poles</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
@@ -116,7 +116,7 @@
 
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Cutter</label>
-                        <select class="choices form-select" style="width: 100%;" name="operator_cutter"
+                        <select class="select2 form-select" style="width: 100%;" name="operator_cutter"
                             id="operator_cutter" data-placeholder="Pilih Operator Cutter">
                             <option value="">Pilih Operator Cutter</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
@@ -187,15 +187,15 @@
                         <input type="text" class="form-control" id="susut" readonly>
                     </div>
                     <div class="col-md-4">
-                        <label for="susut" class="form-label">Total Box</label>
+                        <label for="total_box" class="form-label">Total Box</label>
                         <input type="text" class="form-control" id="total_box" readonly>
                     </div>
                     <div class="col-md-4">
-                        <label for="susut" class="form-label">Total Berat</label>
+                        <label for="total_berat" class="form-label">Total Berat</label>
                         <input type="text" class="form-control" id="total_berat" readonly>
                     </div>
                     <div class="col-md-4">
-                        <label for="susut" class="form-label">Total Pcs</label>
+                        <label for="total_pcs" class="form-label">Total Pcs</label>
                         <input type="text" class="form-control" id="total_pcs" readonly>
                     </div>
                     <div class="col-12">
@@ -578,7 +578,7 @@
             }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('pre_cleaning_output.simpanData') }}`,
+                url: `{{ route('PreCleaningOutput.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
@@ -607,7 +607,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('pre_cleaning_output.index') }}`;
+                    window.location.href = `{{ route('PreCleaningOutput.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);

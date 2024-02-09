@@ -26,7 +26,7 @@ class GradingKasarHasilService
                 'success' => true,
                 'message' => 'Data berhasil disimpan!',
                 'data' => $ids,
-                'redirectTo' => route('grading_kasar_hasil.index'), // Ganti dengan nama route yang sesuai
+                'redirectTo' => route('GradingKasarHasil.index'), // Ganti dengan nama route yang sesuai
             ];
         } catch (\Exception $e) {
             DB::rollBack();

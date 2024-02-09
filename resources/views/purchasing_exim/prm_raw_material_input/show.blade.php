@@ -68,9 +68,9 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
-                                                        action="{{ route('prm_raw_material_input.destroyItem', $MasterPRIM->id) }}"
+                                                        action="{{ route('PrmRawMaterialInput.destroyItem', $MasterPRIM->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('prm_raw_material_input.edit', $MasterPRIM->id) }}"
+                                                        <a href="{{ route('PrmRawMaterialInput.edit', $MasterPRIM->id) }}"
                                                             class="btn btn-link" title="Edit Task"
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>
@@ -95,8 +95,8 @@
                             </table>
                         </div>
                         <div class=" d-flex justify-content-end model-footer no-bd">
-                            <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}" type="button"
-                                class="btn btn-danger mt-3" data-dismiss="modal">Close</a>
+                            <a href="{{ url('/prm_raw_material_input') }}" type="button" class="btn btn-danger mt-3"
+                                data-dismiss="modal">Close</a>
                         </div>
                     </div>
                 </div>

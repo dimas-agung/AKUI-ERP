@@ -30,7 +30,7 @@ class PrmRawMaterialInputService
             return [
                 'success' => true,
                 'message' => 'Data berhasil disimpan!',
-                'redirectTo' => route('prm_raw_material_input.index'), // Ganti dengan nama route yang sesuai
+                'redirectTo' => route('PrmRawMaterialInput.index'), // Ganti dengan nama route yang sesuai
             ];
         } catch (\Exception $e) {
             DB::rollBack();
@@ -44,19 +44,6 @@ class PrmRawMaterialInputService
 
     private function createHeader($header)
     {
-        // PrmRawMaterialInput::create([
-        //     // 'doc_no'                => $dataHeader->doc_no,
-        //     'nomor_po'              => $dataHeader->nomor_po,
-        //     'nomor_batch'           => $dataHeader->nomor_batch,
-        //     'nomor_nota_supplier'   => $dataHeader->nomor_nota_supplier,
-        //     'nomor_nota_internal'   => $dataHeader->nomor_nota_internal,
-        //     'nama_supplier'         => $dataHeader->nama_supplier,
-        //     'keterangan'            => $dataHeader->keterangan,
-        //     'user_created'          => $dataHeader->user_created,
-        //     'user_updated'          => $dataHeader->user_updated ?? ''
-        //     // Sesuaikan dengan kolom-kolom lain di tabel header Anda
-        // ]);
-
         // stok
         $itemObject = (object)$header;
         // Cari item berdasarkan id_box dan nomor_batch
@@ -79,29 +66,13 @@ class PrmRawMaterialInputService
         ];
         //
         if ($existingItem) {
-
             // Simpan perubahan pada stok yang sudah ada
             $existingItem->save();
         } else {
             // Jika item tidak ada, buat item baru dalam database
             PrmRawMaterialInput::create($dataToUpdate);
         }
-        // // Ubah objek header menjadi array agar lebih mudah diakses
-        // $headerArray = (array)$header;
-
-        // // Cari header berdasarkan nomor nota internal
-        // $existingHeader = PrmRawMaterialInput::where('nomor_nota_internal', $headerArray['nomor_nota_internal'])->first();
-
-        // if ($existingHeader) {
-        //     // Jika header sudah ada, update data yang ada
-        //     $existingHeader->update($headerArray);
-        // } else {
-        //     // Jika header belum ada, buat header baru
-        //     PrmRawMaterialInput::create($headerArray);
-        // }
     }
-
-
 
     private function createItem($item)
     {
@@ -145,6 +116,18 @@ class PrmRawMaterialInputService
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
 
+        // Calculate average kadar air and update prmstock
+        $totalKadarAir = PrmRawMaterialStockHistory::where('id_box', $item->id_box)->sum('avg_kadar_air');
+        $jumlahBaris = PrmRawMaterialStockHistory::where('id_box', $item->id_box)->count();
+        $averageKadarAir = $jumlahBaris > 0 ? $totalKadarAir / $jumlahBaris : 0;
+
+        $prmStock = PrmRawMaterialStock::where('id_box', $item->id_box)->first();
+        if ($prmStock) {
+            // Pastikan nilai avg_kadar_air di-format sebagai desimal sebelum disimpan
+            $prmStock->avg_kadar_air = number_format($averageKadarAir, 2); // Format dengan 2 digit desimal
+            $prmStock->save();
+        }
+
         // stok
         $itemObject = (object)$item;
         // Cari item berdasarkan id_box dan nomor_batch
@@ -162,7 +145,7 @@ class PrmRawMaterialInputService
             'berat_masuk'           => $itemObject->berat_bersih,
             'berat_keluar'          => $itemObject->berat_keluar ?? 0,
             'sisa_berat'            => $itemObject->berat_bersih,
-            'avg_kadar_air'         => $itemObject->kadar_air,
+            'avg_kadar_air'         => $itemObject->avg_kadar_air,
             'modal'                 => $itemObject->fix_harga_deal,
             'total_modal'           => $itemObject->fix_harga_deal * $itemObject->berat_bersih,
             'keterangan'            => $itemObject->keterangan,
@@ -179,7 +162,6 @@ class PrmRawMaterialInputService
             // Update nilai berat_masuk pada item yang sudah ada
             $lastBeratMasuk = $existingItem->berat_masuk += $itemObject->berat_bersih;
             $existingItem->berat_keluar = $itemObject->berat_keluar ?? $existingItem->berat_keluar ?? 0;
-            $existingItem->avg_kadar_air = $itemObject->avg_kadar_air ?? $existingItem->avg_kadar_air ?? 0;
 
             // Tentukan nilai sisa_berat sesuai kondisi
             if ($existingItem->berat_keluar === 0 || $existingItem->berat_keluar === null) {
@@ -199,7 +181,7 @@ class PrmRawMaterialInputService
 
             // Update juga kolom-kolom lain yang diperlukan
             $existingItem->nomor_nota_internal = $itemObject->nomor_nota_internal;
-            $existingItem->avg_kadar_air = $itemObject->kadar_air;
+            // $existingItem->avg_kadar_air = $itemObject->avg_kadar_air;
             $existingItem->keterangan = $itemObject->keterangan;
             $existingItem->user_created = $itemObject->user_created ?? '';
 

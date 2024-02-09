@@ -14,7 +14,7 @@
                         <h4>UPDATE DATA MASTER TUJUAN KIRIM RAW MATERIAL</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('master_tujuan_kirim_raw_material.update', $MasterTJRM->id) }}" method="POST">
+                        <form action="{{ route('MasterTujuanKirimRawMaterial.update', $MasterTJRM->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 

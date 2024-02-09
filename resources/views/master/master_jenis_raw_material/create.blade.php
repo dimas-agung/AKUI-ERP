@@ -8,7 +8,7 @@
                         <h4>CREATE DATA MASTER JENIS RAW MATERIAL</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('master_jenis_raw_material.store') }}" method="POST">
+                        <form action="{{ route('MasterJenisRawMaterial.store') }}" method="POST">
 
                             @csrf
 
