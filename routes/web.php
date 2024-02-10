@@ -19,6 +19,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
+Route::controller(App\Http\Controllers\PerusahaanController::class)->group(function () {
+    Route::get('/perusahaan', 'index')->name('Perusahaan.index');
+    Route::get('/perusahaan/create', 'create')->name('Perusahaan.create');
+    Route::post('/perusahaan/store', 'store')->name('Perusahaan.store');
+    Route::get('/perusahaan/show/{id}', 'show')->name('Perusahaan.show');
+    Route::get('/perusahaan/edit/{id}', 'edit')->name('Perusahaan.edit');
+    Route::put('/perusahaan/update/{id}', 'update')->name('Perusahaan.update');
+    Route::delete('/perusahaan/hapus/{id}', 'destroy')->name('Perusahaan.destroy');
+});
+
 Route::controller(App\Http\Controllers\WorkstationController::class)->group(function () {
     Route::get('/workstation', 'index')->name('Workstation.index');
     Route::get('/workstation/create', 'create')->name('Workstation.create');

@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_jenis_gradings', function (Blueprint $table) {
+        Schema::create('perusahaans', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->integer('unit_id');
-            $table->integer('status')->default('1');
-            $table->string('user_created');
-            $table->string('user_updated')->nullable();
+            $table->string('plant');
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_jenis_gradings');
+        Schema::dropIfExists('perusahaans');
     }
 };

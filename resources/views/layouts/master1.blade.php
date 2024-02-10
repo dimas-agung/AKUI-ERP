@@ -139,20 +139,23 @@
                         </li>
                         <li class="sidebar-title">Master</li>
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('Workstation*', 'Unit*', 'Biayahpp*', 'master_supplier_raw_material*', 'master_jenis_raw_material*', 'master_tujuan_kirim_raw_material*', 'master_jenis_grading_kasar*', 'master_tujuan_kirim_grading_kasar*', 'master_operator*') ? 'active' : '' }}">
+                            class="sidebar-item  has-sub {{ Request::is('perusahaan*', 'workstation*', 'unit*', 'biayahpp*', 'master_supplier_raw_material*', 'master_jenis_raw_material*', 'master_tujuan_kirim_raw_material*', 'master_jenis_grading_kasar*', 'master_tujuan_kirim_grading_kasar*', 'master_operator*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Master</span>
                             </a>
 
                             <ul class="submenu ">
-                                <li class="submenu-item  {{ Request::is('Workstation*') ? 'active' : '' }} ">
+                                <li class="submenu-item  {{ Request::is('perusahaan*') ? 'active' : '' }} ">
+                                    <a href="{{ route('Perusahaan.index') }}" class="submenu-link">Perusahaan</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('workstation*') ? 'active' : '' }} ">
                                     <a href="{{ route('Workstation.index') }}" class="submenu-link">Workstation</a>
                                 </li>
-                                <li class="submenu-item  {{ Request::is('Unit*') ? 'active' : '' }} ">
+                                <li class="submenu-item  {{ Request::is('unit*') ? 'active' : '' }} ">
                                     <a href="{{ route('Unit.index') }}" class="submenu-link">Unit</a>
                                 </li>
-                                <li class="submenu-item  {{ Request::is('Biayahpp*') ? 'active' : '' }} ">
+                                <li class="submenu-item  {{ Request::is('biayahpp*') ? 'active' : '' }} ">
                                     <a href="{{ route('Biaya.index') }}" class="submenu-link">Biaya HPP</a>
                                 </li>
                                 <li
