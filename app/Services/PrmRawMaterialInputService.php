@@ -27,7 +27,7 @@ class PrmRawMaterialInputService
             return [
                 'success' => true,
                 'message' => 'Data berhasil disimpan!',
-                'redirectTo' => route('prm_raw_material_input.index'), // Ganti dengan nama route yang sesuai
+                'redirectTo' => route('PrmRawMaterialInput.index'), // Ganti dengan nama route yang sesuai
             ];
         } catch (\Exception $e) {
             DB::rollBack();

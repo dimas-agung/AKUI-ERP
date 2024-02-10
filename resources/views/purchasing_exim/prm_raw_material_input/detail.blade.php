@@ -19,9 +19,9 @@
                         </h5>
                     </div>
                     {{-- card body --}}
-                    <div class="card-body">
+                    <div class="card-body" style="overflow: auto;">
                         <div class="table-responsive">
-                            <table class="table" id="table1">
+                            <table id="table1" class="display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
@@ -93,8 +93,8 @@
                             </table>
                         </div>
                         <div class=" d-flex justify-content-end model-footer no-bd">
-                            <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}" type="button"
-                                class="btn btn-danger mt-3" data-dismiss="modal">Close</a>
+                            <a href="{{ url('/prm_raw_material_input') }}" type="button" class="btn btn-danger mt-3"
+                                data-dismiss="modal">Close</a>
                         </div>
                     </div>
                 </div>

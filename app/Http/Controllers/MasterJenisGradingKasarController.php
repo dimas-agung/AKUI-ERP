@@ -45,7 +45,7 @@ class MasterJenisGradingKasarController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('master_jenis_grading_kasar.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('MasterJenisGradingKasar.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
     // edit
     public function edit(string $id)
@@ -80,7 +80,7 @@ class MasterJenisGradingKasarController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('master_jenis_grading_kasar.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('MasterJenisGradingKasar.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     // delete
     public function destroy($id): RedirectResponse
@@ -92,6 +92,6 @@ class MasterJenisGradingKasarController extends Controller
         $MasterJenisGradingKasar->delete();
 
         //redirect to index
-        return redirect()->route('master_jenis_grading_kasar.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('MasterJenisGradingKasar.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

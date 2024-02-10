@@ -8,7 +8,7 @@
                         <h4>CREATE DATA MASTER SUPPLIER RAW MATERIAL</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('master_supplier_raw_material.store') }}" method="POST">
+                        <form action="{{ route('MasterSupplierRawMaterial.store') }}" method="POST">
 
                             @csrf
 

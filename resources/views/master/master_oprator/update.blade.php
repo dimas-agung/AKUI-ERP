@@ -14,7 +14,7 @@
                         <h4>UPDATE DATA MASTER JENIS RAW MATERIAL</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('master_operator.update', $MasterOP->id) }}" method="POST">
+                        <form action="{{ route('MasterOperator.update', $MasterOP->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 
@@ -73,7 +73,7 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Status</label>
-                                <select class="form-control" @error('status') is-invalid @enderror" name="status">
+                                <select class="select2 form-control" @error('status') is-invalid @enderror" name="status">
                                     <option value="1" {{ $MasterOP->status == 1 ? 'selected' : '' }}> AKTIF </option>
                                     <option value="0" {{ $MasterOP->status == 0 ? 'selected' : '' }}> TIDAK AKTIF
                                     </option>

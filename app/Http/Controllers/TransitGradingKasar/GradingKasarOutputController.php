@@ -48,6 +48,16 @@ class GradingKasarOutputController extends Controller
         return response()->json($data);
     }
 
+    public function setpcc(Request $request)
+    {
+        $tujuan_kirim = $request->tujuan_kirim;
+        // Lakukan logika untuk mengatur nomor batch berdasarkan tujuan_kirim
+        $data = MasterTujuanKirimRawMaterial::where('tujuan_kirim',$tujuan_kirim)->first();
+
+        // Kembalikan nomor batch sebagai respons
+        return response()->json($data);
+    }
+
     // Contoh controller
     public function sendData(
         GradingKasarOutputRequest $request,

@@ -46,7 +46,7 @@ class MasterTujuanKirimRawMaterialController extends Controller
             'inisial_tujuan'            => $request->inisial_tujuan
         ]);
         //redirect to index
-        return redirect()->route('master_tujuan_kirim_raw_material.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('MasterTujuanKirimRawMaterial.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
     // show
     public function show(string $id)
@@ -64,6 +64,22 @@ class MasterTujuanKirimRawMaterialController extends Controller
 
         return view('master.master_tujuan_kirim_raw_material.update', compact('MasterTJRM'));
     }
+
+    // public function edit(string $id)
+    // {
+    //     // $i = 1;
+    //     // $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+    //     // $MasterTujuanKirimRawMaterial = MasterTujuanKirimRawMaterial::with('PrmRawMaterialInputItem')->get();
+    //     //get by ID
+    //     // $MasterPRIM = PrmRawMaterialInput::findOrFail($id);
+    //     // $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
+    //     //     ->where(['id' => $id])
+    //     //     ->first();
+    //     //
+    //     // $MasterTJRM = MasterTujuanKirimRawMaterial::findOrFail($id);
+
+    //     // return view('master.master_tujuan_kirim_raw_material.update', compact('MasterTJRM'));
+    // }
     // update
     public function update(Request $request, $id): RedirectResponse
     {
@@ -91,7 +107,7 @@ class MasterTujuanKirimRawMaterialController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('master_tujuan_kirim_raw_material.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('MasterTujuanKirimRawMaterial.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     // destroy
     public function destroy($id): RedirectResponse
@@ -103,6 +119,6 @@ class MasterTujuanKirimRawMaterialController extends Controller
         $MasterTJRM->delete();
 
         //redirect to index
-        return redirect()->route('master_tujuan_kirim_raw_material.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('MasterTujuanKirimRawMaterial.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }
