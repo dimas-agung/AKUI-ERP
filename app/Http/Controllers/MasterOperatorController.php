@@ -14,7 +14,7 @@ class MasterOperatorController extends Controller
         $i = 1;
         $MasterOperator = MasterOperator::all();
         // return $MasterOperator;
-        return response()->view('master.master_oprator.index', [
+        return response()->view('master.master_operator.index', [
             'master_operators' => $MasterOperator,
             'i' => $i
         ]);

@@ -108,7 +108,7 @@
                     <tbody>
                         @forelse ($unit as $post)
                             <tr>
-                                <td class="text-center">{{ $post->id }}</td>
+                                <td class="text-center">{{ $i++ }}</td>
                                 <td class="text-center">{!! $post->workstation->nama !!}</td>
                                 <td class="text-center">{!! $post->nama !!}</td>
                                 {{-- <td class="text-center">{!! $post->status !!}</td> --}}

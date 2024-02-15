@@ -104,37 +104,6 @@ class WorkstationController extends Controller
         //redirect to index
         return redirect()->route('Workstation.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
-    // public function update(Request $request, $id): RedirectResponse
-    // {
-    //     //get by ID
-    //     $MasterSPR = MasterSupplierRawMaterial::findOrFail($id);
-    //     $validasiNamaSuppllier = 'required';
-    //     $validasiInitialSuppllier = 'required';
-    //     if ($request->nama_supplier != $MasterSPR->nama_supplier) {
-    //         $validasiNamaSuppllier = 'required|unique:master_supplier_raw_materials';
-    //     }
-    //     if ($request->inisial_supplier != $MasterSPR->inisial_supplier) {
-    //         $validasiInitialSuppllier = 'required|unique:master_supplier_raw_materials';
-    //     }
-    //     // validate form
-    //     $validate = $this->validate($request, [
-    //         'nama_supplier'             => $validasiNamaSuppllier,
-    //         'inisial_supplier'          => $validasiInitialSuppllier,
-    //         'status'                    => 'required'
-    //     ], [
-    //         'nama_supplier.unique'      => 'Nama Supplier Sudah Dipakai.',
-    //         'inisial_supplier.unique'   => 'Inisial Supplier Sudah Dipakai.',
-    //     ]);
-
-    //     $MasterSPR->update([
-    //         'nama_supplier'     => $request->nama_supplier,
-    //         'inisial_supplier'  => $request->inisial_supplier,
-    //         'status'            => $request->status
-    //     ]);
-
-    //     //redirect to index
-    //     return redirect()->route('master_supplier_raw_material.index')->with(['success' => 'Data Berhasil Diubah!']);
-    // }
 
     /**
      * destroy
@@ -142,10 +111,10 @@ class WorkstationController extends Controller
     public function destroy($id): RedirectResponse
     {
         //get post by ID
-        $workstation = Workstation::findOrFail($id);
+        $Workstation = Workstation::findOrFail($id);
 
         //delete post
-        $workstation->delete();
+        $Workstation->delete();
 
         //redirect to index
         return redirect()->route('Workstation.index')->with(['success' => 'Data Berhasil Dihapus!']);

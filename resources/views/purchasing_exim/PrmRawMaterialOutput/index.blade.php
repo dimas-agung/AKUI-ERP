@@ -11,7 +11,7 @@
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data PRM Raw Material Output</h4>
-                    <a href="{{ url('/PrmRawMaterialOutput/create') }}" class="btn btn-outline-success rounded-pill">
+                    <a href="{{ Route('PrmRawMaterialOutput.create') }}" class="btn btn-outline-success rounded-pill">
                         <i class="fa fa-plus"></i>
                         Add Data
                     </a>
@@ -28,7 +28,6 @@
                                 <th class="text-center">Nomor Batch</th>
                                 <th class="text-center">Id Box</th>
                                 <th class="text-center">Nama Supplier</th>
-                                <th class="text-center">Status</th>
                                 <th class="text-center">Jenis</th>
                                 <th class="text-center">Berat</th>
                                 <th class="text-center">Kadar Air</th>
@@ -51,14 +50,6 @@
                                     <td class="text-center">{{ $item->nomor_batch }}</td>
                                     <td class="text-center">{{ $item->id_box }}</td>
                                     <td class="text-center">{{ $item->nama_supplier }}</td>
-                                    <td class="text-center">
-                                        @if ($item->status == 1)
-                                            <span>Aktif</span>
-                                        @elseif($item->status == 0)
-                                            <span class="badge badge-secondary"
-                                                style="text-shadow: 1px 1px 6px #000000;">Tidak Aktif</span>
-                                        @endif
-                                    </td>
                                     <td class="text-center">{{ $item->jenis }}</td>
                                     <td class="text-center">{{ $item->berat }}</td>
                                     <td class="text-center">{{ $item->kadar_air }}</td>

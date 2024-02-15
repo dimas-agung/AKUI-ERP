@@ -114,33 +114,13 @@ class GradingKasarInputController extends Controller
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
-            // Ambil data PreCleaningInput berdasarkan nomor_bstb
-            $gradingKI = GradingKasarInput::where('nomor_bstb', '=', $nomor_bstb)->get();
+            $gradingKIs = GradingKasarInput::where('nomor_bstb', '=', $nomor_bstb)->get();
 
-             // Periksa apakah nomor_bstb sudah ada di GradingKasarHasil
-            $gradingKasarHasil = GradingKasarHasil::where('id_box_raw_material', $gradingKI->id_box)
-            ->where('created_at', $gradingKI->created_at)
-            ->first();
-            if ($gradingKasarHasil) {
-                // Rollback transaksi jika nomor_bstb sudah ada di GradingKasarHasil
-                DB::rollback();
-                // return redirect()->route('GradingKasarInput.index')->with(['error' => 'Nomor BSTB sudah berada di GradingKasarHasil. Data tidak dapat dihapus.']);
-                return redirect()->route('GradingKasarInput.index')->with([
-                    'success' => false,
-                    'notification' => [
-                        'type' => 'error',
-                        'title' => 'Gagal Menghapus Data',
-                        'text' => 'Data sudah berada di Grading Kasar Hasil. Data tidak dapat dihapus.'
-                    ]
-                ]);
+            if ($gradingKIs->isEmpty()) {
+                return redirect()->route('GradingKasarInput.index')->with(['error' => 'Data tidak ditemukan!']);
             }
 
-
-            // Ambil data StockTransitRawMaterial berdasarkan nomor_bstb
-            $stockPrmRawMaterial = StockTransitRawMaterial::where('nomor_bstb', '=', $gradingKI->nomor_bstb)->first();
-
-            if ($stockPrmRawMaterial) {
-                // Simpan nilai sebelum dihapus
+            foreach ($gradingKIs as $gradingKI) {
                 $beratSebelumnya = $gradingKI->berat;
                 $totalModalSebelumnya = $gradingKI->total_modal;
 
@@ -150,12 +130,14 @@ class GradingKasarInputController extends Controller
                     'total_modal' => $totalModalSebelumnya,
                 ];
 
+                $stockPrmRawMaterial = StockTransitRawMaterial::where('nomor_bstb', '=', $gradingKI->nomor_bstb)->first();
+
                 if ($stockPrmRawMaterial) {
                     // Ambil berat sebelumnya
-                    $beratSebelumnya = $stockPrmRawMaterial->berat;
+                    $beratSebelum = $stockPrmRawMaterial->berat;
 
                     // Hitung total modal baru berdasarkan perbedaan berats
-                    $perbedaanBerat = $beratSebelumnya - $gradingKI->berat;
+                    $perbedaanBerat = $beratSebelum + $gradingKI->berat;
                     $totalModalBaru = $perbedaanBerat * $gradingKI->modal;
                     // $totalModalBaru = $stockPrmRawMaterial->total_modal + ($perbedaanBerat * $itemObject->modal);
 
@@ -182,29 +164,30 @@ class GradingKasarInputController extends Controller
                         // Sesuaikan dengan kolom-kolom lain di tabel item Anda
                     ]));
                 }
-            }
 
-            $existingItem = PrmRawMaterialOutputItem::where('id_box', $gradingKI->id_box)
-                ->where('nomor_batch', $gradingKI->nomor_batch)
-                ->get();
+                $existingItems = PrmRawMaterialOutputItem::where('id_box', $gradingKI->id_box)
+                    ->where('nomor_batch', $gradingKI->nomor_batch)
+                    ->get();
 
-            // Hapus data GradingKasarInput
-            $gradingKI->delete();
-
-            // Perbarui status PrmRawMaterialOutputItem menjadi 1 jika ada
-            if ($existingItem) {
-                foreach ($existingItem as $existingItems) {
-                    // Perbarui data untuk setiap item yang ada
-                    $existingItems->update(['status' => 1]);
+                // Logika Update Status
+                if ($existingItems) {
+                    foreach ($existingItems as $existingItem) {
+                        // Perbarui data untuk setiap item yang ada
+                        $existingItem->update(['status' => 1]);
+                    }
+                } else {
+                    // Jika tidak ada item PrmRawMaterialOutputItem yang sesuai, buat baru dengan status 1
+                    PrmRawMaterialOutputItem::create([
+                        'nomor_bstb' => $gradingKI->nomor_bstb,
+                        'status' => 1,
+                        // Tambahkan kolom-kolom lain sesuai kebutuhan
+                    ]);
                 }
-            } else {
-                // Jika tidak ada item PrmRawMaterialOutputItem yang sesuai, buat baru dengan status 1
-                PrmRawMaterialOutputItem::create([
-                    'nomor_bstb' => $gradingKI->nomor_bstb,
-                    'status' => 1,
-                    // Tambahkan kolom-kolom lain sesuai kebutuhan
-                ]);
             }
+
+            // Logika Hapus
+            $gradingKIs->each->delete();
+
             // Commit transaksi
             DB::commit();
 

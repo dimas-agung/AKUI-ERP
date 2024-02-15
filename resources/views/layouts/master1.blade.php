@@ -155,28 +155,28 @@
                                     <a href="{{ route('Unit.index') }}" class="submenu-link">Unit</a>
                                 </li>
                                 <li class="submenu-item  {{ Request::is('biayahpp*') ? 'active' : '' }} ">
-                                    <a href="{{ route('Biaya.index') }}" class="submenu-link">Biaya HPP</a>
+                                    <a href="{{ route('BiayaHpp.index') }}" class="submenu-link">Biaya HPP</a>
                                 </li>
                                 <li
-                                    class="submenu-item  {{ Request::is('master_supplier_raw_material*') ? 'active' : '' }} ">
+                                    class="submenu-item  {{ Request::is('MasterSupplierRawMaterial*') ? 'active' : '' }} ">
                                     <a href="{{ route('MasterSupplierRawMaterial.index') }}"
-                                        class="submenu-link">Master Supplier <br>
+                                        class="submenu-link">Supplier
                                         Raw Material</a>
                                 </li>
                                 <li
-                                    class="submenu-item  {{ Request::is('master_jenis_raw_material*') ? 'active' : '' }} ">
-                                    <a href="{{ route('MasterJenisRawMaterial.index') }}" class="submenu-link">Master
-                                        Jenis <br>
-                                        Raw Material</a>
+                                    class="submenu-item  {{ Request::is('MasterJenisRawMaterial*') ? 'active' : '' }} ">
+                                    <a href="{{ route('MasterJenisRawMaterial.index') }}" class="submenu-link">Jenis
+                                        Raw
+                                        Material</a>
                                 </li>
                                 <li
-                                    class="submenu-item  {{ Request::is('master_tujuan_kirim_raw_material*') ? 'active' : '' }} ">
+                                    class="submenu-item  {{ Request::is('MasterTujuanKirimRawMaterial*') ? 'active' : '' }} ">
                                     <a href="{{ route('MasterTujuanKirimRawMaterial.index') }}"
-                                        class="submenu-link">Master Tujuan <br>
+                                        class="submenu-link">Tujuan
                                         Kirim Raw Material</a>
                                 </li>
                                 <li
-                                    class="submenu-item  {{ Request::is('master_jenis_grading_kasar*') ? 'active' : '' }} ">
+                                    class="submenu-item  {{ Request::is('MasterJenisGradingKasar') ? 'active' : '' }} ">
                                     <a href="{{ route('MasterJenisGradingKasar.index') }}"
                                         class="submenu-link">Master
                                         Jenis
@@ -197,7 +197,7 @@
                         </li>
                         <li class="sidebar-title">Purchasing & EXIM</li>
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('prm_raw_material_input*', 'prm_raw_material_stock*', 'prm_raw_material_output*', 'stock_transit_grading_kasar*') ? 'active' : '' }}">
+                            class="sidebar-item  has-sub {{ Request::is('prm_raw_material_input*', 'prm_raw_material_stock*', 'prm_raw_material_output*', 'stock_transit_raw_material*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-collection-fill"></i>
                                 <span>Purchasing & EXIM</span>
@@ -219,67 +219,68 @@
                                         Material Output</a>
                                 </li>
                                 <li
-                                    class="submenu-item  {{ Request::is('stock_transit_grading_kasar*') ? 'active' : '' }} ">
-                                    <a href="{{ route('StockTransitGradingKasar.index') }}"
-                                        class="submenu-link">Stock
-                                        Transit Grading Kasar</a>
-                                </li>
-                                {{-- <li
-                                    class="submenu-item  {{ Request::is('StockTransitRawMaterial') ? 'active' : '' }} ">
+                                    class="submenu-item  {{ Request::is('stock_transit_raw_material*') ? 'active' : '' }} ">
                                     <a href="{{ route('StockTransitRawMaterial.index') }}" class="submenu-link">Stock
                                         Transit Raw Material</a>
-                                </li> --}}
+                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-title">Production</li>
                         <li
-                            class="sidebar-item has-sub {{ Request::is('stock_transit_raw_material*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*', 'grading_kasar_output*', 'stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*') ? 'active' : '' }}">
+                            class="sidebar-item has-sub {{ Request::is('stock_transit_raw_material*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*', 'grading_kasar_output*', 'stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-three-dots"></i>
                                 <span>Bahan Baku</span>
                             </a>
                             <ul class="submenu">
                                 <li
-                                    class="submenu-item  has-sub {{ Request::is('stock_transit_grading_kasar*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*') ? 'active' : '' }}">
+                                    class="submenu-item has-sub {{ Request::is('stock_transit_raw_material*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*', 'grading_kasar_output*', 'stock_transit_grading_kasar*') ? 'active' : '' }}">
                                     <a href="#" class='submenu-link'>
                                         <i class="bi bi-grid-1x2-fill"></i>
                                         <span>Grading Kasar</span>
                                     </a>
                                     <ul class="submenu ">
                                         <li
-                                            class="submenu-item  {{ Request::is('stock_transit_grading_kasar*') ? 'active' : '' }} ">
-                                            <a href="{{ route('StockTransitGradingKasar.index') }}"
-                                                class="submenu-link">Stock
-                                                Transit Grading Kasar</a>
+                                            class="submenu-item {{ Request::is('stock_transit_raw_material*') ? 'active' : '' }}">
+                                            <a href="{{ route('StockTransitRawMaterial.index') }}"
+                                                class="submenu-link">Stock Transit Raw Material</a>
                                         </li>
-                                        {{-- <li class="submenu-item  {{ Request::is('GradingKasarInput') ? 'active' : '' }} ">
-                                    <a href="{{ route('GradingKasarInput.index') }}" class="submenu-link">Grading
-                                        Kasar
-                                        Input</a>
-                                </li> --}}
                                         <li
-                                            class="submenu-item  {{ Request::is('grading_kasar_hasil*') ? 'active' : '' }} ">
+                                            class="submenu-item {{ Request::is('grading_kasar_input*') ? 'active' : '' }}">
+                                            <a href="{{ route('GradingKasarInput.index') }}"
+                                                class="submenu-link">Grading Kasar Input</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('grading_kasar_hasil*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingKasarHasil.index') }}"
-                                                class="submenu-link">Grading
-                                                Kasar<br>Hasil</a>
+                                                class="submenu-link">Grading Kasar Hasil</a>
                                         </li>
                                         <li
-                                            class="submenu-item  {{ Request::is('grading_kasar_stock*') ? 'active' : '' }} ">
+                                            class="submenu-item {{ Request::is('grading_kasar_stock*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingKasarStock.index') }}"
-                                                class="submenu-link">Grading
-                                                Kasar<br>Stock</a>
+                                                class="submenu-link">Grading Kasar Stock</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('grading_kasar_output*') ? 'active' : '' }}">
+                                            <a href="{{ route('GradingKasarOutput.index') }}"
+                                                class="submenu-link">Grading Kasar Output</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('stock_transit_grading_kasar*') ? 'active' : '' }}">
+                                            <a href="{{ route('StockTransitGradingKasar.index') }}"
+                                                class="submenu-link">Stock Transit Grading Kasar</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li
-                                    class="submenu-item  has-sub {{ Request::is('stock_transit_grading_kasar*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*') ? 'active' : '' }}">
+                                    class="submenu-item has-sub {{ Request::is('stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*') ? 'active' : '' }}">
                                     <a href="#" class='submenu-link'>
                                         <i class="bi bi-grid-1x2-fill"></i>
                                         <span>Pre Cleaning</span>
                                     </a>
                                     <ul class="submenu ">
                                         <li
-                                            class="submenu-item  {{ Request::is('stock_transit_grading_kasar*') ? 'active' : '' }} ">
+                                            class="submenu-item {{ Request::is('stock_transit_grading_kasar*') ? 'active' : '' }}">
                                             <a href="{{ route('StockTransitGradingKasar.index') }}"
                                                 class="submenu-link">Stock
                                                 Transit Grading Kasar</a>
@@ -294,21 +295,29 @@
                                                 Cleaning<br>Stock</a>
                                         </li>
                                         <li
-                                            class="submenu-item  {{ Request::is('pre_cleaning_output*') ? 'active' : '' }} ">
-                                            <a href="{{ route('PreCleaningOutput.index') }}" class="submenu-link">Pre
-                                                Cleaning<br>Output</a>
+                                            class="submenu-item {{ Request::is('pre_cleaning_input*') ? 'active' : '' }}">
+                                            <a href="{{ route('PreCleaningInput.index') }}"
+                                                class="submenu-link">Pre-Cleaning Input</a>
                                         </li>
                                         <li
-                                            class="submenu-item  {{ Request::is('transit_pre_cleaning_stock*') ? 'active' : '' }} ">
+                                            class="submenu-item {{ Request::is('pre_cleaning_stock*') ? 'active' : '' }}">
+                                            <a href="{{ route('PreCleaningStock.index') }}"
+                                                class="submenu-link">Pre-Cleaning Stock</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('pre_cleaning_output*') ? 'active' : '' }}">
+                                            <a href="{{ route('PreCleaningOutput.index') }}" class="submenu-link">Pre
+                                                Cleaning Output</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('transit_pre_cleaning_stock*') ? 'active' : '' }}">
                                             <a href="{{ route('TransitPreCleaningStock.index') }}"
-                                                class="submenu-link">Transit
-                                                Pre
-                                                <br> Cleaning Stock</a>
+                                                class="submenu-link">Transit Pre Cleaning Stock</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li
-                                    class="submenu-item has-sub {{ Request::is('transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*') ? 'active' : '' }}">
+                                    class="submenu-item has-sub {{ Request::is('transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*') ? 'active' : '' }}">
                                     <a href="#" class='submenu-link'>
                                         <span>Pre-Grading Halus</span>
                                     </a>
@@ -327,6 +336,16 @@
                                             class="submenu-item {{ Request::is('pre_grading_halus_adding_stock*') ? 'active' : '' }}">
                                             <a href="{{ route('PreGradingHalusAddingStock.index') }}"
                                                 class="submenu-link">Pre Grading Halus Adding Stock</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('pre_grading_halus_input*') ? 'active' : '' }}">
+                                            <a href="{{ route('PreGradingHalusInput.index') }}"
+                                                class="submenu-link">Pre-Grading Halus Input</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('pre_grading_halus_stock*') ? 'active' : '' }}">
+                                            <a href="{{ route('PreGradingHalusStock.index') }}"
+                                                class="submenu-link">Pre-Grading Halus Stock</a>
                                         </li>
                                     </ul>
                                 </li>

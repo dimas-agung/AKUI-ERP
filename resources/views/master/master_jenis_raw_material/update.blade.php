@@ -11,18 +11,16 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-header">
-                        <h4>UPDATE DATA MASTER JENIS RAW MATERIAL</h4>
+                        <h4>CREATE DATA MASTER JENIS RAW MATERIAL</h4>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('MasterJenisRawMaterial.update', $MasterJRM->id) }}" method="POST">
                             @csrf
-                            @method('PUT')
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Jenis</label>
                                 <input type="text" class="form-control @error('jenis') is-invalid @enderror"
-                                    name="jenis" value="{{ old('jenis', $MasterJRM->jenis) }}"
-                                    placeholder="Masukkan jenis">
+                                    name="jenis" placeholder="Masukkan jenis">
 
                                 <!-- error message untuk title -->
                                 @error('jenis')
@@ -36,8 +34,7 @@
                                 <label class="font-weight-bold">Kategori Susut</label>
                                 {{-- <select name="" id=""></select> --}}
                                 <input type="text" class="form-control @error('kategori_susut') is-invalid @enderror"
-                                    name="kategori_susut" value="{{ old('kategori_susut', $MasterJRM->kategori_susut) }}"
-                                    placeholder="Masukan Kategori Susut">
+                                    name="kategori_susut" placeholder="Masukan Kategori Susut">
 
                                 <!-- error message untuk title -->
                                 @error('kategori_susut')
@@ -102,25 +99,8 @@ is-invalid
                                 @enderror
                             </div>
 
-                            <div class="form-group">
-                                <label class="font-weight-bold">Status</label>
-                                <select class="form-control" @error('status') is-invalid @enderror" name="status">
-                                    <option value="1" {{ $MasterJRM->status == 1 ? 'selected' : '' }}> AKTIF </option>
-                                    <option value="0" {{ $MasterJRM->status == 0 ? 'selected' : '' }}> TIDAK AKTIF
-                                    </option>
-                                </select>
-                                <!-- error message untuk title -->
-                                @error('status')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-
-                            <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
+                            <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
-                            <button type="button" class="btn btn-danger" onclick="goBack()">CANCEL</button>
 
                         </form>
                     </div>

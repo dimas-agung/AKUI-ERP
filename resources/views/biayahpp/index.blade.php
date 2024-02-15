@@ -36,7 +36,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="{{ route('Biaya.store') }}" method="POST">
+                        <form action="{{ route('BiayaHpp.store') }}" method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="row">
@@ -132,13 +132,13 @@
                                 <td class="text-center">
                                     <div class="form-button-action">
                                         <form style="display: flex" id="deleteForm{{ $post->id }}"
-                                            action="{{ route('Biaya.destroy', $post->id) }}" method="POST">
-                                            <a href="{{ route('Biaya.show', $post->id) }}" class="btn btn-link btn-info"
+                                            action="{{ route('BiayaHpp.destroy', $post->id) }}" method="POST">
+                                            <a href="{{ route('BiayaHpp.show', $post->id) }}" class="btn btn-link btn-info"
                                                 title="Show Task" data-original-title="Show"><i
                                                     class="bi bi-file-earmark"></i></a>
-                                            <a href="{{ route('Biaya.edit', $post->id) }}" class="btn btn-link btn-primary"
-                                                title="Edit Task" data-original-title="Edit Task"><i
-                                                    class="bi bi-pencil-square"></i></a>
+                                            <a href="{{ route('BiayaHpp.edit', $post->id) }}"
+                                                class="btn btn-link btn-primary" title="Edit Task"
+                                                data-original-title="Edit Task"><i class="bi bi-pencil-square"></i></a>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" data-toggle="tooltip"

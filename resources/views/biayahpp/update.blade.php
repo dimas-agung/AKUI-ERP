@@ -14,7 +14,7 @@
                 <h4>Update Data Biaya HPP</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('biaya.update', $biaya->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('BiayaHpp.update', $biaya->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 

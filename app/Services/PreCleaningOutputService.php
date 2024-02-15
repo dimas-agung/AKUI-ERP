@@ -25,7 +25,7 @@ class PreCleaningOutputService
             return [
                 'success' => true,
                 'message' => 'Data berhasil disimpan!',
-                'redirectTo' => route('PrmRawMaterialInput.index'), // Ganti dengan nama route yang sesuai
+                'redirectTo' => route('PrmRawMaterialOutput.index'), // Ganti dengan nama route yang sesuai
             ];
         } catch (\Exception $e) {
             DB::rollBack();

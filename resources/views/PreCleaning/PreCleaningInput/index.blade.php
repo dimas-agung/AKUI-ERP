@@ -11,7 +11,7 @@
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data Pre-Cleaning Input</h4>
-                    <a href="{{ url('/PreCleaningInput/create') }}" class="btn btn-outline-success rounded-pill">
+                    <a href="{{ Route('PreCleaningInput.create') }}" class="btn btn-outline-success rounded-pill">
                         <i class="fa fa-plus"></i>
                         Add Data
                     </a>

@@ -65,7 +65,69 @@
                                     </div>
                                 </form>
                             </div>
-                        </form>
+                        </div>
+                    </div>
+                    {{-- card body --}}
+                    <div class="card-body" style="overflow: auto;">
+                        <div class="table-responsive">
+                            <table id="table1" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Tujuan Kirim</th>
+                                        <th scope="col" class="text-center">Letak Tujuan</th>
+                                        <th scope="col" class="text-center">Inisial Kirim</th>
+                                        <th scope="col" class="text-center">Status</th>
+                                        <th scope="col" class="text-center">Tanggal Buat</th>
+                                        <th scope="col" class="text-center">Tanggal Update</th>
+                                        <th scope="col" class="text-center">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($MasterTujuanKirimRawMaterial as $MasterTJRM)
+                                        <tr>
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $MasterTJRM->tujuan_kirim }}</td>
+                                            <td class="text-center">{{ $MasterTJRM->letak_tujuan }}</td>
+                                            <td class="text-center">{{ $MasterTJRM->inisial_tujuan }}</td>
+                                            <td class="text-center">
+                                                @if ($MasterTJRM->status == 1)
+                                                    Aktif
+                                                @else
+                                                    Tidak Aktif
+                                                @endif
+                                            </td>
+                                            <td class="text-center">{{ $MasterTJRM->created_at }}</td>
+                                            <td class="text-center">{{ $MasterTJRM->updated_at }}</td>
+                                            <td class="text-center">
+                                                <div class="form-button-action">
+                                                    <form style="display: flex" id="deleteForm{{ $MasterTJRM->id }}"
+                                                        action="{{ route('MasterTujuanKirimRawMaterial.destroy', $MasterTJRM->id) }}"
+                                                        method="POST">
+                                                        <a href="{{ route('MasterTujuanKirimRawMaterial.edit', $MasterTJRM->id) }}"
+                                                            class="btn btn-link" title="Edit Task"
+                                                            data-original-title="Edit Task">
+                                                            <i class="bi bi-pencil-square text-success"></i>
+                                                        </a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-link"
+                                                            data-original-title="Remove"
+                                                            onclick="confirmDelete({{ $MasterTJRM->id }})">
+                                                            <i class="bi bi-trash3 text-danger"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <div class="alert alert-danger">
+                                            Data Master Tujuan Kirim Raw Material belum Tersedia.
+                                        </div>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     {{-- card body --}}
                     <div class="card-body" style="overflow: auto;">
@@ -131,91 +193,8 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table id="table1" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="text-center">No</th>
-                            <th scope="col" class="text-center">Tujuan Kirim</th>
-                            <th scope="col" class="text-center">Letak Tujuan</th>
-                            <th scope="col" class="text-center">Inisial Kirim</th>
-                            <th scope="col" class="text-center">Status</th>
-                            <th scope="col" class="text-center">Tanggal Buat</th>
-                            <th scope="col" class="text-center">Tanggal Update</th>
-                            <th scope="col" class="text-center">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <th scope="col" class="text-center">No</th>
-                        <th scope="col" class="text-center">Tujuan Kirim</th>
-                        <th scope="col" class="text-center">Letak Tujuan</th>
-                        <th scope="col" class="text-center">Inisial Kirim</th>
-                        <th scope="col" class="text-center">Status</th>
-                        <th scope="col" class="text-center">Tanggal Buat</th>
-                        <th scope="col" class="text-center">Tanggal Update</th>
-                        <th scope="col" class="text-center">AKSI</th>
-                    </tfoot>
-                    <tbody>
-                        @forelse ($MasterTujuanKirimRawMaterial as $MasterTJRM)
-                            <tr>
-                                <td>{{ $i++ }}</td>
-                                <td>{{ $MasterTJRM->tujuan_kirim }}</td>
-                                <td>{{ $MasterTJRM->letak_tujuan }}</td>
-                                <td>{{ $MasterTJRM->inisial_tujuan }}</td>
-                                <td>
-                                    @if ($MasterTJRM->status == 1)
-                                        Aktif
-                                    @else
-                                        Tidak Aktif
-                                    @endif
-                                </td>
-                                <td>{{ $MasterTJRM->created_at }}</td>
-                                <td>{{ $MasterTJRM->updated_at }}</td>
-                                {{-- <td class="text-center">
-                                    <div class="form-button-action">
-                                        <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                            action="{{ route('master_tujuan_kirim_raw_material.destroy', $MasterTJRM->id) }}"
-                                            method="POST">
-                                            <a href="{{ route('master_tujuan_kirim_raw_material.edit', $MasterTJRM->id) }}"
-                                                class="btn btn-link" title="Edit Task" data-original-title="Edit Task"><i
-                                                    class="fa fa-edit"></i></a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" data-toggle="tooltip"
-                                                class="btn btn-link btn-danger"data-original-title="Remove"><i
-                                                    class="fa fa-times"></i></button>
-                                        </form>
-                                    </div>
-                                </td> --}}
-                                <td class="text-center">
-                                    <div class="form-button-action">
-                                        <form style="display: flex" id="deleteForm{{ $MasterTJRM->id }}"
-                                            action="{{ route('master_tujuan_kirim_raw_material.destroy', $MasterTJRM->id) }}"
-                                            method="POST">
-                                            <a href="{{ route('master_tujuan_kirim_raw_material.edit', $MasterTJRM->id) }}"
-                                                class="btn btn-link btn-primary" title="Edit Task"
-                                                data-original-title="Edit Task"><i class="bi bi-pencil-square"></i></a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" data-toggle="tooltip"
-                                                class="btn btn-link btn-danger text-danger" data-original-title="Remove"
-                                                onclick="confirmDelete({{ $MasterTJRM->id }})"><i
-                                                    class="bi bi-trash3"></i></button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <div class="alert alert-danger">
-                                Data Master Tujuan Kirim Raw Material belum Tersedia.
-                            </div>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
-    {{-- </div> --}}
 @endsection
 <script>
     function confirmDelete(id) {

@@ -35,32 +35,11 @@
                                     </div>
                                 @endif
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Nomer BSTB</label>
-                                            <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
-                                                value="{{ old('nomor_bstb') }}" placeholder="Masukkan Nomer BSTB">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>NIP Admin</label>
-                                            <input type="text" id="user_created" class="form-control" name="user_created"
-                                                value="{{ old('user_created') }}" placeholder="Masukkan User Created">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Nomor Job</label>
-                                            <input type="text" class="form-control" id="nomor_job" name="nomor_job"
-                                                value="{{ old('nomor_job') }}" placeholder="Masukkan Nomor Job">
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ID Box Grading Kasar</label>
                                             <select id="id_box_grading_kasar" class="select2 form-select"
-                                                name="id_box_grading_kasar">
+                                                name="id_box_grading_kasar" data-placeholder="Pilih ID Box Grading Kasar">
                                                 <option value="">Pilih ID Box Grading Kasar</option>
                                                 @foreach ($GradingKS as $post)
                                                     <option value="{{ $post->id_box_grading_kasar }}">
@@ -73,13 +52,44 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
-                                            <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim">
+                                            <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim"
+                                                data-placeholder="Pilih Tujuan Kirim">
                                                 <option value="">Pilih Tujuan Kirim</option>
                                                 @foreach ($MasTujKir as $post)
-                                                    <option value="{{ $post->tujuan_kirim }}">
-                                                        {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
+                                                    @php
+                                                        $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
+                                                    @endphp
+                                                    @foreach ($MasTujKir as $innerPost)
+                                                        @if ($innerPost->tujuan_kirim == $post->tujuan_kirim && $innerPost->status > 0)
+                                                            @if (!$beratMasukShown)
+                                                                <option value="{{ $innerPost->tujuan_kirim }}">
+                                                                    {{ old('tujuan_kirim', $innerPost->tujuan_kirim) }}
+                                                                </option>
+                                                                @php
+                                                                    $beratMasukShown = true; // Set nilai variabel untuk menandai bahwa berat_masuk sudah ditampilkan
+                                                                @endphp
+                                                            @endif
+                                                        @endif
+                                                    @endforeach
+                                                    @php
+                                                        $selectedNomorBSTB = $post->tujuan_kirim; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
+                                                    @endphp
                                                 @endforeach
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nomer BSTB</label>
+                                            <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
+                                                value="{{ old('nomor_bstb') }}" placeholder="Masukkan Nomer BSTB">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nomor Job</label>
+                                            <input type="text" class="form-control" id="nomor_job" name="nomor_job"
+                                                value="{{ old('nomor_job') }}" placeholder="Masukkan Nomor Job">
                                         </div>
                                     </div>
                                 </div>
@@ -157,15 +167,18 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Berat Keluar</label>
-                                            <input type="text" id="berat_keluar" class="form-control"
-                                                name="berat_keluar" placeholder="Masukkan berat_keluar">
+                                            <input type="text" id="berat_keluar" pattern="[0-9.]*"
+                                                inputmode="numeric"
+                                                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                                                class="form-control" placeholder="Masukkan berat keluar">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>PCS Keluar</label>
-                                            <input type="text" id="pcs_keluar" class="form-control" name="pcs_keluar"
-                                                placeholder="Masukkan pcs_keluar">
+                                            <input type="text" id="pcs_keluar" pattern="[0-9.]*" inputmode="numeric"
+                                                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                                                class="form-control" placeholder="Masukkan pcs keluar">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -180,8 +193,10 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Biaya Produksi</label>
-                                            <input type="text" class="form-control" id="biaya_produksi"
-                                                name="biaya_produksi" placeholder="Masukkan Biaya Produksi">
+                                            <input type="text" id="biaya_produksi" pattern="[0-9.]*"
+                                                inputmode="numeric"
+                                                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                                                class="form-control" placeholder="Masukkan Biaya Produksi">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -191,12 +206,20 @@
                                                 name="fix_total_modal" onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Keterangan</label>
-                                        <input type="text" id="keterangan" class="form-control" name="keterangan"
-                                            placeholder="Masukkan keterangan">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>NIP Admin</label>
+                                            <input type="text" id="user_created" class="form-control"
+                                                name="user_created" value="{{ old('user_created') }}"
+                                                placeholder="Masukkan User Created">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Keterangan</label>
+                                            <input type="text" id="keterangan" class="form-control" name="keterangan"
+                                                placeholder="Masukkan keterangan">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -285,6 +308,58 @@
                 }
             });
         });
+
+        $('#tujuan_kirim').on('change', function() {
+            // Mengambil nilai tujuan_kirim yang dipilih
+            let selectedPcc = $(this).val();
+
+            // Melakukan permintaan AJAX ke controller untuk mendapatkan data
+            $.ajax({
+                url: '{{ route('GradingKasarOutput.setpcc') }}',
+                method: 'GET',
+                data: {
+                    tujuan_kirim: selectedPcc
+                },
+                success: function(response) {
+                    if (response.status > 0) {
+                        // Mengatur nilai elemen-elemen sesuai dengan respons dari server
+                        $('#inisial_tujuan').val(response.inisial_tujuan);
+
+                        // Memanggil fungsi generateNomorBSTB untuk menghasilkan nomor_bstb dan nomor_job
+                        const nomor_bstb = generateNomorBSTB(response.inisial_tujuan, 'BSTB');
+                        const nomor_job = generateNomorBSTB(response.inisial_tujuan, 'JOB');
+
+                        // Menampilkan nomor_bstb dan nomor_job ke dalam elemen HTML dengan ID 'nomor_bstb' dan 'nomor_job'
+                        $('#nomor_bstb').val(nomor_bstb);
+                        $('#nomor_job').val(nomor_job);
+                    }
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        function generateNomorBSTB(inisial_tujuan, prefix) {
+            const now = new Date();
+            const tahun = now.getFullYear().toString().substr(-2);
+            const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+            const tanggal = ('0' + now.getDate()).slice(-2);
+            const jam = ('0' + now.getHours()).slice(-2);
+            const menit = ('0' + now.getMinutes()).slice(-2);
+            const detik = ('0' + now.getSeconds()).slice(-2);
+
+            // Menambahkan prefix yang sesuai
+            const nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_ugk`;
+            if (prefix === 'BSTB') {
+                return `BSTB_${nomor}`;
+            } else if (prefix === 'JOB') {
+                return `${nomor}`;
+            } else {
+                return nomor;
+            }
+        }
+
 
         // Event listener untuk perubahan nilai pada total modal
         $('#modal').on('input', updateTotalmodal);
