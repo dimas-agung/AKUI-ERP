@@ -28,4 +28,8 @@ class PreGradingHalusAdding extends Model
         'user_created',
         'user_updated',
     ];
+    public function PreGradingHalusAddingStock()
+    {
+        return $this->hasMany(PreGradingHalusAddingStock::class, 'nomor_job', 'nomor_job');
+    }
 }

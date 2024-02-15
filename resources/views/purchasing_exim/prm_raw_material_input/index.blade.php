@@ -69,9 +69,9 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
-                                                        action="{{ route('prm_raw_material_input.destroyInput', $MasterPRIM->id) }}"
+                                                        action="{{ route('PrmRawMaterialInput.destroyInput', $MasterPRIM->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('prm_raw_material_input.show', $MasterPRIM->id) }}"
+                                                        <a href="{{ route('PrmRawMaterialInput.show', $MasterPRIM->id) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
                                                         </a>
@@ -103,9 +103,9 @@
 <script>
     function redirectToPage(pageType) {
         if (pageType === 'create') {
-            window.location.href = "{{ url('/purchasing_exim/prm_raw_material_input/create') }}";
+            window.location.href = "{{ url('/prm_raw_material_input/create') }}";
         } else if (pageType === 'detail') {
-            window.location.href = "{{ url('/purchasing_exim/prm_raw_material_input/detail') }}";
+            window.location.href = "{{ url('/prm_raw_material_input/detail') }}";
         }
     }
 

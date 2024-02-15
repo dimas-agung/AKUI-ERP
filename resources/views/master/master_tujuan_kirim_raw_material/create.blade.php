@@ -8,7 +8,7 @@
                         <h4>CREATE DATA MASTER TUJUAN KIRIM RAW MATERIAL</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('master_tujuan_kirim_raw_material.store') }}" method="POST">
+                        <form action="{{ route('MasterTujuanKirimRawMaterial.store') }}" method="POST">
 
                             @csrf
 

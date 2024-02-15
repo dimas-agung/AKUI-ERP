@@ -17,7 +17,7 @@
                     @csrf
                     <div class="col-md-6">
                         <label for="basic-usage" class="form-label">Nomor Grading</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="nomor_grading" id="nomor_grading" placeholder="Pilih Nomor Grading">
                             <option value="">Pilih Nomor Grading</option>
                             @foreach ($GradingKasarInput as $GradingKI)
@@ -67,7 +67,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Jenis Grading :</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="jenis_grading" id="jenis_grading" placeholder="Pilih jenis grading">
                             <option value="">Pilih Jenis Grading</option>
                             @foreach ($MasterJenisGradingKasar as $MasterJGK)
@@ -182,7 +182,7 @@
             let selectedNomorGrading = $(this).val();
             // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
             $.ajax({
-                url: `{{ route('gradingKasarHasil.set') }}`,
+                url: `{{ route('GradingKasarHasil.set') }}`,
                 method: 'GET',
                 data: {
                     nomor_grading: selectedNomorGrading
@@ -483,7 +483,7 @@
             }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('grading_kasar_hasil.simpanData') }}`,
+                url: `{{ route('GradingKasarHasil.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
@@ -512,7 +512,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('grading_kasar_hasil.index') }}`;
+                    window.location.href = `{{ route('GradingKasarHasil.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);

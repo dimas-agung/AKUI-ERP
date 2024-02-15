@@ -34,7 +34,7 @@
 
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="nama_supplier" id="nama_supplier" placeholder="Pilih Nama Supplier">
                             <option value="">Pilih Nama Supplier</option>
                             @foreach ($master_supplier_raw_materials->sortBy('nama_supplier') as $MasterSPRM)
@@ -53,7 +53,7 @@
                     <div class="col-md-flex">
                         <hr>
                     </div>
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <label for="basic-usage" class="form-label">Pilih Jenis :</label>
                         <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="jenis" id="jenis" placeholder="Pilih Jenis">
@@ -66,7 +66,22 @@
                                 @endif
                             @endforeach
                         </select>
+                    </div> --}}
+                    <div class="col-md-3">
+                        <label for="basic-usage" class="form-label">Pilih Jenis :</label>
+                        <select class="select2 form-control" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                            name="jenis" id="jenis" placeholder="Pilih Jenis">
+                            <option value="">Pilih Jenis</option>
+                            @foreach ($master_jenis_raw_materials->sortBy('jenis') as $MasterJRM)
+                                @if ($MasterJRM->status == 1)
+                                    <option value="{{ $MasterJRM->jenis }}">
+                                        {{ $MasterJRM->jenis }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
+
                     <div class="col-md-3">
                         <label for="berat_nota" class="form-label">Berat Nota</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
@@ -160,7 +175,7 @@
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
-                                <th scope="col" class="text-center">Fix Harga Deal</th>
+                                {{-- <th scope="col" class="text-center">Fix Harga Deal</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -200,7 +215,7 @@
             let selectedNamaSupplier = $(this).val();
             // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
             $.ajax({
-                url: `{{ route('prm_raw_material_input.getDataSupplier') }}`,
+                url: `{{ route('PrmRawMaterialInput.getDataSupplier') }}`,
                 method: 'GET',
                 data: {
                     nama_supplier: selectedNamaSupplier
@@ -222,7 +237,7 @@
             let selectedJenis = $(this).val();
             // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
             $.ajax({
-                url: `{{ route('prm_raw_material_input.getDataJenis') }}`,
+                url: `{{ route('PrmRawMaterialInput.getDataJenis') }}`,
                 method: 'GET',
                 data: {
                     jenis: selectedJenis
@@ -346,7 +361,6 @@
             let user_created = $('#user_created').val();
             // test
             let berat_masuk = $('#berat_bersih').val();
-            let avg_kadar_air = $('#kadar_air').val();
 
             // Validasi input (sesuai kebutuhan)
             if (nomor_po.trim() === '' || nomor_batch.trim() === '' || nomor_nota_supplier.trim() === '' ||
@@ -370,57 +384,44 @@
             $('#nomor_nota_supplier').prop('readonly', true);
             $('#nama_supplier').prop('disabled', true); // Jika ingin menjadikan select readonly
 
+
+            console.log("Mengolah id_box:", id_box);
+
             // Memeriksa apakah id_box sudah ada di objek idBoxGroups
             if (id_box in idBoxGroups) {
-                // Jika sudah ada, update nilai total-harga-nominal dan total-berat-bersih
+                // Jika sudah ada, update nilai total-harga-nominal, total-berat-bersih, dan total-kadar-air
                 idBoxGroups[id_box].totalHargaNota += parseFloat(total_harga_nota);
                 idBoxGroups[id_box].totalBeratBersih += parseFloat(berat_bersih);
+                idBoxGroups[id_box].totalKadarAir += parseFloat(kadar_air);
             } else {
                 // Jika belum ada, tambahkan id_box baru ke objek
                 idBoxGroups[id_box] = {
                     totalHargaNota: parseFloat(total_harga_nota),
                     totalBeratBersih: parseFloat(berat_bersih),
+                    totalKadarAir: parseFloat(kadar_air),
+                    jumlahBaris: 0 // Mengatur jumlahBaris ke 0 saat inisialisasi
                 };
             }
 
-            let totalHargaNota = 0;
-            let totalHargaBersih = 0;
-            $('#dataTable tbody tr').each(function() {
-                let totalHargaNotaValue = parseInt($(this).find('td:eq(8)').text()) || 0;
-                let hargaBersihValue = parseInt($(this).find('td:eq(3)').text()) || 0;
+            // Menambah jumlahBaris jika id_box sudah ada atau baru saja ditambahkan
+            idBoxGroups[id_box].jumlahBaris++;
 
-                console.log("------------------------------");
-                console.log("Harga Nota Value = " + totalHargaNotaValue);
-                console.log("Harga Bersih Value = " + hargaBersihValue);
-                console.log("------------------------------");
-
-                totalHargaNota += totalHargaNotaValue;
-                totalHargaBersih += hargaBersihValue;
-
-                console.log("------------------------------");
-                console.log("Harga Nota = " + totalHargaNota);
-                console.log("Harga Bersih = " + totalHargaBersih);
-                console.log("------------------------------");
-
-                let jumlahTotal = totalHargaNota / totalHargaBersih;
-
-                console.log("------------------------------");
-                console.log("Jumlah Total = " + jumlahTotal);
-                console.log("------------------------------");
-            });
-
-            // Menampilkan total-harga-nominal dan total-berat-bersih untuk setiap id_box
             for (let idBox in idBoxGroups) {
                 console.log("ID Box: " + idBox);
+                console.log("Jumlah ID Box: " + idBoxGroups[idBox].jumlahBaris);
                 console.log("Total Harga Nota: " + idBoxGroups[idBox].totalHargaNota);
                 console.log("Total Berat Bersih: " + idBoxGroups[idBox].totalBeratBersih);
                 console.log("Fix harga Modal: " + idBoxGroups[idBox].totalHargaNota / idBoxGroups[idBox].totalBeratBersih);
+                console.log("Total Kadar Air: " + idBoxGroups[idBox].totalKadarAir);
+                console.log("Avg Kadar Air: " + idBoxGroups[idBox].totalKadarAir / idBoxGroups[idBox].jumlahBaris);
                 console.log("------------------------------");
-                fix_harga_deal_clg = idBoxGroups[idBox].totalHargaNota / idBoxGroups[idBox].totalBeratBersih;
-                console.log(fix_harga_deal_clg.toFixed(2));
+                fix_harga_deal = idBoxGroups[idBox].totalHargaNota / idBoxGroups[idBox].totalBeratBersih;
+                console.log(fix_harga_deal.toFixed(2));
+                avg_kadar_air = idBoxGroups[idBox].totalKadarAir / idBoxGroups[idBox].jumlahBaris;
+                console.log(avg_kadar_air.toFixed(2));
             }
             let fixHargaDealForRow = idBoxGroups[id_box].totalHargaNota / idBoxGroups[id_box].totalBeratBersih;
-
+            let avgKadarAir = idBoxGroups[id_box].totalKadarAir / idBoxGroups[id_box].jumlahBaris;
             // Menambahkan atau mengupdate data ke dalam tabel
             let existingRow = $('#dataTable tbody tr[data-idbox="' + id_box + '"]');
             if (existingRow.length > 0) {
@@ -442,7 +443,7 @@
                     `<td class="text-center">${keterangan}</td>` +
                     `<td class="text-center">${user_created}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
-                    `<td class="text-center">${fixHargaDealForRow.toFixed(4)}</td>` +
+                    // `<td class="text-center">${fixHargaDealForRow.toFixed(4)}</td>` +
                     `</tr>`
                 $('#dataTable tbody').append(newRow);
             }
@@ -450,6 +451,7 @@
             let dataIndex = dataArray.findIndex(item => item.id_box === id_box);
             if (dataIndex !== -1) {
                 dataArray[dataIndex].fix_harga_deal = fixHargaDealForRow;
+                dataArray[dataIndex].avg_kadar_air = avgKadarAir;
             }
 
             // Menambahkan data ke dalam array
@@ -465,11 +467,13 @@
                 berat_bersih: berat_bersih,
                 selisih_berat: selisih_berat,
                 kadar_air: kadar_air,
+                avg_kadar_air: avg_kadar_air,
                 id_box: id_box,
                 harga_nota: harga_nota,
                 total_harga_nota: total_harga_nota,
                 harga_deal: harga_deal,
                 fixHargaDealForRow: fixHargaDealForRow,
+                fix_harga_deal: fix_harga_deal,
                 keterangan: keterangan,
                 user_created: user_created,
 
@@ -534,7 +538,7 @@
             }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('prm_raw_material_input.simpanData') }}`,
+                url: `{{ route('PrmRawMaterialInput.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
@@ -564,7 +568,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('prm_raw_material_input.index') }}`;
+                    window.location.href = `{{ route('PrmRawMaterialInput.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);

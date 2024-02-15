@@ -36,7 +36,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="{{ route('workstation.store') }}" method="POST">
+                        <form action="{{ route('Workstation.store') }}" method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="row">
@@ -95,11 +95,11 @@
                                 <td class="text-center">
                                     <div class="form-button-action">
                                         <form style="display: flex" id="deleteForm{{ $post->id }}"
-                                            action="{{ route('workstation.destroy', $post->id) }}" method="POST">
-                                            <a href="{{ route('workstation.show', $post->id) }}"
+                                            action="{{ route('Workstation.destroy', $post->id) }}" method="POST">
+                                            <a href="{{ route('Workstation.show', $post->id) }}"
                                                 class="btn btn-link btn-info" title="Show Task"
                                                 data-original-title="Show"><i class="bi bi-file-earmark"></i></a>
-                                            <a href="{{ route('workstation.edit', $post->id) }}" class="btn btn-link"
+                                            <a href="{{ route('Workstation.edit', $post->id) }}" class="btn btn-link"
                                                 title="Edit Task" data-original-title="Edit Task">
                                                 <i class="bi bi-pencil-square text-success"></i>
                                             </a>

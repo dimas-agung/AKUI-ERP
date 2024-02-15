@@ -35,7 +35,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="{{ route('index.store') }}" method="POST">
+                        <form action="{{ route('Unit.store') }}" method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="row">
@@ -124,11 +124,11 @@
                                 <td class="text-center">
                                     <div class="form-button-action">
                                         <form style="display: flex" id="deleteForm{{ $post->id }}"
-                                            action="{{ route('index.destroy', $post->id) }}" method="POST">
-                                            <a href="{{ route('index.show', $post->id) }}" class="btn btn-link btn-info"
+                                            action="{{ route('Unit.destroy', $post->id) }}" method="POST">
+                                            <a href="{{ route('Unit.show', $post->id) }}" class="btn btn-link btn-info"
                                                 title="Show Task" data-original-title="Show"><i
                                                     class="bi bi-file-earmark"></i></a>
-                                            <a href="{{ route('index.edit', $post->id) }}" class="btn btn-link btn-primary"
+                                            <a href="{{ route('Unit.edit', $post->id) }}" class="btn btn-link btn-primary"
                                                 title="Edit Task" data-original-title="Edit Task"><i
                                                     class="bi bi-pencil-square"></i></a>
                                             @csrf

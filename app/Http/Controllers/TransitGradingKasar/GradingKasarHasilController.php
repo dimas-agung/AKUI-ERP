@@ -113,12 +113,12 @@ class GradingKasarHasilController extends Controller
             // Jika tidak ada kesalahan, komit transaksi
             DB::commit();
 
-            return redirect()->route('grading_kasar_hasil.index')->with('success', 'Data berhasil dihapus');
+            return redirect()->route('GradingKasarHasil.index')->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, rollback transaksi
             DB::rollback();
 
-            return redirect()->route('grading_kasar_hasil.index')->with('error', 'Gagal menghapus data');
+            return redirect()->route('GradingKasarHasil.index')->with('error', 'Gagal menghapus data');
         }
     }
 }

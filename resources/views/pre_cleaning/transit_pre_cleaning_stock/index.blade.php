@@ -21,9 +21,9 @@
                             </div>
                         </h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="overflow: auto;">
                         <div class="table-responsive">
-                            <table class="table" id="table1">
+                            <table id="table1" class="display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
@@ -77,9 +77,9 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $TPCS->id }}"
-                                                        action="{{ route('transit_pre_cleaning_stock.destroy', $TPCS->id) }}"
+                                                        action="{{ route('TransitPreCleaningStock.destroy', $TPCS->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('transit_pre_cleaning_stock.show', $TPCS->id) }}"
+                                                        <a href="{{ route('TransitPreCleaningStock.show', $TPCS->id) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
                                                         </a>

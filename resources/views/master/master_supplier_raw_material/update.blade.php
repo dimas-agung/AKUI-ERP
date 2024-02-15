@@ -14,7 +14,7 @@
                         <h4>UPDATE DATA MASTER SUPPLIER RAW MATERIAL</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('master_supplier_raw_material.update', $MasterSPR->id) }}" method="POST">
+                        <form action="{{ route('MasterSupplierRawMaterial.update', $MasterSPR->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="form-group">

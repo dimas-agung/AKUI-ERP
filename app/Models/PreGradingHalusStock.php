@@ -31,8 +31,8 @@ class PreGradingHalusStock extends Model
         'modal',
         'total_modal',
     ];
-    public function PreGradingHalusInput()
+    public function PreGradingHalusAdding()
     {
-        return $this->hasMany(PreGradingHalusInput::class, 'nomor_bstb', 'nomor_bstb');
+        return $this->hasMany(PreGradingHalusAdding::class, 'nomor_job', 'nomor_job');
     }
 }

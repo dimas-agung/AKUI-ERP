@@ -113,24 +113,22 @@
                                             <td class="text-center">{{ $GradingKH->updated_at }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    @if ($GradingKH->status == 1)
-                                                        <form style="display: flex" id="deleteForm{{ $GradingKH->id }}"
-                                                            action="{{ route('grading_kasar_hasil.destroyInput', $GradingKH->id) }}"
-                                                            method="POST">
-                                                            <a href="{{ route('grading_kasar_hasil.show', $GradingKH->id) }}"
-                                                                class="btn btn-link" title="View"
-                                                                data-original-title="View">
-                                                                <i class="bi bi-eye"></i>
-                                                            </a>
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button" class="btn btn-link"
-                                                                data-original-title="Remove"
-                                                                onclick="confirmDelete({{ $GradingKH->id }})">
-                                                                <i class="bi bi-trash3 text-danger"></i>
-                                                            </button>
-                                                        </form>
-                                                    @endif
+                                                    <form style="display: flex" id="deleteForm{{ $GradingKH->id }}"
+                                                        action="{{ route('GradingKasarHasil.destroyInput', $GradingKH->id) }}"
+                                                        method="POST">
+                                                        <a href="{{ route('GradingKasarHasil.show', $GradingKH->id) }}"
+                                                            class="btn btn-link" title="View"
+                                                            data-original-title="View">
+                                                            <i class="bi bi-eye"></i>
+                                                        </a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-link"
+                                                            data-original-title="Remove"
+                                                            onclick="confirmDelete({{ $GradingKH->id }})">
+                                                            <i class="bi bi-trash3 text-danger"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
@@ -150,7 +148,7 @@
 @endsection
 <script>
     function redirectToPage() {
-        window.location.href = "{{ url('/transit_grading_kasar/grading_kasar_hasil/create') }}";
+        window.location.href = "{{ url('/grading_kasar_hasil/create') }}";
     }
 
     function confirmDelete(id) {

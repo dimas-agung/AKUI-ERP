@@ -14,7 +14,7 @@
                         <h4>UPDATE DATA MASTER JENIS GRADING KASAR</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('master_jenis_grading_kasar.update', $MasterJGK->id) }}" method="POST">
+                        <form action="{{ route('MasterJenisGradingKasar.update', $MasterJGK->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="form-group">

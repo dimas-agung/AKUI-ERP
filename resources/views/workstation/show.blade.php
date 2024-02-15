@@ -33,7 +33,7 @@
                     </tbody>
                 </table>
                 <div class=" d-flex justify-content-end model-footer no-bd">
-                    <a href="{{ url('/work') }}" type="button" class="btn btn-danger" data-dismiss="modal">Close</a>
+                    <a href="{{ url('/workstation') }}" type="button" class="btn btn-danger" data-dismiss="modal">Close</a>
                 </div>
             </div>
         </div>

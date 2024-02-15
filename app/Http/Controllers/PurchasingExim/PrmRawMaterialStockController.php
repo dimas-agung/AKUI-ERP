@@ -33,8 +33,10 @@ class PrmRawMaterialStockController extends Controller
             $inputData = PrmRawMaterialInputItem::with('PrmRawMaterialStockHistory')->where('id_box', $id_box)->get();
             $outputData = PrmRawMaterialStock::with('PrmRawMaterialStockHistory')->where('id_box', $id_box)->get();
 
-            // Gabungkan dan susun data berdasarkan waktu
-            $stockHistory = $inputData->merge($outputData)->sortBy('id_box')
+        // return $inputData;
+        // return $outputData;
+        // Gabungkan dan susun data berdasarkan waktu
+        $stockHistory = $inputData->merge($outputData)->sortBy('id_box')
             ->pluck('PrmRawMaterialStockHistory') // Ambil relasi PrmRawMaterialStockHistory
             ->collapse(); // Gabungkan koleksi hasil pluck menjadi satu
             // $stockHistory = $stockHist->PrmRawMaterialStockHistory;

@@ -35,7 +35,7 @@
                                         <i data-feather="x"></i>
                                     </button>
                                 </div>
-                                <form action="{{ route('master_jenis_grading.store') }}" method="POST">
+                                <form action="{{ route('MasterJenisGrading.store') }}" method="POST">
                                     <div class="modal-body">
                                         @csrf
                                         <label><strong>Nama</strong></label>
@@ -72,9 +72,9 @@
                         </div>
                     </div>
                     {{-- card body --}}
-                    <div class="card-body">
+                    <div class="card-body" style="overflow: auto;">
                         <div class="table-responsive">
-                            <table class="table" id="table1">
+                            <table id="table1" class="display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
@@ -108,9 +108,9 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterJGD->id }}"
-                                                        action="{{ route('master_jenis_grading.destroy', $MasterJGD->id) }}"
+                                                        action="{{ route('MasterJenisGrading.destroy', $MasterJGD->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('master_jenis_grading.edit', $MasterJGD->id) }}"
+                                                        <a href="{{ route('MasterJenisGrading.edit', $MasterJGD->id) }}"
                                                             class="btn btn-link" title="Edit Task"
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>

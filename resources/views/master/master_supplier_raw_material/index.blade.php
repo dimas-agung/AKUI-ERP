@@ -16,7 +16,7 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Master Supplier Raw Material
-                                <button href="{{ route('master_supplier_raw_material.create') }}" type="button"
+                                <button href="{{ route('MasterSupplierRawMaterial.create') }}" type="button"
                                     class="btn btn-outline-success rounded-pill" data-bs-toggle="modal"
                                     data-bs-target="#inlineForm">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
@@ -36,7 +36,7 @@
                                         <i data-feather="x"></i>
                                     </button>
                                 </div>
-                                <form action="{{ route('master_supplier_raw_material.store') }}" method="POST">
+                                <form action="{{ route('MasterSupplierRawMaterial.store') }}" method="POST">
                                     <div class="modal-body">
                                         @csrf
                                         <label><strong>Nama Supplier</strong></label>
@@ -111,9 +111,9 @@
                     </div>
 
                     {{-- card body --}}
-                    <div class="card-body">
+                    <div class="card-body" style="overflow: auto;">
                         <div class="table-responsive">
-                            <table class="table" id="table1">
+                            <table id="table1" class="display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
@@ -143,18 +143,18 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterSPR->id }}"
-                                                        action="{{ route('master_supplier_raw_material.destroy', $MasterSPR->id) }}"
+                                                        action="{{ route('MasterSupplierRawMaterial.destroy', $MasterSPR->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('master_supplier_raw_material.edit', $MasterSPR->id) }}"
+                                                        <a href="{{ route('MasterSupplierRawMaterial.edit', $MasterSPR->id) }}"
                                                             class="btn btn-link" title="Edit Task"
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>
                                                         </a>
-                                                        <a href="#" class="btn btn-link edit-button"
+                                                        {{-- <a href="#" class="btn btn-link edit-button"
                                                             title="Edit Task" data-original-title="Edit Task"
                                                             onclick="editSupplier({{ $MasterSPR->id }})">
                                                             <i class="bi bi-pencil-square text-warning"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
@@ -180,31 +180,33 @@
         </div>
     </div>
 @endsection
-<script>
-    function editSupplier(id) {
-        $.get(`/master_supplier_raw_material/edit/${id}`, function(data) {
-            $('#editNamaSupplier').val(data.nama_supplier);
-            $('#editInisialSupplier').val(data.inisial_supplier);
-            $('#editForm').attr('action', `/master_supplier_raw_material/edit/${id}`);
-            $('#editPostModal').modal('show');
-        });
-    }
+@section('script')
+    <script>
+        function editSupplier(id) {
+            $.get(`/master_supplier_raw_material/edit/${id}`, function(data) {
+                $('#editNamaSupplier').val(data.nama_supplier);
+                $('#editInisialSupplier').val(data.inisial_supplier);
+                $('#editForm').attr('action', `/master_supplier_raw_material/edit/${id}`);
+                $('#editPostModal').modal('show');
+            });
+        }
 
-    function confirmDelete(id) {
-        Swal.fire({
-            title: 'Konfirmasi',
-            text: 'Anda yakin ingin menghapus data ini?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d61609',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, Hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Jika dikonfirmasi, submit form
-                document.getElementById('deleteForm' + id).submit();
-            }
-        });
-    }
-</script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Anda yakin ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d61609',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika dikonfirmasi, submit form
+                    document.getElementById('deleteForm' + id).submit();
+                }
+            });
+        }
+    </script>
+@endsection

@@ -14,7 +14,7 @@
                 <h4>Update Workstation</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('workstation.update', $workstation->id) }}" method="POST"
+                <form action="{{ route('Workstation.update', $workstation->id) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')

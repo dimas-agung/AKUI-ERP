@@ -16,7 +16,7 @@
                 <form method="POST" class="row g-3" id="myForm">
                     <div class="col-md-12">
                         <label for="basic-usage" class="form-label">Nomor Job</label>
-                        <select class="choices form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
+                        <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($pre_cleaning_stocks as $PreCS)
@@ -86,7 +86,7 @@
                     {{-- </div> --}}
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Sikat & Kompresor</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="operator_sikat_dan_kompresor" id="operator_sikat_dan_kompresor"
                             placeholder="Pilih Operator Sikat & Kompresor">
                             <option value="">Pilih Operator Sikat & Kompresor</option>
@@ -101,7 +101,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Flex & Poles</label>
-                        <select class="choices form-select" style="width: 100%;" name="operator_flex_dan_poles"
+                        <select class="select2 form-select" style="width: 100%;" name="operator_flex_dan_poles"
                             id="operator_flex_dan_poles" placeholder="Pilih Operator Flex & Poles">
                             <option value="">Pilih Operator Flex & Poles</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
@@ -116,7 +116,7 @@
 
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Cutter</label>
-                        <select class="choices form-select" style="width: 100%;" name="operator_cutter"
+                        <select class="select2 form-select" style="width: 100%;" name="operator_cutter"
                             id="operator_cutter" data-placeholder="Pilih Operator Cutter">
                             <option value="">Pilih Operator Cutter</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
@@ -130,54 +130,72 @@
                     </div>
                     <div class="col-md-2">
                         <label for="kuningan" class="form-label">Kuningan</label>
-                        <input type="text" class="form-control" id="kuningan">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="kuningan">
                     </div>
                     <div class="col-md-2">
                         <label for="Sterofoam" class="form-label">Sterofoam</label>
-                        <input type="text" class="form-control" id="Sterofoam">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="Sterofoam">
                     </div>
                     <div class="col-md-2">
                         <label for="karat" class="form-label">Karat</label>
-                        <input type="text" class="form-control" id="karat">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="karat">
                     </div>
                     <div class="col-md-2">
                         <label for="rontokan_flex" class="form-label">Rontokan Flex</label>
-                        <input type="text" class="form-control" id="rontokan_flex">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="rontokan_flex">
                     </div>
                     <div class="col-md-2">
                         <label for="rontokan_bahan" class="form-label">Rontokan Bahan</label>
-                        <input type="text" class="form-control" id="rontokan_bahan">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="rontokan_bahan">
                     </div>
                     <div class="col-md-2">
                         <label for="rontokan_serabut" class="form-label">Rontokan Serabut</label>
-                        <input type="text" class="form-control" id="rontokan_serabut">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="rontokan_serabut">
                     </div>
                     <div class="col-md-3">
                         <label for="ws" class="form-label">WS-0-0-0</label>
-                        <input type="text" class="form-control" id="ws">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="ws">
                     </div>
                     <div class="col-md-3">
                         <label for="berat_precleaning" class="form-label">Berat Precleaning</label>
-                        <input type="text" class="form-control" id="berat_precleaning">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="berat_precleaning">
                     </div>
                     <div class="col-md-3">
                         <label for="pcs" class="form-label">Pcs</label>
-                        <input type="text" class="form-control" id="pcs">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="pcs">
                     </div>
                     <div class="col-md-3">
                         <label for="susut" class="form-label">Susut</label>
                         <input type="text" class="form-control" id="susut" readonly>
                     </div>
                     <div class="col-md-4">
-                        <label for="susut" class="form-label">Total Box</label>
+                        <label for="total_box" class="form-label">Total Box</label>
                         <input type="text" class="form-control" id="total_box" readonly>
                     </div>
                     <div class="col-md-4">
-                        <label for="susut" class="form-label">Total Berat</label>
+                        <label for="total_berat" class="form-label">Total Berat</label>
                         <input type="text" class="form-control" id="total_berat" readonly>
                     </div>
                     <div class="col-md-4">
-                        <label for="susut" class="form-label">Total Pcs</label>
+                        <label for="total_pcs" class="form-label">Total Pcs</label>
                         <input type="text" class="form-control" id="total_pcs" readonly>
                     </div>
                     <div class="col-12">
@@ -560,7 +578,7 @@
             }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('pre_cleaning_output.simpanData') }}`,
+                url: `{{ route('PreCleaningOutput.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
@@ -589,7 +607,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('pre_cleaning_output.index') }}`;
+                    window.location.href = `{{ route('PreCleaningOutput.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);

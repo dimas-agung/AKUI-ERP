@@ -12,10 +12,11 @@ use Illuminate\Http\RedirectResponse;
 
 class WorkstationController extends Controller
 {
-    public function index(){
-        $i =1;
+    public function index()
+    {
+        $i = 1;
         $workstation = Workstation::all();
-        return response()->view('workstation.index', [
+        return response()->view('Workstation.index', [
             'workstation' => $workstation,
             'i' => $i,
         ]);
@@ -28,7 +29,7 @@ class WorkstationController extends Controller
      */
     public function create(): View
     {
-        return view('workstation.create');
+        return view('Workstation.create');
     }
 
     /**
@@ -49,7 +50,7 @@ class WorkstationController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('workstation.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('Workstation.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
 
@@ -59,11 +60,11 @@ class WorkstationController extends Controller
         $workstation = Workstation::findOrFail($id);
 
         //render view with post
-        return view('workstation.show', compact('workstation'));
+        return view('Workstation.show', compact('workstation'));
     }
 
 
-     /**
+    /**
      * edit
      */
     public function edit(string $id): View
@@ -72,7 +73,7 @@ class WorkstationController extends Controller
         $workstation = Workstation::findOrFail($id);
 
         //render view with post
-        return view('workstation.update', compact('workstation'));
+        return view('Workstation.update', compact('workstation'));
     }
 
 
@@ -83,7 +84,7 @@ class WorkstationController extends Controller
     {
         $workstation = Workstation::findOrFail($id);
         $validasinama = 'required';
-        if ($request->nama != $workstation->nama){
+        if ($request->nama != $workstation->nama) {
             $validasinama = 'required|unique:workstation';
         }
         // validate form
@@ -101,7 +102,7 @@ class WorkstationController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('workstation.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('Workstation.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     // public function update(Request $request, $id): RedirectResponse
     // {
@@ -135,7 +136,7 @@ class WorkstationController extends Controller
     //     return redirect()->route('master_supplier_raw_material.index')->with(['success' => 'Data Berhasil Diubah!']);
     // }
 
-        /**
+    /**
      * destroy
      */
     public function destroy($id): RedirectResponse
@@ -147,8 +148,6 @@ class WorkstationController extends Controller
         $workstation->delete();
 
         //redirect to index
-        return redirect()->route('workstation.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('Workstation.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
-
-
 }

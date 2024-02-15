@@ -15,7 +15,7 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Master Tujuan Kirim Grading Kasar
-                                <button href="{{ route('master_tujuan_kirim_grading_kasar.create') }}" type="button"
+                                <button href="{{ route('MasterTujuanKirimGradingKasar.create') }}" type="button"
                                     class="btn btn-outline-success rounded-pill" data-bs-toggle="modal"
                                     data-bs-target="#inlineForm">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
@@ -36,7 +36,7 @@
                                         <i data-feather="x"></i>
                                     </button>
                                 </div>
-                                <form action="{{ route('master_tujuan_kirim_grading_kasar.store') }}" method="POST">
+                                <form action="{{ route('MasterTujuanKirimGradingKasar.store') }}" method="POST">
                                     <div class="modal-body">
                                         @csrf
                                         <label><strong>Tujuan Kirim</strong></label>
@@ -69,9 +69,9 @@
                         </div>
                     </div>
                     {{-- card body --}}
-                    <div class="card-body">
+                    <div class="card-body" style="overflow: auto;">
                         <div class="table-responsive">
-                            <table class="table" id="table1">
+                            <table id="table1" class="display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
@@ -103,9 +103,9 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterTJGK->id }}"
-                                                        action="{{ route('master_tujuan_kirim_grading_kasar.destroy', $MasterTJGK->id) }}"
+                                                        action="{{ route('MasterTujuanKirimGradingKasar.destroy', $MasterTJGK->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('master_tujuan_kirim_grading_kasar.edit', $MasterTJGK->id) }}"
+                                                        <a href="{{ route('MasterTujuanKirimGradingKasar.edit', $MasterTJGK->id) }}"
                                                             class="btn btn-link" title="Edit Task"
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>
