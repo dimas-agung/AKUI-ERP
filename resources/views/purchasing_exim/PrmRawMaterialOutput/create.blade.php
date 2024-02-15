@@ -877,8 +877,7 @@
                     }).then((result) => {
                         // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
                         if (result.isConfirmed) {
-                            window.location.href = response
-                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                            window.location.href = response.redirectTo; // Ganti dengan URL tujuan redirect Anda
                         }
                     });
                 },
@@ -888,7 +887,7 @@
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });
-                    console.log('Validation Errors:', response.responseJSON.errors);
+
                 }
             });
         }

@@ -40,8 +40,4 @@ class PreCleaningStock extends Model
     {
         return $this->hasMany(PreCleaningOutput::class, 'nomor_job', 'nomor_job');
     }
-    public function PreCleaningOutput()
-    {
-        return $this->hasMany(PreCleaningOutput::class, 'nomor_job', 'nomor_job');
-    }
 }

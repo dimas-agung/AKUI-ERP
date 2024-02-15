@@ -61,7 +61,7 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form action="">
-                                                <a href="{{ route('prm_raw_material_stock.show', $MasterStock->id_box) }}"
+                                                <a href="{{ route('PrmRawMaterialStock.show', $MasterStock->id_box) }}"
                                                     class="btn btn-link btn-info" title="Show History"
                                                     data-original-title="Show Detail"><i class="bi bi-file-earmark"></i></a>
                                             </form>

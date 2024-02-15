@@ -152,8 +152,8 @@ Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialCon
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
     Route::get('/prm_raw_material_stock', 'index')->name('PrmRawMaterialStock.index');
     Route::get('/prm_raw_material_stock/show/{id_box}', 'show')->name('PrmRawMaterialStock.show');
+
 });
-// Route::get('/PrmRawMaterialStockHistory/{id_box}', 'App\Http\Controllers\PurchasingExim\PrmRawMaterialStockHistoryController@index')->name('PrmRawMaterialStockHistory.index');
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialOutputController::class)->group(function () {
     Route::get('/prm_raw_material_output', 'index')->name('PrmRawMaterialOutput.index');
     Route::get('/prm_raw_material_output/create', 'create')->name('PrmRawMaterialOutput.create');
@@ -199,7 +199,7 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarHasilCont
     Route::get('/grading_kasar_hasil/getDataJenis', 'getDataJenis')->name('GradingKasarHasil.getDataJenis');
     Route::post('/grading_kasar_hasil/simpanData', 'simpanData')->name('GradingKasarHasil.simpanData');
     Route::post('/grading_kasar_hasil/simpanDataItem', 'simpanDataItem')->name('GradingKasarHasil.simpanDataItem');
-    Route::get('/grading_kasar_hasil/get_data_nama_jenis', 'set')->name('gradingKasarHasil.set');
+    Route::get('/grading_kasar_hasil/get_data_nama_jenis', 'set')->name('GradingKasarHasil.set');
 });
 Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarStockController::class)->group(function(){
     Route::get('/grading_kasar_stock', 'index')->name('GradingKasarStock.index');
