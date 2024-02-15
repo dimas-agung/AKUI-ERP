@@ -38,7 +38,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Tanggal Adding</label>
-                                        <input type="date" id="tgl_add" class="form-control mb-3 flatpickr-date"
+                                        <input type="date" id="tgl_add" class="form-control mb-3 "
                                             name="tgl_add" value="{{ old('tgl_add') }}"
                                             placeholder="Masukkan Tanggal Adding">
                                     </div>
@@ -217,11 +217,11 @@
 @section('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            flatpickr('.flatpickr-date', {
-                dateFormat: 'Y-m-d', // Format tanggal yang diinginkan
-                enableTime: false, // Nonaktifkan waktu
-                time_24hr: false // Gunakan format 12 jam jika diinginkan
-            });
+            // flatpickr('.flatpickr-date', {
+            //     dateFormat: 'Y-m-d', // Format tanggal yang diinginkan
+            //     enableTime: false, // Nonaktifkan waktu
+            //     time_24hr: false // Gunakan format 12 jam jika diinginkan
+            // });
         });
 
         $('#nomor_bstb').on('change', function() {
