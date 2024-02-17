@@ -40,11 +40,8 @@
                                         <th scope="col" class="text-center">Jenis Kirim</th>
                                         <th scope="col" class="text-center">Berat Kirim</th>
                                         <th scope="col" class="text-center">Pcs Kirim</th>
-                                        {{-- <th scope="col" class="text-center">Tujuan Kirim</th> --}}
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
-                                        {{-- <th scope="col" class="text-center">Sisa Berat</th> --}}
-                                        {{-- <th scope="col" class="text-center">Sisa Berat</th> --}}
                                         <th scope="col" class="text-center">Operator Flek & Kompresor</th>
                                         <th scope="col" class="text-center">Operator Flek & Poles</th>
                                         <th scope="col" class="text-center">Operator Cutter</th>

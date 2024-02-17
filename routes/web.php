@@ -177,7 +177,7 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarOutputCon
     Route::get('/grading_kasar_output/create', 'create')->name('GradingKasarOutput.create');
     Route::post('/grading_kasar_output/store', 'store')->name('GradingKasarOutput.store');
     Route::post('/grading_kasar_output/sendData', 'sendData')->name('GradingKasarOutput.sendData');
-    Route::delete('/grading_kasar_output/destroy/{id}', 'destroy')->name('GradingKasarOutput.destroy');
+    Route::delete('/grading_kasar_output/destroy/{nomor_bstb}', 'destroy')->name('GradingKasarOutput.destroy');
     Route::get('/grading_kasar_output/get_data_id_box', 'set')->name('GradingKasarOutput.set');
     Route::get('/grading_kasar_output/get_pcc', 'setpcc')->name('GradingKasarOutput.setpcc');
 });

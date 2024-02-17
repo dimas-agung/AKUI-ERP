@@ -142,30 +142,30 @@
     <script>
         // Inisialisasi dataArray
         var dataArray = [];
-        $('#nomor_bstb').on('change', function() {
-            // Mengambil nilai nomor_bstb yang dipilih
-            let selectedIdBox = $(this).val();
-            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
-            $.ajax({
-                url: `{{ route('PreCleaningInput.set') }}`,
-                method: 'GET',
-                data: {
-                    nomor_bstb: selectedIdBox
-                },
-                success: function(response) {
-                    // Memeriksa apakah berat lebih dari 0 sebelum mengatur nilai elemen-elemen
-                    if (response.length > 0 && response[0].berat_keluar > 0) {
-                        // Contoh: Menampilkan data dalam tabel dengan jQuery
-                        var tableBody = $(
-                            '#tableBody'
-                        ); // Ganti dengan ID atau selector yang sesuai dengan tabel Anda
+        let selectedNomorBSTB = ''; // Variabel untuk menyimpan nomor BSTB yang dipilih sebelumnya
 
-                        // Bersihkan isi tabel sebelum menambahkan data baru
-                        tableBody.empty();
-                        // Loop melalui setiap baris data
-                        $.each(response, function(index, rowData) {
+        $('#nomor_bstb').on('change', function() {
+            let selectedIdBox = $(this).val();
+
+            // Hanya lakukan permintaan AJAX jika nomor BSTB yang baru dipilih tidak sama dengan yang sebelumnya
+            if (selectedNomorBSTB !== selectedIdBox) {
+                selectedNomorBSTB = selectedIdBox; // Perbarui nomor BSTB yang dipilih sebelumnya
+
+                $.ajax({
+                    url: `{{ route('PreCleaningInput.set') }}`,
+                    method: 'GET',
+                    data: {
+                        nomor_bstb: selectedIdBox
+                    },
+                    success: function(response) {
+                        if (response.length > 0 && response[0].berat_keluar > 0) {
+                            var tableBody = $('#tableBody');
+                            tableBody.empty();
+
+                            const rowData = response[0];
                             console.log(rowData);
                             var newRow = $('<tr>');
+                            // Tambahkan kolom-kolom sesuai kebutuhan
                             newRow.append('<td>' + rowData.nomor_bstb + '</td>');
                             newRow.append('<td>' + rowData.nomor_job + '</td>');
                             newRow.append('<td>' + rowData.id_box_grading_kasar + '</td>');
@@ -182,10 +182,11 @@
                             newRow.append('<td>' + rowData.nomor_grading + '</td>');
                             newRow.append('<td>' + rowData.modal + '</td>');
                             newRow.append('<td>' + rowData.total_modal + '</td>');
-                            // Lanjutkan dengan kolom-kolom lain sesuai kebutuhan
-
                             // Tambahkan baris ke dalam tabel
                             tableBody.append(newRow);
+
+                            // Bersihkan dataArray sebelum menambahkan data baru
+                            dataArray = [];
                             // Menyimpan data dalam dataArray
                             dataArray.push({
                                 nomor_bstb: rowData.nomor_bstb,
@@ -205,31 +206,30 @@
                                 modal: rowData.modal,
                                 total_modal: rowData.total_modal,
                                 nomor_nota_internal: rowData.nomor_nota_internal,
-                                // ... tambahkan properti lain sesuai kebutuhan
                             });
-                        });
-                    } else {
-                        // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
-                        // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
-                        Swal.fire({
-                            title: 'Warning!',
-                            text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
-                            icon: 'error'
-                        }).then((result) => {
-                            // Refresh halaman saat menekan tombol "OK" pada SweetAlert
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                        // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
-                        $('#nomor_bstb').val('');
+                            console.log(dataArray);
+                        } else {
+                            // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
+                            Swal.fire({
+                                title: 'Warning!',
+                                text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
+                                icon: 'error'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                            $('#nomor_bstb').val('');
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
                     }
-                },
-                error: function(error) {
-                    console.error('Error:', error);
-                }
-            });
+                });
+            }
         });
+
+
 
         function sendData() {
             var doc_no = $('#doc_no').val() || '';

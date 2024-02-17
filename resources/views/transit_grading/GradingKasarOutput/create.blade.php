@@ -223,7 +223,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-primary" onclick="addRow()">Add</button>
+                                    <button type="button" id="tombol_add" class="btn btn-primary"
+                                        onclick="addRow()">Add</button>
                                     <a href="{{ url('/PrmRawMaterialOutput') }}" type="button" class="btn btn-danger"
                                         data-dismiss="modal">Close</a>
                                 </div>
@@ -309,6 +310,16 @@
             });
         });
 
+        // Variabel penanda untuk menandai apakah tombol "add" sudah diklik atau belum
+        let tombolAddDiklik = false;
+
+        // Ketika tombol "add" diklik
+        $('#tombol_add').on('click', function() {
+            // Set variabel penanda menjadi true
+            tombolAddDiklik = true;
+        });
+
+        // Ketika terjadi perubahan pada elemen dengan id 'tujuan_kirim'
         $('#tujuan_kirim').on('change', function() {
             // Mengambil nilai tujuan_kirim yang dipilih
             let selectedPcc = $(this).val();
@@ -325,13 +336,17 @@
                         // Mengatur nilai elemen-elemen sesuai dengan respons dari server
                         $('#inisial_tujuan').val(response.inisial_tujuan);
 
-                        // Memanggil fungsi generateNomorBSTB untuk menghasilkan nomor_bstb dan nomor_job
-                        const nomor_bstb = generateNomorBSTB(response.inisial_tujuan, 'BSTB');
-                        const nomor_job = generateNomorBSTB(response.inisial_tujuan, 'JOB');
+                        // Memeriksa apakah nomor_bstb sudah terisi, jika belum maka diisi
+                        if (!tombolAddDiklik) {
+                            const nomor_bstb = generateNomorBSTB(response.inisial_tujuan, 'BSTB');
+                            $('#nomor_bstb').val(nomor_bstb);
+                        }
 
-                        // Menampilkan nomor_bstb dan nomor_job ke dalam elemen HTML dengan ID 'nomor_bstb' dan 'nomor_job'
-                        $('#nomor_bstb').val(nomor_bstb);
-                        $('#nomor_job').val(nomor_job);
+                        // Memeriksa apakah nomor_job sudah terisi, jika belum maka diisi
+                        if (!tombolAddDiklik) {
+                            const nomor_job = generateNomorBSTB(response.inisial_tujuan, 'JOB');
+                            $('#nomor_job').val(nomor_job);
+                        }
                     }
                 },
                 error: function(error) {
@@ -339,6 +354,7 @@
                 }
             });
         });
+
 
         function generateNomorBSTB(inisial_tujuan, prefix) {
             const now = new Date();
@@ -400,7 +416,7 @@
             var nomor_grading = $('#nomor_grading').val();
             var modal = $('#modal').val();
             var total_modal = $('#total_modal').val();
-            var biaya_produksi = $('#biaya_produksi').val();
+            var biaya_produksi = $('#biaya_produksi').val() ? $('#biaya_produksi').val() : 0;
             var fix_total_modal = $('#fix_total_modal').val();
             var keterangan = $('#keterangan').val();
             var user_created = $('#user_created').val();

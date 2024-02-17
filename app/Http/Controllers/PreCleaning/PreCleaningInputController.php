@@ -125,8 +125,7 @@ class PreCleaningInputController extends Controller
                     $itemObject = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $existingItems = StockTransitGradingKasar::where('nomor_job', $itemObject->nomor_job)
-                        ->where('nomor_bstb', $itemObject->nomor_bstb)
+                    $existingItems = StockTransitGradingKasar::where('nomor_bstb', $itemObject->nomor_bstb)
                         ->get();
 
                     foreach ($existingItems as $existingItem) {
@@ -144,15 +143,17 @@ class PreCleaningInputController extends Controller
                     $itemObject = (object) $mergedData;
                     $existingItem = GradingKasarOutput::where('nama_supplier', $itemObject->nama_supplier)
                         ->where('nomor_bstb', $itemObject->nomor_bstb)
-                        ->first();
+                        ->get();
 
                     $dataToUpdate = [
                         'status'                => $itemObject->status ?? 0,
                     ];
 
                     if ($existingItem) {
-                        // Perbarui data
-                        $existingItem->update($dataToUpdate);
+                            foreach ($existingItem as $existingItems) {
+                                // Perbarui data untuk setiap item yang ada
+                                $existingItems->update($dataToUpdate);
+                            }
                     }
 
                     DB::commit();
@@ -193,14 +194,14 @@ class PreCleaningInputController extends Controller
 
             foreach ($PreCleaningInputs as $PreCleaningI) {
                 // Ambil data PreCleaningStock berdasarkan id_box_grading_kasar dan id_box_raw_material
-                $PreCleaningS = PreCleaningStock::where('id_box_grading_kasar', '=', $PreCleaningI->id_box_grading_kasar)
-                    ->where('id_box_raw_material', '=', $PreCleaningI->id_box_raw_material)
+                $PreCleaningS = PreCleaningStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
+                    ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
                     ->first();
 
                 if ($PreCleaningS) {
                     // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                    $stockPrmRawMaterial = StockTransitGradingKasar::where('id_box_grading_kasar', '=', $PreCleaningI->id_box_grading_kasar)
-                        ->where('id_box_raw_material', '=', $PreCleaningI->id_box_raw_material)
+                    $stockPrmRawMaterial = StockTransitGradingKasar::where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
+                        ->where('nomor_job', '=', $PreCleaningI->nomor_job)
                         ->first();
 
                     if ($stockPrmRawMaterial) {
@@ -242,6 +243,25 @@ class PreCleaningInputController extends Controller
                         'berat_keluar' => $stockPrmRawMaterial->berat_keluar + $beratSebelumHapus,
                         'pcs_keluar' => $stockPrmRawMaterial->pcs_keluar + $pcsSebelumHapus,
                         'total_modal' => $stockPrmRawMaterial->total_modal + $totalModalSebelumHapus,
+                    ]);
+                }
+
+                $existingItems = GradingKasarOutput::where('nama_supplier', $PreCleaningI->nama_supplier)
+                ->where('nomor_bstb', $PreCleaningI->nomor_bstb)
+                ->get();
+
+                // Logika Update Status
+                if ($existingItems) {
+                    foreach ($existingItems as $existingItem) {
+                        // Perbarui data untuk setiap item yang ada
+                        $existingItem->update(['status' => 1]);
+                    }
+                } else {
+                    // Jika tidak ada item GradingKasarOutput yang sesuai, buat baru dengan status 1
+                    GradingKasarOutput::create([
+                        'nomor_bstb' => $PreCleaningI->nomor_bstb,
+                        'status' => 1,
+                        // Tambahkan kolom-kolom lain sesuai kebutuhan
                     ]);
                 }
             }

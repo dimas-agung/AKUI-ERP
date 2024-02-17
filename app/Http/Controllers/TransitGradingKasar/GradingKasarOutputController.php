@@ -13,6 +13,7 @@ use App\Models\GradingKasarStock;
 use App\Models\MasterTujuanKirimRawMaterial;
 //return type redirectResponse
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class GradingKasarOutputController extends Controller
 {
@@ -64,70 +65,116 @@ class GradingKasarOutputController extends Controller
         GradingKasarOutputService $GradingKasarOutputService)
          {
             try {
-            $dataArray = json_decode($request->input('data'));
-            // return $request->input('data');
-            // $dataStock = json_decode($request->input('dataStock'));
+                $dataArray = json_decode($request->input('data'));
+                // return $request->input('data');
+                // $dataStock = json_decode($request->input('dataStock'));
 
-            // Periksa apakah dekoding JSON berhasil
-            if (!$dataArray) {
-                throw new \InvalidArgumentException('Invalid JSON data.');
+                // Periksa apakah dekoding JSON berhasil
+                if (!$dataArray) {
+                    throw new \InvalidArgumentException('Invalid JSON data.');
+                }
+
+                $result = $GradingKasarOutputService->sendData($dataArray);
+
+                // Periksa apakah pemrosesan berhasil
+                if ($result['success']) {
+                    return response()->json($result);
+                } else {
+                    return response()->json($result, 500);
+                }
+            } catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()], 500);
             }
-
-            $result = $GradingKasarOutputService->sendData($dataArray);
-
-            // Periksa apakah pemrosesan berhasil
-            if ($result['success']) {
-                return response()->json($result);
-            } else {
-                return response()->json($result, 500);
-            }
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
         }
-    }
 
         /**
-     * destroy
-     */
-    public function destroy($id): RedirectResponse
-    {
-        //get post by ID
-        $GradingKO = GradingKasarOutput::findOrFail($id);
-        $stockPRM = StockTransitGradingKasar::where('id_box_raw_material', '=', $GradingKO->id_box_raw_material)
-        ->where('created_at', $GradingKO->created_at)
-        ->first();
+         * destroy
+         */
+        public function destroy($id): RedirectResponse
+        {
+            try {
+                // Begin transaction
+                DB::beginTransaction();
+                //get post by ID
+                $GradingKO = GradingKasarOutput::findOrFail($id);
+                // Ambil data PreCleaningInput berdasarkan nomor_bstb
+                // $GradingKO = GradingKasarOutput::where('nomor_bstb', '=', $nomor_bstb)->get();
 
-        // Ambil data StockTransitRawMaterial berdasarkan nomor_bstb
-        $stockGradingKasar = GradingKasarStock::where('id_box_raw_material', '=', $GradingKO->id_box_raw_material)->first();
+                // Ambil data StockTransitRawMaterial berdasarkan nomor_bstb
+                $stockGradingKasar = GradingKasarStock::where('id_box_raw_material', '=', $GradingKO->id_box_raw_material)->first();
 
-        if ($stockGradingKasar) {
-            // Simpan nilai sebelum dihapus
-            $beratTadi = $GradingKO->berat_keluar;
-            $beratSebelumnya = $stockGradingKasar->berat_keluar;
-            $PcsTadi = $GradingKO->pcs_keluar;
-            $PcsSebelumnya = $stockGradingKasar->pcs_keluar;
-            $Modal = $GradingKO->modal;
+                if ($stockGradingKasar) {
+                    // Simpan nilai sebelum dihapus
+                    $beratTadi = $GradingKO->berat_keluar;
+                    $beratSebelumnya = $stockGradingKasar->berat_keluar;
+                    $PcsTadi = $GradingKO->pcs_keluar;
+                    $PcsSebelumnya = $stockGradingKasar->pcs_keluar;
+                    $Modal = $GradingKO->modal;
 
-            $Beratkeluar = $beratSebelumnya - $beratTadi;
-            $PcsKeluar = $PcsSebelumnya - $PcsTadi;
-            $TotalModal = $Beratkeluar * $Modal;
+                    $Beratkeluar = $beratSebelumnya - $beratTadi;
+                    $PcsKeluar = $PcsSebelumnya - $PcsTadi;
+                    $TotalModal = $Beratkeluar * $Modal;
 
-            // Update data pada PrmRawMaterialStock
-            $dataToUpdate = [
-                'berat_keluar' => $Beratkeluar,
-                'pcs_keluar' => $PcsKeluar,
-                'total_modal' => $TotalModal,
-            ];
+                    // Update data pada PrmRawMaterialStock
+                    $dataToUpdate = [
+                        'berat_keluar' => $Beratkeluar,
+                        'pcs_keluar' => $PcsKeluar,
+                        'total_modal' => $TotalModal,
+                    ];
 
-            // Perbarui data pada PrmRawMaterialStock
-            $stockGradingKasar->update($dataToUpdate);
+                    // Perbarui data pada PrmRawMaterialStock
+                    $stockGradingKasar->update($dataToUpdate);
+                }
+
+
+                $stockPRM = StockTransitGradingKasar::where('id_box_raw_material', '=', $GradingKO->id_box_raw_material)
+                ->where('created_at', $GradingKO->created_at)
+                ->first();
+
+                if ($stockPRM) {
+                    // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
+                    if ($stockPRM->berat_keluar === 0) {
+                        $stockPRM->delete();
+                    } else {
+                        // Jika berat_keluar yang dimasukkan lebih besar atau sama dengan berat_keluar stock, hapus data
+                        if ($GradingKO->berat_keluar >= $stockPRM->berat_keluar) {
+                            $stockPRM->delete();
+                        } else {
+                            // Ambil berat_keluar sebelumnya
+                            $beratSebelumnya = $stockPRM->berat_keluar;
+                            $pcsSebelumnya = $stockPRM->pcs_keluar;
+
+                            // Hitung total modal baru berdasarkan perbedaan berat_keluar
+                            $perbedaanBerat = $beratSebelumnya - $GradingKO->berat_keluar;
+                            $perbedaanPcs = $pcsSebelumnya - $GradingKO->pcs_keluar;
+                            $totalModalBaru = $perbedaanBerat * $GradingKO->modal;
+
+                            // Update data dengan berat dan total modal yang baru
+                            $dataToUpdate = [
+                                'berat_keluar' => abs($perbedaanBerat),
+                                'pcs_keluar' => abs($perbedaanPcs),
+                                'total_modal' => abs($totalModalBaru),
+                            ];
+
+                            // Perbarui data
+                            $stockPRM->update($dataToUpdate);
+                        }
+                    }
+                }
+
+                //delete post
+                $GradingKO->delete();
+
+                // Jika tidak ada kesalahan, komit transaksi
+                DB::commit();
+
+                //redirect to index
+                return redirect()->route('GradingKasarOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            } catch (\Exception $e) {
+                // Jika terjadi kesalahan, rollback transaksi
+                DB::rollback();
+
+                return redirect()->route('PreCleaningOutput.index')->with('error', 'Gagal menghapus data');
+            }
         }
-
-        //delete post
-        $GradingKO->delete();
-        $stockPRM->delete();
-
-        //redirect to index
-        return redirect()->route('GradingKasarOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
-    }
 }
