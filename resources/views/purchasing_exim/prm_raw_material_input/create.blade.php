@@ -53,20 +53,6 @@
                     <div class="col-md-flex">
                         <hr>
                     </div>
-                    {{-- <div class="col-md-3">
-                        <label for="basic-usage" class="form-label">Pilih Jenis :</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
-                            name="jenis" id="jenis" placeholder="Pilih Jenis">
-                            <option value="">Pilih Jenis</option>
-                            @foreach ($master_jenis_raw_materials->sortBy('jenis') as $MasterJRM)
-                                @if ($MasterJRM->status == 1)
-                                    <option value="{{ $MasterJRM->jenis }}">
-                                        {{ $MasterJRM->jenis }}
-                                    </option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div> --}}
                     <div class="col-md-3">
                         <label for="basic-usage" class="form-label">Pilih Jenis :</label>
                         <select class="select2 form-control" style="width: 100%;" tabindex="-1" aria-hidden="true"
@@ -174,8 +160,8 @@
                                 <th scope="col" class="text-center">Harga Deal</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
-                                <th scope="col" class="text-center">Action</th>
                                 {{-- <th scope="col" class="text-center">Fix Harga Deal</th> --}}
+                                <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -309,7 +295,7 @@
             let totalHargaNota = beratNota * hargaNota;
 
             // Memasukkan hasil perhitungan ke dalam input total harga nota menggunakan jQuery
-            $('#total_harga_nota').val(isFinite(totalHargaNota) ? totalHargaNota.toFixed(2) : '');
+            $('#total_harga_nota').val(isFinite(totalHargaNota) ? totalHargaNota.toFixed(4) : '');
 
             // Memanggil updateHargaDeal setiap kali updateTotalHarga terjadi
             updateHargaDeal();
@@ -325,7 +311,7 @@
                 const hargaDeal = totalHargaNota / (beratBersih !== 0 ? beratBersih : 1);
 
                 // Memasukkan hasil perhitungan ke dalam input harga deal menggunakan jQuery
-                $('#harga_deal').val(hargaDeal.toFixed(2));
+                $('#harga_deal').val(hargaDeal.toFixed(4));
             } else {
                 // Jika total harga nota kosong, tampilkan nilai dari berat bersih
                 $('#harga_deal').val(beratBersih !== 0 ? '0.00' : '');
@@ -359,8 +345,6 @@
             let harga_deal = $('#harga_deal').val();
             let keterangan = $('#keterangan').val();
             let user_created = $('#user_created').val();
-            // test
-            let berat_masuk = $('#berat_bersih').val();
 
             // Validasi input (sesuai kebutuhan)
             if (nomor_po.trim() === '' || nomor_batch.trim() === '' || nomor_nota_supplier.trim() === '' ||
@@ -383,9 +367,6 @@
             $('#nomor_batch').prop('readonly', true);
             $('#nomor_nota_supplier').prop('readonly', true);
             $('#nama_supplier').prop('disabled', true); // Jika ingin menjadikan select readonly
-
-
-            console.log("Mengolah id_box:", id_box);
 
             // Memeriksa apakah id_box sudah ada di objek idBoxGroups
             if (id_box in idBoxGroups) {
@@ -416,9 +397,9 @@
                 console.log("Avg Kadar Air: " + idBoxGroups[idBox].totalKadarAir / idBoxGroups[idBox].jumlahBaris);
                 console.log("------------------------------");
                 fix_harga_deal = idBoxGroups[idBox].totalHargaNota / idBoxGroups[idBox].totalBeratBersih;
-                console.log(fix_harga_deal.toFixed(2));
+                console.log("Fix Harga Deal : " + fix_harga_deal.toFixed(4));
                 avg_kadar_air = idBoxGroups[idBox].totalKadarAir / idBoxGroups[idBox].jumlahBaris;
-                console.log(avg_kadar_air.toFixed(2));
+                console.log("Avg Kadar Air: " + avg_kadar_air.toFixed(4));
             }
             let fixHargaDealForRow = idBoxGroups[id_box].totalHargaNota / idBoxGroups[id_box].totalBeratBersih;
             let avgKadarAir = idBoxGroups[id_box].totalKadarAir / idBoxGroups[id_box].jumlahBaris;
@@ -426,7 +407,7 @@
             let existingRow = $('#dataTable tbody tr[data-idbox="' + id_box + '"]');
             if (existingRow.length > 0) {
                 // Jika baris sudah ada, update nilai fix_harga_deal
-                existingRow.find('td:eq(12)').text(fixHargaDealForRow.toFixed(2));
+                existingRow.find('td:eq(12)').text(fixHargaDealForRow.toFixed(4));
             } else {
                 // Menambahkan data ke dalam tabel
                 var newRow = `<tr>` +
@@ -442,8 +423,8 @@
                     `<td class="text-center">${harga_deal}</td>` +
                     `<td class="text-center">${keterangan}</td>` +
                     `<td class="text-center">${user_created}</td>` +
+                    // `<td class="text-center">${fix_harga_deal.toFixed(4)}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
-                    // `<td class="text-center">${fixHargaDealForRow.toFixed(4)}</td>` +
                     `</tr>`
                 $('#dataTable tbody').append(newRow);
             }

@@ -164,10 +164,11 @@
                         // let sisaBeratFormatted = sisaBerat;
 
                         // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                        // $('#nomor_grading').val(response.nomor_grading);
+                        $('#nomor_nota_internal').val(response.nomor_nota_internal);
                         $('#id_box_grading_kasar').val(response.id_box_grading_kasar);
                         $('#id_box_raw_material').val(response.id_box_raw_material);
                         $('#nomor_batch').val(response.nomor_batch);
-                        $('#nomor_nota_internal').val(response.nomor_nota_internal);
                         $('#nama_supplier').val(response.nama_supplier);
                         $('#jenis_raw_material').val(response.jenis_raw_material);
                         $('#jenis_kirim').val(response.jenis_kirim);
@@ -210,12 +211,12 @@
         $(document).ready(function() {
             // Menangani perubahan pada dropdown nomor_job
             $('#nomor_job').on('change', function() {
-                // Memanggil fungsi generateNomorBSTB ketika nomor_job berubah
-                generateNomorBSTB();
+                // Memanggil fungsi generateNomorGrading ketika nomor_job berubah
+                generateNomorGrading();
             });
 
             // Fungsi untuk generate nomor_bstb
-            function generateNomorBSTB() {
+            function generateNomorGrading() {
                 const now = new Date();
                 const tahun = now.getFullYear().toString().substr(-2);
                 const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
@@ -228,45 +229,14 @@
                 const nomorJobValue = $('#nomor_job').val().split('_');
 
                 // Mengambil bagian ketiga (indeks 2) dari array hasil split
-                const bagianKetiga = nomorJobValue[2];
+                const bagianKetiga = nomorJobValue[2][0];
 
                 // Menghasilkan nomor_bstb berdasarkan rumus yang diinginkan
-                const nomor_bstb = `BSTB_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_${bagianKetiga}_UPC`;
+                const nomor_grading = `NG_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_${bagianKetiga}_UGH`;
 
                 // Memasukkan nilai yang dihasilkan ke dalam input nomor_bstb
-                $('#nomor_bstb').val(nomor_bstb);
-                console.log(nomor_bstb);
-            }
-        });
-        // Fungsi untuk menghitung persentase susut
-        function hitungPersentaseSusut(nilaiAwal, nilaiAkhir) {
-            // Menghitung nilai susut
-            var nilaiSusut = nilaiAwal - nilaiAkhir;
-
-            // Menghitung persentase susut
-            var persentaseSusut = (nilaiSusut / nilaiAwal) * 100;
-
-            // Mengembalikan hasil
-            return persentaseSusut;
-        }
-
-        // Event listener untuk menghitung persentase susut saat input berubah
-        $("#berat_precleaning").on("input", function() {
-            // Mendapatkan nilai awal dan nilai akhir dari input
-            var nilaiAwal = parseFloat($("#berat_kirim").val()) || 0; // Jika tidak valid, asumsi nilai 0
-            var nilaiAkhir = parseFloat($(this).val()) || 0; // Jika tidak valid, asumsi nilai 0
-
-            // Memastikan nilai akhir tidak nol untuk menghindari pembagian oleh nol
-            if (nilaiAkhir !== 0) {
-                // Menghitung persentase susut
-                var persentaseSusut = hitungPersentaseSusut(nilaiAwal, nilaiAkhir);
-
-                // Menampilkan hasil pada input susut
-                $("#susut").val(persentaseSusut.toFixed(2) +
-                    "%"); // Menampilkan hasil dengan dua desimal dan tambahkan simbol persen
-            } else {
-                // Jika nilai akhir nol, tampilkan pesan atau ambil tindakan lain
-                $("#susut").val("Tidak dapat melakukan pembagian oleh nol");
+                $('#nomor_grading').val(nomor_grading);
+                console.log(nomor_grading);
             }
         });
 
@@ -325,7 +295,7 @@
 
             let totalPcsKirim = 0;
             $('#dataTable tbody tr').each(function() {
-                let pcsKirim = parseFloat($(this).find('td:eq(11)')
+                let pcsKirim = parseFloat($(this).find('td:eq(10)')
                     .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
                 if (!isNaN(pcsKirim)) {
                     totalPcsKirim += pcsKirim;
@@ -336,7 +306,7 @@
 
             let totalBeratKirim = 0;
             $('#dataTable tbody tr').each(function() {
-                let beratKirim = parseFloat($(this).find('td:eq(10)')
+                let beratKirim = parseFloat($(this).find('td:eq(9)')
                     .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
                 if (!isNaN(beratKirim)) {
                     totalBeratKirim += beratKirim;
@@ -365,19 +335,6 @@
                 tujuan_kirim: tujuan_kirim,
                 modal: modal,
                 total_modal: total_modal,
-                operator_sikat_kompresor: operator_sikat_kompresor,
-                operator_flek_poles: operator_flek_poles,
-                operator_flek_cutter: operator_flek_cutter,
-                kuningan: kuningan,
-                sterofoam: sterofoam,
-                karat: karat,
-                rontokan_fisik: rontokan_fisik,
-                rontokan_bahan: rontokan_bahan,
-                rontokan_serabut: rontokan_serabut,
-                ws_0_0_0: ws_0_0_0,
-                berat_pre_cleaning: berat_pre_cleaning,
-                pcs_pre_cleaning: pcs_pre_cleaning,
-                susutTabel: susutTabel,
             });
 
             // Mengosongkan nilai dropdown nomor_job
@@ -398,7 +355,7 @@
             // Total Berat
             let totalBeratKirim = 0;
             $('#dataTable tbody tr').each(function() {
-                let beratKirim = parseFloat($(this).find('td:eq(10)')
+                let beratKirim = parseFloat($(this).find('td:eq(9)')
                     .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
                 if (!isNaN(beratKirim)) {
                     totalBeratKirim += beratKirim;
@@ -408,7 +365,7 @@
             // Total Pcs
             let totalPcsKirim = 0;
             $('#dataTable tbody tr').each(function() {
-                let pcsKirim = parseFloat($(this).find('td:eq(11)')
+                let pcsKirim = parseFloat($(this).find('td:eq(10)')
                     .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
                 if (!isNaN(pcsKirim)) {
                     totalPcsKirim += pcsKirim;

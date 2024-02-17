@@ -127,6 +127,17 @@ class PrmRawMaterialInputService
             $prmStock->avg_kadar_air = number_format($averageKadarAir, 2); // Format dengan 2 digit desimal
             $prmStock->save();
         }
+        // Calculate fix_harga_deal and update prmstock
+        // $totalHargaNota = PrmRawMaterialStockHistory::where('total_modal', $item->total_harga_nota)->sum('total_modal');
+        // $totalBeratBersih = PrmRawMaterialStockHistory::where('berat_masuk', $item->berat_bersih)->sum('berat_masuk');
+        // $fixHargaDeal = $totalHargaNota / $totalBeratBersih;
+
+        // $prmStock = PrmRawMaterialStock::where('id_box', $item->id_box)->first();
+        // if ($prmStock) {
+        //     // Pastikan nilai avg_kadar_air di-format sebagai desimal sebelum disimpan
+        //     $prmStock->modal = number_format($fixHargaDeal, 4); // Format dengan 2 digit desimal
+        //     $prmStock->save();
+        // }
 
         // stok
         $itemObject = (object)$item;

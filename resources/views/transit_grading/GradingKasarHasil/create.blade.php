@@ -47,8 +47,8 @@
                         <input type="text" class="form-control" id="jenis_raw_material" readonly>
                     </div>
                     <div class="col-md-3">
-                        <label for="berat" class="form-label">Berat Adding</label>
-                        <input type="text" class="form-control" id="berat" readonly>
+                        <label for="berat_adding" class="form-label">Berat Adding</label>
+                        <input type="text" class="form-control" id="berat_adding" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="kadar_air" class="form-label">Kadar Air</label>
@@ -195,7 +195,7 @@
                     $('#nomor_nota_internal').val(response.nomor_nota_internal);
                     $('#nama_supplier').val(response.nama_supplier);
                     $('#jenis_raw_material').val(response.jenis_raw_material);
-                    $('#berat').val(response.berat);
+                    $('#berat_adding').val(response.berat);
                     $('#kadar_air').val(response.kadar_air);
                     $('#modal').val(response.modal);
                     $('#total_modal').val(response.total_modal);
@@ -237,7 +237,7 @@
             });
 
             // console.log(beratGradingValue);
-            let beratAdding = parseFloat($('#berat').val());
+            let beratAdding = parseFloat($('#berat_adding').val());
 
             if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding) && beratAdding !== 0) {
                 let nilaiSusut = (1 - totalBeratGradingtest / beratAdding).toFixed(4);
@@ -284,7 +284,7 @@
             let nomor_nota_internal = $('#nomor_nota_internal').val();
             let nama_supplier = $('#nama_supplier').val();
             let jenis_raw_material = $('#jenis_raw_material').val();
-            let berat = $('#berat').val();
+            let berat = $('#berat_adding').val();
             let kadar_air = $('#kadar_air').val();
             let modal = $('#modal').val();
             let total_modal = $('#total_modal').val();

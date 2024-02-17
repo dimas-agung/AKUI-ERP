@@ -60,12 +60,12 @@ class GradingKasarHasilController extends Controller
     ) {
         $dataArray = json_decode($request->input('data'));
         $dataColl = collect($dataArray);
-        $berats = array();
+        $berat_gradings = array();
         $harga_estimasi = array();
         $totalModal = array();
         // return $dataColl;
         foreach ($dataColl as $key => $value) {
-            $berats[] = $value->berat;
+            $berat_gradings[] = $value->berat_grading;
             $harga_estimasi[] = $value->harga_estimasi;
             $totalModal[] = $value->total_modal;
         };
@@ -73,7 +73,7 @@ class GradingKasarHasilController extends Controller
         //panggil service
 
         $result = $GradingKasarHasilService->simpanData($dataArray); //ngambil array id dari data yang diinput
-        $dataHpp = $this->HppService->calculate($berats, $harga_estimasi, $totalModal);
+        $dataHpp = $this->HppService->calculate($berat_gradings, $harga_estimasi, $totalModal);
         // return $result;
 
         $arrayIds = $result['data'];

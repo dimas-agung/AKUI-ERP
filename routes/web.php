@@ -101,16 +101,6 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimGradingKasarController::
     Route::delete('/master_tujuan_kirim_grading_kasar/destroy/{id}', 'destroy')->name('MasterTujuanKirimGradingKasar.destroy');
 });
 
-Route::controller(App\Http\Controllers\MasterJenisGradingController::class)->group(function () {
-    Route::get('/master_jenis_grading', 'index')->name('MasterJenisGrading.index');
-    Route::get('/master_jenis_grading/create', 'create')->name('MasterJenisGrading.create');
-    Route::post('/master_jenis_grading/store', 'store')->name('MasterJenisGrading.store');
-    Route::get('/master_jenis_grading/show/{id}', 'show')->name('MasterJenisGrading.show');
-    Route::get('/master_jenis_grading/edit/{id}', 'edit')->name('MasterJenisGrading.edit');
-    Route::put('/master_jenis_grading/update/{id}', 'update')->name('MasterJenisGrading.update');
-    Route::delete('/master_jenis_grading/destroy/{id}', 'destroy')->name('MasterJenisGrading.destroy');
-});
-
 Route::controller(App\Http\Controllers\MasterJenisGradingKasarController::class)->group(function () {
     Route::get('/master_jenis_grading_kasar', 'index')->name('MasterJenisGradingKasar.index');
     Route::get('/master_jenis_grading_kasar/create', 'create')->name('MasterJenisGradingKasar.create');
@@ -139,6 +129,7 @@ Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputControl
     Route::get('/prm_raw_material_input/show/{id}', 'show')->name('PrmRawMaterialInput.show');
     Route::get('/prm_raw_material_input/edit/{id}', 'edit')->name('PrmRawMaterialInput.edit');
     Route::post('/prm_raw_material_input/update/{id}', 'update')->name('PrmRawMaterialInput.update');
+    Route::delete('/prm_raw_material_input/destroy/{id}', 'destroy')->name('PrmRawMaterialInput.destroy');
     Route::delete('/prm_raw_material_input/destroyInput/{id}', 'destroyInput')->name('PrmRawMaterialInput.destroyInput');
     Route::delete('/prm_raw_material_input/destroyItem/{id}', 'destroyItem')->name('PrmRawMaterialInput.destroyItem');
     Route::get('/prm_raw_material_input/getDataSupplier', 'getDataSupplier')->name('PrmRawMaterialInput.getDataSupplier');
@@ -239,7 +230,9 @@ Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusAddingCont
     Route::delete('/pre_grading_halus_adding/destroy/{id}', 'destroy')->name('PreGradingHalusAdding.destroy');
     Route::get('/pre_grading_halus_adding/get_data_nomor_job', 'set')->name('preGradingHalusAdding.set');
     Route::post('/pre_grading_halus_adding/simpanData', 'simpanData')->name('preGradingHalusAdding.simpanData');
+    Route::post('/pre_grading_halus_adding/getDataPerusahaan', 'getDataPerusahaan')->name('preGradingHalusAdding.getDataPerusahaan');
 });
+
 Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusAddingStockController::class)->group(function () {
     Route::get('/pre_grading_halus_adding_stock', 'index')->name('PreGradingHalusAddingStock.index');
     Route::get('/pre_grading_halus_adding_stock/create', 'create')->name('PreGradingHalusAddingStock.create');
