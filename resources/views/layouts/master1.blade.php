@@ -328,12 +328,12 @@
                                                 class="submenu-link">Transit Pre Cleaning Stock</a>
                                         </li>
                                         <li
-                                            class="submenu-item {{ Request::is('pre_grading_halus_adding*') ? 'active' : '' }}">
+                                            class="submenu-item {{ Request::is('pre_grading_halus_adding') ? 'active' : '' }}">
                                             <a href="{{ route('PreGradingHalusAdding.index') }}"
                                                 class="submenu-link">Pre Grading Halus Adding</a>
                                         </li>
                                         <li
-                                            class="submenu-item {{ Request::is('pre_grading_halus_adding_stock*') ? 'active' : '' }}">
+                                            class="submenu-item {{ Request::is('pre_grading_halus_adding_stock') ? 'active' : '' }}">
                                             <a href="{{ route('PreGradingHalusAddingStock.index') }}"
                                                 class="submenu-link">Pre Grading Halus Adding Stock</a>
                                         </li>

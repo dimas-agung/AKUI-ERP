@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PreGradingHalus;
 
 use App\Http\Controllers\Controller;
+use App\Models\Perusahaan;
 use App\Models\PreGradingHalusAdding;
 use App\Models\PreGradingHalusStock;
 use Illuminate\Http\Request;
@@ -27,15 +28,22 @@ class PreGradingHalusAddingController extends Controller
             'pre_grading_halus_stocks' => $PreGradingHalusStock,
         ]);
     }
-    // set
+    // get Data Stock Grading Halus
     public function set(Request $request)
     {
         $nomor_job = $request->nomor_job;
-        $data = PreGradingHalusStock::where('nomor_job', $nomor_job)
-            ->whereRaw('berat_masuk - berat_keluar != 0') // Tambahkan kondisi ini
+        $data = PreGradingHalusStock::where('nomor_job', $nomor_job)->first();
+
+        return response()->json($data);
+    }
+    // get Data Perusahaan
+    public function getDataPerusahaan(Request $request)
+    {
+        $nama = $request->nama;
+        $data = Perusahaan::where('nama', $nama)
+            ->where('status', 1)
             ->first();
-        return $data;
-        // Kembalikan nomor job sebagai respons
+
         return response()->json($data);
     }
 }

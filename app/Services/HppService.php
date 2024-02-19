@@ -14,20 +14,20 @@ use Illuminate\Support\Facades\DB;
 class HppService
 {
 
-    function calculate(array $berats, array $harga_estimasi, array $totalModal): array
+    function calculate(array $berat_gradings, array $harga_estimasi, array $totalModal): array
     {
         $sum_total_harga = 0;
         $sum_total_modal = 0;
         $sum_nilai_setelah_dikurangi_keuntungan = 0;
 
         $dataHpp = [];
-        foreach ($berats as $key => $berat) {
-            $total_harga = $berat * $harga_estimasi[$key];
+        foreach ($berat_gradings as $key => $berat_grading) {
+            $total_harga = $berat_grading * $harga_estimasi[$key];
             $total_modal = $totalModal[$key];
             $sum_total_harga += $total_harga;
             $sum_total_modal += $total_modal;
             $dataHpp[] = [
-                'berat' => $berat,
+                'berat_grading' => $berat_grading,
                 'harga_estimasi' => $harga_estimasi[$key],
                 'total_harga' => $total_harga,
                 'total_modal' => $total_modal,
@@ -46,14 +46,14 @@ class HppService
             $dataHpp[$key]['nilai_setelah_dikurangi_keuntungan'] = $nilai_setelah_dikurangi_keuntungan;
         }
         foreach ($dataHpp as $key => $value) {
-            $berat = $value['berat'];
+            $berat_grading = $value['berat_grading'];
             $harga_estimasi = $value['harga_estimasi'];
             $nilai_setelah_dikurangi_keuntungan = $value['nilai_setelah_dikurangi_keuntungan'];
             $prosentase_harga_gramasi = $nilai_setelah_dikurangi_keuntungan / $sum_nilai_setelah_dikurangi_keuntungan;
             $selisih_laba_rugi_kg = $prosentase_harga_gramasi * ($sum_total_harga - $total_modal);
-            $selisih_laba_rugi_gram = $selisih_laba_rugi_kg / $berat;
+            $selisih_laba_rugi_gram = $selisih_laba_rugi_kg / $berat_grading;
             $hpp = $harga_estimasi - $selisih_laba_rugi_gram;
-            $total_hpp = $hpp * $berat;
+            $total_hpp = $hpp * $berat_grading;
             $dataHpp[$key]['prosentase_harga_gramasi'] = $prosentase_harga_gramasi;
             $dataHpp[$key]['selisih_laba_rugi_kg'] = round($selisih_laba_rugi_kg, 2);
             $dataHpp[$key]['selisih_laba_rugi_gram'] = round($selisih_laba_rugi_gram, 2);
