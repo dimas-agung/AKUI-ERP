@@ -34,6 +34,10 @@ class PreGradingHalusInput extends Model
     {
         return $this->belongsTo(TransitPreCleaningStock::class, 'nomor_bstb', 'nomor_bstb');
     }
+    public function Unit()
+    {
+        return $this->belongsTo(Unit::class, 'nama', 'nomor_bstb');
+    }
     public function PreGradingHalusStock()
     {
         return $this->hasMany(PreGradingHalusStock::class, 'nomor_job', 'nomor_job');

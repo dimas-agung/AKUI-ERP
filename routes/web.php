@@ -220,11 +220,9 @@ Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusInputContr
     Route::get('/pre_grading_halus_input', 'index')->name('PreGradingHalusInput.index');
     Route::get('/pre_grading_halus_input/create', 'create')->name('PreGradingHalusInput.create');
     Route::get('/pre_grading_halus_input/get_data_id_box', 'set')->name('PreGradingHalusInput.set');
+    Route::get('/pre_grading_halus_input/get_data_id_box/unit', 'setUnit')->name('PreGradingHalusInput.setUnit');
     Route::post('/pre_grading_halus_input/sendData', 'sendData')->name('PreGradingHalusInput.sendData');
     Route::post('/pre_grading_halus_input/store', 'store')->name('PreGradingHalusInput.store');
-    Route::get('/pre_grading_halus_input/show/{id}', 'show')->name('PreGradingHalusInput.show');
-    Route::get('/pre_grading_halus_input/edit/{id}', 'edit')->name('PreGradingHalusInput.edit');
-    Route::put('/pre_grading_halus_input/update/{id}', 'update')->name('PreGradingHalusInput.update');
     Route::delete('/pre_grading_halus_input/destroy/{nomor_bstb}', 'destroy')->name('PreGradingHalusInput.destroy');
 });
 

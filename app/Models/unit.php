@@ -19,9 +19,12 @@ class Unit extends Model
     {
     	return $this->belongsTo(Workstation::class);
     }
-
     public function biayahpp()
     {
         return $this->hasMany(BiayaHpp::class);
+    }
+    public function PreGradingHalusInput()
+    {
+        return $this->hasMany(PreGradingHalusInput::class, 'nomor_bstb', 'nama');
     }
 }

@@ -35,21 +35,21 @@
                                 </div>
                             @endif
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>No BSTB</label>
-                                        <select id="nomor_bstb" class="choices form-select" name="nomor_bstb"
-                                            data-placeholder="Pilih Nomor Job">
-                                            <option value="">Pilih Nomor BSTB</option>
-                                            @foreach ($TransitPre as $post)
+                                        <label>Unit</label>
+                                        <select id="unit" class="select2 form-select" name="unit"
+                                            data-placeholder="Pilih Unit">
+                                            <option value="">Pilih Unit</option>
+                                            @foreach ($Unit as $post)
                                                 @php
                                                     $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
                                                 @endphp
-                                                @foreach ($TransitPre as $innerPost)
-                                                    @if ($innerPost->nomor_bstb == $post->nomor_bstb && $innerPost->berat_kirim > 0)
+                                                @foreach ($Unit as $innerPost)
+                                                    @if ($innerPost->nama == $post->nama && $innerPost->status > 0)
                                                         @if (!$beratMasukShown)
-                                                            <option value="{{ $innerPost->nomor_bstb }}">
-                                                                {{ old('nomor_bstb', $innerPost->nomor_bstb) }}
+                                                            <option value="{{ $innerPost->nama }}">
+                                                                {{ old('nama', $innerPost->nama) }}
                                                             </option>
                                                             @php
                                                                 $beratMasukShown = true; // Set nilai variabel untuk menandai bahwa berat_masuk sudah ditampilkan
@@ -58,13 +58,47 @@
                                                     @endif
                                                 @endforeach
                                                 @php
-                                                    $selectedNomorBSTB = $post->nomor_bstb; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
+                                                    $selectedUnit = $post->nama; // Set nilai variabel dengan unit yang baru ditampilkan
                                                 @endphp
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>No BSTB</label>
+                                        <select id="nomor_bstb" class="select2 form-select" name="nomor_bstb"
+                                            data-placeholder="Pilih Nomor BSTB">
+                                            <option value="">Pilih Nomor BSTB</option>
+                                            @php
+                                                $selectedNomorBSTB = ''; // Inisialisasi variabel untuk menyimpan nomor_bstb yang sudah ditampilkan
+                                            @endphp
+                                            @foreach ($TransitPre as $post)
+                                                @if ($selectedNomorBSTB != $post->nomor_bstb)
+                                                    @php
+                                                        $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
+                                                    @endphp
+                                                    @foreach ($TransitPre as $innerPost)
+                                                        @if ($innerPost->nomor_bstb == $post->nomor_bstb && $innerPost->berat_kirim > 0)
+                                                            @if (!$beratMasukShown)
+                                                                <option value="{{ $innerPost->nomor_bstb }}">
+                                                                    {{ old('nomor_bstb', $innerPost->nomor_bstb) }}
+                                                                </option>
+                                                                @php
+                                                                    $beratMasukShown = true; // Set nilai variabel untuk menandai bahwa berat_masuk sudah ditampilkan
+                                                                @endphp
+                                                            @endif
+                                                        @endif
+                                                    @endforeach
+                                                    @php
+                                                        $selectedNomorBSTB = $post->nomor_bstb; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
+                                                    @endphp
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>NIP Admin</label>
                                         <input type="text" id="user_created" class="form-control" name="user_created"
@@ -120,88 +154,19 @@
 @endsection
 @section('script')
     <script>
-        $('#nomor_bstb').on('change', function() {
-            // Mengambil nilai nomor_bstb yang dipilih
-            let selectedIdBox = $(this).val();
+        $('#unit').on('change', function() {
+            // Mengambil nilai unit yang dipilih
+            let selectedUnit = $(this).val();
 
             // Melakukan permintaan AJAX ke controller untuk mendapatkan data
             $.ajax({
-                url: `{{ route('PreGradingHalusInput.set') }}`,
+                url: `{{ route('PreGradingHalusInput.setUnit') }}`,
                 method: 'GET',
                 data: {
-                    nomor_bstb: selectedIdBox
+                    unit: selectedUnit
                 },
                 success: function(response) {
-                    // Memeriksa apakah berat lebih dari 0 sebelum mengatur nilai elemen-elemen
-                    if (response.length > 0 && response[0].berat_kirim > 0) {
-                        var tableBody = $(
-                            '#tableBody'
-                        );
-                        tableBody.empty();
-                        // Mengatur nilai elemen-elemen sesuai dengan respons dari server
-                        $.each(response, function(index, rowData) {
-                            console.log(rowData);
-                            var newRow = $('<tr>');
-                            newRow.append('<td>' + rowData.unit + '</td>');
-                            newRow.append('<td>' + rowData.nomor_job + '</td>');
-                            newRow.append('<td>' + rowData.id_box_grading_kasar + '</td>');
-                            newRow.append('<td>' + rowData.id_box_raw_material + '</td>');
-                            newRow.append('<td>' + rowData.nomor_batch + '</td>');
-                            newRow.append('<td>' + rowData.nomor_nota_internal + '</td>');
-                            newRow.append('<td>' + rowData.nama_supplier + '</td>');
-                            newRow.append('<td>' + rowData.jenis_raw_material + '</td>');
-                            newRow.append('<td>' + rowData.kadar_air + '</td>');
-                            newRow.append('<td>' + rowData.jenis_kirim + '</td>');
-                            newRow.append('<td>' + rowData.berat_kirim + '</td>');
-                            newRow.append('<td>' + rowData.pcs_kirim + '</td>');
-                            newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
-                            newRow.append('<td>' + rowData.modal + '</td>');
-                            newRow.append('<td>' + rowData.total_modal + '</td>');
-                            // Lanjutkan dengan kolom-kolom lain sesuai kebutuhan
 
-                            // Tambahkan baris ke dalam tabel
-                            tableBody.append(newRow);
-                            // Menyimpan data dalam dataArray
-                            dataArray.push({
-                                unit: rowData.unit,
-                                nomor_bstb: rowData.nomor_bstb,
-                                nomor_job: rowData.nomor_job,
-                                jenis_kirim: rowData.jenis_kirim,
-                                nomor_batch: rowData.nomor_batch,
-                                id_box_grading_kasar: rowData.id_box_grading_kasar,
-                                nama_supplier: rowData.nama_supplier,
-                                id_box_raw_material: rowData.id_box_raw_material,
-                                jenis_raw_material: rowData.jenis_raw_material,
-                                jenis_kirim: rowData.jenis_kirim,
-                                berat_kirim: rowData.berat_kirim,
-                                pcs_kirim: rowData.pcs_kirim,
-                                tujuan_kirim: rowData.tujuan_kirim,
-                                kadar_air: rowData.kadar_air,
-                                modal: rowData.modal,
-                                total_modal: rowData.total_modal,
-                                nomor_nota_internal: rowData.nomor_nota_internal,
-                                // ... tambahkan properti lain sesuai kebutuhan
-                            });
-                        });
-
-                        // Memanggil fungsi untuk mengupdate total modal
-                        updateTotalmodal();
-                    } else {
-                        // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
-                        // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
-                        Swal.fire({
-                            title: 'Warning!',
-                            text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
-                            icon: 'error'
-                        }).then((result) => {
-                            // Refresh halaman saat menekan tombol "OK" pada SweetAlert
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                        // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
-                        $('#nomor_bstb').val('');
-                    }
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -210,8 +175,102 @@
         });
 
 
-        function sendData() {
+        let selectedNomorBSTB = ''; // Variabel untuk menyimpan nomor BSTB yang dipilih sebelumnya
+        $('#nomor_bstb').on('change', function() {
+            // Mengambil nilai nomor_bstb yang dipilih
+            let selectedIdBox = $(this).val();
+            // Hanya lakukan permintaan AJAX jika nomor BSTB yang baru dipilih tidak sama dengan yang sebelumnya
+            if (selectedNomorBSTB !== selectedIdBox) {
+                selectedNomorBSTB = selectedIdBox; // Perbarui nomor BSTB yang dipilih sebelumnya
 
+                // Melakukan permintaan AJAX ke controller untuk mendapatkan data
+                $.ajax({
+                    url: `{{ route('PreGradingHalusInput.set') }}`,
+                    method: 'GET',
+                    data: {
+                        nomor_bstb: selectedIdBox
+                    },
+                    success: function(response) {
+                        // Memeriksa apakah berat lebih dari 0 sebelum mengatur nilai elemen-elemen
+                        if (response.length > 0 && response[0].berat_kirim > 0) {
+                            var tableBody = $(
+                                '#tableBody'
+                            );
+                            tableBody.empty();
+                            // Mengatur nilai elemen-elemen sesuai dengan respons dari server
+                            $.each(response, function(index, rowData) {
+                                console.log(rowData);
+                                var newRow = $('<tr>');
+                                newRow.append('<td>' + $('#unit').val() + '</td>');
+                                newRow.append('<td>' + rowData.nomor_job + '</td>');
+                                newRow.append('<td>' + rowData.id_box_grading_kasar + '</td>');
+                                newRow.append('<td>' + rowData.id_box_raw_material + '</td>');
+                                newRow.append('<td>' + rowData.nomor_batch + '</td>');
+                                newRow.append('<td>' + rowData.nomor_nota_internal + '</td>');
+                                newRow.append('<td>' + rowData.nama_supplier + '</td>');
+                                newRow.append('<td>' + rowData.jenis_raw_material + '</td>');
+                                newRow.append('<td>' + rowData.kadar_air + '</td>');
+                                newRow.append('<td>' + rowData.jenis_kirim + '</td>');
+                                newRow.append('<td>' + rowData.berat_kirim + '</td>');
+                                newRow.append('<td>' + rowData.pcs_kirim + '</td>');
+                                newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
+                                newRow.append('<td>' + rowData.modal + '</td>');
+                                newRow.append('<td>' + rowData.total_modal + '</td>');
+                                // Lanjutkan dengan kolom-kolom lain sesuai kebutuhan
+
+                                // Tambahkan baris ke dalam tabel
+                                tableBody.append(newRow);
+                                // Bersihkan dataArray sebelum menambahkan data baru
+                                dataArray = [];
+                                // Menyimpan data dalam dataArray
+                                dataArray.push({
+                                    unit: $('#unit').val(),
+                                    nomor_bstb: rowData.nomor_bstb,
+                                    nomor_job: rowData.nomor_job,
+                                    jenis_kirim: rowData.jenis_kirim,
+                                    nomor_batch: rowData.nomor_batch,
+                                    id_box_grading_kasar: rowData.id_box_grading_kasar,
+                                    nama_supplier: rowData.nama_supplier,
+                                    id_box_raw_material: rowData.id_box_raw_material,
+                                    jenis_raw_material: rowData.jenis_raw_material,
+                                    jenis_kirim: rowData.jenis_kirim,
+                                    berat_kirim: rowData.berat_kirim,
+                                    pcs_kirim: rowData.pcs_kirim,
+                                    tujuan_kirim: rowData.tujuan_kirim,
+                                    kadar_air: rowData.kadar_air,
+                                    modal: rowData.modal,
+                                    total_modal: rowData.total_modal,
+                                    nomor_nota_internal: rowData.nomor_nota_internal,
+                                    // ... tambahkan properti lain sesuai kebutuhan
+                                });
+                            });
+                            console.log(dataArray);
+                        } else {
+                            // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
+                            // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
+                            Swal.fire({
+                                title: 'Warning!',
+                                text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
+                                icon: 'error'
+                            }).then((result) => {
+                                // Refresh halaman saat menekan tombol "OK" pada SweetAlert
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                            // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
+                            $('#nomor_bstb').val('');
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+        });
+
+
+        function sendData() {
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
                 url: '{{ route('PreGradingHalusInput.store') }}',

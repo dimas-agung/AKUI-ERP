@@ -101,17 +101,20 @@
                                             <td class="text-center">{{ $PCO->updated_at }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $PCO->id }}"
-                                                        action="{{ route('PreCleaningOutput.destroy', $PCO->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $PCO->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
+                                                    @if ($PCO->status == 1)
+                                                        <form style="display: flex" id="deleteForm{{ $PCO->id }}"
+                                                            action="{{ route('PreCleaningOutput.destroy', $PCO->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button"
+                                                                class="btn btn-link btn-danger delete-button"
+                                                                data-original-title="Remove"
+                                                                onclick="confirmDelete({{ $PCO->id }})">
+                                                                <i class="bi bi-trash3 text-danger"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

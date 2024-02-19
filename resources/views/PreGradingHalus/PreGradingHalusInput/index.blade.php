@@ -80,7 +80,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-link" data-original-title="Remove"
-                                                        onclick="confirmDelete({{ $item->nomor_bstb }})">
+                                                        onclick="confirmDelete('{{ $item->nomor_bstb }}')">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
                                                 </form>
@@ -115,7 +115,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Jika dikonfirmasi, submit form
-                    document.getElementById('deleteForm' + nomor_bstb).submit();
+                    document.getElementById('deleteForm' + id).submit();
                 }
             });
         }
