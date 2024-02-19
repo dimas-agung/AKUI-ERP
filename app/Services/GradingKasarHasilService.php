@@ -9,13 +9,13 @@ use PhpParser\Node\Stmt\Finally_;
 
 class GradingKasarHasilService
 {
-    public function simpanData($dataArray)
+    public function simpanData($dataArray, $total_susut)
     {
         try {
             DB::beginTransaction();
             $ids = [];
             foreach ($dataArray as $item) {
-                $ids[] = $this->createItem($item);
+                $ids[] = $this->createItem($item, $total_susut);
             }
 
             DB::commit();
@@ -36,7 +36,7 @@ class GradingKasarHasilService
         }
     }
 
-    private function createItem($item)
+    private function createItem($item, $total_susut)
     {
         // stok
         $itemObject = (object)$item;
@@ -78,7 +78,7 @@ class GradingKasarHasilService
             'jenis_grading'                     => $item->jenis_grading[0],
             'berat_grading'                     => $item->berat_grading,
             'pcs_grading'                       => $item->pcs_grading,
-            'susut'                             => $item->susut,
+            'susut'                             => $total_susut,
             'modal'                             => $item->modal,
             'total_modal'                       => $item->total_modal,
             'biaya_produksi'                    => $item->biaya_produksi,

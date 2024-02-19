@@ -59,6 +59,7 @@ class GradingKasarHasilController extends Controller
         GradingKasarHasilService $GradingKasarHasilService,
     ) {
         $dataArray = json_decode($request->input('data'));
+        $total_susut = $request->input('total_susut');
         $dataColl = collect($dataArray);
         $berat_gradings = array();
         $harga_estimasi = array();
@@ -72,11 +73,12 @@ class GradingKasarHasilController extends Controller
         $dataHpp = 'dataHPPService';
         //panggil service
 
-        $result = $GradingKasarHasilService->simpanData($dataArray); //ngambil array id dari data yang diinput
+        $result = $GradingKasarHasilService->simpanData($dataArray, $total_susut); //ngambil array id dari data yang diinput
         $dataHpp = $this->HppService->calculate($berat_gradings, $harga_estimasi, $totalModal);
         // return $result;
 
         $arrayIds = $result['data'];
+        // return;
         foreach ($arrayIds as $key => $value) {
             // return $key;
             $data = GradingKasarHasil::where('id', $value)->update([

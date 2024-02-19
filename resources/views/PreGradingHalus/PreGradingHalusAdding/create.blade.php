@@ -146,7 +146,7 @@
             let selectedNomorJob = $(this).val();
 
             $.ajax({
-                url: `{{ route('preGradingHalusAdding.set') }}`,
+                url: `{{ route('PreGradingHalusAdding.set') }}`,
                 method: 'GET',
                 data: {
                     nomor_job: selectedNomorJob
@@ -321,8 +321,8 @@
 
             dataArray.push({
                 nomor_job: nomor_job,
+                nomor_grading: nomor_grading,
                 id_box_grading_kasar: id_box_grading_kasar,
-                nomor_bstb: nomor_bstb,
                 id_box_raw_material: id_box_raw_material,
                 nomor_batch: nomor_batch,
                 nomor_nota_internal: nomor_nota_internal,
@@ -335,10 +335,12 @@
                 tujuan_kirim: tujuan_kirim,
                 modal: modal,
                 total_modal: total_modal,
+                // user_created: user_created,
+                // user_updated: user_updated,
             });
 
             // Mengosongkan nilai dropdown nomor_job
-            $('#nomor_job, #id_box_grading_kasar, #nomor_bstb, #id_box_raw_material, #nomor_batch, #nomor_nota_internal, #nama_supplier, #jenis_raw_material, #jenis_kirim, #tujuan_kirim, #modal, #total_modal, #kadar_air, #pcs_kirim, #berat_kirim, #operator_sikat_dan_kompresor, #operator_flex_dan_poles, #operator_cutter, #kuningan, #Sterofoam, #karat, #rontokan_flex, #rontokan_bahan,#rontokan_serabut, #ws, #berat_precleaning, #pcs, #susut')
+            $('#nomor_job, #id_box_grading_kasar, #nomor_grading, #id_box_raw_material, #nomor_batch, #nomor_nota_internal, #nama_supplier, #jenis_raw_material, #jenis_kirim, #tujuan_kirim, #modal, #total_modal, #kadar_air, #pcs_kirim, #berat_kirim, #operator_sikat_dan_kompresor, #operator_flex_dan_poles, #operator_cutter, #kuningan, #Sterofoam, #karat, #rontokan_flex, #rontokan_bahan,#rontokan_serabut, #ws, #berat_precleaning, #pcs, #susut')
                 .val('');
 
         }
@@ -391,7 +393,7 @@
             }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('PreCleaningOutput.simpanData') }}`,
+                url: `{{ route('PreGradingHalusAdding.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
@@ -420,7 +422,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('PreCleaningOutput.index') }}`;
+                    window.location.href = `{{ route('PreGradingHalusAdding.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);

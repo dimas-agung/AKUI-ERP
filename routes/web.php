@@ -286,9 +286,9 @@ Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusAddingCont
     Route::get('/pre_grading_halus_adding/edit/{id}', 'edit')->name('PreGradingHalusAdding.edit');
     Route::put('/pre_grading_halus_adding/update/{id}', 'update')->name('PreGradingHalusAdding.update');
     Route::delete('/pre_grading_halus_adding/destroy/{id}', 'destroy')->name('PreGradingHalusAdding.destroy');
-    Route::get('/pre_grading_halus_adding/get_data_nomor_job', 'set')->name('preGradingHalusAdding.set');
-    Route::post('/pre_grading_halus_adding/simpanData', 'simpanData')->name('preGradingHalusAdding.simpanData');
-    Route::post('/pre_grading_halus_adding/getDataPerusahaan', 'getDataPerusahaan')->name('preGradingHalusAdding.getDataPerusahaan');
+    Route::get('/pre_grading_halus_adding/get_data_nomor_job', 'set')->name('PreGradingHalusAdding.set');
+    Route::post('/pre_grading_halus_adding/simpanData', 'simpanData')->name('PreGradingHalusAdding.simpanData');
+    Route::post('/pre_grading_halus_adding/getDataPerusahaan', 'getDataPerusahaan')->name('PreGradingHalusAdding.getDataPerusahaan');
 });
 
 Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusAddingStockController::class)->group(function () {
