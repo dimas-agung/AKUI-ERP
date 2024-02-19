@@ -14,4 +14,8 @@ class Perusahaan extends Model
         'plant',
         'status',
     ];
+    public function PreGradingHalusAdding()
+    {
+        return $this->hasMany(PreGradingHalusAdding::class, 'nama', 'nomor_job');
+    }
 }

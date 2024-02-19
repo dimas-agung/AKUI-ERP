@@ -47,8 +47,8 @@
                         <input type="text" class="form-control" id="jenis_raw_material" readonly>
                     </div>
                     <div class="col-md-3">
-                        <label for="berat" class="form-label">Berat Adding</label>
-                        <input type="text" class="form-control" id="berat" readonly>
+                        <label for="berat_adding" class="form-label">Berat Adding</label>
+                        <input type="text" class="form-control" id="berat_adding" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="kadar_air" class="form-label">Kadar Air</label>
@@ -195,7 +195,7 @@
                     $('#nomor_nota_internal').val(response.nomor_nota_internal);
                     $('#nama_supplier').val(response.nama_supplier);
                     $('#jenis_raw_material').val(response.jenis_raw_material);
-                    $('#berat').val(response.berat);
+                    $('#berat_adding').val(response.berat);
                     $('#kadar_air').val(response.kadar_air);
                     $('#modal').val(response.modal);
                     $('#total_modal').val(response.total_modal);
@@ -226,31 +226,54 @@
             let totalBerat
         }
         // hitung nilai susut
+        // function hitungNilaiSusut() {
+        //     let totalBeratGradingtest = parseFloat($('#berat_grading').val()) || 0;
+
+        //     $('.berat_grading').each(function() {
+        //         let beratGradingValue = parseFloat($(this).val());
+        //         if (!isNaN(beratGradingValue)) {
+        //             totalBeratGradingtest += beratGradingValue;
+        //         }
+        //     });
+
+        //     // console.log(beratGradingValue);
+        //     let beratAdding = parseFloat($('#berat_adding').val());
+
+        //     if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding) && beratAdding !== 0) {
+        //         let nilaiSusut = (1 - totalBeratGradingtest / beratAdding).toFixed(4);
+        //         console.log("totalTest = " + totalBeratGradingtest);
+        //         console.log("Berat Adding = " + beratAdding);
+        //         // nilaiSusut = nilaiSusut.toFixed(4);
+        //         console.log("Susut = " + nilaiSusut);
+        //         return nilaiSusut;
+        //     } else {
+        //         console.error('Input tidak valid untuk berat_grading atau berat');
+        //         return null;
+        //     }
+
+        // }
+
         function hitungNilaiSusut() {
-            let totalBeratGradingtest = parseFloat($('#berat_grading').val()) || 0;
+            let totalBeratGradingtest = parseFloat($('#total_berat').val());
 
-            $('.berat_grading').each(function() {
-                let beratGradingValue = parseFloat($(this).val());
-                if (!isNaN(beratGradingValue)) {
-                    totalBeratGradingtest += beratGradingValue;
-                }
-            });
+            if (isNaN(totalBeratGradingtest)) {
+                totalBeratGradingtest = parseFloat($('#berat_grading').val()) || 0;
+            }
 
-            // console.log(beratGradingValue);
-            let beratAdding = parseFloat($('#berat').val());
+            let beratAdding = parseFloat($('#berat_adding').val());
 
             if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding) && beratAdding !== 0) {
-                let nilaiSusut = (1 - totalBeratGradingtest / beratAdding).toFixed(4);
-                console.log(totalBeratGradingtest);
-                console.log(beratAdding);
-                // nilaiSusut = nilaiSusut.toFixed(4);
-                console.log(nilaiSusut);
+                let nilaiSusut = (1 - totalBeratGradingtest / beratAdding);
+                console.log("totalTest = " + totalBeratGradingtest);
+                console.log("Berat Adding = " + beratAdding);
+                console.log("Susut = " + nilaiSusut);
                 return nilaiSusut;
             } else {
                 console.error('Input tidak valid untuk berat_grading atau berat');
                 return null;
             }
         }
+
 
         // generate id box grading kasar
         function generateIdBoxGradingKasar() {
@@ -283,7 +306,7 @@
             let nomor_nota_internal = $('#nomor_nota_internal').val();
             let nama_supplier = $('#nama_supplier').val();
             let jenis_raw_material = $('#jenis_raw_material').val();
-            let berat = $('#berat').val();
+            let berat = $('#berat_adding').val();
             let kadar_air = $('#kadar_air').val();
             let modal = $('#modal').val();
             let total_modal = $('#total_modal').val();
@@ -302,9 +325,6 @@
                 return;
             }
 
-            // Total Susut
-            let susut = hitungNilaiSusut();
-            console.log("Susut = " + susut);
             let id_box_grading_kasar = generateIdBoxGradingKasar();
             let biaya_produksi = 0;
             console.log("Harga Estimasi = " + harga_estimasi);
@@ -335,6 +355,9 @@
             // Pastikan untuk mendefinisikan variabel susut sebelumnya
             // let susut = 0;
 
+            let susut = hitungNilaiSusut();
+            console.log("Susut = " + susut);
+
             $('#dataTable tbody tr').each(function() {
                 // Ganti koma dengan titik sebagai tanda desimal
                 let totalSusutValue = parseInt($(this).find('td:eq(12)').text().replace(',', '.')) || 0;
@@ -346,7 +369,7 @@
             console.log('Total = ' + susut);
 
             // Tetapkan nilai susut ke elemen dengan ID 'total_susut'
-            $('#total_susut').val(susut);
+            $('#total_susut').val(susut.toFixed(4));
             //
             let newRow = '<tr>' +
                 '<td class="text-center">' + nomor_grading + '</td>' +
