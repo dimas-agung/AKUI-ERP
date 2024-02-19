@@ -17,6 +17,7 @@ class PrmRawMaterialOutputItem extends Model
         'nomor_batch',
         'id_box',
         'nama_supplier',
+        'status',
         'jenis',
         'berat',
         'kadar_air',
@@ -32,14 +33,18 @@ class PrmRawMaterialOutputItem extends Model
 
     public function PrmRawMaterialStock()
     {
-    	return $this->belongsTo(PrmRawMaterialStock::class, 'id_box', 'id_box');
+        return $this->belongsTo(PrmRawMaterialStock::class, 'id_box', 'id_box');
     }
     public function PrmRawMaterialStockHistory()
     {
         return $this->hasMany(PrmRawMaterialStockHistory::class, 'id_box', 'id_box');
     }
-    public function StockTransitGradingKasar()
+    public function StockTransitRawMaterial()
     {
-        return $this->hasMany(StockTransitGradingKasar::class, 'nomor_bstb', 'nomor_bstb');
+        return $this->hasMany(StockTransitRawMaterial::class, 'nomor_bstb', 'nomor_bstb');
+    }
+    public function GradingKasarInput()
+    {
+        return $this->hasMany(GradingKasarInput::class, 'nomor_bstb', 'nomor_bstb');
     }
 }

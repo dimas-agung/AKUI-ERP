@@ -1,4 +1,7 @@
-@extends('layouts.master2')
+@extends('layouts.master1')
+@section('menu')
+    Master
+@endsection
 @section('title')
     Update Unit
 @endsection
@@ -9,14 +12,13 @@
                 <h4>Update Data Unit</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('unit.update', $unit->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('Unit.update', $unit->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <div class="form-group">
                         <label for="basic-usage">Pilih Workstation ID</label>
-                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
-                            aria-hidden="true" id="basic-usage" name="workstation_id">
+                        <select class="choices form-select" name="workstation_id">
                             @foreach ($workstation as $post)
                                 <option value="{{ $post->id }}"
                                     {{ $unit->workstation_id == $post->id ? 'selected' : '' }}>

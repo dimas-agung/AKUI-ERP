@@ -1,5 +1,5 @@
-@extends('layouts.master2')
-@section('Menu')
+@extends('layouts.master1')
+@section('menu')
     Purchasing & EXIM
 @endsection
 @section('title')
@@ -13,31 +13,15 @@
                     <h4 class="card-title">Data Purchasing Raw Material Stock</h4>
                 </div>
             </div>
-            <div class="card-body">
-                {{-- Create Data --}}
-                @if (session()->has('success'))
-                    <div class="alert alert-success">
-                        <strong>Sukses: </strong>{{ session()->get('success') }}
-                    </div>
-                @endif
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul><strong>
-                                @foreach ($errors->all() as $error)
-                                    <li> {{ $error }} </li>
-                                @endforeach
-                            </strong>
-                        </ul>
-                        <p>Mohon periksa kembali formulir Anda.</p>
-                    </div>
-                @endif
+            <div class="card-body" style="overflow: auto;">
                 <div class="table-responsive">
-                    <table id="add-row" class="display table table-striped table-hover">
+                    <table id="table1" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">No</th>
                                 <th scope="col" class="text-center">Id Box</th>
                                 <th scope="col" class="text-center">Nomor Batch</th>
+                                <th scope="col" class="text-center">Nomor Nota</th>
                                 <th scope="col" class="text-center">Nama Supplier</th>
                                 <th scope="col" class="text-center">Jenis</th>
                                 <th scope="col" class="text-center">Berat Masuk</th>
@@ -60,6 +44,7 @@
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $MasterStock->id_box }}</td>
                                     <td>{{ $MasterStock->nomor_batch }}</td>
+                                    <td>{{ $MasterStock->nomor_nota_internal }}</td>
                                     <td>{{ $MasterStock->nama_supplier }}</td>
                                     <td>{{ $MasterStock->jenis }}</td>
                                     <td>{{ $MasterStock->berat_masuk }}</td>
@@ -76,19 +61,16 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form action="">
-                                                {{-- <a href="{{ route('PrmRawMaterialStockHistory.index', $MasterStock->id) }}"
-                                                    class="btn btn-link" title="Show History"
-                                                    data-original-title="Show Detail"><i class="fa fa-file"></i></a> --}}
-                                                <a href="{{ route('prm_raw_material_stock.show', $MasterStock->id_box) }}"
-                                                    class="btn btn-link" title="Show History"
-                                                    data-original-title="Show Detail"><i class="fa fa-file"></i></a>
+                                                <a href="{{ route('PrmRawMaterialStock.show', $MasterStock->id_box) }}"
+                                                    class="btn btn-link btn-info" title="Show History"
+                                                    data-original-title="Show Detail"><i class="bi bi-file-earmark"></i></a>
                                             </form>
                                         </div>
                                     </td>
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Data Purchasing belum Tersedia.
+                                    Data Purchasing Raw Material Stock belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>
@@ -98,3 +80,22 @@
         </div>
     </div>
 @endsection
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Anda yakin ingin menghapus data ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d61609',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika dikonfirmasi, submit form
+                document.getElementById('deleteForm' + id).submit();
+            }
+        });
+    }
+</script>

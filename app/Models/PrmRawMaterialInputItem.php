@@ -19,16 +19,21 @@ class PrmRawMaterialInputItem extends Model
         'kadar_air',
         'id_box',
         'harga_nota',
+        'fix_harga_deal',
         'total_harga_nota',
         'harga_deal',
+        'fix_harga_deal',
         'keterangan',
         'user_created',
         'user_updated'
     ];
+    // public function PrmRawMaterialInput()
+    // {
+    //     return $this->hasMany(PrmRawMaterialInput::class, 'doc_no', 'doc_no');
+    // }
     public function PrmRawMaterialInput()
     {
-        // return $this->belongsTo(PrmRawMaterialInput::class, 'doc_no', 'doc_no');
-        return $this->belongsTo(PrmRawMaterialInput::class, 'created_at', 'created_at');
+        return $this->hasMany(PrmRawMaterialInput::class, 'nomor_nota_internal', 'id_box');
     }
     public function PrmRawMaterialStock()
     {

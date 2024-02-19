@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+// use App\Models\GradingKasarInput;
+use App\Models\MasterJenisGradingKasar;
+use App\Models\MasterOperator;
 use App\Models\PrmRawMaterialStock;
 use App\Models\TransitGradingKasar;
 use Illuminate\Database\Seeder;
@@ -26,9 +29,18 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterSupplierRawMaterialSeeder::class);
         $this->call(MasterJenisRawMaterialSeeder::class);
         $this->call(MasterTujuanKirimRawMaterialSeeder::class);
+        $this->call(MasterOperatorSeeder::class);
         $this->call(WorkstationSeeder::class);
         $this->call(UnitSeeder::class);
         $this->call(BiayaHppSeeder::class);
+        $this->call(MsterJenisGradingKasarSeeder::class);
+        $this->call(PrmRawMaterialStockSeeder::class);
+        $this->call(PrmRawMaterialOutputSeeder::class);
+        $this->call(StockTransitRawMaterialSeeder::class);
         // $this->call(PrmRawMaterialStockSeeder::class);
+        $this->call(GradingKasarInputSeeder::class);
+        $this->call(PreCleaningStockSeeder::class);
+        $this->call(MasterOperatorSeeder::class);
+        $this->call(PreGradingHalusStockSeeder::class);
     }
 }

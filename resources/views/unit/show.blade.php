@@ -1,4 +1,7 @@
-@extends('layouts.master2')
+@extends('layouts.master1')
+@section('menu')
+    Master
+@endsection
 @section('title')
     Detail Unit
 @endsection
@@ -34,7 +37,7 @@
                     </tbody>
                 </table>
                 <div class=" d-flex justify-content-end model-footer no-bd">
-                    <a href="{{ url('/unit') }}" type="button" style="width: 100px;" class="btn btn-danger"
+                    <a href="{{ Route('Unit.index') }}" type="button" style="width: 100px;" class="btn btn-danger"
                         data-dismiss="modal">Close</a>
                 </div>
             </div>

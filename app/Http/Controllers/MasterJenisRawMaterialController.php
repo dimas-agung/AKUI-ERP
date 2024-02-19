@@ -27,10 +27,10 @@ class MasterJenisRawMaterialController extends Controller
         ]);
     }
     // create
-    public function create()
-    {
-        return view('master.master_jenis_raw_material.create');
-    }
+    // public function create()
+    // {
+    //     return view('master.master_jenis_raw_material.create');
+    // }
     // store
     public function store(Request $request): RedirectResponse
     {
@@ -63,7 +63,7 @@ class MasterJenisRawMaterialController extends Controller
         ]);
 
         // Redirect to index
-        return redirect()->route('master_jenis_raw_material.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('MasterJenisRawMaterial.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
     // show
     public function show(string $id)
@@ -112,7 +112,7 @@ class MasterJenisRawMaterialController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('master_jenis_raw_material.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('MasterJenisRawMaterial.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     // destroy
     public function destroy($id): RedirectResponse
@@ -124,6 +124,6 @@ class MasterJenisRawMaterialController extends Controller
         $MasterJRM->delete();
 
         //redirect to index
-        return redirect()->route('master_jenis_raw_material.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('MasterJenisRawMaterial.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

@@ -1,4 +1,7 @@
-@extends('layouts.master2')
+@extends('layouts.master1')
+@section('menu')
+    Master
+@endsection
 @section('title')
     Detail Workstation
 @endsection
@@ -30,7 +33,8 @@
                     </tbody>
                 </table>
                 <div class=" d-flex justify-content-end model-footer no-bd">
-                    <a href="{{ url('/work') }}" type="button" class="btn btn-danger" data-dismiss="modal">Close</a>
+                    <a href="{{ Route('Workstation.index') }}" type="button" class="btn btn-danger"
+                        data-dismiss="modal">Close</a>
                 </div>
             </div>
         </div>

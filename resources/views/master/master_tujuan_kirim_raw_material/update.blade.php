@@ -1,7 +1,12 @@
-@extends('layouts.master2')
-{{-- @extends('layouts.template') --}}
+@extends('layouts.master1')
+@section('menu')
+    Master
+@endsection
+@section('title')
+    Update Master Tujuan Kirim Raw Material
+@endsection
 @section('content')
-    <div class="container mt-5 mb-5">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="card border-0 shadow-sm rounded">
@@ -9,7 +14,7 @@
                         <h4>UPDATE DATA MASTER TUJUAN KIRIM RAW MATERIAL</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('master_tujuan_kirim_raw_material.update', $MasterTJRM->id) }}" method="POST">
+                        <form action="{{ route('MasterTujuanKirimRawMaterial.update', $MasterTJRM->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 

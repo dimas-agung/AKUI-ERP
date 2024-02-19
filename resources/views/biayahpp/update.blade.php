@@ -1,4 +1,7 @@
-@extends('layouts.master2')
+@extends('layouts.master1')
+@section('Menu')
+    Master
+@endsection
 @section('title')
     Update Biaya HPP
 @endsection
@@ -11,14 +14,13 @@
                 <h4>Update Data Biaya HPP</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('biaya.update', $biaya->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('BiayaHpp.update', $biaya->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <div class="form-group">
                         <label for="basic-usage" class="font-weight-bold">Pilih Unit ID:</label>
-                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1"
-                            aria-hidden="true" name="unit_id" data-placeholder="Pilih Unit ID">
+                        <select class="choices form-select" name="unit_id" data-placeholder="Pilih Unit ID">
                             @foreach ($unit as $post)
                                 <option value="{{ $post->id }}" {{ $biaya->unit_id == $post->id ? 'selected' : '' }}>
                                     {{ old('unit_id', $post->nama) }}</option>
