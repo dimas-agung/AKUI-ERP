@@ -73,6 +73,36 @@ class PreCleaningOutputService
             'user_updated'                      => $item->user_updated ?? 'Admin123',
         ]);
 
+        // Creat Prm Raw Material Stock
+        $itemObject = (object)$item;
+        $existingItem = PreCleaningStock::where('nomor_job', $itemObject->nomor_job)
+            ->first();
+            // return $existingItem
+
+        $dataToUpdate = [
+            'berat_keluar'  => $itemObject->berat_kirim,
+            'pcs_keluar'    => $itemObject->pcs_kirim,
+            'total_modal'   => $itemObject->total_modal,
+            'user_updated'  => $itemObject->user_created ?? "There isn't any",
+            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ];
+
+        if ($existingItem) {
+            // Ambil nilai terakhir berat_masuk dan berat_keluar
+            // $lastBeratMasuk = $existingItem->berat_masuk;
+            $lastBeratKeluar = $existingItem->berat_keluar;
+            $lastPcsKeluar = $existingItem->pcs_keluar;
+
+            $tambahBeratKeluar = $lastBeratKeluar + $itemObject->berat_kirim;
+            $perbedaanBerat = $lastPcsKeluar + $itemObject->pcs_kirim;
+            $totalModalBaru = $tambahBeratKeluar * $itemObject->modal;
+
+            $dataToUpdate['berat_keluar'] = $tambahBeratKeluar;
+            $dataToUpdate['pcs_keluar'] = $perbedaanBerat;
+            $dataToUpdate['total_modal'] = $totalModalBaru;
+            $existingItem->update($dataToUpdate);
+        }
+
         // Creat Transit Pre Cleaning Stock
         $itemObject = (object)$item;
         $existingItem = TransitPreCleaningStock::where('nomor_job', $itemObject->nomor_job)
@@ -113,13 +143,10 @@ class PreCleaningOutputService
                 'id_box_raw_material'       => $itemObject->id_box_raw_material,
                 'jenis_raw_material'        => $itemObject->jenis_raw_material,
                 'jenis_kirim'               => $itemObject->jenis_kirim,
-                // 'berat_kirim'               => $itemObject->berat_kirim,
-                // 'pcs_kirim'                 => $itemObject->pcs_kirim,
                 'kadar_air'                 => $itemObject->kadar_air,
                 'tujuan_kirim'              => $itemObject->tujuan_kirim,
                 'nomor_grading'             => $itemObject->nomor_grading ?? "Belum Tersedia",
                 'modal'                     => $itemObject->modal,
-                // 'total_modal'               => $itemObject->total_modal,
                 'keterangan'                => $itemObject->keterangan ?? "Tes",
                 'user_created'              => $itemObject->user_created ?? "There isn't any",
                 'user_updated'              => $itemObject->user_updated ?? "There isn't any",

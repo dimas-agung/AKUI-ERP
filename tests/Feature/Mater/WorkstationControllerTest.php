@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Master;
 
+use App\Services\PrmRawMaterialInputService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -22,6 +23,10 @@ class WorkstationControllerTest extends TestCase
             'status' => 1,
             // Sesuaikan dengan atribut dan data yang diperlukan
         ];
+
+        // CONTOH TEST SERVICE
+        // $workStationService = new PrmRawMaterialInputService();
+        // $response = $workStationService->create()
 
         $response = $this->post('/work/store', $dataInput);
 

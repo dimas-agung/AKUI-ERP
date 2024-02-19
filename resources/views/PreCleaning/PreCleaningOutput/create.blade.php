@@ -211,7 +211,6 @@
                                 <th scope="col" class="text-center">Tujuan Kirim</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
-                                {{-- <th scope="col" class="text-center">Sisa Berat</th> --}}
                                 <th scope="col" class="text-center">Operator Flek & Kompresor</th>
                                 <th scope="col" class="text-center">Operator Flek & Poles</th>
                                 <th scope="col" class="text-center">Operator Cutter</th>
@@ -225,8 +224,6 @@
                                 <th scope="col" class="text-center">Berat Pre Cleaning</th>
                                 <th scope="col" class="text-center">Pcs</th>
                                 <th scope="col" class="text-center">Susut</th>
-                                {{-- <th scope="col" class="text-center">User Created</th>
-                                <th scope="col" class="text-center">User Updated</th> --}}
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>

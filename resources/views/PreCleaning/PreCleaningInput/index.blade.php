@@ -29,7 +29,6 @@
                                 <th class="text-center" scope="col">Nomor BTSB</th>
                                 <th class="text-center" scope="col">Nomor Batch</th>
                                 <th class="text-center" scope="col">Nama Supplier</th>
-                                <th class="text-center" scope="col">Status</th>
                                 <th class="text-center" scope="col">Nomor Nota Internal</th>
                                 <th class="text-center" scope="col">ID Box Raw Material</th>
                                 <th class="text-center" scope="col">Jenis Raw Material</th>
@@ -57,14 +56,6 @@
                                     <td class="text-center">{!! $item->nomor_bstb !!}</td>
                                     <td class="text-center">{!! $item->nomor_batch !!}</td>
                                     <td class="text-center">{!! $item->nama_supplier !!}</td>
-                                    <td class="text-center">
-                                        @if ($item->status == 1)
-                                            <span>Aktif</span>
-                                        @elseif($item->status == 0)
-                                            <span class="badge badge-secondary"
-                                                style="text-shadow: 1px 1px 6px #000000;">Tidak Aktif</span>
-                                        @endif
-                                    </td>
                                     <td class="text-center">{!! $item->nomor_nota_internal !!}</td>
                                     <td class="text-center">{!! $item->id_box_raw_material !!}</td>
                                     <td class="text-center">{!! $item->jenis_raw_material !!}</td>
