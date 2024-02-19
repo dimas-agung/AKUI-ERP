@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Perusahaan;
 use App\Models\PreGradingHalusAdding;
 use App\Models\PreGradingHalusStock;
+use App\Services\PreGradingHalusAddingService;
+use App\Http\Requests\PreGradingHalusAddingRequest;
 use Illuminate\Http\Request;
 
 class PreGradingHalusAddingController extends Controller
@@ -45,5 +47,20 @@ class PreGradingHalusAddingController extends Controller
             ->first();
 
         return response()->json($data);
+    }
+
+    public function simpanData(
+        PreGradingHalusAddingRequest $request,
+        PreGradingHalusAddingService $PreGradingHalusAddingService
+    ) {
+        $dataArray = json_decode($request->input('data'));
+
+        $result = $PreGradingHalusAddingService->simpanData($dataArray);
+
+        if ($result['success']) {
+            return response()->json($result);
+        } else {
+            return response()->json($result, 500);
+        }
     }
 }
