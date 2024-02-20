@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Master
 @endsection
 @section('title')
@@ -41,6 +41,25 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="">Pilih Perusahaan:</label>
+                                            <select class="choices form-select" name="perusahaan_id">
+                                                <option></option>
+                                                @foreach ($perusahaan as $post)
+                                                    <option value="{{ $post->id }}">
+                                                        {{ $post->nama }}</option>
+                                                @endforeach
+                                            </select>
+
+                                            <!-- error message untuk title -->
+                                            @error('perusahaan_id')
+                                                <div class="alert alert-danger mt-2">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
                                         <div class="form-group form-group-default">
                                             <label>Nama</label>
                                             <input id="addPosition" type="text"
@@ -70,6 +89,7 @@
                     <thead>
                         <tr>
                             <th class="text-center" scope="col">ID</th>
+                            <th class="text-center" scope="col">Perusahan</th>
                             <th class="text-center" scope="col">Nama</th>
                             <th class="text-center" scope="col">Status</th>
                             <th class="text-center" scope="col">Tgl Buat</th>
@@ -81,9 +101,10 @@
                         @forelse ($workstation as $post)
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
+                                <td class="text-center">{!! $post->perusahaan->nama !!}</td>
                                 <td class="text-center">{!! $post->nama !!}</td>
                                 {{-- <td class="text-center">{!! $post->status !!}</td> --}}
-                                <td>
+                                <td class="text-center">
                                     @if ($post->status == 1)
                                         Aktif
                                     @else

@@ -5,23 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Workstation extends Model
+class Perusahaan extends Model
 {
     use HasFactory;
-    protected $table = 'workstation';
+    protected $table = 'perusahaans';
     protected $fillable = [
-        'perusahaan_id',
         'nama',
+        'plant',
         'status',
     ];
-
-
+    public function PreGradingHalusAdding()
+    {
+        return $this->hasMany(PreGradingHalusAdding::class, 'nama', 'nomor_job');
+    }
     public function unit()
     {
         return $this->hasMany(Unit::class);
     }
-    public function perusahaan()
+    public function workstation()
     {
-        return $this->belongsTo(Perusahaan::class);
+        return $this->hasMany(Workstation::class);
     }
 }

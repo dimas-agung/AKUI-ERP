@@ -13,6 +13,6 @@ class WorkstationSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Workstation::factory(5)->create();
+        \App\Models\Workstation::factory(0)->create();
     }
 }

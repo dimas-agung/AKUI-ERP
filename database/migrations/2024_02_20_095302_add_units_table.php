@@ -9,16 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
-
     public function up(): void
     {
-        Schema::create('unit', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('workstation_id')->constrained('workstation');
-            $table->string('nama');
-            $table->integer('status')->default('1');
-            $table->timestamps();
+        //
+        Schema::table('unit', function (Blueprint $table) {
+            //
+            $table->foreignId('perusahaan_id')->constrained('perusahaans');
         });
     }
 
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unit');
+        //
     }
 };

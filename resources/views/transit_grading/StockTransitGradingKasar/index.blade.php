@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Stock Transit Grading
 @endsection
 @section('title')

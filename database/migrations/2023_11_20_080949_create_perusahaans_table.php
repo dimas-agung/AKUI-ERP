@@ -9,15 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
-
     public function up(): void
     {
-        Schema::create('unit', function (Blueprint $table) {
+        Schema::create('perusahaans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('workstation_id')->constrained('workstation');
             $table->string('nama');
-            $table->integer('status')->default('1');
+            $table->string('plant');
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unit');
+        Schema::dropIfExists('perusahaans');
     }
 };

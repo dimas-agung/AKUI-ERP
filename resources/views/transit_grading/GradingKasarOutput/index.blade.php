@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Transit Grading Kasar
 @endsection
 @section('title')

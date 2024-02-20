@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Pre-Cleaning
 @endsection
 @section('title')

@@ -99,12 +99,15 @@
                         </li>
                         <li class="sidebar-title">Menu</li>
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('work*', 'unit*', 'biayahpp*', 'MasterSupplierRawMaterial*', 'MasterJenisRawMaterial*', 'MasterTujuanKirimRawMaterial*', 'MasterJenisGradingKasar*', 'MasterJenisGradingKasar*', 'MasterOperator*') ? 'active' : '' }}">
+                            class="sidebar-item  has-sub {{ Request::is('perusahaan*', 'work*', 'unit*', 'biayahpp*', 'MasterSupplierRawMaterial*', 'MasterJenisRawMaterial*', 'MasterTujuanKirimRawMaterial*', 'MasterJenisGradingKasar*', 'MasterJenisGradingKasar*', 'MasterOperator*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Master</span>
                             </a>
                             <ul class="submenu ">
+                                <li class="submenu-item  {{ Request::is('perusahaan*') ? 'active' : '' }} ">
+                                    <a href="{{ route('Perusahaan.index') }}" class="submenu-link">Perusahaan</a>
+                                </li>
                                 <li class="submenu-item  {{ Request::is('work*') ? 'active' : '' }} ">
                                     <a href="{{ route('Workstation.index') }}" class="submenu-link">Workstation</a>
                                 </li>
@@ -361,7 +364,9 @@
     <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js') }}"></script>
     <script src="{{ asset('https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js') }}"></script>
-
+    <!-- DataTables FixedHeader JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.2.0/js/dataTables.fixedHeader.min.js">
+    </script>
 
 
     <script>
@@ -413,12 +418,26 @@
 
         // DataTables
         $(document).ready(function() {
+            // Menambahkan gaya CSS langsung di dalam JavaScript
+            var style = document.createElement('style');
+            style.innerHTML = ` th, td {
+                text-align: center;
+            white-space: nowrap;}`;
+            document.head.appendChild(style);
             $('#table1').DataTable({
                 dom: '<"row"<"col-md-2"l><"col-md-6"B><"col-md-4"f>>tip',
                 buttons: [
                     'csv', 'excel', 'print', 'copy'
                 ],
+                paging: true,
+                scrollCollapse: true,
                 scrollX: true,
+                scrollY: 350,
+                fixedHeader: true,
+                columnDefs: [{
+                    "targets": '_all',
+                    "className": 'nowrap'
+                }]
             });
         });
     </script>

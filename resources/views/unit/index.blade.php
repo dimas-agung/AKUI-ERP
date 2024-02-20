@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Master
 @endsection
 @section('title')
@@ -41,16 +41,33 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label>Pilih Workstation ID:</label>
-                                            <select class="choices form-select" name="workstation_id">
+                                            <label for="">Pilih Perusahaan:</label>
+                                            <select class="choices form-select" name="perusahaan_id"
+                                                onchange="getWorkstations(this.value)">
                                                 <option></option>
-                                                @foreach ($workstation as $post)
+                                                @foreach ($perusahaan as $post)
                                                     <option value="{{ $post->id }}">
-                                                        {{ $post->nama }}</option>
+                                                        {{ $post->nama }}
+                                                    </option>
                                                 @endforeach
                                             </select>
 
-                                            <!-- error message untuk title -->
+                                            <!-- error message untuk perusahaan -->
+                                            @error('perusahaan_id')
+                                                <div class="alert alert-danger mt-2">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Pilih Workstation ID:</label>
+                                            <select id="workstation_id" class="form-select" name="workstation_id">
+                                                <option></option>
+                                            </select>
+
+                                            <!-- error message untuk workstation -->
                                             @error('workstation_id')
                                                 <div class="alert alert-danger mt-2">
                                                     {{ $message }}
@@ -74,20 +91,21 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer no-bd">
-                                    <button type="submit" class="btn btn-primary">Add</button>
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                </div>
+                            </div>
+                            <div class="modal-footer no-bd">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="table-responsive">
-                <table id="table1" class="display" style="width:100%">
+                <table id="table1" class="display" style="width:100%;">
                     <thead>
                         <tr>
                             <th class="text-center">No</th>
+                            <th class="text-center">Perusahaan</th>
                             <th class="text-center">Workstation</th>
                             <th class="text-center">Nama Unit</th>
                             <th class="text-center">Status</th>
@@ -96,23 +114,15 @@
                             <th style="width: 10%" class="text-center">Action</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <th class="text-center">No</th>
-                        <th class="text-center">Workstation</th>
-                        <th class="text-center">Nama Unit</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Tgl Buat</th>
-                        <th class="text-center">Tgl Update</th>
-                        <th style="width: 10%" class="text-center">Action</th>
-                    </tfoot>
                     <tbody>
                         @forelse ($unit as $post)
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
+                                <td class="text-center">{!! $post->perusahaan->nama !!}</td>
                                 <td class="text-center">{!! $post->workstation->nama !!}</td>
                                 <td class="text-center">{!! $post->nama !!}</td>
                                 {{-- <td class="text-center">{!! $post->status !!}</td> --}}
-                                <td>
+                                <td class="text-center">
                                     @if ($post->status == 1)
                                         Aktif
                                     @else
@@ -133,8 +143,8 @@
                                                     class="bi bi-pencil-square"></i></a>
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" data-toggle="tooltip"
-                                                class="btn btn-link btn-danger text-danger"data-original-title="Remove"
+                                            <button type="button" data-toggle="tooltip"
+                                                class="btn btn-link btn-danger text-danger" data-original-title="Remove"
                                                 onclick="confirmDelete({{ $post->id }})"><i
                                                     class="bi bi-trash3"></i></button>
                                         </form>
@@ -156,6 +166,32 @@
 @endsection
 @section('script')
     <script>
+        function renderSelect2() {
+            $('.select2').select2();
+        }
+
+        function getWorkstations(perusahaan_id) {
+            var workstationSelect = document.getElementById("workstation_id");
+            // Clear previous workstation options
+            workstationSelect.innerHTML = "";
+
+            // Send AJAX request to get workstations based on selected company
+            fetch("/get-workstations/" + perusahaan_id)
+                .then(response => response.json())
+                .then(data => {
+                    $('#workstation_id').empty(); // Kosongkan opsi sebelum menambahkan yang baru
+                    data.forEach(workstation => {
+                        console.log(data);
+                        $('#workstation_id').append($('<option>', {
+                            value: workstation.id,
+                            text: workstation.nama
+                        }));
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Konfirmasi',

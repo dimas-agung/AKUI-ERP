@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Master
 @endsection
 @section('title')
@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th class="text-center" scope="col">ID</th>
-                            <th class="text-center" scope="col">Workstation ID</th>
+                            <th class="text-center" scope="col">Nama Perusahaan</th>
                             <th class="text-center" scope="col">Nama Workstation</th>
                             <th class="text-center" scope="col">Nama Unit</th>
                             <th class="text-center" scope="col">Status</th>
@@ -27,7 +27,7 @@
                     <tbody>
                         <tr>
                             <td class="text-center">{{ $unit->id }}</td>
-                            <td class="text-center">{{ $unit->workstation_id }}</td>
+                            <td class="text-center">{{ $unit->perusahaan->nama }}</td>
                             <td class="text-center">{{ $unit->workstation->nama }}</td>
                             <td class="text-center">{{ $unit->nama }}</td>
                             <td class="text-center">{{ $unit->status }}</td>

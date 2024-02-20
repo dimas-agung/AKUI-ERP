@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Unit;
+use App\Models\Perusahaan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class UnitSeeder extends Seeder
+class PerusahaanSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        \App\Models\Unit::factory(0)->create();
+        \App\Models\Perusahaan::factory(0)->create();
     }
 }

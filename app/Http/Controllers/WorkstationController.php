@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 //return type View
+use App\Models\Perusahaan;
 use Illuminate\View\View;
 use App\Models\Workstation;
 use Illuminate\Http\Request;
@@ -14,9 +15,12 @@ class WorkstationController extends Controller
 {
     public function index(){
         $i =1;
-        $workstation = Workstation::all();
+        $perusahaan = Perusahaan::with('workstation')->get();
+        $workstation = Workstation::with('perusahaan')->get();
+        // return($workstation);
         return response()->view('Workstation.index', [
             'workstation' => $workstation,
+            'perusahaan' => $perusahaan,
             'i' => $i,
         ]);
         // return response()->view('layouts.master2');
@@ -38,14 +42,17 @@ class WorkstationController extends Controller
     {
         //validate form
         $this->validate($request, [
+            'perusahaan_id'       => 'required',
             'nama'   => 'required|unique:workstation',
         ], [
             'nama.required' => 'Kolom Nama Biaya Wajib diisi.',
+            'perusahaan_id.required' => 'Kolom Perusahaan Wajib diisi.',
         ]);
 
         //create post
         Workstation::create([
             'nama'   => $request->nama,
+            'perusahaan_id'   => $request->perusahaan_id,
         ]);
 
         //redirect to index

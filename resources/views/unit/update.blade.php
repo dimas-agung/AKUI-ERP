@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Master
 @endsection
 @section('title')
@@ -15,6 +15,17 @@
                 <form action="{{ route('Unit.update', $unit->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+
+                    <div class="form-group">
+                        <label for="basic-usage">Pilih Perusahaan</label>
+                        <select class="choices form-select" name="perusahaan_id">
+                            @foreach ($perusahaan as $post)
+                                <option value="{{ $post->id }}"
+                                    {{ $unit->perusahaan_id == $post->id ? 'selected' : '' }}>
+                                    {{ old('perusahaan_id', $post->nama) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <label for="basic-usage">Pilih Workstation ID</label>
