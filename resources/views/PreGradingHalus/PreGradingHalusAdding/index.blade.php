@@ -81,6 +81,11 @@
                                                         </a>
                                                         @csrf
                                                         @method('DELETE')
+                                                        {{-- <button type="button" class="btn btn-link"
+                                                            data-original-title="Remove"
+                                                            onclick="confirmDelete({{ $PGHA->id }})">
+                                                            <i class="bi bi-trash3 text-danger"></i>
+                                                        </button> --}}
                                                         <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
                                                             onclick="confirmDelete({{ $PGHA->id }})">

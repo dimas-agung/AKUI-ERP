@@ -35,7 +35,7 @@
     <script src="assets/static/js/initTheme.js"></script>
     <div id="app">
         <div id="sidebar">
-            <div class="sidebar-wrapper active">
+            <div class="sidebar-wrapper border-end border-primary border-3 active">
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
@@ -419,6 +419,29 @@
         });
 
         $(document).ready(function() {
+            // Menambahkan gaya CSS langsung di dalam JavaScript
+            var style = document.createElement('style');
+            style.innerHTML = `
+            th {
+                white-space: nowrap;
+                text-align: center;
+                background-color: #435ebe;
+                color:white;
+            }
+
+            td {
+                white-space: nowrap;
+                text-align: center;
+            }
+
+            table.dataTable {
+                border-collapse: collapse;
+                border-spacing: 0;
+                border-radius: 10px; /* Menambahkan tepi yang membulat */
+                overflow: hidden; /* Memastikan tidak ada overflow */
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); /* Menambahkan bayangan */
+            }`;
+            document.head.appendChild(style);
             $('#table1').DataTable({
                 dom: '<"row"<"col-md-2"l><"col-md-6"B><"col-md-4"f>>tip',
                 buttons: [
@@ -427,8 +450,12 @@
                 paging: true,
                 scrollCollapse: true,
                 scrollX: true,
-                scrollY: 300,
-                fixedHeader: true
+                scrollY: 350,
+                fixedHeader: true,
+                columnDefs: [{
+                    "targets": '_all',
+                    "className": 'nowrap'
+                }]
             });
         });
 

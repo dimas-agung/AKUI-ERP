@@ -56,5 +56,92 @@ class PreGradingHalusAddingService
             // 'user_created'          => $item->user_created ?? "Admin123",
             // 'user_updated'          => $item->user_updated ?? "Admin123",
         ]);
+
+        // stok
+        $itemObject = (object)$item;
+        // Cari item berdasarkan id_box dan nomor_batch
+        $existingItem = PreGradingHalusAddingStock::where('id_box', $itemObject->id_box)
+            ->where('nomor_batch', $itemObject->nomor_batch)
+            ->first();
+        // return $existingItem
+
+        $dataToUpdate = [
+            'unit'                => $itemObject->id_box,
+            'nomor_grading'   => $itemObject->nomor_nota_internal,
+            'id_box_grading_kasar'           => $itemObject->nomor_batch,
+            'nama_supplier'         => $itemObject->nama_supplier,
+            'jenis'                 => $itemObject->jenis,
+            'berat_masuk'           => $itemObject->berat_bersih,
+            'berat_keluar'          => $itemObject->berat_keluar ?? 0,
+            'sisa_berat'            => $itemObject->berat_bersih,
+            'avg_kadar_air'         => $itemObject->avg_kadar_air,
+            'modal'                 => $itemObject->fix_harga_deal,
+            'total_modal'           => $itemObject->fix_harga_deal * $itemObject->berat_bersih,
+            'keterangan'            => $itemObject->keterangan,
+            'user_created'          => $itemObject->user_created,
+            'user_updated'          => $itemObject->user_updated ?? '',
+            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ];
+        //
+        if ($existingItem) {
+            // Ambil nilai terakhir berat_masuk dan berat_keluar
+            $BeratMasuk = $existingItem->berat_masuk;
+            $lastBeratKeluar = $existingItem->berat_keluar;
+
+            // Update nilai berat_masuk pada item yang sudah ada
+            $lastBeratMasuk = $existingItem->berat_masuk += $itemObject->berat_bersih;
+            $existingItem->berat_keluar = $itemObject->berat_keluar ?? $existingItem->berat_keluar ?? 0;
+
+            // Tentukan nilai sisa_berat sesuai kondisi
+            if ($existingItem->berat_keluar === 0 || $existingItem->berat_keluar === null) {
+                // Jika berat_keluar belum diisi, isi sisa_berat dengan nilai berat_masuk
+                $existingItem->sisa_berat = (int)$BeratMasuk;
+            } else {
+                // Jika berat_keluar sudah diisi, hitung sisa berat
+                $existingItem->sisa_berat = $lastBeratMasuk - $lastBeratKeluar;
+            }
+
+            if ($existingItem->total_modal === 0 || $existingItem->total_modal === null) {
+                // tet
+                $existingItem->total_modal = $existingItem->modal * $existingItem->sisa_berat;
+            } else {
+                $existingItem->total_modal = $existingItem->modal * $existingItem->sisa_berat;
+            }
+
+            // Update juga kolom-kolom lain yang diperlukan
+            $existingItem->nomor_nota_internal = $itemObject->nomor_nota_internal;
+            // $existingItem->avg_kadar_air = $itemObject->avg_kadar_air;
+            $existingItem->keterangan = $itemObject->keterangan;
+            $existingItem->user_created = $itemObject->user_created ?? '';
+
+            // Simpan perubahan pada stok yang sudah ada
+            $existingItem->save();
+        } else {
+            // Jika item tidak ada, buat item baru dalam database
+            PreGradingHalusAddingStock::create($dataToUpdate);
+        }
+    }
+    public function deleteData($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Lakukan penghapusan berdasarkan ID
+            PreGradingHalusAdding::where('id', $id)->delete();
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'message' => 'Data berhasil dihapus!',
+            ];
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'error' => 'Gagal menghapus data. ' . $e->getMessage(),
+            ];
+        }
     }
 }
