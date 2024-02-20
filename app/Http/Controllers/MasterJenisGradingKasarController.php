@@ -64,8 +64,8 @@ class MasterJenisGradingKasarController extends Controller
         $this->validate($request, [
             'nama'                          => 'required',
             'kategori_susut'                => 'required',
-            'upah_operator'                 => 'required',
-            'presentase_pengurangan_harga'  => 'required',
+            // 'upah_operator'                 => 'required',
+            // 'presentase_pengurangan_harga'  => 'required',
             'harga_estimasi'                => 'required',
             'user_created'                  => 'required',
         ]);
