@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card border border-primary border-3 mt-2">
             <div class="card-body">
                 <div class="card">
                     {{-- card header --}}

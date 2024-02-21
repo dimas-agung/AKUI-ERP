@@ -13,6 +13,6 @@ class PerusahaanSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Perusahaan::factory(0)->create();
+        \App\Models\Perusahaan::factory(1)->create();
     }
 }

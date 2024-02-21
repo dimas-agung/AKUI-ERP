@@ -7,11 +7,12 @@
 @endsection
 @section('content')
     {{-- <div class="col-md-12"> --}}
-    <div class="card">
+    <div class="card border border-primary border-3">
         <div class="card-header">
             <div class="col-sm-12 d-flex justify-content-between">
                 <h4 class="card-title">Data Unit AKUI-ERP</h4>
-                <button class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#inlineForm">
+                <button class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#inlineForm"
+                    onclick="renderSelect2()">
                     <i class="fa fa-plus"></i>
                     Add Data
                 </button>
@@ -19,10 +20,10 @@
         </div>
         <div class="card-body" style="overflow: auto;">
             {{-- Create Data --}}
-            <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
-                aria-hidden="true">
+            <div class="modal fade text-left border border-primary border-3" id="inlineForm" role="dialog"
+                aria-labelledby="myModalLabel33" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content border border-primary border-3">
                         <div class="modal-header">
                             <h5 class="modal-title" id="myModalLabel33">
                                 <span class="fw-mediumbold">
@@ -63,7 +64,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Pilih Workstation ID:</label>
-                                            <select id="workstation_id" class="form-select" name="workstation_id">
+                                            <select id="workstation_id" class="select2 form-select" name="workstation_id">
                                                 <option></option>
                                             </select>
 
@@ -167,7 +168,10 @@
 @section('script')
     <script>
         function renderSelect2() {
-            $('.select2').select2();
+            $('.select2').select2({
+                width: '100%',
+                dropdownParent: $("#inlineForm")
+            });
         }
 
         function getWorkstations(perusahaan_id) {
@@ -179,7 +183,8 @@
             fetch("/get-workstations/" + perusahaan_id)
                 .then(response => response.json())
                 .then(data => {
-                    $('#workstation_id').empty(); // Kosongkan opsi sebelum menambahkan yang baru
+                    $('#workstation_id').empty();
+                    renderSelect2() // Kosongkan opsi sebelum menambahkan yang baru
                     data.forEach(workstation => {
                         console.log(data);
                         $('#workstation_id').append($('<option>', {

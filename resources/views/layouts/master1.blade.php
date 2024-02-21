@@ -45,7 +45,7 @@
     <script src="assets/static/js/initTheme.js"></script>
     <div id="app">
         <div id="sidebar">
-            <div class="sidebar-wrapper active">
+            <div class="sidebar-wrapper border-end border-primary border-3 active">
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
@@ -181,7 +181,7 @@
                         </li>
                         <li class="sidebar-title">Production</li>
                         <li
-                            class="sidebar-item has-sub {{ Request::is('stock_transit_raw_material*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*', 'grading_kasar_output*', 'stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*') ? 'active' : '' }}">
+                            class="sidebar-item has-sub {{ Request::is('stock_transit_raw_material*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*', 'grading_kasar_output*', 'stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-three-dots"></i>
                                 <span>Bahan Baku</span>
@@ -261,7 +261,7 @@
                                 </li>
 
                                 <li
-                                    class="submenu-item has-sub {{ Request::is('transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*') ? 'active' : '' }}">
+                                    class="submenu-item has-sub {{ Request::is('transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*') ? 'active' : '' }}">
                                     <a href="#" class='submenu-link'>
                                         <span>Pre-Grading Halus</span>
                                     </a>
@@ -280,6 +280,16 @@
                                             class="submenu-item {{ Request::is('pre_grading_halus_stock*') ? 'active' : '' }}">
                                             <a href="{{ route('PreGradingHalusStock.index') }}"
                                                 class="submenu-link">Pre-Grading Halus Stock</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('pre_grading_halus_adding') ? 'active' : '' }}">
+                                            <a href="{{ route('PreGradingHalusAdding.index') }}"
+                                                class="submenu-link">Pre Grading Halus Adding</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('pre_grading_halus_adding_stock') ? 'active' : '' }}">
+                                            <a href="{{ route('PreGradingHalusAddingStock.index') }}"
+                                                class="submenu-link">Pre Grading Halus Adding Stock</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -420,9 +430,26 @@
         $(document).ready(function() {
             // Menambahkan gaya CSS langsung di dalam JavaScript
             var style = document.createElement('style');
-            style.innerHTML = ` th, td {
+            style.innerHTML = `
+            th {
+                white-space: nowrap;
                 text-align: center;
-            white-space: nowrap;}`;
+                background-color: #435ebe;
+                color:white;
+            }
+
+            td {
+                white-space: nowrap;
+                text-align: center;
+            }
+
+            table.dataTable {
+                border-collapse: collapse;
+                border-spacing: 0;
+                border-radius: 10px; /* Menambahkan tepi yang membulat */
+                overflow: hidden; /* Memastikan tidak ada overflow */
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); /* Menambahkan bayangan */
+            }`;
             document.head.appendChild(style);
             $('#table1').DataTable({
                 dom: '<"row"<"col-md-2"l><"col-md-6"B><"col-md-4"f>>tip',
