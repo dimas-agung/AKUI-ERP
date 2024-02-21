@@ -66,20 +66,19 @@ class PreGradingHalusAddingService
         // return $existingItem
 
         $dataToUpdate = [
-            'unit'                => $itemObject->id_box,
-            'nomor_grading'   => $itemObject->nomor_nota_internal,
-            'id_box_grading_kasar'           => $itemObject->nomor_batch,
-            'nama_supplier'         => $itemObject->nama_supplier,
-            'jenis'                 => $itemObject->jenis,
-            'berat_masuk'           => $itemObject->berat_bersih,
-            'berat_keluar'          => $itemObject->berat_keluar ?? 0,
-            'sisa_berat'            => $itemObject->berat_bersih,
-            'avg_kadar_air'         => $itemObject->avg_kadar_air,
-            'modal'                 => $itemObject->fix_harga_deal,
-            'total_modal'           => $itemObject->fix_harga_deal * $itemObject->berat_bersih,
-            'keterangan'            => $itemObject->keterangan,
-            'user_created'          => $itemObject->user_created,
-            'user_updated'          => $itemObject->user_updated ?? '',
+            'unit'                      => $itemObject->unit,
+            'nomor_grading'             => $itemObject->nomor_grading,
+            'id_box_grading_kasar'      => $itemObject->id_box_grading_kasar,
+            'nomor_batch'               => $itemObject->nomor_batch,
+            'nomor_nota_internal'       => $itemObject->nomor_nota_internal,
+            'nama_supplier'             => $itemObject->nama_supplier,
+            'jenis_raw_material'        => $itemObject->jenis_raw_material,
+            'kadar_air'                 => $itemObject->kadar_air,
+            'berat_adding'              => $itemObject->berat_adding,
+            'pcs_adding'                => $itemObject->pcs_adding,
+            'modal'                     => $itemObject->modal,
+            'total_modal'               => $itemObject->total_modal,
+            'status_stock'              => $itemObject->status_stock,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
         //

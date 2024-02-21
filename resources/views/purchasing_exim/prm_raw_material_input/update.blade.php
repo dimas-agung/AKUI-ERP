@@ -161,7 +161,7 @@
             let selectedNamaSupplier = $(this).val();
             // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
             $.ajax({
-                url: `{{ route('prm_raw_material_input.getDataSupplier') }}`,
+                url: `{{ route('PrmRawMaterialInput.getDataSupplier') }}`,
                 method: 'GET',
                 data: {
                     nama_supplier: selectedNamaSupplier

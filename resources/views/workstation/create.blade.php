@@ -3,7 +3,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
-                <div class="card border-0 shadow-sm rounded">
+                <div class="card border border-primary border-3">
                     <div class="card-header">
                         <h4>Input Data Workstation AKUI-ERP</h4>
                     </div>

@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card">
+        <div class="card border border-primary border-3">
             <div class="card-header">
                 <h4>Detail Data Prm Raw Material Output</h4>
             </div>

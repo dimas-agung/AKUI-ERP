@@ -7,15 +7,8 @@
     Grading Kasar Hasil
 @endsection
 @section('content')
-    {{-- <style>
-        th,
-        td {
-            white-space: nowrap;
-        }
-    </style> --}}
     <div class="col-md-12">
         <div class="card mt-2 border border-primary border-3">
-            {{-- <div class="card mt-2" style="background-color:#435ebe"> --}}
             <div class="card-body">
                 <div class="card">
                     {{-- card header --}}

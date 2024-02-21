@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center mb-3">
                     <h4 class="card-title">Pre Grading Halus Adding</h4>
@@ -104,7 +104,7 @@
         </div>
     </div>
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="card-body" style="overflow: scroll">
                     <table class="table" id="dataTable">

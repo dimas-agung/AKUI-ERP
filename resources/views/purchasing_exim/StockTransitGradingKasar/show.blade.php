@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="row justify-content-center">
-        <div class="card border-0 shadow-sm rounded">
+        <div class="card border border-primary border-3">
             <div class="card-header">
                 <h4>Detail Data Stock Transit Grading Kasar</h4>
             </div>
