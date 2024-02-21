@@ -14,10 +14,6 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Pre Grading Halus Adding Stock
-                                <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong><i class="bi bi-plus-circle"></i> Add Data <i
-                                            class="bi bi-plus-circle"></i></strong>
-                                </button>
                             </div>
                         </h5>
                     </div>
@@ -48,7 +44,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($pre_grading_halus_adding_stocks as $PGHASS)
+                                    @forelse ($pre_grading_halus_adding_stocks as $PGHAS)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $PGHAS->unit }}</td>
@@ -71,9 +67,9 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $PGHAS->id }}"
-                                                        action="{{ route('pre_grading_halus_adding_stock.destroy', $PGHAS->id) }}"
+                                                        action="{{ route('PreGradingHalusAddingStock.destroy', $PGHAS->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('pre_grading_halus_adding_stock.show', $PGHAS->id) }}"
+                                                        <a href="{{ route('PreGradingHalusAddingStock.show', $PGHAS->id) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
                                                         </a>
@@ -104,10 +100,6 @@
 @endsection
 @section('script')
     <script>
-        function redirectToPage() {
-            window.location.href = "{{ url('/pre_grading_halus_adding_stock/create') }}";
-        }
-
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Konfirmasi',

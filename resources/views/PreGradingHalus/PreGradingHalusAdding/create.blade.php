@@ -320,7 +320,7 @@
 
             let totalPcsKirim = 0;
             $('#dataTable tbody tr').each(function() {
-                let pcsKirim = parseFloat($(this).find('td:eq(10)')
+                let pcsKirim = parseFloat($(this).find('td:eq(11)')
                     .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
                 if (!isNaN(pcsKirim)) {
                     totalPcsKirim += pcsKirim;
@@ -331,7 +331,7 @@
 
             let totalBeratKirim = 0;
             $('#dataTable tbody tr').each(function() {
-                let beratKirim = parseFloat($(this).find('td:eq(9)')
+                let beratKirim = parseFloat($(this).find('td:eq(10)')
                     .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
                 if (!isNaN(beratKirim)) {
                     totalBeratKirim += beratKirim;
@@ -359,7 +359,10 @@
                 pcs_kirim: pcs_kirim,
                 tujuan_kirim: tujuan_kirim,
                 modal: modal,
-                total_modal: total_modal
+                total_modal: total_modal,
+                berat_adding: totalBeratKirim,
+                pcs_adding: totalPcsKirim,
+
             });
 
             // Mengosongkan nilai dropdown nomor_job
@@ -380,7 +383,7 @@
             // Total Berat
             let totalBeratKirim = 0;
             $('#dataTable tbody tr').each(function() {
-                let beratKirim = parseFloat($(this).find('td:eq(9)')
+                let beratKirim = parseFloat($(this).find('td:eq(10)')
                     .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
                 if (!isNaN(beratKirim)) {
                     totalBeratKirim += beratKirim;
@@ -390,7 +393,7 @@
             // Total Pcs
             let totalPcsKirim = 0;
             $('#dataTable tbody tr').each(function() {
-                let pcsKirim = parseFloat($(this).find('td:eq(10)')
+                let pcsKirim = parseFloat($(this).find('td:eq(11)')
                     .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
                 if (!isNaN(pcsKirim)) {
                     totalPcsKirim += pcsKirim;
