@@ -320,3 +320,7 @@ Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusStockContr
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
