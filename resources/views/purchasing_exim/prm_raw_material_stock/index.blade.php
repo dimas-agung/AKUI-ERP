@@ -86,15 +86,11 @@
                                         <div class="alert alert-danger">
                                             Data Purchasing Raw Material Stock belum Tersedia.
                                         </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <div class="alert alert-danger">
-                                    Data Purchasing Raw Material Stock belum Tersedia.
-                                </div>
-                            @endforelse
-                        </tbody>
-                    </table>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
