@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Unit;
 use App\Models\Workstation;
+use App\Models\Perusahaan;
 use Faker\Generator as Faker;
 
 class UnitFactory extends Factory
@@ -25,10 +26,12 @@ class UnitFactory extends Factory
     {
         // Buat data Workstation terlebih dahulu
         $workstation = Workstation::factory()->create();
+        $perusahaan = Perusahaan::factory()->create();
 
         return [
             'workstation_id' => $workstation->id,
-            'nama' => $this->faker->unique()->company,
+            'perusahaan_id' => $perusahaan->id,
+            'nama' => preg_replace("/[_\-']/", "", $this->faker->unique()->company),
             'status' => $this->faker->randomElement([0, 1]),
         ];
     }

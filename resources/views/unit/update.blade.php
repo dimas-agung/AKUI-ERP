@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="card border border-primary border-3">
+        <div class="card border border-primary border-3 shadow-sm rounded">
             <div class="card-header">
                 <h4>Update Data Unit</h4>
             </div>
@@ -15,6 +15,17 @@
                 <form action="{{ route('Unit.update', $unit->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+
+                    <div class="form-group">
+                        <label for="basic-usage">Pilih Perusahaan</label>
+                        <select class="choices form-select" name="perusahaan_id">
+                            @foreach ($perusahaan as $post)
+                                <option value="{{ $post->id }}"
+                                    {{ $unit->perusahaan_id == $post->id ? 'selected' : '' }}>
+                                    {{ old('perusahaan_id', $post->nama) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <label for="basic-usage">Pilih Workstation ID</label>

@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Purchasing & EXIM
 @endsection
 @section('title')
@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="card mt-2 border border-primary border-3">
+        <div class="card border border-primary border-3 mt-2">
             <form action="{{ route('PrmRawMaterialOutput.store') }}" method="POST">
                 @csrf
                 <div class="row">

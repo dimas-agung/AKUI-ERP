@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Stock Transit Grading
 @endsection
 @section('title')
@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card">
+        <div class="card border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Data Stock Transit Grading Kasar</h4>

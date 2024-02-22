@@ -14,6 +14,6 @@ class BiayaHppSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\BiayaHpp::factory(5)->create();
+        \App\Models\BiayaHpp::factory(7)->create();
     }
 }

@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="row justify-content-center">
-        <div class="card border border-primary border-3">
+        <div class="card border border-primary border-3 shadow-sm rounded">
             <div class="card-header">
                 <h4>Detail Workstation</h4>
             </div>

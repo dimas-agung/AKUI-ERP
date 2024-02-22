@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Transit Grading Kasar
 @endsection
 @section('title')
@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="section">
-        <div class="card">
+        <div class="card border border-primary border-3">
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data Grading Kasar Output</h4>

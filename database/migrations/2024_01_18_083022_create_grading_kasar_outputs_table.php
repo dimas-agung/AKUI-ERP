@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nomor_bstb');
             $table->string('id_box_grading_kasar');
-            $table->string('nomor_job');
+            $table->string('nomor_job')->unique();
             $table->string('nomor_batch');
             $table->string('nama_supplier');
             $table->string('id_box_raw_material');

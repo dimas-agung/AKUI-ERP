@@ -11,6 +11,7 @@ class Unit extends Model
     protected $table = 'unit';
     protected $fillable = [
         'workstation_id',
+        'perusahaan_id',
         'nama',
         'status',
     ];
@@ -19,14 +20,16 @@ class Unit extends Model
     {
         return $this->belongsTo(Workstation::class);
     }
-
+    public function perusahaan()
+    {
+    	return $this->belongsTo(Perusahaan::class);
+    }
     public function biayahpp()
     {
         return $this->hasMany(BiayaHpp::class);
     }
-
-    public function MasterJenisGrading()
+    public function PreGradingHalusInput()
     {
-        return $this->hasmany(MasterJenisGrading::class);
+        return $this->hasMany(PreGradingHalusInput::class, 'nomor_bstb', 'nama');
     }
 }
