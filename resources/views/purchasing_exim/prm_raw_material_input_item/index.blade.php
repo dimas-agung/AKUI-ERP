@@ -4,7 +4,7 @@
         <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Data Purchasing Raw Material Input Item</h4>
+                    <h4 class="card-title">Data Purchasing Raw Material Input Item Test</h4>
                 </div>
             </div>
             <div class="card-body">

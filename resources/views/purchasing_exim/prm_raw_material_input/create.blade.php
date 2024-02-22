@@ -297,7 +297,7 @@
             let totalHargaNota = beratNota * hargaNota;
 
             // Memasukkan hasil perhitungan ke dalam input total harga nota menggunakan jQuery
-            $('#total_harga_nota').val(isFinite(totalHargaNota) ? totalHargaNota.toFixed(4) : '');
+            $('#total_harga_nota').val(isFinite(totalHargaNota) ? totalHargaNota.toFixed(2) : '');
 
             // Memanggil updateHargaDeal setiap kali updateTotalHarga terjadi
             updateHargaDeal();
@@ -313,7 +313,7 @@
                 const hargaDeal = totalHargaNota / (beratBersih !== 0 ? beratBersih : 1);
 
                 // Memasukkan hasil perhitungan ke dalam input harga deal menggunakan jQuery
-                $('#harga_deal').val(hargaDeal.toFixed(4));
+                $('#harga_deal').val(hargaDeal.toFixed(2));
             } else {
                 // Jika total harga nota kosong, tampilkan nilai dari berat bersih
                 $('#harga_deal').val(beratBersih !== 0 ? '0.00' : '');

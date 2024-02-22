@@ -129,7 +129,9 @@ is-invalid
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $MasterJGK->nama }}</td>
                                             <td class="text-center">{{ $MasterJGK->kategori_susut }}</td>
-                                            <td class="text-center">{{ $MasterJGK->upah_operator }}</td>
+                                            {{-- <td class="text-center">{{ $MasterJGK->upah_operator }}</td> --}}
+                                            <td class="text-center">Rp
+                                                {{ number_format($MasterJGK->upah_operator, 0, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterJGK->presentase_pengurangan_harga == '')
                                                 @else
@@ -137,7 +139,9 @@ is-invalid
                                                 @endif
                                             </td>
                                             {{-- <td>{{ $MasterJGK->presentase_pengurangan_harga }}</td> --}}
-                                            <td class="text-center">{{ $MasterJGK->harga_estimasi }}</td>
+                                            {{-- <td class="text-center">{{ $MasterJGK->harga_estimasi }}</td> --}}
+                                            <td class="text-center">Rp
+                                                {{ number_format($MasterJGK->harga_estimasi, 0, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterJGK->status == 1)
                                                     Aktif

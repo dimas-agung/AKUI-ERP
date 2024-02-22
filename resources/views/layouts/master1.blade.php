@@ -418,31 +418,73 @@
             $('.select2').select2();
         });
 
+        // $(document).ready(function() {
+        //     // Menambahkan gaya CSS langsung di dalam JavaScript
+        //     var style = document.createElement('style');
+        //     style.innerHTML = `
+    //     th {
+    //         white-space: nowrap;
+    //         text-align: center;
+    //         background-color: #435ebe;
+    //         color:white;
+    //     }
+
+    //     td {
+    //         white-space: nowrap;
+    //         text-align: center;
+    //     }
+
+    //     table.dataTable {
+    //         border-collapse: collapse;
+    //         border-spacing: 0;
+    //         border-radius: 10px; /* Menambahkan tepi yang membulat */
+    //         overflow: hidden; /* Memastikan tidak ada overflow */
+    //         box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); /* Menambahkan bayangan */
+    //     }`;
+        //     document.head.appendChild(style);
+        //     $('#table1').DataTable({
+        //         dom: '<"row"<"col-md-2"l><"col-md-6"B><"col-md-4"f>>tip',
+        //         buttons: [
+        //             'csv', 'excel', 'print', 'copy'
+        //         ],
+        //         paging: true,
+        //         scrollCollapse: true,
+        //         scrollX: true,
+        //         scrollY: 350,
+        //         fixedHeader: true,
+        //         columnDefs: [{
+        //             "targets": '_all',
+        //             "className": 'nowrap'
+        //         }]
+        //     });
+        // });
+
         $(document).ready(function() {
             // Menambahkan gaya CSS langsung di dalam JavaScript
             var style = document.createElement('style');
             style.innerHTML = `
-            th {
-                white-space: nowrap;
-                text-align: center;
-                background-color: #435ebe;
-                color:white;
-            }
+        th {
+            white-space: nowrap;
+            text-align: center;
+            background-color: #435ebe;
+            color:white;
+        }
 
-            td {
-                white-space: nowrap;
-                text-align: center;
-            }
+        td {
+            white-space: nowrap;
+            text-align: center;
+        }
 
-            table.dataTable {
-                border-collapse: collapse;
-                border-spacing: 0;
-                border-radius: 10px; /* Menambahkan tepi yang membulat */
-                overflow: hidden; /* Memastikan tidak ada overflow */
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); /* Menambahkan bayangan */
-            }`;
+        table.dataTable {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border-radius: 10px; /* Menambahkan tepi yang membulat */
+            overflow: hidden; /* Memastikan tidak ada overflow */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); /* Menambahkan bayangan */
+        }`;
             document.head.appendChild(style);
-            $('#table1').DataTable({
+
+            var table = $('#table1').DataTable({
                 dom: '<"row"<"col-md-2"l><"col-md-6"B><"col-md-4"f>>tip',
                 buttons: [
                     'csv', 'excel', 'print', 'copy'
@@ -450,14 +492,17 @@
                 paging: true,
                 scrollCollapse: true,
                 scrollX: true,
-                scrollY: 350,
-                fixedHeader: true,
+                scrollY: '45vh', // Atur tinggi scroll sebagai 50% tinggi viewport
+                fixedHeader: true, // Aktifkan FixedHeader plugin
                 columnDefs: [{
                     "targets": '_all',
                     "className": 'nowrap'
                 }]
             });
         });
+
+
+
 
         @if (session('success'))
             Swal.fire({
