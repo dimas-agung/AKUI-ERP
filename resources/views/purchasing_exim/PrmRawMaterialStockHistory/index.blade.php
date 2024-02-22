@@ -38,12 +38,12 @@
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td class="text-center">{{ $MasterStock->id_box }}</td>
                                 <td class="text-center">{{ $MasterStock->doc_no }}</td>
-                                <td class="text-center">{{ $MasterStock->berat_masuk }}</td>
-                                <td class="text-center">{{ $MasterStock->berat_keluar }}</td>
-                                <td class="text-center">{{ $MasterStock->sisa_berat }}</td>
-                                <td class="text-center">{{ $MasterStock->avg_kadar_air }}</td>
-                                <td class="text-center">{{ $MasterStock->modal }}</td>
-                                <td class="text-center">{{ $MasterStock->total_modal }}</td>
+                                <td class="text-center">{{ number_format($MasterStock->berat_masuk, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($MasterStock->berat_keluar, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($MasterStock->sisa_berat, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($MasterStock->avg_kadar_air, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($MasterStock->modal, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($MasterStock->total_modal, 0, ',', '.') }}</td>
                                 <td class="text-center">{{ $MasterStock->keterangan }}</td>
                                 <td class="text-center">{{ $MasterStock->user_created }}</td>
                                 <td class="text-center">{{ $MasterStock->created_at }}</td>
@@ -57,7 +57,7 @@
                 </table>
             </div>
             <div class=" d-flex justify-content-end model-footer no-bd">
-                <a href="{{ Route('StockTransitRawMaterial.index') }}" type="button" class="btn btn-danger mt-3"
+                <a href="{{ Route('PrmRawMaterialStock.index') }}" type="button" class="btn btn-danger mt-3"
                     data-dismiss="modal">Close</a>
             </div>
         </div>

@@ -24,4 +24,8 @@ class PreGradingHalusAddingStock extends Model
         'total_modal',
         'status_stock',
     ];
+    public function GradingHalusInput()
+    {
+        return $this->hasMany(GradingHalusInput::class, 'nomor_grading', 'nomor_grading');
+    }
 }

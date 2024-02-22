@@ -20,7 +20,7 @@ return new class extends Migration
             $table->float('sisa_berat');
             $table->float('avg_kadar_air');
             $table->float('modal', 16, 4);
-            $table->float('total_modal');
+            $table->float('total_modal', 16, 4);
             $table->text('keterangan')->nullable();
             $table->text('status')->default('1');
             $table->string('user_created');

@@ -36,8 +36,6 @@
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
                                         <th scope="col" class="text-center">Status Stock</th>
-                                        <th scope="col" class="text-center">User Created</th>
-                                        <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
                                         <th scope="col" class="text-center">Action</th>
@@ -60,8 +58,6 @@
                                             <td class="text-center">{{ $PGHAS->modal }}</td>
                                             <td class="text-center">{{ $PGHAS->total_modal }}</td>
                                             <td class="text-center">{{ $PGHAS->status_stock }}</td>
-                                            <td class="text-center">{{ $PGHAS->user_created }}</td>
-                                            <td class="text-center">{{ $PGHAS->user_updated }}</td>
                                             <td class="text-center">{{ $PGHAS->created_at }}</td>
                                             <td class="text-center">{{ $PGHAS->updated_at }}</td>
                                             <td class="text-center">

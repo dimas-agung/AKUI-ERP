@@ -84,15 +84,14 @@
                                         <div class="form-group">
                                             <label>Nama Supplier</label>
                                             <input type="text" class="form-control" id="nama_supplier"
-                                                name="nama_supplier"
-                                                onchange="handleChange(this.{{ old('nama_supplier') }})" readonly>
+                                                name="nama_supplier" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Nomor Batch</label>
                                             <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
-                                                onchange="handleChange(this.{{ old('nomor_batch') }})" readonly>
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -106,7 +105,7 @@
                                         <div class="form-group">
                                             <label>Letak Tujuan</label>
                                             <input type="text" id="letak_tujuan" class="form-control" name="letak_tujuan"
-                                                onchange="handleChange(this.{{ old('letak_tujuan') }})" readonly>
+                                                onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -136,7 +135,7 @@
                                         <div class="form-group">
                                             <label>Modal</label>
                                             <input type="text" id="modal" class="form-control" name="modal"
-                                                value="{{ old('modal') }}" onchange="handleChange(this)" readonly>
+                                                onchange="handleChange(this)" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Total Modal</label>
@@ -148,8 +147,7 @@
                                         <div class="form-group">
                                             <label>Berat Masuk</label>
                                             <input type="text" class="form-control" id="berat_masuk"
-                                                name="berat_masuk" onchange="handleChange(this.{{ old('berat_masuk') }})"
-                                                readonly>
+                                                name="berat_masuk" onchange="handleChange(this)" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Berat Keluar</label>
@@ -436,6 +434,9 @@
                         $('#modal').val(response.modal);
                         $('#nomor_nota_internal').val(response.nomor_nota_internal);
 
+                        // Panggil fungsi updateSelisihBerat() setelah perubahan nilai
+                        updateSelisihBerat();
+
                         // Panggil fungsi handleChange untuk menghapus atribut readonly
                         handleChange(document.getElementById('nomor_batch_edit'));
                         handleChange(document.getElementById('nama_supplier_edit'));
@@ -529,33 +530,9 @@
             console.log(nomor_bstb);
         }
 
-        // Event listener untuk perubahan nilai pada total modal
-        $('#modal').on('input', updateTotalmodal);
-        $('#berat').on('input', updateTotalmodal);
-        $('#modal_edit').on('input', updateTotalmodal);
-        $('#berat_edit').on('input', updateTotalmodal);
-
-        function updateTotalmodal() {
-            // Mendapatkan nilai berat nota dan berat bersih
-            const modal = parseFloat($('#modal').val());
-            const berat = parseFloat($('#berat').val());
-            const modal_e = parseFloat($('#modal_edit').val());
-            const berat_e = parseFloat($('#berat_edit').val());
-
-            // Melakukan perhitungan selisih berat
-            const totalmodal = berat * modal;
-            const totalmodale = berat_e * modal_e;
-
-            // Memasukkan hasil perhitungan ke dalam input selisih berat
-            $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal);
-            $('#total_modal_edit').val(isNaN(totalmodale) ? '' : totalmodale);
-        }
-
         // Event listener untuk perubahan nilai pada berat nota atau berat bersih
-        $('#berat_masuk').on('change', updateSelisihBerat);
-        $('#berat').on('input', updateSelisihBerat);
-        $('#berat_masuk_edit').on('change', updateSelisihBerat);
-        $('#berat_edit').on('input', updateSelisihBerat);
+        $('#modal, #modal_edit, #berat_masuk, #berat, #berat_masuk_edit, #berat_edit').on('change input',
+            updateSelisihBerat);
 
         function updateSelisihBerat() {
             // Mendapatkan nilai berat nota dan berat bersih
@@ -563,12 +540,24 @@
             const berat_masuk_edit = parseFloat($('#berat_masuk_edit').val());
             const berat = parseFloat($('#berat').val());
             const berat_edit = parseFloat($('#berat_edit').val());
+            const modal = parseFloat($('#modal').val());
+            const modal_e = parseFloat($('#modal_edit').val());
+
             const selisihBerat = berat_masuk - berat;
             const selisihBerate = berat_masuk_edit - berat_edit;
 
+            // Melakukan perhitungan selisih selisih_berat
+            const totalmodal = selisihBerat * modal;
+            const totalmodale = selisihBerate * modal_e;
+
             // Memasukkan hasil perhitungan ke dalam input selisih berat
-            $('#selisih_berat').val(isNaN(selisihBerat) ? '' : selisihBerat);
-            $('#selisih_berat_edit').val(isNaN(selisihBerate) ? '' : selisihBerate);
+            console.log(selisihBerat);
+            console.log(totalmodal);
+            $('#selisih_berat').val(isFinite(selisihBerat) ? selisihBerat.toFixed(2) : '');
+            $('#selisih_berat_edit').val(isFinite(selisihBerate) ? selisihBerate.toFixed(2) : '');
+            // Memasukkan hasil perhitungan ke dalam input selisih berat
+            $('#total_modal').val(isFinite(totalmodal) ? totalmodal.toFixed(2) : '');
+            $('#total_modal_edit').val(isFinite(totalmodale) ? totalmodale.toFixed(2) : '');
         }
 
         // Variabel global untuk menyimpan indeks baris terakhir

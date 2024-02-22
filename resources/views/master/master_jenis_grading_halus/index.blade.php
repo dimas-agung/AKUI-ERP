@@ -1,10 +1,9 @@
 @extends('layouts.master1')
-{{-- @extends('layouts.template') --}}
 @section('menu')
     Master
 @endsection
 @section('title')
-    Master Jenis Grading Kasar
+    Master Jenis Grading Halus
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -15,7 +14,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Master Jenis Grading Kasar
+                                Data Master Jenis Grading Halus
                                 <button type="button" class="btn btn-outline-success rounded-pill" data-bs-toggle="modal"
                                     data-bs-target="#inlineForm">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
@@ -30,20 +29,20 @@
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                             <div class="modal-content">
                                 <div class="modal-header bg-primary">
-                                    <h4 class="modal-title white" id="myModalLabel33">Input Data Master Jenis Grading Kasar
+                                    <h4 class="modal-title white" id="myModalLabel33">Input Data Master Jenis Grading Halus
                                     </h4>
                                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                         <i data-feather="x"></i>
                                     </button>
                                 </div>
-                                <form action="{{ route('MasterJenisGradingKasar.store') }}" method="POST">
+                                <form action="{{ route('MasterJenisGradingHalus.store') }}" method="POST">
                                     <div class="modal-body">
                                         @csrf
-                                        <label><strong>Nama</strong></label>
+                                        <label><strong>Jenis</strong></label>
                                         <div class="form-group">
-                                            <input type="text" name="nama" placeholder="Masukkan Nama"
-                                                class="form-control @error('nama') is-invalid @enderror" required
-                                                oninvalid="this.setCustomValidity('Mohon isi Nama')"
+                                            <input type="text" name="jenis" placeholder="Masukkan jenis"
+                                                class="form-control @error('jenis') is-invalid @enderror" required
+                                                oninvalid="this.setCustomValidity('Mohon isi jenis')"
                                                 oninput="this.setCustomValidity('')">
                                         </div>
                                         <label><strong>Kategori Susut</strong></label>
@@ -61,13 +60,12 @@
 is-invalid
 @enderror">
                                         </div>
-                                        <label><strong>Presentase Pengurangan Harga</strong></label>
+                                        <label><strong>Pengurangan Harga</strong></label>
                                         <div class="form-group">
                                             <input type="text" pattern="[0-9.]*" inputmode="numeric"
                                                 onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                                                name="presentase_pengurangan_harga"
-                                                placeholder="Masukkan Presentase Pengurangan Harga"
-                                                class="form-control @error('presentase_pengurangan_harga')
+                                                name="pengurangan_harga" placeholder="Masukkan Pengurangan Harga"
+                                                class="form-control @error('pengurangan_harga')
 is-invalid
 @enderror">
                                         </div>
@@ -110,10 +108,10 @@ is-invalid
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Nama</th>
+                                        <th scope="col" class="text-center">Jenis</th>
                                         <th scope="col" class="text-center">Katergori Susut</th>
                                         <th scope="col" class="text-center">Upah Operator</th>
-                                        <th scope="col" class="text-center">Presentase Pengurangan Harga</th>
+                                        <th scope="col" class="text-center">Pengurangan Harga</th>
                                         <th scope="col" class="text-center">Estimasi Harga</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">User Created</th>
@@ -124,21 +122,22 @@ is-invalid
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($master_jenis_grading_kasars as $MasterJGK)
+                                    @forelse ($master_jenis_grading_halus as $MasterJGK)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $MasterJGK->nama }}</td>
+                                            <td class="text-center">{{ $MasterJGK->jenis }}</td>
                                             <td class="text-center">{{ $MasterJGK->kategori_susut }}</td>
                                             <td class="text-center">
                                                 {{ number_format($MasterJGK->upah_operator, 0, ',', '.') }}</td>
                                             <td class="text-center">
-                                                @if ($MasterJGK->presentase_pengurangan_harga == '')
+                                                @if ($MasterJGK->pengurangan_harga == '')
                                                 @else
-                                                    {{ $MasterJGK->presentase_pengurangan_harga }} %
+                                                    {{ $MasterJGK->pengurangan_harga }} %
                                                 @endif
                                             </td>
-                                            {{-- <td>{{ $MasterJGK->presentase_pengurangan_harga }}</td> --}}
-                                            <td class="text-center">{{ $MasterJGK->harga_estimasi }}</td>
+                                            {{-- <td>{{ $MasterJGK->pengurangan_harga }}</td> --}}
+                                            <td class="text-center">
+                                                {{ number_format($MasterJGK->harga_estimasi, 0, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterJGK->status == 1)
                                                     Aktif
@@ -153,9 +152,9 @@ is-invalid
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterJGK->id }}"
-                                                        action="{{ route('MasterJenisGradingKasar.destroy', $MasterJGK->id) }}"
+                                                        action="{{ route('MasterJenisGradingHalus.destroy', $MasterJGK->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('MasterJenisGradingKasar.edit', $MasterJGK->id) }}"
+                                                        <a href="{{ route('MasterJenisGradingHalus.edit', $MasterJGK->id) }}"
                                                             class="btn btn-link" title="Edit Task"
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>
@@ -173,7 +172,7 @@ is-invalid
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Master Jenis Grading Kasar belum Tersedia.
+                                            Data Master Jenis Grading Halus belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>

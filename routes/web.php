@@ -100,6 +100,26 @@ Route::controller(App\Http\Controllers\MasterOperatorController::class)->group(f
     Route::delete('/master_operator/destroy/{id}', 'destroy')->name('MasterOperator.destroy');
 });
 
+Route::controller(App\Http\Controllers\MasterJenisGradingKasarController::class)->group(function () {
+    Route::get('/master_jenis_grading_kasar', 'index')->name('MasterJenisGradingKasar.index');
+    Route::get('/master_jenis_grading_kasar/create', 'create')->name('MasterJenisGradingKasar.create');
+    Route::post('/master_jenis_grading_kasar/store', 'store')->name('MasterJenisGradingKasar.store');
+    Route::get('/master_jenis_grading_kasar/show/{id}', 'show')->name('MasterJenisGradingKasar.show');
+    Route::get('/master_jenis_grading_kasar/edit/{id}', 'edit')->name('MasterJenisGradingKasar.edit');
+    Route::put('/master_jenis_grading_kasar/update/{id}', 'update')->name('MasterJenisGradingKasar.update');
+    Route::delete('/master_jenis_grading_kasar/destroy/{id}', 'destroy')->name('MasterJenisGradingKasar.destroy');
+});
+
+Route::controller(App\Http\Controllers\MasterJenisGradingHalusController::class)->group(function () {
+    Route::get('/master_jenis_grading_halus', 'index')->name('MasterJenisGradingHalus.index');
+    Route::get('/master_jenis_grading_halus/create', 'create')->name('MasterJenisGradingHalus.create');
+    Route::post('/master_jenis_grading_halus/store', 'store')->name('MasterJenisGradingHalus.store');
+    Route::get('/master_jenis_grading_halus/show/{id}', 'show')->name('MasterJenisGradingHalus.show');
+    Route::get('/master_jenis_grading_halus/edit/{id}', 'edit')->name('MasterJenisGradingHalus.edit');
+    Route::put('/master_jenis_grading_halus/update/{id}', 'update')->name('MasterJenisGradingHalus.update');
+    Route::delete('/master_jenis_grading_halus/destroy/{id}', 'destroy')->name('MasterJenisGradingHalus.destroy');
+});
+
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
     Route::get('/prm_raw_material_input', 'index')->name('PrmRawMaterialInput.index');
     Route::get('/prm_raw_material_input/create', 'create')->name('PrmRawMaterialInput.create');
@@ -146,15 +166,6 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputCont
     Route::post('/grading_kasar_input/store', 'store')->name('GradingKasarInput.store');
     Route::post('/grading_kasar_input/sendData', 'sendData')->name('GradingKasarInput.sendData');
     Route::delete('/grading_kasar_input/destroy/{nomor_bstb}', 'destroy')->name('GradingKasarInput.destroy');
-});
-Route::controller(App\Http\Controllers\MasterJenisGradingKasarController::class)->group(function () {
-    Route::get('/master_jenis_grading_kasar', 'index')->name('MasterJenisGradingKasar.index');
-    Route::get('/master_jenis_grading_kasar/create', 'create')->name('MasterJenisGradingKasar.create');
-    Route::post('/master_jenis_grading_kasar/store', 'store')->name('MasterJenisGradingKasar.store');
-    Route::get('/master_jenis_grading_kasar/show/{id}', 'show')->name('MasterJenisGradingKasar.show');
-    Route::get('/master_jenis_grading_kasar/edit/{id}', 'edit')->name('MasterJenisGradingKasar.edit');
-    Route::put('/master_jenis_grading_kasar/update/{id}', 'update')->name('MasterJenisGradingKasar.update');
-    Route::delete('/master_jenis_grading_kasar/destroy/{id}', 'destroy')->name('MasterJenisGradingKasar.destroy');
 });
 Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarHasilController::class)->group(function () {
     Route::get('/grading_kasar_hasil', 'index')->name('GradingKasarHasil.index');
@@ -262,6 +273,16 @@ Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusAddingStoc
     Route::get('/pre_grading_halus_adding_stock/edit/{id}', 'edit')->name('PreGradingHalusAddingStock.edit');
     Route::put('/pre_grading_halus_adding_stock/update/{id}', 'update')->name('PreGradingHalusAddingStock.update');
     Route::delete('/pre_grading_halus_adding_stock/destroy/{id}', 'destroy')->name('PreGradingHalusAddingStock.destroy');
+});
+
+Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusInputController::class)->group(function () {
+    Route::get('/grading_halus_input', 'index')->name('GradingHalusInput.index');
+    Route::get('/grading_halus_input/create', 'create')->name('GradingHalusInput.create');
+    Route::get('/grading_halus_input/get_data_id_box', 'set')->name('GradingHalusInput.set');
+    Route::get('/grading_halus_input/get_data_id_box/unit', 'setUnit')->name('GradingHalusInput.setUnit');
+    Route::post('/grading_halus_input/sendData', 'sendData')->name('GradingHalusInput.sendData');
+    Route::post('/grading_halus_input/store', 'store')->name('GradingHalusInput.store');
+    Route::delete('/grading_halus_input/destroy/{nomor_bstb}', 'destroy')->name('GradingHalusInput.destroy');
 });
 
 Auth::routes();

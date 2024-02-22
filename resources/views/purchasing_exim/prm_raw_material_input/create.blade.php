@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card border border-primary border-3 mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center mb-3">
                     <h4 class="card-title">Input Purchasing Raw Material</h4>
@@ -53,20 +53,6 @@
                     <div class="col-md-flex">
                         <hr>
                     </div>
-                    {{-- <div class="col-md-3">
-                        <label for="basic-usage" class="form-label">Pilih Jenis :</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
-                            name="jenis" id="jenis" placeholder="Pilih Jenis">
-                            <option value="">Pilih Jenis</option>
-                            @foreach ($master_jenis_raw_materials->sortBy('jenis') as $MasterJRM)
-                                @if ($MasterJRM->status == 1)
-                                    <option value="{{ $MasterJRM->jenis }}">
-                                        {{ $MasterJRM->jenis }}
-                                    </option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div> --}}
                     <div class="col-md-3">
                         <label for="basic-usage" class="form-label">Pilih Jenis :</label>
                         <select class="select2 form-control" style="width: 100%;" tabindex="-1" aria-hidden="true"
@@ -154,7 +140,7 @@
 
     {{-- table --}}
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="card-title">Validasi</div>
                 <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
@@ -174,8 +160,8 @@
                                 <th scope="col" class="text-center">Harga Deal</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
-                                <th scope="col" class="text-center">Action</th>
                                 {{-- <th scope="col" class="text-center">Fix Harga Deal</th> --}}
+                                <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -191,7 +177,7 @@
 @endsection
 @section('script')
     <script>
-        // Menambahkan event listener untuk perubahan nilai pada input nomor nota supplier dan select nama supplier
+        // // Menambahkan event listener untuk perubahan nilai pada input nomor nota supplier dan select nama supplier
         $('#nomor_nota_supplier').on('input', generateNomorNotaInternal);
         $('#nama_supplier').on('change', generateNomorNotaInternal);
         // $('#nomor_nota_supplier, #nama_supplier').on('input change', generateNomorNotaInternal);
@@ -209,27 +195,6 @@
         // Event listener untuk perubahan nilai pada total harga nota atau berat bersih
         $('#total_harga_nota').on('change', updateHargaDeal);
         $('#berat_bersih').on('input', updateHargaDeal);
-
-        $('#nama_supplier').on('change', function() {
-            // Mengambil nilai id_box yang dipilih
-            let selectedNamaSupplier = $(this).val();
-            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
-            $.ajax({
-                url: `{{ route('PrmRawMaterialInput.getDataSupplier') }}`,
-                method: 'GET',
-                data: {
-                    nama_supplier: selectedNamaSupplier
-                },
-                success: function(response) {
-                    console.log(response);
-                    let inisial_supplier = response.inisial_supplier;
-                    generateNomorNotaInternal(inisial_supplier);
-                },
-                error: function(error) {
-                    console.error('Error:', error);
-                }
-            });
-        });
 
         // idbox
         $('#jenis').on('change', function() {
@@ -254,25 +219,48 @@
                 }
             });
         });
+
         // generate nomor internal
-        function generateNomorNotaInternal(inisial_supplier) {
+        function generateNomorNotaInternal() {
             const nomorNotaSupplier = $('#nomor_nota_supplier').val();
             const namaSupplier = $('#nama_supplier').val();
 
-            // ambil tanggal, bulan, tahun
-            const now = new Date();
-            const tahun = now.getFullYear().toString().substr(-2); // Ambil 2 digit terakhir tahun
-            const bulan = ('0' + (now.getMonth() + 1)).slice(-2); // Menambah '0' jika satu digit
-            const tanggal = ('0' + now.getDate()).slice(-2);
-            console.log(inisial_supplier);
-            // Membentuk nomor nota internal dengan menggabungkan nama supplier dan nomor nota supplier
-            const nomorNotaInternal = `${inisial_supplier}_${nomorNotaSupplier}_${tanggal}${bulan}${tahun}`;
-            console.log(nomorNotaInternal);
+            // Periksa apakah kedua input sudah terisi
+            if (nomorNotaSupplier && namaSupplier) {
+                const now = new Date();
+                const tahun = now.getFullYear().toString().substr(-2);
+                const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+                const tanggal = ('0' + now.getDate()).slice(-2);
 
-            // Menampilkan nomor nota internal pada input nomor nota internal
-            $('#nomor_nota_internal').val(nomorNotaInternal);
+                // Ambil inisial_supplier dari nama_supplier
+                let inisial_supplier = ''; // Inisialisasi inisial_supplier
+                $.ajax({
+                    url: `{{ route('PrmRawMaterialInput.getDataSupplier') }}`,
+                    method: 'GET',
+                    data: {
+                        nama_supplier: namaSupplier
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        inisial_supplier = response.inisial_supplier;
 
+                        // Membentuk nomor nota internal dengan menggabungkan inisial_supplier, nomorNotaSupplier, dan tanggal
+                        const nomorNotaInternal =
+                            `${inisial_supplier}_${nomorNotaSupplier}_${tanggal}${bulan}${tahun}`;
+                        console.log(nomorNotaInternal);
+
+                        // Menampilkan nomor nota internal pada input nomor nota internal
+                        $('#nomor_nota_internal').val(nomorNotaInternal);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
         }
+
+        //
+
         // generate ID_Box
         function generateIdBox(jenis) {
             const nomorNotaInternal = $('#nomor_nota_internal').val();
@@ -359,8 +347,6 @@
             let harga_deal = $('#harga_deal').val();
             let keterangan = $('#keterangan').val();
             let user_created = $('#user_created').val();
-            // test
-            let berat_masuk = $('#berat_bersih').val();
 
             // Validasi input (sesuai kebutuhan)
             if (nomor_po.trim() === '' || nomor_batch.trim() === '' || nomor_nota_supplier.trim() === '' ||
@@ -383,9 +369,6 @@
             $('#nomor_batch').prop('readonly', true);
             $('#nomor_nota_supplier').prop('readonly', true);
             $('#nama_supplier').prop('disabled', true); // Jika ingin menjadikan select readonly
-
-
-            console.log("Mengolah id_box:", id_box);
 
             // Memeriksa apakah id_box sudah ada di objek idBoxGroups
             if (id_box in idBoxGroups) {
@@ -416,9 +399,9 @@
                 console.log("Avg Kadar Air: " + idBoxGroups[idBox].totalKadarAir / idBoxGroups[idBox].jumlahBaris);
                 console.log("------------------------------");
                 fix_harga_deal = idBoxGroups[idBox].totalHargaNota / idBoxGroups[idBox].totalBeratBersih;
-                console.log(fix_harga_deal.toFixed(2));
+                console.log("Fix Harga Deal : " + fix_harga_deal.toFixed(4));
                 avg_kadar_air = idBoxGroups[idBox].totalKadarAir / idBoxGroups[idBox].jumlahBaris;
-                console.log(avg_kadar_air.toFixed(2));
+                console.log("Avg Kadar Air: " + avg_kadar_air.toFixed(4));
             }
             let fixHargaDealForRow = idBoxGroups[id_box].totalHargaNota / idBoxGroups[id_box].totalBeratBersih;
             let avgKadarAir = idBoxGroups[id_box].totalKadarAir / idBoxGroups[id_box].jumlahBaris;
@@ -426,7 +409,7 @@
             let existingRow = $('#dataTable tbody tr[data-idbox="' + id_box + '"]');
             if (existingRow.length > 0) {
                 // Jika baris sudah ada, update nilai fix_harga_deal
-                existingRow.find('td:eq(12)').text(fixHargaDealForRow.toFixed(2));
+                existingRow.find('td:eq(12)').text(fixHargaDealForRow.toFixed(4));
             } else {
                 // Menambahkan data ke dalam tabel
                 var newRow = `<tr>` +
@@ -442,8 +425,8 @@
                     `<td class="text-center">${harga_deal}</td>` +
                     `<td class="text-center">${keterangan}</td>` +
                     `<td class="text-center">${user_created}</td>` +
+                    // `<td class="text-center">${fix_harga_deal.toFixed(4)}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
-                    // `<td class="text-center">${fixHargaDealForRow.toFixed(4)}</td>` +
                     `</tr>`
                 $('#dataTable tbody').append(newRow);
             }
