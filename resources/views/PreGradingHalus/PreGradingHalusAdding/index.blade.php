@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-body">
                 <div class="card">
                     <div class="card-header">
@@ -81,6 +81,11 @@
                                                         </a>
                                                         @csrf
                                                         @method('DELETE')
+                                                        {{-- <button type="button" class="btn btn-link"
+                                                            data-original-title="Remove"
+                                                            onclick="confirmDelete({{ $PGHA->id }})">
+                                                            <i class="bi bi-trash3 text-danger"></i>
+                                                        </button> --}}
                                                         <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
                                                             onclick="confirmDelete({{ $PGHA->id }})">

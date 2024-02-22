@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="card border-0 shadow-sm rounded">
+                <div class="card border border-primary border-3">
                     <div class="card-header">
                         <h4>CREATE DATA MASTER JENIS RAW MATERIAL</h4>
                     </div>

@@ -35,7 +35,7 @@
     <script src="assets/static/js/initTheme.js"></script>
     <div id="app">
         <div id="sidebar">
-            <div class="sidebar-wrapper active">
+            <div class="sidebar-wrapper border-end border-primary border-3 active">
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
@@ -425,6 +425,8 @@
     {{-- <script src="{{ asset('https://code.jquery.com/jquery-3.7.0.js') }}"></script> --}}
     <script src="{{ asset('https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js') }}"></script>
+    <!-- Tautan ke file DataTables FixedHeader JS -->
+    <script src="https://cdn.datatables.net/fixedheader/3.2.0/js/dataTables.fixedHeader.min.js"></script>
     <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js') }}"></script>
     <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js') }}"></script>
     <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js') }}"></script>
@@ -446,12 +448,43 @@
         });
 
         $(document).ready(function() {
+            // Menambahkan gaya CSS langsung di dalam JavaScript
+            var style = document.createElement('style');
+            style.innerHTML = `
+            th {
+                white-space: nowrap;
+                text-align: center;
+                background-color: #435ebe;
+                color:white;
+            }
+
+            td {
+                white-space: nowrap;
+                text-align: center;
+            }
+
+            table.dataTable {
+                border-collapse: collapse;
+                border-spacing: 0;
+                border-radius: 10px; /* Menambahkan tepi yang membulat */
+                overflow: hidden; /* Memastikan tidak ada overflow */
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); /* Menambahkan bayangan */
+            }`;
+            document.head.appendChild(style);
             $('#table1').DataTable({
                 dom: '<"row"<"col-md-2"l><"col-md-6"B><"col-md-4"f>>tip',
                 buttons: [
                     'csv', 'excel', 'print', 'copy'
                 ],
+                paging: true,
+                scrollCollapse: true,
                 scrollX: true,
+                scrollY: 350,
+                fixedHeader: true,
+                columnDefs: [{
+                    "targets": '_all',
+                    "className": 'nowrap'
+                }]
             });
         });
 

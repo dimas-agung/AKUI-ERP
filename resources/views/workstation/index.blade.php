@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     {{-- <section class="section"> --}}
-    <div class="card">
+    <div class="card border border-primary border-3">
         <div class="card-header">
 
             <div class="col-sm-12 d-flex justify-content-between">

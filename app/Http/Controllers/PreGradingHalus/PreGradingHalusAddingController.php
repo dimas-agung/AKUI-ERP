@@ -63,4 +63,17 @@ class PreGradingHalusAddingController extends Controller
             return response()->json($result, 500);
         }
     }
+
+    public function destroy($id, PreGradingHalusAddingService $preGradingHalusAddingService)
+    {
+        $result = $preGradingHalusAddingService->deleteData($id);
+
+        if ($result['success']) {
+            // Jika penghapusan berhasil, kembali ke tampilan indeks dengan pesan sukses
+            return redirect()->route('PreGradingHalusAdding.index')->with('success', $result['message']);
+        } else {
+            // Jika terjadi kesalahan, kembali ke tampilan sebelumnya dengan pesan kesalahan
+            return back()->with('error', $result['error']);
+        }
+    }
 }

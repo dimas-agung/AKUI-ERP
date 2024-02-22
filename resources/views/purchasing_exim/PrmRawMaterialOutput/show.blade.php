@@ -1,25 +1,33 @@
 @extends('layouts.master1')
-@section('Menu')
-    Purchasing & EXIM
-@endsection
 @section('title')
-    PRM Raw Material Output
+    Detail Data Prm Raw Material Output
 @endsection
 @section('content')
-    <div class="section">
+    <div class="col-md-12">
         <div class="card border border-primary border-3">
             <div class="card-header">
-                <div class="col-sm-12 d-flex justify-content-between">
-                    <h4 class="card-title">Data PRM Raw Material Output</h4>
-                    <a href="{{ Route('PrmRawMaterialOutput.create') }}" class="btn btn-outline-success rounded-pill">
-                        <i class="fa fa-plus"></i>
-                        Add Data
-                    </a>
-                </div>
+                <h4>Detail Data Prm Raw Material Output</h4>
             </div>
-            <div class="card-body" style="overflow: auto;">
+            <div class="card-body">
+                {{-- Create Data --}}
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <strong>Sukses: </strong>{{ session()->get('success') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul><strong>
+                                @foreach ($errors->all() as $error)
+                                    <li> {{ $error }} </li>
+                                @endforeach
+                            </strong>
+                        </ul>
+                        <p>Mohon periksa kembali formulir Anda.</p>
+                    </div>
+                @endif
                 <div class="table-responsive">
-                    <table id="table1" class="display" style="width:100%">
+                    <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
@@ -38,11 +46,12 @@
                                 <th class="text-center">Total Modal</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
+                                <th class="text-center" scope="col">User Updated</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($PrmRawMOIC as $item)
+                            @forelse ($items as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{{ $item->doc_no }}</td>
@@ -60,21 +69,21 @@
                                     <td class="text-center">{{ $item->total_modal }}</td>
                                     <td class="text-center">{{ $item->keterangan_item }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
+                                    <td class="text-center">{{ $item->user_updated }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            @if ($item->status == 1)
-                                                <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                    action="{{ route('PrmRawMaterialOutput.destroy', $item->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-link btn-danger delete-button"
-                                                        data-original-title="Remove"
-                                                        onclick="confirmDelete({{ $item->id }})">
-                                                        <i class="bi bi-trash3 text-danger"></i>
-                                                    </button>
-                                                </form>
-                                            @endif
+                                            <form style="display: flex" onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                                action="{{ route('PrmRawMaterialOutput.destroy', $item->id) }}"
+                                                method="POST">
+                                                <a href="{{ route('PrmRawMaterialOutput.edit', $item->id) }}"
+                                                    class="btn btn-link btn-primary" title="Edit Task"
+                                                    data-original-title="Edit Task"><i class="fa fa-edit"></i></a>
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" data-toggle="tooltip"
+                                                    class="btn btn-link btn-danger"data-original-title="Remove"><i
+                                                        class="fa fa-times"></i></button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -85,29 +94,14 @@
                             @endforelse
                         </tbody>
                     </table>
+                    {{-- <div class="col-md-12"> --}}
+                    {{-- </div> --}}
+                </div>
+                <div class=" d-flex justify-content-end model-footer no-bd">
+                    <a href="{{ url('/PrmRawMaterialOutput') }}" type="button" class="btn btn-danger"
+                        data-dismiss="modal">Close</a>
                 </div>
             </div>
         </div>
     </div>
-@endsection
-@section('script')
-    <script>
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Anda yakin ingin menghapus data ini?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Jika dikonfirmasi, submit form
-                    document.getElementById('deleteForm' + id).submit();
-                }
-            });
-        }
-    </script>
 @endsection

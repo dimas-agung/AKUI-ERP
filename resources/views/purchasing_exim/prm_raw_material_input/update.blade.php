@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">View Purchasing Raw Material</h4>
@@ -161,7 +161,7 @@
             let selectedNamaSupplier = $(this).val();
             // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
             $.ajax({
-                url: `{{ route('prm_raw_material_input.getDataSupplier') }}`,
+                url: `{{ route('PrmRawMaterialInput.getDataSupplier') }}`,
                 method: 'GET',
                 data: {
                     nama_supplier: selectedNamaSupplier

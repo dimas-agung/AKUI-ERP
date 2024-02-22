@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-body">
                 <div class="card">
                     {{-- card header --}}
@@ -71,7 +71,8 @@
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $GradingKH->doc_no }}</td>
                                             <td class="text-center">{{ $GradingKH->nomor_grading }}</td>
-                                            <td class="text-center">{{ $GradingKH->id_box_raw_material }}</td>
+                                            <td class="text-center">
+                                                {{ $GradingKH->id_box_raw_material }}</td>
                                             <td class="text-center">{{ $GradingKH->id_box_grading_kasar }}</td>
                                             <td class="text-center">{{ $GradingKH->nomor_batch }}</td>
                                             <td class="text-center">{{ $GradingKH->nama_supplier }}</td>

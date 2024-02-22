@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="card mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <form action="{{ route('PrmRawMaterialOutput.store') }}" method="POST">
                 @csrf
                 <div class="row">
@@ -189,7 +189,7 @@
 
 
         <div class="col-md-12">
-            <div class="card mt-2">
+            <div class="card mt-2 border border-primary border-3">
                 <div class="card-header">
                     <div class="card-title">Validasi Data Input</div>
                     <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">

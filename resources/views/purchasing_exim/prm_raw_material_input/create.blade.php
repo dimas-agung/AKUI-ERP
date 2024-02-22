@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center mb-3">
                     <h4 class="card-title">Input Purchasing Raw Material</h4>
@@ -140,7 +140,7 @@
 
     {{-- table --}}
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="card-title">Validasi</div>
                 <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
@@ -177,7 +177,7 @@
 @endsection
 @section('script')
     <script>
-        // Menambahkan event listener untuk perubahan nilai pada input nomor nota supplier dan select nama supplier
+        // // Menambahkan event listener untuk perubahan nilai pada input nomor nota supplier dan select nama supplier
         $('#nomor_nota_supplier').on('input', generateNomorNotaInternal);
         $('#nama_supplier').on('change', generateNomorNotaInternal);
         // $('#nomor_nota_supplier, #nama_supplier').on('input change', generateNomorNotaInternal);
@@ -195,27 +195,6 @@
         // Event listener untuk perubahan nilai pada total harga nota atau berat bersih
         $('#total_harga_nota').on('change', updateHargaDeal);
         $('#berat_bersih').on('input', updateHargaDeal);
-
-        $('#nama_supplier').on('change', function() {
-            // Mengambil nilai id_box yang dipilih
-            let selectedNamaSupplier = $(this).val();
-            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
-            $.ajax({
-                url: `{{ route('PrmRawMaterialInput.getDataSupplier') }}`,
-                method: 'GET',
-                data: {
-                    nama_supplier: selectedNamaSupplier
-                },
-                success: function(response) {
-                    console.log(response);
-                    let inisial_supplier = response.inisial_supplier;
-                    generateNomorNotaInternal(inisial_supplier);
-                },
-                error: function(error) {
-                    console.error('Error:', error);
-                }
-            });
-        });
 
         // idbox
         $('#jenis').on('change', function() {
@@ -240,25 +219,48 @@
                 }
             });
         });
+
         // generate nomor internal
-        function generateNomorNotaInternal(inisial_supplier) {
+        function generateNomorNotaInternal() {
             const nomorNotaSupplier = $('#nomor_nota_supplier').val();
             const namaSupplier = $('#nama_supplier').val();
 
-            // ambil tanggal, bulan, tahun
-            const now = new Date();
-            const tahun = now.getFullYear().toString().substr(-2); // Ambil 2 digit terakhir tahun
-            const bulan = ('0' + (now.getMonth() + 1)).slice(-2); // Menambah '0' jika satu digit
-            const tanggal = ('0' + now.getDate()).slice(-2);
-            console.log(inisial_supplier);
-            // Membentuk nomor nota internal dengan menggabungkan nama supplier dan nomor nota supplier
-            const nomorNotaInternal = `${inisial_supplier}_${nomorNotaSupplier}_${tanggal}${bulan}${tahun}`;
-            console.log(nomorNotaInternal);
+            // Periksa apakah kedua input sudah terisi
+            if (nomorNotaSupplier && namaSupplier) {
+                const now = new Date();
+                const tahun = now.getFullYear().toString().substr(-2);
+                const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+                const tanggal = ('0' + now.getDate()).slice(-2);
 
-            // Menampilkan nomor nota internal pada input nomor nota internal
-            $('#nomor_nota_internal').val(nomorNotaInternal);
+                // Ambil inisial_supplier dari nama_supplier
+                let inisial_supplier = ''; // Inisialisasi inisial_supplier
+                $.ajax({
+                    url: `{{ route('PrmRawMaterialInput.getDataSupplier') }}`,
+                    method: 'GET',
+                    data: {
+                        nama_supplier: namaSupplier
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        inisial_supplier = response.inisial_supplier;
 
+                        // Membentuk nomor nota internal dengan menggabungkan inisial_supplier, nomorNotaSupplier, dan tanggal
+                        const nomorNotaInternal =
+                            `${inisial_supplier}_${nomorNotaSupplier}_${tanggal}${bulan}${tahun}`;
+                        console.log(nomorNotaInternal);
+
+                        // Menampilkan nomor nota internal pada input nomor nota internal
+                        $('#nomor_nota_internal').val(nomorNotaInternal);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
         }
+
+        //
+
         // generate ID_Box
         function generateIdBox(jenis) {
             const nomorNotaInternal = $('#nomor_nota_internal').val();

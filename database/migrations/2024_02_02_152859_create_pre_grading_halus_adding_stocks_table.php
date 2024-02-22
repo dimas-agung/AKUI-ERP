@@ -23,8 +23,8 @@ return new class extends Migration
             $table->float('kadar_air');
             $table->float('berat_adding');
             $table->float('pcs_adding');
-            $table->float('modal');
-            $table->float('total_modal');
+            $table->float('modal', 16, 4);
+            $table->float('total_modal', 16, 4);
             $table->string('status_stock');
             $table->timestamps();
         });
