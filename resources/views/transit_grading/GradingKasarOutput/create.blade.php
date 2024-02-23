@@ -343,10 +343,10 @@
                         }
 
                         // Memeriksa apakah nomor_job sudah terisi, jika belum maka diisi
-                        if (!tombolAddDiklik) {
-                            const nomor_job = generateNomorBSTB(response.inisial_tujuan, 'JOB');
-                            $('#nomor_job').val(nomor_job);
-                        }
+                        // if (!tombolAddDiklik) {
+                        const nomor_job = generateNomorBSTB(response.inisial_tujuan, 'JOB');
+                        $('#nomor_job').val(nomor_job);
+                        // }
                     }
                 },
                 error: function(error) {

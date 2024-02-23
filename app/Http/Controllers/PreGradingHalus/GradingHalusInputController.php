@@ -28,33 +28,31 @@ class GradingHalusInputController extends Controller
         ]);
     }
 
-    public function create(): View
+    public function create()
     {
         $PreGHI = GradingHalusInput::with('PreGradingHalusAddingStock')->get();
         $TransitPre = PreGradingHalusAddingStock::with('GradingHalusInput')->get();
         $Unit = MasterJenisGradingHalus::with('GradingHalusInput')->get();
-        // return $PrmRawMOIC;
+        // return $TransitPre;
         return view('PreGradingHalus.GradingHalusInput.create', compact('PreGHI', 'TransitPre', 'Unit'));
     }
 
     public function set(Request $request)
     {
-        $nomor_bstb = $request->nomor_bstb;
-        $data = PreGradingHalusAddingStock::where('nomor_bstb',$nomor_bstb)->first();
-        $data = PreGradingHalusAddingStock::where('nomor_bstb',$nomor_bstb)->get();
+        $nomor_grading = $request->nomor_grading;
+        $data = PreGradingHalusAddingStock::where('nomor_grading',$nomor_grading)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
     }
     public function setUnit(Request $request)
     {
-        $nama = $request->nama;
-        $data = MasterJenisGradingHalus::where('nama',$nama)->first();
-        $data = MasterJenisGradingHalus::where('nama',$nama)->get();
+        $jenis = $request->jenis; // Perbaikan disini
+        $data = MasterJenisGradingHalus::where('jenis', $jenis)->first();
 
-        // Kembalikan nomor batch sebagai respons
         return response()->json($data);
     }
+
 
     protected $GradingHalusInputService;
 

@@ -77,11 +77,12 @@
                                             <td class="text-center">{{ $PCO->jenis_raw_material }}</td>
                                             {{-- <td class="text-center">{{ $PCO->kadar_air }}</td> --}}
                                             <td class="text-center">{{ $PCO->jenis_kirim }}</td>
-                                            <td class="text-center">{{ $PCO->berat_kirim }}</td>
-                                            <td class="text-center">{{ $PCO->pcs_kirim }}</td>
-                                            {{-- <td class="text-center">{{ $PCO->tujuan_kirim }}</td> --}}
-                                            <td class="text-center">{{ $PCO->modal }}</td>
-                                            <td class="text-center">{{ $PCO->total_modal }}</td>
+                                            <td class="text-center">{{ number_format($PCO->berat_kirim, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">{{ number_format($PCO->pcs_kirim, 0, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($PCO->modal, 0, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($PCO->total_modal, 0, ',', '.') }}
+                                            </td>
                                             <td class="text-center">{{ $PCO->operator_sikat_kompresor }}</td>
                                             <td class="text-center">{{ $PCO->operator_flek_poles }}</td>
                                             <td class="text-center">{{ $PCO->operator_flek_cutter }}</td>
@@ -92,8 +93,10 @@
                                             <td class="text-center">{{ $PCO->rontokan_bahan }}</td>
                                             <td class="text-center">{{ $PCO->rontokan_serabut }}</td>
                                             <td class="text-center">{{ $PCO->ws_0_0_0 }}</td>
-                                            <td class="text-center">{{ $PCO->berat_pre_cleaning }}</td>
-                                            <td class="text-center">{{ $PCO->pcs_pre_cleaning }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($PCO->berat_pre_cleaning, 2, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($PCO->pcs_pre_cleaning, 0, ',', '.') }}</td>
                                             <td class="text-center">{{ $PCO->susut }}</td>
                                             <td class="text-center">{{ $PCO->user_created }}</td>
                                             <td class="text-center">{{ $PCO->user_updated }}</td>

@@ -294,7 +294,7 @@
                                         <li
                                             class="submenu-item {{ Request::is('grading_halus_input*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingHalusInput.index') }}"
-                                                class="submenu-link">Pre-Grading Halus Input</a>
+                                                class="submenu-link">Grading Halus Input</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -464,7 +464,7 @@
                 paging: true,
                 scrollCollapse: true,
                 scrollX: true,
-                scrollY: 350,
+                scrollY: '100vh',
                 fixedHeader: true,
                 columnDefs: [{
                     "targets": '_all',
