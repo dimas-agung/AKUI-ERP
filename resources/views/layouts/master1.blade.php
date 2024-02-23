@@ -492,7 +492,7 @@
                 paging: true,
                 scrollCollapse: true,
                 scrollX: true,
-                scrollY: '45vh', // Atur tinggi scroll sebagai 50% tinggi viewport
+                scrollY: '100vh', // Atur tinggi scroll sebagai 50% tinggi viewport
                 fixedHeader: true, // Aktifkan FixedHeader plugin
                 columnDefs: [{
                     "targets": '_all',
