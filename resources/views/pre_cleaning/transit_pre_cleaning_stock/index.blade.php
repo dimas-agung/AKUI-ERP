@@ -62,13 +62,15 @@
                                             <td class="text-center">{{ $TPCS->id_box_raw_material }}</td>
                                             <td class="text-center">{{ $TPCS->jenis_raw_material }}</td>
                                             <td class="text-center">{{ $TPCS->jenis_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->berat_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->pcs_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->kadar_air }}</td>
+                                            <td class="text-center">{{ number_format($TPCS->berat_kirim, 0, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">{{ number_format($TPCS->pcs_kirim, 0, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($TPCS->kadar_air, 2, ',', '.') }}</td>
                                             <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
                                             <td class="text-center">{{ $TPCS->nomor_grading }}</td>
-                                            <td class="text-center">{{ $TPCS->modal }}</td>
-                                            <td class="text-center">{{ $TPCS->total_modal }}</td>
+                                            <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}
+                                            </td>
                                             <td class="text-center">{{ $TPCS->keterangan }}</td>
                                             <td class="text-center">{{ $TPCS->user_created }}</td>
                                             <td class="text-center">{{ $TPCS->user_updated }}</td>

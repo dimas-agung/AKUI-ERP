@@ -427,43 +427,52 @@
             susutTabel = susutTabel.padStart(4, '0');
 
             // Validasi input (sesuai kebutuhan)
-            if (!nomor_job || !id_box_grading_kasar) {
-                alert('Nomor Job Dan ID Box Grading Kasar Required.');
-                return;
+            if (nomor_job.trim() === '' || nomor_bstb.trim() === '' || operator_sikat_kompresor.trim() === '' ||
+                operator_flek_poles.trim() === '' || operator_flek_cutter.trim() === '' || kuningan.trim() === '' ||
+                sterofoam.trim() === '' || karat.trim() === '' || rontokan_fisik.trim() === '' ||
+                rontokan_bahan.trim() === '' || rontokan_serabut.trim() === '' || ws_0_0_0.trim() === '' ||
+                berat_pre_cleaning.trim() === '' || pcs_pre_cleaning.trim() === '') {
+                // Menampilkan SweetAlert untuk pesan error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Harap isi semua kolom.'
+                });
+                return; // Berhenti jika ada input yang kosong
             }
 
-            let newRow = '<tr>' +
-                '<td class="text-center">' + nomor_job + '</td>' +
-                '<td class="text-center">' + id_box_grading_kasar + '</td>' +
-                '<td class="text-center">' + nomor_bstb + '</td>' +
-                '<td class="text-center">' + id_box_raw_material + '</td>' +
-                '<td class="text-center">' + nomor_batch + '</td>' +
-                '<td class="text-center">' + nomor_nota_internal + '</td>' +
-                '<td class="text-center">' + nama_supplier + '</td>' +
-                '<td class="text-center">' + jenis_raw_material + '</td>' +
-                '<td class="text-center">' + kadar_air + '</td>' +
-                '<td class="text-center">' + jenis_kirim + '</td>' +
-                '<td class="text-center">' + berat_kirim + '</td>' +
-                '<td class="text-center">' + pcs_kirim + '</td>' +
-                '<td class="text-center">' + tujuan_kirim + '</td>' +
-                '<td class="text-center">' + modal + '</td>' +
-                '<td class="text-center">' + total_modal + '</td>' +
-                '<td class="text-center">' + operator_sikat_kompresor + '</td>' +
-                '<td class="text-center">' + operator_flek_poles + '</td>' +
-                '<td class="text-center">' + operator_flek_cutter + '</td>' +
-                '<td class="text-center">' + kuningan + '</td>' +
-                '<td class="text-center">' + sterofoam + '</td>' +
-                '<td class="text-center">' + karat + '</td>' +
-                '<td class="text-center">' + rontokan_fisik + '</td>' +
-                '<td class="text-center">' + rontokan_bahan + '</td>' +
-                '<td class="text-center">' + rontokan_serabut + '</td>' +
-                '<td class="text-center">' + ws_0_0_0 + '</td>' +
-                '<td class="text-center">' + berat_pre_cleaning + '</td>' +
-                '<td class="text-center">' + pcs_pre_cleaning + '</td>' +
-                '<td class="text-center">' + susutTabel + '</td>' +
-                // '<td class="text-center">' + "sisa_berat" + '</td>' +
-                '<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
-                '</tr>';
+            let newRow = `<tr>` +
+                `<td class="text-center">${nomor_job}</td>` +
+                `<td class="text-center">${id_box_grading_kasar}</td>` +
+                `<td class="text-center">${nomor_bstb}</td>` +
+                `<td class="text-center">${id_box_raw_material}</td>` +
+                `<td class="text-center">${nomor_batch}</td>` +
+                `<td class="text-center">${nomor_nota_internal}</td>` +
+                `<td class="text-center">${nama_supplier}</td>` +
+                `<td class="text-center">${jenis_raw_material}</td>` +
+                `<td class="text-center">${kadar_air}</td>` +
+                `<td class="text-center">${jenis_kirim}</td>` +
+                `<td class="text-center">${berat_kirim}</td>` +
+                `<td class="text-center">${pcs_kirim}</td>` +
+                `<td class="text-center">${tujuan_kirim}</td>` +
+                `<td class="text-center">${modal}</td>` +
+                `<td class="text-center">${total_modal}</td>` +
+                `<td class="text-center">${operator_sikat_kompresor}</td>` +
+                `<td class="text-center">${operator_flek_poles}</td>` +
+                `<td class="text-center">${operator_flek_cutter}</td>` +
+                `<td class="text-center">${kuningan}</td>` +
+                `<td class="text-center">${sterofoam}</td>` +
+                `<td class="text-center">${karat}</td>` +
+                `<td class="text-center">${rontokan_fisik}</td>` +
+                `<td class="text-center">${rontokan_bahan}</td>` +
+                `<td class="text-center">${rontokan_serabut}</td>` +
+                `<td class="text-center">${ws_0_0_0}</td>` +
+                `<td class="text-center">${berat_pre_cleaning}</td>` +
+                `<td class="text-center">${pcs_pre_cleaning}</td>` +
+                `<td class="text-center">${susutTabel}</td>` +
+                // `<td class="text-center"> + "sisa_berat" + </td>` +
+                `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
+                `</tr>`;
             // Tambahkan Kedalam Tabel
             $('#dataTable tbody').append(newRow);
 

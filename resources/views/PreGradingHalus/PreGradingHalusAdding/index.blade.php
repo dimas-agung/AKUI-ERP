@@ -59,13 +59,20 @@
                                             <td class="text-center">{{ $PGHA->nomor_nota_internal }}</td>
                                             <td class="text-center">{{ $PGHA->nama_supplier }}</td>
                                             <td class="text-center">{{ $PGHA->jenis_raw_material }}</td>
-                                            <td class="text-center">{{ $PGHA->kadar_air }}</td>
+                                            {{-- <td class="text-center">{{ $PGHA->kadar_air }}</td> --}}
+                                            <td class="text-center">{{ number_format($PGHA->kadar_air, 2, ',', '.') }}</td>
                                             <td class="text-center">{{ $PGHA->jenis_kirim }}</td>
-                                            <td class="text-center">{{ $PGHA->berat_kirim }}</td>
-                                            <td class="text-center">{{ $PGHA->pcs_kirim }}</td>
+                                            {{-- <td class="text-center">{{ $PGHA->berat_kirim }}</td> --}}
+                                            <td class="text-center">{{ number_format($PGHA->berat_kirim, 0, ',', '.') }}
+                                            </td>
+                                            {{-- <td class="text-center">{{ $PGHA->pcs_kirim }}</td> --}}
+                                            <td class="text-center">{{ number_format($PGHA->pcs_kirim, 0, ',', '.') }}</td>
                                             <td class="text-center">{{ $PGHA->tujuan_kirim }}</td>
-                                            <td class="text-center">{{ $PGHA->modal }}</td>
-                                            <td class="text-center">{{ $PGHA->total_modal }}</td>
+                                            {{-- <td class="text-center">{{ $PGHA->modal }}</td> --}}
+                                            <td class="text-center">{{ number_format($PGHA->modal, 2, ',', '.') }}</td>
+                                            {{-- <td class="text-center">{{ $PGHA->total_modal }}</td> --}}
+                                            <td class="text-center">{{ number_format($PGHA->total_modal, 2, ',', '.') }}
+                                            </td>
                                             <td class="text-center">{{ $PGHA->user_created }}</td>
                                             <td class="text-center">{{ $PGHA->user_updated }}</td>
                                             <td class="text-center">{{ $PGHA->created_at }}</td>
