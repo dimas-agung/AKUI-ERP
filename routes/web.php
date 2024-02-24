@@ -243,6 +243,16 @@ Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusAddingStoc
     Route::delete('/pre_grading_halus_adding_stock/destroy/{id}', 'destroy')->name('PreGradingHalusAddingStock.destroy');
 });
 
+Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentAddingController::class)->group(function () {
+    Route::get('/adjustment_adding', 'index')->name('AdjustmentAdding.index');
+    Route::get('/adjustment_adding/create', 'create')->name('AdjustmentAdding.create');
+    Route::post('/adjustment_adding/store', 'store')->name('AdjustmentAdding.store');
+    Route::get('/adjustment_adding/show/{id}', 'show')->name('AdjustmentAdding.show');
+    Route::get('/adjustment_adding/edit/{id}', 'edit')->name('AdjustmentAdding.edit');
+    Route::put('/adjustment_adding/update/{id}', 'update')->name('AdjustmentAdding.update');
+    Route::delete('/adjustment_adding/destroy/{id}', 'destroy')->name('AdjustmentAdding.destroy');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

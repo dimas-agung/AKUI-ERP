@@ -289,11 +289,6 @@
             return id_box_grading_kasar;
         }
 
-
-
-
-
-
         let dataArray = [];
 
         function addRow() {
@@ -319,9 +314,17 @@
             let total_pcs = $('#total_pcs').val();
 
             // Validasi input (sesuai kebutuhan)
-            if (!nomor_grading || !nomor_batch) {
-                alert('Nomor Grading and nomor_batch are required.');
-                return;
+            if (nomor_grading.trim() === '' || nomor_batch.trim() === '' || id_box_raw_material.trim() === '' ||
+                nomor_nota_internal.trim() === '' || nama_supplier.trim() === '' || jenis_raw_material.trim() === '' ||
+                berat.trim() === '' || kadar_air.trim() === '' || modal.trim() === '' || total_modal.trim() === '' ||
+                harga_estimasi.trim() === '' || berat_grading.trim() === '' || pcs_grading.trim() === '') {
+                // Menampilkan SweetAlert untuk pesan error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Harap isi semua kolom.'
+                });
+                return; // Berhenti jika ada input yang kosong
             }
 
             let id_box_grading_kasar = generateIdBoxGradingKasar();
@@ -466,14 +469,11 @@
             // $('#kadar_air').val();
             // $('#modal').val();
             // $('#total_modal').val();
-            $('#jenis').val($('#jenis option:first').val()).trigger('change');
+            $('#jenis_grading').val($('#jenis_grading option:first').val()).trigger('change');
             // $('#jenis').val('');
             $('#berat_grading').val('');
             $('#pcs_grading').val('');
             $('#keterangan').val('');
-            // $('#total_susut').val();
-            // $('#total_berat').val();
-            // $('#total_pcs').val();
         }
 
         //

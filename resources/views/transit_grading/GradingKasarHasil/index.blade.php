@@ -71,25 +71,24 @@
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $GradingKH->doc_no }}</td>
                                             <td class="text-center">{{ $GradingKH->nomor_grading }}</td>
-                                            <td class="text-center">
-                                                {{ $GradingKH->id_box_raw_material }}</td>
+                                            <td class="text-center">{{ $GradingKH->id_box_raw_material }}</td>
                                             <td class="text-center">{{ $GradingKH->id_box_grading_kasar }}</td>
                                             <td class="text-center">{{ $GradingKH->nomor_batch }}</td>
                                             <td class="text-center">{{ $GradingKH->nama_supplier }}</td>
                                             <td class="text-center">{{ $GradingKH->nomor_nota_internal }}</td>
                                             <td class="text-center">{{ $GradingKH->jenis_raw_material }}</td>
-                                            {{-- <td class="text-center">{{ $GradingKH->berat }}</td> --}}
-                                            <td class="text-center">{{ number_format($GradingKH->berat, 2, ',', '.') }}
-                                            </td>
+                                            <td class="text-center">{{ $GradingKH->berat }}</td>
+                                            {{-- <td class="text-center">{{ number_format($GradingKH->berat, 2, ',', '.') }}
+                                            </td> --}}
                                             <td class="text-center">{{ $GradingKH->kadar_air }}</td>
                                             <td class="text-center">{{ $GradingKH->jenis_grading }}</td>
                                             <td class="text-center">{{ $GradingKH->berat_grading }}</td>
                                             <td class="text-center">{{ $GradingKH->pcs_grading }}</td>
                                             <td class="text-center">{{ $GradingKH->susut }}</td>
                                             <td class="text-center">{{ $GradingKH->modal }}</td>
-                                            <td class="text-center">{{ number_format($GradingKH->berat, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">{{ $GradingKH->total_modal }}</td>
+                                            {{-- <td class="text-center">{{ number_format($GradingKH->berat, 2, ',', '.') }}
+                                            </td> --}}
+                                            {{-- <td class="text-center">{{ $GradingKH->total_modal }}</td> --}}
                                             <td class="text-center">{{ $GradingKH->total_modal }}</td>
                                             <td class="text-center">{{ $GradingKH->biaya_produksi }}</td>
                                             <td class="text-center">{{ $GradingKH->harga_estimasi }}</td>
