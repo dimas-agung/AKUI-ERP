@@ -147,6 +147,8 @@
                                         <label>Harga Estimasi</label>
                                         <input type="text" id="harga_estimasi" class="form-control"
                                             name="harga_estimasi" readonly>
+                                        <input type="hidden" id="harga_esti" name="harga_esti">
+                                        <input type="hidden" id="pengurangan" name="pengurangan">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -279,6 +281,7 @@
                         $('#total_modal').val(response.total_modal);
 
                         // Update nomor BSTB setiap kali nomor batch berubah
+                        hargaEstimasi();
                         generateNomorBSTB();
                     },
                     error: function(error) {
@@ -297,11 +300,13 @@
                     jenis: selectedUnit
                 },
                 success: function(response) {
-                    console.log(response);
+                    console.log('pengurangan harga=' + response.pengurangan_harga);
                     $('#kategori_susut').val(response.kategori_susut);
-                    $('#harga_estimasi').val(response.harga_estimasi);
+                    $('#harga_esti').val(response.harga_estimasi);
+                    $('#pengurangan').val(response.pengurangan_harga);
 
                     // Update nomor BSTB setiap kali jenis grading berubah
+                    hargaEstimasi();
                     generateNomorBSTB();
                 },
                 error: function(error) {
@@ -309,6 +314,34 @@
                 }
             });
         });
+
+        function hargaEstimasi() {
+            // Pastikan nilai modal adalah angka
+            const modal_number = parseFloat($('#modal').val());
+
+            // Cek apakah nomor_grading dan jenis_grading sudah terisi
+            const nomorGradingTerisi = $('#nomor_grading').val() !== '';
+            const jenisGradingTerisi = $('#jenis_grading').val() !== '';
+
+            // Pastikan nilai modal adalah angka dan nomor_grading serta jenis_grading sudah terisi
+            if (!isNaN(modal_number) && nomorGradingTerisi && jenisGradingTerisi) {
+                // Pastikan nilai pengurangan_harga adalah angka
+                const pengurangan_harga_number = parseFloat($('#pengurangan').val());
+                // Pastikan nilai harga_estimasi adalah angka
+                const harga_estimasi = parseFloat($('#harga_esti').val());
+
+                // Menghasilkan nomor BSTB baru
+                if (isNaN(pengurangan_harga_number) || pengurangan_harga_number === null || pengurangan_harga_number ===
+                    0) {
+                    $('#harga_estimasi').val(harga_estimasi);
+                } else {
+                    $('#harga_estimasi').val(pengurangan_harga_number * modal_number);
+                }
+            } else {
+                // Jika nomor_grading atau jenis_grading belum terisi, tidak melakukan perhitungan
+                console.log('Nomor grading atau jenis grading belum terisi.');
+            }
+        }
 
         function generateNomorBSTB() {
             const nomor_batch = $('#nomor_batch').val();
@@ -321,6 +354,49 @@
             $('#id_box_grading_halus').val(nomorBSTB);
 
             return nomorBSTB;
+        }
+
+        function hitungBeratGradingPerAdding() {
+            // Menyimpan berat grading berdasarkan kategori susut
+            let beratGradingPerKategoriSusut = {};
+
+            // Iterasi melalui setiap baris tabel
+            $('#tableBody tr').each(function() {
+                let kategoriSusut = $(this).find('td:eq(15)').text(); // Kolom 15 berisi kategori susut
+                let beratGrading = parseFloat($(this).find('td:eq(10)').text()); // Kolom 10 berisi berat grading
+                let beratAdding = parseFloat($(this).find('td:eq(7)').text()); // Kolom 7 berisi berat adding
+
+                // Pastikan beratGrading dan beratAdding adalah angka yang valid
+                if (!isNaN(beratGrading) && !isNaN(beratAdding)) {
+                    // Menambahkan berat grading ke dalam kategori susut yang sesuai
+                    if (kategoriSusut in beratGradingPerKategoriSusut) {
+                        beratGradingPerKategoriSusut[kategoriSusut] += beratGrading;
+                    } else {
+                        beratGradingPerKategoriSusut[kategoriSusut] = beratGrading;
+                    }
+                }
+            });
+
+            // Menghitung berat grading per adding untuk setiap kategori susut dan memperbarui tabel
+            for (let kategoriSusut in beratGradingPerKategoriSusut) {
+                let totalBeratGrading = beratGradingPerKategoriSusut[kategoriSusut];
+                let totalBeratAdding = parseFloat($('#berat_adding').val()); // Menggunakan berat adding dari input form
+
+                // Menghindari pembagian oleh nol
+                if (totalBeratAdding !== 0) {
+                    let beratGradingPerAdding = totalBeratGrading / totalBeratAdding;
+
+                    // Memperbarui tabel dengan hasil perhitungan
+                    $('#tableBody tr').each(function() {
+                        let currentKategoriSusut = $(this).find('td:eq(15)')
+                            .text(); // Kolom 15 berisi kategori susut
+                        if (currentKategoriSusut === kategoriSusut) {
+                            $(this).find('td:eq(17)').text(beratGradingPerAdding.toFixed(
+                                2)); // Kolom 30 untuk menampilkan hasil perhitungan
+                        }
+                    });
+                }
+            }
         }
 
 
@@ -421,6 +497,9 @@
                 '</td><td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
 
             $('#tableBody').append(newRow);
+
+            // Setelah berhasil menambahkan baris baru, panggil fungsi untuk menghitung berat grading per adding
+            hitungBeratGradingPerAdding();
 
             // Menambahkan data ke dalam array
             // dataArrayDocNo.push(doc_no)

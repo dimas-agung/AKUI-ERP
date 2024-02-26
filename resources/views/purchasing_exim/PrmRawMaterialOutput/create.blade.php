@@ -141,7 +141,7 @@
                                             <label>Total Modal</label>
                                             <input type="text" id="total_modal" class="form-control"
                                                 name="total_modal" value="{{ old('total_modal') }}" readonly>
-                                            <input type="hidden" id="total_modal_stock" name="">
+                                            <input type="hidden" id="total_modal_stock" name="total_modal_stock">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -352,6 +352,8 @@
                                             <label>Total Modal</label>
                                             <input type="text" id="total_modal_edit" class="form-control"
                                                 name="total_modal_edit" readonly>
+                                            <input type="hidden" id="total_modal_edit_stock"
+                                                name="total_modal_edit_stock">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -721,6 +723,7 @@
             editModal.find('#inisial_tujuan_edit').val(editedData.inisial_tujuan);
             editModal.find('#modal_edit').val(editedData.modal);
             editModal.find('#total_modal_edit').val(editedData.total_modal);
+            editModal.find('#total_modal_edit_stock').val(editedData.total_modal_stock);
             editModal.find('#keterangan_item_edit').val(editedData.keterangan_item);
             editModal.find('#user_created_edit').val(editedData.user_created);
             editModal.find('#nomor_nota_internal_edit').val(editedData.nomor_nota_internal);
@@ -751,6 +754,7 @@
                 inisial_tujuan: $('#inisial_tujuan_edit').val(),
                 modal: $('#modal_edit').val(),
                 total_modal: $('#total_modal_edit').val(),
+                total_modal_stock: $('#total_modal_edit_stock').val(),
                 keterangan_item: $('#keterangan_item_edit').val(),
                 user_created: $('#user_created_edit').val(),
                 nomor_nota_internal: $('#nomor_nota_internal_edit').val(),
@@ -811,7 +815,8 @@
                     '</td><td>' +
                     rowData.tujuan_kirim + '</td><td>' + rowData.letak_tujuan + '</td><td>' + rowData.inisial_tujuan +
                     '</td><td>' +
-                    rowData.modal + '</td><td>' + rowData.total_modal + '</td><td>' + rowData.keterangan_item +
+                    rowData.modal + '</td><td>' + rowData.total_modal + '</td><td class="d-none">' + rowData
+                    .total_modal_stock + '</td><td>' + rowData.keterangan_item +
                     '</td><td>' +
                     rowData.user_created + '</td><td><button onclick="editRow(' + i +
                     ')" class="btn btn-warning" data-toggle="modal" data-target="#editModal">Edit</button></td>' +

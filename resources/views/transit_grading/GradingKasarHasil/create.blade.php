@@ -71,12 +71,14 @@
                             name="jenis_grading" id="jenis_grading" placeholder="Pilih jenis grading">
                             <option value="">Pilih Jenis Grading</option>
                             @foreach ($MasterJenisGradingKasar as $MasterJGK)
-                                <option value="{{ $MasterJGK->nama }},{{ $MasterJGK->harga_estimasi }}">
+                                <option
+                                    value="{{ $MasterJGK->nama }},{{ $MasterJGK->harga_estimasi }},{{ $MasterJGK->presentase_pengurangan_harga }}">
                                     {{ $MasterJGK->nama }}
                                 </option>
                             @endforeach
                         </select>
                         <input type="hidden" id="harga_estimasi" name="harga_estimasi">
+                        <input type="hidden" id="presetanse_pengurangan_harga" name="presetanse_pengurangan_harga">
                     </div>
                     <div class="col-md-4">
                         <label for="berat_grading" class="form-label">Berat Grading</label>
@@ -212,13 +214,17 @@
                 var selectedOption = $(this).find("option:selected");
                 var values = selectedOption.val().split(',');
 
+                console.log("data = " + values);
                 // Ambil nilai sesuai kebutuhan Anda
                 var nama = values[0];
                 var hargaEstimasi = values[1];
-                $('#harga_estimasi').val(hargaEstimasi)
+                var presentasePenguranganHarga = values[2];
+                $('#harga_estimasi').val(hargaEstimasi);
+                $('#presetanse_pengurangan_harga').val(presentasePenguranganHarga);
                 // Log untuk memeriksa nilai
                 console.log("Nama: " + nama);
                 console.log("Harga Estimasi: " + hargaEstimasi);
+                console.log("Prosentase Pengurangan Harga: " + presentasePenguranganHarga);
             });
         });
         // hitung nilai berat
@@ -306,6 +312,7 @@
             let total_modal = $('#total_modal').val();
             let jenis_grading = $('#jenis_grading').val().split(',');
             let harga_estimasi = $('#harga_estimasi').val();
+            let presetanse_pengurangan_harga = $('#presetanse_pengurangan_harga').val();
             let berat_grading = $('#berat_grading').val();
             let pcs_grading = $('#pcs_grading').val();
             let keterangan = $('#keterangan').val();
@@ -424,6 +431,17 @@
             // let susutTotal = susut;
             // let susutTotal = total_susut;
 
+            // Mengecek dan menetapkan nilai yang akan dimasukkan ke dalam dataArray
+            let hargaEstimasiToSend = harga_estimasi;
+            console.log("Harga Estimasi Lama= " + hargaEstimasiToSend);
+            if (presetanse_pengurangan_harga === '' || presetanse_pengurangan_harga === null ||
+                presetanse_pengurangan_harga === 0) {
+                hargaEstimasiToSend = harga_estimasi;
+            } else {
+                hargaEstimasiToSend = presetanse_pengurangan_harga * modal;
+            }
+
+            console.log("Harga Estimasi Baru= " + hargaEstimasiToSend);
 
             dataArray.push({
                 // doc_no: doc_no,
@@ -444,7 +462,7 @@
                 modal: modal,
                 total_modal: total_modal,
                 biaya_produksi: 0,
-                harga_estimasi: harga_estimasi,
+                harga_estimasi: hargaEstimasiToSend,
                 total_harga: 0,
                 nilai_laba_rugi: 0,
                 nilai_prosentase_total_keuntungan: 0,
@@ -471,6 +489,8 @@
             // $('#total_modal').val();
             $('#jenis_grading').val($('#jenis_grading option:first').val()).trigger('change');
             // $('#jenis').val('');
+            // $('#harga_estimasi').val('');
+            // $('#presetanse_pengurangan_harga').val('');
             $('#berat_grading').val('');
             $('#pcs_grading').val('');
             $('#keterangan').val('');
