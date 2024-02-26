@@ -180,8 +180,7 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarHasilCont
     Route::get('/grading_kasar_hasil/getDataSupplier', 'getDataSupplier')->name('GradingKasarHasil.getDataSupplier');
     Route::get('/grading_kasar_hasil/getDataJenis', 'getDataJenis')->name('GradingKasarHasil.getDataJenis');
     Route::post('/grading_kasar_hasil/simpanData', 'simpanData')->name('GradingKasarHasil.simpanData');
-    Route::post('/grading_kasar_hasil/simpanDataItem', 'simpanDataItem')->name('GradingKasarHasil.simpanDataItem');
-    Route::get('/grading_kasar_hasil/get_data_nama_jenis', 'set')->name('gradingKasarHasil.set');
+    Route::get('/grading_kasar_hasil/get_data_nama_jenis', 'set')->name('GradingKasarHasil.set');
 });
 Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarStockController::class)->group(function(){
     Route::get('/grading_kasar_stock', 'index')->name('GradingKasarStock.index');

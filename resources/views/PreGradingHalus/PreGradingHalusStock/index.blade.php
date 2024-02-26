@@ -57,20 +57,20 @@
                                             <td class="text-center">{{ $TPCS->id_box_raw_material }}</td>
                                             <td class="text-center">{{ $TPCS->jenis_raw_material }}</td>
                                             <td class="text-center">{{ $TPCS->jenis_kirim }}</td>
-                                            <td class="text-center">{{ number_format($TPCS->berat_masuk, 2, ',', '.') }}
+                                            <td class="text-center">{{ $TPCS->berat_masuk }}
                                             </td>
-                                            <td class="text-center">{{ number_format($TPCS->pcs_masuk, 0, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($TPCS->berat_keluar, 2, ',', '.') }}
+                                            <td class="text-center">{{ $TPCS->pcs_masuk }}</td>
+                                            <td class="text-center">{{ $TPCS->berat_keluar }}
                                             </td>
-                                            <td class="text-center">{{ number_format($TPCS->pcs_keluar, 0, ',', '.') }}
+                                            <td class="text-center">{{ $TPCS->pcs_keluar }}
                                             </td>
-                                            <td class="text-center">{{ number_format($TPCS->sisa_berat, 0, ',', '.') }}
+                                            <td class="text-center">{{ $TPCS->sisa_berat }}
                                             </td>
-                                            <td class="text-center">{{ number_format($TPCS->sisa_pcs, 0, ',', '.') }}</td>
+                                            <td class="text-center">{{ $TPCS->sisa_pcs }}</td>
                                             <td class="text-center">{{ number_format($TPCS->kadar_air, 2, ',', '.') }}</td>
                                             <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
-                                            <td class="text-center">{{ number_format($TPCS->modal, 0, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($TPCS->total_modal, 0, ',', '.') }}
+                                            <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}
                                             </td>
                                         </tr>
                                     @empty

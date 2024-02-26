@@ -36,22 +36,6 @@
                             @endif
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group mandatory">
-                                        <label>Nomer Dokument</label>
-                                        <input type="text" id="doc_no" class="form-control" name="doc_no"
-                                            placeholder="Masukkan Nomer Dokument" data-parsley-required="true">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>NIP Admin</label>
-                                        <input type="text" id="user_created" class="form-control" name="user_created"
-                                            placeholder="Masukkan User Created" data-parsley-required="true">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nomor Grading</label>
                                         <select id="nomor_grading" class="select2 form-select" name="nomor_grading">
@@ -74,6 +58,20 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Id Box Raw Material</label>
+                                        <input type="text" class="form-control" id="id_box_raw_material"
+                                            name="id_box_raw_material" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Id Box Grading Halus</label>
+                                        <input type="text" class="form-control" id="id_box_grading_halus"
+                                            name="id_box_grading_halus" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -140,8 +138,15 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Kategori Susut</label>
-                                        <input type="text" id="kategori_susut" class="form-control"
-                                            name="kategori_susut" readonly>
+                                        <input type="text" id="kategori_susut" class="form-control" name="kategori_susut"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Harga Estimasi</label>
+                                        <input type="text" id="harga_estimasi" class="form-control"
+                                            name="harga_estimasi" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -162,12 +167,19 @@
                                             placeholder="Masukkan pcs grading" data-parsley-required="true">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Keterangan</label>
-                                    <input type="text" id="keterangan" class="form-control" name="keterangan"
-                                        placeholder="Masukkan keterangan">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>NIP Admin</label>
+                                        <input type="text" id="user_created" class="form-control" name="user_created"
+                                            placeholder="Masukkan User Created" data-parsley-required="true">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Keterangan</label>
+                                        <input type="text" id="keterangan" class="form-control" name="keterangan"
+                                            placeholder="Masukkan keterangan">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -193,7 +205,6 @@
                     <table class="table table-striped mt-3">
                         <thead>
                             <tr>
-                                <th class="text-center" scope="col">No</th>
                                 <th class="text-center" scope="col">Nomor grading</th>
                                 <th class="text-center" scope="col">Id Box Raw Material</th>
                                 <th class="text-center" scope="col">Nomor Batch</th>
@@ -203,6 +214,9 @@
                                 <th class="text-center" scope="col">Kadar Air</th>
                                 <th class="text-center" scope="col">Berat Adding</th>
                                 <th class="text-center" scope="col">Pcs Adding</th>
+                                <th class="text-center" scope="col">Jenis Grading</th>
+                                <th class="text-center" scope="col">Berat Grading</th>
+                                <th class="text-center" scope="col">Pcs Grading</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">Modal</th>
                                 <th class="text-center" scope="col">Total Modal</th>
@@ -242,13 +256,9 @@
     <script>
         let selectedNomorBSTB = ''; // Variabel untuk menyimpan nomor BSTB yang dipilih sebelumnya
         $('#nomor_grading').on('change', function() {
-            // Mengambil nilai nomor_grading yang dipilih
             let selectedIdBox = $(this).val();
-            // Hanya lakukan permintaan AJAX jika nomor BSTB yang baru dipilih tidak sama dengan yang sebelumnya
             if (selectedNomorBSTB !== selectedIdBox) {
-                selectedNomorBSTB = selectedIdBox; // Perbarui nomor BSTB yang dipilih sebelumnya
-
-                // Melakukan permintaan AJAX ke controller untuk mendapatkan data
+                selectedNomorBSTB = selectedIdBox;
                 $.ajax({
                     url: `{{ route('GradingHalusInput.set') }}`,
                     method: 'GET',
@@ -267,6 +277,9 @@
                         $('#pcs_adding').val(response.pcs_adding);
                         $('#modal').val(response.modal);
                         $('#total_modal').val(response.total_modal);
+
+                        // Update nomor BSTB setiap kali nomor batch berubah
+                        generateNomorBSTB();
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -276,25 +289,39 @@
         });
 
         $('#jenis_grading').on('change', function() {
-            // Mengambil nilai unit yang dipilih
             let selectedUnit = $(this).val();
-
-            // Melakukan permintaan AJAX ke controller untuk mendapatkan data
             $.ajax({
                 url: `{{ route('GradingHalusInput.setUnit') }}`,
                 method: 'GET',
                 data: {
-                    jenis: selectedUnit // Perbaikan disini
+                    jenis: selectedUnit
                 },
                 success: function(response) {
                     console.log(response);
                     $('#kategori_susut').val(response.kategori_susut);
+                    $('#harga_estimasi').val(response.harga_estimasi);
+
+                    // Update nomor BSTB setiap kali jenis grading berubah
+                    generateNomorBSTB();
                 },
                 error: function(error) {
                     console.error('Error:', error);
                 }
             });
         });
+
+        function generateNomorBSTB() {
+            const nomor_batch = $('#nomor_batch').val();
+            const jenis_grading = $('#jenis_grading').val();
+
+            // Menghasilkan nomor BSTB baru
+            const nomorBSTB = `${nomor_batch}_${jenis_grading}`;
+
+            // Mengisi input dengan nomor BSTB baru
+            $('#id_box_grading_halus').val(nomorBSTB);
+
+            return nomorBSTB;
+        }
 
 
         function addRow() {
@@ -357,9 +384,6 @@
                 return;
             }
 
-            // Memanggil fungsi generateNomorBSTB untuk mendapatkan nomor_bstb
-            var nomor_bstb = generateNomorBSTB(inisial_tujuan);
-
             var newRow = '<tr>' +
                 '<td>' + nomor_grading + '</td>' +
                 '<td>' + id_box_raw_material + '</td>' +
@@ -394,8 +418,7 @@
                 '<td>' + fix_hpp + '</td>' +
                 '<td>' + fix_total_hpp + '</td>' +
                 '<td>' + user_created + '</td>' +
-                '<td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
-                '</tr>';
+                '</td><td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
 
             $('#tableBody').append(newRow);
 
@@ -461,6 +484,24 @@
 
             // Update indeks baris terakhir
             currentRowIndex++;
+        }
+
+        // Ambil indeks terakhir sebelum menghapus baris
+        var lastRowIndex = currentRowIndex;
+
+        function hapusBaris(button) {
+            // Dapatkan elemen baris terkait dengan tombol delete yang diklik
+            let row = $(button).closest('tr');
+
+            // Hapus baris dari dataArray berdasarkan indeks baris di tabel
+            let rowIndex = row.index();
+            dataArray.splice(rowIndex, 1);
+
+            // Hapus baris dari tabel
+            row.remove();
+
+            // Update indeks baris terakhir
+            currentRowIndex--;
         }
 
         function sendData() {

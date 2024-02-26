@@ -54,11 +54,11 @@
                                             <td class="text-center">{{ $MasterStock->nama_supplier }}</td>
                                             <td class="text-center">{{ $MasterStock->jenis }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterStock->berat_masuk, 2, ',', '.') }}</td>
+                                                {{ $MasterStock->berat_masuk }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterStock->berat_keluar, 2, ',', '.') }}</td>
+                                                {{ $MasterStock->berat_keluar }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterStock->sisa_berat, 2, ',', '.') }}</td>
+                                                {{ $MasterStock->sisa_berat }}</td>
                                             <td class="text-center">
                                                 {{ number_format($MasterStock->avg_kadar_air, 2, ',', '.') }}</td>
                                             <td class="text-center">

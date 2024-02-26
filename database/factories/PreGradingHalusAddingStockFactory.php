@@ -21,6 +21,7 @@ class PreGradingHalusAddingStockFactory extends Factory
             'unit' => $unit->nama,
             'nomor_grading' => $this->faker->unique()->randomNumber(9),
             'id_box_grading_kasar' => $this->faker->unique()->randomNumber(9),
+            'id_box_raw_material' => $this->faker->unique()->randomNumber(9),
             'nomor_batch' => $this->faker->unique()->randomNumber(5),
             'nomor_nota_internal' => $this->faker->unique()->randomNumber(5),
             'nama_supplier' => $this->faker->unique()->userName,

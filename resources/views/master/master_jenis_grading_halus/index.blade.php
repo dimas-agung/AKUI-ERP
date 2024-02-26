@@ -128,7 +128,7 @@ is-invalid
                                             <td class="text-center">{{ $MasterJGK->jenis }}</td>
                                             <td class="text-center">{{ $MasterJGK->kategori_susut }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterJGK->upah_operator, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterJGK->upah_operator, 2, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterJGK->pengurangan_harga == '')
                                                 @else
@@ -137,7 +137,7 @@ is-invalid
                                             </td>
                                             {{-- <td>{{ $MasterJGK->pengurangan_harga }}</td> --}}
                                             <td class="text-center">
-                                                {{ number_format($MasterJGK->harga_estimasi, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterJGK->harga_estimasi, 2, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterJGK->status == 1)
                                                     Aktif

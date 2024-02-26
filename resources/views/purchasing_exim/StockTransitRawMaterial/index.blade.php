@@ -50,13 +50,13 @@
                                 <td class="text-center">{!! $post->nomor_bstb !!}</td>
                                 <td class="text-center">{!! $post->nama_supplier !!}</td>
                                 <td class="text-center">{!! $post->jenis !!}</td>
-                                <td class="text-center">{!! number_format($post->berat, 2, ',', '.') !!}</td>
+                                <td class="text-center">{!! $post->berat !!}</td>
                                 <td class="text-center">{!! number_format($post->kadar_air, 2, ',', '.') !!}</td>
                                 <td class="text-center">{!! $post->tujuan_kirim !!}</td>
                                 <td class="text-center">{!! $post->letak_tujuan !!}</td>
                                 <td class="text-center">{!! $post->inisial_tujuan !!}</td>
-                                <td class="text-center">{!! number_format($post->modal, 0, ',', '.') !!}</td>
-                                <td class="text-center">{!! number_format($post->total_modal, 0, ',', '.') !!}</td>
+                                <td class="text-center">{!! number_format($post->modal, 2, ',', '.') !!}</td>
+                                <td class="text-center">{!! number_format($post->total_modal, 2, ',', '.') !!}</td>
                                 <td class="text-center">{!! $post->keterangan !!}</td>
                                 <td class="text-center">{!! $post->user_created !!}</td>
                                 <td class="text-center">{!! $post->user_updated !!}</td>

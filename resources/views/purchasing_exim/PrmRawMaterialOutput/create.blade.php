@@ -141,6 +141,7 @@
                                             <label>Total Modal</label>
                                             <input type="text" id="total_modal" class="form-control"
                                                 name="total_modal" value="{{ old('total_modal') }}" readonly>
+                                            <input type="hidden" id="total_modal_stock" name="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -546,18 +547,24 @@
             const selisihBerat = berat_masuk - berat;
             const selisihBerate = berat_masuk_edit - berat_edit;
 
-            // Melakukan perhitungan selisih selisih_berat
-            const totalmodal = selisihBerat * modal;
-            const totalmodale = selisihBerate * modal_e;
+            // Melakukan perhitungan selisih berat stock
+            const totalmodalstk = selisihBerat * modal;
+            const totalmodalestk = selisihBerate * modal_e;
+
+            // Melakukan perhitungan selisih berat
+            const totalmodal = berat * modal;
+            const totalmodale = berat_edit * modal_e;
 
             // Memasukkan hasil perhitungan ke dalam input selisih berat
             console.log(selisihBerat);
             console.log(totalmodal);
+            console.log(totalmodalstk);
             $('#selisih_berat').val(isFinite(selisihBerat) ? selisihBerat.toFixed(2) : '');
             $('#selisih_berat_edit').val(isFinite(selisihBerate) ? selisihBerate.toFixed(2) : '');
-            // Memasukkan hasil perhitungan ke dalam input selisih berat
             $('#total_modal').val(isFinite(totalmodal) ? totalmodal.toFixed(2) : '');
             $('#total_modal_edit').val(isFinite(totalmodale) ? totalmodale.toFixed(2) : '');
+            $('#total_modal_stock').val(isFinite(totalmodalstk) ? totalmodalstk.toFixed(2) : '');
+            $('#total_modal_edit_stock').val(isFinite(totalmodalestk) ? totalmodalestk.toFixed(2) : '');
         }
 
         // Variabel global untuk menyimpan indeks baris terakhir
@@ -581,6 +588,7 @@
             var inisial_tujuan = $('#inisial_tujuan').val();
             var modal = $('#modal').val();
             var total_modal = $('#total_modal').val();
+            var total_modal_stock = $('#total_modal_stock').val();
             var keterangan_item = $('#keterangan_item').val();
             var user_created = $('#user_created').val();
             var nomor_nota_internal = $('#nomor_nota_internal').val();
@@ -628,6 +636,7 @@
                 '<td>' + inisial_tujuan + '</td>' +
                 '<td>' + modal + '</td>' +
                 '<td>' + total_modal + '</td>' +
+                '<td class="d-none">' + total_modal_stock + '</td>' +
                 '<td>' + keterangan_item + '</td>' +
                 '<td>' + user_created + '</td>' +
                 '<td><button onclick="editRow(' + currentRowIndex +
@@ -638,7 +647,6 @@
             $('#tableBody').append(newRow);
 
             // Menambahkan data ke dalam array
-            // dataArrayDocNo.push(doc_no)
             dataArray.push({
                 doc_no: doc_no,
                 nomor_bstb: nomor_bstb,
@@ -655,6 +663,7 @@
                 inisial_tujuan: inisial_tujuan,
                 modal: modal,
                 total_modal: total_modal,
+                total_modal_stock: total_modal_stock,
                 keterangan_item: keterangan_item,
                 user_created: user_created,
                 nomor_nota_internal: nomor_nota_internal,
@@ -675,6 +684,7 @@
             $('#inisial_tujuan').val('');
             $('#modal').val('');
             $('#total_modal').val('');
+            $('#total_modal_stock').val('');
             $('#keterangan_item').val('');
             // Menonaktif kan nilai input ketika ditambah
             $('#doc_no').prop('readonly', true);

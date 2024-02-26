@@ -57,27 +57,28 @@ class GradingKasarHasilController extends Controller
     public function simpanData(
         GradingKasarHasilRequest $request,
         GradingKasarHasilService $GradingKasarHasilService,
-
     ) {
         $dataArray = json_decode($request->input('data'));
+        $total_susut = $request->input('total_susut');
         $dataColl = collect($dataArray);
-        $berats = array();
+        $berat_gradings = array();
         $harga_estimasi = array();
         $totalModal = array();
         // return $dataColl;
         foreach ($dataColl as $key => $value) {
-            $berats[] = $value->berat;
+            $berat_gradings[] = $value->berat_grading;
             $harga_estimasi[] = $value->harga_estimasi;
             $totalModal[] = $value->total_modal;
         };
         $dataHpp = 'dataHPPService';
         //panggil service
 
-        $result = $GradingKasarHasilService->simpanData($dataArray); //ngambil array id dari data yang diinput
-        $dataHpp = $this->HppService->calculate($berats, $harga_estimasi, $totalModal);
+        $result = $GradingKasarHasilService->simpanData($dataArray, $total_susut); //ngambil array id dari data yang diinput
+        $dataHpp = $this->HppService->calculate($berat_gradings, $harga_estimasi, $totalModal);
         // return $result;
 
         $arrayIds = $result['data'];
+        // return;
         foreach ($arrayIds as $key => $value) {
             // return $key;
             $data = GradingKasarHasil::where('id', $value)->update([
@@ -99,6 +100,33 @@ class GradingKasarHasilController extends Controller
         }
     }
 
+    // show
+    // public function show(string $id)
+    // {
+    //     $i = 1;
+    //     // $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+    //     // $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
+    //     //get by ID
+    //     $MasterGKH = PrmRawMaterialInput::findOrFail($id);
+    //     $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
+    //         ->where(['id' => $id])
+    //         ->first();
+
+
+    //     return response()->view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM', 'i'));
+    // }
+    // destroy
+    // public function destroyInput($id): RedirectResponse
+    // {
+    //     //get by ID
+    //     $GradingKasarHasil = GradingKasarHasil::findOrFail($id);
+
+    //     //delete
+    //     $GradingKasarHasil->delete();
+
+    //     //redirect to index
+    //     return redirect()->route('grading_kasar_hasil.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    // }
     public function destroyInput($id): RedirectResponse
     {
         try {

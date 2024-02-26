@@ -77,9 +77,9 @@
                                             <td class="text-center">{{ $PCO->jenis_raw_material }}</td>
                                             {{-- <td class="text-center">{{ $PCO->kadar_air }}</td> --}}
                                             <td class="text-center">{{ $PCO->jenis_kirim }}</td>
-                                            <td class="text-center">{{ number_format($PCO->berat_kirim, 2, ',', '.') }}
+                                            <td class="text-center">{{ $PCO->berat_kirim }}
                                             </td>
-                                            <td class="text-center">{{ number_format($PCO->pcs_kirim, 0, ',', '.') }}</td>
+                                            <td class="text-center">{{ $PCO->pcs_kirim }}</td>
                                             <td class="text-center">{{ number_format($PCO->modal, 0, ',', '.') }}</td>
                                             <td class="text-center">{{ number_format($PCO->total_modal, 0, ',', '.') }}
                                             </td>

@@ -51,13 +51,13 @@
                                     <td class="text-center">{{ $item->id_box }}</td>
                                     <td class="text-center">{{ $item->nama_supplier }}</td>
                                     <td class="text-center">{{ $item->jenis }}</td>
-                                    <td class="text-center">{{ number_format($item->berat, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ $item->berat }}</td>
                                     <td class="text-center">{{ number_format($item->kadar_air, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ $item->letak_tujuan }}</td>
                                     <td class="text-center">{{ $item->inisial_tujuan }}</td>
-                                    <td class="text-center">{{ number_format($item->modal, 0, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->total_modal, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->keterangan_item }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">
