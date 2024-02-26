@@ -71,8 +71,7 @@
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $GradingKH->doc_no }}</td>
                                             <td class="text-center">{{ $GradingKH->nomor_grading }}</td>
-                                            <td class="text-center">
-                                                {{ $GradingKH->id_box_raw_material }}</td>
+                                            <td class="text-center">{{ $GradingKH->id_box_raw_material }}</td>
                                             <td class="text-center">{{ $GradingKH->id_box_grading_kasar }}</td>
                                             <td class="text-center">{{ $GradingKH->nomor_batch }}</td>
                                             <td class="text-center">{{ $GradingKH->nama_supplier }}</td>
@@ -86,26 +85,54 @@
                                             </td>
                                             <td class="text-center">{{ $GradingKH->nomor_nota_internal }}</td>
                                             <td class="text-center">{{ $GradingKH->jenis_raw_material }}</td>
-                                            <td class="text-center">{{ $GradingKH->berat }}</td>
-                                            <td class="text-center">{{ $GradingKH->kadar_air }}</td>
-                                            <td class="text-center">{{ $GradingKH->jenis_grading }}</td>
-                                            <td class="text-center">{{ $GradingKH->berat_grading }}</td>
-                                            <td class="text-center">{{ $GradingKH->pcs_grading }}</td>
-                                            <td class="text-center">{{ $GradingKH->susut }}</td>
-                                            <td class="text-center">{{ $GradingKH->modal }}</td>
-                                            <td class="text-center">{{ $GradingKH->total_modal }}</td>
-                                            <td class="text-center">{{ $GradingKH->biaya_produksi }}</td>
-                                            <td class="text-center">{{ $GradingKH->harga_estimasi }}</td>
-                                            <td class="text-center">{{ $GradingKH->total_harga }}</td>
-                                            <td class="text-center">{{ $GradingKH->nilai_laba_rugi }}</td>
-                                            <td class="text-center">{{ $GradingKH->nilai_prosentase_total_keuntungan }}
+                                            <td class="text-center">{{ number_format($GradingKH->berat, 0, ',', '.') }}
                                             </td>
-                                            <td class="text-center">{{ $GradingKH->nilai_dikurangi_keuntungan }}</td>
-                                            <td class="text-center">{{ $GradingKH->prosentase_harga_gramasi }}</td>
-                                            <td class="text-center">{{ $GradingKH->selisih_laba_rugi_kg }}</td>
-                                            <td class="text-center">{{ $GradingKH->selisih_laba_rugi_gram }}</td>
-                                            <td class="text-center">{{ $GradingKH->hpp }}</td>
-                                            <td class="text-center">{{ $GradingKH->total_hpp }}</td>
+                                            <td class="text-center">{{ number_format($GradingKH->kadar_air, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">{{ $GradingKH->jenis_grading }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->berat_grading, 0, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->pcs_grading, 0, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($GradingKH->susut, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->modal, 2, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->total_modal, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->biaya_produksi, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->harga_estimasi, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->total_harga, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->nilai_laba_rugi, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->nilai_prosentase_total_keuntungan, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->nilai_dikurangi_keuntungan, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->prosentase_harga_gramasi, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->selisih_laba_rugi_kg, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->selisih_laba_rugi_gram, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">{{ number_format($GradingKH->hpp, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ number_format($GradingKH->total_hpp, 2, ',', '.') }}
+                                            </td>
                                             <td class="text-center">{{ $GradingKH->keterangan }}</td>
                                             <td class="text-center">{{ $GradingKH->user_created }}</td>
                                             <td class="text-center">{{ $GradingKH->user_updated }}</td>

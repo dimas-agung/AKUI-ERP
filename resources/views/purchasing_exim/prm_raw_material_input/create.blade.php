@@ -31,7 +31,6 @@
                         <label for="nomor_nota_supplier" class="form-label">Nomor Nota Supplier</label>
                         <input type="text" class="form-control" id="nomor_nota_supplier">
                     </div>
-
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
                         <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
@@ -297,7 +296,7 @@
             let totalHargaNota = beratNota * hargaNota;
 
             // Memasukkan hasil perhitungan ke dalam input total harga nota menggunakan jQuery
-            $('#total_harga_nota').val(isFinite(totalHargaNota) ? totalHargaNota.toFixed(4) : '');
+            $('#total_harga_nota').val(isFinite(totalHargaNota) ? totalHargaNota.toFixed(2) : '');
 
             // Memanggil updateHargaDeal setiap kali updateTotalHarga terjadi
             updateHargaDeal();
@@ -313,7 +312,7 @@
                 const hargaDeal = totalHargaNota / (beratBersih !== 0 ? beratBersih : 1);
 
                 // Memasukkan hasil perhitungan ke dalam input harga deal menggunakan jQuery
-                $('#harga_deal').val(hargaDeal.toFixed(4));
+                $('#harga_deal').val(hargaDeal.toFixed(2));
             } else {
                 // Jika total harga nota kosong, tampilkan nilai dari berat bersih
                 $('#harga_deal').val(beratBersih !== 0 ? '0.00' : '');

@@ -14,7 +14,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Detail Data Purchasing Input Item
+                                Detail Data Purchasing Input Item Trest
                             </div>
                         </h5>
                     </div>
@@ -49,7 +49,7 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $MasterPRIM->doc_no }}</td>
                                             <td>{{ $MasterPRIM->jenis }}</td>
-                                            <td>{{ $MasterPRIM->berat_nota }}</td>
+                                            <td>{{ number_format($MasterPRIM->berat_nota, 0, ',', '.') }}</td>
                                             <td>{{ $MasterPRIM->berat_kotor }}</td>
                                             <td>{{ $MasterPRIM->berat_bersih }}</td>
                                             <td>{{ $MasterPRIM->selisih_berat }}</td>

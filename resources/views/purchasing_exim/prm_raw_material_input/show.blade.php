@@ -51,15 +51,22 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $MasterPRIM->doc_no }}</td>
                                             <td>{{ $MasterPRIM->jenis }}</td>
-                                            <td>{{ $MasterPRIM->berat_nota }}</td>
-                                            <td>{{ $MasterPRIM->berat_kotor }}</td>
-                                            <td>{{ $MasterPRIM->berat_bersih }}</td>
-                                            <td>{{ $MasterPRIM->selisih_berat }}</td>
-                                            <td>{{ $MasterPRIM->kadar_air }}</td>
+                                            <td>{{ number_format($MasterPRIM->berat_nota, 2, ',', '.') }}</td>
+                                            {{-- <td>{{ $MasterPRIM->berat_kotor }}</td> --}}
+                                            <td>{{ number_format($MasterPRIM->berat_kotor, 2, ',', '.') }}</td>
+                                            {{-- <td>{{ $MasterPRIM->berat_bersih }}</td> --}}
+                                            <td>{{ number_format($MasterPRIM->berat_bersih, 2, ',', '.') }}</td>
+                                            {{-- <td>{{ $MasterPRIM->selisih_berat }}</td> --}}
+                                            <td>{{ number_format($MasterPRIM->selisih_berat, 2, ',', '.') }}</td>
+                                            {{-- <td>{{ $MasterPRIM->kadar_air }}</td> --}}
+                                            <td>{{ number_format($MasterPRIM->kadar_air, 2, ',', '.') }}</td>
                                             <td>{{ $MasterPRIM->id_box }}</td>
-                                            <td>{{ $MasterPRIM->harga_nota }}</td>
-                                            <td>{{ $MasterPRIM->total_harga_nota }}</td>
-                                            <td>{{ $MasterPRIM->harga_deal }}</td>
+                                            {{-- <td>{{ $MasterPRIM->harga_nota }}</td> --}}
+                                            <td>{{ number_format($MasterPRIM->harga_nota, 2, ',', '.') }}</td>
+                                            {{-- <td>{{ $MasterPRIM->total_harga_nota }}</td> --}}
+                                            <td>{{ number_format($MasterPRIM->total_harga_nota, 2, ',', '.') }}</td>
+                                            {{-- <td>{{ $MasterPRIM->harga_deal }}</td> --}}
+                                            <td>{{ number_format($MasterPRIM->harga_deal, 2, ',', '.') }}</td>
                                             <td>{{ $MasterPRIM->keterangan }}</td>
                                             <td>{{ $MasterPRIM->user_created }}</td>
                                             <td>{{ $MasterPRIM->user_updated }}</td>

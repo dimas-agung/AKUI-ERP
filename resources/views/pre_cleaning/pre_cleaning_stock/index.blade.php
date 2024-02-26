@@ -1,16 +1,16 @@
 @extends('layouts.master1')
 @section('menu')
-    Grading Kasar
+    Pre Cleaning
 @endsection
 @section('title')
-    Grading Kasar Stock
+    Pre Cleaning Stock
 @endsection
 @section('content')
     <div class="section">
         <div class="card border border-primary border-3">
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
-                    <h4 class="card-title">Data Grading Kasar Stock</h4>
+                    <h4 class="card-title">Data Pre Cleaning Stock</h4>
                 </div>
             </div>
             <div class="card-body" style="overflow: auto;">
@@ -56,15 +56,15 @@
                                     <td class="text-center">{{ $item->id_box_raw_material }}</td>
                                     <td class="text-center">{{ $item->jenis_raw_material }}</td>
                                     <td class="text-center">{{ $item->jenis_kirim }}</td>
-                                    <td class="text-center">{{ $item->berat_masuk }}</td>
-                                    <td class="text-center">{{ $item->berat_keluar }}</td>
-                                    <td class="text-center">{{ $item->pcs_masuk }}</td>
-                                    <td class="text-center">{{ $item->pcs_keluar }}</td>
-                                    <td class="text-center">{{ $item->avg_kadar_air }}</td>
+                                    <td class="text-center">{{ number_format($item->berat_masuk, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->berat_keluar, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->pcs_masuk, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->pcs_keluar, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->avg_kadar_air, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->nomor_grading }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
-                                    <td class="text-center">{{ $item->modal }}</td>
-                                    <td class="text-center">{{ $item->total_modal }}</td>
+                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">{{ $item->user_updated }}</td>

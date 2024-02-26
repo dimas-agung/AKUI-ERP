@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('jenis')->unique();
             $table->string('kategori_susut');
-            $table->float('upah_operator')->nullable();
+            $table->float('upah_operator', 16, 4)->nullable();
             $table->float('pengurangan_harga')->nullable();
-            $table->float('harga_estimasi')->nullable();
+            $table->float('harga_estimasi', 16, 4)->nullable();
             $table->string('status')->default('1');
             $table->timestamps();
         });
