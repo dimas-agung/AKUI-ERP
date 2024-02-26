@@ -489,7 +489,7 @@
                 paging: true,
                 scrollCollapse: true,
                 scrollX: true,
-                scrollY: 350,
+                scrollY: '100vh',
                 fixedHeader: true,
                 columnDefs: [{
                     "targets": '_all',
