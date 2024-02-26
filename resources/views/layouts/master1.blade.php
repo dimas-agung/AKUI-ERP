@@ -495,13 +495,8 @@
                 paging: true,
                 scrollCollapse: true,
                 scrollX: true,
-<<<<<<< HEAD
-                scrollY: '100vh',
-                fixedHeader: true,
-=======
                 scrollY: '100vh', // Atur tinggi scroll sebagai 50% tinggi viewport
                 fixedHeader: true, // Aktifkan FixedHeader plugin
->>>>>>> dev-helmi
                 columnDefs: [{
                     "targets": '_all',
                     "className": 'nowrap'
