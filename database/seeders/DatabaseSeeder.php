@@ -41,5 +41,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PreGradingHalusStockSeeder::class);
         $this->call(PreGradingHalusStockSeeder::class);
         $this->call(GradingHalusStockSeeder::class);
+        $this->call(MasterOngkosCuciSeeder::class);
     }
 }

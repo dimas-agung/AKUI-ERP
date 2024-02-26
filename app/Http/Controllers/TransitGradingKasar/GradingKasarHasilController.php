@@ -31,7 +31,7 @@ class GradingKasarHasilController extends Controller
         $GradingKasarHasil = GradingKasarHasil::all();
         return response()->view('transit_grading.GradingKasarHasil.index', [
             'grading_kasar_hasils'          => $GradingKasarHasil,
-            'i'                             => $i
+            'i'                             => $i,
         ]);
     }
 
