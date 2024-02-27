@@ -340,7 +340,7 @@
                                                 class="submenu-link">Pre Grading Halus Adding Stock</a>
                                         </li>
                                         <li
-                                            class="submenu-item {{ Request::is('adjustment_adding') ? 'active' : '' }}">
+                                            class="submenu-item {{ Request::is('adjustment_adding*') ? 'active' : '' }}">
                                             <a href="{{ route('AdjustmentAdding.index') }}"
                                                 class="submenu-link">Adjustment Adding</a>
                                         </li>

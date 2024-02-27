@@ -261,6 +261,9 @@ Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentAddingControlle
     Route::get('/adjustment_adding/edit/{id}', 'edit')->name('AdjustmentAdding.edit');
     Route::put('/adjustment_adding/update/{id}', 'update')->name('AdjustmentAdding.update');
     Route::delete('/adjustment_adding/destroy/{id}', 'destroy')->name('AdjustmentAdding.destroy');
+    Route::get('/adjustment_adding/get_data_nomor_job', 'set')->name('AdjustmentAdding.set');
+    Route::post('/adjustment_adding/simpanData', 'simpanData')->name('AdjustmentAdding.simpanData');
+    Route::post('/adjustment_adding/getDataPerusahaan', 'getDataPerusahaan')->name('AdjustmentAdding.getDataPerusahaan');
 });
 
 Auth::routes();

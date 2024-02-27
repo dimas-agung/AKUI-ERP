@@ -22,10 +22,11 @@ class AdjustmentAddingController extends Controller
     // create
     public function create()
     {
-        // $AdjustmentAdding = AdjustmentAdding::with('PreGradingHalusAdding')->get();
-        $AdjustmentAdding = AdjustmentAdding::all();
+        $GradingHalusStock = GradingHalusStock::with('AdjustmentAdding')->get();
+        // $AdjustmentAdding = AdjustmentAdding::all();
         return view('PreGradingHalus.AdjustmentAdding.create', [
-            'pre_grading_halus_stocks' => $AdjustmentAdding,
+            // 'pre_grading_halus_stocks' => $AdjustmentAdding,
+            'grading_halus_stocks' => $GradingHalusStock,
         ]);
     }
     // get data id Box
