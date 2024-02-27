@@ -357,8 +357,8 @@
         }
 
         function hitungBeratGradingPerAdding() {
-            // Menyimpan berat grading berdasarkan kategori susut
-            let beratGradingPerKategoriSusut = {};
+            // Menyimpan berat grading berdasarkan kategori susut SD
+            let beratGradingSD = 0;
 
             // Iterasi melalui setiap baris tabel
             $('#tableBody tr').each(function() {
@@ -368,34 +368,95 @@
 
                 // Pastikan beratGrading dan beratAdding adalah angka yang valid
                 if (!isNaN(beratGrading) && !isNaN(beratAdding)) {
-                    // Menambahkan berat grading ke dalam kategori susut yang sesuai
-                    if (kategoriSusut in beratGradingPerKategoriSusut) {
-                        beratGradingPerKategoriSusut[kategoriSusut] += beratGrading;
-                    } else {
-                        beratGradingPerKategoriSusut[kategoriSusut] = beratGrading;
+                    // Menambahkan berat grading jika kategori susut adalah "SD"
+                    if (kategoriSusut === "SD") {
+                        beratGradingSD += beratGrading;
                     }
                 }
             });
 
-            // Menghitung berat grading per adding untuk setiap kategori susut dan memperbarui tabel
-            for (let kategoriSusut in beratGradingPerKategoriSusut) {
-                let totalBeratGrading = beratGradingPerKategoriSusut[kategoriSusut];
-                let totalBeratAdding = parseFloat($('#berat_adding').val()); // Menggunakan berat adding dari input form
+            // Menghitung berat grading per adding untuk kategori SD
+            let totalBeratAdding = parseFloat($('#berat_adding').val()); // Menggunakan berat adding dari input form
+            let beratGradingPerAddingSD = totalBeratAdding !== 0 ? beratGradingSD / totalBeratAdding : 0;
 
-                // Menghindari pembagian oleh nol
-                if (totalBeratAdding !== 0) {
-                    let beratGradingPerAdding = totalBeratGrading / totalBeratAdding;
-
-                    // Memperbarui tabel dengan hasil perhitungan
-                    $('#tableBody tr').each(function() {
-                        let currentKategoriSusut = $(this).find('td:eq(15)')
-                            .text(); // Kolom 15 berisi kategori susut
-                        if (currentKategoriSusut === kategoriSusut) {
-                            $(this).find('td:eq(17)').text(beratGradingPerAdding.toFixed(
-                                2)); // Kolom 30 untuk menampilkan hasil perhitungan
-                        }
-                    });
+            // Memperbarui tabel dengan hasil perhitungan untuk kategori SD
+            $('#tableBody tr').each(function() {
+                let currentKategoriSusut = $(this).find('td:eq(15)').text(); // Kolom 15 berisi kategori susut
+                if (currentKategoriSusut === "SD") {
+                    $(this).find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(
+                        2)); // Kolom 17 untuk menampilkan hasil perhitungan
+                } else {
+                    $(this).find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(
+                        2
+                    )); // Kolom 17 untuk kategori selain SD akan menggunakan hasil perhitungan yang sama dengan kategori SD
                 }
+            });
+        }
+
+        function hitungRataRataBeratGradingPerAdding() {
+            let totalBeratGrading = 0;
+            let totalBeratAdding = parseFloat($('#berat_adding').val()); // Mengambil berat adding dari input form
+
+            // Menghitung total berat grading dari setiap baris tabel
+            $('#tableBody tr').each(function() {
+                let beratGrading = parseFloat($(this).find('td:eq(10)').text()); // Kolom 10 berisi berat grading
+
+                // Pastikan beratGrading adalah angka yang valid
+                if (!isNaN(beratGrading)) {
+                    totalBeratGrading += beratGrading;
+                }
+            });
+
+            // Menghindari pembagian oleh nol
+            if (totalBeratAdding !== 0) {
+                let rataRataBeratGradingPerAdding = totalBeratGrading / totalBeratAdding;
+
+                // Memperbarui tabel dengan hasil perhitungan
+                $('#tableBody tr').each(function() {
+                    $(this).find('td:eq(18)').text(rataRataBeratGradingPerAdding.toFixed(
+                        2)); // Kolom 30 untuk menampilkan hasil perhitungan
+                });
+            }
+        }
+
+        function hitungKontribusi() {
+            // Inisialisasi variabel untuk menyimpan total berat grading dari seluruh tabel
+            let totalBeratGrading = 0;
+            // Inisialisasi variabel untuk menyimpan jumlah data berat grading yang valid
+            let jumlahData = 0;
+
+            // Iterasi melalui setiap baris tabel
+            $('#tableBody tr').each(function() {
+                // Mendapatkan berat grading dari kolom yang sesuai
+                let beratGrading = parseFloat($(this).find('td:eq(10)').text()); // Kolom 10 berisi berat grading
+
+                // Pastikan beratGrading adalah angka yang valid
+                if (!isNaN(beratGrading)) {
+                    // Menambahkan berat grading ke total
+                    totalBeratGrading += beratGrading;
+                    // Menambah jumlah data berat grading yang valid
+                    jumlahData++;
+                }
+            });
+
+            // Menghindari pembagian oleh nol dan pastikan ada data berat grading yang valid
+            if (totalBeratGrading !== 0 && jumlahData > 0) {
+                // Iterasi melalui setiap baris tabel
+                $('#tableBody tr').each(function() {
+                    // Mendapatkan berat grading dari kolom yang sesuai
+                    let beratGrading = parseFloat($(this).find('td:eq(10)')
+                .text()); // Kolom 10 berisi berat grading
+                    // Menghitung presentase berat grading berdasarkan total berat grading
+                    let presentaseBeratGrading = (beratGrading / totalBeratGrading) * 100;
+
+                    // Menampilkan hasil perhitungan pada kolom yang sesuai
+                    $(this).find('td:eq(20)').text(Math.round(presentaseBeratGrading) + '%');
+                });
+            } else {
+                // Jika tidak ada data berat grading yang valid atau total berat grading adalah nol, set semua nilai pada kolom hasil perhitungan ke 0
+                $('#tableBody tr').each(function() {
+                    $(this).find('td:eq(20)').text('0%');
+                });
             }
         }
 
@@ -500,6 +561,10 @@
 
             // Setelah berhasil menambahkan baris baru, panggil fungsi untuk menghitung berat grading per adding
             hitungBeratGradingPerAdding();
+
+            // Setelah berhasil menambahkan baris ke tabel, panggil fungsi untuk menghitung rata-rata berat grading per adding
+            hitungRataRataBeratGradingPerAdding();
+            hitungKontribusi();
 
             // Menambahkan data ke dalam array
             // dataArrayDocNo.push(doc_no)

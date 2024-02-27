@@ -1,10 +1,12 @@
 <?php
 namespace App\Services;
 
+use App\Models\MasterJenisGradingHalus;
 use App\Models\PreCleaningOutput;
+use App\Models\PreGradingHalusAddingStock;
 use Illuminate\Http\Request;
 use App\Models\GradingHalusInput;
-use App\Models\PreGradingHalusStock;
+use App\Models\GradingHalusStock;
 use App\Models\TransitPreCleaningStock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -55,52 +57,45 @@ class GradingHalusInputService
                     // Buat instansi PreCleaningInput
                     GradingHalusInput::create($mergedData);
 
-                    PreGradingHalusStock::create([
-                        'unit'             => $mergedData['unit'] ?? 'grading halus',
-                        'nomor_job'             => $mergedData['nomor_job'],
-                        'id_box_grading_kasar'  => $mergedData['id_box_grading_kasar'],
-                        'nomor_bstb'    => $mergedData['nomor_bstb'],
-                        'nomor_batch'   => $mergedData['nomor_batch'],
-                        'nama_supplier' => $mergedData['nama_supplier'],
-                        'id_box_raw_material'        => $mergedData['id_box_raw_material'],
-                        'jenis_raw_material'         => $mergedData['jenis_raw_material'],
-                        'kadar_air'     => $mergedData['kadar_air'],
-                        'tujuan_kirim'      => $mergedData['tujuan_kirim'],
-                        'jenis_kirim'       => $mergedData['jenis_kirim'],
-                        'berat_keluar'      => $mergedData['berat_keluar'] ?? 0,
-                        'berat_masuk'       => $mergedData['berat_kirim'] ?? 0,
-                        'pcs_keluar'        => $mergedData['pcs_keluar'] ?? 0,
-                        'pcs_masuk'         => $mergedData['pcs_kirim'] ?? 0,
-                        'sisa_berat'         => $mergedData['berat_kirim'] ?? 0,
-                        'sisa_pcs'         => $mergedData['pcs_kirim'] ?? 0,
-                        'modal'             => $mergedData['modal'],
-                        'total_modal'       => $mergedData['total_modal'],
-                        'user_created'  => $mergedData['user_created'],
-                        'user_update'   => $mergedData['user_updated'] ?? `"There isn't any"`,
-                        'nomor_nota_internal'   => $mergedData['nomor_nota_internal']
+                    GradingHalusStock::create([
+                        'unit'                  => $mergedData['unit'] ?? 'grading halus',
+                        'id_box_grading_halus'  => $mergedData['id_box_grading_halus'],
+                        'nomor_batch'           => $mergedData['nomor_batch'],
+                        'nomor_nota_internal'   => $mergedData['nomor_nota_internal'],
+                        'nama_supplier'         => $mergedData['nama_supplier'],
+                        'jenis'                 => $mergedData['jenis_raw_material'],
+                        'berat_masuk'           => $mergedData['berat_grading'] ?? 0,
+                        'pcs_masuk'             => $mergedData['pcs_grading'] ?? 0,
+                        'berat_keluar'          => $mergedData['berat_keluars'] ?? 0,
+                        'pcs_keluar'            => $mergedData['pcs_keluars'] ?? 0,
+                        'sisa_berat'            => $mergedData['berat_grading'] ?? 0,
+                        'sisa_pcs'              => $mergedData['pcs_grading'] ?? 0,
+                        'modal'                 => $mergedData['modal'],
+                        'total_modal'           => $mergedData['total_modal'],
+                        'user_created'          => $mergedData['user_created'],
+                        'user_update'           => $mergedData['user_updated'] ?? `"There isn't any"`,
                     ]);
 
                     $itemObject = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $existingItems = TransitPreCleaningStock::where('nomor_job', $itemObject->nomor_job)
-                        ->where('nomor_bstb', $itemObject->nomor_bstb)
+                    $existingItems = PreGradingHalusAddingStock::where('nomor_grading', $itemObject->nomor_grading)
+                        ->where('nomor_batch', $itemObject->nomor_batch)
                         ->get();
 
                     foreach ($existingItems as $existingItem) {
 
                         // Update data dengan nilai baru
                         $existingItem->update([
-                            // Update data TransitPreCleaningStock
-                            'berat_kirim' => $itemObject->berat_kirims ?? 0,
-                            'pcs_kirim'   => $itemObject->pcs_kirims ?? 0,
+                            // Update data PreGradingHalusAddingStock
+                            'berat_adding' => $itemObject->berat_addings ?? 0,
+                            'pcs_adding'   => $itemObject->pcs_addings ?? 0,
                             'total_modal'  => $itemObject->total_modals ?? 0,
                             'user_updated' => $itemObject->user_created ?? "There isn't any",
                         ]);
                     }
 
-                    $existingItems = PreCleaningOutput::where('nama_supplier', $itemObject->nama_supplier)
-                    ->where('nomor_bstb', $itemObject->nomor_bstb)
+                    $existingItems = MasterJenisGradingHalus::where('jenis', $itemObject->jenis_grading)
                     ->get();
 
                     $dataToUpdate = [
@@ -152,7 +147,7 @@ class GradingHalusInputService
 
             foreach ($GradingHalusInputs as $PreCleaningI) {
                 // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
-                $PreCleaningS = PreGradingHalusStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
+                $PreCleaningS = GradingHalusStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
                     ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
                     ->first();
 

@@ -120,6 +120,16 @@ Route::controller(App\Http\Controllers\MasterJenisGradingHalusController::class)
     Route::delete('/master_jenis_grading_halus/destroy/{id}', 'destroy')->name('MasterJenisGradingHalus.destroy');
 });
 
+Route::controller(App\Http\Controllers\MasterOngkosCuciController::class)->group(function () {
+    Route::get('/master_ongkos_cuci', 'index')->name('MasterOngkosCuci.index');
+    Route::get('/master_ongkos_cuci/create', 'create')->name('MasterOngkosCuci.create');
+    Route::post('/master_ongkos_cuci/store', 'store')->name('MasterOngkosCuci.store');
+    Route::get('/master_ongkos_cuci/show/{id}', 'show')->name('MasterOngkosCuci.show');
+    Route::get('/master_ongkos_cuci/edit/{id}', 'edit')->name('MasterOngkosCuci.edit');
+    Route::put('/master_ongkos_cuci/update/{id}', 'update')->name('MasterOngkosCuci.update');
+    Route::delete('/master_ongkos_cuci/destroy/{id}', 'destroy')->name('MasterOngkosCuci.destroy');
+});
+
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
     Route::get('/prm_raw_material_input', 'index')->name('PrmRawMaterialInput.index');
     Route::get('/prm_raw_material_input/create', 'create')->name('PrmRawMaterialInput.create');

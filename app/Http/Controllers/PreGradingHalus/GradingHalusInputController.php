@@ -45,6 +45,7 @@ class GradingHalusInputController extends Controller
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
     }
+
     public function setUnit(Request $request)
     {
         $jenis = $request->jenis; // Perbaikan disini
