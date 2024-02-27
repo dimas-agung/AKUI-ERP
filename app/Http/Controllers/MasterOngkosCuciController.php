@@ -14,8 +14,6 @@ class MasterOngkosCuciController extends Controller
     {
         $i = 1;
         $MasterOngkosCuci = MasterOngkosCuci::all();
-        // return $PrmRawMaterialInput;
-        // return $MasterOngkosCuci;
         return response()->view('master.master_ongkos_cuci.index', [
             'MasterOngkosCuci' => $MasterOngkosCuci,
             'i' => $i
@@ -25,11 +23,17 @@ class MasterOngkosCuciController extends Controller
     public function store(Request $request): RedirectResponse
     {
         // Validate form
-        $this->validate($request, [
-            'unit'               => 'required',
-            'jenis_bulu'         => 'required',
-            'biaya_per_gram'     => 'required',
-        ]);
+        $this->validate(
+            $request,
+            [
+                'unit'               => 'required',
+                'jenis_bulu'         => 'required|unique:master_ongkos_cucis',
+                'biaya_per_gram'     => 'required',
+            ],
+            [
+                'jenis_bulu.unique' => 'Jenis bulu sudah digunakan.',
+            ]
+        );
 
         // Create MasterSupplier
         MasterOngkosCuci::create([
@@ -41,6 +45,7 @@ class MasterOngkosCuciController extends Controller
         // Redirect to index
         return redirect()->route('MasterOngkosCuci.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
+
     // show
     public function show(string $id)
     {
@@ -48,14 +53,14 @@ class MasterOngkosCuciController extends Controller
         $MasterOngkosCuci = MasterOngkosCuci::findOrFail($id);
 
         //render view
-        return view('master.master_ongkos_cuci.show', compact('Master$MasterOngkosCuci'));
+        return view('master.master_ongkos_cuci.show', compact('MasterOngkosCuci'));
     }
     // edit
     public function edit(string $id)
     {
         $MasterOngkosCuci = MasterOngkosCuci::findOrFail($id);
 
-        return view('master.master_ongkos_cuci.update', compact('Master$MasterOngkosCuci'));
+        return view('master.master_ongkos_cuci.update', compact('MasterOngkosCuci'));
     }
     // update
     public function update(Request $request, $id): RedirectResponse

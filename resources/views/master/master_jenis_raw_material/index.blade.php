@@ -41,10 +41,13 @@
                                         @csrf
                                         <label><strong>Jenis</strong></label>
                                         <div class="form-group">
-                                            <input type="text" name="jenis" placeholder="Masukkan jenis"
+                                            <input type="text" name="jenis" placeholder="Masukan Jenis"
                                                 class="form-control @error('jenis') is-invalid @enderror" required
                                                 oninvalid="this.setCustomValidity('Mohon isi Jenis')"
                                                 oninput="this.setCustomValidity('')">
+                                            @error('jenis')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <label><strong>Kategori Susut</strong></label>
                                         <div class="form-group">

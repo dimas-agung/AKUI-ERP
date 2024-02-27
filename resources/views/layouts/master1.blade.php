@@ -28,6 +28,12 @@
         .dataTables_wrapper {
             overflow-x: hidden;
         }
+
+        .dt-button {
+            background-color: #435EBE !important;
+            color: white !important;
+            border-radius: 5px !important;
+        }
     </style>
 </head>
 

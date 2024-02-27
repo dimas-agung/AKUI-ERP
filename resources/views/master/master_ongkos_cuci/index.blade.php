@@ -52,7 +52,11 @@
                                                 class="form-control @error('jenis_bulu') is-invalid @enderror" required
                                                 oninvalid="this.setCustomValidity('Mohon isi Jenis Bulu')"
                                                 oninput="this.setCustomValidity('')">
+                                            @error('jenis_bulu')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
+
                                         <label><strong>Biaya Per Gram</strong></label>
                                         <div class="form-group">
                                             <input type="text" name="biaya_per_gram" placeholder="Masukan Biaya Per Gram"
