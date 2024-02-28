@@ -166,7 +166,7 @@
                             </div>
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-primary" onclick="addRow()">Add</button>
-                                <a href="{{ url('/GradingKasarInput') }}" type="button" class="btn btn-danger"
+                                <a href="{{ Route('GradingKasarInput.index') }}" type="button" class="btn btn-danger"
                                     data-dismiss="modal">Close</a>
                             </div>
                         </div>
