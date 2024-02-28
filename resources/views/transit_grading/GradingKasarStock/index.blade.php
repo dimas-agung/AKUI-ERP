@@ -42,7 +42,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($grading_kasar_stocks as $item)
+                            @forelse ($grading_kasar_stocks as $GradingKS)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{{ $GradingKS->doc_no }}</td>
