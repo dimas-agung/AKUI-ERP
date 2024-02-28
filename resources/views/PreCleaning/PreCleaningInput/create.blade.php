@@ -162,52 +162,54 @@
                             var tableBody = $('#tableBody');
                             tableBody.empty();
 
-                            const rowData = response[0];
-                            console.log(rowData);
-                            var newRow = $('<tr>');
-                            // Tambahkan kolom-kolom sesuai kebutuhan
-                            newRow.append('<td>' + rowData.nomor_bstb + '</td>');
-                            newRow.append('<td>' + rowData.nomor_job + '</td>');
-                            newRow.append('<td>' + rowData.id_box_grading_kasar + '</td>');
-                            newRow.append('<td>' + rowData.nomor_batch + '</td>');
-                            newRow.append('<td>' + rowData.nomor_nota_internal + '</td>');
-                            newRow.append('<td>' + rowData.nama_supplier + '</td>');
-                            newRow.append('<td>' + rowData.id_box_raw_material + '</td>');
-                            newRow.append('<td>' + rowData.jenis_raw_material + '</td>');
-                            newRow.append('<td>' + rowData.jenis_grading + '</td>');
-                            newRow.append('<td>' + rowData.berat_keluar + '</td>');
-                            newRow.append('<td>' + rowData.pcs_keluar + '</td>');
-                            newRow.append('<td>' + rowData.avg_kadar_air + '</td>');
-                            newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
-                            newRow.append('<td>' + rowData.nomor_grading + '</td>');
-                            newRow.append('<td>' + rowData.modal + '</td>');
-                            newRow.append('<td>' + rowData.total_modal + '</td>');
-                            // Tambahkan baris ke dalam tabel
-                            tableBody.append(newRow);
-
-                            // Bersihkan dataArray sebelum menambahkan data baru
+                            // Menghapus dataArray sebelum menambahkan data baru
                             dataArray = [];
-                            // Menyimpan data dalam dataArray
-                            dataArray.push({
-                                nomor_bstb: rowData.nomor_bstb,
-                                nomor_job: rowData.nomor_job,
-                                jenis_kirim: rowData.jenis_kirim,
-                                id_box_grading_kasar: rowData.id_box_grading_kasar,
-                                nomor_batch: rowData.nomor_batch,
-                                nama_supplier: rowData.nama_supplier,
-                                id_box_raw_material: rowData.id_box_raw_material,
-                                jenis_raw_material: rowData.jenis_raw_material,
-                                tujuan_kirim: rowData.tujuan_kirim,
-                                jenis_kirim: rowData.jenis_grading,
-                                berat_kirim: rowData.berat_keluar,
-                                pcs_kirim: rowData.pcs_keluar,
-                                kadar_air: rowData.avg_kadar_air,
-                                nomor_grading: rowData.nomor_grading,
-                                modal: rowData.modal,
-                                total_modal: rowData.total_modal,
-                                nomor_nota_internal: rowData.nomor_nota_internal,
+
+                            // Iterasi melalui setiap data yang diterima
+                            response.forEach(function(rowData) {
+                                var newRow = $('<tr>');
+                                // Tambahkan kolom-kolom sesuai kebutuhan
+                                newRow.append('<td>' + rowData.nomor_bstb + '</td>');
+                                newRow.append('<td>' + rowData.nomor_job + '</td>');
+                                newRow.append('<td>' + rowData.id_box_grading_kasar + '</td>');
+                                newRow.append('<td>' + rowData.nomor_batch + '</td>');
+                                newRow.append('<td>' + rowData.nomor_nota_internal + '</td>');
+                                newRow.append('<td>' + rowData.nama_supplier + '</td>');
+                                newRow.append('<td>' + rowData.id_box_raw_material + '</td>');
+                                newRow.append('<td>' + rowData.jenis_raw_material + '</td>');
+                                newRow.append('<td>' + rowData.jenis_grading + '</td>');
+                                newRow.append('<td>' + rowData.berat_keluar + '</td>');
+                                newRow.append('<td>' + rowData.pcs_keluar + '</td>');
+                                newRow.append('<td>' + rowData.avg_kadar_air + '</td>');
+                                newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
+                                newRow.append('<td>' + rowData.nomor_grading + '</td>');
+                                newRow.append('<td>' + rowData.modal + '</td>');
+                                newRow.append('<td>' + rowData.total_modal + '</td>');
+
+                                // Tambahkan baris ke dalam tabel
+                                tableBody.append(newRow);
+
+                                // Menambahkan data ke dalam dataArray
+                                dataArray.push({
+                                    nomor_bstb: rowData.nomor_bstb,
+                                    nomor_job: rowData.nomor_job,
+                                    jenis_kirim: rowData.jenis_kirim,
+                                    id_box_grading_kasar: rowData.id_box_grading_kasar,
+                                    nomor_batch: rowData.nomor_batch,
+                                    nama_supplier: rowData.nama_supplier,
+                                    id_box_raw_material: rowData.id_box_raw_material,
+                                    jenis_raw_material: rowData.jenis_raw_material,
+                                    tujuan_kirim: rowData.tujuan_kirim,
+                                    jenis_kirim: rowData.jenis_grading,
+                                    berat_kirim: rowData.berat_keluar,
+                                    pcs_kirim: rowData.pcs_keluar,
+                                    kadar_air: rowData.avg_kadar_air,
+                                    nomor_grading: rowData.nomor_grading,
+                                    modal: rowData.modal,
+                                    total_modal: rowData.total_modal,
+                                    nomor_nota_internal: rowData.nomor_nota_internal,
+                                });
                             });
-                            console.log(dataArray);
                         } else {
                             // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
                             Swal.fire({
@@ -228,8 +230,6 @@
                 });
             }
         });
-
-
 
         function sendData() {
             var doc_no = $('#doc_no').val() || '';
