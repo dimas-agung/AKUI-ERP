@@ -166,11 +166,20 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
+                                            <label>Berat Masuk</label>
+                                            <input type="text" id="berat_masuk" class="form-control"
+                                                name="berat_masuk" value="{{ old('berat_masuk') }}"
+                                                onchange="handleChange(this)" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
                                             <label>Berat Keluar</label>
                                             <input type="text" id="berat_keluar" pattern="[0-9.]*"
                                                 inputmode="numeric"
                                                 onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                                                class="form-control" placeholder="Masukkan berat keluar">
+                                                class="form-control" placeholder="Masukkan berat keluar"
+                                                onchange="validateBeratKeluar()">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -181,16 +190,9 @@
                                                 class="form-control" placeholder="Masukkan pcs keluar">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Total Modal</label>
-                                            <input type="text" id="total_modal" class="form-control"
-                                                name="total_modal" placeholder="Masukkan total_modal" readonly>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Biaya Produksi</label>
                                             <input type="text" id="biaya_produksi" pattern="[0-9.]*"
@@ -199,7 +201,14 @@
                                                 class="form-control" placeholder="Masukkan Biaya Produksi">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Total Modal</label>
+                                            <input type="text" id="total_modal" class="form-control"
+                                                name="total_modal" placeholder="Masukkan total_modal" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Fix Total Modal</label>
                                             <input type="text" class="form-control" id="fix_total_modal"
@@ -301,6 +310,7 @@
                     $('#jenis_grading').val(response.jenis_grading);
                     $('#avg_kadar_air').val(response.avg_kadar_air);
                     $('#nomor_grading').val(response.nomor_grading);
+                    $('#berat_masuk').val(response.berat_masuk);
                     $('#modal, #fix_total_modal').val(response.modal);
                     $('#nomor_nota_internal').val(response.nomor_nota_internal);
                 },
@@ -355,7 +365,6 @@
             });
         });
 
-
         function generateNomorBSTB(inisial_tujuan, prefix) {
             const now = new Date();
             const tahun = now.getFullYear().toString().substr(-2);
@@ -376,7 +385,6 @@
             }
         }
 
-
         // Event listener untuk perubahan nilai pada total modal
         $('#modal').on('input', updateTotalmodal);
         $('#berat_keluar').on('input', updateTotalmodal);
@@ -391,6 +399,22 @@
 
             // Memasukkan hasil perhitungan ke dalam input selisih berat
             $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal);
+        }
+
+        // Fungsi untuk memeriksa apakah berat melebihi sisa berat
+        function validateBeratKeluar() {
+            var beratMasuk = parseFloat(document.getElementById('berat_masuk').value);
+            var beratKeluarInput = parseFloat(document.getElementById('berat_keluar').value);
+
+            if (beratKeluarInput > beratMasuk) {
+                document.getElementById('berat_keluar').value = ''; // Mengosongkan input berat keluar
+                Swal.fire({
+                    title: 'Warning!',
+                    text: "Berat keluar tidak boleh melebihi berat masuk.",
+                    icon: 'warning'
+                });
+                return;
+            }
         }
 
         // Variabel global untuk menyimpan indeks baris terakhir
@@ -425,7 +449,6 @@
             // Validasi input (sesuai kebutuhan)
             // Inisialisasi array untuk menyimpan field yang belum terisi
             let fieldsNotFilled = [];
-            // Periksa setiap field
             if (!nomor_bstb) fieldsNotFilled.push('Nomor BSTB');
             if (!id_box_grading_kasar) fieldsNotFilled.push('ID box grading kasar');
             if (!nama_supplier) fieldsNotFilled.push('Nama supllier');

@@ -294,6 +294,10 @@ Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusInputControll
     Route::delete('/grading_halus_input/destroy/{nomor_bstb}', 'destroy')->name('GradingHalusInput.destroy');
 });
 
+Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusStockController::class)->group(function () {
+    Route::get('/grading_halus_stock', 'index')->name('GradingHalusStock.index');
+});
+
 Auth::routes();
 
 

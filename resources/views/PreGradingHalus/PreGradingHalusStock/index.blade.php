@@ -87,28 +87,3 @@
         </div>
     </div>
 @endsection
-@section('script')
-    <script>
-        // function redirectToPage() {
-        //     window.location.href = "{{ url('/transit_pre_cleaning_stock/create') }}";
-        // }
-
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Anda yakin ingin menghapus data ini?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d61609',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Jika dikonfirmasi, submit form
-                    document.getElementById('deleteForm' + id).submit();
-                }
-            });
-        }
-    </script>
-@endsection

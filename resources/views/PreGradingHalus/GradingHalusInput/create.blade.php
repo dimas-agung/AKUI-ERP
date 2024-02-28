@@ -445,7 +445,7 @@
                 $('#tableBody tr').each(function() {
                     // Mendapatkan berat grading dari kolom yang sesuai
                     let beratGrading = parseFloat($(this).find('td:eq(10)')
-                .text()); // Kolom 10 berisi berat grading
+                        .text()); // Kolom 10 berisi berat grading
                     // Menghitung presentase berat grading berdasarkan total berat grading
                     let presentaseBeratGrading = (beratGrading / totalBeratGrading) * 100;
 
@@ -584,7 +584,7 @@
                 keterangan: keterangan,
                 modal: modal,
                 total_modal: total_modal,
-                kategori_susut: inisial_tujuan,
+                kategori_susut: kategori_susut,
                 id_box_grading_halus: id_box_grading_halus,
                 susut_depan: susut_depan,
                 susut_belakang: susut_belakang,
