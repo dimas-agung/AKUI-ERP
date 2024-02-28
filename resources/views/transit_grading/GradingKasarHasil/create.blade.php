@@ -435,7 +435,8 @@
             let hargaEstimasiToSend = harga_estimasi;
             console.log("Harga Estimasi Lama= " + hargaEstimasiToSend);
             if (presetanse_pengurangan_harga === '' || presetanse_pengurangan_harga === null ||
-                presetanse_pengurangan_harga === 0) {
+                presetanse_pengurangan_harga == 0) {
+                // console.log(presetanse_pengurangan_harga);
                 hargaEstimasiToSend = harga_estimasi;
             } else {
                 hargaEstimasiToSend = presetanse_pengurangan_harga * modal;
