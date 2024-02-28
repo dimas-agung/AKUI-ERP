@@ -16,6 +16,7 @@ class GradingKasarHasil extends Model
         'id_box_grading_kasar',
         'nomor_batch',
         'nama_supplier',
+        'status',
         'nomor_nota_internal',
         'jenis_raw_material',
         'berat',

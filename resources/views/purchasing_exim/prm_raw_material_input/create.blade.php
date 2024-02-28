@@ -250,6 +250,8 @@
 
                         // Menampilkan nomor nota internal pada input nomor nota internal
                         $('#nomor_nota_internal').val(nomorNotaInternal);
+                        // Panggil generateIdBox setelah nomor nota internal diperbarui
+                        generateIdBox();
                     },
                     error: function(error) {
                         console.error('Error:', error);
