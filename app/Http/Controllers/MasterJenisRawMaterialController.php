@@ -36,13 +36,13 @@ class MasterJenisRawMaterialController extends Controller
     {
         // Validate form
         $this->validate($request, [
-            'jenis'             => 'required|unique:master_jenis_raw_materials',
-            'kategori_susut'    => 'required',
-            'upah_operator'     => 'nullable|numeric', // Tambahkan validasi untuk numeric
-            'pengurangan_harga' => 'nullable|numeric', // Tambahkan validasi untuk numeric
-            'harga_estimasi'    => 'nullable|numeric', // Tambahkan validasi untuk numeric
+            'jenis'                     => 'required|unique:master_jenis_raw_materials',
+            'kategori_susut'            => 'required',
+            'upah_operator'             => 'nullable|numeric', // Tambahkan validasi untuk numeric
+            'pengurangan_harga'         => 'nullable|numeric', // Tambahkan validasi untuk numeric
+            'harga_estimasi'            => 'nullable|numeric', // Tambahkan validasi untuk numeric
         ], [
-            'jenis.required'            => 'Kolom Jenis Wajib diisi.',
+            'jenis.unique'              => 'Jenis Sudah Dipakai',
             'kategori_susut.required'   => 'Kolom Kategori Susut Wajib diisi.',
             'upah_operator.numeric'     => 'Kolom Upah Operator harus berupa angka.',
             'pengurangan_harga.numeric' => 'Kolom Pengurangan Harga harus berupa angka.',

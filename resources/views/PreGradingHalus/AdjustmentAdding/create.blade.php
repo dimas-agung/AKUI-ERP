@@ -19,9 +19,9 @@
                         <select class="select2 form-select" style="width: 100%;" name="id_box_grading_halus"
                             id="id_box_grading_halus" placeholder="Pilih ID Box Grading Halus">
                             <option value="">Pilih ID Box Grading Halus</option>
-                            @foreach ($pre_grading_halus_stocks as $PreGHS)
-                                <option value="{{ $PreGHS->id_box_grading_halus }}">
-                                    {{ $PreGHS->id_box_grading_halus }}
+                            @foreach ($grading_halus_stocks as $GradingHS)
+                                <option value="{{ $GradingHS->id_box_grading_halus }}">
+                                    {{ $GradingHS->id_box_grading_halus }}
                                 </option>
                             @endforeach
                         </select>
@@ -48,15 +48,15 @@
                     </div>
                     <div class="col-md-4">
                         <label for="berat_adding" class="form-label">Berat Adding</label>
-                        <input type="text" class="form-control" id="berat_adding" readonly>
+                        <input type="text" class="form-control" id="berat_adding">
                     </div>
                     <div class="col-md-4">
                         <label for="pcs_adding" class="form-label">Pcs Adding</label>
-                        <input type="text" class="form-control" id="pcs_adding" readonly>
+                        <input type="text" class="form-control" id="pcs_adding">
                     </div>
                     <div class="col-md-4">
                         <label for="keterangan" class="form-label">Keterangan</label>
-                        <input type="text" class="form-control" id="keterangan" readonly>
+                        <input type="text" class="form-control" id="keterangan">
                     </div>
                     <div class="col-md-3">
                         <label for="modal" class="form-label">Modal</label>
@@ -115,4 +115,32 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        $('#id_box_grading_halus').on('change', function() {
+            // Mengambil nilai id_box yang dipilih
+            let selectedIdBoxGradingHalus = $(this).val();
+            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
+            $.ajax({
+                url: `{{ route('AdjustmentAdding.set') }}`,
+                method: 'GET',
+                data: {
+                    id_box_grading_halus: selectedIdBoxGradingHalus
+                },
+                success: function(response) {
+                    console.log(response);
+                    // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                    $('#nomor_batch').val(response.nomor_batch);
+                    $('#jenis_adding').val(response.jenis);
+                    $('#sisa_berat').val(response.sisa_berat);
+                    $('#sisa_pcs').val(response.sisa_pcs);
+                    // $('#harga_estimasi').val(response.harga_estimasi);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    </script>
 @endsection

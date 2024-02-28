@@ -4,7 +4,7 @@
     Master
 @endsection
 @section('title')
-    Master Jenis Raw Material
+    Master Ongkos Cuci
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -15,8 +15,8 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Master Jenis Raw Material
-                                <button href="{{ route('MasterJenisRawMaterial.create') }}" type="button"
+                                Data Master Ongkos Cuci
+                                <button href="{{ route('MasterOngkosCuci.create') }}" type="button"
                                     class="btn btn-outline-success rounded-pill" data-bs-toggle="modal"
                                     data-bs-target="#inlineForm">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
@@ -31,59 +31,39 @@
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                             <div class="modal-content">
                                 <div class="modal-header bg-primary">
-                                    <h4 class="modal-title white" id="myModalLabel33">Input Data Master Jenis</h4>
+                                    <h4 class="modal-title white" id="myModalLabel33">Input Data Master Ongkos Cuci</h4>
                                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                         <i data-feather="x"></i>
                                     </button>
                                 </div>
-                                <form action="{{ route('MasterJenisRawMaterial.store') }}" method="POST">
+                                <form action="{{ route('MasterOngkosCuci.store') }}" method="POST">
                                     <div class="modal-body">
                                         @csrf
-                                        <label><strong>Jenis</strong></label>
+                                        <label><strong>Unit</strong></label>
                                         <div class="form-group">
-                                            <input type="text" name="jenis" placeholder="Masukan Jenis"
-                                                class="form-control @error('jenis') is-invalid @enderror" required
-                                                oninvalid="this.setCustomValidity('Mohon isi Jenis')"
+                                            <input type="text" name="unit" placeholder="Masukkan Unit"
+                                                class="form-control @error('unit') is-invalid @enderror" required
+                                                oninvalid="this.setCustomValidity('Mohon isi unit')"
                                                 oninput="this.setCustomValidity('')">
-                                            @error('jenis')
+                                        </div>
+                                        <label><strong>Jenis Bulu</strong></label>
+                                        <div class="form-group">
+                                            <input type="text" name="jenis_bulu" placeholder="Masukan Jenis Bulu"
+                                                class="form-control @error('jenis_bulu') is-invalid @enderror" required
+                                                oninvalid="this.setCustomValidity('Mohon isi Jenis Bulu')"
+                                                oninput="this.setCustomValidity('')">
+                                            @error('jenis_bulu')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <label><strong>Kategori Susut</strong></label>
+
+                                        <label><strong>Biaya Per Gram</strong></label>
                                         <div class="form-group">
-                                            <input type="text" name="kategori_susut" placeholder="Masukan Kategori Susut"
-                                                class="form-control @error('kategori_susut') is-invalid @enderror" required
-                                                oninvalid="this.setCustomValidity('Mohon isi Kategori Susut')"
+                                            <input type="text" name="biaya_per_gram" placeholder="Masukan Biaya Per Gram"
+                                                class="form-control @error('biaya_per_gram') is-invalid @enderror" required
+                                                oninvalid="this.setCustomValidity('Mohon isi Biaya Per Gram')"
                                                 oninput="this.setCustomValidity('')">
                                         </div>
-                                        <label><strong>Upah Operator</strong></label>
-                                        <div class="form-group">
-                                            <input type="text" pattern="[0-9.]*" inputmode="numeric"
-                                                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                                                name="upah_operator" placeholder="Masukan Upah Operator"
-                                                class="form-control @error('upah_operator')
-is-invalid
-@enderror">
-                                        </div>
-                                        <label><strong>Pengurangan Harga</strong></label>
-                                        <div class="form-group">
-                                            <input type="text" pattern="[0-9.]*" inputmode="numeric"
-                                                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                                                name="pengurangan_harga" placeholder="Masukan Pengurangan Harga"
-                                                class="form-control @error('pengurangan_harga')
-is-invalid
-@enderror">
-                                        </div>
-                                        <label><strong>Harga Estimasi</strong></label>
-                                        <div class="form-group">
-                                            <input type="text" pattern="[0-9.]*" inputmode="numeric"
-                                                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                                                name="harga_estimasi" placeholder="Masukan Harga Estimasi"
-                                                class="form-control @error('harga_estimasi')
-is-invalid
-@enderror">
-                                        </div>
-
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
@@ -105,48 +85,42 @@ is-invalid
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Jenis</th>
-                                        <th scope="col" class="text-center">Kategori Susut</th>
-                                        <th scope="col" class="text-center">Upah Operator</th>
-                                        <th scope="col" class="text-center">Pengurangan harga</th>
-                                        <th scope="col" class="text-center">Harga Estimasi</th>
+                                        <th scope="col" class="text-center">Unit</th>
+                                        <th scope="col" class="text-center">Jenis Bulu</th>
+                                        <th scope="col" class="text-center">Biaya Per Gram</th>
                                         <th scope="col" class="text-center">Status</th>
+                                        <th scope="col" class="text-center">User Created</th>
+                                        <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Tanggal Buat</th>
                                         <th scope="col" class="text-center">Tanggal Update</th>
                                         <th scope="col" class="text-center">AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($MasterJenisRawMaterial as $MasterJRM)
+                                    @forelse ($MasterOngkosCuci as $MasterOC)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $MasterJRM->jenis }}</td>
-                                            <td class="text-center">{{ $MasterJRM->kategori_susut }}</td>
+                                            <td class="text-center">{{ $MasterOC->unit }}</td>
+                                            <td class="text-center">{{ $MasterOC->jenis_bulu }}</td>
                                             <td class="text-center">Rp
-                                                {{ number_format($MasterJRM->upah_operator, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterOC->biaya_per_gram, 0, ',', '.') }}</td>
                                             <td class="text-center">
-                                                @if ($MasterJRM->pengurangan_harga == '')
-                                                @else
-                                                    {{ $MasterJRM->pengurangan_harga }} %
-                                                @endif
-                                            </td>
-                                            <td class="text-center">Rp
-                                                {{ number_format($MasterJRM->harga_estimasi, 0, ',', '.') }}</td>
-                                            <td class="text-center">
-                                                @if ($MasterJRM->status == 1)
+                                                @if ($MasterOC->status == 1)
                                                     Aktif
                                                 @else
                                                     Tidak Aktif
                                                 @endif
                                             </td>
-                                            <td class="text-center">{{ $MasterJRM->created_at }}</td>
-                                            <td class="text-center">{{ $MasterJRM->updated_at }}</td>
+                                            <td class="text-center">{{ $MasterOC->user_created }}</td>
+                                            <td class="text-center">{{ $MasterOC->user_updated }}</td>
+                                            <td class="text-center">{{ $MasterOC->created_at }}</td>
+                                            <td class="text-center">{{ $MasterOC->updated_at }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $MasterJRM->id }}"
-                                                        action="{{ route('MasterJenisRawMaterial.destroy', $MasterJRM->id) }}"
+                                                    <form style="display: flex" id="deleteForm{{ $MasterOC->id }}"
+                                                        action="{{ route('MasterOngkosCuci.destroy', $MasterOC->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('MasterJenisRawMaterial.edit', $MasterJRM->id) }}"
+                                                        <a href="{{ route('MasterOngkosCuci.edit', $MasterOC->id) }}"
                                                             class="btn btn-link" title="Edit Task"
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>
@@ -155,7 +129,7 @@ is-invalid
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $MasterJRM->id }})">
+                                                            onclick="confirmDelete({{ $MasterOC->id }})">
                                                             <i class="bi bi-trash3 text-danger"></i>
                                                         </button>
                                                     </form>
@@ -164,7 +138,7 @@ is-invalid
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Master Jenis Raw Material belum Tersedia.
+                                            Data Master Ongkos Cuci belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>

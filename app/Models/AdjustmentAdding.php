@@ -22,4 +22,8 @@ class AdjustmentAdding extends Model
         'user_created',
         'user_updated',
     ];
+    public function GradingHalusStock()
+    {
+        return $this->hasMany(GradingHalusStock::class, 'id_box_grading_halus', 'id_box_grading_halus');
+    }
 }

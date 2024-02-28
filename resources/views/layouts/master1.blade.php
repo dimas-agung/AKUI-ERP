@@ -28,6 +28,12 @@
         .dataTables_wrapper {
             overflow-x: hidden;
         }
+
+        .dt-button {
+            background-color: #435EBE !important;
+            color: white !important;
+            border-radius: 5px !important;
+        }
     </style>
 </head>
 
@@ -139,7 +145,7 @@
                         </li>
                         <li class="sidebar-title">Master</li>
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('perusahaan*', 'workstation*', 'unit*', 'biayahpp*', 'master_supplier_raw_material*', 'master_jenis_raw_material*', 'master_tujuan_kirim_raw_material*', 'master_jenis_grading_kasar*', 'master_tujuan_kirim_grading_kasar*', 'master_operator*') ? 'active' : '' }}">
+                            class="sidebar-item  has-sub {{ Request::is('perusahaan*', 'workstation*', 'unit*', 'biayahpp*', 'master_supplier_raw_material*', 'master_jenis_raw_material*', 'master_tujuan_kirim_raw_material*', 'master_jenis_grading_kasar*', 'master_tujuan_kirim_grading_kasar*', 'master_operator*', 'master_ongkos_cuci*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Master</span>
@@ -192,6 +198,10 @@
                                 <li class="submenu-item  {{ Request::is('master_operator*') ? 'active' : '' }} ">
                                     <a href="{{ route('MasterOperator.index') }}" class="submenu-link">Master
                                         Operator</a>
+                                </li>
+                                <li class="submenu-item  {{ Request::is('master_ongkos_cuci*') ? 'active' : '' }} ">
+                                    <a href="{{ route('MasterOngkosCuci.index') }}" class="submenu-link">Master <br>
+                                        Ongkos Cuci</a>
                                 </li>
                             </ul>
                         </li>
