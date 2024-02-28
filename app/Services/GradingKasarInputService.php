@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Services;
-
 use App\Models\GradingKasarInput;
+use App\Models\PrmRawMaterialOutputItem;
 use App\Models\StockTransitGradingKasar;
 use App\Models\StockTransitRawMaterial;
 use Illuminate\Http\Request;
@@ -101,5 +100,15 @@ class GradingKasarInputService
                 // Sesuaikan dengan kolom-kolom lain di tabel item Anda
             ]));
         }
+
+        $itemObject = (object) $item;
+        $existingItems = PrmRawMaterialOutputItem::where('nama_supplier', $itemObject->nama_supplier)
+            ->where('id_box', $itemObject->id_box)
+            ->get();
+
+            foreach ($existingItems as $existingItem) {
+                // Perbarui data untuk setiap item yang ada
+                $existingItem->update(['status' => 0]);
+            }
     }
 }

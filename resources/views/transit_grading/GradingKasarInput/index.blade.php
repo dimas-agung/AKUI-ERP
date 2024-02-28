@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Grading Kasar
 @endsection
 @section('title')
@@ -11,7 +11,7 @@
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data Grading Kasar Input</h4>
-                    <a href="{{ url('/GradingKasarInput/create') }}" class="btn btn-outline-success rounded-pill">
+                    <a href="{{ Route('GradingKasarInput.create') }}" class="btn btn-outline-success rounded-pill">
                         <i class="fa fa-plus"></i>
                         Add Data
                     </a>
@@ -35,27 +35,9 @@
                                 <th class="text-center">Total Modal</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
-                                {{-- <th class="text-center" scope="col">User Updated</th> --}}
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <th class="text-center">No</th>
-                            <th class="text-center">Nomor BSTB</th>
-                            <th class="text-center">Nomor Batch</th>
-                            <th class="text-center">Id Box</th>
-                            <th class="text-center">Nama Supplier</th>
-                            <th class="text-center">Jenis Raw Material</th>
-                            <th class="text-center">Berat</th>
-                            <th class="text-center">Kadar Air</th>
-                            <th class="text-center">Nomor Grading</th>
-                            <th class="text-center">Modal</th>
-                            <th class="text-center">Total Modal</th>
-                            <th class="text-center">Keterangan</th>
-                            <th class="text-center">NIP Admin</th>
-                            {{-- <th class="text-center">User Updated</th> --}}
-                            <th class="text-center">Action</th>
-                        </tfoot>
                         <tbody>
                             @forelse ($GradingKI as $item)
                                 <tr>
@@ -72,20 +54,30 @@
                                     <td class="text-center">{{ $item->total_modal }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
-                                    {{-- <td class="text-center">{{ $item->user_updated }}</td> --}}
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                action="{{ route('GradingKasarInput.destroy', $item->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-link btn-danger"
-                                                    data-original-title="Remove"
-                                                    onclick="confirmDelete({{ $item->id }})">
-                                                    <i class="bi bi-trash3 text-danger"></i>
-                                                </button>
-                                            </form>
+                                            @php
+                                                $gradingKasarHasilCount = $GradingKH
+                                                    ? $GradingKH
+                                                        ->where('id_box_raw_material', $item->id_box)
+                                                        ->where('nomor_grading', $item->nomor_grading)
+                                                        ->count()
+                                                    : 0;
+                                            @endphp
+
+                                            @if ($gradingKasarHasilCount == 0)
+                                                <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
+                                                    action="{{ route('GradingKasarInput.destroy', $item->nomor_bstb) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-link btn-danger"
+                                                        data-original-title="Remove"
+                                                        onclick="confirmDelete('{{ $item->nomor_bstb }}')">
+                                                        <i class="bi bi-trash3 text-danger"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

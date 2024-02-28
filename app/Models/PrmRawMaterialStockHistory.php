@@ -23,7 +23,11 @@ class PrmRawMaterialStockHistory extends Model
         'status',
         'user_created'
     ];
-    public function PrmRawMaterialStock()
+    // public function PrmRawMaterialStock()
+    // {
+    //     return $this->belongsTo(PrmRawMaterialStock::class);
+    // }
+    public function prmRawMaterialStock()
     {
         return $this->belongsTo(PrmRawMaterialStock::class, 'id_box', 'id_box');
     }

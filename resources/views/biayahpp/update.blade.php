@@ -9,12 +9,12 @@
     {{-- <div class="container mt-5 mb-5"> --}}
     <div class="row">
         {{-- <div class="col-md-12"> --}}
-        <div class="card border-0 shadow-sm rounded">
+        <div class="card border border-primary border-3 shadow-sm rounded">
             <div class="card-header">
                 <h4>Update Data Biaya HPP</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('biaya.update', $biaya->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('BiayaHpp.update', $biaya->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('unit', function (Blueprint $table) {
             $table->id();
             $table->foreignId('workstation_id')->constrained('workstation');
-            $table->string('nama')->unique();
+            $table->string('nama');
             $table->integer('status')->default('1');
             $table->timestamps();
         });

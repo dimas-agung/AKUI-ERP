@@ -17,6 +17,7 @@ class PreGradingHalusInput extends Model
         'nomor_batch',
         'nomor_nota_internal',
         'nama_supplier',
+        'status',
         'jenis_raw_material',
         'kadar_air',
         'jenis_kirim',
@@ -28,4 +29,17 @@ class PreGradingHalusInput extends Model
         'user_created',
         'user_updated',
     ];
+
+    public function TransitPreCleaningStock()
+    {
+        return $this->belongsTo(TransitPreCleaningStock::class, 'nomor_bstb', 'nomor_bstb');
+    }
+    public function Unit()
+    {
+        return $this->belongsTo(Unit::class, 'nama', 'nomor_bstb');
+    }
+    public function PreGradingHalusStock()
+    {
+        return $this->hasMany(PreGradingHalusStock::class, 'nomor_job', 'nomor_job');
+    }
 }

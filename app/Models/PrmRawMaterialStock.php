@@ -15,6 +15,7 @@ class PrmRawMaterialStock extends Model
         'nomor_batch',
         'nama_supplier',
         'jenis',
+        'nomor_nota_internal',
         'berat_masuk',
         'berat_keluar',
         'sisa_berat',
@@ -44,5 +45,9 @@ class PrmRawMaterialStock extends Model
     public function PrmRawMaterialOutputItem()
     {
         return $this->hasMany(PrmRawMaterialOutputItem::class, 'id_box', 'id_box');
+    }
+    public function GradingKasarInput()
+    {
+        return $this->hasMany(GradingKasarInput::class, 'doc_no', 'doc_no');
     }
 }

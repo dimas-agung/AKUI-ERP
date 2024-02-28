@@ -41,4 +41,5 @@ class PrmRawMaterialInput extends Model
     {
         return $this->hasMany(PrmRawMaterialStockHistory::class, 'created_at', 'created_at');
     }
+
 }
