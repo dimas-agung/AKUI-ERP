@@ -104,7 +104,7 @@ class GradingKasarOutputService
             'nama_supplier'                     => $itemObject->nama_supplier,
             'nomor_nota_internal'               => $itemObject->nomor_nota_internal,
             'jenis_raw_material'                => $itemObject->jenis_raw_material,
-            'jenis_grading'                     => $itemObject->jenis_grading[0],
+            'jenis_grading'                     => $itemObject->jenis_grading,
             'id_box_raw_material'               => $itemObject->id_box_raw_material,
             'avg_kadar_air'                     => $itemObject->avg_kadar_air,
             'tujuan_kirim'                     => $itemObject->tujuan_kirim,

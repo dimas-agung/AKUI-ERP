@@ -242,8 +242,8 @@
                                 <div class="col-md-12">
                                     <button type="button" id="tombol_add" class="btn btn-primary"
                                         onclick="addRow()">Add</button>
-                                    <a href="{{ url('/PrmRawMaterialOutput') }}" type="button" class="btn btn-danger"
-                                        data-dismiss="modal">Close</a>
+                                    <a href="{{ route('GradingKasarOutput.index') }}" type="button"
+                                        class="btn btn-danger" data-dismiss="modal">Close</a>
                                 </div>
                             </div>
                         </div>
