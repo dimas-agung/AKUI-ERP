@@ -166,12 +166,28 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Berat Masuk</label>
+                                            <label>Sisa Berat</label>
                                             <input type="text" id="berat_masuk" class="form-control"
                                                 name="berat_masuk" value="{{ old('berat_masuk') }}"
                                                 onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Sisa Pcs</label>
+                                            <input type="text" id="sisa_pcs" class="form-control" name="sisa_pcs"
+                                                value="{{ old('sisa_pcs') }}" onchange="handleChange(this)" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Fix Total Modal</label>
+                                            <input type="text" class="form-control" id="fix_total_modal"
+                                                name="fix_total_modal" onchange="handleChange(this)" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Berat Keluar</label>
@@ -187,11 +203,10 @@
                                             <label>PCS Keluar</label>
                                             <input type="text" id="pcs_keluar" pattern="[0-9.]*" inputmode="numeric"
                                                 onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                                                class="form-control" placeholder="Masukkan pcs keluar">
+                                                class="form-control" placeholder="Masukkan pcs keluar"
+                                                onchange="validateBeratKeluar()">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Biaya Produksi</label>
@@ -203,31 +218,24 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Total Modal</label>
-                                            <input type="text" id="total_modal" class="form-control"
-                                                name="total_modal" placeholder="Masukkan total_modal" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Fix Total Modal</label>
-                                            <input type="text" class="form-control" id="fix_total_modal"
-                                                name="fix_total_modal" onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
                                             <label>NIP Admin</label>
                                             <input type="text" id="user_created" class="form-control"
                                                 name="user_created" value="{{ old('user_created') }}"
                                                 placeholder="Masukkan User Created">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Keterangan</label>
                                             <input type="text" id="keterangan" class="form-control" name="keterangan"
                                                 placeholder="Masukkan keterangan">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Total Modal</label>
+                                            <input type="text" id="total_modal" class="form-control"
+                                                name="total_modal" placeholder="Masukkan total_modal" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -310,9 +318,18 @@
                     $('#jenis_grading').val(response.jenis_grading);
                     $('#avg_kadar_air').val(response.avg_kadar_air);
                     $('#nomor_grading').val(response.nomor_grading);
-                    $('#berat_masuk').val(response.berat_masuk);
                     $('#modal, #fix_total_modal').val(response.modal);
                     $('#nomor_nota_internal').val(response.nomor_nota_internal);
+
+                    // Perhitungan sisa berat
+                    let beratMasuk = parseFloat(response.berat_masuk);
+                    let beratKeluar = parseFloat(response.berat_keluar);
+                    let pcsMasuk = parseFloat(response.pcs_masuk);
+                    let pcsKeluar = parseFloat(response.pcs_keluar);
+                    let sisaBerat = beratMasuk - beratKeluar;
+                    let sisaPcs = pcsMasuk - pcsKeluar;
+                    $('#berat_masuk').val(sisaBerat);
+                    $('#sisa_pcs').val(sisaPcs);
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -405,17 +422,35 @@
         function validateBeratKeluar() {
             var beratMasuk = parseFloat(document.getElementById('berat_masuk').value);
             var beratKeluarInput = parseFloat(document.getElementById('berat_keluar').value);
+            var pcsMasuk = parseFloat(document.getElementById('sisa_pcs').value);
+            var pcsKeluarInput = parseFloat(document.getElementById('pcs_keluar').value);
 
-            if (beratKeluarInput > beratMasuk) {
-                document.getElementById('berat_keluar').value = ''; // Mengosongkan input berat keluar
-                Swal.fire({
-                    title: 'Warning!',
-                    text: "Berat keluar tidak boleh melebihi berat masuk.",
-                    icon: 'warning'
-                });
+            if (beratKeluarInput > beratMasuk || pcsKeluarInput > pcsMasuk) {
+                if (beratKeluarInput > beratMasuk && pcsKeluarInput > pcsMasuk) {
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: "Berat keluar tidak boleh melebihi sisa berat dan pcs.",
+                        icon: 'warning'
+                    });
+                } else if (beratKeluarInput > beratMasuk) {
+                    document.getElementById('berat_keluar').value = ''; // Mengosongkan input berat keluar
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: "Berat keluar tidak boleh melebihi sisa berat.",
+                        icon: 'warning'
+                    });
+                } else {
+                    document.getElementById('pcs_keluar').value = ''; // Mengosongkan input berat keluar
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: "Berat keluar tidak boleh melebihi sisa pcs.",
+                        icon: 'warning'
+                    });
+                }
                 return;
             }
         }
+
 
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;
