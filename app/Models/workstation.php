@@ -10,6 +10,7 @@ class Workstation extends Model
     use HasFactory;
     protected $table = 'workstation';
     protected $fillable = [
+        'perusahaan_id',
         'nama',
         'status',
     ];
@@ -18,5 +19,9 @@ class Workstation extends Model
     public function unit()
     {
         return $this->hasMany(Unit::class);
+    }
+    public function perusahaan()
+    {
+        return $this->belongsTo(Perusahaan::class);
     }
 }

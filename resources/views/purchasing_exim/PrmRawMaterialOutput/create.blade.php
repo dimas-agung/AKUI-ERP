@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Purchasing & EXIM
 @endsection
 @section('title')
@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="card mt-2 border border-primary border-3">
+        <div class="card border border-primary border-3 mt-2">
             <form action="{{ route('PrmRawMaterialOutput.store') }}" method="POST">
                 @csrf
                 <div class="row">
@@ -36,17 +36,19 @@
                                 @endif
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group mandatory">
                                             <label>Nomer Dokument</label>
                                             <input type="text" id="doc_no" class="form-control" name="doc_no"
-                                                value="{{ old('doc_no') }}" placeholder="Masukkan Nomer Dokument">
+                                                value="{{ old('doc_no') }}" placeholder="Masukkan Nomer Dokument"
+                                                data-parsley-required="true">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>NIP Admin</label>
                                             <input type="text" id="user_created" class="form-control" name="user_created"
-                                                value="{{ old('user_created') }}" placeholder="Masukkan User Created">
+                                                value="{{ old('user_created') }}" placeholder="Masukkan User Created"
+                                                data-parsley-required="true">
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +56,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Id Box</label>
-                                            <select id="id_box" class="choices form-select" name="id_box">
+                                            <select id="id_box" class="select2 form-select" name="id_box"
+                                                removeActiveItemsByValue>
                                                 <option value="">Pilih Id Box</option>
                                                 @foreach ($PrmRawMS->sortBy('id_box') as $post)
                                                     <option value="{{ $post->id_box }}">
@@ -66,7 +69,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tujuan Kirim</label>
-                                            <select id="tujuan_kirim" class="choices form-select" name="tujuan_kirim">
+                                            <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim"
+                                                searchable="true">
                                                 <option value="">Pilih Tujuan Kirim</option>
                                                 @foreach ($MasTujKir->sortBy('tujuan_kirim') as $post)
                                                     <option value="{{ $post->tujuan_kirim }}">
@@ -152,7 +156,7 @@
                                             <input type="text" id="berat" pattern="[0-9]*" inputmode="numeric"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 class="form-control" name="berat" value="{{ old('berat') }}"
-                                                placeholder="Masukkan berat keluar">
+                                                placeholder="Masukkan berat keluar" data-parsley-required="true">
                                         </div>
                                         <div class="form-group">
                                             <label>Sisa Berat</label>
@@ -174,8 +178,8 @@
                                 </div>
                                 <div class="col-md-12">
                                     <button type="button" class="btn btn-primary" onclick="addRow()">Add</button>
-                                    <a href="{{ url('/PrmRawMaterialOutput') }}" type="button" class="btn btn-danger"
-                                        data-dismiss="modal">Close</a>
+                                    <a href="{{ Route('PrmRawMaterialOutput.index') }}" type="button"
+                                        class="btn btn-danger" data-dismiss="modal">Close</a>
                                 </div>
                             </div>
                         </div>
@@ -227,7 +231,8 @@
             <!-- full size modal-->
             <div class="modal fade text-left w-100" id="editModal" tabindex="-1" role="dialog"
                 aria-labelledby="myModalLabel20" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full" role="document">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full" role="document"
+                    data-parsley-validate>
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="myModalLabel20">Edit Data</h4>
@@ -240,44 +245,54 @@
                             <form id="editForm">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <label for="doc_no_edit">No Document</label>
-                                        <input type="text" class="form-control" id="doc_no_edit" name="doc_no_edit"
-                                            required>
+                                        <div class="form-group mandatory">
+                                            <label for="doc_no_edit" class="form-label">No Document</label>
+                                            <input type="text" class="form-control" id="doc_no_edit"
+                                                name="doc_no_edit" data-parsley-required="true" required>
+                                        </div>
                                     </div>
                                     <div class="col-sm-4">
-                                        <label for="user_created_edit">Nomor Batch</label>
-                                        <input type="text" class="form-control" id="user_created_edit"
-                                            name="user_created_edit" required>
+                                        <div class="form-group mandatory">
+                                            <label for="user_created_edit" class="form-label">Nomor Batch</label>
+                                            <input type="text" class="form-control" id="user_created_edit"
+                                                name="user_created_edit" required>
+                                        </div>
                                     </div>
                                     <div class="col-sm-4">
-                                        <label>nomor_bstb</label>
-                                        <input type="text" id="nomor_bstb_edit" class="form-control"
-                                            name="nomor_bstb_edit" value="{{ old('nomor_bstb') }}"
-                                            placeholder="Masukkan nomor_bstb">
+                                        <div class="form-group mandatory">
+                                            <label class="form-label">nomor_bstb</label>
+                                            <input type="text" id="nomor_bstb_edit" class="form-control"
+                                                name="nomor_bstb_edit" value="{{ old('nomor_bstb') }}"
+                                                placeholder="Masukkan nomor_bstb">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label for="id_box_edit">ID Box</label>
-                                        <select id="id_box_edit" class="choices form-select" name="id_box_edit">
-                                            <option value="">Pilih Id Box</option>
-                                            @foreach ($PrmRawMS->sortBy('id_box') as $post)
-                                                <option value="{{ $post->id_box }}">
-                                                    {{ old('id_box', $post->id_box) }}</option>
-                                            @endforeach
-                                        </select>
+                                        <div class="form-group mandatory">
+                                            <label for="id_box_edit" class="form-label">ID Box</label>
+                                            <select id="id_box_edit" class="choices form-select" name="id_box_edit">
+                                                <option value="">Pilih Id Box</option>
+                                                @foreach ($PrmRawMS->sortBy('id_box') as $post)
+                                                    <option value="{{ $post->id_box }}">
+                                                        {{ old('id_box', $post->id_box) }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="tujuan_kirim_edit">Tujuan Kirim</label>
-                                        <select id="tujuan_kirim_edit" class="choices form-select"
-                                            name="tujuan_kirim_edit">
-                                            <option value="">Pilih Tujuan Kirim</option>
-                                            @foreach ($MasTujKir->sortBy('tujuan_kirim') as $post)
-                                                <option value="{{ $post->tujuan_kirim }}">
-                                                    {{ old('tujuan_kirim', $post->tujuan_kirim) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                        <div class="form-group mandatory">
+                                            <label for="tujuan_kirim_edit" class="form-label">Tujuan Kirim</label>
+                                            <select id="tujuan_kirim_edit" class="choices form-select"
+                                                name="tujuan_kirim_edit">
+                                                <option value="">Pilih Tujuan Kirim</option>
+                                                @foreach ($MasTujKir->sortBy('tujuan_kirim') as $post)
+                                                    <option value="{{ $post->tujuan_kirim }}">
+                                                        {{ old('tujuan_kirim', $post->tujuan_kirim) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -390,6 +405,10 @@
 @endsection
 @section('script')
     <script>
+        // $(document).ready(function() {
+        //     $('.select2').select2();
+        // });
+
         function handleChange(input) {
             // Hapus atribut readonly
             input.removeAttribute('readonly');
@@ -436,7 +455,7 @@
                     } else {
                         // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
                         Swal.fire({
-                            title: 'Innalillahi!',
+                            title: 'Warning!',
                             text: 'Berat ID Box tidak boleh 0. Pilih ID Box lain.',
                             icon: 'warning'
                         });
@@ -450,9 +469,8 @@
             });
         });
 
-
-        $('#tujuan_kirim, #tujuan_kirim_edit').on('change', function() {
-            // Mengambil nilai tujuan_kirim yang dipilih
+        $('#tujuan_kirim').on('change', function() {
+            // Mengambil nilai id_box yang dipilih
             let selectedPcc = $(this).val();
 
             // Melakukan permintaan AJAX ke controller untuk mendapatkan data
@@ -478,7 +496,7 @@
                         // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
                         // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
                         Swal.fire({
-                            title: 'Innalillahi!',
+                            title: 'Warning!',
                             text: 'Tujuan Kirim tidak boleh tidak aktif. Pilih Tujuan Kirim lain.',
                             icon: 'warning'
                         });
@@ -578,12 +596,25 @@
             var user_created = $('#user_created').val();
             var nomor_nota_internal = $('#nomor_nota_internal').val();
 
-            // Validasi input (sesuai kebutuhan)
-            if (!id_box || !nomor_batch || !nama_supplier || !jenis || !berat_masuk || !berat || !selisih_berat || !
-                kadar_air || !tujuan_kirim || !letak_tujuan || !inisial_tujuan || !modal || !total_modal || !user_created) {
+
+            // Inisialisasi array untuk menyimpan field yang belum terisi
+            let fieldsNotFilled = [];
+            // Periksa setiap field
+            if (!id_box) fieldsNotFilled.push('ID Box');
+            if (!nama_supplier) fieldsNotFilled.push('Nama Supllier');
+            if (!tujuan_kirim) fieldsNotFilled.push('Tujuan Kirim');
+            if (!letak_tujuan) fieldsNotFilled.push('Inisial Kirim');
+            if (!user_created) fieldsNotFilled.push('NIP Admin');
+            if (!berat || berat <= 0) fieldsNotFilled.push('Berat Keluar');
+
+            // Cek apakah ada field yang belum terisi
+            if (fieldsNotFilled.length > 0) {
+                // Membuat pesan teks yang mencantumkan field yang belum terisi
+                let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
+
                 Swal.fire({
-                    title: 'Innalillahi!',
-                    text: 'Data belum di inputkan semuanya, Silakan coba lagi.',
+                    title: 'Warning!',
+                    text: message,
                     icon: 'warning'
                 });
                 return;
@@ -640,7 +671,8 @@
                 nomor_nota_internal: nomor_nota_internal,
             });
             // Membersihkan nilai input setelah ditambahkan
-            $('#id_box').val('<option></option>');
+            $('#id_box').val('');
+            $('#tujuan_kirim').val('');
             $('#nomor_batch').val('');
             $('#nama_supplier').val('');
             $('#jenis').val('');
@@ -725,7 +757,7 @@
                 nomor_nota_internal: $('#nomor_nota_internal_edit').val(),
             };
 
-            // Validasi data sebelum menyimpan
+            // // Validasi data sebelum menyimpan
             if (!validateEditedData(editedData)) {
                 // Tampilkan pesan kesalahan atau lakukan tindakan yang sesuai
                 return;
@@ -752,15 +784,14 @@
                 !data.user_created || !data.nomor_nota_internal) {
                 // Tampilkan pesan kesalahan atau lakukan tindakan yang sesuai
                 Swal.fire({
-                    title: 'Error!',
+                    title: 'Warning!',
                     text: 'Semua kolom harus diisi.',
-                    icon: 'error'
+                    icon: 'warning'
                 });
                 return;
             }
 
             // Lakukan validasi lainnya sesuai kebutuhan
-
             return true; // Kembalikan true jika data valid
         }
 
@@ -840,24 +871,23 @@
                 dataType: 'json', // payload is json,
                 success: function(response) {
                     Swal.fire({
-                        title: 'Alhamdulillah!',
+                        title: 'Success!',
                         text: 'Data berhasil disimpan.',
                         icon: 'success'
                     }).then((result) => {
                         // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
                         if (result.isConfirmed) {
-                            window.location.href = response
-                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                            window.location.href = response.redirectTo; // Ganti dengan URL tujuan redirect Anda
                         }
                     });
                 },
                 error: function(error) {
                     Swal.fire({
-                        title: 'Astaghfirullah!',
+                        title: 'Failed!',
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });
-                    console.log('Validation Errors:', response.responseJSON.errors);
+
                 }
             });
         }

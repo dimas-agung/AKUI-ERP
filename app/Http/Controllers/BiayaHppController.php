@@ -20,6 +20,7 @@ class BiayaHppController extends Controller
         $i = 1;
         $unit = unit::with('biayahpp')->get();
         $biaya = BiayaHpp::with('unit')->get();
+        // return $unit;
         return response()->view('biayahpp.index', [
             'biaya' => $biaya,
             'unit' => $unit,
@@ -53,7 +54,7 @@ class BiayaHppController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('biaya.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('BiayaHpp.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
 
@@ -100,7 +101,7 @@ class BiayaHppController extends Controller
             'status'            => $request->status
         ]);
         //redirect to index
-        return redirect()->route('biaya.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('BiayaHpp.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
 
@@ -119,6 +120,6 @@ class BiayaHppController extends Controller
         $biaya->delete();
 
         //redirect to index
-        return redirect()->route('biaya.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('BiayaHpp.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

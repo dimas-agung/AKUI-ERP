@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\PreCleaningInput;
 use App\Models\PreCleaningOutput;
 use App\Models\PreCleaningStock;
 use App\Models\TransitPreCleaningStock;
@@ -24,7 +25,7 @@ class PreCleaningOutputService
             return [
                 'success' => true,
                 'message' => 'Data berhasil disimpan!',
-                'redirectTo' => route('PrmRawMaterialInput.index'), // Ganti dengan nama route yang sesuai
+                'redirectTo' => route('PrmRawMaterialOutput.index'), // Ganti dengan nama route yang sesuai
             ];
         } catch (\Exception $e) {
             DB::rollBack();
@@ -72,20 +73,35 @@ class PreCleaningOutputService
             'user_updated'                      => $item->user_updated ?? 'Admin123',
         ]);
 
-        // PrmRawMaterialStockHistory::create([
-        //     'id_box'        => $item->id_box,
-        //     'doc_no'        => $item->doc_no,
-        //     'berat_masuk'   => $item->berat_masu ?? 0,
-        //     'berat_keluar'  => $item->berat,
-        //     'sisa_berat'    => $item->selisih_berat,
-        //     'avg_kadar_air' => $item->kadar_air,
-        //     'modal'         => $item->modal,
-        //     'total_modal'   => $item->total_modal,
-        //     'keterangan'    => $item->keterangan_item,
-        //     'user_created'  => $item->user_created,
-        //     'user_updated'  => $item->user_updated ?? "There isn't any",
-        //     // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-        // ]);
+        // Creat Prm Raw Material Stock
+        $itemObject = (object)$item;
+        $existingItem = PreCleaningStock::where('nomor_job', $itemObject->nomor_job)
+            ->first();
+            // return $existingItem
+
+        $dataToUpdate = [
+            'berat_keluar'  => $itemObject->berat_kirim,
+            'pcs_keluar'    => $itemObject->pcs_kirim,
+            'total_modal'   => $itemObject->total_modal,
+            'user_updated'  => $itemObject->user_created ?? "There isn't any",
+            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ];
+
+        if ($existingItem) {
+            // Ambil nilai terakhir berat_masuk dan berat_keluar
+            // $lastBeratMasuk = $existingItem->berat_masuk;
+            $lastBeratKeluar = $existingItem->berat_keluar;
+            $lastPcsKeluar = $existingItem->pcs_keluar;
+
+            $tambahBeratKeluar = $lastBeratKeluar + $itemObject->berat_kirim;
+            $perbedaanBerat = $lastPcsKeluar + $itemObject->pcs_kirim;
+            $totalModalBaru = $tambahBeratKeluar * $itemObject->modal;
+
+            $dataToUpdate['berat_keluar'] = $tambahBeratKeluar;
+            $dataToUpdate['pcs_keluar'] = $perbedaanBerat;
+            $dataToUpdate['total_modal'] = $totalModalBaru;
+            $existingItem->update($dataToUpdate);
+        }
 
         // Creat Transit Pre Cleaning Stock
         $itemObject = (object)$item;
@@ -123,20 +139,33 @@ class PreCleaningOutputService
                 'nomor_bstb'                => $itemObject->nomor_bstb,
                 'nama_supplier'             => $itemObject->nama_supplier,
                 'nomor_nota_internal'       => $itemObject->nomor_nota_internal,
+                'nomor_batch'               => $itemObject->nomor_batch,
                 'id_box_raw_material'       => $itemObject->id_box_raw_material,
                 'jenis_raw_material'        => $itemObject->jenis_raw_material,
                 'jenis_kirim'               => $itemObject->jenis_kirim,
-                // 'berat_kirim'               => $itemObject->berat_kirim,
-                // 'pcs_kirim'                 => $itemObject->pcs_kirim,
                 'kadar_air'                 => $itemObject->kadar_air,
                 'tujuan_kirim'              => $itemObject->tujuan_kirim,
                 'nomor_grading'             => $itemObject->nomor_grading ?? "Belum Tersedia",
                 'modal'                     => $itemObject->modal,
-                // 'total_modal'               => $itemObject->total_modal,
                 'keterangan'                => $itemObject->keterangan ?? "Tes",
                 'user_created'              => $itemObject->user_created ?? "There isn't any",
                 'user_updated'              => $itemObject->user_updated ?? "There isn't any",
             ]));
+        }
+
+
+        $itemObject = (object) $item;
+        $existingItem = PreCleaningInput::where('nomor_job', $itemObject->nomor_job)
+            ->where('id_box_raw_material', $itemObject->id_box_raw_material)
+            ->first();
+
+        $dataToUpdate = [
+            'status'                => $itemObject->status ?? 0,
+        ];
+
+        if ($existingItem) {
+            // Perbarui data
+            $existingItem->update($dataToUpdate);
         }
     }
 }

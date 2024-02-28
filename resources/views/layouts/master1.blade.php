@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Mazer Admin Dashboard</title>
-
+    <title>@yield('title')</title>
     <link rel="shortcut icon" href="./assets/compiled/svg/favicon.svg" type="image/x-icon">
     <link rel="shortcut icon"
         href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADRcLDBAAAEs2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjMzIgogICBleGlmOlBpeGVsWURpbWVuc2lvbj0iMzQiCiAgIGV4aWY6Q29sb3JTcGFjZT0iMSIKICAgdGlmZjpJbWFnZVdpZHRoPSIzMyIKICAgdGlmZjpJbWFnZUxlbmd0aD0iMzQiCiAgIHRpZmY6UmVzb2x1dGlvblVuaXQ9IjIiCiAgIHRpZmY6WFJlc29sdXRpb249Ijk2LjAiCiAgIHRpZmY6WVJlc29sdXRpb249Ijk2LjAiCiAgIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiCiAgIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIKICAgeG1wOk1vZGlmeURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiCiAgIHhtcDpNZXRhZGF0YURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJwcm9kdWNlZCIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWZmaW5pdHkgRGVzaWduZXIgMS4xMC4xIgogICAgICBzdEV2dDp3aGVuPSIyMDIyLTAzLTMxVDEwOjUwOjIzKzAyOjAwIi8+CiAgICA8L3JkZjpTZXE+CiAgIDwveG1wTU06SGlzdG9yeT4KICA8L3JkZjpEZXNjcmlwdGlvbj4KIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+Cjw/eHBhY2tldCBlbmQ9InIiPz5V57uAAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kc8rRFEUxz9maORHo1hYKC9hISNGTWwsRn4VFmOUX5uZZ36oeTOv954kW2WrKLHxa8FfwFZZK0WkZClrYoOe87ypmWTO7dzzud97z+nec8ETzaiaWd4NWtYyIiNhZWZ2TvE946WZSjqoj6mmPjE1HKWkfdxR5sSbgFOr9Ll/rXoxYapQVik8oOqGJTwqPL5i6Q5vCzeo6dii8KlwpyEXFL519LjLLw6nXP5y2IhGBsFTJ6ykijhexGra0ITl5bRqmWU1fx/nJTWJ7PSUxBbxJkwijBBGYYwhBgnRQ7/MIQIE6ZIVJfK7f/MnyUmuKrPOKgZLpEhj0SnqslRPSEyKnpCRYdXp/9++msneoFu9JgwVT7b91ga+LfjetO3PQ9v+PgLvI1xkC/m5A+h7F32zoLXug38dzi4LWnwHzjeg8UGPGbFfySvuSSbh9QRqZ6H+Gqrm3Z7l9zm+h+iafNUV7O5Bu5z3L/wAdthn7QIme0YAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAJTSURBVFiF7Zi9axRBGIefEw2IdxFBRQsLWUTBaywSK4ubdSGVIY1Y6HZql8ZKCGIqwX/AYLmCgVQKfiDn7jZeEQMWfsSAHAiKqPiB5mIgELWYOW5vzc3O7niHhT/YZvY37/swM/vOzJbIqVq9uQ04CYwCI8AhYAlYAB4Dc7HnrOSJWcoJcBS4ARzQ2F4BZ2LPmTeNuykHwEWgkQGAet9QfiMZjUSt3hwD7psGTWgs9pwH1hC1enMYeA7sKwDxBqjGnvNdZzKZjqmCAKh+U1kmEwi3IEBbIsugnY5avTkEtIAtFhBrQCX2nLVehqyRqFoCAAwBh3WGLAhbgCRIYYinwLolwLqKUwwi9pxV4KUlxKKKUwxC6ZElRCPLYAJxGfhSEOCz6m8HEXvOB2CyIMSk6m8HoXQTmMkJcA2YNTHm3congOvATo3tE3A29pxbpnFzQSiQPcB55IFmFNgFfEQeahaAGZMpsIJIAZWAHcDX2HN+2cT6r39GxmvC9aPNwH5gO1BOPFuBVWAZue0vA9+A12EgjPadnhCuH1WAE8ivYAQ4ohKaagV4gvxi5oG7YSA2vApsCOH60WngKrA3R9IsvQUuhIGY00K4flQG7gHH/mLytB4C42EgfrQb0mV7us8AAMeBS8mGNMR4nwHamtBB7B4QRNdaS0M8GxDEog7iyoAguvJ0QYSBuAOcAt71Kfl7wA8DcTvZ2KtOlJEr+ByyQtqqhTyHTIeB+ONeqi3brh+VgIN0fohUgWGggizZFTplu12yW8iy/YLOGWMpDMTPXnl+Az9vj2HERYqPAAAAAElFTkSuQmCC"
@@ -20,6 +19,7 @@
     {{-- Choice --}}
     <link rel="stylesheet" href="{{ asset('assets/extensions/select2/css/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.min.css') }}">
     {{-- DataTable --}}
     <link rel="stylesheet" href="{{ asset('https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css') }}">
     <link rel="stylesheet"
@@ -150,7 +150,6 @@
                                 <i class="bi bi-stack"></i>
                                 <span>Master</span>
                             </a>
-
                             <ul class="submenu ">
                                 <li class="submenu-item  {{ Request::is('perusahaan*') ? 'active' : '' }} ">
                                     <a href="{{ route('Perusahaan.index') }}" class="submenu-link">Perusahaan</a>
@@ -162,28 +161,28 @@
                                     <a href="{{ route('Unit.index') }}" class="submenu-link">Unit</a>
                                 </li>
                                 <li class="submenu-item  {{ Request::is('biayahpp*') ? 'active' : '' }} ">
-                                    <a href="{{ route('Biaya.index') }}" class="submenu-link">Biaya HPP</a>
+                                    <a href="{{ route('BiayaHpp.index') }}" class="submenu-link">Biaya HPP</a>
                                 </li>
                                 <li
-                                    class="submenu-item  {{ Request::is('master_supplier_raw_material*') ? 'active' : '' }} ">
+                                    class="submenu-item  {{ Request::is('MasterSupplierRawMaterial*') ? 'active' : '' }} ">
                                     <a href="{{ route('MasterSupplierRawMaterial.index') }}"
-                                        class="submenu-link">Master Supplier <br>
+                                        class="submenu-link">Supplier
                                         Raw Material</a>
                                 </li>
                                 <li
-                                    class="submenu-item  {{ Request::is('master_jenis_raw_material*') ? 'active' : '' }} ">
-                                    <a href="{{ route('MasterJenisRawMaterial.index') }}" class="submenu-link">Master
-                                        Jenis <br>
-                                        Raw Material</a>
+                                    class="submenu-item  {{ Request::is('MasterJenisRawMaterial*') ? 'active' : '' }} ">
+                                    <a href="{{ route('MasterJenisRawMaterial.index') }}" class="submenu-link">Jenis
+                                        Raw
+                                        Material</a>
                                 </li>
                                 <li
-                                    class="submenu-item  {{ Request::is('master_tujuan_kirim_raw_material*') ? 'active' : '' }} ">
+                                    class="submenu-item  {{ Request::is('MasterTujuanKirimRawMaterial*') ? 'active' : '' }} ">
                                     <a href="{{ route('MasterTujuanKirimRawMaterial.index') }}"
-                                        class="submenu-link">Master Tujuan <br>
+                                        class="submenu-link">Tujuan
                                         Kirim Raw Material</a>
                                 </li>
                                 <li
-                                    class="submenu-item  {{ Request::is('master_jenis_grading_kasar*') ? 'active' : '' }} ">
+                                    class="submenu-item  {{ Request::is('MasterJenisGradingKasar') ? 'active' : '' }} ">
                                     <a href="{{ route('MasterJenisGradingKasar.index') }}"
                                         class="submenu-link">Master
                                         Jenis
@@ -208,7 +207,7 @@
                         </li>
                         <li class="sidebar-title">Purchasing & EXIM</li>
                         <li
-                            class="sidebar-item  has-sub {{ Request::is('prm_raw_material_input*', 'prm_raw_material_stock*', 'prm_raw_material_output*', 'stock_transit_grading_kasar*') ? 'active' : '' }}">
+                            class="sidebar-item  has-sub {{ Request::is('prm_raw_material_input*', 'prm_raw_material_stock*', 'prm_raw_material_output*', 'stock_transit_raw_material*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-collection-fill"></i>
                                 <span>Purchasing & EXIM</span>
@@ -230,16 +229,10 @@
                                         Material Output</a>
                                 </li>
                                 <li
-                                    class="submenu-item  {{ Request::is('stock_transit_grading_kasar*') ? 'active' : '' }} ">
-                                    <a href="{{ route('StockTransitGradingKasar.index') }}"
-                                        class="submenu-link">Stock
-                                        Transit Grading Kasar</a>
-                                </li>
-                                {{-- <li
-                                    class="submenu-item  {{ Request::is('StockTransitRawMaterial') ? 'active' : '' }} ">
+                                    class="submenu-item  {{ Request::is('stock_transit_raw_material*') ? 'active' : '' }} ">
                                     <a href="{{ route('StockTransitRawMaterial.index') }}" class="submenu-link">Stock
                                         Transit Raw Material</a>
-                                </li> --}}
+                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-title">Production</li>
@@ -251,46 +244,53 @@
                             </a>
                             <ul class="submenu">
                                 <li
-                                    class="submenu-item  has-sub {{ Request::is('stock_transit_grading_kasar*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*') ? 'active' : '' }}">
+                                    class="submenu-item has-sub {{ Request::is('stock_transit_raw_material*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*', 'grading_kasar_output*', 'stock_transit_grading_kasar*') ? 'active' : '' }}">
                                     <a href="#" class='submenu-link'>
                                         <i class="bi bi-grid-1x2-fill"></i>
                                         <span>Grading Kasar</span>
                                     </a>
                                     <ul class="submenu ">
                                         <li
-                                            class="submenu-item  {{ Request::is('stock_transit_grading_kasar*') ? 'active' : '' }} ">
-                                            <a href="{{ route('StockTransitGradingKasar.index') }}"
-                                                class="submenu-link">Stock
-                                                Transit Grading Kasar</a>
+                                            class="submenu-item {{ Request::is('stock_transit_raw_material*') ? 'active' : '' }}">
+                                            <a href="{{ route('StockTransitRawMaterial.index') }}"
+                                                class="submenu-link">Stock Transit Raw Material</a>
                                         </li>
-                                        {{-- <li class="submenu-item  {{ Request::is('GradingKasarInput') ? 'active' : '' }} ">
-                                    <a href="{{ route('GradingKasarInput.index') }}" class="submenu-link">Grading
-                                        Kasar
-                                        Input</a>
-                                </li> --}}
                                         <li
-                                            class="submenu-item  {{ Request::is('grading_kasar_hasil*') ? 'active' : '' }} ">
+                                            class="submenu-item {{ Request::is('grading_kasar_input*') ? 'active' : '' }}">
+                                            <a href="{{ route('GradingKasarInput.index') }}"
+                                                class="submenu-link">Grading Kasar Input</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('grading_kasar_hasil*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingKasarHasil.index') }}"
-                                                class="submenu-link">Grading
-                                                Kasar<br>Hasil</a>
+                                                class="submenu-link">Grading Kasar Hasil</a>
                                         </li>
                                         <li
-                                            class="submenu-item  {{ Request::is('grading_kasar_stock*') ? 'active' : '' }} ">
+                                            class="submenu-item {{ Request::is('grading_kasar_stock*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingKasarStock.index') }}"
-                                                class="submenu-link">Grading
-                                                Kasar<br>Stock</a>
+                                                class="submenu-link">Grading Kasar Stock</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('grading_kasar_output*') ? 'active' : '' }}">
+                                            <a href="{{ route('GradingKasarOutput.index') }}"
+                                                class="submenu-link">Grading Kasar Output</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('stock_transit_grading_kasar*') ? 'active' : '' }}">
+                                            <a href="{{ route('StockTransitGradingKasar.index') }}"
+                                                class="submenu-link">Stock Transit Grading Kasar</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li
-                                    class="submenu-item  has-sub {{ Request::is('stock_transit_grading_kasar*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*') ? 'active' : '' }}">
+                                    class="submenu-item has-sub {{ Request::is('stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*') ? 'active' : '' }}">
                                     <a href="#" class='submenu-link'>
                                         <i class="bi bi-grid-1x2-fill"></i>
                                         <span>Pre Cleaning</span>
                                     </a>
                                     <ul class="submenu ">
                                         <li
-                                            class="submenu-item  {{ Request::is('stock_transit_grading_kasar*') ? 'active' : '' }} ">
+                                            class="submenu-item {{ Request::is('stock_transit_grading_kasar*') ? 'active' : '' }}">
                                             <a href="{{ route('StockTransitGradingKasar.index') }}"
                                                 class="submenu-link">Stock
                                                 Transit Grading Kasar</a>
@@ -305,16 +305,24 @@
                                                 Cleaning<br>Stock</a>
                                         </li>
                                         <li
-                                            class="submenu-item  {{ Request::is('pre_cleaning_output*') ? 'active' : '' }} ">
-                                            <a href="{{ route('PreCleaningOutput.index') }}" class="submenu-link">Pre
-                                                Cleaning<br>Output</a>
+                                            class="submenu-item {{ Request::is('pre_cleaning_input*') ? 'active' : '' }}">
+                                            <a href="{{ route('PreCleaningInput.index') }}"
+                                                class="submenu-link">Pre-Cleaning Input</a>
                                         </li>
                                         <li
-                                            class="submenu-item  {{ Request::is('transit_pre_cleaning_stock*') ? 'active' : '' }} ">
+                                            class="submenu-item {{ Request::is('pre_cleaning_stock*') ? 'active' : '' }}">
+                                            <a href="{{ route('PreCleaningStock.index') }}"
+                                                class="submenu-link">Pre-Cleaning Stock</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('pre_cleaning_output*') ? 'active' : '' }}">
+                                            <a href="{{ route('PreCleaningOutput.index') }}" class="submenu-link">Pre
+                                                Cleaning Output</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('transit_pre_cleaning_stock*') ? 'active' : '' }}">
                                             <a href="{{ route('TransitPreCleaningStock.index') }}"
-                                                class="submenu-link">Transit
-                                                Pre
-                                                <br> Cleaning Stock</a>
+                                                class="submenu-link">Transit Pre Cleaning Stock</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -340,7 +348,27 @@
                                                 class="submenu-link">Pre Grading Halus Adding Stock</a>
                                         </li>
                                         <li
-                                            class="submenu-item {{ Request::is('adjustment_adding*') ? 'active' : '' }}">
+                                            class="submenu-item {{ Request::is('pre_grading_halus_input*') ? 'active' : '' }}">
+                                            <a href="{{ route('PreGradingHalusInput.index') }}"
+                                                class="submenu-link">Pre-Grading Halus Input</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('pre_grading_halus_stock*') ? 'active' : '' }}">
+                                            <a href="{{ route('PreGradingHalusStock.index') }}"
+                                                class="submenu-link">Pre-Grading Halus Stock</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('pre_grading_halus_adding') ? 'active' : '' }}">
+                                            <a href="{{ route('PreGradingHalusAdding.index') }}"
+                                                class="submenu-link">Pre Grading Halus Adding</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('pre_grading_halus_adding_stock') ? 'active' : '' }}">
+                                            <a href="{{ route('PreGradingHalusAddingStock.index') }}"
+                                                class="submenu-link">Pre Grading Halus Adding Stock</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('adjustment_adding') ? 'active' : '' }}">
                                             <a href="{{ route('AdjustmentAdding.index') }}"
                                                 class="submenu-link">Adjustment Adding</a>
                                         </li>
@@ -348,6 +376,8 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <li class="sidebar-title">Cleaning</li>
                     </ul>
                 </div>
             </div>
@@ -402,6 +432,10 @@
 
     <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
 
+    {{-- Date --}}
+    <script src="{{ asset('assets/extensions/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('assets/static/js/pages/date-picker.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- Need: Apexcharts -->
     {{-- <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script> --}}
@@ -425,6 +459,11 @@
     <script src="{{ asset('https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js') }}"></script>
 
     <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+
+        // SweetAler
         function goBack() {
             window.history.back();
         }
@@ -477,7 +516,7 @@
 
         @if (session('success'))
             Swal.fire({
-                title: 'Alhamdulillah!',
+                title: 'Success!',
                 text: '{{ session('success') }}',
                 icon: 'success',
                 toast: true,
@@ -486,6 +525,42 @@
                 timer: 2000 // Durasi tampilan SweetAlert dalam milidetik
             });
         @endif
+        // Dapatkan notifikasi dari session
+        var notification = @json(session('notification'));
+
+        // Cek apakah notifikasi ada
+        if (notification) {
+            // Gunakan SweetAlert untuk menampilkan notifikasi
+            Swal.fire({
+                icon: notification.type,
+                title: notification.title,
+                text: notification.text,
+            });
+        }
+
+        // allow Select2 Changes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi Choices pada semua elemen dengan class "choices"
+            const selectElements = document.querySelectorAll('.choices');
+
+            selectElements.forEach((select) => {
+                new Choices(select, {
+                    // ... Opsi lainnya ...
+                    allowHTML: true, // Atur allowHTML ke true untuk merender HTML
+                });
+            });
+        });
+
+        // DataTables
+        $(document).ready(function() {
+            // $('#table1').DataTable({
+            //     dom: '<"row"<"col-md-2"l><"col-md-6"B><"col-md-4"f>>tip',
+            //     buttons: [
+            //         'csv', 'excel', 'print', 'copy'
+            //     ],
+            //     scrollX: true,
+            // });
+        });
     </script>
     @yield('script')
 </body>
