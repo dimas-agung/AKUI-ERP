@@ -13,25 +13,6 @@ class WorkstationSeeder extends Seeder
      */
     public function run(): void
     {
-        Workstation::create([
-            'nama'      => 'Joko',
-            'status'    => 0,
-        ]);
-        Workstation::create([
-            'nama'      => 'Budi',
-            'status'    => 1,
-        ]);
-        Workstation::create([
-            'nama'      => 'Jawir',
-            'status'    => 1,
-        ]);
-        Workstation::create([
-            'nama'      => 'Jamet',
-            'status'    => 0,
-        ]);
-        Workstation::create([
-            'nama'      => 'Supri',
-            'status'    => 1,
-        ]);
+        \App\Models\Workstation::factory(3)->create();
     }
 }

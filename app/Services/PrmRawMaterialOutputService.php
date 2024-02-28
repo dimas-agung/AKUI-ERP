@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Services;
-
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\PrmRawMaterialStock;
 use App\Models\PrmRawMaterialStockHistory;
 use App\Models\StockTransitRawMaterial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class PrmRawMaterialOutputService
 {
@@ -77,19 +77,26 @@ class PrmRawMaterialOutputService
             'keterangan'    => $item->keterangan_item,
             'user_created'  => $item->user_created,
             'user_updated'  => $item->user_updated ?? "There isn't any",
-            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
 
         // Creat Stock Transit Grading Kasar
         $itemObject = (object)$item;
+        // $items = collect($item);
         $existingItem = StockTransitRawMaterial::where('tujuan_kirim', $itemObject->tujuan_kirim)
             ->where('id_box', $itemObject->id_box)
             ->first();
-        // return $existingItem
+
+        $jumlahData = PrmRawMaterialOutputItem::distinct('nomor_bstb')->count('id_box');
+        $jumlahKadarAir = PrmRawMaterialOutputItem::groupBy('id_box')
+                    ->selectRaw('id_box, sum(kadar_air) as total_kadar_air')
+                    ->pluck('total_kadar_air');
+
 
         $dataToUpdate = [
             'id_box'        => $itemObject->id_box,
             'berat'         => $itemObject->berat,
+            'kadar_air'     => $itemObject->kadar_air,
             'total_modal'   => $itemObject->total_modal,
             'keterangan'    => $itemObject->keterangan_item,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
@@ -98,15 +105,27 @@ class PrmRawMaterialOutputService
         if ($existingItem) {
             // Jika item sudah ada, perbarui data
             $beratSebelumnya = $existingItem->berat;
+            $avgairSebelumnya = $existingItem->kadar_air;
+            $banyakData = $jumlahData;
 
-            // Hitung total modal baru berdasarkan perbedaan berats
+            // Menghitung rata-rata kadar air baru
+            if (isset($jumlahKadarAir[$itemObject->id_box])) {
+                $banyakKadarAir = $jumlahKadarAir[$itemObject->id_box];
+                $avgKadarAirBaru = $banyakKadarAir / $banyakData;
+            } else {
+                // Jika id_box tidak ditemukan dalam array jumlahKadarAir,
+                // hitung rata-rata kadar air baru berdasarkan data sebelumnya dan data baru
+                $avgKadarAirBaru = ($avgairSebelumnya * ($banyakData - 1) + $itemObject->kadar_air) / $banyakData;
+            }
+
+            // Hitung total modal baru berdasarkan perbedaan berat
             $perbedaanBerat = $beratSebelumnya + $itemObject->berat;
             $totalModalBaru = $perbedaanBerat * $itemObject->modal;
-            // $totalModalBaru = $existingItem->total_modal + ($perbedaanBerat * $itemObject->modal);
 
             // Update data dengan berat dan total modal yang baru
             $dataToUpdate['berat'] = $perbedaanBerat;
             $dataToUpdate['total_modal'] = $totalModalBaru;
+            $dataToUpdate['kadar_air'] = $avgKadarAirBaru;
 
             $existingItem->update($dataToUpdate);
         } else {
@@ -116,10 +135,9 @@ class PrmRawMaterialOutputService
                 'nomor_batch'   => $item->nomor_batch,
                 'nama_supplier' => $itemObject->nama_supplier,
                 'jenis'         => $itemObject->jenis,
-                'kadar_air'     => $itemObject->kadar_air,
                 'tujuan_kirim'  => $itemObject->tujuan_kirim,
                 'letak_tujuan'  => $itemObject->letak_tujuan,
-                'inisial_tujuan' => $itemObject->inisial_tujuan,
+                'inisial_tujuan'=> $itemObject->inisial_tujuan,
                 'modal'         => $itemObject->modal,
                 'user_created'  => $itemObject->user_created,
                 'user_updated'  => $itemObject->user_updated ?? "There isn't any",
@@ -172,8 +190,7 @@ class PrmRawMaterialOutputService
         }
     }
 
-    public function updateItem($request, $id)
-    {
+    public function updateItem($request, $id) {
         try {
             DB::beginTransaction();
             // Update item
@@ -198,24 +215,24 @@ class PrmRawMaterialOutputService
                 // Sesuaikan dengan kolom-kolom lain di tabel item Anda
             ]);
 
-            // Creat Prm Raw Material Stock History
-            PrmRawMaterialStockHistory::create([
-                'id_box'        => $request->id_box,
-                'doc_no'        => $request->doc_no,
-                'berat_masuk'   => $request->berat_masuk  ?? 0,
-                'berat_keluar'  => $request->berat,
-                'sisa_berat'    => $request->selisih_berat,
-                'avg_kadar_air' => $request->kadar_air,
-                'modal'         => $request->modal,
-                'total_modal'   => $request->total_modal,
-                'keterangan'    => $request->keterangan_item,
-                'user_created'  => $request->user_created,
-                'user_updated'  => $request->user_updated,
-                // Sesuaikan dengan kolom-kolom lain di tabel item Anda
-            ]);
+                    // Creat Prm Raw Material Stock History
+        PrmRawMaterialStockHistory::create([
+            'id_box'        => $request->id_box,
+            'doc_no'        => $request->doc_no,
+            'berat_masuk'   => $request->berat_masuk  ?? 0,
+            'berat_keluar'  => $request->berat,
+            'sisa_berat'    => $request->selisih_berat,
+            'avg_kadar_air' => $request->kadar_air,
+            'modal'         => $request->modal,
+            'total_modal'   => $request->total_modal,
+            'keterangan'    => $request->keterangan_item,
+            'user_created'  => $request->user_created,
+            'user_updated'  => $request->user_updated,
+            // Sesuaikan dengan kolom-kolom lain di tabel item Anda
+        ]);
             DB::commit();
 
-            return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('PrmRawMaterialOutput.index')->with(['success' => 'Data Berhasil Diubah!']);
         } catch (\Exception $e) {
             DB::rollBack();
             return [

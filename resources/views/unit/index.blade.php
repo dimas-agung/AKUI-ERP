@@ -11,18 +11,19 @@
         <div class="card-header">
             <div class="col-sm-12 d-flex justify-content-between">
                 <h4 class="card-title">Data Unit AKUI-ERP</h4>
-                <button class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#inlineForm">
+                <button class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#inlineForm"
+                    onclick="renderSelect2()">
                     <i class="fa fa-plus"></i>
                     Add Data
                 </button>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="overflow: auto;">
             {{-- Create Data --}}
-            <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
-                aria-hidden="true">
+            <div class="modal fade text-left border border-primary border-3" id="inlineForm" role="dialog"
+                aria-labelledby="myModalLabel33" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content border border-primary border-3">
                         <div class="modal-header">
                             <h5 class="modal-title" id="myModalLabel33">
                                 <span class="fw-mediumbold">
@@ -41,16 +42,33 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label>Pilih Workstation ID:</label>
-                                            <select class="choices form-select" name="workstation_id">
+                                            <label for="">Pilih Perusahaan:</label>
+                                            <select class="choices form-select" name="perusahaan_id"
+                                                onchange="getWorkstations(this.value)">
                                                 <option></option>
-                                                @foreach ($workstation as $post)
+                                                @foreach ($perusahaan as $post)
                                                     <option value="{{ $post->id }}">
-                                                        {{ $post->nama }}</option>
+                                                        {{ $post->nama }}
+                                                    </option>
                                                 @endforeach
                                             </select>
 
-                                            <!-- error message untuk title -->
+                                            <!-- error message untuk perusahaan -->
+                                            @error('perusahaan_id')
+                                                <div class="alert alert-danger mt-2">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Pilih Workstation ID:</label>
+                                            <select id="workstation_id" class="select2 form-select" name="workstation_id">
+                                                <option></option>
+                                            </select>
+
+                                            <!-- error message untuk workstation -->
                                             @error('workstation_id')
                                                 <div class="alert alert-danger mt-2">
                                                     {{ $message }}
@@ -74,21 +92,21 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer no-bd">
-                                    <button type="submit" class="btn btn-primary">Add</button>
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                </div>
+                            </div>
+                            <div class="modal-footer no-bd">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-
             <div class="table-responsive">
-                <table id="add-row" class="display table table-striped table-hover">
+                <table id="table1" class="display" style="width:100%;">
                     <thead>
                         <tr>
                             <th class="text-center">No</th>
+                            <th class="text-center">Perusahaan</th>
                             <th class="text-center">Workstation</th>
                             <th class="text-center">Nama Unit</th>
                             <th class="text-center">Status</th>
@@ -97,23 +115,15 @@
                             <th style="width: 10%" class="text-center">Action</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <th class="text-center">No</th>
-                        <th class="text-center">Workstation</th>
-                        <th class="text-center">Nama Unit</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Tgl Buat</th>
-                        <th class="text-center">Tgl Update</th>
-                        <th style="width: 10%" class="text-center">Action</th>
-                    </tfoot>
                     <tbody>
                         @forelse ($unit as $post)
                             <tr>
-                                <td class="text-center">{{ $post->id }}</td>
+                                <td class="text-center">{{ $i++ }}</td>
+                                <td class="text-center">{!! $post->perusahaan->nama !!}</td>
                                 <td class="text-center">{!! $post->workstation->nama !!}</td>
                                 <td class="text-center">{!! $post->nama !!}</td>
                                 {{-- <td class="text-center">{!! $post->status !!}</td> --}}
-                                <td>
+                                <td class="text-center">
                                     @if ($post->status == 1)
                                         Aktif
                                     @else
@@ -134,8 +144,8 @@
                                                     class="bi bi-pencil-square"></i></a>
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" data-toggle="tooltip"
-                                                class="btn btn-link btn-danger text-danger"data-original-title="Remove"
+                                            <button type="button" data-toggle="tooltip"
+                                                class="btn btn-link btn-danger text-danger" data-original-title="Remove"
                                                 onclick="confirmDelete({{ $post->id }})"><i
                                                     class="bi bi-trash3"></i></button>
                                         </form>
@@ -157,6 +167,36 @@
 @endsection
 @section('script')
     <script>
+        function renderSelect2() {
+            $('.select2').select2({
+                width: '100%',
+                dropdownParent: $("#inlineForm")
+            });
+        }
+
+        function getWorkstations(perusahaan_id) {
+            var workstationSelect = document.getElementById("workstation_id");
+            // Clear previous workstation options
+            workstationSelect.innerHTML = "";
+
+            // Send AJAX request to get workstations based on selected company
+            fetch("/get-workstations/" + perusahaan_id)
+                .then(response => response.json())
+                .then(data => {
+                    $('#workstation_id').empty();
+                    renderSelect2() // Kosongkan opsi sebelum menambahkan yang baru
+                    data.forEach(workstation => {
+                        console.log(data);
+                        $('#workstation_id').append($('<option>', {
+                            value: workstation.id,
+                            text: workstation.nama
+                        }));
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Konfirmasi',

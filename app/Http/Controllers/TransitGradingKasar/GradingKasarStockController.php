@@ -8,13 +8,14 @@ use App\Models\GradingKasarStock;
 
 class GradingKasarStockController extends Controller
 {
+    //
     //index
     public function index()
     {
         $i = 1;
-        $GradingKasarStock = GradingKasarStock::all();
+        $GradigKasarStock = GradingKasarStock::all();
         return response()->view('transit_grading.GradingKasarStock.index', [
-            'grading_kasar_stocks'          => $GradingKasarStock,
+            'grading_kasar_stocks'          => $GradigKasarStock,
             'i'                             => $i
         ]);
     }

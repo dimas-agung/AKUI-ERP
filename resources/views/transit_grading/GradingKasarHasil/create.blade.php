@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card mt-2 border border-primary border-3">
+        <div class="card border border-primary border-3 mt-2">
             <div class="card-header">
                 <div class="d-flex align-items-center mb-3">
                     <h4 class="card-title">Input Grading Kasar hasil</h4>
@@ -222,9 +222,9 @@
                 $('#harga_estimasi').val(hargaEstimasi);
                 $('#presetanse_pengurangan_harga').val(presentasePenguranganHarga);
                 // Log untuk memeriksa nilai
-                console.log("Nama: " + nama);
-                console.log("Harga Estimasi: " + hargaEstimasi);
-                console.log("Prosentase Pengurangan Harga: " + presentasePenguranganHarga);
+                // console.log("Nama: " + nama);
+                // console.log("Harga Estimasi: " + hargaEstimasi);
+                // console.log("Prosentase Pengurangan Harga: " + presentasePenguranganHarga);
             });
         });
         // hitung nilai berat
@@ -441,8 +441,10 @@
             } else {
                 hargaEstimasiToSend = presetanse_pengurangan_harga * modal;
             }
+            $()
 
             console.log("Harga Estimasi Baru= " + hargaEstimasiToSend);
+            console.log("Harga modal= " + modal);
 
             dataArray.push({
                 // doc_no: doc_no,
@@ -544,7 +546,7 @@
                 // Menampilkan SweetAlert untuk pesan error
                 Swal.fire({
                     icon: 'error',
-                    title: 'Astagfirullah',
+                    title: 'Warning!',
                     text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
                 });
                 return; // Menghentikan eksekusi fungsi jika data kosong
@@ -576,7 +578,7 @@
                     // Menampilkan SweetAlert untuk pesan sukses
                     Swal.fire({
                         icon: 'success',
-                        title: 'Alhamdulillah',
+                        title: 'Success!',
                         text: 'Data berhasil dikirim.'
                     });
 
@@ -589,7 +591,7 @@
                     // Menampilkan SweetAlert untuk pesan error
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
+                        title: 'Failed!',
                         text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
                     });
                 },

@@ -3,7 +3,7 @@
     <div class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card border-0 shadow-sm rounded">
+                <div class="card border border-primary border-3 shadow-sm rounded">
                     <div class="card-body">
                         <table class="table table-bordered">
                             <thead>

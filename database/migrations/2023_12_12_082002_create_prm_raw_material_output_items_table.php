@@ -24,9 +24,9 @@ return new class extends Migration
             $table->string('tujuan_kirim');
             $table->string('letak_tujuan');
             $table->string('inisial_tujuan');
-            $table->float('modal');
-            $table->float('total_modal');
-            $table->text('keterangan_item');
+            $table->float('modal', 16, 4);
+            $table->float('total_modal', 16, 4);
+            $table->text('keterangan_item')->nullable();
             $table->string('user_created');
             $table->string('user_updated');
             $table->timestamps();
