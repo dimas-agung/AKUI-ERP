@@ -11,19 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prm_raw_material_stock_histories', function (Blueprint $table) {
+        Schema::create('grading_halus_stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('id_box');
-            $table->string('doc_no')->default('1');
+            $table->string('unit');
+            $table->string('id_box_grading_halus');
+            $table->string('nomor_batch');
+            $table->string('jenis');
             $table->float('berat_masuk');
+            $table->float('pcs_masuk');
             $table->float('berat_keluar');
+            $table->float('pcs_keluar');
             $table->float('sisa_berat');
-            $table->float('avg_kadar_air');
+            $table->float('sisa_pcs');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->text('keterangan');
-            $table->integer('status')->default(1);
-            $table->string('user_created');
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prm_raw_material_stock_histories');
+        Schema::dropIfExists('grading_halus_stocks');
     }
 };

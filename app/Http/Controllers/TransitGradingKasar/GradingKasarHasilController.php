@@ -100,6 +100,33 @@ class GradingKasarHasilController extends Controller
         }
     }
 
+    // show
+    // public function show(string $id)
+    // {
+    //     $i = 1;
+    //     // $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+    //     // $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
+    //     //get by ID
+    //     $MasterGKH = PrmRawMaterialInput::findOrFail($id);
+    //     $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
+    //         ->where(['id' => $id])
+    //         ->first();
+
+
+    //     return response()->view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM', 'i'));
+    // }
+    // destroy
+    // public function destroyInput($id): RedirectResponse
+    // {
+    //     //get by ID
+    //     $GradingKasarHasil = GradingKasarHasil::findOrFail($id);
+
+    //     //delete
+    //     $GradingKasarHasil->delete();
+
+    //     //redirect to index
+    //     return redirect()->route('grading_kasar_hasil.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    // }
     public function destroyInput($id): RedirectResponse
     {
         try {

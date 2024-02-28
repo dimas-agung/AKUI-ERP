@@ -1,4 +1,5 @@
 @extends('layouts.master1')
+{{-- @extends('layouts.template') --}}
 @section('menu')
     Grading Kasar Transit
 @endsection
@@ -7,7 +8,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card border border-primary border-3 mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-body">
                 <div class="card">
                     {{-- card header --}}
@@ -35,7 +36,6 @@
                                         <th scope="col" class="text-center">Id Box Grading Kasar</th>
                                         <th scope="col" class="text-center">Nomor Batch</th>
                                         <th scope="col" class="text-center">Nama Supplier</th>
-                                        <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">Nomor Nota Internal</th>
                                         <th scope="col" class="text-center">Jenis Raw Material</th>
                                         <th scope="col" class="text-center">Berat</th>
@@ -75,14 +75,6 @@
                                             <td class="text-center">{{ $GradingKH->id_box_grading_kasar }}</td>
                                             <td class="text-center">{{ $GradingKH->nomor_batch }}</td>
                                             <td class="text-center">{{ $GradingKH->nama_supplier }}</td>
-                                            <td class="text-center">
-                                                @if ($GradingKH->status == 1)
-                                                    <span>Aktif</span>
-                                                @elseif($GradingKH->status == 0)
-                                                    <span class="badge badge-secondary"
-                                                        style="text-shadow: 1px 1px 6px #000000;">Tidak Aktif</span>
-                                                @endif
-                                            </td>
                                             <td class="text-center">{{ $GradingKH->nomor_nota_internal }}</td>
                                             <td class="text-center">{{ $GradingKH->jenis_raw_material }}</td>
                                             <td class="text-center">{{ number_format($GradingKH->berat, 0, ',', '.') }}
@@ -177,7 +169,7 @@
 @endsection
 <script>
     function redirectToPage() {
-        window.location.href = "{{ Route('GradingKasarHasil.create') }}";
+        window.location.href = "{{ url('/grading_kasar_hasil/create') }}";
     }
 
     function confirmDelete(id) {

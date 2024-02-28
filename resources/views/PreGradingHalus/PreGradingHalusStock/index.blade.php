@@ -57,16 +57,21 @@
                                             <td class="text-center">{{ $TPCS->id_box_raw_material }}</td>
                                             <td class="text-center">{{ $TPCS->jenis_raw_material }}</td>
                                             <td class="text-center">{{ $TPCS->jenis_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->berat_masuk }}</td>
+                                            <td class="text-center">{{ $TPCS->berat_masuk }}
+                                            </td>
                                             <td class="text-center">{{ $TPCS->pcs_masuk }}</td>
-                                            <td class="text-center">{{ $TPCS->berat_keluar }}</td>
-                                            <td class="text-center">{{ $TPCS->pcs_keluar }}</td>
-                                            <td class="text-center">{{ $TPCS->sisa_berat }}</td>
+                                            <td class="text-center">{{ $TPCS->berat_keluar }}
+                                            </td>
+                                            <td class="text-center">{{ $TPCS->pcs_keluar }}
+                                            </td>
+                                            <td class="text-center">{{ $TPCS->sisa_berat }}
+                                            </td>
                                             <td class="text-center">{{ $TPCS->sisa_pcs }}</td>
-                                            <td class="text-center">{{ $TPCS->kadar_air }}</td>
+                                            <td class="text-center">{{ number_format($TPCS->kadar_air, 2, ',', '.') }}</td>
                                             <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->modal }}</td>
-                                            <td class="text-center">{{ $TPCS->total_modal }}</td>
+                                            <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}
+                                            </td>
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
@@ -81,29 +86,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('script')
-    <script>
-        // function redirectToPage() {
-        //     window.location.href = "{{ url('/transit_pre_cleaning_stock/create') }}";
-        // }
-
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Anda yakin ingin menghapus data ini?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d61609',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Jika dikonfirmasi, submit form
-                    document.getElementById('deleteForm' + id).submit();
-                }
-            });
-        }
-    </script>
 @endsection

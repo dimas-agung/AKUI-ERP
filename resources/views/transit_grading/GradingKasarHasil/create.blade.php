@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card border border-primary border-3 mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center mb-3">
                     <h4 class="card-title">Input Grading Kasar hasil</h4>
@@ -441,7 +441,6 @@
             } else {
                 hargaEstimasiToSend = presetanse_pengurangan_harga * modal;
             }
-            $()
 
             console.log("Harga Estimasi Baru= " + hargaEstimasiToSend);
             console.log("Harga modal= " + modal);
@@ -546,7 +545,7 @@
                 // Menampilkan SweetAlert untuk pesan error
                 Swal.fire({
                     icon: 'error',
-                    title: 'Warning!',
+                    title: 'Astagfirullah',
                     text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
                 });
                 return; // Menghentikan eksekusi fungsi jika data kosong
@@ -578,7 +577,7 @@
                     // Menampilkan SweetAlert untuk pesan sukses
                     Swal.fire({
                         icon: 'success',
-                        title: 'Success!',
+                        title: 'Alhamdulillah',
                         text: 'Data berhasil dikirim.'
                     });
 
@@ -591,7 +590,7 @@
                     // Menampilkan SweetAlert untuk pesan error
                     Swal.fire({
                         icon: 'error',
-                        title: 'Failed!',
+                        title: 'Error',
                         text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
                     });
                 },

@@ -73,7 +73,7 @@ class PrmRawMaterialOutputService
             'sisa_berat'    => $item->selisih_berat,
             'avg_kadar_air' => $item->kadar_air,
             'modal'         => $item->modal,
-            'total_modal'   => $item->total_modal,
+            'total_modal'   => $item->total_modal_stock,
             'keterangan'    => $item->keterangan_item,
             'user_created'  => $item->user_created,
             'user_updated'  => $item->user_updated ?? "There isn't any",
@@ -97,7 +97,7 @@ class PrmRawMaterialOutputService
             'id_box'        => $itemObject->id_box,
             'berat'         => $itemObject->berat,
             'kadar_air'     => $itemObject->kadar_air,
-            'total_modal'   => $itemObject->total_modal,
+            'total_modal'   => $itemObject->total_modal_stock,
             'keterangan'    => $itemObject->keterangan_item,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
@@ -156,7 +156,7 @@ class PrmRawMaterialOutputService
             'berat_masuk'   => $itemObject->berat_masuk,
             'berat_keluar'  => $itemObject->berat,
             'sisa_berat'    => $itemObject->selisih_berat,
-            'total_modal'   => $itemObject->total_modal,
+            'total_modal'   => $itemObject->total_modal_stock,
             'keterangan'    => $itemObject->keterangan_item,
             'user_updated'  => $itemObject->user_created ?? "There isn't any",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
@@ -224,7 +224,7 @@ class PrmRawMaterialOutputService
             'sisa_berat'    => $request->selisih_berat,
             'avg_kadar_air' => $request->kadar_air,
             'modal'         => $request->modal,
-            'total_modal'   => $request->total_modal,
+            'total_modal'   => $request->total_modal_stock,
             'keterangan'    => $request->keterangan_item,
             'user_created'  => $request->user_created,
             'user_updated'  => $request->user_updated,

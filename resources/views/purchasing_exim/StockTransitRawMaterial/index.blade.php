@@ -51,12 +51,12 @@
                                 <td class="text-center">{!! $post->nama_supplier !!}</td>
                                 <td class="text-center">{!! $post->jenis !!}</td>
                                 <td class="text-center">{!! $post->berat !!}</td>
-                                <td class="text-center">{!! $post->kadar_air !!}</td>
+                                <td class="text-center">{!! number_format($post->kadar_air, 2, ',', '.') !!}</td>
                                 <td class="text-center">{!! $post->tujuan_kirim !!}</td>
                                 <td class="text-center">{!! $post->letak_tujuan !!}</td>
                                 <td class="text-center">{!! $post->inisial_tujuan !!}</td>
-                                <td class="text-center">{!! $post->modal !!}</td>
-                                <td class="text-center">{!! $post->total_modal !!}</td>
+                                <td class="text-center">{!! number_format($post->modal, 2, ',', '.') !!}</td>
+                                <td class="text-center">{!! number_format($post->total_modal, 2, ',', '.') !!}</td>
                                 <td class="text-center">{!! $post->keterangan !!}</td>
                                 <td class="text-center">{!! $post->user_created !!}</td>
                                 <td class="text-center">{!! $post->user_updated !!}</td>

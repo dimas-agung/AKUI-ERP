@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\GradingKasarHasil;
 use App\Models\GradingKasarStock;
+use App\Models\MasterJenisGradingKasar;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Finally_;
 
@@ -40,6 +42,11 @@ class GradingKasarHasilService
     {
         // stok
         $itemObject = (object)$item;
+        // Cari item berdasarkan id_box dan nomor_batch
+        // $existingItem = GradingKasarStock::where('id_box_grading_kasar', $itemObject->id_box_grading_kasar)
+        //     ->where('nomor_batch', $itemObject->nomor_batch)
+        //     ->first();
+        // return $existingItem
 
         $dataToUpdate = [
             // 'doc_no'                            => $itemObject->doc_no,

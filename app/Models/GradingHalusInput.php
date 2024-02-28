@@ -46,4 +46,17 @@ class GradingHalusInput extends Model
         'user_created',
         'user_updated',
     ];
+
+    public function PreGradingHalusAddingStock()
+    {
+        return $this->belongsTo(PreGradingHalusAddingStock::class, 'nomor_grading', 'nomor_grading');
+    }
+    public function MasterJenisGradingHalus()
+    {
+        return $this->belongsTo(MasterJenisGradingHalus::class, 'jenis', 'jenis_grading');
+    }
+    // public function GradingHalusStock()
+    // {
+    //     return $this->hasMany(GradingHalusStock::class, 'id_box_grading_halus', 'id_box_grading_halus');
+    // }
 }

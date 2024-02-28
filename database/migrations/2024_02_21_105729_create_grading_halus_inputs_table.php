@@ -42,12 +42,12 @@ return new class extends Migration
             $table->float('prosentase_harga_gramasi', 16, 4)->nullable();
             $table->float('selisih_laba_rugi_kg')->nullable();
             $table->float('selisih_laba_rugi_per_gram')->nullable();
-            $table->float('hpp');
-            $table->float('total_hpp');
-            $table->float('fix_hpp');
-            $table->float('fix_total_hpp');
+            $table->float('hpp')->nullable();
+            $table->float('total_hpp')->nullable();
+            $table->float('fix_hpp')->nullable();
+            $table->float('fix_total_hpp')->nullable();
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

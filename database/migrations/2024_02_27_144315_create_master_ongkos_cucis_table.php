@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_jenis_raw_materials', function (Blueprint $table) {
+        Schema::create('master_ongkos_cucis', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis')->unique();
-            $table->string('kategori_susut');
-            $table->float('upah_operator', 16, 4)->nullable();
-            $table->float('pengurangan_harga')->nullable();
-            $table->float('harga_estimasi', 16, 4)->nullable();
+            $table->string('unit');
+            $table->string('jenis_bulu');
+            $table->float('biaya_per_gram', 16, 4);
             $table->string('status')->default('1');
+            $table->string('user_created')->nullable();
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_jenis_raw_materials');
+        Schema::dropIfExists('master_ongkos_cucis');
     }
 };

@@ -1,17 +1,17 @@
 @extends('layouts.master1')
 @section('menu')
-    Pre-Grading Halus
+    Grading Halus
 @endsection
 @section('title')
-    Pre-Grading Halus Input
+    Grading Halus Input
 @endsection
 @section('content')
     <div class="section">
         <div class="card border border-primary border-3">
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
-                    <h4 class="card-title">Data Pre-Grading Halus Input</h4>
-                    <a href="{{ route('PreGradingHalusInput.create') }}" class="btn btn-outline-success rounded-pill">
+                    <h4 class="card-title">Data Grading Halus Input</h4>
+                    <a href="{{ route('GradingHalusInput.create') }}" class="btn btn-outline-success rounded-pill">
                         <i class="fa fa-plus"></i>
                         Add Data
                     </a>
@@ -23,9 +23,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
-                                <th class="text-center" scope="col">Nomor Job</th>
-                                <th class="text-center" scope="col">Id Box Grading Kasar</th>
-                                <th class="text-center" scope="col">Nomor BSTB</th>
+                                <th class="text-center" scope="col">Nomor grading</th>
                                 <th class="text-center" scope="col">Id Box Raw Material</th>
                                 <th class="text-center" scope="col">Nomor Batch</th>
                                 <th class="text-center" scope="col">Nomor Nota Internal</th>
@@ -33,12 +31,28 @@
                                 <th class="text-center" scope="col">Status</th>
                                 <th class="text-center" scope="col">Jenis Raw Material</th>
                                 <th class="text-center" scope="col">Kadar Air</th>
-                                <th class="text-center" scope="col">Jenis Kirim</th>
-                                <th class="text-center" scope="col">Berat Kirim</th>
-                                <th class="text-center" scope="col">Pcs Kirim</th>
-                                <th class="text-center" scope="col">Tujuan Kirim</th>
+                                <th class="text-center" scope="col">Berat Adding</th>
+                                <th class="text-center" scope="col">Pcs Adding</th>
+                                <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">Modal</th>
                                 <th class="text-center" scope="col">Total Modal</th>
+                                <th class="text-center" scope="col">Kategori Susut</th>
+                                <th class="text-center" scope="col">Id Box Grading Halus</th>
+                                <th class="text-center" scope="col">Susut Depan</th>
+                                <th class="text-center" scope="col">Susut Belakang</th>
+                                <th class="text-center" scope="col">Biaya Produksi</th>
+                                <th class="text-center" scope="col">kontribusi</th>
+                                <th class="text-center" scope="col">harga_estimasi</th>
+                                <th class="text-center" scope="col">total_harga</th>
+                                <th class="text-center" scope="col">nilai_laba_rugi</th>
+                                <th class="text-center" scope="col">nilai_prosentase_total_keuntungan</th>
+                                <th class="text-center" scope="col">prosentase_harga_gramasi</th>
+                                <th class="text-center" scope="col">selisih_laba_rugi_kg</th>
+                                <th class="text-center" scope="col">selisih_laba_rugi_per_gram</th>
+                                <th class="text-center" scope="col">hpp</th>
+                                <th class="text-center" scope="col">total_hpp</th>
+                                <th class="text-center" scope="col">fix_hpp</th>
+                                <th class="text-center" scope="col">fix_total_hpp</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
@@ -47,9 +61,7 @@
                             @forelse ($PreGHI as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{{ $item->nomor_job }}</td>
-                                    <td class="text-center">{{ $item->id_box_grading_kasar }}</td>
-                                    <td class="text-center">{{ $item->nomor_bstb }}</td>
+                                    <td class="text-center">{{ $item->nomor_grading }}</td>
                                     <td class="text-center">{{ $item->id_box_raw_material }}</td>
                                     <td class="text-center">{{ $item->nomor_batch }}</td>
                                     <td class="text-center">{{ $item->nomor_nota_internal }}</td>
@@ -64,22 +76,42 @@
                                     </td>
                                     <td class="text-center">{{ $item->jenis_raw_material }}</td>
                                     <td class="text-center">{{ number_format($item->kadar_air, 2, ',', '.') }}</td>
-                                    <td class="text-center">{{ $item->jenis_kirim }}</td>
-                                    <td class="text-center">{{ $item->berat_kirim }}</td>
-                                    <td class="text-center">{{ $item->pcs_kirim }}</td>
-                                    <td class="text-center">{{ $item->tujuan_kirim }}</td>
+                                    <td class="text-center">{{ $item->berat_adding }}</td>
+                                    <td class="text-center">{{ $item->pcs_adding }}</td>
+                                    <td class="text-center">{{ $item->jenis_grading }}</td>
+                                    <td class="text-center">{{ $item->berat_grading }}</td>
+                                    <td class="text-center">{{ $item->pcs_grading }}</td>
+                                    <td class="text-center">{{ $item->keterangan }}</td>
                                     <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ $item->kategori_susut }}</td>
+                                    <td class="text-center">{{ $item->id_box_grading_halus }}</td>
+                                    <td class="text-center">{{ $item->susut_depan }}</td>
+                                    <td class="text-center">{{ $item->susut_belakang }}</td>
+                                    <td class="text-center">{{ number_format($item->biaya_produksi, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ $item->kontribusi }}</td>
+                                    <td class="text-center">{{ number_format($item->harga_estimasi, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->total_harga, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ $item->nilai_laba_rugi }}</td>
+                                    <td class="text-center">{{ $item->nilai_prosentase_total_keuntungan }}</td>
+                                    <td class="text-center">{{ $item->prosentase_harga_gramasi }}</td>
+                                    <td class="text-center">{{ $item->selisih_laba_rugi_kg }}</td>
+                                    <td class="text-center">{{ $item->selisih_laba_rugi_per_gram }}</td>
+                                    <td class="text-center">{{ number_format($item->hpp, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->total_hpp, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->fix_hpp, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->fix_total_hpp, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
                                                 <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
-                                                    action="{{ route('PreGradingHalusInput.destroy', $item->nomor_bstb) }}"
+                                                    action="{{ route('GradingHalusInput.destroy', $item->nomor_bstb) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-link" data-original-title="Remove"
+                                                    <button type="button" class="btn btn-link"
+                                                        data-original-title="Remove"
                                                         onclick="confirmDelete('{{ $item->nomor_bstb }}')">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
@@ -90,7 +122,7 @@
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Data Pre-Grading Halus Input belum Tersedia.
+                                    Data Grading Halus Input belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>
