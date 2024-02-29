@@ -89,7 +89,7 @@
                                         <div class="form-group">
                                             <label>Nomor Job</label>
                                             <input type="text" class="form-control" id="nomor_job" name="nomor_job"
-                                                value="{{ old('nomor_job') }}" placeholder="Masukkan Nomor Job">
+                                                placeholder="Masukkan Nomor Job">
                                         </div>
                                     </div>
                                 </div>
@@ -242,8 +242,8 @@
                                 <div class="col-md-12">
                                     <button type="button" id="tombol_add" class="btn btn-primary"
                                         onclick="addRow()">Add</button>
-                                    <a href="{{ url('/PrmRawMaterialOutput') }}" type="button" class="btn btn-danger"
-                                        data-dismiss="modal">Close</a>
+                                    <a href="{{ route('GradingKasarOutput.index') }}" type="button"
+                                        class="btn btn-danger" data-dismiss="modal">Close</a>
                                 </div>
                             </div>
                         </div>
@@ -383,23 +383,30 @@
         });
 
         function generateNomorBSTB(inisial_tujuan, prefix) {
-            const now = new Date();
-            const tahun = now.getFullYear().toString().substr(-2);
-            const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
-            const tanggal = ('0' + now.getDate()).slice(-2);
-            const jam = ('0' + now.getHours()).slice(-2);
-            const menit = ('0' + now.getMinutes()).slice(-2);
-            const detik = ('0' + now.getSeconds()).slice(-2);
+            let nomor;
+            do {
+                const now = new Date();
+                const tahun = now.getFullYear().toString().substr(-2);
+                const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+                const tanggal = ('0' + now.getDate()).slice(-2);
+                const jam = ('0' + now.getHours()).slice(-2);
+                const menit = ('0' + now.getMinutes()).slice(-2);
+                const detik = ('0' + now.getSeconds()).slice(-2);
 
-            // Menambahkan prefix yang sesuai
-            const nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_ugk`;
-            if (prefix === 'BSTB') {
-                return `BSTB_${nomor}`;
-            } else if (prefix === 'JOB') {
-                return `${nomor}`;
-            } else {
-                return nomor;
-            }
+                // Menambahkan prefix yang sesuai
+                const nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_ugk`;
+                if (prefix === 'BSTB') {
+                    return `BSTB_${nomor}`;
+                } else if (prefix === 'JOB') {
+                    return `${nomor}`;
+                } else {
+                    return nomor;
+                }
+                // Memeriksa apakah nomor job yang dihasilkan sudah ada dalam data yang sudah diinputkan sebelumnya
+                const existingNomorJobs = dataArray.map(data => data.nomor_job);
+            } while (existingNomorJobs.includes(nomor));
+
+            return nomor;
         }
 
         // Event listener untuk perubahan nilai pada total modal
@@ -500,6 +507,16 @@
                 Swal.fire({
                     title: 'Warning!',
                     text: message,
+                    icon: 'warning'
+                });
+                return;
+            }
+
+            // Memeriksa apakah nomor job sudah ada dalam dataArray
+            if (dataArray.some(data => data.nomor_job === nomor_job)) {
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Nomor job sudah ada. Silakan masukkan nomor job yang berbeda.',
                     icon: 'warning'
                 });
                 return;

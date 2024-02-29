@@ -460,6 +460,9 @@
             }
         }
 
+        // Variabel global untuk menyimpan indeks baris terakhir
+        var currentRowIndex = 0;
+        var dataArray = [];
 
         function addRow() {
             // Mengambil nilai dari input
@@ -604,27 +607,43 @@
                 user_created: user_created,
             });
             // Membersihkan nilai input setelah ditambahkan
-            $('#id_box').val('');
-            $('#tujuan_kirim').val('');
+            $('#id_box_raw_material').val('');
             $('#nomor_batch').val('');
-            $('#nama_supplier').val('');
-            $('#jenis').val('');
-            $('#berat_masuk').val('');
-            $('#berat').val('');
-            $('#selisih_berat').val('');
-            $('#kadar_air').val('');
-            $('#tujuan_kirim').val($('#tujuan_kirim option:first').val());
             $('#nomor_nota_internal').val('');
-            $('#letak_tujuan').val('');
-            $('#inisial_tujuan').val('');
+            $('#nama_supplier').val('');
+            $('#jenis_raw_material').val('');
+            $('#kadar_air').val('');
+            $('#berat_adding').val('');
+            $('#pcs_adding').val('');
+            $('#jenis_grading').val('');
+            $('#berat_grading').val('');
+            $('#pcs_grading').val('');
+            $('#keterangan').val('');
             $('#modal').val('');
             $('#total_modal').val('');
-            $('#keterangan_item').val('');
+            $('#kategori_susut').val('');
+            $('#id_box_grading_halus').val('');
+            $('#susut_depan').val('');
+            $('#susut_belakang').val('');
+            $('#biaya_produksi').val('');
+            $('#kontribusi').val('');
+            $('#harga_estimasi').val('');
+            $('#total_harga').val('');
+            $('#nilai_laba_rugi').val('');
+            $('#nilai_prosentase_total_keuntungan').val('');
+            $('#prosentase_harga_gramasi').val('');
+            $('#selisih_laba_rugi_kg').val('');
+            $('#selisih_laba_rugi_per_gram').val('');
+            $('#hpp').val('');
+            $('#total_hpp').val('');
+            $('#fix_hpp').val('');
+            $('#fix_total_hpp').val('');
+            $('#user_created').val('');
             $('#doc_no').prop('readonly', true);
             $('#nomor_bstb').prop('readonly', true);
             $('#nomor_batch').prop('readonly', true);
-            $('#keterangan').prop('readonly', true);
             $('#user_created').prop('readonly', true);
+            $('#tujuan_kirim').val($('#tujuan_kirim option:first').val());
 
             // Update indeks baris terakhir
             currentRowIndex++;
@@ -649,6 +668,7 @@
         }
 
         function sendData() {
+            console.log("Isi data=" + dataArray);
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
                 url: '{{ route('PreGradingHalusInput.store') }}',
@@ -666,7 +686,7 @@
                 data: function() {
                     var postData = {
                         dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
-                        user_created: $('#user_created').val() || '',
+                        // user_created: $('#user_created').val() || '',
                         user_updated: 'Asc-186',
                         _token: '{{ csrf_token() }}'
                     };

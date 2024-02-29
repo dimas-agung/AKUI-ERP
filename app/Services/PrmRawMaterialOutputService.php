@@ -85,6 +85,7 @@ class PrmRawMaterialOutputService
         // $items = collect($item);
         $existingItem = StockTransitRawMaterial::where('tujuan_kirim', $itemObject->tujuan_kirim)
             ->where('id_box', $itemObject->id_box)
+            ->where('nomor_bstb', $itemObject->nomor_bstb)
             ->first();
 
         $jumlahData = PrmRawMaterialOutputItem::distinct('nomor_bstb')->count('id_box');

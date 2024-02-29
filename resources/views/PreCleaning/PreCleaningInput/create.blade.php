@@ -123,7 +123,7 @@
                                                     {{-- <button type="submit" class="btn btn-primary">Add</button> --}}
                                                     <a href="#" class="btn btn-primary"
                                                         onclick="sendData()">Submit</a>
-                                                    <a href="{{ url('/PreCleaningInput') }}" type="button"
+                                                    <a href="{{ Route('PreCleaningInput.index') }}" type="button"
                                                         class="btn btn-danger" data-dismiss="modal">Close</a>
                                                 </div>
                                             </div>
@@ -254,7 +254,7 @@
                         dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
                         doc_no: doc_no,
                         user_created: $('#user_created').val() || '',
-                        user_updated: 'Asc-186',
+                        user_updated: "There isn't any",
                         _token: '{{ csrf_token() }}'
                     };
 

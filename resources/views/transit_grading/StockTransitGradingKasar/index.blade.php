@@ -39,6 +39,7 @@
                                 <th class="text-center">Keterangan</th>
                                 <th class="text-center">NIP Admin</th>
                                 <th class="text-center">User Updated</th>
+                                {{-- <th class="text-center">Nomor Nota Internal</th> --}}
                                 {{-- <th style="width: 10%" class="text-center">Action</th> --}}
                             </tr>
                         </thead>
