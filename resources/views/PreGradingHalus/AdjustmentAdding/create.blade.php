@@ -14,14 +14,28 @@
                 </div>
                 <hr>
                 <form method="POST" class="row g-3" id="myForm">
-                    <div class="col-md-12">
-                        <label for="basic-usage" class="form-label">ID Box Grading Halus</label>
-                        <select class="select2 form-select" style="width: 100%;" name="id_box_grading_halus"
-                            id="id_box_grading_halus" placeholder="Pilih ID Box Grading Halus">
-                            <option value="">Pilih ID Box Grading Halus</option>
-                            @foreach ($grading_halus_stocks as $GradingHS)
-                                <option value="{{ $GradingHS->id_box_grading_halus }}">
-                                    {{ $GradingHS->id_box_grading_halus }}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="basic-usage" class="form-label">ID Box Grading Halus</label>
+                            <select class="select2 form-select" style="width: 100%;" name="id_box_grading_halus"
+                                id="id_box_grading_halus" placeholder="Pilih ID Box Grading Halus">
+                                <option value="">Pilih ID Box Grading Halus</option>
+                                @foreach ($grading_halus_stocks as $GradingHS)
+                                    <option value="{{ $GradingHS->id_box_grading_halus }}">
+                                        {{ $GradingHS->id_box_grading_halus }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Plant</label>
+                        <select class="select2 form-select" style="width: 100%;" name="plant" id="plant"
+                            placeholder="Pilih ID Box Grading Halus">
+                            <option value="">Pilih Plant</option>
+                            @foreach ($perusahaan as $Perusahaans)
+                                <option value="{{ $Perusahaans->plant }}">
+                                    {{ $Perusahaans->plant }}
                                 </option>
                             @endforeach
                         </select>
@@ -135,12 +149,43 @@
                     $('#jenis_adding').val(response.jenis);
                     $('#sisa_berat').val(response.sisa_berat);
                     $('#sisa_pcs').val(response.sisa_pcs);
-                    // $('#harga_estimasi').val(response.harga_estimasi);
+                    $('#modal').val(response.modal);
                 },
                 error: function(error) {
                     console.error('Error:', error);
                 }
             });
+        });
+        $(document).ready(function() {
+            // Menangani perubahan pada dropdown nomor_job
+            $('#plant').on('change', function() {
+                // Memanggil fungsi generateNomorGrading ketika nomor_job berubah
+                generateNomorAdjustment();
+            });
+
+            // Fungsi untuk generate nomor_bstb
+            function generateNomorAdjustment() {
+                const now = new Date();
+                const tahun = now.getFullYear().toString().substr(-2);
+                const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+                const tanggal = ('0' + now.getDate()).slice(-2);
+                const jam = ('0' + now.getHours()).slice(-2);
+                const menit = ('0' + now.getMinutes()).slice(-2);
+                const detik = ('0' + now.getSeconds()).slice(-2);
+
+                // Mengambil nilai dari dropdown nomor_job
+                const plant = $('#plant').val();
+
+                // Mengambil bagian ketiga (indeks 2) dari array hasil split
+                // const bagianKetiga = nomorJobValue[2][0];
+
+                // Menghasilkan nomor_bstb berdasarkan rumus yang diinginkan
+                const nomor_adjustment = `ADJ_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_${plant}_UGH`;
+
+                // Memasukkan nilai yang dihasilkan ke dalam input nomor_bstb
+                $('#nomor_adjustment').val(nomor_adjustment);
+                console.log(nomor_adjustment);
+            }
         });
     </script>
 @endsection
