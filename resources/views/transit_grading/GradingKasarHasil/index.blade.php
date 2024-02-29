@@ -136,6 +136,7 @@
                                                         <form style="display: flex" id="deleteForm{{ $GradingKH->id }}"
                                                             action="{{ route('GradingKasarHasil.destroyInput', $GradingKH->id) }}"
                                                             method="POST">
+
                                                             <a href="{{ route('GradingKasarHasil.show', $GradingKH->id) }}"
                                                                 class="btn btn-link" title="View"
                                                                 data-original-title="View">

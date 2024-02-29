@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\GradingKasarHasil;
 use App\Models\GradingKasarStock;
+use App\Services\HppService;
 use App\Models\MasterJenisGradingKasar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +39,7 @@ class GradingKasarHasilService
         }
     }
 
+
     private function createItem($item, $total_susut)
     {
         // stok
@@ -63,7 +65,7 @@ class GradingKasarHasilService
             'pcs_keluar'                        => $itemObject->pcs_keluar ?? 0,
             'avg_kadar_air'                     => $itemObject->kadar_air,
             'nomor_grading'                     => $itemObject->nomor_grading,
-            'modal'                             => $itemObject->modal,
+            'modal'                             => $item->modal,
             'total_modal'                       => $itemObject->total_modal,
             'keterangan'                        => $itemObject->keterangan,
             'user_created'                      => $itemObject->user_created ?? 'Admin',
