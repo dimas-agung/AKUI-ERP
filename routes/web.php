@@ -210,6 +210,7 @@ Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarOutputCon
     Route::post('/grading_kasar_output/sendData', 'sendData')->name('GradingKasarOutput.sendData');
     Route::delete('/grading_kasar_output/destroy/{nomor_bstb}', 'destroy')->name('GradingKasarOutput.destroy');
     Route::get('/grading_kasar_output/get_data_id_box', 'set')->name('GradingKasarOutput.set');
+    Route::post('/grading_kasar_output/post_data_nomor_job', 'validasi')->name('GradingKasarOutput.validasi');
     Route::get('/grading_kasar_output/get_pcc', 'setpcc')->name('GradingKasarOutput.setpcc');
 });
 

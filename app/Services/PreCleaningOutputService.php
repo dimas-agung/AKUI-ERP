@@ -83,7 +83,7 @@ class PreCleaningOutputService
             'berat_keluar'  => $itemObject->berat_kirim,
             'pcs_keluar'    => $itemObject->pcs_kirim,
             'total_modal'   => $itemObject->total_modal,
-            'user_updated'  => $itemObject->user_created ?? "There isn't any",
+            'user_updated'  => $itemObject->user_created ?? " ",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
 
@@ -148,8 +148,8 @@ class PreCleaningOutputService
                 'nomor_grading'             => $itemObject->nomor_grading ?? "Belum Tersedia",
                 'modal'                     => $itemObject->modal,
                 'keterangan'                => $itemObject->keterangan ?? "Tes",
-                'user_created'              => $itemObject->user_created ?? "There isn't any",
-                'user_updated'              => $itemObject->user_updated ?? "There isn't any",
+                'user_created'              => $itemObject->user_created ?? " ",
+                'user_updated'              => $itemObject->user_updated ?? " ",
             ]));
         }
 

@@ -61,7 +61,7 @@ class GradingKasarOutputService
             'fix_total_modal'   => $item->fix_total_modal,
             'keterangan'        => $item->keterangan,
             'user_created'      => $item->user_created,
-            'user_updated'      => $item->user_updated ?? "There isn't any",
+            'user_updated'      => $item->user_updated ?? " ",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
 
@@ -113,7 +113,7 @@ class GradingKasarOutputService
             'modal'                             => $itemObject->modal,
             'fix_total_modal'                   => $itemObject->fix_total_modal,
             'user_created'                      => $itemObject->user_created ?? 'Admin',
-            'user_updated'                      => $itemObject->user_updated ?? "There isn't any",
+            'user_updated'                      => $itemObject->user_updated ?? " ",
             ]));
         }
 
@@ -130,7 +130,7 @@ class GradingKasarOutputService
             'pcs_keluar'    => $itemObject->pcs_keluar,
             'total_modal'   => $itemObject->total_modal,
             'keterangan'    => $itemObject->keterangan,
-            'user_updated'  => $itemObject->user_created ?? "There isn't any",
+            'user_updated'  => $itemObject->user_created ?? " ",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
 

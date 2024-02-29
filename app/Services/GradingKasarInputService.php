@@ -53,7 +53,7 @@ class GradingKasarInputService
             'total_modal'          => $item->total_modal,
             'keterangan'           => $item->keterangan,
             'user_created'         => $item->user_created,
-            'user_updated'         => $item->user_updated ?? "There isn't any",
+            'user_updated'         => $item->user_updated ?? "",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
 
@@ -65,7 +65,7 @@ class GradingKasarInputService
         $dataToUpdate = [
             'berat'                => $itemObject->berat ?? 0,
             'total_modal'          => $itemObject->total_modal,
-            'user_updated'         => $itemObject->user_created ?? "There isn't any",
+            'user_updated'         => $itemObject->user_created ?? "",
         ];
 
         if ($existingItem) {
@@ -95,7 +95,7 @@ class GradingKasarInputService
                 'inisial_tujuan'       => $itemObject->inisial_tujuan,
                 'modal'                => $itemObject->modal,
                 'keterangan'           => $itemObject->keterangan,
-                'user_created'         => $itemObject->user_updated ?? "There isn't any",
+                'user_created'         => $itemObject->user_updated ?? "",
                 'nomor_nota_internal'  => $itemObject->nomor_nota_internal,
                 // Sesuaikan dengan kolom-kolom lain di tabel item Anda
             ]));

@@ -254,7 +254,7 @@
                         dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
                         doc_no: doc_no,
                         user_created: $('#user_created').val() || '',
-                        user_updated: "There isn't any",
+                        user_updated: $('#user_createds').val() || '',
                         _token: '{{ csrf_token() }}'
                     };
 
