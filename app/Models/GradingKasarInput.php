@@ -27,12 +27,16 @@ class GradingKasarInput extends Model
         'user_updated',
     ];
 
-    // public function StockTransitRawMaterial()
-    // {
-    //     return $this->belongsTo(StockTransitRawMaterial::class, 'nomor_bstb', 'nomor_bstb');
-    // }
+    public function StockTransitRawMaterial()
+    {
+        return $this->belongsTo(StockTransitRawMaterial::class, 'nomor_bstb', 'nomor_bstb');
+    }
+    public function PrmRawMaterialOutputItem()
+    {
+        return $this->belongsTo(PrmRawMaterialOutputItem::class, 'nomor_bstb', 'nomor_bstb');
+    }
     public function GradingKasarHasil()
     {
-        return $this->belongsTo(GradingKasarHasil::class, 'nomor_grading', 'nomor_grading');
+        return $this->hasMany(GradingKasarHasil::class, 'nomor_grading', 'nomor_grading');
     }
 }

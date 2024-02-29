@@ -13,25 +13,6 @@ class UnitSeeder extends Seeder
      */
     public function run(): void
     {
-        Unit::create([
-            'workstation_id' => 1,
-            'nama'      => 'perbarui',
-            'status'    => 0,
-        ]);
-        Unit::create([
-            'workstation_id' => 2,
-            'nama'      => 'Pengiriman',
-            'status'    => 0,
-        ]);
-        Unit::create([
-            'workstation_id' => 3,
-            'nama'      => 'Pengemasan',
-            'status'    => 0,
-        ]);
-        Unit::create([
-            'workstation_id' => 4,
-            'nama'      => 'Pengecek',
-            'status'    => 0,
-        ]);
+        \App\Models\Unit::factory(5)->create();
     }
 }

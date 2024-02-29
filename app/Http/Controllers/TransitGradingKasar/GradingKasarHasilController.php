@@ -50,7 +50,7 @@ class GradingKasarHasilController extends Controller
     {
         $nomor_grading = $request->nomor_grading;
         $data = GradingKasarInput::where('nomor_grading', $nomor_grading)->first();
-        return $data;
+        // return $data;
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
     }

@@ -18,7 +18,7 @@
                 </button>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="overflow: auto;">
             {{-- Create Data --}}
             <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
                 aria-hidden="true">
@@ -36,7 +36,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="{{ route('Biaya.store') }}" method="POST">
+                        <form action="{{ route('BiayaHpp.store') }}" method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="row">
@@ -96,9 +96,8 @@
                     </div>
                 </div>
             </div>
-
             <div class="table-responsive">
-                <table id="table1" class="display table table-striped table-hover">
+                <table id="table1" class="display" style="width:100%">
                     <thead>
                         <tr>
                             <th class="text-center">No</th>
@@ -111,16 +110,6 @@
                             <th style="width: 10%" class="text-center">Action</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <th>No</th>
-                        <th>Nama Unit</th>
-                        <th>Jenis Biaya</th>
-                        <th>Biaya PerGram</th>
-                        <th>Status</th>
-                        <th>Tgl Buat</th>
-                        <th>Tgl Update</th>
-                        <th>Action</th>
-                    </tfoot>
                     <tbody>
                         @forelse ($biaya as $post)
                             <tr>
@@ -143,13 +132,13 @@
                                 <td class="text-center">
                                     <div class="form-button-action">
                                         <form style="display: flex" id="deleteForm{{ $post->id }}"
-                                            action="{{ route('Biaya.destroy', $post->id) }}" method="POST">
-                                            <a href="{{ route('Biaya.show', $post->id) }}" class="btn btn-link btn-info"
+                                            action="{{ route('BiayaHpp.destroy', $post->id) }}" method="POST">
+                                            <a href="{{ route('BiayaHpp.show', $post->id) }}" class="btn btn-link btn-info"
                                                 title="Show Task" data-original-title="Show"><i
                                                     class="bi bi-file-earmark"></i></a>
-                                            <a href="{{ route('Biaya.edit', $post->id) }}" class="btn btn-link btn-primary"
-                                                title="Edit Task" data-original-title="Edit Task"><i
-                                                    class="bi bi-pencil-square"></i></a>
+                                            <a href="{{ route('BiayaHpp.edit', $post->id) }}"
+                                                class="btn btn-link btn-primary" title="Edit Task"
+                                                data-original-title="Edit Task"><i class="bi bi-pencil-square"></i></a>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" data-toggle="tooltip"

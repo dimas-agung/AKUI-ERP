@@ -222,9 +222,9 @@
                 $('#harga_estimasi').val(hargaEstimasi);
                 $('#presetanse_pengurangan_harga').val(presentasePenguranganHarga);
                 // Log untuk memeriksa nilai
-                console.log("Nama: " + nama);
-                console.log("Harga Estimasi: " + hargaEstimasi);
-                console.log("Prosentase Pengurangan Harga: " + presentasePenguranganHarga);
+                // console.log("Nama: " + nama);
+                // console.log("Harga Estimasi: " + hargaEstimasi);
+                // console.log("Prosentase Pengurangan Harga: " + presentasePenguranganHarga);
             });
         });
         // hitung nilai berat
@@ -443,6 +443,7 @@
             }
 
             console.log("Harga Estimasi Baru= " + hargaEstimasiToSend);
+            console.log("Harga modal= " + modal);
 
             dataArray.push({
                 // doc_no: doc_no,

@@ -75,6 +75,7 @@ class PreGradingHalusAddingService
                 'unit'                  => $item->unit ?? "Grading Halus",
                 'nomor_grading'         => $item->nomor_grading,
                 'id_box_grading_kasar'  => $item->id_box_grading_kasar,
+                'id_box_raw_material'   => $item->id_box_raw_material,
                 'nomor_batch'           => $item->nomor_batch,
                 'nomor_nota_internal'   => $item->nomor_nota_internal,
                 'nama_supplier'         => $item->nama_supplier,
