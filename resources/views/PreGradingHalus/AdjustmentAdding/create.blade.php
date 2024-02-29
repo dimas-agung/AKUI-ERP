@@ -187,5 +187,46 @@
                 console.log(nomor_adjustment);
             }
         });
+
+        // Define the hitungsisaberat function
+        function hitungsisaberat() {
+            // Get the current value of sisa_berat
+            let sisa_berat = parseFloat($('#sisa_berat').val());
+
+            // Get the value of berat_adding
+            let berat_adding = parseFloat($('#berat_adding').val());
+
+            // Check if berat_adding is greater than sisa_berat
+            if (berat_adding > sisa_berat) {
+                // Display an alert message or handle the error accordingly
+                alert("Berat Adding melebihi Sisa Berat!");
+                // Reset the value of berat_adding to prevent further processing
+                $('#berat_adding').val('');
+            } else {
+                // Subtract berat_adding from sisa_berat
+                sisa_berat -= berat_adding;
+
+                // Update the value of sisa_berat input field
+                $('#sisa_berat').val(sisa_berat);
+            }
+        }
+
+        // Fungsi untuk menghitung total modal
+        function calculateTotalModal() {
+            // Mengambil nilai berat adding
+            var beratAdding = parseFloat($('#berat_adding').val()) || 0;
+            // Mengambil nilai modal
+            var modal = parseFloat($('#modal').val()) || 0;
+            // Menghitung total modal
+            var totalModal = beratAdding * modal;
+            // Memasukkan hasil perhitungan ke dalam input total modal
+            $('#total_modal').val(totalModal.toFixed(
+                2)); // Menggunakan toFixed(2) untuk menampilkan dua angka di belakang koma
+        }
+
+        // Memanggil fungsi calculateTotalModal setiap kali berat adding berubah
+        $('#berat_adding').on('input', function() {
+            calculateTotalModal();
+        });
     </script>
 @endsection
