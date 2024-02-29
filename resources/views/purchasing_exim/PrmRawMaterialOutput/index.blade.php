@@ -1,5 +1,5 @@
 @extends('layouts.master1')
-@section('Menu')
+@section('menu')
     Purchasing & EXIM
 @endsection
 @section('title')
@@ -11,7 +11,7 @@
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data PRM Raw Material Output</h4>
-                    <a href="{{ url('/PrmRawMaterialOutput/create') }}" class="btn btn-outline-success rounded-pill">
+                    <a href="{{ Route('PrmRawMaterialOutput.create') }}" class="btn btn-outline-success rounded-pill">
                         <i class="fa fa-plus"></i>
                         Add Data
                     </a>
@@ -38,30 +38,9 @@
                                 <th class="text-center">Total Modal</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
-                                <th class="text-center" scope="col">User Updated</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <th class="text-center">No</th>
-                            <th class="text-center">Nomor Dokument</th>
-                            <th class="text-center">Nomor BSTB</th>
-                            <th class="text-center">Nomor Batch</th>
-                            <th class="text-center">Id Box</th>
-                            <th class="text-center">Nama Supplier</th>
-                            <th class="text-center">Jenis</th>
-                            <th class="text-center">Berat</th>
-                            <th class="text-center">Kadar Air</th>
-                            <th class="text-center">Tujuan Kirim</th>
-                            <th class="text-center">Letak Tujuan</th>
-                            <th class="text-center">Inisial Tujuan</th>
-                            <th class="text-center">Modal</th>
-                            <th class="text-center">Total Modal</th>
-                            <th class="text-center">Keterangan</th>
-                            <th class="text-center">NIP Admin</th>
-                            <th class="text-center">User Updated</th>
-                            <th class="text-center">Action</th>
-                        </tfoot>
                         <tbody>
                             @forelse ($PrmRawMOIC as $item)
                                 <tr>
@@ -73,31 +52,29 @@
                                     <td class="text-center">{{ $item->nama_supplier }}</td>
                                     <td class="text-center">{{ $item->jenis }}</td>
                                     <td class="text-center">{{ $item->berat }}</td>
-                                    <td class="text-center">{{ $item->kadar_air }}</td>
+                                    <td class="text-center">{{ number_format($item->kadar_air, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ $item->letak_tujuan }}</td>
                                     <td class="text-center">{{ $item->inisial_tujuan }}</td>
-                                    <td class="text-center">{{ $item->modal }}</td>
-                                    <td class="text-center">{{ $item->total_modal }}</td>
+                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->keterangan_item }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
-                                    <td class="text-center">{{ $item->user_updated }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                action="{{ route('PrmRawMaterialOutput.destroy', $item->id) }}"
-                                                method="POST">
-                                                {{-- <a href="{{ route('PrmRawMaterialOutput.edit', $item->id) }}"
-                                                    class="btn btn-link btn-primary" title="Edit Task"
-                                                    data-original-title="Edit Task"><i class="bi bi-pencil-square"></i></a> --}}
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-link btn-danger"
-                                                    data-original-title="Remove"
-                                                    onclick="confirmDelete({{ $item->id }})">
-                                                    <i class="bi bi-trash3 text-danger"></i>
-                                                </button>
-                                            </form>
+                                            @if ($item->status == 1)
+                                                <form style="display: flex" id="deleteForm{{ $item->id }}"
+                                                    action="{{ route('PrmRawMaterialOutput.destroy', $item->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-link btn-danger delete-button"
+                                                        data-original-title="Remove"
+                                                        onclick="confirmDelete({{ $item->id }})">
+                                                        <i class="bi bi-trash3 text-danger"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

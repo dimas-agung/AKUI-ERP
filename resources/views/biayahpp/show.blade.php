@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="row justify-content-center">
-        <div class="card border-0 shadow-sm rounded">
+        <div class="card border border-primary border-3 shadow-sm rounded">
             <div class="card-header">
                 <h4>Detail Data Biaya HPP</h4>
             </div>
@@ -44,7 +44,8 @@
                     </tbody>
                 </table>
                 <div class=" d-flex justify-content-end model-footer no-bd">
-                    <a href="{{ url('/biayahpp') }}" type="button" class="btn btn-danger" data-dismiss="modal">Close</a>
+                    <a href="{{ Route('BiayaHpp.index') }}" type="button" class="btn btn-danger"
+                        data-dismiss="modal">Close</a>
                 </div>
             </div>
         </div>

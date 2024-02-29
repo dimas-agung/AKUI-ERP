@@ -16,6 +16,7 @@ class PreCleaningOutput extends Model
         'nomor_bstb',
         'nomor_batch',
         'nama_supplier',
+        'status',
         'nomor_nota_internal',
         'id_box_raw_material',
         'jenis_raw_material',
@@ -43,7 +44,7 @@ class PreCleaningOutput extends Model
 
     public function PreCleaningStock()
     {
-        return $this->hasMany(PreCleaningStock::class, 'nomor_job', 'nomor_job');
+        return $this->belongsTo(PreCleaningStock::class, 'nomor_job', 'nomor_job');
     }
     public function MasterOperator()
     {

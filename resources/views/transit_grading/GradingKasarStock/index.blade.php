@@ -11,10 +11,6 @@
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data Grading Kasar Stock</h4>
-                    <a href="{{ url('/GradingKasarStock/create') }}" class="btn btn-outline-success rounded-pill">
-                        <i class="fa fa-plus"></i>
-                        Add Data
-                    </a>
                 </div>
             </div>
             <div class="card-body" style="overflow: auto;">
@@ -78,17 +74,17 @@
                                     <td class="text-center">{{ $GradingKS->user_updated }}</td>
                                     {{-- <td class="text-center">
                                         <div class="form-button-action">
-                                            <form style="display: flex" id="deleteForm{{ $GradingKS->id }}"
-                                                action="{{ route('GradingKasarInput.destroy', $GradingKS->id) }}"
+                                            <form style="display: flex" id="deleteForm{{ $item->id }}"
+                                                action="{{ route('GradingKasarInput.destroy', $item->id) }}"
                                                 method="POST">
-                                                <a href="{{ route('GradingKasarInput.edit', $GradingKS->id) }}"
+                                                <a href="{{ route('GradingKasarInput.edit', $item->id) }}"
                                                     class="btn btn-link btn-primary" title="Edit Task"
                                                     data-original-title="Edit Task"><i class="bi bi-pencil-square"></i></a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn btn-link btn-danger"
                                                     data-original-title="Remove"
-                                                    onclick="confirmDelete({{ $GradingKS->id }})">
+                                                    onclick="confirmDelete({{ $item->id }})">
                                                     <i class="bi bi-trash3 text-danger"></i>
                                                 </button>
                                             </form>

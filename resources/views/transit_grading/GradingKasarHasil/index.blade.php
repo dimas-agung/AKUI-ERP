@@ -136,11 +136,12 @@
                                                         <form style="display: flex" id="deleteForm{{ $GradingKH->id }}"
                                                             action="{{ route('GradingKasarHasil.destroyInput', $GradingKH->id) }}"
                                                             method="POST">
-                                                            {{-- <a href="{{ route('GradingKasarHasil.show', $GradingKH->id) }}"
+
+                                                            <a href="{{ route('GradingKasarHasil.show', $GradingKH->id) }}"
                                                                 class="btn btn-link" title="View"
                                                                 data-original-title="View">
                                                                 <i class="bi bi-eye"></i>
-                                                            </a> --}}
+                                                            </a>
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="button" class="btn btn-link"

@@ -30,7 +30,7 @@ class PreGradingHalusAdding extends Model
     ];
     public function PreGradingHalusAddingStock()
     {
-        return $this->hasMany(PreGradingHalusAddingStock::class, 'nomor_grading', 'nomor_grading');
+        return $this->hasMany(PreGradingHalusAddingStock::class, 'nomor_job', 'nomor_job');
     }
     public function Perusahaan()
     {

@@ -22,8 +22,7 @@ class PrmRawMaterialOutputRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data' => 'required',
-            'dataHeader' => 'required',
+            'data' => 'required'
         ];
     }
 }

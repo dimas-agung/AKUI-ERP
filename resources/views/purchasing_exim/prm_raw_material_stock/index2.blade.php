@@ -96,7 +96,7 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form action="">
-                                                <a href="{{ route('prm_raw_material_stock_history.show', $MasterStock->id) }}"
+                                                <a href="{{ route('PrmRawMaterialStock.show', $MasterStock->id) }}"
                                                     class="btn btn-link" title="Show History"
                                                     data-original-title="Show Detail"><i class="fa fa-file"></i></a>
                                             </form>
