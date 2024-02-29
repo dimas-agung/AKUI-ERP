@@ -366,6 +366,8 @@
                                             class="submenu-item {{ Request::is('adjustment_adding') ? 'active' : '' }}">
                                             <a href="{{ route('AdjustmentAdding.index') }}"
                                                 class="submenu-link">Adjustment Adding</a>
+                                        </li>
+                                            <li
                                             class="submenu-item {{ Request::is('grading_halus_input*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingHalusInput.index') }}"
                                                 class="submenu-link">Grading Halus Input</a>
