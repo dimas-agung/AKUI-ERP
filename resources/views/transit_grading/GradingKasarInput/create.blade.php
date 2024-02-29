@@ -456,7 +456,7 @@
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });
-                    console.log('Validation Errors:', response.responseJSON.errors);
+                    // console.log('Validation Errors:', response.responseJSON.errors);
                 }
             });
 
