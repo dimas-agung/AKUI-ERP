@@ -304,11 +304,11 @@
                                             <a href="{{ route('PreCleaningInput.index') }}"
                                                 class="submenu-link">Pre-Cleaning Input</a>
                                         </li>
-                                        <li
+                                        {{-- <li
                                             class="submenu-item {{ Request::is('pre_cleaning_stock*') ? 'active' : '' }}">
                                             <a href="{{ route('PreCleaningStock.index') }}"
                                                 class="submenu-link">Pre-Cleaning Stock</a>
-                                        </li>
+                                        </li> --}}
                                         <li
                                             class="submenu-item {{ Request::is('pre_cleaning_output*') ? 'active' : '' }}">
                                             <a href="{{ route('PreCleaningOutput.index') }}" class="submenu-link">Pre
