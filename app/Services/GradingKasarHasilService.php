@@ -43,12 +43,14 @@ class GradingKasarHasilService
     private function createItem($item, $total_susut)
     {
         // stok
+
         $itemObject = (object)$item;
         // Cari item berdasarkan id_box dan nomor_batch
         // $existingItem = GradingKasarStock::where('id_box_grading_kasar', $itemObject->id_box_grading_kasar)
         //     ->where('nomor_batch', $itemObject->nomor_batch)
         //     ->first();
         // return $existingItem
+        // $total_modal = $itemObject->berat_grading * $item->modal;
 
         $dataToUpdate = [
             // 'doc_no'                            => $itemObject->doc_no,
@@ -66,7 +68,7 @@ class GradingKasarHasilService
             'avg_kadar_air'                     => $itemObject->kadar_air,
             'nomor_grading'                     => $itemObject->nomor_grading,
             'modal'                             => $item->modal,
-            'total_modal'                       => $itemObject->total_modal,
+            'total_modal'                       => $item->total_modal,
             'keterangan'                        => $itemObject->keterangan,
             'user_created'                      => $itemObject->user_created ?? 'Admin',
             'user_updated'                      => $itemObject->user_updated ?? 'Admin'
