@@ -4,7 +4,6 @@ namespace App\Http\Controllers\TransitGradingKasar;
 
 use App\Http\Controllers\Controller;
 use App\Models\GradingKasarHasil;
-use App\Models\GradingKasarStock;
 use App\Models\GradingKasarInput;
 use App\Models\MasterJenisGradingKasar;
 use App\Services\GradingKasarHasilService;
@@ -92,18 +91,6 @@ class GradingKasarHasilController extends Controller
                 'selisih_laba_rugi_gram'                => $dataHpp[$key]['selisih_laba_rugi_gram'],
                 'hpp'                                   => $dataHpp[$key]['hpp'],
                 'total_hpp'                             => $dataHpp[$key]['total_hpp'],
-            ]);
-            // $data = GradingKasarStock::where('id', $value)->update([
-            //     'modal' => $dataHpp[$key]['hpp']
-            // ]);
-        }
-        foreach ($arrayIds as $key => $value) {
-            // Ambil nilai HPP dari hasil perhitungan HppService
-            $modal = $dataHpp[$key]['hpp'];
-
-            // Update modal di GradingKasarHasil dengan nilai HPP
-            $data = GradingKasarStock::where('id', $value)->update([
-                'modal' => $modal
             ]);
         }
         if ($result['success']) {

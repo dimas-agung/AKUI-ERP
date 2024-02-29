@@ -5,7 +5,6 @@ namespace App\Http\Controllers\PreGradingHalus;
 use App\Http\Controllers\Controller;
 use App\Models\AdjustmentAdding;
 use App\Models\GradingHalusStock;
-use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 
 class AdjustmentAddingController extends Controller
@@ -24,11 +23,10 @@ class AdjustmentAddingController extends Controller
     public function create()
     {
         $GradingHalusStock = GradingHalusStock::with('AdjustmentAdding')->get();
-        $Perusahaan = Perusahaan::all();
+        // $AdjustmentAdding = AdjustmentAdding::all();
         return view('PreGradingHalus.AdjustmentAdding.create', [
             // 'pre_grading_halus_stocks' => $AdjustmentAdding,
             'grading_halus_stocks' => $GradingHalusStock,
-            'perusahaan' => $Perusahaan,
         ]);
     }
     // get data id Box
