@@ -632,7 +632,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    // window.location.href = `{{ route('GradingKasarHasil.index') }}`;
+                    window.location.href = `{{ route('GradingKasarHasil.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);
