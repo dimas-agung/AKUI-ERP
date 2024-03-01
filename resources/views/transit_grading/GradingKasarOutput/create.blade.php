@@ -382,8 +382,39 @@
             });
         });
 
+        $('#nomor_job').blur(function() {
+            var nomor_job = $(this).val();
+            $.ajax({
+                url: '{{ route('GradingKasarOutput.validasi') }}',
+                method: 'POST',
+                data: {
+                    nomor_job: nomor_job,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.exists) {
+                        // Nomor job sudah ada dalam database
+                        $('#nomor_job').val(''); // Mengosongkan nilai input
+                        Swal.fire({
+                            title: 'Warning!',
+                            text: 'Nomor job sudah ada. Silakan masukkan nomor job yang berbeda.',
+                            icon: 'warning'
+                        });
+                        return;
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Tangani kesalahan
+                    console.error('Terjadi kesalahan:', errorThrown);
+                }
+            });
+        });
+
         function generateNomorBSTB(inisial_tujuan, prefix) {
             let nomor;
+            const existingNomorJobs = dataArray.map(data => data
+                .nomor_job); // dataArray harus diisi dengan data yang sesuai
+
             do {
                 const now = new Date();
                 const tahun = now.getFullYear().toString().substr(-2);
@@ -394,20 +425,16 @@
                 const detik = ('0' + now.getSeconds()).slice(-2);
 
                 // Menambahkan prefix yang sesuai
-                const nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_ugk`;
+                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_ugk`;
                 if (prefix === 'BSTB') {
-                    return `BSTB_${nomor}`;
-                } else if (prefix === 'JOB') {
-                    return `${nomor}`;
-                } else {
-                    return nomor;
+                    nomor = `BSTB_${nomor}`;
                 }
                 // Memeriksa apakah nomor job yang dihasilkan sudah ada dalam data yang sudah diinputkan sebelumnya
-                const existingNomorJobs = dataArray.map(data => data.nomor_job);
             } while (existingNomorJobs.includes(nomor));
 
             return nomor;
         }
+
 
         // Event listener untuk perubahan nilai pada total modal
         $('#modal').on('input', updateTotalmodal);

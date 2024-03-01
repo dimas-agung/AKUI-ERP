@@ -68,8 +68,8 @@ class GradingHalusInputController extends Controller
     }
 
 
-    public function destroy($nomor_bstb): RedirectResponse
-    {
-        return $this->GradingHalusInputService->destroy($nomor_bstb);
-    }
+    // public function destroy($nomor_bstb): RedirectResponse
+    // {
+    //     return $this->GradingHalusInputService->destroy($nomor_bstb);
+    // }
 }

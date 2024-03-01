@@ -76,7 +76,7 @@ class PreGradingHalusInputService
                         'modal'             => $mergedData['modal'],
                         'total_modal'       => $mergedData['total_modal'],
                         'user_created'  => $mergedData['user_created'],
-                        'user_update'   => $mergedData['user_updated'] ?? `"There isn't any"`,
+                        'user_update'   => $mergedData['user_updated'] ?? `" "`,
                         'nomor_nota_internal'   => $mergedData['nomor_nota_internal']
                     ]);
 
@@ -95,7 +95,7 @@ class PreGradingHalusInputService
                             'berat_kirim' => $itemObject->berat_kirims ?? 0,
                             'pcs_kirim'   => $itemObject->pcs_kirims ?? 0,
                             'total_modal'  => $itemObject->total_modals ?? 0,
-                            'user_updated' => $itemObject->user_created ?? "There isn't any",
+                            'user_updated' => $itemObject->user_created ?? " ",
                         ]);
                     }
 
