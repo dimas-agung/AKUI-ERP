@@ -1,7 +1,7 @@
 @extends('layouts.master1')
 {{-- @extends('layouts.template') --}}
 @section('menu')
-    Grading Kasar Transit
+    Grading Kasar
 @endsection
 @section('title')
     Grading Kasar Hasil

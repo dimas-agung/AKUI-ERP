@@ -1,6 +1,6 @@
 @extends('layouts.master1')
 @section('menu')
-    Grading Kasar Transit
+    Grading Kasar
 @endsection
 @section('title')
     Grading Kasar Hasil
@@ -181,6 +181,8 @@
     <script>
         $('#nomor_grading').on('change', function() {
             // Mengambil nilai id_box yang dipilih
+            $('#berat_grading').val('');
+            $('#pcs_grading').val('');
             let selectedNomorGrading = $(this).val();
             // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
             $.ajax({
@@ -294,6 +296,54 @@
 
             return id_box_grading_kasar;
         }
+
+        // function validateBeratKeluar() {
+        //     var beratMasuk = parseFloat(document.getElementById('berat_masuk').value);
+        //     var beratKeluarInput = parseFloat(document.getElementById('berat_keluar').value);
+        //     var pcsMasuk = parseFloat(document.getElementById('sisa_pcs').value);
+        //     var pcsKeluarInput = parseFloat(document.getElementById('pcs_keluar').value);
+
+        //     if (beratKeluarInput > beratMasuk || pcsKeluarInput > pcsMasuk) {
+        //         if (beratKeluarInput > beratMasuk && pcsKeluarInput > pcsMasuk) {
+        //             Swal.fire({
+        //                 title: 'Warning!',
+        //                 text: "Berat keluar tidak boleh melebihi sisa berat dan pcs.",
+        //                 icon: 'warning'
+        //             });
+        //         } else if (beratKeluarInput > beratMasuk) {
+        //             document.getElementById('berat_keluar').value = ''; // Mengosongkan input berat keluar
+        //             Swal.fire({
+        //                 title: 'Warning!',
+        //                 text: "Berat keluar tidak boleh melebihi sisa berat.",
+        //                 icon: 'warning'
+        //             });
+        //         } else {
+        //             document.getElementById('pcs_keluar').value = ''; // Mengosongkan input berat keluar
+        //             Swal.fire({
+        //                 title: 'Warning!',
+        //                 text: "Berat keluar tidak boleh melebihi sisa pcs.",
+        //                 icon: 'warning'
+        //             });
+        //         }
+        //         return;
+        //     }
+        // }
+        $('#berat_grading').on('input', function() {
+            var beratGrading = parseFloat($(this).val());
+            var beratAdding = parseFloat($('#berat_adding').val());
+
+            if (beratGrading > beratAdding) {
+                $(this).val(''); // Mengosongkan nilai input berat grading
+                Swal.fire({
+                    title: 'Warning!',
+                    text: "Berat grading tidak boleh melebihi berat adding.",
+                    icon: 'warning'
+                });
+            }
+        });
+
+
+
 
         let dataArray = [];
 
@@ -581,7 +631,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('GradingKasarHasil.index') }}`;
+                    // window.location.href = `{{ route('GradingKasarHasil.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);
