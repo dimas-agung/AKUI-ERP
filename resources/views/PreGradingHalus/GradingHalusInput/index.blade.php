@@ -33,6 +33,9 @@
                                 <th class="text-center" scope="col">Kadar Air</th>
                                 <th class="text-center" scope="col">Berat Adding</th>
                                 <th class="text-center" scope="col">Pcs Adding</th>
+                                <th class="text-center" scope="col">Jenis Grading</th>
+                                <th class="text-center" scope="col">Berat Grading</th>
+                                <th class="text-center" scope="col">Pcs Grading</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">Modal</th>
                                 <th class="text-center" scope="col">Total Modal</th>
@@ -105,14 +108,14 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
-                                                <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
-                                                    action="{{ route('GradingHalusInput.destroy', $item->nomor_bstb) }}"
+                                                <form style="display: flex" id="deleteForm{{ $item->nomor_grading }}"
+                                                    action="{{ route('GradingHalusInput.destroy', $item->nomor_grading) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-link"
                                                         data-original-title="Remove"
-                                                        onclick="confirmDelete('{{ $item->nomor_bstb }}')">
+                                                        onclick="confirmDelete('{{ $item->nomor_grading }}')">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
                                                 </form>

@@ -121,104 +121,83 @@ class GradingHalusInputService
         ], 201);
     }
 
-    // public function destroy($nomor_bstb): RedirectResponse
-    // {
-    //     try {
-    //         // Gunakan transaksi database untuk memastikan konsistensi
-    //         DB::beginTransaction();
+    public function destroy($nomor_grading): RedirectResponse
+    {
+        try {
+            // Gunakan transaksi database untuk memastikan konsistensi
+            DB::beginTransaction();
 
-    //         // Ambil data PreCleaningInput berdasarkan nomor_bstb
-    //         $GradingHalusInputs = GradingHalusInput::where('nomor_bstb', '=', $nomor_bstb)->get();
-    //         // $GradingHalusInputs = GradingHalusInput::findOrFail($id);
+            // Ambil data PreCleaningInput berdasarkan nomor_grading
+            $GradingHalusInputs = GradingHalusInput::where('nomor_grading', '=', $nomor_grading)->get();
+            // $GradingHalusInputs = GradingHalusInput::findOrFail($id);
 
-    //         if ($GradingHalusInputs->isEmpty()) {
-    //             // Redirect ke index dengan pesan error jika data tidak ditemukan
-    //             return redirect()->route('GradingHalusInput.index')->with(['error' => 'Data tidak ditemukan!']);
-    //         }
+            if ($GradingHalusInputs->isEmpty()) {
+                // Redirect ke index dengan pesan error jika data tidak ditemukan
+                return redirect()->route('GradingHalusInput.index')->with(['error' => 'Data tidak ditemukan!']);
+            }
 
-    //         foreach ($GradingHalusInputs as $PreCleaningI) {
-    //             // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
-    //             $PreCleaningS = GradingHalusStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
-    //                 ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
-    //                 ->first();
+            foreach ($GradingHalusInputs as $PreCleaningI) {
+                // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
+                $PreCleaningS = GradingHalusStock::where('id_box_grading_halus', '=', $PreCleaningI->id_box_grading_halus)
+                    ->where('nomor_grading', '=', $PreCleaningI->nomor_grading)
+                    ->first();
 
-    //             if ($PreCleaningS) {
-    //                 // Ambil data TransitPreCleaningStock berdasarkan nomor job dan nomor bstb
-    //                 $stockPrmRawMaterial = TransitPreCleaningStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
-    //                     ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
-    //                     ->first();
+                if ($PreCleaningS) {
+                    // Ambil data PreGradingHalusAddingStock berdasarkan nomor job dan nomor bstb
+                    $stockPrmRawMaterial = PreGradingHalusAddingStock::where('nomor_grading', '=', $PreCleaningI->nomor_grading)
+                        ->first();
 
-    //                 if ($stockPrmRawMaterial) {
-    //                     // Simpan nilai sebelum dihapus
-    //                     $beratSebelumnya = $stockPrmRawMaterial->berat_kirim;
-    //                     $pcsSebelumnya = $stockPrmRawMaterial->pcs_kirim;
+                    if ($stockPrmRawMaterial) {
+                        // Simpan nilai sebelum dihapus
+                        $beratSebelumnya = $stockPrmRawMaterial->berat_adding;
+                        $pcsSebelumnya = $stockPrmRawMaterial->pcs_adding;
 
-    //                     // Hitung total modal baru berdasarkan perbedaan berats
-    //                     $perbedaanBerat = $beratSebelumnya + $PreCleaningI->berat_kirim;
-    //                     $perbedaanPcs = $pcsSebelumnya + $PreCleaningI->pcs_kirim;
-    //                     $totalModalBaru = $perbedaanBerat * $PreCleaningI->modal;
+                        // Hitung total modal baru berdasarkan perbedaan berats
+                        $perbedaanBerat = $beratSebelumnya + $PreCleaningI->berat_adding;
+                        $perbedaanPcs = $pcsSebelumnya + $PreCleaningI->pcs_adding;
+                        $totalModalBaru = $perbedaanBerat * $PreCleaningI->modal;
 
-    //                     // Update data TransitPreCleaningStock dengan berat, pcs, dan total modal yang baru
-    //                     $stockPrmRawMaterial->update([
-    //                         'berat_kirim' => max($perbedaanBerat, 0),
-    //                         'pcs_kirim' => max($perbedaanPcs, 0),
-    //                         'total_modal' => max($totalModalBaru, 0),
-    //                     ]);
-    //                 }
-    //             }
+                        // Update data PreGradingHalusAddingStock dengan berat, pcs, dan total modal yang baru
+                        $stockPrmRawMaterial->update([
+                            'berat_adding' => max($perbedaanBerat, 0),
+                            'pcs_adding' => max($perbedaanPcs, 0),
+                            'total_modal' => max($totalModalBaru, 0),
+                        ]);
+                    }
+                }
 
-    //             // Simpan data sebelum dihapus
-    //             $beratSebelumHapus = $PreCleaningI->berat_kirim;
-    //             $pcsSebelumHapus = $PreCleaningI->pcs_kirim;
-    //             $totalModalSebelumHapus = $PreCleaningI->total_modal;
+                // Simpan data sebelum dihapus
+                $beratSebelumHapus = $PreCleaningI->berat_adding;
+                $pcsSebelumHapus = $PreCleaningI->pcs_adding;
+                $totalModalSebelumHapus = $PreCleaningI->total_modal;
 
-    //             // Hapus data GradingHalusInput dan PreCleaningStock
-    //             $PreCleaningI->delete();
-    //             if ($PreCleaningS) {
-    //                 $PreCleaningS->delete();
-    //             }
+                // Hapus data GradingHalusInput dan PreCleaningStock
+                $PreCleaningI->delete();
+                if ($PreCleaningS) {
+                    $PreCleaningS->delete();
+                }
 
-    //             // Kembalikan nilai sebelum dihapus
-    //             if ($stockPrmRawMaterial) {
-    //                 $stockPrmRawMaterial->update([
-    //                     'berat_keluar' => $stockPrmRawMaterial->berat_keluar + $beratSebelumHapus,
-    //                     'pcs_keluar' => $stockPrmRawMaterial->pcs_keluar + $pcsSebelumHapus,
-    //                     'total_modal' => $stockPrmRawMaterial->total_modal + $totalModalSebelumHapus,
-    //                 ]);
-    //             }
+                // Kembalikan nilai sebelum dihapus
+                if ($stockPrmRawMaterial) {
+                    $stockPrmRawMaterial->update([
+                        'berat_adding' => $stockPrmRawMaterial->berat_adding + $beratSebelumHapus,
+                        'pcs_adding' => $stockPrmRawMaterial->pcs_adding + $pcsSebelumHapus,
+                        'total_modal' => $stockPrmRawMaterial->total_modal + $totalModalSebelumHapus,
+                    ]);
+                }
+            }
 
-    //             // Perbarui status PreCleaningOutput jika ada
-    //             $existingItems = PreCleaningOutput::where('nama_supplier', $PreCleaningI->nama_supplier)
-    //                 ->where('nomor_bstb', $PreCleaningI->nomor_bstb)
-    //                 ->get();
+            // Commit transaksi
+            DB::commit();
 
-    //             // Logika Update Status
-    //             if ($existingItems->isNotEmpty()) {
-    //                 foreach ($existingItems as $existingItem) {
-    //                     // Perbarui data untuk setiap item yang ada
-    //                     $existingItem->update(['status' => 1]);
-    //                 }
-    //             } else {
-    //                 // Jika tidak ada item PreCleaningOutput yang sesuai, buat baru dengan status 1
-    //                 PreCleaningOutput::create([
-    //                     'nomor_bstb' => $PreCleaningI->nomor_bstb,
-    //                     'status' => 1,
-    //                     // Tambahkan kolom-kolom lain sesuai kebutuhan
-    //                 ]);
-    //             }
-    //         }
+            // Redirect ke index dengan pesan sukses
+            return redirect()->route('GradingHalusInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::rollback();
 
-    //         // Commit transaksi
-    //         DB::commit();
-
-    //         // Redirect ke index dengan pesan sukses
-    //         return redirect()->route('GradingHalusInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
-    //     } catch (\Exception $e) {
-    //         // Rollback transaksi jika terjadi kesalahan
-    //         DB::rollback();
-
-    //         // Redirect ke index dengan pesan error
-    //         return redirect()->route('GradingHalusInput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
-    //     }
-    // }
+            // Redirect ke index dengan pesan error
+            return redirect()->route('GradingHalusInput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+    }
 }
