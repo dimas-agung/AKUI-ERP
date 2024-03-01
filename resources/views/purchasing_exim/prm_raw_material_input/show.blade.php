@@ -77,11 +77,11 @@
                                                     <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
                                                         action="{{ route('PrmRawMaterialInput.destroyItem', $MasterPRIM->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('PrmRawMaterialInput.edit', $MasterPRIM->id) }}"
+                                                        {{-- <a href="{{ route('PrmRawMaterialInput.edit', $MasterPRIM->id) }}"
                                                             class="btn btn-link" title="Edit Task"
                                                             data-original-title="Edit Task">
                                                             <i class="bi bi-pencil-square text-success"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"

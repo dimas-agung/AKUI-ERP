@@ -99,13 +99,14 @@ class GradingKasarHasilController extends Controller
         }
         foreach ($arrayIds as $key => $value) {
             // Ambil nilai HPP dari hasil perhitungan HppService
-            $modal = $dataHpp[$key]['hpp'];
-            $total_modal = $dataHpp[$key]['hpp'] * $berat_gradings[$key];
-
-            // Update modal di GradingKasarHasil dengan nilai HPP
-            $data = GradingKasarStock::where('id', $value)->update([
-                'modal'         => $modal,
-                'total_modal'   => $total_modal,
+            // $modal = $dataHpp[$key]['hpp'];
+            // $total_modal = $dataHpp[$key]['hpp'] * $berat_gradings[$key];
+            $GradingKasarHasil = GradingKasarHasil::where('id', $value)->first();
+            // Update modal di GradingKasarStock dengan nilai HPP.
+            $data = GradingKasarStock::where('id_box_grading_kasar', $GradingKasarHasil->id_box_grading_kasar)->update([
+                // 'modal'         => $modal,
+                'modal'         => $dataHpp[$key]['hpp'],
+                'total_modal'   => $dataHpp[$key]['hpp'] * $dataHpp[$key]['berat_grading'],
 
             ]);
         }
