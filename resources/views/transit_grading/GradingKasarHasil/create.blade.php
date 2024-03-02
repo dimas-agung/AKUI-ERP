@@ -427,7 +427,7 @@
                 // console.log(presetanse_pengurangan_harga);
                 hargaEstimasiToSend = harga_estimasi;
             } else {
-                hargaEstimasiToSend = modal * presetanse_pengurangan_harga;
+                hargaEstimasiToSend = modal - (modal * presetanse_pengurangan_harga);
             }
 
             console.log("Harga Estimasi Baru= " + hargaEstimasiToSend);

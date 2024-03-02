@@ -125,7 +125,7 @@ class GradingKasarHasilService
             'modal'                             => $item->modal,
             'total_modal'                       => $item->total_modal,
             'biaya_produksi'                    => $item->biaya_produksi,
-            'harga_estimasi'                    => $item->modal - $item->harga_estimasi,
+            'harga_estimasi'                    => $item->harga_estimasi,
             'total_harga'                       => $item->total_harga,
             'nilai_laba_rugi'                   => $item->nilai_laba_rugi,
             'nilai_prosentase_total_keuntungan' => $item->nilai_prosentase_total_keuntungan,
