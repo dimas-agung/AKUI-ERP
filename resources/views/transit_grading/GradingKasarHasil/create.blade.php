@@ -247,6 +247,7 @@
                 }
             });
         });
+
         // jenis grading
         $(document).ready(function() {
             $("#jenis_grading").change(function() {
@@ -426,7 +427,7 @@
                 // console.log(presetanse_pengurangan_harga);
                 hargaEstimasiToSend = harga_estimasi;
             } else {
-                hargaEstimasiToSend = presetanse_pengurangan_harga * modal;
+                hargaEstimasiToSend = modal * presetanse_pengurangan_harga;
             }
 
             console.log("Harga Estimasi Baru= " + hargaEstimasiToSend);
