@@ -167,6 +167,9 @@
                                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                             class="form-control" name="pcs_grading" value="{{ old('pcs_grading') }}"
                                             placeholder="Masukkan pcs grading" data-parsley-required="true">
+                                        <input type="hidden" name="susut_depan" id="susut_depan">
+                                        <input type="hidden" name="susut_belakang" id="susut_belakang">
+                                        <input type="hidden" name="kontribusi" id="kontribusi">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -379,18 +382,19 @@
             let totalBeratAdding = parseFloat($('#berat_adding').val()); // Menggunakan berat adding dari input form
             let beratGradingPerAddingSD = totalBeratAdding !== 0 ? beratGradingSD / totalBeratAdding : 0;
 
-            // Memperbarui tabel dengan hasil perhitungan untuk kategori SD
             $('#tableBody tr').each(function() {
-                let currentKategoriSusut = $(this).find('td:eq(15)').text(); // Kolom 15 berisi kategori susut
+                let currentKategoriSusut = $(this).find('td:eq(15)').text();
                 if (currentKategoriSusut === "SD") {
-                    $(this).find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(
-                        2)); // Kolom 17 untuk menampilkan hasil perhitungan
+                    let row = $(this);
+                    row.find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(2)); // Update nilai di tabel
+                    row.find('input#susut_depan').val(beratGradingPerAddingSD.toFixed(2)); // Update nilai di input
                 } else {
-                    $(this).find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(
-                        2
-                    )); // Kolom 17 untuk kategori selain SD akan menggunakan hasil perhitungan yang sama dengan kategori SD
+                    let row = $(this);
+                    row.find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(2)); // Update nilai di tabel
+                    row.find('input#susut_depan').val(beratGradingPerAddingSD.toFixed(2)); // Update nilai di input
                 }
             });
+
         }
 
         function hitungRataRataBeratGradingPerAdding() {
@@ -638,7 +642,6 @@
             $('#total_hpp').val('');
             $('#fix_hpp').val('');
             $('#fix_total_hpp').val('');
-            $('#user_created').val('');
             $('#doc_no').prop('readonly', true);
             $('#nomor_bstb').prop('readonly', true);
             $('#nomor_batch').prop('readonly', true);
@@ -668,10 +671,11 @@
         }
 
         function sendData() {
-            console.log("Isi data=" + dataArray);
+            console.log("Isi data=",
+                dataArray);
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: '{{ route('PreGradingHalusInput.store') }}',
+                url: '{{ route('GradingHalusInput.store') }}',
                 method: 'POST',
                 beforeSend: function() {
                     Swal.fire({
@@ -686,8 +690,8 @@
                 data: function() {
                     var postData = {
                         dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
-                        // user_created: $('#user_created').val() || '',
-                        user_updated: 'Asc-186',
+                        // user_created: 'Asc-86',
+                        // user_updated: 'Asc-186',
                         _token: '{{ csrf_token() }}'
                     };
 

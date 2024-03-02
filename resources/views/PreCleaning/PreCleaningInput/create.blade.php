@@ -170,8 +170,8 @@
                                 var newRow = $('<tr>');
                                 // Tambahkan kolom-kolom sesuai kebutuhan
                                 newRow.append('<td>' + rowData.nomor_bstb + '</td>');
-                                newRow.append('<td>' + rowData.nomor_job + '</td>');
                                 newRow.append('<td>' + rowData.id_box_grading_kasar + '</td>');
+                                newRow.append('<td>' + rowData.nomor_job + '</td>');
                                 newRow.append('<td>' + rowData.nomor_batch + '</td>');
                                 newRow.append('<td>' + rowData.nomor_nota_internal + '</td>');
                                 newRow.append('<td>' + rowData.nama_supplier + '</td>');

@@ -36,7 +36,7 @@ return new class extends Migration
             $table->float('biaya_produksi', 16, 4)->nullable();
             $table->string('kontribusi')->nullable();
             $table->float('harga_estimasi', 16, 4);
-            $table->float('total_harga', 16, 4);
+            $table->float('total_harga', 16, 4)->nullable();
             $table->float('nilai_laba_rugi')->nullable();
             $table->float('nilai_prosentase_total_keuntungan')->nullable();
             $table->float('prosentase_harga_gramasi', 16, 4)->nullable();
