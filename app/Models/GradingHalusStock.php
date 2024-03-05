@@ -23,4 +23,8 @@ class GradingHalusStock extends Model
         'modal',
         'total_modal',
     ];
+    public function GradingHalusInput()
+    {
+        return $this->belongsTo(GradingHalusInput::class, 'id_box_grading_halus', 'id_box_grading_halus');
+    }
 }

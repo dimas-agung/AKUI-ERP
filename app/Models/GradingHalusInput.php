@@ -55,8 +55,8 @@ class GradingHalusInput extends Model
     {
         return $this->belongsTo(MasterJenisGradingHalus::class, 'jenis', 'jenis_grading');
     }
-    // public function GradingHalusStock()
-    // {
-    //     return $this->hasMany(GradingHalusStock::class, 'id_box_grading_halus', 'id_box_grading_halus');
-    // }
+    public function GradingHalusStock()
+    {
+        return $this->hasMany(GradingHalusStock::class, 'id_box_grading_halus', 'id_box_grading_halus');
+    }
 }
