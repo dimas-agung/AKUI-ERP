@@ -199,7 +199,6 @@
                 let pcsAdding = parseFloat($(this).val());
                 if (!isNaN(pcsAdding)) {
                     if (pcsAdding > sisaPcsAwal) {
-                        // Menampilkan alert jika berat grading melebihi berat awal
                         Swal.fire({
                             title: 'Warning!',
                             text: "Pcs Adding tidak boleh melebihi Sisa Pcs.",
@@ -212,10 +211,8 @@
                     if (sisaPcs < 0) {
                         sisaPcs = 0; // Menghindari stok negatif
                     }
-                    // Mengatur nilai sisa berat pada #berat_adding
                     $('#sisa_pcs').val(sisaPcs);
                 } else {
-                    // Jika #berat_grading kosong, kembalikan ke nilai awal
                     $('#sisa_pcs').val(sisaPcsAwal);
                 }
             });
@@ -352,16 +349,16 @@
 
                 // Membuat baris HTML baru untuk ditambahkan ke tabel
                 let newRow = `<tr>` +
-                    `<td class="text-center">${idBoxGradingHalus}</td>` +
-                    `<td class="text-center">${nomorAdjustment}</td>` +
-                    `<td class="text-center">${nomorBatch}</td>` +
-                    `<td class="text-center">${jenisAdding}</td>` +
-                    `<td class="text-center">${beratAdding}</td>` +
-                    `<td class="text-center">${pcsAdding}</td>` +
-                    `<td class="text-center">${keterangan}</td>` +
-                    `<td class="text-center">${modal}</td>` +
-                    `<td class="text-center">${totalModal}</td>` +
-                    `<td class="text-center"><button type='button' class='btn btn-danger' onclick='deleteRow(this)'>Delete</button></td>` +
+                    `<td class='text-center'>${idBoxGradingHalus}</td>` +
+                    `<td class='text-center'>${nomorAdjustment}</td>` +
+                    `<td class='text-center'>${nomorBatch}</td>` +
+                    `<td class='text-center'>${jenisAdding}</td>` +
+                    `<td class='text-center'>${beratAdding}</td>` +
+                    `<td class='text-center'>${pcsAdding}</td>` +
+                    `<td class='text-center'>${keterangan}</td>` +
+                    `<td class='text-center'>${modal}</td>` +
+                    `<td class='text-center'>${totalModal}</td>` +
+                    `<td class='text-center'><button type='button' class='btn btn-danger' onclick='deleteRow(this)'>Delete</button></td>` +
                     `</tr>`;
 
                 // Menambahkan baris baru ke dalam tabel
@@ -383,6 +380,7 @@
 
                 calculateTotalBerat();
                 calculateTotalPcs();
+
             }
         }
 
