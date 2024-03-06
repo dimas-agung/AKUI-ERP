@@ -104,6 +104,7 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">ID Box Grading Halus</th>
+                                <th scope="col" class="text-center">Nomor Adjustment</th>
                                 <th scope="col" class="text-center">Nomor Batch</th>
                                 <th scope="col" class="text-center">Jenis Adding</th>
                                 <th scope="col" class="text-center">Berat Adding</th>
@@ -111,11 +112,6 @@
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
-                                <th scope="col" class="text-center">Nomor Adjustment</th>
-                                <th scope="col" class="text-center">User Created</th>
-                                <th scope="col" class="text-center">User Updated</th>
-                                <th scope="col" class="text-center">Created At</th>
-                                <th scope="col" class="text-center">Updated At</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -132,27 +128,100 @@
 @endsection
 @section('script')
     <script>
-        $('#id_box_grading_halus').on('change', function() {
-            // Mengambil nilai id_box yang dipilih
-            let selectedIdBoxGradingHalus = $(this).val();
-            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
-            $.ajax({
-                url: `{{ route('AdjustmentAdding.set') }}`,
-                method: 'GET',
-                data: {
-                    id_box_grading_halus: selectedIdBoxGradingHalus
-                },
-                success: function(response) {
-                    console.log(response);
-                    // Mengatur nilai Nomor Batch sesuai dengan respons dari server
-                    $('#nomor_batch').val(response.nomor_batch);
-                    $('#jenis_adding').val(response.jenis);
-                    $('#sisa_berat').val(response.sisa_berat);
-                    $('#sisa_pcs').val(response.sisa_pcs);
-                    $('#modal').val(response.modal);
-                },
-                error: function(error) {
-                    console.error('Error:', error);
+        $(document).ready(function() {
+            let sisaBeratAwal; // Variabel untuk menyimpan nilai awal berat adding
+            let sisaPcsAwal
+            $('#id_box_grading_halus').on('change', function() {
+                // Mengambil nilai id_box yang dipilih
+                $('#berat_adding').val('');
+                $('#pcs_adding').val('');
+                let selectedIdBoxGradingHalus = $(this).val();
+                // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
+                $.ajax({
+                    url: `{{ route('AdjustmentAdding.set') }}`,
+                    method: 'GET',
+                    data: {
+                        id_box_grading_halus: selectedIdBoxGradingHalus
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                        $('#nomor_batch').val(response.nomor_batch);
+                        $('#jenis_adding').val(response.jenis);
+                        $('#sisa_berat').val(response.sisa_berat);
+                        $('#sisa_pcs').val(response.sisa_pcs);
+                        $('#modal').val(response.modal);
+                        sisaBeratAwal = parseFloat(response.sisa_berat);
+                        sisaPcsAwal = parseFloat(response.sisa_pcs);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+
+            // Event untuk menghitung stok pada perubahan nilai berat grading
+            $('#berat_adding').on('input', function() {
+                let beratGrading = parseFloat($(this).val());
+                if (!isNaN(beratGrading)) {
+                    if (beratGrading > sisaBeratAwal) {
+                        // Menampilkan alert jika berat grading melebihi berat awal
+                        Swal.fire({
+                            title: 'Warning!',
+                            text: "Berat Adding tidak boleh melebihi Sisa Berat.",
+                            icon: 'warning'
+                        });
+                        $(this).val(''); // Mengosongkan nilai input
+                        return;
+                    }
+                    let sisaBerat = sisaBeratAwal - beratGrading;
+                    if (sisaBerat < 0) {
+                        sisaBerat = 0; // Menghindari stok negatif
+                    }
+                    // Mengatur nilai sisa berat pada #berat_adding
+                    $('#sisa_berat').val(sisaBerat);
+                } else {
+                    // Jika #berat_grading kosong, kembalikan ke nilai awal
+                    $('#sisa_berat').val(sisaBeratAwal);
+                }
+            });
+
+            // Event untuk mengembalikan nilai berat adding ke nilai awal jika nilai berat grading dihapus
+            $('#berat_adding').on('change', function() {
+                if ($(this).val() === '') {
+                    $('#sisa_berat').val(sisaBeratAwal);
+                    // Mengembalikan nilai berat adding ke nilai awalnya
+                }
+            });
+            // Sisa PCS
+            // Event untuk menghitung stok pada perubahan Sisa PCS
+            $('#pcs_adding').on('input', function() {
+                let pcsAdding = parseFloat($(this).val());
+                if (!isNaN(pcsAdding)) {
+                    if (pcsAdding > sisaPcsAwal) {
+                        Swal.fire({
+                            title: 'Warning!',
+                            text: "Pcs Adding tidak boleh melebihi Sisa Pcs.",
+                            icon: 'warning'
+                        });
+                        $(this).val(''); // Mengosongkan nilai input
+                        return;
+                    }
+                    let sisaPcs = sisaPcsAwal - pcsAdding;
+                    if (sisaPcs < 0) {
+                        sisaPcs = 0; // Menghindari stok negatif
+                    }
+                    $('#sisa_pcs').val(sisaPcs);
+                } else {
+                    $('#sisa_pcs').val(sisaPcsAwal);
+                }
+            });
+
+            // Event untuk mengembalikan nilai berat adding ke nilai awal jika nilai berat grading dihapus
+            $('#pcs_adding').on('change', function() {
+                if ($(this).val() === '') {
+                    $('#sisa_pcs').val(sisaPcsAwal);
+                    // Mengembalikan nilai berat adding ke nilai awalnya
                 }
             });
         });
@@ -176,9 +245,6 @@
                 // Mengambil nilai dari dropdown nomor_job
                 const plant = $('#plant').val();
 
-                // Mengambil bagian ketiga (indeks 2) dari array hasil split
-                // const bagianKetiga = nomorJobValue[2][0];
-
                 // Menghasilkan nomor_bstb berdasarkan rumus yang diinginkan
                 const nomor_adjustment = `ADJ_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_${plant}_UGH`;
 
@@ -188,45 +254,141 @@
             }
         });
 
-        // Define the hitungsisaberat function
-        function hitungsisaberat() {
-            // Get the current value of sisa_berat
-            let sisa_berat = parseFloat($('#sisa_berat').val());
-
-            // Get the value of berat_adding
-            let berat_adding = parseFloat($('#berat_adding').val());
-
-            // Check if berat_adding is greater than sisa_berat
-            if (berat_adding > sisa_berat) {
-                // Display an alert message or handle the error accordingly
-                alert("Berat Adding melebihi Sisa Berat!");
-                // Reset the value of berat_adding to prevent further processing
-                $('#berat_adding').val('');
-            } else {
-                // Subtract berat_adding from sisa_berat
-                sisa_berat -= berat_adding;
-
-                // Update the value of sisa_berat input field
-                $('#sisa_berat').val(sisa_berat);
-            }
-        }
-
         // Fungsi untuk menghitung total modal
         function calculateTotalModal() {
             // Mengambil nilai berat adding
-            var beratAdding = parseFloat($('#berat_adding').val()) || 0;
+            let beratAdding = parseFloat($('#berat_adding').val()) || 0;
             // Mengambil nilai modal
-            var modal = parseFloat($('#modal').val()) || 0;
+            let modal = parseFloat($('#modal').val()) || 0;
             // Menghitung total modal
-            var totalModal = beratAdding * modal;
+            let totalModal = beratAdding * modal;
             // Memasukkan hasil perhitungan ke dalam input total modal
-            $('#total_modal').val(totalModal.toFixed(
-                2)); // Menggunakan toFixed(2) untuk menampilkan dua angka di belakang koma
+            $('#total_modal').val(totalModal);
         }
 
         // Memanggil fungsi calculateTotalModal setiap kali berat adding berubah
         $('#berat_adding').on('input', function() {
             calculateTotalModal();
         });
+
+        function calculateTotalBerat() {
+            let totalBerat = 0;
+            // Iterasi melalui setiap baris dalam tabel
+            $('#dataTable tbody tr').each(function() {
+                // Mendapatkan nilai berat adding dari baris saat ini dan menambahkannya ke totalBerat
+                let beratAdding = parseFloat($(this).find('td:eq(4)').text()) || 0;
+                totalBerat += beratAdding;
+            });
+            // Menampilkan total berat di input #total_berat
+            $('#total_berat').val(totalBerat);
+        }
+
+        function calculateTotalPcs() {
+            let totalPcs = 0;
+            // Iterasi melalui setiap baris dalam tabel
+            $('#dataTable tbody tr').each(function() {
+                // Mendapatkan nilai pcs adding dari baris saat ini dan menambahkannya ke totalPcs
+                let pcsAdding = parseFloat($(this).find('td:eq(5)').text()) || 0;
+                totalPcs += pcsAdding;
+            });
+            // Menampilkan total pcs di input #total_pcs
+            $('#total_pcs').val(totalPcs);
+        }
+
+        function validateForm() {
+            // Mendefinisikan variabel untuk menyimpan kolom yang belum diisi
+            let emptyFields = [];
+
+            // Mendapatkan nilai dari semua input
+            let idBoxGradingHalus = $('#id_box_grading_halus').val();
+            let plant = $('#plant').val();
+            let nomorAdjustment = $('#nomor_adjustment').val();
+            let nomorBatch = $('#nomor_batch').val();
+            let jenisAdding = $('#jenis_adding').val();
+            let beratAdding = $('#berat_adding').val();
+            let pcsAdding = $('#pcs_adding').val();
+            let modal = $('#modal').val();
+            let totalModal = $('#total_modal').val();
+
+            // Memeriksa setiap input, dan jika kosong, tambahkan ke daftar kolom yang belum diisi
+            if (!idBoxGradingHalus) emptyFields.push('ID Box Grading Halus');
+            if (!plant) emptyFields.push('Plant');
+            if (!nomorAdjustment) emptyFields.push('Nomor Adjustment');
+            if (!nomorBatch) emptyFields.push('Nomor Batch');
+            if (!jenisAdding) emptyFields.push('Jenis Adding');
+            if (!beratAdding) emptyFields.push('Berat Adding');
+            if (!pcsAdding) emptyFields.push('Pcs Adding');
+            if (!modal) emptyFields.push('Modal');
+            if (!totalModal) emptyFields.push('Total Modal');
+
+            // Jika daftar kolom yang belum diisi tidak kosong, tampilkan pesan peringatan
+            if (emptyFields.length > 0) {
+                Swal.fire({
+                    title: 'Warning!',
+                    html: "Harap isi kolom berikut: <br>" + emptyFields.join('<br>'),
+                    icon: 'warning'
+                });
+                return false;
+            } else {
+                return true; // Form valid
+            }
+        }
+        // Manambahkan Data Ke Table
+        function addRow() {
+            if (validateForm()) {
+                // Mendapatkan nilai dari semua input
+                let idBoxGradingHalus = $('#id_box_grading_halus').val();
+                let nomorAdjustment = $('#nomor_adjustment').val();
+                let nomorBatch = $('#nomor_batch').val();
+                let jenisAdding = $('#jenis_adding').val();
+                let beratAdding = $('#berat_adding').val();
+                let pcsAdding = $('#pcs_adding').val();
+                let keterangan = $('#keterangan').val();
+                let modal = $('#modal').val();
+                let totalModal = $('#total_modal').val();
+
+                // Membuat baris HTML baru untuk ditambahkan ke tabel
+                let newRow = `<tr>` +
+                    `<td class='text-center'>${idBoxGradingHalus}</td>` +
+                    `<td class='text-center'>${nomorAdjustment}</td>` +
+                    `<td class='text-center'>${nomorBatch}</td>` +
+                    `<td class='text-center'>${jenisAdding}</td>` +
+                    `<td class='text-center'>${beratAdding}</td>` +
+                    `<td class='text-center'>${pcsAdding}</td>` +
+                    `<td class='text-center'>${keterangan}</td>` +
+                    `<td class='text-center'>${modal}</td>` +
+                    `<td class='text-center'>${totalModal}</td>` +
+                    `<td class='text-center'><button type='button' class='btn btn-danger' onclick='deleteRow(this)'>Delete</button></td>` +
+                    `</tr>`;
+
+                // Menambahkan baris baru ke dalam tabel
+                $('#dataTable tbody').append(newRow);
+
+                // Mengosongkan nilai input formulir
+                $('#id_box_grading_halus, #plant').val(null).trigger('change');
+                $('#plant').val(null).trigger('change');
+                $('#nomor_adjustment').val('');
+                $('#nomor_batch').val('');
+                $('#jenis_adding').val('');
+                $('#sisa_berat').val('');
+                $('#sisa_pcs').val('');
+                $('#berat_adding').val('');
+                $('#pcs_adding').val('');
+                $('#keterangan').val('');
+                $('#modal').val('');
+                $('#total_modal').val('');
+
+                calculateTotalBerat();
+                calculateTotalPcs();
+
+            }
+        }
+
+        function deleteRow(btn) {
+            // Menghapus baris dari tabel
+            $(btn).closest('tr').remove();
+            calculateTotalBerat();
+            calculateTotalPcs();
+        }
     </script>
 @endsection

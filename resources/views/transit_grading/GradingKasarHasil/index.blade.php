@@ -58,8 +58,8 @@
                                         <th scope="col" class="text-center">Hpp</th>
                                         <th scope="col" class="text-center">Total Hpp</th>
                                         <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center">User Created</th>
-                                        <th scope="col" class="text-center">User Updated</th>
+                                        {{-- <th scope="col" class="text-center">User Created</th>
+                                        <th scope="col" class="text-center">User Updated</th> --}}
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
                                         <th scope="col" class="text-center">Actions</th>
@@ -126,8 +126,8 @@
                                                 {{ number_format($GradingKH->total_hpp, 2, ',', '.') }}
                                             </td>
                                             <td class="text-center">{{ $GradingKH->keterangan }}</td>
-                                            <td class="text-center">{{ $GradingKH->user_created }}</td>
-                                            <td class="text-center">{{ $GradingKH->user_updated }}</td>
+                                            {{-- <td class="text-center">{{ $GradingKH->user_created }}</td>
+                                            <td class="text-center">{{ $GradingKH->user_updated }}</td> --}}
                                             <td class="text-center">{{ $GradingKH->created_at }}</td>
                                             <td class="text-center">{{ $GradingKH->updated_at }}</td>
                                             <td class="text-center">

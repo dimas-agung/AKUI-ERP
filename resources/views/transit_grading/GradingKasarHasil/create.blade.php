@@ -38,17 +38,21 @@
                         <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
                         <input type="text" class="form-control" id="nomor_nota_internal" readonly>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="nama_supplier" class="form-label">Nama Supplier</label>
                         <input type="text" class="form-control" id="nama_supplier" readonly>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="jenis_raw_material" class="form-label">Jenis Adding</label>
                         <input type="text" class="form-control" id="jenis_raw_material" readonly>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="berat_adding" class="form-label">Berat Adding</label>
                         <input type="text" class="form-control" id="berat_adding" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="sisa_berat_adding" class="form-label">Sisa Berat Adding</label>
+                        <input type="text" class="form-control" id="sisa_berat_adding" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="kadar_air" class="form-label">Kadar Air</label>
@@ -179,9 +183,10 @@
 @endsection
 @section('script')
     <script>
+        var sisaBeratAddding = 0;
         $(document).ready(function() {
             let beratAddingAwal; // Variabel untuk menyimpan nilai awal berat adding
-
+            // var sisaBeratAddding = parseFloat($('#sisa_berat_adding').val());
             // Event untuk mengambil nilai awal berat adding saat memilih nomor grading
             $('#nomor_grading').on('change', function() {
                 $('#berat_grading').val('');
@@ -201,10 +206,12 @@
                         $('#nama_supplier').val(response.nama_supplier);
                         $('#jenis_raw_material').val(response.jenis_raw_material);
                         $('#berat_adding').val(response.berat);
+                        $('#sisa_berat_adding').val(response.berat);
                         $('#kadar_air').val(response.kadar_air);
                         $('#modal').val(response.modal);
                         $('#total_modal').val(response.total_modal);
                         // Menyimpan nilai awal berat adding
+                        sisaBeratAddding = response.berat;
                         beratAddingAwal = parseFloat(response.berat);
                     },
                     error: function(error) {
@@ -214,10 +221,12 @@
             });
 
             // Event untuk menghitung stok pada perubahan nilai berat grading
-            $('#berat_grading').on('input', function() {
+            $('#berat_grading').on('change', function() {
                 let beratGrading = parseFloat($(this).val());
+                let beratAddingAwal = parseFloat($('#berat_adding').val());
+                console.log(sisaBeratAddding);
                 if (!isNaN(beratGrading)) {
-                    if (beratGrading > beratAddingAwal) {
+                    if (beratGrading > sisaBeratAddding) {
                         // Menampilkan alert jika berat grading melebihi berat awal
                         Swal.fire({
                             title: 'Warning!',
@@ -227,22 +236,37 @@
                         $(this).val(''); // Mengosongkan nilai input
                         return;
                     }
-                    let sisaBerat = beratAddingAwal - beratGrading;
+                    let sisaBerat = sisaBeratAddding - beratGrading;
                     if (sisaBerat < 0) {
                         sisaBerat = 0; // Menghindari stok negatif
                     }
                     // Mengatur nilai sisa berat pada #berat_adding
-                    $('#berat_adding').val(sisaBerat); // membulatkan ke 2 desimal
+                    $('#sisa_berat_adding').val(sisaBerat); // membulatkan ke 2 desimal
                 } else {
+                    // if ($('#sisa_berat_adding').val()) {
+
+                    $('#sisa_berat_adding').val(sisaBeratAddding);
+                    // } else {
+                    //     $('#sisa_berat_adding').val(beratAddingAwal);
+
+                    // }
+
                     // Jika #berat_grading kosong, kembalikan ke nilai awal
-                    $('#berat_adding').val(beratAddingAwal);
+
                 }
             });
 
             // Event untuk mengembalikan nilai berat adding ke nilai awal jika nilai berat grading dihapus
+            // $('#berat_grading').on('change', function() {
+            //     if ($(this).val() === '') {
+            //         $('#sisa_berat_adding').val(beratAddingAwal);
+            //         // Mengembalikan nilai berat adding ke nilai awalnya
+            //     }
+            // });
             $('#berat_grading').on('change', function() {
                 if ($(this).val() === '') {
-                    $('#berat_adding').val(beratAddingAwal);
+                    // let beratAddingAwal = parseFloat($('#sisa_berat_adding').val());
+                    $('#sisa_berat_adding').val(sisaBerat);
                     // Mengembalikan nilai berat adding ke nilai awalnya
                 }
             });
@@ -272,6 +296,27 @@
             let totalBerat
         }
 
+        // function hitungNilaiSusut() {
+        //     let totalBeratGradingtest = parseFloat($('#total_berat').val());
+
+        //     if (isNaN(totalBeratGradingtest)) {
+        //         totalBeratGradingtest = parseFloat($('#berat_grading').val()) || 0;
+        //     }
+
+        //     let beratAdding = parseFloat($('#berat_adding').val());
+
+        //     if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding) && beratAdding !== 0) {
+        //         let nilaiSusut = (1 - totalBeratGradingtest / beratAdding);
+        //         console.log("totalTest = " + totalBeratGradingtest);
+        //         console.log("Berat Adding = " + beratAdding);
+        //         console.log("Susut = " + nilaiSusut);
+        //         return nilaiSusut;
+        //     } else {
+        //         console.error('Input tidak valid untuk berat_grading atau berat');
+        //         return null;
+        //     }
+        // }
+
         function hitungNilaiSusut() {
             let totalBeratGradingtest = parseFloat($('#total_berat').val());
 
@@ -281,7 +326,7 @@
 
             let beratAdding = parseFloat($('#berat_adding').val());
 
-            if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding) && beratAdding !== 0) {
+            if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding)) {
                 let nilaiSusut = (1 - totalBeratGradingtest / beratAdding);
                 console.log("totalTest = " + totalBeratGradingtest);
                 console.log("Berat Adding = " + beratAdding);
@@ -292,6 +337,7 @@
                 return null;
             }
         }
+
 
 
         // generate id box grading kasar
@@ -338,6 +384,8 @@
             let total_susut = $('#total_susut').val();
             let total_berat = $('#total_berat').val();
             let total_pcs = $('#total_pcs').val();
+            let sisa_berat_adding = $('#sisa_berat_adding').val();
+            sisaBeratAddding = sisa_berat_adding
 
             // Validasi input (sesuai kebutuhan)
             if (nomor_grading.trim() === '' || nomor_batch.trim() === '' || id_box_raw_material.trim() === '' ||
@@ -380,12 +428,30 @@
             $('#total_pcs').val(totalPcsGrading);
 
             // test
-            let susut = hitungNilaiSusut();
+            // let susut = hitungNilaiSusut();
+            // console.log("Susut = " + susut);
+
+            // $('#dataTable tbody tr').each(function() {
+            //     // Ganti koma dengan titik sebagai tanda desimal
+            //     let totalSusutValue = parseInt($(this).find('td:eq(12)').text().replace(',', '.')) || 0;
+            //     console.log('TotalSusut = ' + totalSusutValue);
+
+            //     susut += totalSusutValue;
+
+            //     // Update nilai susut pada kolom susut di setiap baris tabel
+            //     $(this).find('td:eq(12)').text(susut.toFixed(4));
+            // });
+            // console.log('Total Susut= ' + susut);
+
+            // // Memperbarui nilai #total_susut
+            // $('#total_susut').val(susut.toFixed(4));
+
+            let susut = hitungNilaiSusut() || 0; // Nilai susut diambil dari fungsi hitungNilaiSusut
             console.log("Susut = " + susut);
 
             $('#dataTable tbody tr').each(function() {
                 // Ganti koma dengan titik sebagai tanda desimal
-                let totalSusutValue = parseInt($(this).find('td:eq(12)').text().replace(',', '.')) || 0;
+                let totalSusutValue = parseFloat($(this).find('td:eq(12)').text().replace(',', '.')) || 0;
                 console.log('TotalSusut = ' + totalSusutValue);
 
                 susut += totalSusutValue;
@@ -394,9 +460,8 @@
                 $(this).find('td:eq(12)').text(susut.toFixed(4));
             });
             console.log('Total Susut= ' + susut);
-
-            // Memperbarui nilai #total_susut
             $('#total_susut').val(susut.toFixed(4));
+
             //
             let newRow = '<tr>' +
                 '<td class="text-center">' + nomor_grading + '</td>' +

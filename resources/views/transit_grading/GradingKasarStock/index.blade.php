@@ -36,8 +36,8 @@
                                 <th class="text-center">Modal</th>
                                 <th class="text-center">Total Modal</th>
                                 <th class="text-center" scope="col">Keterangan</th>
-                                <th class="text-center" scope="col">NIP Admin</th>
-                                <th class="text-center" scope="col">User Updated</th>
+                                {{-- <th class="text-center" scope="col">NIP Admin</th>
+                                <th class="text-center" scope="col">User Updated</th> --}}
                                 {{-- <th class="text-center">Action</th> --}}
                             </tr>
                         </thead>
@@ -70,8 +70,8 @@
                                     {{-- <td class="text-center">{{ $GradingKS->total_modal }}</td> --}}
                                     <td class="text-center">{{ number_format($GradingKS->total_modal, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $GradingKS->keterangan }}</td>
-                                    <td class="text-center">{{ $GradingKS->user_created }}</td>
-                                    <td class="text-center">{{ $GradingKS->user_updated }}</td>
+                                    {{-- <td class="text-center">{{ $GradingKS->user_created }}</td>
+                                    <td class="text-center">{{ $GradingKS->user_updated }}</td> --}}
                                     {{-- <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" id="deleteForm{{ $item->id }}"

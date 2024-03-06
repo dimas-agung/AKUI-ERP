@@ -70,8 +70,8 @@ class GradingKasarHasilService
             'modal'                             => $itemObject->modal,
             'total_modal'                       => $itemObject->total_modal,
             'keterangan'                        => $itemObject->keterangan,
-            'user_created'                      => $itemObject->user_created ?? 'Admin',
-            'user_updated'                      => $itemObject->user_updated ?? 'Admin'
+            // 'user_created'                      => $itemObject->user_created,
+            // 'user_updated'                      => $itemObject->user_updated
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
         GradingKasarStock::create($dataToUpdate);
@@ -104,8 +104,8 @@ class GradingKasarHasilService
             'hpp'                               => $item->hpp,
             'total_hpp'                         => $item->total_hpp,
             'keterangan'                        => $item->keterangan,
-            'user_created'                      => $item->user_created ?? 'Admin',
-            'user_updated'                      => $item->user_updated ?? 'Admin',
+            // 'user_created'                      => $item->user_created,
+            // 'user_updated'                      => $item->user_updated,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
         return $GradingKasarHasil->id;
