@@ -1,28 +1,28 @@
 @extends('layouts.master1')
 @section('menu')
-    Adjustment Adding
+    Adjustment Input
 @endsection
 @section('title')
-    Adjustment Adding
+    Adjustment Input
 @endsection
 @section('content')
     <div class="col-md-12">
         <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center mb-3">
-                    <h4 class="card-title">Adjustment Adding</h4>
+                    <h4 class="card-title">Adjustment Input</h4>
                 </div>
                 <hr>
                 <form method="POST" class="row g-3" id="myForm">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="basic-usage" class="form-label">ID Box Grading Halus</label>
-                            <select class="select2 form-select" style="width: 100%;" name="id_box_grading_halus"
-                                id="id_box_grading_halus" placeholder="Pilih ID Box Grading Halus">
-                                <option value="">Pilih ID Box Grading Halus</option>
+                            <label for="basic-usage" class="form-label">Nomor Adjustment</label>
+                            <select class="select2 form-select" style="width: 100%;" name="nomor_adjustment"
+                                id="nomor_adjustment" placeholder="Pilih Nomor Adjustment">
+                                <option value="">Pilih Nomor Adjustment</option>
                                 @foreach ($grading_halus_stocks as $GradingHS)
-                                    <option value="{{ $GradingHS->id_box_grading_halus }}">
-                                        {{ $GradingHS->id_box_grading_halus }}
+                                    <option value="{{ $GradingHS->nomor_adjustment }}">
+                                        {{ $GradingHS->nomor_adjustment }}
                                     </option>
                                 @endforeach
                             </select>

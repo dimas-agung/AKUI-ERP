@@ -233,7 +233,7 @@
                             text: "Berat grading tidak boleh melebihi berat adding.",
                             icon: 'warning'
                         });
-                        $(this).val(''); // Mengosongkan nilai input
+                        // $(this).val(''); // Mengosongkan nilai input
                         return;
                     }
                     let sisaBerat = sisaBeratAddding - beratGrading;
@@ -401,6 +401,8 @@
                 return; // Berhenti jika ada input yang kosong
             }
 
+            $('#nomor_grading').prop('disabled', true);
+
             let id_box_grading_kasar = generateIdBoxGradingKasar();
             let biaya_produksi = 0;
             console.log("Harga Estimasi = " + harga_estimasi);
@@ -563,6 +565,9 @@
             row.remove();
             // Kurangkan nilai dari total_pcs dan total_berat
             hitungNilaiSusut();
+            // Mengaktifkan kembali select2 pada elemen #nomor_grading
+            $('#nomor_grading').prop('disabled', false).trigger('change');
+            // Mengaktifkan dan men-trigger change
             // Total Berat
             let totalBeratGrading = 0;
             $('#dataTable tbody tr').each(function() {

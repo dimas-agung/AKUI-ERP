@@ -265,6 +265,15 @@ Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentAddingControlle
     Route::post('/adjustment_adding/simpanData', 'simpanData')->name('AdjustmentAdding.simpanData');
     Route::post('/adjustment_adding/getDataPerusahaan', 'getDataPerusahaan')->name('AdjustmentAdding.getDataPerusahaan');
 });
+Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentStockController::class)->group(function () {
+    Route::get('/adjustment_stock', 'index')->name('AdjustmentStock.index');
+    Route::get('/adjustment_stock/create', 'create')->name('AdjustmentStock.create');
+    Route::post('/adjustment_stock/store', 'store')->name('AdjustmentStock.store');
+    Route::get('/adjustment_stock/show/{id}', 'show')->name('AdjustmentStock.show');
+    Route::get('/adjustment_stock/edit/{id}', 'edit')->name('AdjustmentStock.edit');
+    Route::put('/adjustment_stock/update/{id}', 'update')->name('AdjustmentStock.update');
+    Route::delete('/adjustment_stock/destroy/{id}', 'destroy')->name('AdjustmentStock.destroy');
+});
 
 Auth::routes();
 
