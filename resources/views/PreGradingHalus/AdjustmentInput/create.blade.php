@@ -20,57 +20,25 @@
                             <select class="select2 form-select" style="width: 100%;" name="nomor_adjustment"
                                 id="nomor_adjustment" placeholder="Pilih Nomor Adjustment">
                                 <option value="">Pilih Nomor Adjustment</option>
-                                @foreach ($grading_halus_stocks as $GradingHS)
-                                    <option value="{{ $GradingHS->nomor_adjustment }}">
-                                        {{ $GradingHS->nomor_adjustment }}
+                                @foreach ($adjustment_inputs as $ADJI)
+                                    <option value="{{ $ADJI->nomor_adjustment }}">
+                                        {{ $ADJI->nomor_adjustment }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label>Plant</label>
-                        <select class="select2 form-select" style="width: 100%;" name="plant" id="plant"
-                            placeholder="Pilih ID Box Grading Halus">
-                            <option value="">Pilih Plant</option>
-                            @foreach ($perusahaan as $Perusahaans)
-                                <option value="{{ $Perusahaans->plant }}">
-                                    {{ $Perusahaans->plant }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="nomor_adjustment" class="form-label">Nomor Adjustment</label>
-                        <input type="text" class="form-control" id="nomor_adjustment">
-                    </div>
-                    <div class="col-md-6">
                         <label for="nomor_batch" class="form-label">Nomor Batch</label>
                         <input type="text" class="form-control" id="nomor_batch" readonly>
                     </div>
-                    <div class="col-md-4">
-                        <label for="jenis_adding" class="form-label">Jenis Adding</label>
-                        <input type="text" class="form-control" id="jenis_adding" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="sisa_berat" class="form-label">Sisa Berat</label>
-                        <input type="text" class="form-control" id="sisa_berat" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="sisa_pcs" class="form-label">Sisa Pcs</label>
-                        <input type="text" class="form-control" id="sisa_pcs" readonly>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="berat_adding" class="form-label">Berat Adding</label>
                         <input type="text" class="form-control" id="berat_adding">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="pcs_adding" class="form-label">Pcs Adding</label>
                         <input type="text" class="form-control" id="pcs_adding">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="keterangan" class="form-label">Keterangan</label>
-                        <input type="text" class="form-control" id="keterangan">
                     </div>
                     <div class="col-md-3">
                         <label for="modal" class="form-label">Modal</label>
@@ -79,6 +47,44 @@
                     <div class="col-md-3">
                         <label for="total_modal" class="form-label">Total Modal</label>
                         <input type="text" class="form-control" id="total_modal" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="basic-usage" class="form-label">Jenis Adjustment</label>
+                            <select class="select2 form-select" style="width: 100%;" name="nomor_adjustment"
+                                id="nomor_adjustment" placeholder="Pilih Nomor Adjustment">
+                                <option value="">Pilih Nomor Adjustment</option>
+                                @foreach ($adjustment_inputs as $ADJI)
+                                    <option value="{{ $ADJI->nomor_adjustment }}">
+                                        {{ $ADJI->nomor_adjustment }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="katergori_susut" class="form-label">Kategori Susut</label>
+                        <input type="text" class="form-control" id="katergori_susut" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="berat_adjustment" class="form-label">Berat Adjustment</label>
+                        <input type="text" class="form-control" id="berat_adjustment" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="pcs_adjustment" class="form-label">Pcs Adjustment</label>
+                        <input type="text" class="form-control" id="pcs_adjustment" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <input type="text" class="form-control" id="keterangan" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="susut_depan" class="form-label">Susut Depan</label>
+                        <input type="text" class="form-control" id="susut_depan" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="susut_belakang" class="form-label">Susut Belakang</label>
+                        <input type="text" class="form-control" id="susut_belakang" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="total_berat" class="form-label">Total Berat</label>

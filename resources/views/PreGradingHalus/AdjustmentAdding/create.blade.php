@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label>Plant</label>
+                        <label class="form-label">Plant</label>
                         <select class="select2 form-select" style="width: 100%;" name="plant" id="plant"
                             placeholder="Pilih ID Box Grading Halus">
                             <option value="">Pilih Plant</option>

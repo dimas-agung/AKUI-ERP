@@ -274,6 +274,15 @@ Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentStockController
     Route::put('/adjustment_stock/update/{id}', 'update')->name('AdjustmentStock.update');
     Route::delete('/adjustment_stock/destroy/{id}', 'destroy')->name('AdjustmentStock.destroy');
 });
+Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentInputController::class)->group(function () {
+    Route::get('/adjustment_input', 'index')->name('AdjustmentInput.index');
+    Route::get('/adjustment_input/create', 'create')->name('AdjustmentInput.create');
+    Route::post('/adjustment_input/store', 'store')->name('AdjustmentInput.store');
+    Route::get('/adjustment_input/show/{id}', 'show')->name('AdjustmentInput.show');
+    Route::get('/adjustment_input/edit/{id}', 'edit')->name('AdjustmentInput.edit');
+    Route::put('/adjustment_input/update/{id}', 'update')->name('AdjustmentInput.update');
+    Route::delete('/adjustment_input/destroy/{id}', 'destroy')->name('AdjustmentInput.destroy');
+});
 
 Auth::routes();
 

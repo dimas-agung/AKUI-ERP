@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('jenis_adjustment');
             $table->float('berat_adjustment');
             $table->float('pcs_adjustment');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
             $table->string('kategori_susut');
