@@ -37,25 +37,25 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Nomor Grading</label>
-                                        <select id="nomor_grading" class="select2 form-select" name="nomor_grading">
-                                            <option value="">Pilih Nomor Grading</option>
-                                            @foreach ($TransitPre->sortBy('nomor_grading') as $post)
-                                                <option value="{{ $post->nomor_grading }}">
-                                                    {{ old('nomor_grading', $post->nomor_grading) }}</option>
+                                        <label>ID Box Grading Halus</label>
+                                        <select id="id_box_grading_halus" class="select2 form-select"
+                                            name="id_box_grading_halus">
+                                            <option value="">Pilih ID Box Grading Halus</option>
+                                            @foreach ($TransitPre->sortBy('id_box_grading_halus') as $post)
+                                                <option value="{{ $post->id_box_grading_halus }}">
+                                                    {{ old('id_box_grading_halus', $post->id_box_grading_halus) }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Jenis Grading</label>
-                                        <select id="jenis_grading" class="select2 form-select" name="jenis_grading">
-                                            <option value="">Pilih Jenis Grading</option>
-                                            @foreach ($Unit->sortBy('jenis') as $post)
-                                                <option value="{{ $post->jenis }}">
-                                                    {{ old('jenis', $post->jenis) }}
-                                                </option>
+                                        <label>Tujuan Kirim</label>
+                                        <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim">
+                                            <option value="">Pilih Tujuan Kirim</option>
+                                            @foreach ($TransitPre->sortBy('tujuan_kirim') as $post)
+                                                <option value="{{ $post->tujuan_kirim }}">
+                                                    {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -169,27 +169,6 @@
                                             placeholder="Masukkan pcs grading" data-parsley-required="true">
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Susut Depan</label>
-                                        <input type="text" id="susut_depan" class="form-control" name="susut_depan"
-                                            readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Susut Belakang</label>
-                                        <input type="text" id="susut_belakang" class="form-control"
-                                            name="susut_belakang" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Kontribusi</label>
-                                        <input type="text" id="kontribusi" class="form-control" name="kontribusi"
-                                            readonly>
-                                    </div>
-                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>NIP Admin</label>

@@ -299,6 +299,16 @@ Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusStockControll
     Route::get('/grading_halus_stock', 'index')->name('GradingHalusStock.index');
 });
 
+Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusOutputController::class)->group(function () {
+    Route::get('/grading_halus_output', 'index')->name('GradingHalusOutput.index');
+    Route::get('/grading_halus_output/create', 'create')->name('GradingHalusOutput.create');
+    Route::get('/grading_halus_output/get_data_id_box', 'set')->name('GradingHalusOutput.set');
+    Route::get('/grading_halus_output/get_data_id_box/jenis_grading', 'setUnit')->name('GradingHalusOutput.setUnit');
+    Route::post('/grading_halus_output/sendData', 'sendData')->name('GradingHalusOutput.sendData');
+    Route::post('/grading_halus_output/store', 'store')->name('GradingHalusOutput.store');
+    Route::delete('/grading_halus_output/destroy/{nomor_grading}', 'destroy')->name('GradingHalusOutput.destroy');
+});
+
 Auth::routes();
 
 

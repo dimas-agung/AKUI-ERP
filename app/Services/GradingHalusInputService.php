@@ -14,6 +14,12 @@ use Illuminate\Http\RedirectResponse;
 
 class GradingHalusInputService
 {
+    protected $HppService;
+
+    public function __construct(HppService $HppService)
+    {
+        $this->HppService = $HppService;
+    }
     public function store(Request $request)
     {
         // Decode JSON string to associative array

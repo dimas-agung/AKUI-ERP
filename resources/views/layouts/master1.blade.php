@@ -187,7 +187,7 @@
                         </li>
                         <li class="sidebar-title">Production</li>
                         <li
-                            class="sidebar-item has-sub {{ Request::is('stock_transit_raw_material*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*', 'grading_kasar_output*', 'stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*', 'grading_halus_input*') ? 'active' : '' }}">
+                            class="sidebar-item has-sub {{ Request::is('stock_transit_raw_material*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*', 'grading_kasar_output*', 'stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*', 'grading_halus_input*', 'grading_halus_stock', 'grading_halus_output*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-three-dots"></i>
                                 <span>Bahan Baku</span>
@@ -233,7 +233,7 @@
                                 </li>
 
                                 <li
-                                    class="submenu-item has-sub {{ Request::is('stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*', 'grading_halus_stock*') ? 'active' : '' }}">
+                                    class="submenu-item has-sub {{ Request::is('stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*') ? 'active' : '' }}">
                                     <a href="#" class='submenu-link'>
                                         <span>Pre-Cleaning</span>
                                     </a>
@@ -267,7 +267,7 @@
                                 </li>
 
                                 <li
-                                    class="submenu-item has-sub {{ Request::is('transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*', 'grading_halus_input*', 'grading_halus_stock*') ? 'active' : '' }}">
+                                    class="submenu-item has-sub {{ Request::is('transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*', 'grading_halus_input*', 'grading_halus_stock*', 'grading_halus_output*') ? 'active' : '' }}">
                                     <a href="#" class='submenu-link'>
                                         <span>Pre-Grading Halus</span>
                                     </a>
@@ -306,6 +306,11 @@
                                             class="submenu-item {{ Request::is('grading_halus_stock*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingHalusStock.index') }}"
                                                 class="submenu-link">Grading Halus Stock</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('grading_halus_output*') ? 'active' : '' }}">
+                                            <a href="{{ route('GradingHalusOutput.index') }}"
+                                                class="submenu-link">Grading Halus Output</a>
                                         </li>
                                     </ul>
                                 </li>
