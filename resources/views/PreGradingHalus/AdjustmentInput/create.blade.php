@@ -34,11 +34,11 @@
                     </div>
                     <div class="col-md-3">
                         <label for="berat_adding" class="form-label">Berat Adding</label>
-                        <input type="text" class="form-control" id="berat_adding">
+                        <input type="text" class="form-control" id="berat_adding" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="pcs_adding" class="form-label">Pcs Adding</label>
-                        <input type="text" class="form-control" id="pcs_adding">
+                        <input type="text" class="form-control" id="pcs_adding" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="modal" class="form-label">Modal</label>
@@ -51,12 +51,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="basic-usage" class="form-label">Jenis Adjustment</label>
-                            <select class="select2 form-select" style="width: 100%;" name="nomor_adjustment"
-                                id="nomor_adjustment" placeholder="Pilih Nomor Adjustment">
-                                <option value="">Pilih Nomor Adjustment</option>
-                                @foreach ($adjustment_inputs as $ADJI)
-                                    <option value="{{ $ADJI->nomor_adjustment }}">
-                                        {{ $ADJI->nomor_adjustment }}
+                            <select class="select2 form-select" style="width: 100%;" name="jenis_adjustment"
+                                id="jenis_adjustment" placeholder="Pilih Jenis Adjustment">
+                                <option value="">Pilih Jenis Adjustment</option>
+                                @foreach ($master_jenis_grading_halus as $MasterJGH)
+                                    <option
+                                        value="{{ $MasterJGH->jenis }},{{ $MasterJGH->harga_estimasi }},{{ $MasterJGH->pengurangan_harga }}">
+                                        {{ $MasterJGH->jenis }}
                                     </option>
                                 @endforeach
                             </select>
@@ -68,15 +69,15 @@
                     </div>
                     <div class="col-md-4">
                         <label for="berat_adjustment" class="form-label">Berat Adjustment</label>
-                        <input type="text" class="form-control" id="berat_adjustment" readonly>
+                        <input type="text" class="form-control" id="berat_adjustment">
                     </div>
                     <div class="col-md-4">
                         <label for="pcs_adjustment" class="form-label">Pcs Adjustment</label>
-                        <input type="text" class="form-control" id="pcs_adjustment" readonly>
+                        <input type="text" class="form-control" id="pcs_adjustment">
                     </div>
                     <div class="col-md-4">
                         <label for="keterangan" class="form-label">Keterangan</label>
-                        <input type="text" class="form-control" id="keterangan" readonly>
+                        <input type="text" class="form-control" id="keterangan">
                     </div>
                     <div class="col-md-3">
                         <label for="susut_depan" class="form-label">Susut Depan</label>
@@ -109,15 +110,17 @@
                     <table class="table" id="dataTable">
                         <thead>
                             <tr>
-                                <th scope="col" class="text-center">ID Box Grading Halus</th>
                                 <th scope="col" class="text-center">Nomor Adjustment</th>
                                 <th scope="col" class="text-center">Nomor Batch</th>
-                                <th scope="col" class="text-center">Jenis Adding</th>
                                 <th scope="col" class="text-center">Berat Adding</th>
                                 <th scope="col" class="text-center">Pcs Adding</th>
-                                <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
+                                <th scope="col" class="text-center">Jenis Adjustment</th>
+                                <th scope="col" class="text-center">Kategori Susut</th>
+                                <th scope="col" class="text-center">Berat Adjustment</th>
+                                <th scope="col" class="text-center">Pcs Adjustment</th>
+                                <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -136,27 +139,27 @@
     <script>
         $(document).ready(function() {
             let sisaBeratAwal; // Variabel untuk menyimpan nilai awal berat adding
-            let sisaPcsAwal
-            $('#id_box_grading_halus').on('change', function() {
+            let sisaPcsAwal;
+            $('#nomor_adjustment').on('change', function() {
                 // Mengambil nilai id_box yang dipilih
                 $('#berat_adding').val('');
                 $('#pcs_adding').val('');
-                let selectedIdBoxGradingHalus = $(this).val();
+                let selectedNomorAdjustment = $(this).val();
                 // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
                 $.ajax({
-                    url: `{{ route('AdjustmentAdding.set') }}`,
+                    url: `{{ route('AdjustmentAdding.getNomorAdjustment') }}`,
                     method: 'GET',
                     data: {
-                        id_box_grading_halus: selectedIdBoxGradingHalus
+                        nomor_adjustment: selectedNomorAdjustment
                     },
                     success: function(response) {
                         console.log(response);
                         // Mengatur nilai Nomor Batch sesuai dengan respons dari server
                         $('#nomor_batch').val(response.nomor_batch);
-                        $('#jenis_adding').val(response.jenis);
-                        $('#sisa_berat').val(response.sisa_berat);
-                        $('#sisa_pcs').val(response.sisa_pcs);
+                        $('#berat_adding').val(response.berat_adding);
+                        $('#pcs_adding').val(response.pcs_adding);
                         $('#modal').val(response.modal);
+                        $('#total_modal').val(response.total_modal);
                         sisaBeratAwal = parseFloat(response.sisa_berat);
                         sisaPcsAwal = parseFloat(response.sisa_pcs);
                     },
@@ -165,99 +168,50 @@
                     }
                 });
             });
-
-            // Event untuk menghitung stok pada perubahan nilai berat grading
-            $('#berat_adding').on('input', function() {
-                let beratGrading = parseFloat($(this).val());
-                if (!isNaN(beratGrading)) {
-                    if (beratGrading > sisaBeratAwal) {
-                        // Menampilkan alert jika berat grading melebihi berat awal
-                        Swal.fire({
-                            title: 'Warning!',
-                            text: "Berat Adding tidak boleh melebihi Sisa Berat.",
-                            icon: 'warning'
-                        });
-                        $(this).val(''); // Mengosongkan nilai input
-                        return;
+            // Jenis Adjustment
+            $('#jenis_adjustment').on('change', function() {
+                // Mengambil nilai id_box yang dipilih
+                let selectedJenis = $(this).val();
+                // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
+                $.ajax({
+                    url: `{{ route('AdjustmentAdding.getJenisAdjustment') }}`,
+                    method: 'GET',
+                    data: {
+                        jenis: selectedJenis
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                        $('#nomor_batch').val(response.nomor_batch);
+                        $('#berat_adding').val(response.berat_adding);
+                        $('#pcs_adding').val(response.pcs_adding);
+                        $('#modal').val(response.modal);
+                        $('#total_modal').val(response.total_modal);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
                     }
-                    let sisaBerat = sisaBeratAwal - beratGrading;
-                    if (sisaBerat < 0) {
-                        sisaBerat = 0; // Menghindari stok negatif
-                    }
-                    // Mengatur nilai sisa berat pada #berat_adding
-                    $('#sisa_berat').val(sisaBerat);
-                } else {
-                    // Jika #berat_grading kosong, kembalikan ke nilai awal
-                    $('#sisa_berat').val(sisaBeratAwal);
-                }
-            });
-
-            // Event untuk mengembalikan nilai berat adding ke nilai awal jika nilai berat grading dihapus
-            $('#berat_adding').on('change', function() {
-                if ($(this).val() === '') {
-                    $('#sisa_berat').val(sisaBeratAwal);
-                    // Mengembalikan nilai berat adding ke nilai awalnya
-                }
-            });
-            // Sisa PCS
-            // Event untuk menghitung stok pada perubahan Sisa PCS
-            $('#pcs_adding').on('input', function() {
-                let pcsAdding = parseFloat($(this).val());
-                if (!isNaN(pcsAdding)) {
-                    if (pcsAdding > sisaPcsAwal) {
-                        Swal.fire({
-                            title: 'Warning!',
-                            text: "Pcs Adding tidak boleh melebihi Sisa Pcs.",
-                            icon: 'warning'
-                        });
-                        $(this).val(''); // Mengosongkan nilai input
-                        return;
-                    }
-                    let sisaPcs = sisaPcsAwal - pcsAdding;
-                    if (sisaPcs < 0) {
-                        sisaPcs = 0; // Menghindari stok negatif
-                    }
-                    $('#sisa_pcs').val(sisaPcs);
-                } else {
-                    $('#sisa_pcs').val(sisaPcsAwal);
-                }
-            });
-
-            // Event untuk mengembalikan nilai berat adding ke nilai awal jika nilai berat grading dihapus
-            $('#pcs_adding').on('change', function() {
-                if ($(this).val() === '') {
-                    $('#sisa_pcs').val(sisaPcsAwal);
-                    // Mengembalikan nilai berat adding ke nilai awalnya
-                }
+                });
             });
         });
+        // jenis grading
         $(document).ready(function() {
-            // Menangani perubahan pada dropdown nomor_job
-            $('#plant').on('change', function() {
-                // Memanggil fungsi generateNomorGrading ketika nomor_job berubah
-                generateNomorAdjustment();
+            $("#jenis_adjustment").change(function() {
+                let selectedOption = $(this).find("option:selected");
+                let values = selectedOption.val().split(',');
+
+                console.log("data = " + values);
+                // Ambil nilai sesuai kebutuhan Anda
+                let nama = values[0];
+                let hargaEstimasi = values[1];
+                let presentasePenguranganHarga = values[2];
+                $('#harga_estimasi').val(hargaEstimasi);
+                $('#presetanse_pengurangan_harga').val(presentasePenguranganHarga);
+                // Log untuk memeriksa nilai
+                console.log("Nama: " + nama);
+                console.log("Harga Estimasi: " + hargaEstimasi);
+                console.log("Prosentase Pengurangan Harga: " + presentasePenguranganHarga);
             });
-
-            // Fungsi untuk generate nomor_bstb
-            function generateNomorAdjustment() {
-                const now = new Date();
-                const tahun = now.getFullYear().toString().substr(-2);
-                const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
-                const tanggal = ('0' + now.getDate()).slice(-2);
-                const jam = ('0' + now.getHours()).slice(-2);
-                const menit = ('0' + now.getMinutes()).slice(-2);
-                const detik = ('0' + now.getSeconds()).slice(-2);
-
-                // Mengambil nilai dari dropdown nomor_job
-                const plant = $('#plant').val();
-
-                // Menghasilkan nomor_bstb berdasarkan rumus yang diinginkan
-                const nomor_adjustment = `ADJ_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_${plant}_UGH`;
-
-                // Memasukkan nilai yang dihasilkan ke dalam input nomor_bstb
-                $('#nomor_adjustment').val(nomor_adjustment);
-                console.log(nomor_adjustment);
-            }
         });
 
         // Fungsi untuk menghitung total modal
