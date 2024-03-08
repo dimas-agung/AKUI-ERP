@@ -27,4 +27,9 @@ class GradingHalusStock extends Model
     {
         return $this->hasMany(AdjustmentAdding::class, 'id_box_grading_halus', 'id_box_grading_halus');
     }
+
+    public function GradingHalusInput()
+    {
+        return $this->belongsTo(GradingHalusInput::class, 'id_box_grading_halus', 'id_box_grading_halus');
+    }
 }

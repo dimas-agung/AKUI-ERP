@@ -167,11 +167,29 @@
                                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                             class="form-control" name="pcs_grading" value="{{ old('pcs_grading') }}"
                                             placeholder="Masukkan pcs grading" data-parsley-required="true">
-                                        <input type="hidden" name="susut_depan" id="susut_depan">
-                                        <input type="hidden" name="susut_belakang" id="susut_belakang">
-                                        <input type="hidden" name="kontribusi" id="kontribusi">
                                     </div>
                                 </div>
+                                {{-- <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Susut Depan</label>
+                                        <input type="text" id="susut_depan" class="form-control" name="susut_depan"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Susut Belakang</label>
+                                        <input type="text" id="susut_belakang" class="form-control"
+                                            name="susut_belakang" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Kontribusi</label>
+                                        <input type="text" id="kontribusi" class="form-control" name="kontribusi"
+                                            readonly>
+                                    </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>NIP Admin</label>
@@ -338,7 +356,7 @@
                     0) {
                     $('#harga_estimasi').val(harga_estimasi);
                 } else {
-                    $('#harga_estimasi').val(pengurangan_harga_number * modal_number);
+                    $('#harga_estimasi').val(modal_number - (modal_number * pengurangan_harga_number));
                 }
             } else {
                 // Jika nomor_grading atau jenis_grading belum terisi, tidak melakukan perhitungan
@@ -387,11 +405,9 @@
                 if (currentKategoriSusut === "SD") {
                     let row = $(this);
                     row.find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(2)); // Update nilai di tabel
-                    row.find('input#susut_depan').val(beratGradingPerAddingSD.toFixed(2)); // Update nilai di input
                 } else {
                     let row = $(this);
                     row.find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(2)); // Update nilai di tabel
-                    row.find('input#susut_depan').val(beratGradingPerAddingSD.toFixed(2)); // Update nilai di input
                 }
             });
 
@@ -489,8 +505,12 @@
             var id_box_grading_halus = $('#id_box_grading_halus').val();
             var susut_depan = $('#susut_depan').val();
             var susut_belakang = $('#susut_belakang').val();
-            var biaya_produksi = $('#biaya_produksi').val();
             var kontribusi = $('#kontribusi').val();
+            // Mengganti nilai susut_depan dengan nilai dari kolom ke-17 pada baris pertama tabel
+            // var susut_depan = parseFloat($('#tableBody tr:last td:eq(17)').text());
+            // var susut_belakang = parseFloat($('#tableBody tr:last td:eq(18)').text());
+            var biaya_produksi = $('#biaya_produksi').val();
+            // var kontribusi = parseFloat($('#tableBody tr:last td:eq(20)').text());
             var harga_estimasi = $('#harga_estimasi').val();
             var total_harga = $('#total_harga').val();
             var nilai_laba_rugi = $('#nilai_laba_rugi').val();
@@ -503,7 +523,6 @@
             var fix_hpp = $('#fix_hpp').val();
             var fix_total_hpp = $('#fix_total_hpp').val();
             var user_created = $('#user_created').val();
-
 
             // Inisialisasi array untuk menyimpan field yang belum terisi
             let fieldsNotFilled = [];
@@ -688,13 +707,36 @@
                     });
                 },
                 data: function() {
+                    // Inisialisasi array untuk menyimpan data tiap baris
+                    var tableDataArray = [];
+
+                    // Iterasi melalui setiap baris tabel
+                    $('#tableBody tr').each(function() {
+                        // Mengambil nilai susut_depan dan susut_belakang dari tiap baris
+                        var susutDepan = parseFloat($(this).find('td:eq(17)').text());
+                        var susutBelakang = parseFloat($(this).find('td:eq(18)').text());
+                        var kontribusi = parseFloat($(this).find('td:eq(20)').text());
+
+                        // Debugging: Cetak nilai susut_depan, susut_belakang, dan kontribusi ke konsol
+                        console.log("Nilai susut_depan:", susutDepan);
+                        console.log("Nilai susut_belakang:", susutBelakang);
+                        console.log("Nilai kontribusi:", kontribusi);
+
+                        // Menambahkan data ke dalam array
+                        tableDataArray.push({
+                            susut_depan: susutDepan,
+                            susut_belakang: susutBelakang,
+                            kontribusi: kontribusi
+                        });
+                    });
+
+                    // Mengirim dataArray dan data tabel ke server sebagai string JSON
                     var postData = {
                         dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
-                        // user_created: 'Asc-86',
-                        // user_updated: 'Asc-186',
+                        tableDataArray: JSON.stringify(
+                            tableDataArray), // Mengirim data tabel sebagai string JSON
                         _token: '{{ csrf_token() }}'
                     };
-
                     return postData;
                 }(),
                 success: function(response) {
