@@ -372,6 +372,24 @@ Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentAddingControlle
     Route::post('/adjustment_adding/simpanData', 'simpanData')->name('AdjustmentAdding.simpanData');
     Route::post('/adjustment_adding/getDataPerusahaan', 'getDataPerusahaan')->name('AdjustmentAdding.getDataPerusahaan');
 });
+Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentStockController::class)->group(function () {
+    Route::get('/adjustment_stock', 'index')->name('AdjustmentStock.index');
+    Route::get('/adjustment_stock/create', 'create')->name('AdjustmentStock.create');
+    Route::post('/adjustment_stock/store', 'store')->name('AdjustmentStock.store');
+    Route::get('/adjustment_stock/show/{id}', 'show')->name('AdjustmentStock.show');
+    Route::get('/adjustment_stock/edit/{id}', 'edit')->name('AdjustmentStock.edit');
+    Route::put('/adjustment_stock/update/{id}', 'update')->name('AdjustmentStock.update');
+    Route::delete('/adjustment_stock/destroy/{id}', 'destroy')->name('AdjustmentStock.destroy');
+});
+Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentInputController::class)->group(function () {
+    Route::get('/adjustment_input', 'index')->name('AdjustmentInput.index');
+    Route::get('/adjustment_input/create', 'create')->name('AdjustmentInput.create');
+    Route::post('/adjustment_input/store', 'store')->name('AdjustmentInput.store');
+    Route::get('/adjustment_input/show/{id}', 'show')->name('AdjustmentInput.show');
+    Route::get('/adjustment_input/edit/{id}', 'edit')->name('AdjustmentInput.edit');
+    Route::put('/adjustment_input/update/{id}', 'update')->name('AdjustmentInput.update');
+    Route::delete('/adjustment_input/destroy/{id}', 'destroy')->name('AdjustmentInput.destroy');
+});
 
 Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusInputController::class)->group(function () {
     Route::get('/grading_halus_input', 'index')->name('GradingHalusInput.index');

@@ -3,7 +3,7 @@
     Pre Grading Halus
 @endsection
 @section('title')
-    Adjustment Adding
+    Adjustment Stock
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,11 +13,11 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Adjustment Adding
-                                <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
+                                Data Adjustment Stock
+                                {{-- <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
                                             class="bi bi-plus-circle"></i></strong>
-                                </button>
+                                </button> --}}
                             </div>
                         </h5>
                     </div>
@@ -27,15 +27,14 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">ID Box Grading Halus</th>
+                                        <th scope="col" class="text-center">Unit</th>
                                         <th scope="col" class="text-center">Nomor Adjustment</th>
                                         <th scope="col" class="text-center">Nomor Batch</th>
-                                        <th scope="col" class="text-center">Jenis Adding</th>
                                         <th scope="col" class="text-center">Berat Adding</th>
                                         <th scope="col" class="text-center">Pcs Adding</th>
-                                        <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
+                                        <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
@@ -44,28 +43,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($adjustment_addings as $ADJ)
+                                    @forelse ($adjustment_stocks as $ADJS)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $ADJ->id_box_grading_halus }}</td>
-                                            <td class="text-center">{{ $ADJ->nomor_adjustment }}</td>
-                                            <td class="text-center">{{ $ADJ->nomor_batch }}</td>
-                                            <td class="text-center">{{ $ADJ->jenis_adding }}</td>
-                                            <td class="text-center">{{ $ADJ->berat_adding }}</td>
-                                            <td class="text-center">{{ $ADJ->pcs_adding }}</td>
-                                            <td class="text-center">{{ $ADJ->keterangan }}</td>
-                                            <td class="text-center">{{ $ADJ->modal }}</td>
-                                            <td class="text-center">{{ $ADJ->total_modal }}</td>
-                                            <td class="text-center">{{ $ADJ->user_created }}</td>
-                                            <td class="text-center">{{ $ADJ->user_updated }}</td>
-                                            <td class="text-center">{{ $ADJ->created_at }}</td>
-                                            <td class="text-center">{{ $ADJ->updated_at }}</td>
+                                            <td class="text-center">{{ $ADJS->unit }}</td>
+                                            <td class="text-center">{{ $ADJS->nomor_adjustment }}</td>
+                                            <td class="text-center">{{ $ADJS->nomor_batch }}</td>
+                                            <td class="text-center">{{ $ADJS->berat_adding }}</td>
+                                            <td class="text-center">{{ $ADJS->pcs_adding }}</td>
+                                            <td class="text-center">{{ $ADJS->modal }}</td>
+                                            <td class="text-center">{{ $ADJS->total_modal }}</td>
+                                            {{-- <td class="text-center">{{ $ADJS->status }}</td> --}}
+                                            <td class="text-center">
+                                                @if ($ADJS->status == 1)
+                                                    Aktif
+                                                @else
+                                                    Tidak Aktif
+                                                @endif
+                                            </td>
+                                            <td class="text-center">{{ $ADJS->user_created }}</td>
+                                            <td class="text-center">{{ $ADJS->user_updated }}</td>
+                                            <td class="text-center">{{ $ADJS->created_at }}</td>
+                                            <td class="text-center">{{ $ADJS->updated_at }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $ADJ->id }}"
-                                                        action="{{ route('AdjustmentAdding.destroy', $ADJ->id) }}"
+                                                    <form style="display: flex" id="deleteForm{{ $ADJS->id }}"
+                                                        action="{{ route('AdjustmentStock.destroy', $ADJS->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('AdjustmentAdding.show', $ADJ->id) }}"
+                                                        <a href="{{ route('AdjustmentStock.show', $ADJS->id) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
                                                         </a>
@@ -78,7 +83,7 @@
                                                         </button> --}}
                                                         <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $ADJ->id }})">
+                                                            onclick="confirmDelete({{ $ADJS->id }})">
                                                             <i class="bi bi-trash3 text-danger"></i>
                                                         </button>
                                                     </form>
@@ -87,7 +92,7 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Adjustment Adding belum Tersedia.
+                                            Data Adjustment Stock belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -102,7 +107,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ url('/adjustment_adding/create') }}";
+            window.location.href = "{{ url('/adjustment_stock/create') }}";
         }
 
         function confirmDelete(id) {

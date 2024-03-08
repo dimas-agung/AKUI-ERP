@@ -1,76 +1,44 @@
 @extends('layouts.master1')
 @section('menu')
-    Adjustment Adding
+    Adjustment Input
 @endsection
 @section('title')
-    Adjustment Adding
+    Adjustment Input
 @endsection
 @section('content')
     <div class="col-md-12">
         <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center mb-3">
-                    <h4 class="card-title">Adjustment Adding</h4>
+                    <h4 class="card-title">Adjustment Input</h4>
                 </div>
                 <hr>
                 <form method="POST" class="row g-3" id="myForm">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="basic-usage" class="form-label">ID Box Grading Halus</label>
-                            <select class="select2 form-select" style="width: 100%;" name="id_box_grading_halus"
-                                id="id_box_grading_halus" placeholder="Pilih ID Box Grading Halus">
-                                <option value="">Pilih ID Box Grading Halus</option>
-                                @foreach ($grading_halus_stocks as $GradingHS)
-                                    <option value="{{ $GradingHS->id_box_grading_halus }}">
-                                        {{ $GradingHS->id_box_grading_halus }}
+                            <label for="basic-usage" class="form-label">Nomor Adjustment</label>
+                            <select class="select2 form-select" style="width: 100%;" name="nomor_adjustment"
+                                id="nomor_adjustment" placeholder="Pilih Nomor Adjustment">
+                                <option value="">Pilih Nomor Adjustment</option>
+                                @foreach ($adjustment_inputs as $ADJI)
+                                    <option value="{{ $ADJI->nomor_adjustment }}">
+                                        {{ $ADJI->nomor_adjustment }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Plant</label>
-                        <select class="select2 form-select" style="width: 100%;" name="plant" id="plant"
-                            placeholder="Pilih ID Box Grading Halus">
-                            <option value="">Pilih Plant</option>
-                            @foreach ($perusahaan as $Perusahaans)
-                                <option value="{{ $Perusahaans->plant }}">
-                                    {{ $Perusahaans->plant }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="nomor_adjustment" class="form-label">Nomor Adjustment</label>
-                        <input type="text" class="form-control" id="nomor_adjustment">
-                    </div>
-                    <div class="col-md-6">
                         <label for="nomor_batch" class="form-label">Nomor Batch</label>
                         <input type="text" class="form-control" id="nomor_batch" readonly>
                     </div>
-                    <div class="col-md-4">
-                        <label for="jenis_adding" class="form-label">Jenis Adding</label>
-                        <input type="text" class="form-control" id="jenis_adding" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="sisa_berat" class="form-label">Sisa Berat</label>
-                        <input type="text" class="form-control" id="sisa_berat" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="sisa_pcs" class="form-label">Sisa Pcs</label>
-                        <input type="text" class="form-control" id="sisa_pcs" readonly>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="berat_adding" class="form-label">Berat Adding</label>
                         <input type="text" class="form-control" id="berat_adding">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="pcs_adding" class="form-label">Pcs Adding</label>
                         <input type="text" class="form-control" id="pcs_adding">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="keterangan" class="form-label">Keterangan</label>
-                        <input type="text" class="form-control" id="keterangan">
                     </div>
                     <div class="col-md-3">
                         <label for="modal" class="form-label">Modal</label>
@@ -79,6 +47,44 @@
                     <div class="col-md-3">
                         <label for="total_modal" class="form-label">Total Modal</label>
                         <input type="text" class="form-control" id="total_modal" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="basic-usage" class="form-label">Jenis Adjustment</label>
+                            <select class="select2 form-select" style="width: 100%;" name="nomor_adjustment"
+                                id="nomor_adjustment" placeholder="Pilih Nomor Adjustment">
+                                <option value="">Pilih Nomor Adjustment</option>
+                                @foreach ($adjustment_inputs as $ADJI)
+                                    <option value="{{ $ADJI->nomor_adjustment }}">
+                                        {{ $ADJI->nomor_adjustment }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="katergori_susut" class="form-label">Kategori Susut</label>
+                        <input type="text" class="form-control" id="katergori_susut" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="berat_adjustment" class="form-label">Berat Adjustment</label>
+                        <input type="text" class="form-control" id="berat_adjustment" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="pcs_adjustment" class="form-label">Pcs Adjustment</label>
+                        <input type="text" class="form-control" id="pcs_adjustment" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <input type="text" class="form-control" id="keterangan" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="susut_depan" class="form-label">Susut Depan</label>
+                        <input type="text" class="form-control" id="susut_depan" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="susut_belakang" class="form-label">Susut Belakang</label>
+                        <input type="text" class="form-control" id="susut_belakang" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="total_berat" class="form-label">Total Berat</label>
