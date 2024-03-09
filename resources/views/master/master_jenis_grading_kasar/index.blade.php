@@ -152,7 +152,9 @@ is-invalid
                                             <td class="text-center">{{ $MasterJGK->user_created }}</td>
                                             <td class="text-center">{{ $MasterJGK->user_updated }}</td>
                                             <td class="text-center">{{ $MasterJGK->created_at }}</td>
-                                            <td class="text-center">{{ $MasterJGK->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterJGK->created_at != $MasterJGK->updated_at ? $MasterJGK->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterJGK->id }}"

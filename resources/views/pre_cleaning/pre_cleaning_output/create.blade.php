@@ -128,37 +128,37 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="kuningan" class="form-label">Kuningan</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="kuningan">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="Sterofoam" class="form-label">Sterofoam</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="Sterofoam">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="karat" class="form-label">Karat</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="karat">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="rontokan_flex" class="form-label">Rontokan Flex</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="rontokan_flex">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="rontokan_bahan" class="form-label">Rontokan Bahan</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="rontokan_bahan">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="rontokan_serabut" class="form-label">Rontokan Serabut</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
@@ -183,18 +183,22 @@
                             class="form-control" id="pcs">
                     </div>
                     <div class="col-md-3">
+                        <label for="user_created" class="form-label">NIP Admin</label>
+                        <input type="text" class="form-control" id="user_created">
+                    </div>
+                    <div class="col-md-3">
                         <label for="susut" class="form-label">Susut</label>
                         <input type="text" class="form-control" id="susut" readonly>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="total_box" class="form-label">Total Box</label>
                         <input type="text" class="form-control" id="total_box" readonly>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="total_berat" class="form-label">Total Berat</label>
                         <input type="text" class="form-control" id="total_berat" readonly>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="total_pcs" class="form-label">Total Pcs</label>
                         <input type="text" class="form-control" id="total_pcs" readonly>
                     </div>
@@ -243,8 +247,7 @@
                                 <th scope="col" class="text-center">Berat Pre Cleaning</th>
                                 <th scope="col" class="text-center">Pcs</th>
                                 <th scope="col" class="text-center">Susut</th>
-                                {{-- <th scope="col" class="text-center">User Created</th>
-                                <th scope="col" class="text-center">User Updated</th> --}}
+                                <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -422,6 +425,7 @@
             let berat_pre_cleaning = $('#berat_precleaning').val();
             let pcs_pre_cleaning = $('#pcs').val();
             let susut = $('#susut').val();
+            let user_created = $('#user_created').val();
             let susutTabel = parseFloat(susut).toFixed(2);
             susutTabel = susutTabel.replace('.', '');
             susutTabel = susutTabel.padStart(4, '0');
@@ -470,6 +474,7 @@
                 `<td class="text-center">${berat_pre_cleaning}</td>` +
                 `<td class="text-center">${pcs_pre_cleaning}</td>` +
                 `<td class="text-center">${susutTabel}</td>` +
+                `<td class="text-center">${user_created}</td>` +
                 // `<td class="text-center"> + "sisa_berat" + </td>` +
                 `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
                 `</tr>`;
@@ -531,6 +536,7 @@
                 berat_pre_cleaning: berat_pre_cleaning,
                 pcs_pre_cleaning: pcs_pre_cleaning,
                 susutTabel: susutTabel,
+                user_created: user_created,
             });
 
             // Mengosongkan nilai dropdown nomor_job

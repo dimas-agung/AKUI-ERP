@@ -69,7 +69,7 @@
                     <div class="col-md-flex">
                         <hr>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="basic-usage" class="form-label">Pilih Jenis Grading :</label>
                         <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="jenis_grading" id="jenis_grading" placeholder="Pilih jenis grading">
@@ -84,17 +84,21 @@
                         <input type="hidden" id="harga_estimasi" name="harga_estimasi">
                         <input type="hidden" id="presetanse_pengurangan_harga" name="presetanse_pengurangan_harga">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="berat_grading" class="form-label">Berat Grading</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="berat_grading">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="pcs_grading" class="form-label">Pcs Grading</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="pcs_grading">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="user_created" class="form-label">NIP Admin</label>
+                        <input type="text" class="form-control" id="user_created">
                     </div>
                     <div class="card-body">
                         <div class="form-group mb-3">
@@ -166,6 +170,7 @@
                                 <th scope="col" class="text-center">Selisih Laba Rugi per gram</th>
                                 <th scope="col" class="text-center">HPP</th>
                                 <th scope="col" class="text-center">Total HPP</th> --}}
+                                <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
@@ -360,10 +365,11 @@
             return id_box_grading_kasar;
         }
 
-        let dataArray = [];
+        function validateForm() {
+            // Mendefinisikan variabel untuk menyimpan kolom yang belum diisi
+            let emptyFields = [];
 
-        function addRow() {
-
+            // Mendapatkan nilai dari semua input
             // Mengambil nilai dari input
             let nomor_grading = $('#nomor_grading').val();
             let nomor_batch = $('#nomor_batch').val();
@@ -384,173 +390,201 @@
             let total_susut = $('#total_susut').val();
             let total_berat = $('#total_berat').val();
             let total_pcs = $('#total_pcs').val();
+            let user_created = $('#user_created').val();
             let sisa_berat_adding = $('#sisa_berat_adding').val();
-            sisaBeratAddding = sisa_berat_adding
 
-            // Validasi input (sesuai kebutuhan)
-            if (nomor_grading.trim() === '' || nomor_batch.trim() === '' || id_box_raw_material.trim() === '' ||
-                nomor_nota_internal.trim() === '' || nama_supplier.trim() === '' || jenis_raw_material.trim() === '' ||
-                berat.trim() === '' || kadar_air.trim() === '' || modal.trim() === '' || total_modal.trim() === '' ||
-                harga_estimasi.trim() === '' || berat_grading.trim() === '' || pcs_grading.trim() === '') {
-                // Menampilkan SweetAlert untuk pesan error
+            // Memeriksa setiap input, dan jika kosong, tambahkan ke daftar kolom yang belum diisi
+            if (!nomor_grading) emptyFields.push('Nomor Grading');
+            if (!nomor_batch) emptyFields.push('Nomor Batch');
+            if (!id_box_raw_material) emptyFields.push('ID Box Raw Material');
+            if (!nomor_nota_internal) emptyFields.push('Nomor Nota Internal');
+            if (!nama_supplier) emptyFields.push('Nama Supplier');
+            if (!jenis_raw_material) emptyFields.push('Jenis Adding');
+            if (!berat) emptyFields.push('Berat Adding');
+            if (!kadar_air) emptyFields.push('Kadar Air');
+            if (!modal) emptyFields.push('Modal');
+            if (!total_modal) emptyFields.push('Total Modal');
+            if (!jenis_grading[0]) emptyFields.push('Jenis Grading');
+            if (!berat_grading) emptyFields.push('Berat Grading');
+            if (!pcs_grading) emptyFields.push('Pcs Grading');
+            if (!user_created) emptyFields.push('NIP Admin');
+
+            // Jika daftar kolom yang belum diisi tidak kosong, tampilkan pesan peringatan
+            if (emptyFields.length > 0) {
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Harap isi semua kolom.'
+                    title: 'Warning!',
+                    html: "Harap isi kolom berikut: <br>" + emptyFields.join('<br>'),
+                    icon: 'warning'
                 });
-                return; // Berhenti jika ada input yang kosong
-            }
-
-            $('#nomor_grading').prop('disabled', true);
-
-            let id_box_grading_kasar = generateIdBoxGradingKasar();
-            let biaya_produksi = 0;
-            console.log("Harga Estimasi = " + harga_estimasi);
-
-            // TOTAL Berat
-            let totalBeratGrading = parseFloat($('#berat_grading').val()) || 0;
-            $('#dataTable tbody tr').each(function() {
-                let beratGradingValue = parseFloat($(this).find('td:eq(10)').text()) || 0;
-
-                totalBeratGrading += beratGradingValue;
-            });
-            // console.log("Total Berat = " + totalBeratGrading);
-            $('#total_berat').val(totalBeratGrading);
-            // Total Pcs
-            let totalPcsGrading = parseFloat($('#pcs_grading').val()) || 0;
-            // Loop melalui setiap baris tabel untuk menghitung total pcs_grading
-            $('#dataTable tbody tr').each(function() {
-                // Ambil nilai dari kolom pcs_grading dalam setiap baris
-                let pcsGradingValue = parseFloat($(this).find('td:eq(11)').text()) || 0;
-
-                // Tambahkan nilai pcs_grading ke totalPcsGrading
-                totalPcsGrading += pcsGradingValue;
-            });
-            // console.log("Total Pcs = " + totalPcsGrading);
-            $('#total_pcs').val(totalPcsGrading);
-
-            // test
-            // let susut = hitungNilaiSusut();
-            // console.log("Susut = " + susut);
-
-            // $('#dataTable tbody tr').each(function() {
-            //     // Ganti koma dengan titik sebagai tanda desimal
-            //     let totalSusutValue = parseInt($(this).find('td:eq(12)').text().replace(',', '.')) || 0;
-            //     console.log('TotalSusut = ' + totalSusutValue);
-
-            //     susut += totalSusutValue;
-
-            //     // Update nilai susut pada kolom susut di setiap baris tabel
-            //     $(this).find('td:eq(12)').text(susut.toFixed(4));
-            // });
-            // console.log('Total Susut= ' + susut);
-
-            // // Memperbarui nilai #total_susut
-            // $('#total_susut').val(susut.toFixed(4));
-
-            let susut = hitungNilaiSusut() || 0; // Nilai susut diambil dari fungsi hitungNilaiSusut
-            console.log("Susut = " + susut);
-
-            $('#dataTable tbody tr').each(function() {
-                // Ganti koma dengan titik sebagai tanda desimal
-                let totalSusutValue = parseFloat($(this).find('td:eq(12)').text().replace(',', '.')) || 0;
-                console.log('TotalSusut = ' + totalSusutValue);
-
-                susut += totalSusutValue;
-
-                // Update nilai susut pada kolom susut di setiap baris tabel
-                $(this).find('td:eq(12)').text(susut.toFixed(4));
-            });
-            console.log('Total Susut= ' + susut);
-            $('#total_susut').val(susut.toFixed(4));
-
-            //
-            let newRow = '<tr>' +
-                '<td class="text-center">' + nomor_grading + '</td>' +
-                '<td class="text-center">' + id_box_raw_material + '</td>' +
-                '<td class="text-center">' + id_box_grading_kasar + '</td>' +
-                '<td class="text-center">' + nomor_batch + '</td>' +
-                '<td class="text-center">' + nama_supplier + '</td>' +
-                '<td class="text-center">' + nomor_nota_internal + '</td>' +
-                '<td class="text-center">' + jenis_raw_material + '</td>' +
-                '<td class="text-center">' + berat + '</td>' +
-                '<td class="text-center">' + kadar_air + '</td>' +
-                '<td class="text-center">' + jenis_grading[0] + '</td>' +
-                '<td class="text-center">' + berat_grading + '</td>' +
-                '<td class="text-center">' + pcs_grading + '</td>' +
-                '<td class="text-center">' + susut.toFixed(4) + '</td>' +
-                '<td class="text-center">' + modal + '</td>' +
-                '<td class="text-center">' + total_modal + '</td>' +
-                '<td class="text-center">' + keterangan + '</td>' +
-                '<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
-                '</tr>';
-            $('#dataTable tbody').append(newRow);
-
-            // Mengecek dan menetapkan nilai yang akan dimasukkan ke dalam dataArray
-            let hargaEstimasiToSend = harga_estimasi;
-            console.log("Harga Estimasi Lama= " + hargaEstimasiToSend);
-            if (presetanse_pengurangan_harga === '' || presetanse_pengurangan_harga === null ||
-                presetanse_pengurangan_harga == 0) {
-                // console.log(presetanse_pengurangan_harga);
-                hargaEstimasiToSend = harga_estimasi;
+                return false;
             } else {
-                hargaEstimasiToSend = modal - (modal * presetanse_pengurangan_harga);
+                return true; // Form valid
             }
-
-            console.log("Harga Estimasi Baru= " + hargaEstimasiToSend);
-
-            dataArray.push({
-                // doc_no: doc_no,
-                nomor_grading: nomor_grading,
-                id_box_raw_material: id_box_raw_material,
-                id_box_grading_kasar: id_box_grading_kasar,
-                nomor_batch: nomor_batch,
-                nama_supplier: nama_supplier,
-                nomor_nota_internal: nomor_nota_internal,
-                jenis_raw_material: jenis_raw_material,
-                berat: berat,
-                kadar_air: kadar_air,
-                jenis_grading: jenis_grading,
-                berat_grading: berat_grading,
-                pcs_grading: pcs_grading,
-                susut: total_susut,
-                // susut: susut,
-                modal: modal,
-                total_modal: total_modal,
-                biaya_produksi: 0,
-                harga_estimasi: hargaEstimasiToSend,
-                total_harga: 0,
-                nilai_laba_rugi: 0,
-                nilai_prosentase_total_keuntungan: 0,
-                nilai_dikurangi_keuntungan: 0,
-                prosentase_harga_gramasi: 0,
-                selisih_laba_rugi_kg: 0,
-                selisih_laba_rugi_gram: 0,
-                hpp: 0,
-                total_hpp: 0,
-                keterangan: keterangan,
-                // user_created: user_created,
-                // user_updated: user_updated
-            });
-            // Membersihkan nilai input setelah ditambahkan
-            // $('#nomor_grading').val();
-            // $('#nomor_batch').val();
-            // $('#id_box_raw_material').val();
-            // $('#nomor_nota_internal').val();
-            // $('#nama_supplier').val();
-            // $('#jenis_adding').val();
-            // $('#berat_adding').val();
-            // $('#kadar_air').val();
-            // $('#modal').val();
-            // $('#total_modal').val();
-            $('#jenis_grading').val($('#jenis_grading option:first').val()).trigger('change');
-            // $('#jenis').val('');
-            // $('#harga_estimasi').val('');
-            // $('#presetanse_pengurangan_harga').val('');
-            $('#berat_grading').val('');
-            $('#pcs_grading').val('');
-            $('#keterangan').val('');
         }
+        let dataArray = [];
+
+        function addRow() {
+            if (validateForm()) {
+                // Mengambil nilai dari input
+                let nomor_grading = $('#nomor_grading').val();
+                let nomor_batch = $('#nomor_batch').val();
+                let id_box_raw_material = $('#id_box_raw_material').val();
+                let nomor_nota_internal = $('#nomor_nota_internal').val();
+                let nama_supplier = $('#nama_supplier').val();
+                let jenis_raw_material = $('#jenis_raw_material').val();
+                let berat = $('#berat_adding').val();
+                let kadar_air = $('#kadar_air').val();
+                let modal = $('#modal').val();
+                let total_modal = $('#total_modal').val();
+                let jenis_grading = $('#jenis_grading').val().split(',');
+                let harga_estimasi = $('#harga_estimasi').val();
+                let presetanse_pengurangan_harga = $('#presetanse_pengurangan_harga').val();
+                let berat_grading = $('#berat_grading').val();
+                let pcs_grading = $('#pcs_grading').val();
+                let keterangan = $('#keterangan').val();
+                let total_susut = $('#total_susut').val();
+                let total_berat = $('#total_berat').val();
+                let total_pcs = $('#total_pcs').val();
+                let user_created = $('#user_created').val();
+                let sisa_berat_adding = $('#sisa_berat_adding').val();
+                sisaBeratAddding = sisa_berat_adding
+
+                $('#nomor_grading').prop('disabled', true);
+
+                let id_box_grading_kasar = generateIdBoxGradingKasar();
+                let biaya_produksi = 0;
+                console.log("Harga Estimasi = " + harga_estimasi);
+
+                // TOTAL Berat
+                let totalBeratGrading = parseFloat($('#berat_grading').val()) || 0;
+                $('#dataTable tbody tr').each(function() {
+                    let beratGradingValue = parseFloat($(this).find('td:eq(10)').text()) || 0;
+
+                    totalBeratGrading += beratGradingValue;
+                });
+                // console.log("Total Berat = " + totalBeratGrading);
+                $('#total_berat').val(totalBeratGrading);
+                // Total Pcs
+                let totalPcsGrading = parseFloat($('#pcs_grading').val()) || 0;
+                // Loop melalui setiap baris tabel untuk menghitung total pcs_grading
+                $('#dataTable tbody tr').each(function() {
+                    // Ambil nilai dari kolom pcs_grading dalam setiap baris
+                    let pcsGradingValue = parseFloat($(this).find('td:eq(11)').text()) || 0;
+
+                    // Tambahkan nilai pcs_grading ke totalPcsGrading
+                    totalPcsGrading += pcsGradingValue;
+                });
+                // console.log("Total Pcs = " + totalPcsGrading);
+                $('#total_pcs').val(totalPcsGrading);
+
+                let susut = hitungNilaiSusut() || 0; // Nilai susut diambil dari fungsi hitungNilaiSusut
+                console.log("Susut = " + susut);
+
+                $('#dataTable tbody tr').each(function() {
+                    // Ganti koma dengan titik sebagai tanda desimal
+                    let totalSusutValue = parseFloat($(this).find('td:eq(12)').text().replace(',', '.')) || 0;
+                    console.log('TotalSusut = ' + totalSusutValue);
+
+                    susut += totalSusutValue;
+
+                    // Update nilai susut pada kolom susut di setiap baris tabel
+                    $(this).find('td:eq(12)').text(susut.toFixed(4));
+                });
+                console.log('Total Susut= ' + susut);
+                $('#total_susut').val(susut.toFixed(4));
+
+                //
+                let newRow = `<tr>` +
+                    `<td class="text-center">${nomor_grading}</td>` +
+                    `<td class="text-center">${id_box_raw_material}</td>` +
+                    `<td class="text-center">${id_box_grading_kasar}</td>` +
+                    `<td class="text-center">${nomor_batch}</td>` +
+                    `<td class="text-center">${nama_supplier}</td>` +
+                    `<td class="text-center">${nomor_nota_internal}</td>` +
+                    `<td class="text-center">${jenis_raw_material}</td>` +
+                    `<td class="text-center">${berat}</td>` +
+                    `<td class="text-center">${kadar_air}</td>` +
+                    `<td class="text-center">${jenis_grading[0]}</td>` +
+                    `<td class="text-center">${berat_grading}</td>` +
+                    `<td class="text-center">${pcs_grading}</td>` +
+                    `<td class="text-center">${susut.toFixed(4)}</td>` +
+                    `<td class="text-center">${modal}</td>` +
+                    `<td class="text-center">${total_modal}</td>` +
+                    `<td class="text-center">${user_created} </td>` +
+                    `<td class="text-center">${keterangan}</td>` +
+                    `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
+                    `</tr>`;
+                $('#dataTable tbody').append(newRow);
+
+                // Mengecek dan menetapkan nilai yang akan dimasukkan ke dalam dataArray
+                let hargaEstimasiToSend = harga_estimasi;
+                console.log("Harga Estimasi Lama= " + hargaEstimasiToSend);
+                if (presetanse_pengurangan_harga === '' || presetanse_pengurangan_harga === null ||
+                    presetanse_pengurangan_harga == 0) {
+                    // console.log(presetanse_pengurangan_harga);
+                    hargaEstimasiToSend = harga_estimasi;
+                } else {
+                    hargaEstimasiToSend = modal - (modal * presetanse_pengurangan_harga);
+                }
+
+                console.log("Harga Estimasi Baru= " + hargaEstimasiToSend);
+
+                dataArray.push({
+                    // doc_no: doc_no,
+                    nomor_grading: nomor_grading,
+                    id_box_raw_material: id_box_raw_material,
+                    id_box_grading_kasar: id_box_grading_kasar,
+                    nomor_batch: nomor_batch,
+                    nama_supplier: nama_supplier,
+                    nomor_nota_internal: nomor_nota_internal,
+                    jenis_raw_material: jenis_raw_material,
+                    berat: berat,
+                    kadar_air: kadar_air,
+                    jenis_grading: jenis_grading,
+                    berat_grading: berat_grading,
+                    pcs_grading: pcs_grading,
+                    susut: total_susut,
+                    // susut: susut,
+                    modal: modal,
+                    total_modal: total_modal,
+                    biaya_produksi: 0,
+                    harga_estimasi: hargaEstimasiToSend,
+                    total_harga: 0,
+                    nilai_laba_rugi: 0,
+                    nilai_prosentase_total_keuntungan: 0,
+                    nilai_dikurangi_keuntungan: 0,
+                    prosentase_harga_gramasi: 0,
+                    selisih_laba_rugi_kg: 0,
+                    selisih_laba_rugi_gram: 0,
+                    hpp: 0,
+                    total_hpp: 0,
+                    keterangan: keterangan,
+                    user_created: user_created,
+                    // user_updated: user_updated
+                });
+                // Membersihkan nilai input setelah ditambahkan
+                // $('#nomor_grading').val();
+                // $('#nomor_batch').val();
+                // $('#id_box_raw_material').val();
+                // $('#nomor_nota_internal').val();
+                // $('#nama_supplier').val();
+                // $('#jenis_adding').val();
+                // $('#berat_adding').val();
+                // $('#kadar_air').val();
+                // $('#modal').val();
+                // $('#total_modal').val();
+                $('#jenis_grading').val($('#jenis_grading option:first').val()).trigger('change');
+                // $('#jenis').val('');
+                // $('#harga_estimasi').val('');
+                // $('#presetanse_pengurangan_harga').val('');
+                $('#berat_grading').val('');
+                $('#pcs_grading').val('');
+                $('#keterangan').val('');
+                $('#user_created').val('');
+            }
+        }
+
+
 
         //
         function hapusBaris(button) {

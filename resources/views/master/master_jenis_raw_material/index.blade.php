@@ -140,7 +140,9 @@ is-invalid
                                                 @endif
                                             </td>
                                             <td class="text-center">{{ $MasterJRM->created_at }}</td>
-                                            <td class="text-center">{{ $MasterJRM->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterJRM->created_at != $MasterJRM->updated_at ? $MasterJRM->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterJRM->id }}"

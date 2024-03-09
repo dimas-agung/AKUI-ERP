@@ -114,7 +114,9 @@
                                             <td class="text-center">{{ $MasterOC->user_created }}</td>
                                             <td class="text-center">{{ $MasterOC->user_updated }}</td>
                                             <td class="text-center">{{ $MasterOC->created_at }}</td>
-                                            <td class="text-center">{{ $MasterOC->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterOC->created_at != $MasterOC->updated_at ? $MasterOC->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterOC->id }}"

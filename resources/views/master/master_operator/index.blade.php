@@ -197,7 +197,9 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">{{ $MasterOP->created_at }}</td>
-                                            <td class="text-center">{{ $MasterOP->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterOP->created_at != $MasterOP->updated_at ? $MasterOP->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterOP->id }}"
