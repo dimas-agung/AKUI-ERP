@@ -70,7 +70,7 @@ class GradingKasarHasilController extends Controller
             $harga_estimasi[] = $value->harga_estimasi;
             $totalModal[] = $value->total_modal;
         };
-        $dataHpp = 'dataHPPService';
+        // $dataHpp = 'dataHPPService';
         //panggil service
 
         $result = $GradingKasarHasilService->simpanData($dataArray, $total_susut); //ngambil array id dari data yang diinput

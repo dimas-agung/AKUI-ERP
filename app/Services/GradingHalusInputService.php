@@ -26,6 +26,11 @@ class GradingHalusInputService
         $dataArray = json_decode($request->input('dataArray'), true);
         $tableDataArray = json_decode($request->input('tableDataArray'), true);
 
+        $dataColl = collect($dataArray);
+        $berat_gradings = array();
+        $harga_estimasi = array();
+        $totalModal = array();
+
         // Check if $dataArray or $tableDataArray is empty
         if (empty($dataArray) || empty($tableDataArray)) {
             return response()->json([
@@ -34,29 +39,53 @@ class GradingHalusInputService
             ], 400);
         }
 
-        // Loop melalui setiap item dalam dataArray
+        foreach ($dataColl as $key => $value) {
+            $berat_gradings[] = $value['berat_grading']; // Mengubah akses menjadi array asosiatif
+            $harga_estimasi[] = $value['harga_estimasi']; // Mengubah akses menjadi array asosiatif
+            $totalModal[] = $value['total_modal']; // Mengubah akses menjadi array asosiatif
+            $jenisGradings[] = $value['jenis_grading']; // Mengubah akses menjadi array asosiatif
+        };
+
+        // Calculate HPP values using HppService
+        $dataHpp = $this->HppService->calculate($berat_gradings, $harga_estimasi, $totalModal, $jenisGradings);
+
+        // Loop through each item in dataArray
         foreach ($dataArray as $key => $data) {
-            // Gabungkan data dari $dataArray dan $tableDataArray
+            // Merge data from $dataArray and $tableDataArray
             $mergedData = array_merge($data, $tableDataArray[$key]);
 
-            // Validasi untuk setiap item dalam dataArray
+            // Update data with HPP values
+            $mergedData['total_harga'] = $dataHpp[$key]['total_harga'];
+            $mergedData['nilai_laba_rugi'] = $dataHpp[$key]['nilai_laba_rugi'];
+            $mergedData['nilai_prosentase_total_keuntungan'] = $dataHpp[$key]['nilai_prosentase_total_keuntungan'];
+            $mergedData['nilai_dikurangi_keuntungan'] = $dataHpp[$key]['nilai_setelah_dikurangi_keuntungan'];
+            $mergedData['prosentase_harga_gramasi'] = $dataHpp[$key]['prosentase_harga_gramasi'];
+            $mergedData['selisih_laba_rugi_kg'] = $dataHpp[$key]['selisih_laba_rugi_kg'];
+            $mergedData['selisih_laba_rugi_per_gram'] = $dataHpp[$key]['selisih_laba_rugi_gram'];
+            $mergedData['hpp'] = $dataHpp[$key]['hpp'];
+            $mergedData['total_hpp'] = $dataHpp[$key]['total_hpp'];
+            $mergedData['fix_hpp'] = $dataHpp[$key]['fix_hpp'];
+            $mergedData['fix_total_hpp'] = $dataHpp[$key]['fix_total_hpp'];
+
+            // Validate each item in dataArray
             $validator = Validator::make($mergedData, [
-                'nomor_grading' => 'required', // Ganti dengan nama field yang sesuai
-                'kontribusi' => 'required', // Ganti dengan nama field yang sesuai
-                // ... tambahkan validasi lain sesuai kebutuhan
+                'nomor_grading' => 'required', // Change with appropriate field name
+                'berat_grading' => 'required', // Change with appropriate field name
+                'kontribusi' => 'required', // Change with appropriate field name
+                // ... add other validations as needed
             ]);
 
-            // Jika validasi gagal, kembalikan pesan error
+            // If validation fails, return error message
             if ($validator->fails()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Validasi gagal: ' . $validator->errors()->first(),
+                    'message' => 'Validation failed: ' . $validator->errors()->first(),
                 ], 400);
             } else {
                 try {
                     DB::beginTransaction();
 
-                    // Buat instansi PreCleaningInput
+                    // Create instance of GradingHalusInput
                     GradingHalusInput::create($mergedData);
 
                     GradingHalusStock::create([
@@ -111,24 +140,23 @@ class GradingHalusInputService
                         }
                     }
 
-
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollBack();
 
                     return response()->json([
                         'success' => false,
-                        'error' => 'Gagal menyimpan data. ' . $e->getMessage(),
+                        'error' => 'Failed to save data. ' . $e->getMessage(),
                         'redirectTo' => route('GradingHalusInput.create')
                     ], 504);
                 }
             }
         }
 
-        // Kembalikan data yang baru dibuat sebagai respons
+        // Return newly created data as response
         return response()->json([
             'success' => true,
-            'message' => 'Data berhasil disimpan!',
+            'message' => 'Data successfully saved!',
             'redirectTo' => route('GradingHalusInput.index')
         ], 201);
     }
