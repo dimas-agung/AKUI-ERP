@@ -23,8 +23,8 @@ return new class extends Migration
             $table->float('avg_kadar_air');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->text('keterangan');
-            $table->string('user_created');
+            $table->text('keterangan')->nullable();
+            $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
             $table->timestamps();
         });

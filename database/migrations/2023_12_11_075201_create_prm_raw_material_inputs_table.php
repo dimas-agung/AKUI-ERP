@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('nomor_nota_internal');
             $table->string('nama_supplier');
             $table->text('keterangan')->nullable();
-            $table->string('user_created');
+            $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
             $table->timestamps();
         });

@@ -65,7 +65,10 @@
                                             <td class="text-center">{{ $MasterPRIM->user_created }}</td>
                                             <td class="text-center">{{ $MasterPRIM->user_updated }}</td>
                                             <td class="text-center">{{ $MasterPRIM->created_at }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterPRIM->created_at != $MasterPRIM->updated_at ? $MasterPRIM->updated_at : '' }}
+                                            </td>
+
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"

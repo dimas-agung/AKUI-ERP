@@ -48,30 +48,33 @@
                                     {{-- @forelse ($PrmInput->PrmRawMaterialInputItem as $MasterPRIM) --}}
                                     @forelse ($MasterPRIM->PrmRawMaterialInputItem as $MasterPRIM)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $MasterPRIM->doc_no }}</td>
-                                            <td>{{ $MasterPRIM->jenis }}</td>
-                                            <td>{{ number_format($MasterPRIM->berat_nota, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->berat_kotor }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->berat_kotor, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->berat_bersih }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->berat_bersih, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->selisih_berat }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->selisih_berat, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->kadar_air }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->kadar_air, 2, ',', '.') }}</td>
-                                            <td>{{ $MasterPRIM->id_box }}</td>
-                                            {{-- <td>{{ $MasterPRIM->harga_nota }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->harga_nota, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->total_harga_nota }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->total_harga_nota, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->harga_deal }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->harga_deal, 2, ',', '.') }}</td>
-                                            <td>{{ $MasterPRIM->keterangan }}</td>
-                                            <td>{{ $MasterPRIM->user_created }}</td>
-                                            <td>{{ $MasterPRIM->user_updated }}</td>
-                                            <td>{{ $MasterPRIM->created_at }}</td>
-                                            <td>{{ $MasterPRIM->updated_at }}</td>
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->doc_no }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->jenis }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->berat_nota, 2, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->berat_kotor, 2, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->berat_bersih, 2, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->selisih_berat, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($MasterPRIM->kadar_air, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">{{ $MasterPRIM->id_box }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->harga_nota, 2, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->total_harga_nota, 2, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->harga_deal, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->keterangan }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->user_created }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->user_updated }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->created_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterPRIM->created_at != $MasterPRIM->updated_at ? $MasterPRIM->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"

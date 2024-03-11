@@ -19,7 +19,7 @@ return new class extends Migration
             $table->float('presentase_pengurangan_harga')->nullable();
             $table->float('harga_estimasi');
             $table->integer('status')->default('1');
-            $table->string('user_created');
+            $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
             $table->timestamps();
         });

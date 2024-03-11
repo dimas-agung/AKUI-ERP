@@ -68,8 +68,8 @@ class PreCleaningOutputService
             'berat_pre_cleaning'                => $item->berat_pre_cleaning,
             'pcs_pre_cleaning'                  => $item->pcs_pre_cleaning,
             'susut'                             => $item->susutTabel,
-            'user_created'                      => $item->user_created ?? 'Admin123',
-            'user_updated'                      => $item->user_updated ?? 'Admin123',
+            'user_created'                      => $item->user_created,
+            // 'user_updated'                      => $item->user_updated,
         ]);
 
         // PrmRawMaterialStockHistory::create([
@@ -133,9 +133,9 @@ class PreCleaningOutputService
                 'nomor_grading'             => $itemObject->nomor_grading ?? "Belum Tersedia",
                 'modal'                     => $itemObject->modal,
                 // 'total_modal'               => $itemObject->total_modal,
-                'keterangan'                => $itemObject->keterangan ?? "Tes",
-                'user_created'              => $itemObject->user_created ?? "There isn't any",
-                'user_updated'              => $itemObject->user_updated ?? "There isn't any",
+                'keterangan'                => $itemObject->keterangan,
+                'user_created'              => $itemObject->user_created,
+                // 'user_updated'              => $itemObject->user_updated,
             ]));
         }
     }

@@ -40,8 +40,8 @@ return new class extends Migration
             $table->float('berat_pre_cleaning', 16, 4);
             $table->float('pcs_pre_cleaning', 16, 4);
             $table->float('susut', 16, 4);
-            $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_created')->nullable();
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

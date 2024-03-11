@@ -31,9 +31,9 @@ return new class extends Migration
             $table->string('nomor_grading');
             $table->float('modal');
             $table->float('total_modal');
-            $table->text('keterangan');
-            $table->string('user_created');
-            $table->string('user_update');
+            $table->text('keterangan')->nullable();
+            $table->string('user_created')->nullable();
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

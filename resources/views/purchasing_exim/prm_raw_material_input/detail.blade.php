@@ -14,7 +14,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Detail Data Purchasing Input Item Trest
+                                Detail Data Purchasing Input Item
                             </div>
                         </h5>
                     </div>
@@ -46,43 +46,33 @@
                                 <tbody>
                                     @forelse ($prm_raw_material_input_items as $MasterPRIM)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $MasterPRIM->doc_no }}</td>
-                                            <td>{{ $MasterPRIM->jenis }}</td>
-                                            <td>{{ number_format($MasterPRIM->berat_nota, 0, ',', '.') }}</td>
-                                            <td>{{ $MasterPRIM->berat_kotor }}</td>
-                                            <td>{{ $MasterPRIM->berat_bersih }}</td>
-                                            <td>{{ $MasterPRIM->selisih_berat }}</td>
-                                            <td>{{ $MasterPRIM->kadar_air }}</td>
-                                            <td>{{ $MasterPRIM->id_box }}</td>
-                                            <td>{{ $MasterPRIM->harga_nota }}</td>
-                                            <td>{{ $MasterPRIM->total_harga_nota }}</td>
-                                            <td>{{ $MasterPRIM->harga_deal }}</td>
-                                            <td>{{ $MasterPRIM->keterangan }}</td>
-                                            <td>{{ $MasterPRIM->user_created }}</td>
-                                            <td>{{ $MasterPRIM->user_updated }}</td>
-                                            <td>{{ $MasterPRIM->created_at }}</td>
-                                            <td>{{ $MasterPRIM->updated_at }}</td>
-                                            {{-- <td class="text-center">
-                                                <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
-                                                        action="{{ route('prm_raw_material_input.destroyItem', $MasterPRIM->id) }}"
-                                                        method="POST">
-                                                        <a href="{{ route('prm_raw_material_input.edit', $MasterPRIM->id) }}"
-                                                            class="btn btn-link" title="Edit Task"
-                                                            data-original-title="Edit Task">
-                                                            <i class="bi bi-pencil-square text-success"></i>
-                                                        </a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $MasterPRIM->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td> --}}
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->doc_no }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->jenis }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->berat_nota, 0, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->berat_kotor, 0, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->berat_bersih, 0, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->selisih_berat, 0, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($MasterPRIM->kadar_air, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">{{ $MasterPRIM->id_box }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->harga_nota, 2, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->total_harga_nota, 2, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->harga_deal, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->keterangan }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->user_created }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->user_updated }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->created_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterPRIM->created_at != $MasterPRIM->updated_at ? $MasterPRIM->updated_at : '' }}
+                                            </td>
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">

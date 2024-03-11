@@ -75,16 +75,18 @@
                                             <td class="text-center">{{ $TPCS->user_created }}</td>
                                             <td class="text-center">{{ $TPCS->user_updated }}</td>
                                             <td class="text-center">{{ $TPCS->created_at }}</td>
-                                            <td class="text-center">{{ $TPCS->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $TPCS->created_at != $TPCS->updated_at ? $TPCS->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $TPCS->id }}"
                                                         action="{{ route('TransitPreCleaningStock.destroy', $TPCS->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('TransitPreCleaningStock.show', $TPCS->id) }}"
+                                                        {{-- <a href="{{ route('TransitPreCleaningStock.show', $TPCS->id) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
