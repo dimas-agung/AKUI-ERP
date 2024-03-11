@@ -105,41 +105,53 @@
                         </li>
                         <li class="sidebar-title">Menu</li>
                         <li
-                            class="sidebar-item has-sub {{ Request::is('perusahaan*', 'work*', 'unit*', 'biaya_hpp*', 'master_supplier_raw_material*', 'master_jenis_raw_material*', 'master_tujuan_kirim_raw_material*', 'master_jenis_grading_kasar*', 'master_jenis_grading_halus*', 'MasterOperator*') ? 'active' : '' }}">
+                            class="sidebar-item has-sub {{ Request::is('perusahaan*', 'work*', 'unit*', 'biaya_hpp*', 'master_supplier_raw_material*', 'master_jenis_raw_material*', 'master_tujuan_kirim_raw_material*', 'master_tujuan_kirim_grading_halus*', 'master_jenis_grading_kasar*', 'master_jenis_grading_halus*', 'MasterOperator*', 'master_ongkos_cuci*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Master</span>
                             </a>
                             <ul class="submenu">
                                 <li class="submenu-item {{ Request::is('perusahaan*') ? 'active' : '' }}">
-                                    <a href="{{ route('Perusahaan.index') }}" class="submenu-link">Perusahaan</a>
+                                    <a href="{{ route('Perusahaan.index') }}" class="submenu-link">Master
+                                        Perusahaan</a>
                                 </li>
                                 <li class="submenu-item {{ Request::is('work*') ? 'active' : '' }}">
-                                    <a href="{{ route('Workstation.index') }}" class="submenu-link">Workstation</a>
+                                    <a href="{{ route('Workstation.index') }}" class="submenu-link">Master
+                                        Workstation</a>
                                 </li>
                                 <li class="submenu-item {{ Request::is('unit*') ? 'active' : '' }}">
-                                    <a href="{{ route('Unit.index') }}" class="submenu-link">Unit</a>
+                                    <a href="{{ route('Unit.index') }}" class="submenu-link">Master Unit</a>
                                 </li>
                                 <li class="submenu-item {{ Request::is('biaya_hpp*') ? 'active' : '' }}">
-                                    <a href="{{ route('BiayaHpp.index') }}" class="submenu-link">Biaya HPP</a>
+                                    <a href="{{ route('BiayaHpp.index') }}" class="submenu-link">Master Biaya HPP</a>
                                 </li>
                                 <li
                                     class="submenu-item {{ Request::is('master_supplier_raw_material*') ? 'active' : '' }}">
                                     <a href="{{ route('MasterSupplierRawMaterial.index') }}"
-                                        class="submenu-link">Supplier Raw Material</a>
+                                        class="submenu-link">Master Supplier Raw Material</a>
                                 </li>
                                 <li
                                     class="submenu-item {{ Request::is('master_jenis_raw_material*') ? 'active' : '' }}">
-                                    <a href="{{ route('MasterJenisRawMaterial.index') }}" class="submenu-link">Jenis
+                                    <a href="{{ route('MasterJenisRawMaterial.index') }}" class="submenu-link">Master
+                                        Jenis
                                         Raw Material</a>
                                 </li>
                                 <li
                                     class="submenu-item {{ Request::is('master_tujuan_kirim_raw_material*') ? 'active' : '' }}">
                                     <a href="{{ route('MasterTujuanKirimRawMaterial.index') }}"
-                                        class="submenu-link">Tujuan Kirim Raw Material</a>
+                                        class="submenu-link">Master Tujuan Kirim Raw Material</a>
                                 </li>
                                 <li
-                                    class="submenu-item {{ Request::is('MasterJenisGradingKasar*') ? 'active' : '' }}">
+                                    class="submenu-item {{ Request::is('master_tujuan_kirim_grading_halus*') ? 'active' : '' }}">
+                                    <a href="{{ route('MasterTujuanKirimGradingHalus.index') }}"
+                                        class="submenu-link">Master Tujuan Kirim Grading Halus</a>
+                                </li>
+                                <li class="submenu-item {{ Request::is('master_ongkos_cuci*') ? 'active' : '' }}">
+                                    <a href="{{ route('MasterOngkosCuci.index') }}" class="submenu-link">Master
+                                        Ongkos Cuci</a>
+                                </li>
+                                <li
+                                    class="submenu-item {{ Request::is('master_jenis_grading_kasar*') ? 'active' : '' }}">
                                     <a href="{{ route('MasterJenisGradingKasar.index') }}"
                                         class="submenu-link">Master Jenis Grading Kasar</a>
                                 </li>

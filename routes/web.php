@@ -89,6 +89,15 @@ Route::controller(App\Http\Controllers\MasterTujuanKirimRawMaterialController::c
     Route::put('/master_tujuan_kirim_raw_material/update/{id}', 'update')->name('MasterTujuanKirimRawMaterial.update');
     Route::delete('/master_tujuan_kirim_raw_material/destroy/{id}', 'destroy')->name('MasterTujuanKirimRawMaterial.destroy');
 });
+Route::controller(App\Http\Controllers\MasterTujuanKirimGradingHalusController::class)->group(function () {
+    Route::get('/master_tujuan_kirim_grading_halus', 'index')->name('MasterTujuanKirimGradingHalus.index');
+    Route::get('/master_tujuan_kirim_grading_halus/create', 'create')->name('MasterTujuanKirimGradingHalus.create');
+    Route::post('/master_tujuan_kirim_grading_halus/store', 'store')->name('MasterTujuanKirimGradingHalus.store');
+    Route::get('/master_tujuan_kirim_grading_halus/show/{id}', 'show')->name('MasterTujuanKirimGradingHalus.show');
+    Route::get('/master_tujuan_kirim_grading_halus/edit/{id}', 'edit')->name('MasterTujuanKirimGradingHalus.edit');
+    Route::put('/master_tujuan_kirim_grading_halus/update/{id}', 'update')->name('MasterTujuanKirimGradingHalus.update');
+    Route::delete('/master_tujuan_kirim_grading_halus/destroy/{id}', 'destroy')->name('MasterTujuanKirimGradingHalus.destroy');
+});
 
 Route::controller(App\Http\Controllers\MasterOperatorController::class)->group(function () {
     Route::get('/master_operator', 'index')->name('MasterOperator.index');
@@ -306,7 +315,7 @@ Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusOutputControl
     Route::get('/grading_halus_output/get_data_id_box/jenis_grading', 'setUnit')->name('GradingHalusOutput.setUnit');
     Route::post('/grading_halus_output/sendData', 'sendData')->name('GradingHalusOutput.sendData');
     Route::post('/grading_halus_output/store', 'store')->name('GradingHalusOutput.store');
-    Route::delete('/grading_halus_output/destroy/{nomor_grading}', 'destroy')->name('GradingHalusOutput.destroy');
+    Route::delete('/grading_halus_output/destroy/{id_box_grading_halus}', 'destroy')->name('GradingHalusOutput.destroy');
 });
 
 Auth::routes();

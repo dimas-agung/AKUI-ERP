@@ -36,4 +36,21 @@ class GradingHalusOutputController extends Controller
         // return $TransitPre;
         return view('PreGradingHalus.GradingHalusOutput.create', compact('PreGHI', 'TransitPre'));
     }
+
+    public function set(Request $request)
+    {
+        $id_box_grading_halus = $request->id_box_grading_halus;
+        $data = GradingHalusStock::where('id_box_grading_halus',$id_box_grading_halus)->first();
+
+        // Kembalikan nomor batch sebagai respons
+        return response()->json($data);
+    }
+
+    public function setUnit(Request $request)
+    {
+        $jenis = $request->jenis; // Perbaikan disini
+        $data = MasterJenisGradingHalus::where('jenis', $jenis)->first();
+
+        return response()->json($data);
+    }
 }
