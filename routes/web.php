@@ -150,6 +150,16 @@ Route::controller(App\Http\Controllers\MasterOngkosCuciController::class)->group
     Route::delete('/master_ongkos_cuci/destroy/{id}', 'destroy')->name('MasterOngkosCuci.destroy');
 });
 
+Route::controller(App\Http\Controllers\MasterJenisGradingHalusController::class)->group(function () {
+    Route::get('/master_jenis_grading_halus', 'index')->name('MasterJenisGradingHalus.index');
+    Route::get('/master_jenis_grading_halus/create', 'create')->name('MasterJenisGradingHalus.create');
+    Route::post('/master_jenis_grading_halus/store', 'store')->name('MasterJenisGradingHalus.store');
+    Route::get('/master_jenis_grading_halus/show/{id}', 'show')->name('MasterJenisGradingHalus.show');
+    Route::get('/master_jenis_grading_halus/edit/{id}', 'edit')->name('MasterJenisGradingHalus.edit');
+    Route::put('/master_jenis_grading_halus/update/{id}', 'update')->name('MasterJenisGradingHalus.update');
+    Route::delete('/master_jenis_grading_halus/destroy/{id}', 'destroy')->name('MasterJenisGradingHalus.destroy');
+});
+
 Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
     Route::get('/prm_raw_material_input', 'index')->name('PrmRawMaterialInput.index');
     Route::get('/prm_raw_material_input/create', 'create')->name('PrmRawMaterialInput.create');
@@ -389,6 +399,8 @@ Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentInputController
     Route::get('/adjustment_input/edit/{id}', 'edit')->name('AdjustmentInput.edit');
     Route::put('/adjustment_input/update/{id}', 'update')->name('AdjustmentInput.update');
     Route::delete('/adjustment_input/destroy/{id}', 'destroy')->name('AdjustmentInput.destroy');
+    Route::get('/adjustment_input/get_data_nomor_adjustment', 'getNomorAdjustment')->name('AdjustmentAdding.getNomorAdjustment');
+    Route::get('/adjustment_input/get_data_jenis_adjustment', 'getJenisGradingHalus')->name('AdjustmentAdding.getJenisGradingHalus');
 });
 
 Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusInputController::class)->group(function () {

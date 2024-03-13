@@ -98,7 +98,9 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">{{ $MasterTJRM->created_at }}</td>
-                                            <td class="text-center">{{ $MasterTJRM->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterTJRM->created_at != $MasterTJRM->updated_at ? $MasterTJRM->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterTJRM->id }}"

@@ -70,7 +70,9 @@
                                             <td class="text-center">{{ $MasterStock->user_created }}</td>
                                             <td class="text-center">{{ $MasterStock->user_updated }}</td>
                                             <td class="text-center">{{ $MasterStock->created_at }}</td>
-                                            <td class="text-center">{{ $MasterStock->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterStock->created_at != $MasterStock->updated_at ? $MasterStock->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form>

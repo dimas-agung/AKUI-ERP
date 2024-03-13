@@ -40,4 +40,12 @@ class AdjustmentInput extends Model
         'user_created',
         'user_updated',
     ];
+    public function AdjustmentStock()
+    {
+        return $this->hasMany(AdjustmentStock::class, 'nomor_adjustment', 'nomor_adjustment');
+    }
+    public function MasterJenisGradingHalus()
+    {
+        return $this->belongsTo(MasterJenisGradingHalus::class, 'jenis', 'jenis_adjustment');
+    }
 }

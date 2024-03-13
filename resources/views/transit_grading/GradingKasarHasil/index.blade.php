@@ -129,7 +129,9 @@
                                             <td class="text-center">{{ $GradingKH->user_created }}</td>
                                             <td class="text-center">{{ $GradingKH->user_updated }}</td>
                                             <td class="text-center">{{ $GradingKH->created_at }}</td>
-                                            <td class="text-center">{{ $GradingKH->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $GradingKH->created_at != $GradingKH->updated_at ? $GradingKH->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     @if ($GradingKH->status == 1)

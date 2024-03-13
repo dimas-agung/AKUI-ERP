@@ -35,7 +35,7 @@ class PreCleaningStockSeeder extends Seeder
             'total_modal' =>  353,
             'keterangan' => 'tes',
             'user_created' => 'Admin123',
-            'user_update' => 'Admin123',
+            'user_updated' => 'Admin123',
         ]);
         PreCleaningStock::create([
             'nomor_job' => '120124_103127_AKI_ugk',
@@ -58,7 +58,7 @@ class PreCleaningStockSeeder extends Seeder
             'total_modal' =>  300000,
             'keterangan' => 'tes',
             'user_created' => 'Admin123',
-            'user_update' => 'Admin123',
+            'user_updated' => 'Admin123',
         ]);
     }
 }

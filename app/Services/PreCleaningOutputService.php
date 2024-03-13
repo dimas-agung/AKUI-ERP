@@ -69,8 +69,8 @@ class PreCleaningOutputService
             'berat_pre_cleaning'                => $item->berat_pre_cleaning,
             'pcs_pre_cleaning'                  => $item->pcs_pre_cleaning,
             'susut'                             => $item->susutTabel,
-            'user_created'                      => $item->user_created ?? 'Admin123',
-            'user_updated'                      => $item->user_updated ?? 'Admin123',
+            'user_created'                      => $item->user_created,
+            // 'user_updated'                      => $item->user_updated,
         ]);
 
         // Creat Prm Raw Material Stock
@@ -147,9 +147,10 @@ class PreCleaningOutputService
                 'tujuan_kirim'              => $itemObject->tujuan_kirim,
                 'nomor_grading'             => $itemObject->nomor_grading ?? "Belum Tersedia",
                 'modal'                     => $itemObject->modal,
-                'keterangan'                => $itemObject->keterangan ?? "Tes",
-                'user_created'              => $itemObject->user_created ?? " ",
-                'user_updated'              => $itemObject->user_updated ?? " ",
+                // 'total_modal'               => $itemObject->total_modal,
+                'keterangan'                => $itemObject->keterangan,
+                'user_created'              => $itemObject->user_created,
+                // 'user_updated'              => $itemObject->user_updated,
             ]));
         }
 

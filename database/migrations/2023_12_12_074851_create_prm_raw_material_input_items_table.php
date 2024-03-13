@@ -25,7 +25,7 @@ return new class extends Migration
             $table->float('total_harga_nota', 16, 4);
             $table->float('harga_deal', 16, 4);
             $table->text('keterangan')->nullable();
-            $table->string('user_created');
+            $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
             $table->float('fix_harga_deal', 16, 4);
             $table->timestamps();

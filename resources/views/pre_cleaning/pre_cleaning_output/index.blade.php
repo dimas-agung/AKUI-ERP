@@ -122,7 +122,9 @@
                                             <td class="text-center">{{ $PCO->user_created }}</td>
                                             <td class="text-center">{{ $PCO->user_updated }}</td>
                                             <td class="text-center">{{ $PCO->created_at }}</td>
-                                            <td class="text-center">{{ $PCO->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $PCO->created_at != $PCO->updated_at ? $PCO->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $PCO->id }}"

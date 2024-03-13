@@ -19,4 +19,8 @@ class AdjustmentStock extends Model
         'total_modal',
         'status',
     ];
+    public function AdjustmentInput()
+    {
+        return $this->hasMany(AdjustmentInput::class, 'nomor_adjustment', 'nomor_adjustment');
+    }
 }
