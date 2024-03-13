@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\GradingKasarHasil;
+use App\Models\MasterOngkosCuci;
 use App\Models\PrmRawMaterialInput;
 use App\Models\PrmRawMaterialInputItem;
 use App\Models\PrmRawMaterialStockHistory;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 class HppService
 {
 
-    function calculate(array $berat_gradings, array $harga_estimasi, array $totalModal): array
+    function calculate(array $berat_gradings, array $harga_estimasi, array $totalModal, array $jenisGradings = null): array
     {
         $sum_total_harga = 0;
         $sum_total_modal = 0;
@@ -59,7 +60,24 @@ class HppService
             $dataHpp[$key]['selisih_laba_rugi_gram'] = round($selisih_laba_rugi_gram, 2);
             $dataHpp[$key]['hpp'] = round($hpp, 2);
             $dataHpp[$key]['total_hpp'] = round($total_hpp, 2);
+            if ($jenisGradings != null) {
+                $fix_hpp = self::calculateFixHpp( round($hpp, 2),$jenisGradings[$key]);
+                $dataHpp[$key]['fix_hpp'] = round($fix_hpp, 2);
+                $dataHpp[$key]['fix_total_hpp'] = round($fix_hpp, 2)* $berat_grading;
+            }
         }
         return $dataHpp;
+    }
+    function calculateFixHpp($hpp,$jenis_grading){
+        $fix_hpp = $hpp;
+        $ongkosCuci = MasterOngkosCuci::where('status',1)->get();
+        foreach($ongkosCuci as $val){
+            $is_contains = str_contains($jenis_grading, $val->jenis_bulu);
+            if($is_contains){
+                $fix_hpp =$val->biaya_per_gram+$hpp;
+            }
+
+        }
+        return $fix_hpp;
     }
 }
