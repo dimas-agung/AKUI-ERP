@@ -57,13 +57,14 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
-                                                <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
-                                                    action="{{ route('GradingHalusOutput.destroy', $item->nomor_bstb) }}"
+                                                <form style="display: flex"
+                                                    id="deleteForm{{ $item->id_box_grading_halus }}"
+                                                    action="{{ route('GradingHalusOutput.destroy', $item->id_box_grading_halus) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-link" data-original-title="Remove"
-                                                        onclick="confirmDelete('{{ $item->nomor_bstb }}')">
+                                                        onclick="confirmDelete('{{ $item->id_box_grading_halus }}')">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
                                                 </form>
