@@ -37,48 +37,40 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Nomor Grading</label>
-                                        <select id="nomor_grading" class="select2 form-select" name="nomor_grading">
-                                            <option value="">Pilih Nomor Grading</option>
-                                            @foreach ($TransitPre->sortBy('nomor_grading') as $post)
-                                                <option value="{{ $post->nomor_grading }}">
-                                                    {{ old('nomor_grading', $post->nomor_grading) }}</option>
+                                        <label>ID Box Grading Halus</label>
+                                        <select id="id_box_grading_halus" class="select2 form-select"
+                                            name="id_box_grading_halus">
+                                            <option value="">Pilih ID Box Grading Halus</option>
+                                            @foreach ($TransitPre->sortBy('id_box_grading_halus') as $post)
+                                                <option value="{{ $post->id_box_grading_halus }}">
+                                                    {{ old('id_box_grading_halus', $post->id_box_grading_halus) }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Jenis Grading</label>
-                                        <select id="jenis_grading" class="select2 form-select" name="jenis_grading">
-                                            <option value="">Pilih Jenis Grading</option>
-                                            @foreach ($Unit->sortBy('jenis') as $post)
-                                                <option value="{{ $post->jenis }}">
-                                                    {{ old('jenis', $post->jenis) }}
-                                                </option>
+                                        <label>Tujuan Kirim</label>
+                                        <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim">
+                                            <option value="">Pilih Tujuan Kirim</option>
+                                            @foreach ($TransitPre->sortBy('tujuan_kirim') as $post)
+                                                <option value="{{ $post->tujuan_kirim }}">
+                                                    {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Id Box Raw Material</label>
-                                        <input type="text" class="form-control" id="id_box_raw_material"
-                                            name="id_box_raw_material" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Id Box Grading Halus</label>
-                                        <input type="text" class="form-control" id="id_box_grading_halus"
-                                            name="id_box_grading_halus" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Nama Supplier</label>
-                                        <input type="text" class="form-control" id="nama_supplier" name="nama_supplier"
+                                        <label>Nomor BSTB</label>
+                                        <input type="text" class="form-control" id="nomor_bstb" name="nomor_bstb"
                                             readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nomor Job</label>
+                                        <input type="text" class="form-control" id="nomor_job" name="nomor_job" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -90,36 +82,21 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Jenis Raw Material</label>
-                                        <input type="text" class="form-control" id="jenis_raw_material"
-                                            name="jenis_raw_material" readonly>
+                                        <label>Jenis Job</label>
+                                        <input type="text" class="form-control" id="jenis_job" name="jenis_job" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Berta Adding</label>
-                                        <input type="text" id="berat_adding" class="form-control" name="berat_adding"
+                                        <label>Sisa Berat</label>
+                                        <input type="text" id="berat_masuk" class="form-control" name="berat_masuk"
                                             readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Pcs Adding</label>
-                                        <input type="text" id="pcs_adding" class="form-control" name="pcs_adding"
-                                            readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>No Nota</label>
-                                        <input type="text" id="nomor_nota_internal" class="form-control"
-                                            name="nomor_nota_internal" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Kadar Air</label>
-                                        <input type="text" class="form-control" id="kadar_air" name="kadar_air" readonly>
+                                        <label>Sisa Pcs</label>
+                                        <input type="text" id="pcs_masuk" class="form-control" name="pcs_masuk" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -145,8 +122,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Harga Estimasi</label>
-                                        <input type="text" id="harga_estimasi" class="form-control"
-                                            name="harga_estimasi" readonly>
+                                        <input type="text" id="harga_estimasi" class="form-control" name="harga_estimasi"
+                                            readonly>
                                         <input type="hidden" id="harga_esti" name="harga_esti">
                                         <input type="hidden" id="pengurangan" name="pengurangan">
                                     </div>
@@ -169,27 +146,6 @@
                                             placeholder="Masukkan pcs grading" data-parsley-required="true">
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Susut Depan</label>
-                                        <input type="text" id="susut_depan" class="form-control" name="susut_depan"
-                                            readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Susut Belakang</label>
-                                        <input type="text" id="susut_belakang" class="form-control"
-                                            name="susut_belakang" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Kontribusi</label>
-                                        <input type="text" id="kontribusi" class="form-control" name="kontribusi"
-                                            readonly>
-                                    </div>
-                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>NIP Admin</label>
@@ -247,19 +203,8 @@
                                 <th class="text-center" scope="col">Id Box Grading Halus</th>
                                 <th class="text-center" scope="col">Susut Depan</th>
                                 <th class="text-center" scope="col">Susut Belakang</th>
-                                {{-- <th class="text-center" scope="col">Biaya Produksi</th> --}}
                                 <th class="text-center" scope="col">harga_estimasi</th>
                                 <th class="text-center" scope="col">kontribusi</th>
-                                {{-- <th class="text-center" scope="col">total_harga</th>
-                                <th class="text-center" scope="col">nilai_laba_rugi</th>
-                                <th class="text-center" scope="col">nilai_prosentase_total_keuntungan</th>
-                                <th class="text-center" scope="col">prosentase_harga_gramasi</th>
-                                <th class="text-center" scope="col">selisih_laba_rugi_kg</th>
-                                <th class="text-center" scope="col">selisih_laba_rugi_per_gram</th>
-                                <th class="text-center" scope="col">hpp</th>
-                                <th class="text-center" scope="col">total_hpp</th>
-                                <th class="text-center" scope="col">fix_hpp</th>
-                                <th class="text-center" scope="col">fix_total_hpp</th> --}}
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
@@ -278,32 +223,33 @@
 @section('script')
     <script>
         let selectedNomorBSTB = ''; // Variabel untuk menyimpan nomor BSTB yang dipilih sebelumnya
-        $('#nomor_grading').on('change', function() {
+        $('#id_box_grading_halus').on('change', function() {
             let selectedIdBox = $(this).val();
             if (selectedNomorBSTB !== selectedIdBox) {
                 selectedNomorBSTB = selectedIdBox;
                 $.ajax({
-                    url: `{{ route('GradingHalusInput.set') }}`,
+                    url: `{{ route('GradingHalusOutput.set') }}`,
                     method: 'GET',
                     data: {
-                        nomor_grading: selectedIdBox
+                        id_box_grading_halus: selectedIdBox
                     },
                     success: function(response) {
                         console.log(response);
                         $('#id_box_raw_material').val(response.id_box_raw_material);
                         $('#nomor_batch').val(response.nomor_batch);
-                        $('#nomor_nota_internal').val(response.nomor_nota_internal);
-                        $('#nama_supplier').val(response.nama_supplier);
-                        $('#jenis_raw_material').val(response.jenis_raw_material);
-                        $('#kadar_air').val(response.kadar_air);
-                        $('#berat_adding').val(response.berat_adding);
-                        $('#pcs_adding').val(response.pcs_adding);
+                        $('#jenis_job').val(response.jenis);
+                        $('#berat_masuk').val(response.berat_masuk);
+                        $('#pcs_masuk').val(response.pcs_masuk);
                         $('#modal').val(response.modal);
                         $('#total_modal').val(response.total_modal);
 
-                        // Update nomor BSTB setiap kali nomor batch berubah
-                        hargaEstimasi();
-                        generateNomorBSTB();
+                        // Memanggil generateNomorBSTB dan mengatur nilai sesuai dengan respons dari server
+                        let generatedNomorBSTB = generateNomorBSTB(
+                            'BSTB'); // Memanggil generateNomorBSTB dengan prefix 'BSTB'
+                        let generatedNomorJob = generateNomorBSTB(
+                            'JOB'); // Memanggil generateNomorBSTB dengan prefix 'JOB'
+                        $('#nomor_bstb').val(generatedNomorBSTB);
+                        $('#nomor_job').val(generatedNomorJob);
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -312,39 +258,38 @@
             }
         });
 
-        $('#jenis_grading').on('change', function() {
-            let selectedUnit = $(this).val();
-            $.ajax({
-                url: `{{ route('GradingHalusInput.setUnit') }}`,
-                method: 'GET',
-                data: {
-                    jenis: selectedUnit
-                },
-                success: function(response) {
-                    console.log('pengurangan harga=' + response.pengurangan_harga);
-                    $('#kategori_susut').val(response.kategori_susut);
-                    $('#harga_esti').val(response.harga_estimasi);
-                    $('#pengurangan').val(response.pengurangan_harga);
+        // $('#jenis_grading').on('change', function() {
+        //     let selectedUnit = $(this).val();
+        //     $.ajax({
+        //         url: `{{ route('GradingHalusInput.setUnit') }}`,
+        //         method: 'GET',
+        //         data: {
+        //             jenis: selectedUnit
+        //         },
+        //         success: function(response) {
+        //             console.log('pengurangan harga=' + response.pengurangan_harga);
+        //             $('#kategori_susut').val(response.kategori_susut);
+        //             $('#harga_esti').val(response.harga_estimasi);
+        //             $('#pengurangan').val(response.pengurangan_harga);
 
-                    // Update nomor BSTB setiap kali jenis grading berubah
-                    hargaEstimasi();
-                    generateNomorBSTB();
-                },
-                error: function(error) {
-                    console.error('Error:', error);
-                }
-            });
-        });
+        //             // Update nomor BSTB setiap kali jenis grading berubah
+        //             generateNomorBSTB();
+        //         },
+        //         error: function(error) {
+        //             console.error('Error:', error);
+        //         }
+        //     });
+        // });
 
         function hargaEstimasi() {
             // Pastikan nilai modal adalah angka
             const modal_number = parseFloat($('#modal').val());
 
-            // Cek apakah nomor_grading dan jenis_grading sudah terisi
-            const nomorGradingTerisi = $('#nomor_grading').val() !== '';
+            // Cek apakah id_box_grading_halus dan jenis_grading sudah terisi
+            const nomorGradingTerisi = $('#id_box_grading_halus').val() !== '';
             const jenisGradingTerisi = $('#jenis_grading').val() !== '';
 
-            // Pastikan nilai modal adalah angka dan nomor_grading serta jenis_grading sudah terisi
+            // Pastikan nilai modal adalah angka dan id_box_grading_halus serta jenis_grading sudah terisi
             if (!isNaN(modal_number) && nomorGradingTerisi && jenisGradingTerisi) {
                 // Pastikan nilai pengurangan_harga adalah angka
                 const pengurangan_harga_number = parseFloat($('#pengurangan').val());
@@ -359,22 +304,30 @@
                     $('#harga_estimasi').val(modal_number - (modal_number * pengurangan_harga_number));
                 }
             } else {
-                // Jika nomor_grading atau jenis_grading belum terisi, tidak melakukan perhitungan
+                // Jika id_box_grading_halus atau jenis_grading belum terisi, tidak melakukan perhitungan
                 console.log('Nomor grading atau jenis grading belum terisi.');
             }
         }
 
-        function generateNomorBSTB() {
-            const nomor_batch = $('#nomor_batch').val();
-            const jenis_grading = $('#jenis_grading').val();
+        function generateNomorBSTB(prefix) {
+            let nomor;
 
-            // Menghasilkan nomor BSTB baru
-            const nomorBSTB = `${nomor_batch}_${jenis_grading}`;
+            const now = new Date();
+            const tahun = now.getFullYear().toString().substr(-2);
+            const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+            const tanggal = ('0' + now.getDate()).slice(-2);
+            const jam = ('0' + now.getHours()).slice(-2);
+            const menit = ('0' + now.getMinutes()).slice(-2);
+            const detik = ('0' + now.getSeconds()).slice(-2);
 
-            // Mengisi input dengan nomor BSTB baru
-            $('#id_box_grading_halus').val(nomorBSTB);
+            // Menambahkan prefix yang sesuai
+            if (prefix === 'BSTB') {
+                nomor = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_ugk`;
+            } else {
+                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_ugk`;
+            }
 
-            return nomorBSTB;
+            return nomor;
         }
 
         function hitungBeratGradingPerAdding() {
@@ -728,8 +681,7 @@
                         // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
                         if (result.isConfirmed) {
                             window.location.href = response
-                                .redirectTo;
-                            // Ganti dengan URL tujuan redirect Anda
+                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
                         }
                     });
                 },
