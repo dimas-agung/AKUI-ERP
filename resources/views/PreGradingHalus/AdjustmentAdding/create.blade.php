@@ -1,16 +1,16 @@
 @extends('layouts.master1')
 @section('menu')
-    Adjustment Adding
+    Grading Halus Adjustment Adding
 @endsection
 @section('title')
-    Adjustment Adding
+    Grading Halus Adjustment Adding
 @endsection
 @section('content')
     <div class="col-md-12">
         <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center mb-3">
-                    <h4 class="card-title">Adjustment Adding</h4>
+                    <h4 class="card-title">Grading Halus Adjustment Adding</h4>
                 </div>
                 <hr>
                 <form method="POST" class="row g-3" id="myForm">
@@ -138,7 +138,7 @@
                 let selectedIdBoxGradingHalus = $(this).val();
                 // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
                 $.ajax({
-                    url: `{{ route('AdjustmentAdding.set') }}`,
+                    url: `{{ route('GradingHalusAdjustmentAdding.set') }}`,
                     method: 'GET',
                     data: {
                         id_box_grading_halus: selectedIdBoxGradingHalus
@@ -423,7 +423,7 @@
             }
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: `{{ route('AdjustmentAdding.simpanData') }}`,
+                url: `{{ route('GradingHalusAdjustmentAdding.simpanData') }}`,
                 method: 'POST',
                 data: {
                     data: JSON.stringify(dataArray),
@@ -452,7 +452,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('AdjustmentAdding.index') }}`;
+                    window.location.href = `{{ route('GradingHalusAdjustmentAdding.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);

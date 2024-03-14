@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Models\AdjustmentAdding;
-use App\Models\AdjustmentStock;
+use App\Models\GradingHalusAdjustmentAdding;
+use App\Models\GradingHalusAdjustmentStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Constraint\Operator;
 
-class AdjustmentAddingService
+class GradingHalusAdjustmentAddingService
 {
     public function simpanData($dataArray)
     {
@@ -24,7 +24,7 @@ class AdjustmentAddingService
             return [
                 'success' => true,
                 'message' => 'Data berhasil disimpan!',
-                'redirectTo' => route('AdjustmentAdding.index'), // Ganti dengan nama route yang sesuai
+                'redirectTo' => route('GradingHalusAdjustmentAdding.index'), // Ganti dengan nama route yang sesuai
             ];
         } catch (\Exception $e) {
             DB::rollBack();
@@ -39,7 +39,7 @@ class AdjustmentAddingService
     private function createItem($item)
     {
         // Tambahkan item baru ke tabel PreGradingHalusAdding
-        AdjustmentAdding::create([
+        GradingHalusAdjustmentAdding::create([
             'id_box_grading_halus'      => $item->id_box_grading_halus,
             'nomor_adjustment'          => $item->nomor_adjustment,
             'nomor_batch'               => $item->nomor_batch,
@@ -53,7 +53,7 @@ class AdjustmentAddingService
             'total_modal'               => $item->total_modal,
         ]);
         // Tambahkan item baru ke tabel PreGradingHalusAdding
-        AdjustmentStock::create([
+        GradingHalusAdjustmentStock::create([
             'unit'                      => $item->unit ?? "Grading Halus",
             'nomor_adjustment'          => $item->nomor_adjustment,
             'nomor_batch'               => $item->nomor_batch,
@@ -68,11 +68,14 @@ class AdjustmentAddingService
         try {
             DB::beginTransaction();
 
-            // Hapus data dari tabel AdjustmentAdding berdasarkan ID
-            AdjustmentAdding::where('id', $id)->delete();
+            // Dapatkan nomor_adjustment berdasarkan ID dari tabel GradingHalusAdjustmentAdding
+            $nomorAdjustment = GradingHalusAdjustmentAdding::where('id', $id)->value('nomor_adjustment');
 
-            // Hapus data dari tabel AdjustmentStock berdasarkan nomor_adjustment
-            AdjustmentStock::where('nomor_adjustment', $id)->delete();
+            // Hapus data dari tabel GradingHalusAdjustmentAdding berdasarkan ID
+            GradingHalusAdjustmentAdding::where('id', $id)->delete();
+
+            // Hapus data dari tabel GradingHalusAdjustmentStock berdasarkan nomor_adjustment
+            GradingHalusAdjustmentStock::where('nomor_adjustment', $nomorAdjustment)->delete();
 
             DB::commit();
 

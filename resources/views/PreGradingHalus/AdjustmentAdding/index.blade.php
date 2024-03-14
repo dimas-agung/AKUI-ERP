@@ -3,7 +3,7 @@
     Pre Grading Halus
 @endsection
 @section('title')
-    Adjustment Adding
+    Grading Halus Adjustment Adding
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Adjustment Adding
+                                Data Grading Halus Adjustment Adding
                                 <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
                                             class="bi bi-plus-circle"></i></strong>
@@ -44,7 +44,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($adjustment_addings as $ADJ)
+                                    @forelse ($grading_halus_adjustment_addings as $ADJ)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $ADJ->id_box_grading_halus }}</td>
@@ -59,16 +59,18 @@
                                             <td class="text-center">{{ $ADJ->user_created }}</td>
                                             <td class="text-center">{{ $ADJ->user_updated }}</td>
                                             <td class="text-center">{{ $ADJ->created_at }}</td>
-                                            <td class="text-center">{{ $ADJ->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $ADJ->created_at != $ADJ->updated_at ? $ADJ->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $ADJ->id }}"
-                                                        action="{{ route('AdjustmentAdding.destroy', $ADJ->id) }}"
+                                                        action="{{ route('GradingHalusAdjustmentAdding.destroy', $ADJ->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('AdjustmentAdding.show', $ADJ->id) }}"
+                                                        {{-- <a href="{{ route('GradingHalusAdjustmentAdding.show', $ADJ->id) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         @csrf
                                                         @method('DELETE')
                                                         {{-- <button type="button" class="btn btn-link"
@@ -87,7 +89,7 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Adjustment Adding belum Tersedia.
+                                            Data Grading Halus Adjustment Adding belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -102,7 +104,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ url('/adjustment_adding/create') }}";
+            window.location.href = "{{ url('/grading_halus_adjustment_adding/create') }}";
         }
 
         function confirmDelete(id) {

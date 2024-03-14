@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('adjustment_addings', function (Blueprint $table) {
+        Schema::create('grading_halus_adjustment_addings', function (Blueprint $table) {
             $table->id();
             $table->string('id_box_grading_halus');
             $table->string('nomor_batch');
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('adjustment_addings');
+        Schema::dropIfExists('grading_halus_adjustment_addings');
     }
 };

@@ -263,37 +263,37 @@ Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusAddingStoc
     Route::delete('/pre_grading_halus_adding_stock/destroy/{id}', 'destroy')->name('PreGradingHalusAddingStock.destroy');
 });
 
-Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentAddingController::class)->group(function () {
-    Route::get('/adjustment_adding', 'index')->name('AdjustmentAdding.index');
-    Route::get('/adjustment_adding/create', 'create')->name('AdjustmentAdding.create');
-    Route::post('/adjustment_adding/store', 'store')->name('AdjustmentAdding.store');
-    Route::get('/adjustment_adding/show/{id}', 'show')->name('AdjustmentAdding.show');
-    Route::get('/adjustment_adding/edit/{id}', 'edit')->name('AdjustmentAdding.edit');
-    Route::put('/adjustment_adding/update/{id}', 'update')->name('AdjustmentAdding.update');
-    Route::delete('/adjustment_adding/destroy/{id}', 'destroy')->name('AdjustmentAdding.destroy');
-    Route::get('/adjustment_adding/get_data_nomor_job', 'set')->name('AdjustmentAdding.set');
-    Route::post('/adjustment_adding/simpanData', 'simpanData')->name('AdjustmentAdding.simpanData');
-    Route::post('/adjustment_adding/getDataPerusahaan', 'getDataPerusahaan')->name('AdjustmentAdding.getDataPerusahaan');
+Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusAdjustmentAddingController::class)->group(function () {
+    Route::get('/grading_halus_adjustment_adding', 'index')->name('GradingHalusAdjustmentAdding.index');
+    Route::get('/grading_halus_adjustment_adding/create', 'create')->name('GradingHalusAdjustmentAdding.create');
+    Route::post('/grading_halus_adjustment_adding/store', 'store')->name('GradingHalusAdjustmentAdding.store');
+    Route::get('/grading_halus_adjustment_adding/show/{id}', 'show')->name('GradingHalusAdjustmentAdding.show');
+    Route::get('/grading_halus_adjustment_adding/edit/{id}', 'edit')->name('GradingHalusAdjustmentAdding.edit');
+    Route::put('/grading_halus_adjustment_adding/update/{id}', 'update')->name('GradingHalusAdjustmentAdding.update');
+    Route::delete('/grading_halus_adjustment_adding/destroy/{id}', 'destroy')->name('GradingHalusAdjustmentAdding.destroy');
+    Route::get('/grading_halus_adjustment_adding/get_data_nomor_job', 'set')->name('GradingHalusAdjustmentAdding.set');
+    Route::post('/grading_halus_adjustment_adding/simpanData', 'simpanData')->name('GradingHalusAdjustmentAdding.simpanData');
+    Route::post('/grading_halus_adjustment_adding/getDataPerusahaan', 'getDataPerusahaan')->name('GradingHalusAdjustmentAdding.getDataPerusahaan');
 });
-Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentStockController::class)->group(function () {
-    Route::get('/adjustment_stock', 'index')->name('AdjustmentStock.index');
-    Route::get('/adjustment_stock/create', 'create')->name('AdjustmentStock.create');
-    Route::post('/adjustment_stock/store', 'store')->name('AdjustmentStock.store');
-    Route::get('/adjustment_stock/show/{id}', 'show')->name('AdjustmentStock.show');
-    Route::get('/adjustment_stock/edit/{id}', 'edit')->name('AdjustmentStock.edit');
-    Route::put('/adjustment_stock/update/{id}', 'update')->name('AdjustmentStock.update');
-    Route::delete('/adjustment_stock/destroy/{id}', 'destroy')->name('AdjustmentStock.destroy');
+Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusAdjustmentStockController::class)->group(function () {
+    Route::get('/grading_halus_adjustment_stock', 'index')->name('GradingHalusAdjustmentStock.index');
+    Route::get('/grading_halus_adjustment_stock/create', 'create')->name('GradingHalusAdjustmentStock.create');
+    Route::post('/grading_halus_adjustment_stock/store', 'store')->name('GradingHalusAdjustmentStock.store');
+    Route::get('/grading_halus_adjustment_stock/show/{id}', 'show')->name('GradingHalusAdjustmentStock.show');
+    Route::get('/grading_halus_adjustment_stock/edit/{id}', 'edit')->name('GradingHalusAdjustmentStock.edit');
+    Route::put('/grading_halus_adjustment_stock/update/{id}', 'update')->name('GradingHalusAdjustmentStock.update');
+    Route::delete('/grading_halus_adjustment_stock/destroy/{id}', 'destroy')->name('GradingHalusAdjustmentStock.destroy');
 });
-Route::controller(App\Http\Controllers\PreGradingHalus\AdjustmentInputController::class)->group(function () {
-    Route::get('/adjustment_input', 'index')->name('AdjustmentInput.index');
-    Route::get('/adjustment_input/create', 'create')->name('AdjustmentInput.create');
-    Route::post('/adjustment_input/store', 'store')->name('AdjustmentInput.store');
-    Route::get('/adjustment_input/show/{id}', 'show')->name('AdjustmentInput.show');
-    Route::get('/adjustment_input/edit/{id}', 'edit')->name('AdjustmentInput.edit');
-    Route::put('/adjustment_input/update/{id}', 'update')->name('AdjustmentInput.update');
-    Route::delete('/adjustment_input/destroy/{id}', 'destroy')->name('AdjustmentInput.destroy');
-    Route::get('/adjustment_input/get_data_nomor_adjustment', 'getNomorAdjustment')->name('AdjustmentAdding.getNomorAdjustment');
-    Route::get('/adjustment_input/get_data_jenis_adjustment', 'getJenisGradingHalus')->name('AdjustmentAdding.getJenisGradingHalus');
+Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusAdjustmentInputController::class)->group(function () {
+    Route::get('/grading_halus_adjustment_input', 'index')->name('GradingHalusAdjustmentInput.index');
+    Route::get('/grading_halus_adjustment_input/create', 'create')->name('GradingHalusAdjustmentInput.create');
+    Route::post('/grading_halus_adjustment_input/store', 'store')->name('GradingHalusAdjustmentInput.store');
+    Route::get('/grading_halus_adjustment_input/show/{id}', 'show')->name('GradingHalusAdjustmentInput.show');
+    Route::get('/grading_halus_adjustment_input/edit/{id}', 'edit')->name('GradingHalusAdjustmentInput.edit');
+    Route::put('/grading_halus_adjustment_input/update/{id}', 'update')->name('GradingHalusAdjustmentInput.update');
+    Route::delete('/grading_halus_adjustment_input/destroy/{id}', 'destroy')->name('GradingHalusAdjustmentInput.destroy');
+    Route::get('/grading_halus_adjustment_input/get_data_nomor_adjustment', 'getNomorAdjustment')->name('GradingHalusAdjustmentAdding.getNomorAdjustment');
+    Route::get('/grading_halus_adjustment_input/get_data_jenis_adjustment', 'getJenisGradingHalus')->name('GradingHalusAdjustmentAdding.getJenisGradingHalus');
 });
 
 Auth::routes();

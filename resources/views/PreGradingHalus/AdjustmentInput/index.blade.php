@@ -3,7 +3,7 @@
     Pre Grading Halus
 @endsection
 @section('title')
-    Adjustment Input
+    Grading Halus Adjustment Input
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Adjustment Input
+                                Data Grading Halus Adjustment Input
                                 <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
                                             class="bi bi-plus-circle"></i></strong>
@@ -114,17 +114,19 @@
                                             <td class="text-center">{{ $ADJI->user_created }}</td>
                                             <td class="text-center">{{ $ADJI->user_updated }}</td>
                                             <td class="text-center">{{ $ADJI->created_at }}</td>
-                                            <td class="text-center">{{ $ADJI->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $ADJI->created_at != $ADJI->updated_at ? $ADJI->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $ADJI->id }}"
-                                                        action="{{ route('AdjustmentInput.destroy', $ADJI->id) }}"
+                                                        action="{{ route('GradingHalusAdjustmentInput.destroy', $ADJI->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('AdjustmentInput.show', $ADJI->id) }}"
+                                                        {{-- <a href="{{ route('AdjustmentInput.show', $ADJI->id) }}"
                                                             class="btn btn-link" title="View"
                                                             data-original-title="View">
                                                             <i class="bi bi-eye"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         @csrf
                                                         @method('DELETE')
                                                         {{-- <button type="button" class="btn btn-link"
@@ -143,7 +145,7 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Adjustment Input belum Tersedia.
+                                            Data Grading Halus Adjustment Input belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -158,7 +160,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ url('/adjustment_input/create') }}";
+            window.location.href = "{{ url('/grading_halus_adjustment_input/create') }}";
         }
 
         function confirmDelete(id) {
