@@ -39,6 +39,7 @@ class PreGradingHalusInputService
             // Validasi untuk setiap item dalam dataArray
             $validator = Validator::make($mergedData, [
                 'nomor_bstb' => 'required', // Ganti dengan nama field yang sesuai
+                'unit' => 'required', // Ganti dengan nama field yang sesuai
                 // ... tambahkan validasi lain sesuai kebutuhan
             ]);
 
@@ -212,13 +213,6 @@ class PreGradingHalusInputService
                         // Perbarui data untuk setiap item yang ada
                         $existingItem->update(['status' => 1]);
                     }
-                } else {
-                    // Jika tidak ada item PreCleaningOutput yang sesuai, buat baru dengan status 1
-                    PreCleaningOutput::create([
-                        'nomor_bstb' => $PreCleaningI->nomor_bstb,
-                        'status' => 1,
-                        // Tambahkan kolom-kolom lain sesuai kebutuhan
-                    ]);
                 }
             }
 
