@@ -88,29 +88,13 @@ class GradingHalusInputService
                     // Create instance of GradingHalusInput
                     GradingHalusInput::create($mergedData);
 
-                    // GradingHalusStock::create([
-                    //     'unit'                  => $mergedData['unit'] ?? 'grading halus',
-                    //     'id_box_grading_halus'  => $mergedData['id_box_grading_halus'],
-                    //     'nomor_batch'           => $mergedData['nomor_batch'],
-                    //     'nomor_nota_internal'   => $mergedData['nomor_nota_internal'],
-                    //     'nama_supplier'         => $mergedData['nama_supplier'],
-                    //     'jenis'                 => $mergedData['jenis_raw_material'],
-                    //     'berat_masuk'           => $mergedData['berat_grading'] ?? 0,
-                    //     'pcs_masuk'             => $mergedData['pcs_grading'] ?? 0,
-                    //     'berat_keluar'          => $mergedData['berat_keluars'] ?? 0,
-                    //     'pcs_keluar'            => $mergedData['pcs_keluars'] ?? 0,
-                    //     'sisa_berat'            => $mergedData['berat_grading'] ?? 0,
-                    //     'sisa_pcs'              => $mergedData['pcs_grading'] ?? 0,
-                    //     'modal'                 => $mergedData['modal'],
-                    //     'total_modal'           => $mergedData['total_modal'],
-                    //     'user_created'          => $mergedData['user_created'],
-                    //     'user_update'           => $mergedData['user_updated'] ?? `"There isn't any"`,
-                    // ]);
-
                     $grading = GradingHalusStock::where('id_box_grading_halus', $mergedData['id_box_grading_halus'])
                         ->first();
 
                     if ($grading) {
+                        // $total_berat = $grading->berat_masuk + ($mergedData['berat_grading'] ?? 0);
+                        $hpp = $this->HppService->recalculateHpp($grading->berat_masuk, $grading->modal, $mergedData['fix_total_hpp'], $mergedData['berat_grading']);
+
                         // Update existing grading data
                         $grading->update([
                             'berat_masuk'       => $grading->berat_masuk + ($mergedData['berat_grading'] ?? 0),
@@ -119,6 +103,8 @@ class GradingHalusInputService
                             'pcs_keluar'        => $grading->pcs_keluar + ($mergedData['pcs_keluars'] ?? 0),
                             'sisa_berat'        => $grading->sisa_berat + ($mergedData['berat_grading'] ?? 0),
                             'sisa_pcs'          => $grading->sisa_pcs + ($mergedData['pcs_grading'] ?? 0),
+                            'modal'             => $hpp,
+                            'total_modal'       => $hpp * ($grading->sisa_berat + $mergedData['berat_grading']),
                             'user_update'       => $mergedData['user_updated'] ?? "There isn't any",
                         ]);
                     } else {

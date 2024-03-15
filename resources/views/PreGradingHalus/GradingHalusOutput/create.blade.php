@@ -116,7 +116,7 @@
                                     <div class="form-group">
                                         <label>Berat Job</label>
                                         <input type="text" id="berat_job" pattern="[0-9]*" inputmode="numeric"
-                                            onkeypress="return event.charCode >= 68 && event.charCode <= 57"
+                                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                             class="form-control" name="berat_job" value="{{ old('berat_job') }}"
                                             placeholder="Masukkan berat job" data-parsley-required="true">
                                     </div>
