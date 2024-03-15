@@ -55,7 +55,7 @@ class PreGradingHalusAddingService
             'tujuan_kirim'          => $item->tujuan_kirim,
             'modal'                 => $item->modal,
             'total_modal'           => $item->total_modal,
-            // 'user_created'          => $item->user_created ?? "Admin123",
+            'user_created'          => $item->user_created ?? "There isn't any",
             // 'user_updated'          => $item->user_updated ?? "Admin123",
         ]);
 

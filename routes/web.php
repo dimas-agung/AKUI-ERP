@@ -263,6 +263,10 @@ Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusAddingStoc
     Route::delete('/pre_grading_halus_adding_stock/destroy/{id}', 'destroy')->name('PreGradingHalusAddingStock.destroy');
 });
 
+Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusStockContoller::class)->group(function () {
+    Route::get('/grading_halus_stock', 'index')->name('GradingHalusStock.index');
+});
+
 Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusAdjustmentAddingController::class)->group(function () {
     Route::get('/grading_halus_adjustment_adding', 'index')->name('GradingHalusAdjustmentAdding.index');
     Route::get('/grading_halus_adjustment_adding/create', 'create')->name('GradingHalusAdjustmentAdding.create');

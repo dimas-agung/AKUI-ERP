@@ -36,6 +36,7 @@ class GradingHalusAdjustmentInput extends Model
         'selisih_laba_rugi_per_gram',
         'hpp',
         'total_hpp',
+        'fix_hpp',
         'fix_total_hpp',
         'user_created',
         'user_updated',

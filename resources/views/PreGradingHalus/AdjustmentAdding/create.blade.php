@@ -54,39 +54,59 @@
                     </div>
                     <div class="col-md-4">
                         <label for="sisa_berat" class="form-label">Sisa Berat</label>
-                        <input type="text" class="form-control" id="sisa_berat" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="sisa_berat" readonly>
                     </div>
                     <div class="col-md-4">
                         <label for="sisa_pcs" class="form-label">Sisa Pcs</label>
-                        <input type="text" class="form-control" id="sisa_pcs" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="sisa_pcs" readonly>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="berat_adding" class="form-label">Berat Adding</label>
-                        <input type="text" class="form-control" id="berat_adding">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="berat_adding">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="pcs_adding" class="form-label">Pcs Adding</label>
-                        <input type="text" class="form-control" id="pcs_adding">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="pcs_adding">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <input type="text" class="form-control" id="keterangan">
                     </div>
                     <div class="col-md-3">
+                        <label for="user_created" class="form-label">NIP Admin</label>
+                        <input type="text" class="form-control" id="user_created">
+                    </div>
+                    <div class="col-md-3">
                         <label for="modal" class="form-label">Modal</label>
-                        <input type="text" class="form-control" id="modal" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="modal" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="total_modal" class="form-label">Total Modal</label>
-                        <input type="text" class="form-control" id="total_modal" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="total_modal" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="total_berat" class="form-label">Total Berat</label>
-                        <input type="text" class="form-control" id="total_berat" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="total_berat" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="total_pcs" class="form-label">Total Pcs</label>
-                        <input type="text" class="form-control" id="total_pcs" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="total_pcs" readonly>
                     </div>
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" onclick="addRow()">Tambah</button>
@@ -263,7 +283,7 @@
             // Menghitung total modal
             let totalModal = beratAdding * modal;
             // Memasukkan hasil perhitungan ke dalam input total modal
-            $('#total_modal').val(totalModal);
+            $('#total_modal').val(totalModal.toFixed(4));
         }
 
         // Memanggil fungsi calculateTotalModal setiap kali berat adding berubah
@@ -309,6 +329,7 @@
             let pcsAdding = $('#pcs_adding').val();
             let modal = $('#modal').val();
             let totalModal = $('#total_modal').val();
+            let user_created = $('#user_created').val();
 
             // Memeriksa setiap input, dan jika kosong, tambahkan ke daftar kolom yang belum diisi
             if (!idBoxGradingHalus) emptyFields.push('ID Box Grading Halus');
@@ -320,6 +341,7 @@
             if (!pcsAdding) emptyFields.push('Pcs Adding');
             if (!modal) emptyFields.push('Modal');
             if (!totalModal) emptyFields.push('Total Modal');
+            if (!user_created) emptyFields.push('NIP Admin');
 
             // Jika daftar kolom yang belum diisi tidak kosong, tampilkan pesan peringatan
             if (emptyFields.length > 0) {
@@ -349,6 +371,7 @@
                 let keterangan = $('#keterangan').val();
                 let modal = $('#modal').val();
                 let totalModal = $('#total_modal').val();
+                let user_created = $('#user_created').val();
 
                 // Membuat baris HTML baru untuk ditambahkan ke tabel
                 let newRow = `<tr>` +
@@ -379,7 +402,8 @@
                     sisa_pcs: sisaPcs,
                     keterangan: keterangan,
                     modal: modal,
-                    total_modal: totalModal
+                    total_modal: totalModal,
+                    user_created: user_created
                 });
 
                 // Mengosongkan nilai input formulir

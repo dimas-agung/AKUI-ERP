@@ -39,6 +39,7 @@ return new class extends Migration
             $table->float('selisih_laba_rugi_per_gram', 16, 4);
             $table->float('hpp', 16, 4);
             $table->float('total_hpp', 16, 4);
+            $table->float('fix_hpp', 16, 4);
             $table->float('fix_total_hpp', 16, 4);
             $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();

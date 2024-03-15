@@ -65,35 +65,55 @@
                     </div>
                     <div class="col-md-3">
                         <label for="kadar_air" class="form-label">Kadar Air</label>
-                        <input type="text" class="form-control" id="kadar_air" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="kadar_air" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="berat_kirim" class="form-label">Berat Kirim</label>
-                        <input type="text" class="form-control" id="berat_kirim" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="berat_kirim" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="pcs_kirim" class="form-label">Pcs Kirim</label>
-                        <input type="text" class="form-control" id="pcs_kirim" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="pcs_kirim" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="modal" class="form-label">Modal</label>
-                        <input type="text" class="form-control" id="modal" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="modal" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="total_modal" class="form-label">Total Modal</label>
-                        <input type="text" class="form-control" id="total_modal" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="total_modal" readonly>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <label for="user_created" class="form-label">NIP Admin</label>
+                        <input type="text" class="form-control" id="user_created">
+                    </div>
+                    <div class="col-md-3">
                         <label for="susut" class="form-label">Total Box</label>
-                        <input type="text" class="form-control" id="total_box" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="total_box" readonly>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="susut" class="form-label">Total Berat</label>
-                        <input type="text" class="form-control" id="total_berat" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="total_berat" readonly>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="susut" class="form-label">Total Pcs</label>
-                        <input type="text" class="form-control" id="total_pcs" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="total_pcs" readonly>
                     </div>
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" onclick="addRow()">Tambah</button>
@@ -261,6 +281,7 @@
             let kadar_air = $('#kadar_air').val();
             let pcs_kirim = $('#pcs_kirim').val();
             let berat_kirim = $('#berat_kirim').val();
+            let user_created = $('#user_created').val();
             // let berat_pre_cleaning = $('#berat_precleaning').val();
             // let pcs_pre_cleaning = $('#pcs').val();
             // let susut = $('#susut').val();
@@ -269,8 +290,8 @@
             // susutTabel = susutTabel.padStart(4, '0');
 
             // Validasi input (sesuai kebutuhan)
-            if (!nomor_job || !id_box_grading_kasar) {
-                alert('Nomor Job Dan ID Box Grading Kasar Required.');
+            if (!nomor_job || !id_box_grading_kasar || user_created) {
+                alert('Nomor Job, ID Box Grading Kasar dan NIP Admin Required.');
                 return;
             }
             // test
@@ -362,6 +383,7 @@
                 total_modal: total_modal,
                 berat_adding: totalBeratKirim,
                 pcs_adding: totalPcsKirim,
+                user_created: user_created,
 
             });
 

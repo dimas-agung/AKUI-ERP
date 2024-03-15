@@ -35,19 +35,27 @@
                     </div>
                     <div class="col-md-3">
                         <label for="berat_adding" class="form-label">Berat Adding</label>
-                        <input type="text" class="form-control" id="berat_adding" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="berat_adding" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="pcs_adding" class="form-label">Pcs Adding</label>
-                        <input type="text" class="form-control" id="pcs_adding" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="pcs_adding" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="modal" class="form-label">Modal</label>
-                        <input type="text" class="form-control" id="modal" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="modal" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="total_modal" class="form-label">Total Modal</label>
-                        <input type="text" class="form-control" id="total_modal" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="total_modal" readonly>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -61,43 +69,58 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <input type="text" id="harga_estimasi" name="harga_estimasi" readonly>
-                            <input type="text" id="pengurangan_harga" name="pengurangan_harga" readonly>
-                            <input type="text" id="id_box_grading_halus" name="id_box_grading_halus" readonly>
-                            <input type="text" id="kontribusi" name="kontribusi" readonly>
+                            <input type="hidden" id="harga_estimasi" name="harga_estimasi" readonly>
+                            <input type="hidden" id="pengurangan_harga" name="pengurangan_harga" readonly>
+                            <input type="hidden" id="id_box_grading_halus" name="id_box_grading_halus" readonly>
+                            <input type="hidden" id="kontribusi" name="kontribusi" readonly>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="kategori_susut" class="form-label">Kategori Susut</label>
                         <input type="text" class="form-control" id="kategori_susut" readonly>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="berat_adjustment" class="form-label">Berat Adjustment</label>
-                        <input type="text" class="form-control" id="berat_adjustment">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="berat_adjustment">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="pcs_adjustment" class="form-label">Pcs Adjustment</label>
-                        <input type="text" class="form-control" id="pcs_adjustment">
+                        <input onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="pcs_adjustment">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <input type="text" class="form-control" id="keterangan">
                     </div>
                     <div class="col-md-3">
+                        <label for="user_created" class="form-label">NIP Admin</label>
+                        <input type="text" class="form-control" id="user_created">
+                    </div>
+                    <div class="col-md-3">
                         <label for="susut_depan" class="form-label">Susut Depan</label>
-                        <input type="text" class="form-control" id="susut_depan" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="susut_depan" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="susut_belakang" class="form-label">Susut Belakang</label>
-                        <input type="text" class="form-control" id="susut_belakang" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="susut_belakang" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="total_berat" class="form-label">Total Berat</label>
-                        <input type="text" class="form-control" id="total_berat" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="total_berat" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="total_pcs" class="form-label">Total Pcs</label>
-                        <input type="text" class="form-control" id="total_pcs" readonly>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="total_pcs" readonly>
                     </div>
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" onclick="addRow()">Tambah</button>
@@ -370,6 +393,7 @@
             let keterangan = $('#keterangan').val();
             let modal = $('#modal').val();
             let totalModal = $('#total_modal').val();
+            let user_created = $('#user_created').val();
 
             // Memeriksa setiap input, dan jika kosong, tambahkan ke daftar kolom yang belum diisi
             if (!idBoxGradingHalus) emptyFields.push('ID Box Grading Halus');
@@ -383,7 +407,7 @@
             if (!kategoriSusut) emptyFields.push('Kategori Susut');
             if (!beratAdjustment) emptyFields.push('Berat Adjustment');
             if (!pcsAdjustment) emptyFields.push('Pcs Adjustment');
-            // if (!keterangan) emptyFields.push('Keterangan');
+            if (!user_created) emptyFields.push('NIP Admin');
 
             // Jika daftar kolom yang belum diisi tidak kosong, tampilkan pesan peringatan
             if (emptyFields.length > 0) {
@@ -414,6 +438,7 @@
                 let pcsAdjustment = $('#pcs_adjustment').val();
                 let keterangan = $('#keterangan').val();
                 let modal = $('#modal').val();
+                let user_created = $('#user_created').val();
                 let totalModal = $('#total_modal').val();
                 let hargaEstimasi = $('#harga_estimasi').val();
                 let pengurangan_harga = $('#pengurangan_harga').val();
@@ -424,15 +449,18 @@
                 $('#nomor_adjustment').prop('disabled', true);
                 // Harga Estimasi
                 // Mengecek dan menetapkan nilai yang akan dimasukkan ke dalam dataArray
-                let hargaEstimasiToSend = hargaEstimasi;
+                let hargaEstimasiToSend = parseFloat(hargaEstimasi); // Mengonversi hargaEstimasi menjadi angka
                 console.log("Harga Estimasi Lama= " + hargaEstimasiToSend);
-                if (pengurangan_harga === '' || pengurangan_harga === null ||
-                    pengurangan_harga == 0) {
-                    // console.log(presetanse_pengurangan_harga);
-                    hargaEstimasiToSend = hargaEstimasi;
+                if (pengurangan_harga === '' || pengurangan_harga === null || pengurangan_harga == 0) {
+                    hargaEstimasiToSend = parseFloat(
+                        hargaEstimasi); // Jika tidak ada pengurangan harga, tetap gunakan hargaEstimasi asli
                 } else {
-                    hargaEstimasiToSend = modal - (modal * pengurangan_harga);
+                    let modalNumber = parseFloat(modal); // Mengonversi modal menjadi angka
+                    hargaEstimasiToSend = modalNumber - (modalNumber * pengurangan_harga);
                 }
+
+                hargaEstimasiToSend = hargaEstimasiToSend.toFixed(4);
+
 
                 console.log("Harga Estimasi Baru= " + hargaEstimasiToSend)
 
@@ -472,6 +500,7 @@
                     pcs_adjustment: pcsAdjustment,
                     keterangan: keterangan,
                     modal: modal,
+                    user_created: user_created,
                     total_modal: totalModal,
                     harga_estimasi: hargaEstimasiToSend,
                 });

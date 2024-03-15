@@ -88,57 +88,45 @@ class GradingHalusAdjustmentInputService
                     // Create instance of AdjustmentInput
                     GradingHalusAdjustmentInput::create($mergedData);
 
-                    GradingHalusStock::create([
-                        'unit'                  => $mergedData['unit'] ?? 'Grading halus',
-                        'id_box_grading_halus'  => $mergedData['id_box_grading_halus'],
-                        'nomor_batch'           => $mergedData['nomor_batch'],
-                        // 'nomor_nota_internal'   => $mergedData['nomor_nota_internal'],
-                        // 'nama_supplier'         => $mergedData['nama_supplier'],
-                        'jenis'                 => $mergedData['jenis_adjustment'],
-                        'berat_masuk'           => $mergedData['berat_adjustment'] ?? 0,
-                        'pcs_masuk'             => $mergedData['pcs_adjustment'] ?? 0,
-                        'berat_keluar'          => $mergedData['berat_keluars'] ?? 0,
-                        'pcs_keluar'            => $mergedData['pcs_keluars'] ?? 0,
-                        'sisa_berat'            => $mergedData['berat_grading'] ?? 0,
-                        'sisa_pcs'              => $mergedData['pcs_grading'] ?? 0,
-                        'modal'                 => $mergedData['modal'],
-                        'total_modal'           => $mergedData['total_modal'],
-                        'user_created'          => $mergedData['user_created'] ?? `"There isn't any"`,
-                        'user_updated'          => $mergedData['user_updated'] ?? `"There isn't any"`,
-                    ]);
+                    $grading = GradingHalusStock::where('id_box_grading_halus', $mergedData['id_box_grading_halus'])
+                        ->first();
 
-                    $itemObject = (object) $mergedData;
+                    if ($grading) {
+                        // Update existing grading data
 
-                    // // Ambil semua item yang sesuai dengan kriteria
-                    // $existingItems = PreGradingHalusAddingStock::where('nomor_grading', $itemObject->nomor_grading)
-                    //     ->where('nomor_batch', $itemObject->nomor_batch)
-                    //     ->get();
-
-                    // foreach ($existingItems as $existingItem) {
-
-                    //     // Update data dengan nilai baru
-                    //     $existingItem->update([
-                    //         // Update data PreGradingHalusAddingStock
-                    //         'status_stock' => $itemObject->statuss ?? 0,
-                    //         'berat_adding' => $itemObject->berat_addings ?? 0,
-                    //         'pcs_adding'   => $itemObject->pcs_addings ?? 0,
-                    //         'total_modal'  => $itemObject->total_modals ?? 0,
-                    //         'user_updated' => $itemObject->user_created ?? "There isn't any",
-                    //     ]);
-                    // }
-
-                    // $existingItems = MasterJenisGradingHalus::where('jenis', $itemObject->jenis_grading)
-                    //     ->get();
-
-                    // $dataToUpdate = [
-                    //     'status'                => $itemObject->status ?? 0,
-                    // ];
-
-                    // if ($existingItems) {
-                    //     foreach ($existingItems as $existingItem) {
-                    //         $existingItem->update($dataToUpdate);
-                    //     }
-                    // }
+                        $hpp = $this->HppService->recalculateHpp($grading->berat_masuk, $grading->modal, $mergedData['fix_total_hpp'], $mergedData['berat_adjustment']);
+                        $grading->update([
+                            'berat_masuk'       => $grading->berat_masuk + ($mergedData['berat_adjustment'] ?? 0),
+                            'pcs_masuk'         => $grading->pcs_masuk + ($mergedData['pcs_adjustment'] ?? 0),
+                            'berat_keluar'      => $grading->berat_keluar + ($mergedData['berat_keluars'] ?? 0),
+                            'pcs_keluar'        => $grading->pcs_keluar + ($mergedData['pcs_keluars'] ?? 0),
+                            'sisa_berat'        => $grading->sisa_berat + ($mergedData['berat_adjustment'] ?? 0),
+                            'sisa_pcs'          => $grading->sisa_pcs + ($mergedData['pcs_adjustment'] ?? 0),
+                            'modal'             => $hpp,
+                            'total_modal'       => $hpp * ($grading->sisa_berat + $mergedData['berat_adjustment']),
+                            'user_updated'      => $mergedData['user_updated'] ?? "There isn't any",
+                        ]);
+                    } else {
+                        // Create new grading data
+                        GradingHalusStock::create([
+                            'unit'                  => $mergedData['unit'] ?? 'Grading Halus',
+                            'id_box_grading_halus'  => $mergedData['id_box_grading_halus'],
+                            'nomor_batch'           => $mergedData['nomor_batch'],
+                            // 'nomor_nota_internal'   => $mergedData['nomor_nota_internal'],
+                            // 'nama_supplier'         => $mergedData['nama_supplier'],
+                            'jenis'                 => $mergedData['jenis_adjustment'],
+                            'berat_masuk'           => $mergedData['berat_adjustment'] ?? 0,
+                            'pcs_masuk'             => $mergedData['pcs_adjustment'] ?? 0,
+                            'berat_keluar'          => $mergedData['berat_keluars'] ?? 0,
+                            'pcs_keluar'            => $mergedData['pcs_keluars'] ?? 0,
+                            'sisa_berat'            => $mergedData['berat_adjustment'] ?? 0,
+                            'sisa_pcs'              => $mergedData['pcs_adjustment'] ?? 0,
+                            'modal'                 => $mergedData['fix_hpp'],
+                            'total_modal'           => $mergedData['fix_hpp'] * $mergedData['berat_adjustment'],
+                            'user_created'          => $mergedData['user_created'] ?? "There isn't any",
+                            'user_updated'          => $mergedData['user_updated'] ?? "There isn't any",
+                        ]);
+                    }
 
                     DB::commit();
                 } catch (\Exception $e) {
@@ -160,74 +148,106 @@ class GradingHalusAdjustmentInputService
             'redirectTo' => route('GradingHalusAdjustmentInput.index')
         ], 201);
     }
+    // public function destroy($id)
+    // {
+    //     try {
+    //         // Mulai transaksi database
+    //         DB::beginTransaction();
 
-    public function destroy($nomor_grading): RedirectResponse
+    //         // Temukan data GradingHalusAdjustmentInput berdasarkan ID
+    //         $gradingHalusAdjustmentInput = GradingHalusAdjustmentInput::find($id);
+
+    //         if (!$gradingHalusAdjustmentInput) {
+    //             // Jika data tidak ditemukan, kembalikan pesan error
+    //             return [
+    //                 'success' => false,
+    //                 'error' => 'Data tidak ditemukan.',
+    //             ];
+    //         }
+
+    //         // Temukan data GradingHalusStock berdasarkan id_box_grading_halus
+    //         $gradingHalusStock = GradingHalusStock::where('id_box_grading_halus', $gradingHalusAdjustmentInput->id_box_grading_halus)
+    //             ->first();
+
+    //         if ($gradingHalusStock) {
+    //             // Kurangi berat_masuk, pcs_masuk, berat_keluar, dan pcs_keluar di GradingHalusStock
+    //             $gradingHalusStock->berat_masuk -= $gradingHalusAdjustmentInput->berat_adjustment;
+    //             $gradingHalusStock->pcs_masuk -= $gradingHalusAdjustmentInput->pcs_adjustment;
+    //             $gradingHalusStock->berat_keluar -= $gradingHalusAdjustmentInput->berat_keluars;
+    //             $gradingHalusStock->pcs_keluar -= $gradingHalusAdjustmentInput->pcs_keluars;
+    //             $gradingHalusStock->sisa_berat -= $gradingHalusAdjustmentInput->berat_adjustment;
+    //             $gradingHalusStock->sisa_pcs -= $gradingHalusAdjustmentInput->pcs_adjustment;
+    //             $gradingHalusStock->user_updated = auth()->user()->name;
+    //             $gradingHalusStock->save();
+    //         }
+
+    //         // Hapus data GradingHalusAdjustmentInput
+    //         $gradingHalusAdjustmentInput->delete();
+
+    //         // Commit transaksi
+    //         DB::commit();
+
+    //         // Kembalikan respons sukses
+    //         return [
+    //             'success' => true,
+    //             'message' => 'Data berhasil dihapus!',
+    //         ];
+    //     } catch (\Exception $e) {
+    //         // Rollback transaksi jika terjadi kesalahan
+    //         DB::rollback();
+
+    //         // Kembalikan pesan error
+    //         return [
+    //             'success' => false,
+    //             'error' => 'Gagal menghapus data. ' . $e->getMessage(),
+    //         ];
+    //     }
+    // }
+
+    public function hapusData($id)
     {
         try {
-            // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
-            // Ambil data PreCleaningInput berdasarkan nomor_grading
-            $GradingHalusAdjustmentInputs = GradingHalusAdjustmentInput::where('nomor_grading', '=', $nomor_grading)->get();
+            // Dapatkan id_box_grading_halus dan nomor_batch berdasarkan ID
+            $data = GradingHalusAdjustmentInput::select('id_box_grading_halus', 'nomor_batch')->find($id);
 
-            if ($GradingHalusAdjustmentInputs->isEmpty()) {
-                // Redirect ke index dengan pesan error jika data tidak ditemukan
-                return redirect()->route('GradingHalusAdjustmentInput.index')->with(['error' => 'Data tidak ditemukan!']);
-            }
+            if ($data) {
+                // Hapus data dari GradingHalusAdjustmentInput berdasarkan id_box_grading_halus dan nomor_batch
+                GradingHalusAdjustmentInput::where('id_box_grading_halus', $data->id_box_grading_halus)
+                    ->where('nomor_batch', $data->nomor_batch)
+                    ->delete();
 
-            foreach ($GradingHalusAdjustmentInputs as $PreCleaningI) {
-                // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
-                $PreCleaningS = GradingHalusStock::where('id_box_grading_halus', '=', $PreCleaningI->id_box_grading_halus)
+                // Perbarui data di GradingHalusStock
+                $gradingHalusStock = GradingHalusStock::where('id_box_grading_halus', $data->id_box_grading_halus)
+                    ->where('nomor_batch', $data->nomor_batch)
                     ->first();
 
-                if ($PreCleaningS) {
-                    // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                    $stockPrmRawMaterial = PreGradingHalusAddingStock::where('nomor_grading', '=', $PreCleaningI->nomor_grading)
-                        ->first();
-
-                    if ($stockPrmRawMaterial) {
-                        // Simpan nilai sebelum dihapus
-                        $beratSebelumnya = $stockPrmRawMaterial->berat_adding;
-                        $pcsSebelumnya = $stockPrmRawMaterial->pcs_adding;
-                        $totalModalSebelumnya = $stockPrmRawMaterial->total_modal;
-
-                        // Hitung perbedaan berat dan pcs
-                        $perbedaanBerat = $PreCleaningI->berat_adding;
-                        $perbedaanPcs = $PreCleaningI->pcs_adding;
-
-                        // Hitung total modal baru
-                        $totalModalBaru = $perbedaanBerat * $PreCleaningI->modal;
-
-                        // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
-                        $stockPrmRawMaterial->update([
-                            'berat_adding' => max($beratSebelumnya + $perbedaanBerat, 0),
-                            'pcs_adding' => max($pcsSebelumnya + $perbedaanPcs, 0),
-                            'total_modal' => max($totalModalBaru, 0),
-                            'status_stock' => 1,
-                        ]);
-                    }
+                if ($gradingHalusStock) {
+                    $gradingHalusStock->berat_masuk -= $data->berat_adjustment ?? 0;
+                    $gradingHalusStock->pcs_masuk -= $data->pcs_adjustment ?? 0;
+                    $gradingHalusStock->sisa_berat -= $data->berat_adjustment ?? 0;
+                    $gradingHalusStock->sisa_pcs -= $data->pcs_adjustment ?? 0;
+                    $gradingHalusStock->save();
                 }
-
-                if ($PreCleaningS) {
-                    // Hapus data PreCleaningStock
-                    $PreCleaningS->delete();
-                }
-
-                // Hapus data GradingHalusAdjustmentInput
-                $PreCleaningI->delete();
+            } else {
+                // Jika data tidak ditemukan, langsung hapus dari GradingHalusAdjustmentInput
+                GradingHalusAdjustmentInput::where('id', $id)->delete();
             }
 
-            // Commit transaksi
             DB::commit();
 
-            // Redirect ke index dengan pesan sukses
-            return redirect()->route('GradingHalusAdjustmentInput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            return [
+                'success' => true,
+                'message' => 'Data berhasil dihapus!',
+            ];
         } catch (\Exception $e) {
-            // Rollback transaksi jika terjadi kesalahan
-            DB::rollback();
+            DB::rollBack();
 
-            // Redirect ke index dengan pesan error
-            return redirect()->route('GradingHalusAdjustmentInput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return [
+                'success' => false,
+                'error' => 'Gagal menghapus data. ' . $e->getMessage(),
+            ];
         }
     }
 }

@@ -67,8 +67,22 @@ class GradingHalusAdjustmentInputController extends Controller
         return $this->GradingHalusAdjustmentInputService->store($request);
     }
     // destroy
-    public function destroy($nomor_grading): RedirectResponse
+    // public function destroy($id): RedirectResponse
+    // {
+    //     return $this->GradingHalusAdjustmentInputService->destroy($id);
+    // }
+    public function destroy($id): RedirectResponse
     {
-        return $this->GradingHalusAdjustmentInputService->destroy($nomor_grading);
+        // Panggil fungsi hapusData dari GradingHalusAdjustmentInputService
+        $result = $this->GradingHalusAdjustmentInputService->hapusData($id);
+
+        // Periksa hasil panggilan fungsi hapusData
+        if ($result['success']) {
+            // Jika berhasil, redirect ke index dengan pesan sukses
+            return redirect()->route('GradingHalusAdjustmentInput.index')->with('success', $result['message']);
+        } else {
+            // Jika gagal, redirect ke index dengan pesan error
+            return redirect()->route('GradingHalusAdjustmentInput.index')->with('error', $result['error']);
+        }
     }
 }

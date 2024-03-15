@@ -53,6 +53,7 @@
                                         <th scope="col" class="text-center">Selisih Labah Rugi Per Gram</th>
                                         <th scope="col" class="text-center">Hpp</th>
                                         <th scope="col" class="text-center">Total Hpp</th>
+                                        <th scope="col" class="text-center">Fix Hpp</th>
                                         <th scope="col" class="text-center">Fix Total Hpp</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
@@ -83,9 +84,11 @@
                                             <td class="text-center">{{ $ADJI->kategori_susut }}</td>
                                             <td class="text-center">{{ number_format($ADJI->susut_depan, 2, ',', '.') }}
                                             </td>
-                                            <td class="text-center">{{ number_format($ADJI->susut_belakang, 2, ',', '.') }}
+                                            <td class="text-center">
+                                                {{ number_format($ADJI->susut_belakang, 2, ',', '.') }}
                                             </td>
-                                            <td class="text-center">{{ number_format($ADJI->biaya_produksi, 2, ',', '.') }}
+                                            <td class="text-center">
+                                                {{ number_format($ADJI->biaya_produksi, 2, ',', '.') }}
                                             </td>
                                             <td class="text-center">{{ number_format($ADJI->kontribusi, 2, ',', '.') }}
                                             </td>
@@ -108,6 +111,8 @@
                                                 {{ number_format($ADJI->selisih_laba_rugi_per_gram, 2, ',', '.') }}</td>
                                             <td class="text-center">{{ number_format($ADJI->hpp, 2, ',', '.') }}</td>
                                             <td class="text-center">{{ number_format($ADJI->total_hpp, 2, ',', '.') }}
+                                            </td>
+                                            <td class="text-center">{{ number_format($ADJI->fix_hpp, 2, ',', '.') }}
                                             </td>
                                             <td class="text-center">{{ number_format($ADJI->fix_total_hpp, 2, ',', '.') }}
                                             </td>
