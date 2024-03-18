@@ -17,7 +17,7 @@ class TransitPreCleaningStockController extends Controller
         // $PrmRawMOH = PrmRawMaterialOutputHeader::with('StockTransitGradingKasar')->get();
         $PreCleaningOutput = PreCleaningOutput::with('TransitPreCleaningStock')->get();
         // return $PrmRawMOI;
-        return response()->view('pre_cleaning.transit_pre_cleaning_stock.index', [
+        return response()->view('PreCleaning.TransitPreCleaningStock.index', [
             'transit_pre_cleaning_stocks' => $TransitPreCleaningStock,
             'pre_cleaning_outputs' => $PreCleaningOutput,
             'i' => $i,
