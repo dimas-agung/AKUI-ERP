@@ -7,16 +7,16 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card border border-primary border-3 mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center mb-3">
                     <h4 class="card-title">Pre Cleaning Output</h4>
                 </div>
                 <hr>
                 <form method="POST" class="row g-3" id="myForm">
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <label for="basic-usage" class="form-label">Nomor Job</label>
-                        <select class="choices form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
+                        <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($pre_cleaning_stocks as $PreCS)
@@ -25,7 +25,27 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div> --}}
+                    <div class="col-md-12">
+                        <label for="basic-usage" class="form-label">Nomor Job</label>
+                        <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
+                            data-placeholder="Pilih Nomor Job">
+                            <option value="">Pilih Nomor Job</option>
+                            @foreach ($pre_cleaning_stocks as $PreCS)
+                                @php
+                                    // Menghitung sisa berat
+                                    $sisaBerat = $PreCS->berat_masuk - $PreCS->berat_keluar;
+                                @endphp
+                                {{-- Menambahkan kondisi untuk menampilkan hanya jika sisa berat tidak sama dengan 0 --}}
+                                @if ($sisaBerat != 0)
+                                    <option value="{{ $PreCS->nomor_job }}">
+                                        {{ $PreCS->nomor_job }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
+
                     {{-- <input type="hidden" id="sisa_berat"> --}}
                     {{-- <div class="col-md-4"> --}}
                     {{-- <label for="id_box_grading_kasar" class="form-label">ID Box Grading Kasar</label> --}}
@@ -86,9 +106,9 @@
                     {{-- </div> --}}
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Sikat & Kompresor</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="operator_sikat_dan_kompresor" id="operator_sikat_dan_kompresor"
-                            placeholder="Pilih Operator Sikat & Kompresor">
+                            data-placeholder="Pilih Operator Sikat & Kompresor">
                             <option value="">Pilih Operator Sikat & Kompresor</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
                                 @if ($MasterSPRM->job == 'Sikat + Kompresor' && $MasterSPRM->status == 1)
@@ -101,8 +121,8 @@
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Flex & Poles</label>
-                        <select class="choices form-select" style="width: 100%;" name="operator_flex_dan_poles"
-                            id="operator_flex_dan_poles" placeholder="Pilih Operator Flex & Poles">
+                        <select class="select2 form-select" style="width: 100%;" name="operator_flex_dan_poles"
+                            id="operator_flex_dan_poles" data-placeholder="Pilih Operator Flex & Poles">
                             <option value="">Pilih Operator Flex & Poles</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
                                 @if ($MasterSPRM->job == 'Flek + Poles' && $MasterSPRM->status == 1)
@@ -116,7 +136,7 @@
 
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Cutter</label>
-                        <select class="choices form-select" style="width: 100%;" name="operator_cutter"
+                        <select class="select2 form-select" style="width: 100%;" name="operator_cutter"
                             id="operator_cutter" data-placeholder="Pilih Operator Cutter">
                             <option value="">Pilih Operator Cutter</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
@@ -128,56 +148,82 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="kuningan" class="form-label">Kuningan</label>
-                        <input type="text" class="form-control" id="kuningan">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="kuningan">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="Sterofoam" class="form-label">Sterofoam</label>
-                        <input type="text" class="form-control" id="Sterofoam">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="Sterofoam">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="karat" class="form-label">Karat</label>
-                        <input type="text" class="form-control" id="karat">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="karat">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label for="rontokan_flex" class="form-label">Rontokan Flex</label>
-                        <input type="text" class="form-control" id="rontokan_flex">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="rontokan_flex">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label for="rontokan_bahan" class="form-label">Rontokan Bahan</label>
-                        <input type="text" class="form-control" id="rontokan_bahan">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="rontokan_bahan">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label for="rontokan_serabut" class="form-label">Rontokan Serabut</label>
-                        <input type="text" class="form-control" id="rontokan_serabut">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="rontokan_serabut">
                     </div>
                     <div class="col-md-3">
                         <label for="ws" class="form-label">WS-0-0-0</label>
-                        <input type="text" class="form-control" id="ws">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="ws">
                     </div>
                     <div class="col-md-3">
                         <label for="berat_precleaning" class="form-label">Berat Precleaning</label>
-                        <input type="text" class="form-control" id="berat_precleaning">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="berat_precleaning">
                     </div>
                     <div class="col-md-3">
                         <label for="pcs" class="form-label">Pcs</label>
-                        <input type="text" class="form-control" id="pcs">
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="pcs">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <input type="text" class="form-control" id="keterangan">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="user_created" class="form-label">NIP Admin</label>
+                        <input type="text" class="form-control" id="user_created">
                     </div>
                     <div class="col-md-3">
                         <label for="susut" class="form-label">Susut</label>
                         <input type="text" class="form-control" id="susut" readonly>
                     </div>
-                    <div class="col-md-4">
-                        <label for="susut" class="form-label">Total Box</label>
+                    <div class="col-md-3">
+                        <label for="total_box" class="form-label">Total Box</label>
                         <input type="text" class="form-control" id="total_box" readonly>
                     </div>
-                    <div class="col-md-4">
-                        <label for="susut" class="form-label">Total Berat</label>
+                    <div class="col-md-3">
+                        <label for="total_berat" class="form-label">Total Berat</label>
                         <input type="text" class="form-control" id="total_berat" readonly>
                     </div>
-                    <div class="col-md-4">
-                        <label for="susut" class="form-label">Total Pcs</label>
+                    <div class="col-md-3">
+                        <label for="total_pcs" class="form-label">Total Pcs</label>
                         <input type="text" class="form-control" id="total_pcs" readonly>
                     </div>
                     <div class="col-12">
@@ -189,7 +235,7 @@
         </div>
     </div>
     <div class="col-md-12">
-        <div class="card mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="card-body" style="overflow: scroll">
                     <table class="table" id="dataTable">
@@ -211,6 +257,7 @@
                                 <th scope="col" class="text-center">Tujuan Kirim</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
+                                {{-- <th scope="col" class="text-center">Sisa Berat</th> --}}
                                 <th scope="col" class="text-center">Operator Flek & Kompresor</th>
                                 <th scope="col" class="text-center">Operator Flek & Poles</th>
                                 <th scope="col" class="text-center">Operator Cutter</th>
@@ -224,6 +271,7 @@
                                 <th scope="col" class="text-center">Berat Pre Cleaning</th>
                                 <th scope="col" class="text-center">Pcs</th>
                                 <th scope="col" class="text-center">Susut</th>
+                                <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -369,9 +417,11 @@
             }
         });
 
-        let dataArray = [];
-        // ADD ROW
-        function addRow() {
+        function validateForm() {
+            // Mendefinisikan variabel untuk menyimpan kolom yang belum diisi
+            let emptyFields = [];
+
+            // Mendapatkan nilai dari semua input
             // Mengambil nilai dari input
             let nomor_job = $('#nomor_job').val();
             let id_box_grading_kasar = $('#id_box_grading_kasar').val();
@@ -401,111 +451,175 @@
             let berat_pre_cleaning = $('#berat_precleaning').val();
             let pcs_pre_cleaning = $('#pcs').val();
             let susut = $('#susut').val();
-            let susutTabel = parseFloat(susut).toFixed(2);
-            susutTabel = susutTabel.replace('.', '');
-            susutTabel = susutTabel.padStart(4, '0');
+            let user_created = $('#user_created').val();
 
-            // Validasi input (sesuai kebutuhan)
-            if (!nomor_job || !id_box_grading_kasar) {
-                alert('Nomor Job Dan ID Box Grading Kasar Required.');
-                return;
+            // Memeriksa setiap input, dan jika kosong, tambahkan ke daftar kolom yang belum diisi
+            if (!nomor_job) emptyFields.push('Nomor Job');
+            if (!operator_sikat_kompresor) emptyFields.push('Operator Sikat Kompresor');
+            if (!operator_flek_poles) emptyFields.push('Operator Flek Poles');
+            if (!operator_flek_cutter) emptyFields.push('Operator Flek Cutter');
+            if (!kuningan) emptyFields.push('Kuningan');
+            if (!sterofoam) emptyFields.push('Sterofoam');
+            if (!karat) emptyFields.push('Karat');
+            if (!rontokan_fisik) emptyFields.push('Rontokan Fisik');
+            if (!rontokan_bahan) emptyFields.push('Rontokan Bahan');
+            if (!rontokan_serabut) emptyFields.push('Rontokan Serabut');
+            if (!ws_0_0_0) emptyFields.push('ws_0_0_0');
+            if (!berat_pre_cleaning) emptyFields.push('Berat Pre Cleaning');
+            if (!pcs_pre_cleaning) emptyFields.push('Pcs Pre Cleaning');
+            if (!user_created) emptyFields.push('NIP Admin');
+
+            // Jika daftar kolom yang belum diisi tidak kosong, tampilkan pesan peringatan
+            if (emptyFields.length > 0) {
+                Swal.fire({
+                    title: 'Warning!',
+                    html: "Harap isi kolom berikut: <br>" + emptyFields.join('<br>'),
+                    icon: 'warning'
+                });
+                return false;
+            } else {
+                return true; // Form valid
             }
+        }
 
-            let newRow = '<tr>' +
-                '<td class="text-center">' + nomor_job + '</td>' +
-                '<td class="text-center">' + id_box_grading_kasar + '</td>' +
-                '<td class="text-center">' + nomor_bstb + '</td>' +
-                '<td class="text-center">' + id_box_raw_material + '</td>' +
-                '<td class="text-center">' + nomor_batch + '</td>' +
-                '<td class="text-center">' + nomor_nota_internal + '</td>' +
-                '<td class="text-center">' + nama_supplier + '</td>' +
-                '<td class="text-center">' + jenis_raw_material + '</td>' +
-                '<td class="text-center">' + kadar_air + '</td>' +
-                '<td class="text-center">' + jenis_kirim + '</td>' +
-                '<td class="text-center">' + berat_kirim + '</td>' +
-                '<td class="text-center">' + pcs_kirim + '</td>' +
-                '<td class="text-center">' + tujuan_kirim + '</td>' +
-                '<td class="text-center">' + modal + '</td>' +
-                '<td class="text-center">' + total_modal + '</td>' +
-                '<td class="text-center">' + operator_sikat_kompresor + '</td>' +
-                '<td class="text-center">' + operator_flek_poles + '</td>' +
-                '<td class="text-center">' + operator_flek_cutter + '</td>' +
-                '<td class="text-center">' + kuningan + '</td>' +
-                '<td class="text-center">' + sterofoam + '</td>' +
-                '<td class="text-center">' + karat + '</td>' +
-                '<td class="text-center">' + rontokan_fisik + '</td>' +
-                '<td class="text-center">' + rontokan_bahan + '</td>' +
-                '<td class="text-center">' + rontokan_serabut + '</td>' +
-                '<td class="text-center">' + ws_0_0_0 + '</td>' +
-                '<td class="text-center">' + berat_pre_cleaning + '</td>' +
-                '<td class="text-center">' + pcs_pre_cleaning + '</td>' +
-                '<td class="text-center">' + susutTabel + '</td>' +
-                // '<td class="text-center">' + "sisa_berat" + '</td>' +
-                '<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
-                '</tr>';
-            // Tambahkan Kedalam Tabel
-            $('#dataTable tbody').append(newRow);
+        let dataArray = [];
+        // ADD ROW
+        function addRow() {
+            if (validateForm()) {
+                // Mengambil nilai dari input
+                let nomor_job = $('#nomor_job').val();
+                let id_box_grading_kasar = $('#id_box_grading_kasar').val();
+                let nomor_bstb = $('#nomor_bstb').val();
+                let id_box_raw_material = $('#id_box_raw_material').val();
+                let nomor_batch = $('#nomor_batch').val();
+                let nomor_nota_internal = $('#nomor_nota_internal').val();
+                let nama_supplier = $('#nama_supplier').val();
+                let jenis_raw_material = $('#jenis_raw_material').val();
+                let jenis_kirim = $('#jenis_kirim').val();
+                let tujuan_kirim = $('#tujuan_kirim').val();
+                let modal = $('#modal').val();
+                let total_modal = $('#total_modal').val();
+                let kadar_air = $('#kadar_air').val();
+                let pcs_kirim = $('#pcs_kirim').val();
+                let berat_kirim = $('#berat_kirim').val();
+                let operator_sikat_kompresor = $('#operator_sikat_dan_kompresor').val();
+                let operator_flek_poles = $('#operator_flex_dan_poles').val();
+                let operator_flek_cutter = $('#operator_cutter').val();
+                let kuningan = $('#kuningan').val();
+                let sterofoam = $('#Sterofoam').val();
+                let karat = $('#karat').val();
+                let rontokan_fisik = $('#rontokan_flex').val();
+                let rontokan_bahan = $('#rontokan_bahan').val();
+                let rontokan_serabut = $('#rontokan_serabut').val();
+                let ws_0_0_0 = $('#ws').val();
+                let berat_pre_cleaning = $('#berat_precleaning').val();
+                let pcs_pre_cleaning = $('#pcs').val();
+                let susut = $('#susut').val();
+                let user_created = $('#user_created').val();
+                let keterangan = $('#keterangan').val();
+                let susutTabel = parseFloat(susut).toFixed(2);
+                susutTabel = susutTabel.replace('.', '');
+                susutTabel = susutTabel.padStart(4, '0');
 
-            let totalPcsKirim = 0;
-            $('#dataTable tbody tr').each(function() {
-                let pcsKirim = parseFloat($(this).find('td:eq(11)')
-                    .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
-                if (!isNaN(pcsKirim)) {
-                    totalPcsKirim += pcsKirim;
-                }
-            });
+                let newRow = `<tr>` +
+                    `<td class="text-center">${nomor_job}</td>` +
+                    `<td class="text-center">${id_box_grading_kasar}</td>` +
+                    `<td class="text-center">${nomor_bstb}</td>` +
+                    `<td class="text-center">${id_box_raw_material}</td>` +
+                    `<td class="text-center">${nomor_batch}</td>` +
+                    `<td class="text-center">${nomor_nota_internal}</td>` +
+                    `<td class="text-center">${nama_supplier}</td>` +
+                    `<td class="text-center">${jenis_raw_material}</td>` +
+                    `<td class="text-center">${kadar_air}</td>` +
+                    `<td class="text-center">${jenis_kirim}</td>` +
+                    `<td class="text-center">${berat_kirim}</td>` +
+                    `<td class="text-center">${pcs_kirim}</td>` +
+                    `<td class="text-center">${tujuan_kirim}</td>` +
+                    `<td class="text-center">${modal}</td>` +
+                    `<td class="text-center">${total_modal}</td>` +
+                    `<td class="text-center">${operator_sikat_kompresor}</td>` +
+                    `<td class="text-center">${operator_flek_poles}</td>` +
+                    `<td class="text-center">${operator_flek_cutter}</td>` +
+                    `<td class="text-center">${kuningan}</td>` +
+                    `<td class="text-center">${sterofoam}</td>` +
+                    `<td class="text-center">${karat}</td>` +
+                    `<td class="text-center">${rontokan_fisik}</td>` +
+                    `<td class="text-center">${rontokan_bahan}</td>` +
+                    `<td class="text-center">${rontokan_serabut}</td>` +
+                    `<td class="text-center">${ws_0_0_0}</td>` +
+                    `<td class="text-center">${berat_pre_cleaning}</td>` +
+                    `<td class="text-center">${pcs_pre_cleaning}</td>` +
+                    `<td class="text-center">${susutTabel}</td>` +
+                    `<td class="text-center">${user_created}</td>` +
+                    // `<td class="text-center"> + "sisa_berat" + </td>` +
+                    `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
+                    `</tr>`;
+                // Tambahkan Kedalam Tabel
+                $('#dataTable tbody').append(newRow);
 
-            $('#total_pcs').val(totalPcsKirim);
+                let totalPcsKirim = 0;
+                $('#dataTable tbody tr').each(function() {
+                    let pcsKirim = parseFloat($(this).find('td:eq(11)')
+                        .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
+                    if (!isNaN(pcsKirim)) {
+                        totalPcsKirim += pcsKirim;
+                    }
+                });
 
-            let totalBeratKirim = 0;
-            $('#dataTable tbody tr').each(function() {
-                let beratKirim = parseFloat($(this).find('td:eq(10)')
-                    .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
-                if (!isNaN(beratKirim)) {
-                    totalBeratKirim += beratKirim;
-                }
-            });
+                $('#total_pcs').val(totalPcsKirim);
 
-            $('#total_berat').val(totalBeratKirim);
+                let totalBeratKirim = 0;
+                $('#dataTable tbody tr').each(function() {
+                    let beratKirim = parseFloat($(this).find('td:eq(10)')
+                        .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
+                    if (!isNaN(beratKirim)) {
+                        totalBeratKirim += beratKirim;
+                    }
+                });
 
-            let jumlahBaris = $('#dataTable tbody tr').length;
-            // Tampilkan Jumlah Baris di Input dengan ID "total_box"
-            $('#total_box').val(jumlahBaris);
+                $('#total_berat').val(totalBeratKirim);
 
-            dataArray.push({
-                nomor_job: nomor_job,
-                id_box_grading_kasar: id_box_grading_kasar,
-                nomor_bstb: nomor_bstb,
-                id_box_raw_material: id_box_raw_material,
-                nomor_batch: nomor_batch,
-                nomor_nota_internal: nomor_nota_internal,
-                nama_supplier: nama_supplier,
-                jenis_raw_material: jenis_raw_material,
-                kadar_air: kadar_air,
-                jenis_kirim: jenis_kirim,
-                berat_kirim: berat_kirim,
-                pcs_kirim: pcs_kirim,
-                tujuan_kirim: tujuan_kirim,
-                modal: modal,
-                total_modal: total_modal,
-                operator_sikat_kompresor: operator_sikat_kompresor,
-                operator_flek_poles: operator_flek_poles,
-                operator_flek_cutter: operator_flek_cutter,
-                kuningan: kuningan,
-                sterofoam: sterofoam,
-                karat: karat,
-                rontokan_fisik: rontokan_fisik,
-                rontokan_bahan: rontokan_bahan,
-                rontokan_serabut: rontokan_serabut,
-                ws_0_0_0: ws_0_0_0,
-                berat_pre_cleaning: berat_pre_cleaning,
-                pcs_pre_cleaning: pcs_pre_cleaning,
-                susutTabel: susutTabel,
-            });
+                let jumlahBaris = $('#dataTable tbody tr').length;
+                // Tampilkan Jumlah Baris di Input dengan ID "total_box"
+                $('#total_box').val(jumlahBaris);
 
-            // Mengosongkan nilai dropdown nomor_job
-            $('#nomor_job, #id_box_grading_kasar, #nomor_bstb, #id_box_raw_material, #nomor_batch, #nomor_nota_internal, #nama_supplier, #jenis_raw_material, #jenis_kirim, #tujuan_kirim, #modal, #total_modal, #kadar_air, #pcs_kirim, #berat_kirim, #operator_sikat_dan_kompresor, #operator_flex_dan_poles, #operator_cutter, #kuningan, #Sterofoam, #karat, #rontokan_flex, #rontokan_bahan,#rontokan_serabut, #ws, #berat_precleaning, #pcs, #susut')
-                .val('');
+                dataArray.push({
+                    nomor_job: nomor_job,
+                    id_box_grading_kasar: id_box_grading_kasar,
+                    nomor_bstb: nomor_bstb,
+                    id_box_raw_material: id_box_raw_material,
+                    nomor_batch: nomor_batch,
+                    nomor_nota_internal: nomor_nota_internal,
+                    nama_supplier: nama_supplier,
+                    jenis_raw_material: jenis_raw_material,
+                    kadar_air: kadar_air,
+                    jenis_kirim: jenis_kirim,
+                    berat_kirim: berat_kirim,
+                    pcs_kirim: pcs_kirim,
+                    tujuan_kirim: tujuan_kirim,
+                    modal: modal,
+                    total_modal: total_modal,
+                    operator_sikat_kompresor: operator_sikat_kompresor,
+                    operator_flek_poles: operator_flek_poles,
+                    operator_flek_cutter: operator_flek_cutter,
+                    kuningan: kuningan,
+                    sterofoam: sterofoam,
+                    karat: karat,
+                    rontokan_fisik: rontokan_fisik,
+                    rontokan_bahan: rontokan_bahan,
+                    rontokan_serabut: rontokan_serabut,
+                    ws_0_0_0: ws_0_0_0,
+                    berat_pre_cleaning: berat_pre_cleaning,
+                    pcs_pre_cleaning: pcs_pre_cleaning,
+                    susutTabel: susutTabel,
+                    keterangan: keterangan,
+                    user_created: user_created,
+                });
+
+                // Mengosongkan nilai dropdown nomor_job
+                $('#nomor_job, #id_box_grading_kasar, #nomor_bstb, #id_box_raw_material, #nomor_batch, #nomor_nota_internal, #nama_supplier, #jenis_raw_material, #jenis_kirim, #tujuan_kirim, #modal, #total_modal, #kadar_air, #pcs_kirim, #berat_kirim, #operator_sikat_dan_kompresor, #operator_flex_dan_poles, #operator_cutter, #kuningan, #Sterofoam, #karat, #rontokan_flex, #rontokan_bahan,#rontokan_serabut, #ws, #berat_precleaning, #pcs, #susut')
+                    .val('');
+            }
 
         }
 
