@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AdjustmentInput extends Model
+class GradingHalusAdjustmentInput extends Model
 {
     use HasFactory;
-    protected $table = 'adjustment_inputs';
+    protected $table = 'grading_halus_adjustment_inputs';
     protected $fillable = [
         'nomor_adjustment',
         'nomor_batch',
@@ -36,13 +36,14 @@ class AdjustmentInput extends Model
         'selisih_laba_rugi_per_gram',
         'hpp',
         'total_hpp',
+        'fix_hpp',
         'fix_total_hpp',
         'user_created',
         'user_updated',
     ];
-    public function AdjustmentStock()
+    public function GradingHalusAdjustmentStock()
     {
-        return $this->hasMany(AdjustmentStock::class, 'nomor_adjustment', 'nomor_adjustment');
+        return $this->hasMany(GradingHalusAdjustmentStock::class, 'nomor_adjustment', 'nomor_adjustment');
     }
     public function MasterJenisGradingHalus()
     {

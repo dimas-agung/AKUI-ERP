@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AdjustmentAdding extends Model
+class GradingHalusAdjustmentAdding extends Model
 {
     use HasFactory;
-    protected $table = 'adjustment_addings';
+    protected $table = 'grading_halus_adjustment_addings';
     protected $fillable = [
         'id_box_grading_halus',
         'nomor_batch',
@@ -25,5 +25,9 @@ class AdjustmentAdding extends Model
     public function GradingHalusStock()
     {
         return $this->hasMany(GradingHalusStock::class, 'id_box_grading_halus', 'id_box_grading_halus');
+    }
+    public function GradingHalusAdjustmentStock()
+    {
+        return $this->hasMany(GradingHalusAdjustmentStock::class, 'nomor_adjustment', 'nomor_adjustment');
     }
 }

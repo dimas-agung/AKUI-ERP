@@ -3,7 +3,7 @@
     Pre Grading Halus
 @endsection
 @section('title')
-    Adjustment Stock
+    Grading Halus Adjustment Stock
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Adjustment Stock
+                                Data Grading Halus Adjustment Stock
                                 {{-- <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
                                             class="bi bi-plus-circle"></i></strong>
@@ -39,11 +39,11 @@
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
-                                        <th scope="col" class="text-center">Action</th>
+                                        {{-- <th scope="col" class="text-center">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($adjustment_stocks as $ADJS)
+                                    @forelse ($grading_halus_adjustment_stocks as $ADJS)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $ADJS->unit }}</td>
@@ -64,23 +64,25 @@
                                             <td class="text-center">{{ $ADJS->user_created }}</td>
                                             <td class="text-center">{{ $ADJS->user_updated }}</td>
                                             <td class="text-center">{{ $ADJS->created_at }}</td>
-                                            <td class="text-center">{{ $ADJS->updated_at }}</td>
                                             <td class="text-center">
+                                                {{ $ADJS->created_at != $ADJS->updated_at ? $ADJS->updated_at : '' }}
+                                            </td>
+                                            {{-- <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $ADJS->id }}"
-                                                        action="{{ route('AdjustmentStock.destroy', $ADJS->id) }}"
+                                                        action="{{ route('GradingHalusAdjustmentStock.destroy', $ADJS->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('AdjustmentStock.show', $ADJS->id) }}"
+                                                        <a href="{{ route('GradingHalusAdjustmentStock.show', $ADJS->id) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
                                                         </a>
                                                         @csrf
                                                         @method('DELETE')
-                                                        {{-- <button type="button" class="btn btn-link"
+                                                        <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
                                                             onclick="confirmDelete({{ $ADJ->id }})">
                                                             <i class="bi bi-trash3 text-danger"></i>
-                                                        </button> --}}
+                                                        </button>
                                                         <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
                                                             onclick="confirmDelete({{ $ADJS->id }})">
@@ -88,11 +90,11 @@
                                                         </button>
                                                     </form>
                                                 </div>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Adjustment Stock belum Tersedia.
+                                            Data Grading Halus Adjustment Stock belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -107,7 +109,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ url('/adjustment_stock/create') }}";
+            window.location.href = "{{ url('/grading_halus_adjustment_stock/create') }}";
         }
 
         function confirmDelete(id) {

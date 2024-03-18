@@ -80,4 +80,11 @@ class HppService
         }
         return $fix_hpp;
     }
+    function recalculateHpp($berat_masuk_stock, $modal_stock, $total_hpp_input, $berat_input)
+    {
+        $sumTotalHpp = ($berat_masuk_stock * $modal_stock) + $total_hpp_input;
+        $sumTotalBeratMasuk = ($berat_masuk_stock + $berat_input);
+        $Hpp = $sumTotalHpp / $sumTotalBeratMasuk;
+        return $Hpp;
+    }
 }

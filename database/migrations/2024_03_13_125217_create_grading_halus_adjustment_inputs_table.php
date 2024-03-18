@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('adjustment_inputs', function (Blueprint $table) {
+        Schema::create('grading_halus_adjustment_inputs', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_adjustment');
             $table->string('nomor_batch');
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('id_box_grading_halus');
             $table->float('susut_depan', 16, 4);
             $table->float('susut_belakang', 16, 4);
-            $table->float('biaya_produksi', 16, 4);
+            $table->float('biaya_produksi', 16, 4)->default(0);
             $table->float('kontribusi', 16, 4);
             $table->float('harga_estimasi', 16, 4);
             $table->float('total_harga', 16, 4);
@@ -39,6 +39,7 @@ return new class extends Migration
             $table->float('selisih_laba_rugi_per_gram', 16, 4);
             $table->float('hpp', 16, 4);
             $table->float('total_hpp', 16, 4);
+            $table->float('fix_hpp', 16, 4);
             $table->float('fix_total_hpp', 16, 4);
             $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
@@ -51,6 +52,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('adjustment_inputs');
+        Schema::dropIfExists('grading_halus_adjustment_inputs');
     }
 };
