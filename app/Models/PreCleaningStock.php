@@ -30,7 +30,7 @@ class PreCleaningStock extends Model
         'total_modal',
         'keterangan',
         'user_created',
-        'user_update',
+        'user_updated',
     ];
     public function preCleaningInputs()
     {

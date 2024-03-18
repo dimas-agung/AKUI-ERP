@@ -81,6 +81,7 @@ class GradingHalusOutputService
                         // Hitung sisa berat dan sisa pcs
                         $sisaBerat = $existingItem->berat_masuk - ($itemObject->berat_job ?? 0);
                         $sisaPcs = $existingItem->pcs_masuk - ($itemObject->pcs_job ?? 0);
+                        $totalModal = $sisaBerat * ($existingItem->modal ?? 0);
 
                         // Update data dengan nilai baru
                         $existingItem->update([
@@ -89,6 +90,7 @@ class GradingHalusOutputService
                             'pcs_keluar'   => $itemObject->pcs_job ?? 0,
                             'sisa_berat'   => $sisaBerat,
                             'sisa_pcs'     => $sisaPcs,
+                            'total_modal'  => $totalModal,
                             'user_updated' => $itemObject->user_created ?? "There isn't any",
                         ]);
                     }
@@ -165,10 +167,11 @@ class GradingHalusOutputService
 
                             // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
                             $stockPrmRawMaterial->update([
-                                'berat_keluar' => max(0, $stockPrmRawMaterial->berat_keluar),
-                                'pcs_keluar' => max(0, $stockPrmRawMaterial->pcs_keluar),
+                                'berat_keluar' => max(0, $stockPrmRawMaterial->berat_keluars),
+                                'pcs_keluar' => max(0, $stockPrmRawMaterial->pcs_keluars),
                                 'sisa_berat' => max($beratSebelumnya, 0),
                                 'sisa_pcs' => max($pcsSebelumnya, 0),
+                                'total_modal' => max($pcsSebelumnya, 0),
                             ]);
                         }
                     }
