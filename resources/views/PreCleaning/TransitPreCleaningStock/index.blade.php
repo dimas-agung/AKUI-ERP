@@ -7,17 +7,13 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card mt-2 border border-primary border-3">
+        <div class="card border border-primary border-3 mt-2">
             <div class="card-body">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Transit Pre Cleaning Stock
-                                {{-- <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong><i class="bi bi-plus-circle"></i> Add Data <i
-                                            class="bi bi-plus-circle"></i></strong>
-                                </button> --}}
                             </div>
                         </h5>
                     </div>
@@ -30,6 +26,7 @@
                                         <th scope="col" class="text-center">Nomor Job</th>
                                         <th scope="col" class="text-center">ID Box Grading Kasar</th>
                                         <th scope="col" class="text-center">Nomor BSTB</th>
+                                        <th scope="col" class="text-center">Nomor Batch</th>
                                         <th scope="col" class="text-center">Nama Supplier</th>
                                         <th scope="col" class="text-center">Nomor Nota Internal</th>
                                         <th scope="col" class="text-center">ID Box Raw Material</th>
@@ -47,62 +44,43 @@
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
-                                        <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($transit_pre_cleaning_stocks as $TPCS)
-                                        <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_job }}</td>
-                                            <td class="text-center">{{ $TPCS->id_box_grading_kasar }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_bstb }}</td>
-                                            <td class="text-center">{{ $TPCS->nama_supplier }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_nota_internal }}</td>
-                                            <td class="text-center">{{ $TPCS->id_box_raw_material }}</td>
-                                            <td class="text-center">{{ $TPCS->jenis_raw_material }}</td>
-                                            <td class="text-center">{{ $TPCS->jenis_kirim }}</td>
-                                            <td class="text-center">{{ number_format($TPCS->berat_kirim, 0, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">{{ number_format($TPCS->pcs_kirim, 0, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($TPCS->kadar_air, 2, ',', '.') }}</td>
-                                            <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_grading }}</td>
-                                            <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">{{ $TPCS->keterangan }}</td>
-                                            <td class="text-center">{{ $TPCS->user_created }}</td>
-                                            <td class="text-center">{{ $TPCS->user_updated }}</td>
-                                            <td class="text-center">{{ $TPCS->created_at }}</td>
-                                            <td class="text-center">
-                                                {{ $TPCS->created_at != $TPCS->updated_at ? $TPCS->updated_at : '' }}
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $TPCS->id }}"
-                                                        action="{{ route('TransitPreCleaningStock.destroy', $TPCS->id) }}"
-                                                        method="POST">
-                                                        {{-- <a href="{{ route('TransitPreCleaningStock.show', $TPCS->id) }}"
-                                                            class="btn btn-link" title="View" data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a> --}}
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $TPCS->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <div class="alert alert-danger">
-                                            Data Pre Cleaning Output belum Tersedia.
-                                        </div>
-                                    @endforelse
+                                    <?php $i = 1; ?>
+                                    <?php foreach ($transit_pre_cleaning_stocks as $TPCS): ?>
+                                    <?php if($TPCS->berat_kirim != 0 || $TPCS->total_modal != 0): ?>
+                                    <tr>
+                                        <td class="text-center">{{ $i++ }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_job }}</td>
+                                        <td class="text-center">{{ $TPCS->id_box_grading_kasar }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_bstb }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_batch }}</td>
+                                        <td class="text-center">{{ $TPCS->nama_supplier }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_nota_internal }}</td>
+                                        <td class="text-center">{{ $TPCS->id_box_raw_material }}</td>
+                                        <td class="text-center">{{ $TPCS->jenis_raw_material }}</td>
+                                        <td class="text-center">{{ $TPCS->jenis_kirim }}</td>
+                                        <td class="text-center">{{ $TPCS->berat_kirim }}</td>
+                                        <td class="text-center">{{ $TPCS->pcs_kirim }}</td>
+                                        <td class="text-center">{{ number_format($TPCS->kadar_air, 2, ',', '.') }}</td>
+                                        <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_grading }}</td>
+                                        <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}</td>
+                                        <td class="text-center">{{ $TPCS->keterangan }}</td>
+                                        <td class="text-center">{{ $TPCS->user_created }}</td>
+                                        <td class="text-center">{{ $TPCS->user_updated }}</td>
+                                        <td class="text-center">{{ $TPCS->created_at }}</td>
+                                        <td class="text-center">{{ $TPCS->updated_at }}</td>
+                                    </tr>
+                                    <?php endif; ?>
+                                    <?php endforeach; ?>
+                                    <?php if (empty($transit_pre_cleaning_stocks)): ?>
+                                    <div class="alert alert-danger">
+                                        Data Pre Cleaning Output belum Tersedia.
+                                    </div>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
