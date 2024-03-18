@@ -17,7 +17,7 @@
                     <div class="col-md-12">
                         <label for="basic-usage" class="form-label">Nomor Job</label>
                         <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
-                            placeholder="Pilih Nomor Job">
+                            data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($pre_grading_halus_stocks as $PreGHS)
                                 <option value="{{ $PreGHS->nomor_job }}">
@@ -229,6 +229,38 @@
         });
 
 
+        // $(document).ready(function() {
+        //     // Menangani perubahan pada dropdown nomor_job
+        //     $('#nomor_job').on('change', function() {
+        //         // Memanggil fungsi generateNomorGrading ketika nomor_job berubah
+        //         generateNomorGrading();
+        //     });
+
+        //     // Fungsi untuk generate nomor_bstb
+        //     function generateNomorGrading() {
+        //         const now = new Date();
+        //         const tahun = now.getFullYear().toString().substr(-2);
+        //         const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+        //         const tanggal = ('0' + now.getDate()).slice(-2);
+        //         const jam = ('0' + now.getHours()).slice(-2);
+        //         const menit = ('0' + now.getMinutes()).slice(-2);
+        //         const detik = ('0' + now.getSeconds()).slice(-2);
+
+        //         // Mengambil nilai dari dropdown nomor_job
+        //         const nomorJobValue = $('#nomor_job').val().split('_');
+
+        //         // Mengambil bagian ketiga (indeks 2) dari array hasil split
+        //         const bagianKetiga = nomorJobValue[2][0];
+
+        //         // Menghasilkan nomor_bstb berdasarkan rumus yang diinginkan
+        //         const nomor_grading = `NG_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_${bagianKetiga}_UGH`;
+
+        //         // Memasukkan nilai yang dihasilkan ke dalam input nomor_bstb
+        //         $('#nomor_grading').val(nomor_grading);
+        //         console.log(nomor_grading);
+        //     }
+        // });
+
         $(document).ready(function() {
             // Menangani perubahan pada dropdown nomor_job
             $('#nomor_job').on('change', function() {
@@ -238,6 +270,11 @@
 
             // Fungsi untuk generate nomor_bstb
             function generateNomorGrading() {
+                // Cek apakah input nomor_grading sudah terisi, jika sudah, tidak perlu generate ulang
+                if ($('#nomor_grading').val() !== '') {
+                    return;
+                }
+
                 const now = new Date();
                 const tahun = now.getFullYear().toString().substr(-2);
                 const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
@@ -261,135 +298,161 @@
             }
         });
 
-        let dataArray = [];
-        // ADD ROW
-        function addRow() {
-            // Mengambil nilai dari input
+
+        function validateForm() {
+            // Mendefinisikan variabel untuk menyimpan kolom yang belum diisi
+            let emptyFields = [];
+
+            // Mendapatkan nilai dari semua input
             let nomor_job = $('#nomor_job').val();
             let nomor_grading = $('#nomor_grading').val();
             let nomor_nota_internal = $('#nomor_nota_internal').val();
             let id_box_grading_kasar = $('#id_box_grading_kasar').val();
             let id_box_raw_material = $('#id_box_raw_material').val();
-            // let nomor_bstb = $('#nomor_bstb').val();
             let nomor_batch = $('#nomor_batch').val();
             let nama_supplier = $('#nama_supplier').val();
             let jenis_raw_material = $('#jenis_raw_material').val();
             let jenis_kirim = $('#jenis_kirim').val();
             let tujuan_kirim = $('#tujuan_kirim').val();
+            let kadar_air = $('#kadar_air').val();
             let modal = $('#modal').val();
             let total_modal = $('#total_modal').val();
-            let kadar_air = $('#kadar_air').val();
             let pcs_kirim = $('#pcs_kirim').val();
             let berat_kirim = $('#berat_kirim').val();
             let user_created = $('#user_created').val();
-            // let berat_pre_cleaning = $('#berat_precleaning').val();
-            // let pcs_pre_cleaning = $('#pcs').val();
-            // let susut = $('#susut').val();
-            // let susutTabel = parseFloat(susut).toFixed(2);
-            // susutTabel = susutTabel.replace('.', '');
-            // susutTabel = susutTabel.padStart(4, '0');
 
-            // Validasi input (sesuai kebutuhan)
-            if (!nomor_job || !id_box_grading_kasar || user_created) {
-                alert('Nomor Job, ID Box Grading Kasar dan NIP Admin Required.');
-                return;
+            // Memeriksa setiap input, dan jika kosong, tambahkan ke daftar kolom yang belum diisi
+            if (!nomor_job) emptyFields.push('Nomor Job');
+            if (!nomor_grading) emptyFields.push('Nomor Grading');
+            if (!nomor_nota_internal) emptyFields.push('Nomor Nota Internal');
+            if (!id_box_grading_kasar) emptyFields.push('Id Box Grading Kasar');
+            if (!id_box_raw_material) emptyFields.push('Id Box Raw Material');
+            if (!nomor_batch) emptyFields.push('Nomor Batch');
+            if (!nama_supplier) emptyFields.push('Nama Supplier');
+            if (!jenis_raw_material) emptyFields.push('Jenis Raw Material');
+            if (!jenis_kirim) emptyFields.push('Jenis Kirim');
+            if (!tujuan_kirim) emptyFields.push('Tujuan Kirim');
+            if (!kadar_air) emptyFields.push('Kadar Air');
+            if (!modal) emptyFields.push('Modal');
+            if (!total_modal) emptyFields.push('Total Modal');
+            if (!pcs_kirim) emptyFields.push('Pcs Kirim');
+            if (!berat_kirim) emptyFields.push('Berat Kirim');
+            if (!user_created) emptyFields.push('NIP Admin');
+
+            // Jika daftar kolom yang belum diisi tidak kosong, tampilkan pesan peringatan
+            if (emptyFields.length > 0) {
+                Swal.fire({
+                    title: 'Warning!',
+                    html: "Harap isi kolom berikut: <br>" + emptyFields.join('<br>'),
+                    icon: 'warning'
+                });
+                return false;
+            } else {
+                return true; // Form valid
             }
-            // test
-            var newRow = `<tr>` +
-                `<td class="text-center">${nomor_job}</td>` +
-                `<td class="text-center">${nomor_grading}</td>` +
-                `<td class="text-center">${nomor_nota_internal}</td>` +
-                `<td class="text-center">${id_box_grading_kasar}</td>` +
-                `<td class="text-center">${id_box_raw_material}</td>` +
-                `<td class="text-center">${nomor_batch}</td>` +
-                `<td class="text-center">${nama_supplier}</td>` +
-                `<td class="text-center">${jenis_raw_material}</td>` +
-                `<td class="text-center">${jenis_kirim}</td>` +
-                `<td class="text-center">${tujuan_kirim}</td>` +
-                `<td class="text-center">${berat_kirim}</td>` +
-                `<td class="text-center">${pcs_kirim}</td>` +
-                `<td class="text-center">${kadar_air}</td>` +
-                `<td class="text-center">${modal}</td>` +
-                `<td class="text-center">${total_modal}</td>` +
-                // `<td class="text-center">${fix_harga_deal.toFixed(4)}</td>` +
-                `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
-                `</tr>`
-            $('#dataTable tbody').append(newRow);
-            // test
+        }
 
-            // let newRow = '<tr>' +
-            //     '<td class="text-center">' + nomor_job + '</td>' +
-            //     '<td class="text-center">' + nomor_job + '</td>' +
-            //     '<td class="text-center">' + id_box_grading_kasar + '</td>' +
-            //     '<td class="text-center">' + id_box_raw_material + '</td>' +
-            //     '<td class="text-center">' + nomor_batch + '</td>' +
-            //     '<td class="text-center">' + nomor_nota_internal + '</td>' +
-            //     '<td class="text-center">' + nama_supplier + '</td>' +
-            //     '<td class="text-center">' + jenis_raw_material + '</td>' +
-            //     '<td class="text-center">' + kadar_air + '</td>' +
-            //     '<td class="text-center">' + jenis_kirim + '</td>' +
-            //     '<td class="text-center">' + berat_kirim + '</td>' +
-            //     '<td class="text-center">' + pcs_kirim + '</td>' +
-            //     '<td class="text-center">' + tujuan_kirim + '</td>' +
-            //     '<td class="text-center">' + modal + '</td>' +
-            //     '<td class="text-center">' + total_modal + '</td>' +
-            //     // '<td class="text-center">' + "sisa_berat" + '</td>' +
-            //     '<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
-            //     '</tr>';
-            // // Tambahkan Kedalam Tabel
-            // $('#dataTable tbody').append(newRow);
+        let dataArray = [];
+        // ADD ROW
+        function addRow() {
+            if (validateForm()) {
+                // Mengambil nilai dari input
+                let nomor_job = $('#nomor_job').val();
+                let nomor_grading = $('#nomor_grading').val();
+                let nomor_nota_internal = $('#nomor_nota_internal').val();
+                let id_box_grading_kasar = $('#id_box_grading_kasar').val();
+                let id_box_raw_material = $('#id_box_raw_material').val();
+                // let nomor_bstb = $('#nomor_bstb').val();
+                let nomor_batch = $('#nomor_batch').val();
+                let nama_supplier = $('#nama_supplier').val();
+                let jenis_raw_material = $('#jenis_raw_material').val();
+                let jenis_kirim = $('#jenis_kirim').val();
+                let tujuan_kirim = $('#tujuan_kirim').val();
+                let modal = $('#modal').val();
+                let total_modal = $('#total_modal').val();
+                let kadar_air = $('#kadar_air').val();
+                let pcs_kirim = $('#pcs_kirim').val();
+                let berat_kirim = $('#berat_kirim').val();
+                let user_created = $('#user_created').val();
+                // let berat_pre_cleaning = $('#berat_precleaning').val();
+                // let pcs_pre_cleaning = $('#pcs').val();
+                // let susut = $('#susut').val();
+                // let susutTabel = parseFloat(susut).toFixed(2);
+                // susutTabel = susutTabel.replace('.', '');
+                // susutTabel = susutTabel.padStart(4, '0');
+                var newRow = `<tr>` +
+                    `<td class="text-center">${nomor_job}</td>` +
+                    `<td class="text-center">${nomor_grading}</td>` +
+                    `<td class="text-center">${nomor_nota_internal}</td>` +
+                    `<td class="text-center">${id_box_grading_kasar}</td>` +
+                    `<td class="text-center">${id_box_raw_material}</td>` +
+                    `<td class="text-center">${nomor_batch}</td>` +
+                    `<td class="text-center">${nama_supplier}</td>` +
+                    `<td class="text-center">${jenis_raw_material}</td>` +
+                    `<td class="text-center">${jenis_kirim}</td>` +
+                    `<td class="text-center">${tujuan_kirim}</td>` +
+                    `<td class="text-center">${berat_kirim}</td>` +
+                    `<td class="text-center">${pcs_kirim}</td>` +
+                    `<td class="text-center">${kadar_air}</td>` +
+                    `<td class="text-center">${modal}</td>` +
+                    `<td class="text-center">${total_modal}</td>` +
+                    // `<td class="text-center">${fix_harga_deal.toFixed(4)}</td>` +
+                    `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
+                    `</tr>`
+                $('#dataTable tbody').append(newRow);
 
-            let totalPcsKirim = 0;
-            $('#dataTable tbody tr').each(function() {
-                let pcsKirim = parseFloat($(this).find('td:eq(11)')
-                    .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
-                if (!isNaN(pcsKirim)) {
-                    totalPcsKirim += pcsKirim;
-                }
-            });
+                let totalPcsKirim = 0;
+                $('#dataTable tbody tr').each(function() {
+                    let pcsKirim = parseFloat($(this).find('td:eq(11)')
+                        .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
+                    if (!isNaN(pcsKirim)) {
+                        totalPcsKirim += pcsKirim;
+                    }
+                });
 
-            $('#total_pcs').val(totalPcsKirim);
+                $('#total_pcs').val(totalPcsKirim);
 
-            let totalBeratKirim = 0;
-            $('#dataTable tbody tr').each(function() {
-                let beratKirim = parseFloat($(this).find('td:eq(10)')
-                    .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
-                if (!isNaN(beratKirim)) {
-                    totalBeratKirim += beratKirim;
-                }
-            });
+                let totalBeratKirim = 0;
+                $('#dataTable tbody tr').each(function() {
+                    let beratKirim = parseFloat($(this).find('td:eq(10)')
+                        .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
+                    if (!isNaN(beratKirim)) {
+                        totalBeratKirim += beratKirim;
+                    }
+                });
 
-            $('#total_berat').val(totalBeratKirim);
+                $('#total_berat').val(totalBeratKirim);
 
-            let jumlahBaris = $('#dataTable tbody tr').length;
-            // Tampilkan Jumlah Baris di Input dengan ID "total_box"
-            $('#total_box').val(jumlahBaris);
+                let jumlahBaris = $('#dataTable tbody tr').length;
+                // Tampilkan Jumlah Baris di Input dengan ID "total_box"
+                $('#total_box').val(jumlahBaris);
 
-            dataArray.push({
-                nomor_job: nomor_job,
-                nomor_grading: nomor_grading,
-                id_box_grading_kasar: id_box_grading_kasar,
-                id_box_raw_material: id_box_raw_material,
-                nomor_batch: nomor_batch,
-                nomor_nota_internal: nomor_nota_internal,
-                nama_supplier: nama_supplier,
-                jenis_raw_material: jenis_raw_material,
-                kadar_air: kadar_air,
-                jenis_kirim: jenis_kirim,
-                berat_kirim: berat_kirim,
-                pcs_kirim: pcs_kirim,
-                tujuan_kirim: tujuan_kirim,
-                modal: modal,
-                total_modal: total_modal,
-                berat_adding: totalBeratKirim,
-                pcs_adding: totalPcsKirim,
-                user_created: user_created,
+                dataArray.push({
+                    nomor_job: nomor_job,
+                    nomor_grading: nomor_grading,
+                    id_box_grading_kasar: id_box_grading_kasar,
+                    id_box_raw_material: id_box_raw_material,
+                    nomor_batch: nomor_batch,
+                    nomor_nota_internal: nomor_nota_internal,
+                    nama_supplier: nama_supplier,
+                    jenis_raw_material: jenis_raw_material,
+                    kadar_air: kadar_air,
+                    jenis_kirim: jenis_kirim,
+                    berat_kirim: berat_kirim,
+                    pcs_kirim: pcs_kirim,
+                    tujuan_kirim: tujuan_kirim,
+                    modal: modal,
+                    total_modal: total_modal,
+                    berat_adding: totalBeratKirim,
+                    pcs_adding: totalPcsKirim,
+                    user_created: user_created,
 
-            });
+                });
 
-            // Mengosongkan nilai dropdown nomor_job
-            $('#nomor_job, #id_box_grading_kasar, #nomor_grading, #id_box_raw_material, #nomor_batch, #nomor_nota_internal, #nama_supplier, #jenis_raw_material, #jenis_kirim, #tujuan_kirim, #modal, #total_modal, #kadar_air, #pcs_kirim, #berat_kirim, #operator_sikat_dan_kompresor, #operator_flex_dan_poles, #operator_cutter, #kuningan, #Sterofoam, #karat, #rontokan_flex, #rontokan_bahan,#rontokan_serabut, #ws, #berat_precleaning, #pcs, #susut')
-                .val('');
+                // Mengosongkan nilai dropdown nomor_job
+                $('#nomor_job, #id_box_grading_kasar, #id_box_raw_material, #nomor_batch, #nomor_nota_internal, #nama_supplier, #jenis_raw_material, #jenis_kirim, #tujuan_kirim, #modal, #total_modal, #kadar_air, #pcs_kirim, #berat_kirim, #operator_sikat_dan_kompresor, #operator_flex_dan_poles, #operator_cutter, #kuningan, #Sterofoam, #karat, #rontokan_flex, #rontokan_bahan,#rontokan_serabut, #ws, #berat_precleaning, #pcs, #susut')
+                    .val('');
+            }
 
         }
 

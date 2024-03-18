@@ -28,6 +28,7 @@
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Nomor Job</th>
+                                        <th scope="col" class="text-center">Nomor Grading</th>
                                         <th scope="col" class="text-center">ID Box Grading Kasar</th>
                                         <th scope="col" class="text-center">ID Box Raw Material</th>
                                         <th scope="col" class="text-center">Nomor Batch</th>
@@ -53,39 +54,37 @@
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $PGHA->nomor_job }}</td>
+                                            <td class="text-center">{{ $PGHA->nomor_grading }}</td>
                                             <td class="text-center">{{ $PGHA->id_box_grading_kasar }}</td>
                                             <td class="text-center">{{ $PGHA->id_box_raw_material }}</td>
                                             <td class="text-center">{{ $PGHA->nomor_batch }}</td>
                                             <td class="text-center">{{ $PGHA->nomor_nota_internal }}</td>
                                             <td class="text-center">{{ $PGHA->nama_supplier }}</td>
                                             <td class="text-center">{{ $PGHA->jenis_raw_material }}</td>
-                                            {{-- <td class="text-center">{{ $PGHA->kadar_air }}</td> --}}
                                             <td class="text-center">{{ number_format($PGHA->kadar_air, 2, ',', '.') }}</td>
                                             <td class="text-center">{{ $PGHA->jenis_kirim }}</td>
-                                            {{-- <td class="text-center">{{ $PGHA->berat_kirim }}</td> --}}
                                             <td class="text-center">{{ number_format($PGHA->berat_kirim, 0, ',', '.') }}
                                             </td>
-                                            {{-- <td class="text-center">{{ $PGHA->pcs_kirim }}</td> --}}
                                             <td class="text-center">{{ number_format($PGHA->pcs_kirim, 0, ',', '.') }}</td>
                                             <td class="text-center">{{ $PGHA->tujuan_kirim }}</td>
-                                            {{-- <td class="text-center">{{ $PGHA->modal }}</td> --}}
                                             <td class="text-center">{{ number_format($PGHA->modal, 2, ',', '.') }}</td>
-                                            {{-- <td class="text-center">{{ $PGHA->total_modal }}</td> --}}
                                             <td class="text-center">{{ number_format($PGHA->total_modal, 2, ',', '.') }}
                                             </td>
                                             <td class="text-center">{{ $PGHA->user_created }}</td>
                                             <td class="text-center">{{ $PGHA->user_updated }}</td>
                                             <td class="text-center">{{ $PGHA->created_at }}</td>
-                                            <td class="text-center">{{ $PGHA->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $PGHA->created_at != $PGHA->updated_at ? $PGHA->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $PGHA->id }}"
                                                         action="{{ route('PreGradingHalusAdding.destroy', $PGHA->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('PreGradingHalusAdding.show', $PGHA->id) }}"
+                                                        {{-- <a href="{{ route('PreGradingHalusAdding.show', $PGHA->id) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         @csrf
                                                         @method('DELETE')
                                                         {{-- <button type="button" class="btn btn-link"
