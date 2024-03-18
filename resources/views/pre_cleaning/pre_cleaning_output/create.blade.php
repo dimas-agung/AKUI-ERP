@@ -14,7 +14,7 @@
                 </div>
                 <hr>
                 <form method="POST" class="row g-3" id="myForm">
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <label for="basic-usage" class="form-label">Nomor Job</label>
                         <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             placeholder="Pilih Nomor Job">
@@ -25,7 +25,27 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div> --}}
+                    <div class="col-md-12">
+                        <label for="basic-usage" class="form-label">Nomor Job</label>
+                        <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
+                            data-placeholder="Pilih Nomor Job">
+                            <option value="">Pilih Nomor Job</option>
+                            @foreach ($pre_cleaning_stocks as $PreCS)
+                                @php
+                                    // Menghitung sisa berat
+                                    $sisaBerat = $PreCS->berat_masuk - $PreCS->berat_keluar;
+                                @endphp
+                                {{-- Menambahkan kondisi untuk menampilkan hanya jika sisa berat tidak sama dengan 0 --}}
+                                @if ($sisaBerat != 0)
+                                    <option value="{{ $PreCS->nomor_job }}">
+                                        {{ $PreCS->nomor_job }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
+
                     {{-- <input type="hidden" id="sisa_berat"> --}}
                     {{-- <div class="col-md-4"> --}}
                     {{-- <label for="id_box_grading_kasar" class="form-label">ID Box Grading Kasar</label> --}}
@@ -88,7 +108,7 @@
                         <label for="basic-usage" class="form-label">Operator Sikat & Kompresor</label>
                         <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="operator_sikat_dan_kompresor" id="operator_sikat_dan_kompresor"
-                            placeholder="Pilih Operator Sikat & Kompresor">
+                            data-placeholder="Pilih Operator Sikat & Kompresor">
                             <option value="">Pilih Operator Sikat & Kompresor</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
                                 @if ($MasterSPRM->job == 'Sikat + Kompresor' && $MasterSPRM->status == 1)
@@ -102,7 +122,7 @@
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Flex & Poles</label>
                         <select class="select2 form-select" style="width: 100%;" name="operator_flex_dan_poles"
-                            id="operator_flex_dan_poles" placeholder="Pilih Operator Flex & Poles">
+                            id="operator_flex_dan_poles" data-placeholder="Pilih Operator Flex & Poles">
                             <option value="">Pilih Operator Flex & Poles</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
                                 @if ($MasterSPRM->job == 'Flek + Poles' && $MasterSPRM->status == 1)
@@ -146,19 +166,19 @@
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="karat">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="rontokan_flex" class="form-label">Rontokan Flex</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="rontokan_flex">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="rontokan_bahan" class="form-label">Rontokan Bahan</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="rontokan_bahan">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="rontokan_serabut" class="form-label">Rontokan Serabut</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
@@ -181,6 +201,10 @@
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="pcs">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <input type="text" class="form-control" id="keterangan">
                     </div>
                     <div class="col-md-3">
                         <label for="user_created" class="form-label">NIP Admin</label>
@@ -492,6 +516,7 @@
                 let pcs_pre_cleaning = $('#pcs').val();
                 let susut = $('#susut').val();
                 let user_created = $('#user_created').val();
+                let keterangan = $('#keterangan').val();
                 let susutTabel = parseFloat(susut).toFixed(2);
                 susutTabel = susutTabel.replace('.', '');
                 susutTabel = susutTabel.padStart(4, '0');
@@ -587,6 +612,7 @@
                     berat_pre_cleaning: berat_pre_cleaning,
                     pcs_pre_cleaning: pcs_pre_cleaning,
                     susutTabel: susutTabel,
+                    keterangan: keterangan,
                     user_created: user_created,
                 });
 
