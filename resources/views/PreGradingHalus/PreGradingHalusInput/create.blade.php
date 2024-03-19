@@ -207,6 +207,7 @@
                             '#tableBody'
                         );
                         tableBody.empty();
+                        dataArray = [];
                         // Mengatur nilai elemen-elemen sesuai dengan respons dari server
                         $.each(response, function(index, rowData) {
                             console.log(rowData);
@@ -231,7 +232,6 @@
                             // Tambahkan baris ke dalam tabel
                             tableBody.append(newRow);
                             // Bersihkan dataArray sebelum menambahkan data baru
-                            dataArray = [];
                             // Menyimpan data dalam dataArray
                             dataArray.push({
                                 unit: $('#unit').val(),
@@ -255,22 +255,6 @@
                             });
                         });
                         console.log(dataArray);
-                        // } else {
-                        //     // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
-                        //     // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
-                        //     Swal.fire({
-                        //         title: 'Warning!',
-                        //         text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
-                        //         icon: 'error'
-                        //     }).then((result) => {
-                        //         // Refresh halaman saat menekan tombol "OK" pada SweetAlert
-                        //         if (result.isConfirmed) {
-                        //             location.reload();
-                        //         }
-                        //     });
-                        //     // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
-                        //     $('#nomor_bstb').val('');
-                        // }
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -280,6 +264,7 @@
         });
 
         function sendData() {
+            console.log(dataArray);
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
                 url: '{{ route('PreGradingHalusInput.store') }}',

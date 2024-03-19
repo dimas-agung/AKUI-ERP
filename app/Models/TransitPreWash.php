@@ -14,7 +14,6 @@ class TransitPreWash extends Model
         'nomor_job',
         'nomor_batch',
         'status',
-        'nomor_bstb',
         'jenis_job',
         'berat_job',
         'pcs_job',
