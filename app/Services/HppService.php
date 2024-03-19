@@ -87,4 +87,11 @@ class HppService
         $Hpp = $sumTotalHpp / $sumTotalBeratMasuk;
         return $Hpp;
     }
+    function recalculateHppAfterDelete($berat_masuk_stock, $modal_stock, $total_hpp_delete, $berat_delete)
+    {
+        $sumTotalHpp = ($berat_masuk_stock * $modal_stock) - $total_hpp_delete;
+        $sumTotalBeratMasuk = ($berat_masuk_stock - $berat_delete);
+        $Hpp = $sumTotalHpp / $sumTotalBeratMasuk;
+        return $Hpp;
+    }
 }

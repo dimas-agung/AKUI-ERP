@@ -408,6 +408,11 @@
                                             <a href="{{ route('GradingHalusOutput.index') }}"
                                                 class="submenu-link">Grading Halus Output</a>
                                         </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('transit_grading_halus*') ? 'active' : '' }}">
+                                            <a href="{{ route('TransitGradingHalus.index') }}"
+                                                class="submenu-link">Transit Grading Halus</a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>

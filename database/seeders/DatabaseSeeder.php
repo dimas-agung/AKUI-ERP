@@ -45,6 +45,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StockTransitRawMaterialSeeder::class);
         $this->call(TestSeeder::class);
         $this->call(MasterOngkosCuciSeeder::class);
+        $this->call(TransitPreCleaningStockSeeder::class);
         // $this->call(PrmRawMaterialStockSeeder::class);
         $this->call(GradingKasarInputSeeder::class);
         $this->call(PreCleaningStockSeeder::class);

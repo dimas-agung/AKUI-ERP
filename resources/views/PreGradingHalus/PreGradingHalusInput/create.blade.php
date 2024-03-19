@@ -157,6 +157,18 @@
         $('#unit').on('change', function() {
             // Mengambil nilai unit yang dipilih
             let selectedUnit = $(this).val();
+            // Mengatur nilai nomor BSTB menjadi kosong ketika unit dipilih kembali setelah sebelumnya dipilih
+            if (selectedUnit && selectedNomorBSTB) {
+                $('#nomor_bstb').val('').trigger(
+                    'change'); // Trigger event change setelah mengatur nilai menjadi kosong
+                selectedNomorBSTB = ''; // Reset nilai selectedNomorBSTB
+                return;
+            }
+            // Jika unit belum dipilih, ubah nomor bstb ke pilihan pertama
+            if (!selectedUnit) {
+                $('#nomor_bstb').val($('#nomor_bstb option:first').val()).trigger('change');
+                return; // Keluar dari event handler agar tidak melakukan permintaan AJAX
+            }
 
             // Melakukan permintaan AJAX ke controller untuk mendapatkan data
             $.ajax({
@@ -165,9 +177,7 @@
                 data: {
                     unit: selectedUnit
                 },
-                success: function(response) {
-
-                },
+                success: function(response) {},
                 error: function(error) {
                     console.error('Error:', error);
                 }
@@ -192,75 +202,75 @@
                     },
                     success: function(response) {
                         // Memeriksa apakah berat lebih dari 0 sebelum mengatur nilai elemen-elemen
-                        if (response.length > 0 && response[0].berat_kirim > 0) {
-                            var tableBody = $(
-                                '#tableBody'
-                            );
-                            tableBody.empty();
-                            // Mengatur nilai elemen-elemen sesuai dengan respons dari server
-                            $.each(response, function(index, rowData) {
-                                console.log(rowData);
-                                var newRow = $('<tr>');
-                                newRow.append('<td>' + $('#unit').val() + '</td>');
-                                newRow.append('<td>' + rowData.nomor_job + '</td>');
-                                newRow.append('<td>' + rowData.id_box_grading_kasar + '</td>');
-                                newRow.append('<td>' + rowData.id_box_raw_material + '</td>');
-                                newRow.append('<td>' + rowData.nomor_batch + '</td>');
-                                newRow.append('<td>' + rowData.nomor_nota_internal + '</td>');
-                                newRow.append('<td>' + rowData.nama_supplier + '</td>');
-                                newRow.append('<td>' + rowData.jenis_raw_material + '</td>');
-                                newRow.append('<td>' + rowData.kadar_air + '</td>');
-                                newRow.append('<td>' + rowData.jenis_kirim + '</td>');
-                                newRow.append('<td>' + rowData.berat_kirim + '</td>');
-                                newRow.append('<td>' + rowData.pcs_kirim + '</td>');
-                                newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
-                                newRow.append('<td>' + rowData.modal + '</td>');
-                                newRow.append('<td>' + rowData.total_modal + '</td>');
-                                // Lanjutkan dengan kolom-kolom lain sesuai kebutuhan
+                        // if (response.length > 0 && response[0].berat_kirim > 0) {
+                        var tableBody = $(
+                            '#tableBody'
+                        );
+                        tableBody.empty();
+                        // Mengatur nilai elemen-elemen sesuai dengan respons dari server
+                        $.each(response, function(index, rowData) {
+                            console.log(rowData);
+                            var newRow = $('<tr>');
+                            newRow.append('<td>' + $('#unit').val() + '</td>');
+                            newRow.append('<td>' + rowData.nomor_job + '</td>');
+                            newRow.append('<td>' + rowData.id_box_grading_kasar + '</td>');
+                            newRow.append('<td>' + rowData.id_box_raw_material + '</td>');
+                            newRow.append('<td>' + rowData.nomor_batch + '</td>');
+                            newRow.append('<td>' + rowData.nomor_nota_internal + '</td>');
+                            newRow.append('<td>' + rowData.nama_supplier + '</td>');
+                            newRow.append('<td>' + rowData.jenis_raw_material + '</td>');
+                            newRow.append('<td>' + rowData.kadar_air + '</td>');
+                            newRow.append('<td>' + rowData.jenis_kirim + '</td>');
+                            newRow.append('<td>' + rowData.berat_kirim + '</td>');
+                            newRow.append('<td>' + rowData.pcs_kirim + '</td>');
+                            newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
+                            newRow.append('<td>' + rowData.modal + '</td>');
+                            newRow.append('<td>' + rowData.total_modal + '</td>');
+                            // Lanjutkan dengan kolom-kolom lain sesuai kebutuhan
 
-                                // Tambahkan baris ke dalam tabel
-                                tableBody.append(newRow);
-                                // Bersihkan dataArray sebelum menambahkan data baru
-                                dataArray = [];
-                                // Menyimpan data dalam dataArray
-                                dataArray.push({
-                                    unit: $('#unit').val(),
-                                    nomor_bstb: rowData.nomor_bstb,
-                                    nomor_job: rowData.nomor_job,
-                                    jenis_kirim: rowData.jenis_kirim,
-                                    nomor_batch: rowData.nomor_batch,
-                                    id_box_grading_kasar: rowData.id_box_grading_kasar,
-                                    nama_supplier: rowData.nama_supplier,
-                                    id_box_raw_material: rowData.id_box_raw_material,
-                                    jenis_raw_material: rowData.jenis_raw_material,
-                                    jenis_kirim: rowData.jenis_kirim,
-                                    berat_kirim: rowData.berat_kirim,
-                                    pcs_kirim: rowData.pcs_kirim,
-                                    tujuan_kirim: rowData.tujuan_kirim,
-                                    kadar_air: rowData.kadar_air,
-                                    modal: rowData.modal,
-                                    total_modal: rowData.total_modal,
-                                    nomor_nota_internal: rowData.nomor_nota_internal,
-                                    // ... tambahkan properti lain sesuai kebutuhan
-                                });
+                            // Tambahkan baris ke dalam tabel
+                            tableBody.append(newRow);
+                            // Bersihkan dataArray sebelum menambahkan data baru
+                            dataArray = [];
+                            // Menyimpan data dalam dataArray
+                            dataArray.push({
+                                unit: $('#unit').val(),
+                                nomor_bstb: rowData.nomor_bstb,
+                                nomor_job: rowData.nomor_job,
+                                jenis_kirim: rowData.jenis_kirim,
+                                nomor_batch: rowData.nomor_batch,
+                                id_box_grading_kasar: rowData.id_box_grading_kasar,
+                                nama_supplier: rowData.nama_supplier,
+                                id_box_raw_material: rowData.id_box_raw_material,
+                                jenis_raw_material: rowData.jenis_raw_material,
+                                jenis_kirim: rowData.jenis_kirim,
+                                berat_kirim: rowData.berat_kirim,
+                                pcs_kirim: rowData.pcs_kirim,
+                                tujuan_kirim: rowData.tujuan_kirim,
+                                kadar_air: rowData.kadar_air,
+                                modal: rowData.modal,
+                                total_modal: rowData.total_modal,
+                                nomor_nota_internal: rowData.nomor_nota_internal,
+                                // ... tambahkan properti lain sesuai kebutuhan
                             });
-                            console.log(dataArray);
-                        } else {
-                            // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
-                            // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
-                            Swal.fire({
-                                title: 'Warning!',
-                                text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
-                                icon: 'error'
-                            }).then((result) => {
-                                // Refresh halaman saat menekan tombol "OK" pada SweetAlert
-                                if (result.isConfirmed) {
-                                    location.reload();
-                                }
-                            });
-                            // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
-                            $('#nomor_bstb').val('');
-                        }
+                        });
+                        console.log(dataArray);
+                        // } else {
+                        //     // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
+                        //     // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
+                        //     Swal.fire({
+                        //         title: 'Warning!',
+                        //         text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
+                        //         icon: 'error'
+                        //     }).then((result) => {
+                        //         // Refresh halaman saat menekan tombol "OK" pada SweetAlert
+                        //         if (result.isConfirmed) {
+                        //             location.reload();
+                        //         }
+                        //     });
+                        //     // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
+                        //     $('#nomor_bstb').val('');
+                        // }
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -268,7 +278,6 @@
                 });
             }
         });
-
 
         function sendData() {
             // Mengirim data ke server menggunakan AJAX
@@ -292,11 +301,6 @@
                         user_updated: 'Asc-186',
                         _token: '{{ csrf_token() }}'
                     };
-
-                    // Hanya mengirim keterangan jika memiliki nilai
-                    // if (keterangan.trim() !== '') {
-                    //     postData.keterangan = keterangan;
-                    // }
 
                     return postData;
                 }(),
@@ -323,8 +327,6 @@
                 }
             });
         }
-
-
 
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;

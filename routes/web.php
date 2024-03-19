@@ -449,6 +449,10 @@ Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusOutputControl
     Route::delete('/grading_halus_output/destroy/{id_box_grading_halus}', 'destroy')->name('GradingHalusOutput.destroy');
 });
 
+Route::controller(App\Http\Controllers\PreGradingHalus\TransitGradingHalusController::class)->group(function () {
+    Route::get('/transit_grading_halus', 'index')->name('TransitGradingHalus.index');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

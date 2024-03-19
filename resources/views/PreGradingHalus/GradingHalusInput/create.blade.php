@@ -64,14 +64,14 @@
                                     <div class="form-group">
                                         <label>Id Box Raw Material</label>
                                         <input type="text" class="form-control" id="id_box_raw_material"
-                                            name="id_box_raw_material" readonly>
+                                            name="id_box_raw_material">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Id Box Grading Halus</label>
                                         <input type="text" class="form-control" id="id_box_grading_halus"
-                                            name="id_box_grading_halus" readonly>
+                                            name="id_box_grading_halus">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
