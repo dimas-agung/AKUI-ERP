@@ -5,12 +5,19 @@ namespace App\Services;
 use App\Models\GradingHalusAdjustmentAdding;
 use App\Models\GradingHalusAdjustmentStock;
 use App\Models\GradingHalusStock;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Constraint\Operator;
 
 class GradingHalusAdjustmentAddingService
 {
+    protected $HppService;
+
+    public function __construct(HppService $HppService)
+    {
+        $this->HppService = $HppService;
+    }
     public function simpanData($dataArray)
     {
         try {
@@ -81,69 +88,25 @@ class GradingHalusAdjustmentAddingService
             'pcs_adding'                => $item->pcs_adding,
             'modal'                     => $item->modal,
             'total_modal'               => $item->total_modal,
+            'user_created'              => $item->user_created,
         ]);
     }
-    // public function hapusData($id)
-    // {
-    //     try {
-    //         DB::beginTransaction();
 
-    //         // Dapatkan nomor_adjustment berdasarkan ID dari tabel GradingHalusAdjustmentAdding
-    //         $nomorAdjustment = GradingHalusAdjustmentAdding::where('id', $id)->value('nomor_adjustment');
-
-    //         // Hapus data dari tabel GradingHalusAdjustmentAdding berdasarkan ID
-    //         GradingHalusAdjustmentAdding::where('id', $id)->delete();
-
-    //         // Hapus data dari tabel GradingHalusAdjustmentStock berdasarkan nomor_adjustment
-    //         GradingHalusAdjustmentStock::where('nomor_adjustment', $nomorAdjustment)->delete();
-
-    //         DB::commit();
-
-    //         return [
-    //             'success' => true,
-    //             'message' => 'Data berhasil dihapus!',
-    //         ];
-    //     } catch (\Exception $e) {
-    //         DB::rollBack();
-
-    //         return [
-    //             'success' => false,
-    //             'error' => 'Gagal menghapus data. ' . $e->getMessage(),
-    //         ];
-    //     }
-    // }
-    public function hapusData($id)
+    public function hapus($id)
     {
         try {
             DB::beginTransaction();
 
-            // Dapatkan nomor_adjustment berdasarkan ID dari tabel GradingHalusAdjustmentAdding
-            $nomorAdjustment = GradingHalusAdjustmentAdding::where('id', $id)->value('nomor_adjustment');
+            // Ambil data yang akan dihapus
+            $adjustment = GradingHalusAdjustmentAdding::findOrFail($id);
 
-            // Dapatkan id_box_grading_halus dan nomor_batch
-            $data = GradingHalusAdjustmentAdding::select('id_box_grading_halus', 'nomor_batch', 'berat_adding', 'pcs_adding')->find($id);
+            // Hapus data dari GradingHalusAdjustmentAdding
+            $adjustment->delete();
 
-            // Hapus data dari tabel GradingHalusAdjustmentAdding berdasarkan ID
-            GradingHalusAdjustmentAdding::where('id', $id)->delete();
-
-            // Hapus data dari tabel GradingHalusAdjustmentStock berdasarkan nomor_adjustment
-            GradingHalusAdjustmentStock::where('nomor_adjustment', $nomorAdjustment)
+            // Hapus data terkait dari GradingHalusAdjustmentStock
+            GradingHalusAdjustmentStock::where('nomor_adjustment', $adjustment->nomor_adjustment)
+                ->where('nomor_batch', $adjustment->nomor_batch)
                 ->delete();
-
-            // Kurangi berat_keluar dan pcs_keluar di GradingHalusStock
-            if ($data) {
-                $gradingHalusStock = GradingHalusStock::where('id_box_grading_halus', $data->id_box_grading_halus)
-                    ->where('nomor_batch', $data->nomor_batch)
-                    ->first();
-
-                if ($gradingHalusStock) {
-                    $gradingHalusStock->berat_keluar -= $data->berat_adding;
-                    $gradingHalusStock->pcs_keluar -= $data->pcs_adding;
-                    $gradingHalusStock->sisa_berat += $data->berat_adding;
-                    $gradingHalusStock->sisa_pcs += $data->pcs_adding;
-                    $gradingHalusStock->save();
-                }
-            }
 
             DB::commit();
 
