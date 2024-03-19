@@ -182,24 +182,10 @@ class PreGradingHalusInputService
                     }
                 }
 
-                // Simpan data sebelum dihapus
-                $beratSebelumHapus = $PreCleaningI->berat_kirim;
-                $pcsSebelumHapus = $PreCleaningI->pcs_kirim;
-                $totalModalSebelumHapus = $PreCleaningI->total_modal;
-
                 // Hapus data PreGradingHalusInput dan PreCleaningStock
                 $PreCleaningI->delete();
                 if ($PreCleaningS) {
                     $PreCleaningS->delete();
-                }
-
-                // Kembalikan nilai sebelum dihapus
-                if ($stockPrmRawMaterial) {
-                    $stockPrmRawMaterial->update([
-                        'berat_keluar' => $stockPrmRawMaterial->berat_keluar + $beratSebelumHapus,
-                        'pcs_keluar' => $stockPrmRawMaterial->pcs_keluar + $pcsSebelumHapus,
-                        'total_modal' => $stockPrmRawMaterial->total_modal + $totalModalSebelumHapus,
-                    ]);
                 }
 
                 // Perbarui status PreCleaningOutput jika ada
