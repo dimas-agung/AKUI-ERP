@@ -199,7 +199,7 @@
                         </li>
                         <li class="sidebar-title">Production</li>
                         <li
-                            class="sidebar-item has-sub {{ Request::is('stock_transit_raw_material*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*', 'grading_kasar_output*', 'stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*', 'grading_halus_input*', 'grading_halus_stock', 'grading_halus_output*', 'transit_grading_halus*') ? 'active' : '' }}">
+                            class="sidebar-item has-sub {{ Request::is('stock_transit_raw_material*', 'grading_kasar_input*', 'grading_kasar_hasil*', 'grading_kasar_stock*', 'grading_kasar_output*', 'stock_transit_grading_kasar*', 'pre_cleaning_input*', 'pre_cleaning_stock*', 'pre_cleaning_output*', 'transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*', 'grading_halus_input*', 'grading_halus_stock', 'grading_halus_output*', 'transit_grading_halus*', 'pre_wash_output*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-three-dots"></i>
                                 <span>Bahan Baku</span>
@@ -329,6 +329,25 @@
                                             <a href="{{ route('TransitGradingHalus.index') }}"
                                                 class="submenu-link">Transit Grading Halus</a>
                                         </li>
+                                    </ul>
+                                </li>
+                                <li
+                                    class="submenu-item has-sub {{ Request::is('transit_grading_halus*', 'pre_wash_output*') ? 'active' : '' }}">
+                                    <a href="#" class='submenu-link'>
+                                        <span>Pre-Wash</span>
+                                    </a>
+                                    <ul class="submenu submenu-level-2">
+                                        <li
+                                            class="submenu-item {{ Request::is('transit_grading_halus*') ? 'active' : '' }}">
+                                            <a href="{{ route('TransitGradingHalus.index') }}"
+                                                class="submenu-link">Transit Grading Halus</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('pre_wash_output*') ? 'active' : '' }}">
+                                            <a href="{{ route('PreWashOutput.index') }}"
+                                                class="submenu-link">Pre-Wahs Output</a>
+                                        </li>
+
                                     </ul>
                                 </li>
                             </ul>

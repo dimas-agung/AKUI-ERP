@@ -24,4 +24,8 @@ class PreWashStock extends Model
         'user_created',
         'user_updated',
     ];
+    public function PreWashOutput()
+    {
+        return $this->hasMany(PreWashOutput::class, 'nomor_job', 'nomor_job');
+    }
 }
