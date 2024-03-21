@@ -10,32 +10,31 @@ class PreCleaningStock extends Model
     use HasFactory;
     protected $table = 'pre_cleaning_stocks';
     protected $fillable = [
+        'unit',
         'nomor_job',
         'id_box_grading_kasar',
         'nomor_bstb',
-        'nomor_batch',
-        'nama_supplier',
-        'nomor_nota_internal',
         'id_box_raw_material',
+        'nomor_batch',
+        'nomor_nota_internal',
+        'nama_supplier',
         'jenis_raw_material',
-        'tujuan_kirim',
+        'kadar_air',
         'jenis_kirim',
         'berat_masuk',
-        'pcs_masuk',
         'berat_keluar',
+        'pcs_masuk',
         'pcs_keluar',
-        'avg_kadar_air',
-        'nomor_grading',
+        'sisa_berat',
+        'sisa_pcs',
+        'tujuan_kirim',
         'modal',
         'total_modal',
         'keterangan',
+        'nomor_grading',
         'user_created',
         'user_updated',
     ];
-    // public function preCleaningInputs()
-    // {
-    //     return $this->belongsTo(PreCleaningInput::class, 'nomor_job', 'nomor_job');
-    // }
     public function PreCleaningOutput()
     {
         return $this->hasMany(PreCleaningOutput::class, 'nomor_job', 'nomor_job');

@@ -60,7 +60,7 @@
                                     <td class="text-center">{{ number_format($item->berat_keluar, 0, ',', '.') }}</td>
                                     <td class="text-center">{{ number_format($item->pcs_masuk, 0, ',', '.') }}</td>
                                     <td class="text-center">{{ number_format($item->pcs_keluar, 0, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->avg_kadar_air, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->kadar_air, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->nomor_grading }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
