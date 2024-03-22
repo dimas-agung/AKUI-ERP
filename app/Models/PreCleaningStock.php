@@ -10,6 +10,7 @@ class PreCleaningStock extends Model
     use HasFactory;
     protected $table = 'pre_cleaning_stocks';
     protected $fillable = [
+        'unit',
         'nomor_job',
         'id_box_grading_kasar',
         'nomor_bstb',
@@ -23,8 +24,10 @@ class PreCleaningStock extends Model
         'berat_masuk',
         'pcs_masuk',
         'berat_keluar',
+        'sisa_berat',
         'pcs_keluar',
-        'avg_kadar_air',
+        'sisa_pcs',
+        'kadar_air',
         'nomor_grading',
         'modal',
         'total_modal',

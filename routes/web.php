@@ -329,7 +329,7 @@ Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->
     Route::get('/pre_wash_output/show/{id}', 'show')->name('PreWashOutput.show');
     Route::get('/pre_wash_output/edit/{id}', 'edit')->name('PreWashOutput.edit');
     Route::put('/pre_wash_output/update/{id}', 'update')->name('PreWashOutput.update');
-    Route::delete('/pre_wash_output/destroy/{id}', 'destroy')->name('PreWashOutput.destroy');
+    Route::delete('/pre_wash_output/destroy/{nomor_bstb}', 'destroy')->name('PreWashOutput.destroy');
     Route::get('/pre_wash_output/get_data_nomor_job', 'set')->name('preWashOutput.set');
     Route::post('/pre_wash_output/simpanData', 'simpanData')->name('PreWashOutput.simpanData');
 });

@@ -14,9 +14,10 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Pre-Wash Output
-                                <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong> Add Data </strong>
-                                </button>
+                                <a href="{{ route('PreWashOutput.create') }}" class="btn btn-outline-success rounded-pill">
+                                    <i class="fa fa-plus"></i>
+                                    Add Data
+                                </a>
                             </div>
                         </h5>
                     </div>
@@ -65,15 +66,14 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     @if ($PCO->status == 1)
-                                                        <form style="display: flex" id="deleteForm{{ $PCO->id }}"
-                                                            action="{{ route('PreCleaningOutput.destroy', $PCO->id) }}"
+                                                        <form style="display: flex" id="deleteForm{{ $PCO->nomor_bstb }}"
+                                                            action="{{ route('PreWashOutput.destroy', $PCO->nomor_bstb) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="button"
-                                                                class="btn btn-link btn-danger delete-button"
+                                                            <button type="button" class="btn btn-link"
                                                                 data-original-title="Remove"
-                                                                onclick="confirmDelete({{ $PCO->id }})">
+                                                                onclick="confirmDelete('{{ $PCO->nomor_bstb }}')">
                                                                 <i class="bi bi-trash3 text-danger"></i>
                                                             </button>
                                                         </form>

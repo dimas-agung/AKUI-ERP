@@ -35,4 +35,8 @@ class PreWashOutput extends Model
     {
         return $this->hasMany(TransitPreWash::class, 'nomor_job', 'nomor_job');
     }
+    public function MasterOperator()
+    {
+        return $this->hasMany(MasterOperator::class, 'nama', 'operator_perendaman');
+    }
 }

@@ -14,7 +14,7 @@ class MasterOperatorController extends Controller
         $i = 1;
         $MasterOperator = MasterOperator::all();
         // return $MasterOperator;
-        return response()->view('master.master_operator.index', [
+        return response()->view('master.master_oprator.index', [
             'master_operators' => $MasterOperator,
             'i' => $i
         ]);
@@ -50,14 +50,14 @@ class MasterOperatorController extends Controller
         ]);
 
         // Redirect to index
-        return redirect()->route('MasterOperator.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('MasterOngkosCuci.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
     // edit
     public function edit(string $id)
     {
         $MasterOP = MasterOperator::findOrFail($id);
 
-        return view('master.master_operator.update', compact('MasterOP'));
+        return view('master.master_oprator.update', compact('MasterOP'));
     }
     // update
     public function update(Request $request, $id): RedirectResponse
