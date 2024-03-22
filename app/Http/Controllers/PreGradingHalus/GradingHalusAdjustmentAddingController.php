@@ -62,7 +62,7 @@ class GradingHalusAdjustmentAddingController extends Controller
     //Hapus Data
     public function destroy($id, GradingHalusAdjustmentAddingService $GradingHalusAdjustmentAddingService)
     {
-        $result = $GradingHalusAdjustmentAddingService->hapusData($id);
+        $result = $GradingHalusAdjustmentAddingService->hapus($id);
 
         if ($result['success']) {
             return redirect()->route('GradingHalusAdjustmentAdding.index')->with('success', 'Data berhasil dihapus');

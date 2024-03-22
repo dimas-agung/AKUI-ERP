@@ -30,6 +30,6 @@ class MasterOperator extends Model
     // }
     public function PreCleaningOutput()
     {
-        return $this->hasMany(PreCleaningOutput::class, 'operator_sikat_kompresor', 'nip');
+        return $this->hasMany(PreCleaningOutput::class, 'operator_sikat_n_kompresor', 'nip');
     }
 }

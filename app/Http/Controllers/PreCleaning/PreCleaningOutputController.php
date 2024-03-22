@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PreCleaningOutputRequest;
 use App\Models\MasterOperator;
 use App\Models\PreCleaningInput;
+use App\Models\Perusahaan;
 use App\Models\PreCleaningOutput;
 use App\Models\PreCleaningStock;
 use App\Models\TransitPreCleaningStock;
@@ -32,10 +33,12 @@ class PreCleaningOutputController extends Controller
         $PreCleaningStock = PreCleaningStock::with('PreCleaningOutput')->get();
         $PreCleaningOutput = PreCleaningOutput::with('PreCleaningStock')->whereRaw('berat_masuk - berat_keluar != 0');
         $MasterOperator = MasterOperator::with('PreCleaningOutput')->get();
+        $Perusahaan = Perusahaan::all();
         return view('PreCleaning.PreCleaningOutput.create', [
             'pre_cleaning_outputs'      => $PreCleaningOutput,
             'pre_cleaning_stocks'       => $PreCleaningStock,
             'master_operators'          => $MasterOperator,
+            'perusahaan'                => $Perusahaan,
         ]);
     }
     // set
@@ -43,7 +46,7 @@ class PreCleaningOutputController extends Controller
     {
         $nomor_job = $request->nomor_job;
         $data = PreCleaningStock::where('nomor_job', $nomor_job)
-            ->whereRaw('berat_masuk - berat_keluar != 0') // Tambahkan kondisi ini
+            // ->whereRaw('berat_masuk - berat_keluar != 0') // Tambahkan kondisi ini
             ->first();
         // return $data;
         // Kembalikan nomor job sebagai respons
@@ -72,36 +75,6 @@ class PreCleaningOutputController extends Controller
             DB::beginTransaction();
             // Temukan record berdasarkan ID
             $PreCleaningOutput = PreCleaningOutput::findOrFail($id);
-            // $TransitPreCleaningStock = TransitPreCleaningStock::findOrFail($id)
-
-            // Ambil data StockTransitRawMaterial berdasarkan nomor_bstb
-            $stockGradingKasar = PreCleaningStock::where('id_box_raw_material', '=', $PreCleaningOutput->id_box_raw_material)
-            ->where('nomor_job', '=', $PreCleaningOutput->nomor_job)
-            ->first();
-
-            if ($stockGradingKasar) {
-                // Simpan nilai sebelum dihapus
-                $beratTadi = $PreCleaningOutput->berat_keluar;
-                $beratSebelumnya = $stockGradingKasar->berat_keluar;
-                $PcsTadi = $PreCleaningOutput->pcs_keluar;
-                $PcsSebelumnya = $stockGradingKasar->pcs_keluar;
-                $Modal = $PreCleaningOutput->modal;
-
-                $Beratkeluar = $beratSebelumnya - $beratTadi;
-                $PcsKeluar = $PcsSebelumnya - $PcsTadi;
-                $TotalModal = $Beratkeluar * $Modal;
-
-                // Update data pada PrmRawMaterialStock
-                $dataToUpdate = [
-                    'berat_keluar' => $Beratkeluar,
-                    'pcs_keluar' => $PcsKeluar,
-                    'total_modal' => $TotalModal,
-                ];
-
-                // Perbarui data pada PrmRawMaterialStock
-                $stockGradingKasar->update($dataToUpdate);
-            }
-
             // Hapus semua item terkait
             $stockPRM = TransitPreCleaningStock::where('id_box_raw_material', '=', $PreCleaningOutput->id_box_raw_material)
                 ->where('nomor_job', $PreCleaningOutput->nomor_job)
