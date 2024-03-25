@@ -155,7 +155,8 @@
                                             <input type="text" id="berat" pattern="[0-9]*" inputmode="numeric"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 class="form-control" name="berat" value="{{ old('berat') }}"
-                                                placeholder="Masukkan berat keluar" data-parsley-required="true">
+                                                placeholder="Masukkan berat keluar" data-parsley-required="true"
+                                                onchange="validateBeratKeluar()">
                                         </div>
                                         <div class="form-group">
                                             <label>Sisa Berat</label>
@@ -367,7 +368,7 @@
                                             <input type="text" id="berat_edit" pattern="[0-9]*" inputmode="numeric"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 class="form-control" name="berat_edit"
-                                                placeholder="Masukkan berat keluar">
+                                                placeholder="Masukkan berat keluar" onchange="validateBeratKeluar()">
                                         </div>
                                         <div class="form-group">
                                             <label>Sisa Berat</label>
@@ -568,6 +569,25 @@
             $('#total_modal_stock').val(isFinite(totalmodalstk) ? totalmodalstk.toFixed(2) : '');
             $('#total_modal_edit_stock').val(isFinite(totalmodalestk) ? totalmodalestk.toFixed(2) : '');
         }
+
+        // Fungsi untuk memeriksa apakah berat melebihi sisa berat
+        function validateBeratKeluar() {
+            var beratMasuk = parseFloat(document.getElementById('berat_masuk').value);
+            var beratKeluarInput = parseFloat(document.getElementById('berat').value);
+            var beratKeluarEdit = parseFloat(document.getElementById('berat_edit').value);
+
+            if (beratKeluarInput > beratMasuk || beratKeluarEdit > beratMasuk) {
+                Swal.fire({
+                    title: 'Warning!',
+                    text: "Berat keluar tidak boleh melebihi sisa berat.",
+                    icon: 'warning'
+                });
+                document.getElementById('berat').value = ''; // Mengosongkan input berat keluar
+                document.getElementById('berat_edit').value = ''; // Mengosongkan input berat edit
+                return;
+            }
+        }
+
 
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;
