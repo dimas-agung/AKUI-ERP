@@ -15,6 +15,7 @@ use App\Models\MasterSupplierRawMaterial;
 use Illuminate\Http\RedirectResponse;
 use App\Services\PrmRawMaterialInputService;
 use App\Services\PrmRawMaterialInputItemService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -23,6 +24,9 @@ class PrmRawMaterialInputController extends Controller
     //index
     public function index()
     {
+        // $user = Auth::user();
+        // var_dump( $user->hasRole('purchasing'));
+        // return;
         $i = 1;
         $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
