@@ -16,10 +16,10 @@ class userSeeders extends Seeder
     {
         //
         $user = User::create([
-            'email' => 'Example@gmail.com',
-            'password' => Hash::make('admin123'),
-            'fullname' => 'Example',
-            'nip' => '2002050703',
+            'email' => 'Purchasing@akuibirdnest.com',
+            'password' => Hash::make('purchasing'),
+            'fullname' => 'Purchasing',
+            'nip' => '222040347',
             'unit_id' => '1',
             'username' => 'Example',
             'phone_number' => '0111111111',
