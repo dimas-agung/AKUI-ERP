@@ -18,23 +18,26 @@ class userSeeders extends Seeder
         $user = User::create([
             'email' => 'Example@gmail.com',
             'password' => Hash::make('admin123'),
-            'fullname' => 'superadmin',
-            'username' => 'admin',
+            'fullname' => 'Example',
+            'nip' => '2002050703',
+            'unit_id' => '1',
+            'username' => 'Example',
             'phone_number' => '0111111111',
             'birth_date' => '2000-04-09',
-            'roles_id' => null,
-
-        ]);
-            User::create([
-            'email' => 'Example@gmail.com',
-            'password' => Hash::make('admin123'),
-            'fullname' => 'superadmin',
-            'username' => 'admin',
-            'phone_number' => '0111111111',
-            'birth_date' => '2000-04-09',
-            'roles_id' => null,
 
         ]);
         $user->assignRole(['purchasing']);
+        $superdmin = User::create([
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin'),
+            'fullname' => 'superadmin',
+            'nip' => '2002050693',
+            'unit_id' => '2',
+            'username' => 'admin',
+            'phone_number' => '0222222222',
+            'birth_date' => '2000-04-09',
+
+        ]);
+        $superdmin->assignRole(['master', 'purchasing', 'bahan_baku']);
     }
 }

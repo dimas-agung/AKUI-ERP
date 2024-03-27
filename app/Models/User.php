@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +26,7 @@ class User extends Authenticatable
         'username',
         'phone_number',
         'birth_date',
-        'roles_id',
+        'unit_id',
     ];
 
     /**
@@ -48,8 +48,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function role()
+    public function unit()
     {
-        return $this->belongsTo(Roles::class, 'id', 'roles_id');
+        return $this->belongsTo(Unit::class, 'id', 'unit_id');
     }
 }

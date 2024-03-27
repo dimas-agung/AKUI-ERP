@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function (){
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::controller(App\Http\Controllers\RegisterController::class)->group(function () {
+        Route::get('/reset', 'index')->name('reset.index');
+        Route::post('/reset/create', 'update')->name('reset.create');
+        Route::post('/reset/store', 'store')->name('reset.store');
+    });
     Route::prefix('master')->middleware(['role:master'])->group(function (){
         Route::controller(App\Http\Controllers\PerusahaanController::class)->group(function () {
             Route::get('/perusahaan', 'index')->name('Perusahaan.index');
@@ -337,11 +342,6 @@ Route::middleware('auth')->group(function (){
     // Route::prefix('user3')->group(function (){
     // })->middleware('role:master');
 });
-
-Auth::routes();
-
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
