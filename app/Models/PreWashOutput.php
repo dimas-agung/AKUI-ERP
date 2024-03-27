@@ -27,4 +27,16 @@ class PreWashOutput extends Model
         'user_created',
         'user_updated',
     ];
+    public function PreWashStock()
+    {
+        return $this->belongsTo(PreWashStock::class, 'nomor_job', 'nomor_job');
+    }
+    public function TransitPreWash()
+    {
+        return $this->hasMany(TransitPreWash::class, 'nomor_job', 'nomor_job');
+    }
+    public function MasterOperator()
+    {
+        return $this->hasMany(MasterOperator::class, 'nama', 'operator_perendaman');
+    }
 }

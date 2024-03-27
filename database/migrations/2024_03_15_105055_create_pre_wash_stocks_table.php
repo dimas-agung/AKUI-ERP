@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('keterangan')->nullable();
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->string('user_created');
+            $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
             $table->timestamps();
         });

@@ -13,6 +13,36 @@ class UnitSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Unit::factory(5)->create();
+        // \App\Models\Unit::factory(5)->create();
+        Unit :: create([
+            'workstation_id' => '1',
+            'perusahaan_id' => '1',
+            'nama' => 'master',
+            'status' => '1',
+        ]);
+        Unit :: create([
+            'workstation_id' => '2',
+            'perusahaan_id' => '2',
+            'nama' => 'purchasing & Exim',
+            'status' => '1',
+        ]);
+        Unit :: create([
+            'workstation_id' => '3',
+            'perusahaan_id' => '3',
+            'nama' => 'Grading Kasar',
+            'status' => '1',
+        ]);
+        Unit :: create([
+            'workstation_id' => '3',
+            'perusahaan_id' => '3',
+            'nama' => 'Pre Cleaning',
+            'status' => '1',
+        ]);
+        Unit :: create([
+            'workstation_id' => '2',
+            'perusahaan_id' => '2',
+            'nama' => 'Grading Halus',
+            'status' => '1',
+        ]);
     }
 }
