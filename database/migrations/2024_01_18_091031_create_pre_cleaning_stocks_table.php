@@ -28,9 +28,9 @@ return new class extends Migration
             $table->float('berat_keluar');
             $table->float('pcs_masuk');
             $table->float('pcs_keluar');
-            $table->string('avg_kadar_air');
-            $table->string('nomor_grading');
-            $table->float('sisa_berat');
+            $table->string('avg_kadar_air')->default(0);
+            // $table->string('nomor_grading');
+            $table->float('sisa_berat')->default(0);
             $table->float('sisa_pcs');
             $table->string('tujuan_kirim');
             $table->float('modal', 16, 4);

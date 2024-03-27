@@ -369,22 +369,8 @@
                                             <a href="{{ route('PreGradingHalusStock.index') }}"
                                                 class="submenu-link">Pre-Grading Halus Stock</a>
                                         </li>
+                                        
                                         <li
-                                            class="submenu-item {{ Request::is('pre_grading_halus_adding') ? 'active' : '' }}">
-                                            <a href="{{ route('PreGradingHalusAdding.index') }}"
-                                                class="submenu-link">Pre Grading Halus Adding</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('pre_grading_halus_adding_stock') ? 'active' : '' }}">
-                                            <a href="{{ route('PreGradingHalusAddingStock.index') }}"
-                                                class="submenu-link">Pre Grading Halus Adding Stock</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('adjustment_adding') ? 'active' : '' }}">
-                                            <a href="{{ route('AdjustmentAdding.index') }}"
-                                                class="submenu-link">Adjustment Adding</a>
-                                        </li>
-                                            <li
                                             class="submenu-item {{ Request::is('grading_halus_input*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingHalusInput.index') }}"
                                                 class="submenu-link">Grading Halus Input</a>
@@ -393,6 +379,12 @@
                                             class="submenu-item {{ Request::is('grading_halus_stock*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingHalusStock.index') }}"
                                                 class="submenu-link">Grading Halus Stock</a>
+                                        </li>
+                                        <li
+                                            class="submenu-item {{ Request::is('adjustment_adding') ? 'active' : '' }}">
+                                            <a href="{{ route('AdjustmentAdding.index') }}"
+                                                class="submenu-link">Adjustment Adding</a>
+                                        </li>
                                         <li
                                             class="submenu-item {{ Request::is('grading_halus_adjustment_stock*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingHalusAdjustmentStock.index') }}"

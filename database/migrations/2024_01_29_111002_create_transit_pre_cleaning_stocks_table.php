@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transit_pre_cleaning_stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('unit');
+            $table->string('unit')->nullable();
             $table->string('nomor_job');
             $table->string('id_box_grading_kasar');
             $table->string('nomor_bstb');
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('tujuan_kirim');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->float('sisa_berat');
+            $table->float('sisa_berat')->default(0);
             $table->text('keterangan')->nullable();
             $table->string('nomor_grading')->nullable();
             $table->string('user_created')->nullable();
