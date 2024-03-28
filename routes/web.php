@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
         Route::controller(App\Http\Controllers\UnitController::class)->group(function () {
             Route::get('/unit', 'index')->name('Unit.index');
             Route::get('/unit/create', 'create')->name('Unit.create');
+            Route::get('/get-workstations/{perusahaan_id}', 'getWorkstations')->name('Unit.getWorkstations');
             Route::post('/unit/store', 'store')->name('Unit.store');
             Route::get('/unit/show/{id}', 'show')->name('Unit.show');
             Route::get('/unit/edit/{id}', 'edit')->name('Unit.edit');
@@ -50,13 +51,13 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::controller(App\Http\Controllers\BiayaHppController::class)->group(function () {
-            Route::get('/biayahpp', 'index')->name('Biaya.index');
-            Route::post('/biayahpp/store', 'store')->name('Biaya.store');
-            Route::get('/biayahpp/create', 'create')->name('Biaya.create');
-            Route::get('/biayahpp/show/{id}', 'show')->name('Biaya.show');
-            Route::get('/biayahpp/edit/{id}', 'edit')->name('Biaya.edit');
-            Route::put('/biayahpp/update/{id}', 'update')->name('Biaya.update');
-            Route::delete('/biayahpp/hapus/{id}', 'destroy')->name('Biaya.destroy');
+            Route::get('/biaya_hpp', 'index')->name('BiayaHpp.index');
+            Route::post('/biaya_hpp/store', 'store')->name('BiayaHpp.store');
+            Route::get('/biaya_hpp/create', 'create')->name('BiayaHpp.create');
+            Route::get('/biaya_hpp/show/{id}', 'show')->name('BiayaHpp.show');
+            Route::get('/biaya_hpp/edit/{id}', 'edit')->name('BiayaHpp.edit');
+            Route::put('/biaya_hpp/update/{id}', 'update')->name('BiayaHpp.update');
+            Route::delete('/biaya_hpp/hapus/{id}', 'destroy')->name('BiayaHpp.destroy');
         });
 
         Route::controller(App\Http\Controllers\MasterSupplierRawMaterialController::class)->group(function () {
