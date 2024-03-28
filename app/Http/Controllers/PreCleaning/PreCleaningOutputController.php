@@ -32,7 +32,7 @@ class PreCleaningOutputController extends Controller
     {
         $PreCleaningStock = PreCleaningStock::with('PreCleaningOutput')->get();
         $PreCleaningOutput = PreCleaningOutput::with('PreCleaningStock')->whereRaw('berat_masuk - berat_keluar != 0');
-        $MasterOperator = MasterOperator::with('PreCleaningOutput')->get();
+        $MasterOperator = MasterOperator::all();
         $Perusahaan = Perusahaan::all();
         return view('PreCleaning.PreCleaningOutput.create', [
             'pre_cleaning_outputs'      => $PreCleaningOutput,

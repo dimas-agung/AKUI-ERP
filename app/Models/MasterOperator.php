@@ -22,14 +22,12 @@ class MasterOperator extends Model
         'job',
         'status',
     ];
-    // public function PreCleaningOutput()
-    // {
-    //     return $this->hasMany(PreCleaningOutput::class, 'nip', 'operator_sikat_kompresor')
-    //         ->orWhere('nip', 'operator_flek_poles')
-    //         ->orWhere('nip', 'operator_flek_cutter');
-    // }
     public function PreCleaningOutput()
     {
         return $this->hasMany(PreCleaningOutput::class, 'operator_sikat_n_kompresor', 'nip');
+    }
+    public function PreWashOutput()
+    {
+        return $this->hasMany(PreWashOutput::class, 'operator_perendaman', 'nama');
     }
 }
