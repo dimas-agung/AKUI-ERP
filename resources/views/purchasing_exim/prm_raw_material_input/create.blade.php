@@ -125,7 +125,8 @@
                     </div>
                     <div class="col-md-3">
                         <label for="user_created" class="form-label">NIP Admin</label>
-                        <input type="text" class="form-control" id="user_created">
+                        <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}"
+                            readonly>
                     </div>
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" onclick="addRow()">Tambah</button>
