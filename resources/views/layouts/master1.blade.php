@@ -199,12 +199,7 @@
                                     <a href="{{ route('MasterJenisGradingKasar.index') }}"
                                         class="submenu-link">Master Jenis Grading Kasar</a>
                                 </li>
-                                <li
-                                    class="submenu-item  {{ Request::is('master_tujuan_kirim_grading_kasar*') ? 'active' : '' }} ">
-                                    <a href="{{ route('MasterTujuanKirimGradingKasar.index') }}"
-                                        class="submenu-link">Master Tujuan<br>Kirim
-                                        Grading<br>Kasar</a>
-                                </li>
+                              
                                 <li class="submenu-item  {{ Request::is('master_operator*') ? 'active' : '' }} ">
                                     <a href="{{ route('MasterOperator.index') }}" class="submenu-link">Master
                                         Operator</a>
@@ -343,94 +338,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li
-                                    class="submenu-item has-sub {{ Request::is('transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*', 'adjustment_adding*', 'adjustment_stock*', 'adjustment_input*','grading_halus_input*', 'grading_halus_stock*', 'grading_halus_output*') ? 'active' : '' }}">
-                                    <a href="#" class='submenu-link'>
-                                        <span>Pre-Grading Halus</span>
-                                    </a>
-                                    <ul class="submenu">
-                                        <li
-                                            class="submenu-item {{ Request::is('transit_pre_cleaning_stock*') ? 'active' : '' }}">
-                                            <a href="{{ route('TransitPreCleaningStock.index') }}"
-                                                class="submenu-link">Transit Pre Cleaning Stock</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('pre_grading_halus_adding') ? 'active' : '' }}">
-                                            <a href="{{ route('PreGradingHalusAdding.index') }}"
-                                                class="submenu-link">Pre Grading Halus Adding</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('pre_grading_halus_adding_stock') ? 'active' : '' }}">
-                                            <a href="{{ route('PreGradingHalusAddingStock.index') }}"
-                                                class="submenu-link">Pre Grading Halus Adding Stock</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('pre_grading_halus_input*') ? 'active' : '' }}">
-                                            <a href="{{ route('PreGradingHalusInput.index') }}"
-                                                class="submenu-link">Pre-Grading Halus Input</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('pre_grading_halus_stock*') ? 'active' : '' }}">
-                                            <a href="{{ route('PreGradingHalusStock.index') }}"
-                                                class="submenu-link">Pre-Grading Halus Stock</a>
-                                        </li>
-                                        
-                                        <li
-                                            class="submenu-item {{ Request::is('grading_halus_input*') ? 'active' : '' }}">
-                                            <a href="{{ route('GradingHalusInput.index') }}"
-                                                class="submenu-link">Grading Halus Input</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('grading_halus_stock*') ? 'active' : '' }}">
-                                            <a href="{{ route('GradingHalusStock.index') }}"
-                                                class="submenu-link">Grading Halus Stock</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('adjustment_adding') ? 'active' : '' }}">
-                                            <a href="{{ route('AdjustmentAdding.index') }}"
-                                                class="submenu-link">Adjustment Adding</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('grading_halus_adjustment_stock*') ? 'active' : '' }}">
-                                            <a href="{{ route('GradingHalusAdjustmentStock.index') }}"
-                                                class="submenu-link">Adjustment Stock</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('grading_halus_adjustment_input*') ? 'active' : '' }}">
-                                            <a href="{{ route('GradingHalusAdjustmentInput.index') }}"
-                                                class="submenu-link">Adjustment Input</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('grading_halus_output*') ? 'active' : '' }}">
-                                            <a href="{{ route('GradingHalusOutput.index') }}"
-                                                class="submenu-link">Grading Halus Output</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('transit_grading_halus*') ? 'active' : '' }}">
-                                            <a href="{{ route('TransitGradingHalus.index') }}"
-                                                class="submenu-link">Transit Grading Halus</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li
-                                    class="submenu-item has-sub {{ Request::is('transit_grading_halus*', 'pre_wash_output*') ? 'active' : '' }}">
-                                    <a href="#" class='submenu-link'>
-                                        <span>Pre-Wash</span>
-                                    </a>
-                                    <ul class="submenu submenu-level-2">
-                                        <li
-                                            class="submenu-item {{ Request::is('transit_grading_halus*') ? 'active' : '' }}">
-                                            <a href="{{ route('TransitGradingHalus.index') }}"
-                                                class="submenu-link">Transit Grading Halus</a>
-                                        </li>
-                                        <li
-                                            class="submenu-item {{ Request::is('pre_wash_output*') ? 'active' : '' }}">
-                                            <a href="{{ route('PreWashOutput.index') }}"
-                                                class="submenu-link">Pre-Wahs Output</a>
-                                        </li>
-
-                                    </ul>
-                                </li>
+                          
                             </ul>
                         </li>
 

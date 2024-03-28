@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('fullname');
             $table->string('password');
             $table->string('nip');
-            $table->string('unit_id');
+            $table->string('unit_id')->nullable();
             $table->string('email')->unique();
             $table->string('phone_number')->unique();
             $table->timestamp('phone_number_verified_at')->nullable();
