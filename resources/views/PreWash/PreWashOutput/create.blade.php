@@ -108,7 +108,8 @@
                     </div>
                     <div class="col-md-6">
                         <label for="user_created" class="form-label">Nip Admin</label>
-                        <input type="text" class="form-control" id="user_created" placeholder="Masukkan NIP Admin">
+                        <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}"
+                            readonly>
                     </div>
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" onclick="addRow()">Tambah</button>
