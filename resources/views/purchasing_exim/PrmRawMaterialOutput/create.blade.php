@@ -155,7 +155,8 @@
                                             <input type="text" id="berat" pattern="[0-9]*" inputmode="numeric"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 class="form-control" name="berat" value="{{ old('berat') }}"
-                                                placeholder="Masukkan berat keluar" data-parsley-required="true">
+                                                placeholder="Masukkan berat keluar" data-parsley-required="true"
+                                                onchange="validateBeratKeluar()">
                                         </div>
                                         <div class="form-group">
                                             <label>Sisa Berat</label>
@@ -188,7 +189,7 @@
 
 
         <div class="col-md-12">
-            <div class="card mt-2 border border-primary border-3">
+            <div class="card mt-2">
                 <div class="card-header">
                     <div class="card-title">Validasi Data Input</div>
                     <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
@@ -367,7 +368,7 @@
                                             <input type="text" id="berat_edit" pattern="[0-9]*" inputmode="numeric"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 class="form-control" name="berat_edit"
-                                                placeholder="Masukkan berat keluar">
+                                                placeholder="Masukkan berat keluar" onchange="validateBeratKeluar()">
                                         </div>
                                         <div class="form-group">
                                             <label>Sisa Berat</label>
@@ -473,8 +474,8 @@
             });
         });
 
-        $('#tujuan_kirim').on('change', function() {
-            // Mengambil nilai id_box yang dipilih
+        $('#tujuan_kirim, #tujuan_kirim_edit').on('change', function() {
+            // Mengambil nilai tujuan_kirim yang dipilih
             let selectedPcc = $(this).val();
 
             // Melakukan permintaan AJAX ke controller untuk mendapatkan data
@@ -568,6 +569,25 @@
             $('#total_modal_stock').val(isFinite(totalmodalstk) ? totalmodalstk.toFixed(2) : '');
             $('#total_modal_edit_stock').val(isFinite(totalmodalestk) ? totalmodalestk.toFixed(2) : '');
         }
+
+        // Fungsi untuk memeriksa apakah berat melebihi sisa berat
+        function validateBeratKeluar() {
+            var beratMasuk = parseFloat(document.getElementById('berat_masuk').value);
+            var beratKeluarInput = parseFloat(document.getElementById('berat').value);
+            var beratKeluarEdit = parseFloat(document.getElementById('berat_edit').value);
+
+            if (beratKeluarInput > beratMasuk || beratKeluarEdit > beratMasuk) {
+                Swal.fire({
+                    title: 'Warning!',
+                    text: "Berat keluar tidak boleh melebihi sisa berat.",
+                    icon: 'warning'
+                });
+                document.getElementById('berat').value = ''; // Mengosongkan input berat keluar
+                document.getElementById('berat_edit').value = ''; // Mengosongkan input berat edit
+                return;
+            }
+        }
+
 
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;
@@ -881,7 +901,8 @@
                     }).then((result) => {
                         // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
                         if (result.isConfirmed) {
-                            window.location.href = response.redirectTo; // Ganti dengan URL tujuan redirect Anda
+                            window.location.href = response
+                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
                         }
                     });
                 },
@@ -891,7 +912,7 @@
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });
-
+                    console.log('Validation Errors:', response.responseJSON.errors);
                 }
             });
         }
