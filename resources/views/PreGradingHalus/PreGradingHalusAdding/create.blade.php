@@ -20,9 +20,15 @@
                             data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($pre_grading_halus_stocks as $PreGHS)
-                                <option value="{{ $PreGHS->nomor_job }}">
-                                    {{ $PreGHS->nomor_job }}
-                                </option>
+                                @php
+                                    // Menghitung sisa berat
+                                    $sisaBerat = $PreGHS->berat_masuk - $PreGHS->berat_keluar;
+                                @endphp
+                                @if ($sisaBerat != 0)
+                                    <option value="{{ $PreGHS->nomor_job }}">
+                                        {{ $PreGHS->nomor_job }}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -231,6 +237,9 @@
                                 title: 'Oops...',
                                 text: 'Berat masuk - berat keluar sama dengan 0. Pilih nomor job lain.',
                             }).then(() => {
+                                // Hapus opsi nomor job yang sudah dipilih
+                                $('#nomor_job option[value="' + selectedNomorJob + '"]')
+                                    .remove();
                                 // Reset nilai input
                                 $('#nomor_job').val('').trigger('change');
                             });
@@ -241,33 +250,6 @@
                     }
                 });
             });
-            //
-            // Variabel penanda untuk menandai apakah tombol "add" sudah diklik atau belum
-            // let tombolAddDiklik = false;
-
-            // let nomorGradingTerkunci = false;
-            // // // Ketika tombol "add" diklik
-            // $('#tambah_data').on('click', function() {
-            //     if (!nomorGradingTerkunci) {
-            //         // Mengambil nilai plant yang dipilih
-            //         const selectedPlant = $('#plant').val();
-
-            //         // Menghasilkan nomor grading baru
-            //         const nomorGrading = generateNomorGrading(selectedPlant);
-
-            //         // Menetapkan nomor grading ke input dengan id 'nomor_grading' dan membuatnya readonly
-            //         $('#nomor_grading').val(nomorGrading).prop('readonly', true);
-
-            //         // Menetapkan variabel penanda menjadi true
-            //         // nomorGradingTerkunci = true;
-
-            //         // Menonaktifkan dropdown "Plant"
-            //         $('#plant').prop('disabled', true);
-            //     } else {
-            //         // Jika nomor grading sudah terkunci, berikan pesan kepada pengguna
-            //         alert("Nomor grading sudah digenerate dan terkunci.");
-            //     }
-            // });
             // grading
             $('#plant').on('change', function() {
                 const selectedPlant = $(this).val();
@@ -296,25 +278,35 @@
 
         });
 
-        // $(document).ready(function() {
-        //     // Fungsi untuk menghasilkan nomor grading
-        //     function generateNomorGrading() {
-        //         var now = new Date();
-        //         var year = now.getFullYear().toString().substr(-2); // Dua digit terakhir tahun
-        //         var month = ('0' + (now.getMonth() + 1)).slice(-2); // Dua digit bulan
-        //         var day = ('0' + now.getDate()).slice(-2); // Dua digit tanggal
-        //         var plant = $("#plant").val();
-        //         var nomorGrading = year + month + day + '_' + plant + '_UGH';
-        //         $("#nomor_grading").val(nomorGrading);
-        //     }
+        function calculateTotalBerat() {
+            let totalBerat = 0;
+            // Iterasi melalui setiap baris dalam tabel
+            $('#dataTable tbody tr').each(function() {
+                // Mendapatkan nilai berat adding dari baris saat ini dan menambahkannya ke totalBerat
+                let beratAdding = parseFloat($(this).find('td:eq(10)').text()) || 0;
+                totalBerat += beratAdding;
+            });
+            // Menampilkan total berat di input #total_berat
+            $('#total_berat').val(totalBerat);
+        }
 
-        //     // Panggil fungsi saat nilai plant berubah atau halaman dimuat
-        //     $("#plant").change(generateNomorGrading);
-        //     generateNomorGrading(); // Panggil saat halaman dimuat
-        // });
+        function calculateTotalPcs() {
+            let totalPcs = 0;
+            // Iterasi melalui setiap baris dalam tabel
+            $('#dataTable tbody tr').each(function() {
+                // Mendapatkan nilai pcs adding dari baris saat ini dan menambahkannya ke totalPcs
+                let pcsAdding = parseFloat($(this).find('td:eq(11)').text()) || 0;
+                totalPcs += pcsAdding;
+            });
+            // Menampilkan total pcs di input #total_pcs
+            $('#total_pcs').val(totalPcs);
+        }
 
-
-
+        function calculateTotalBox() {
+            let jumlahBaris = $('#dataTable tbody tr').length;
+            // Tampilkan Jumlah Baris di Input dengan ID "total_box"
+            $('#total_box').val(jumlahBaris);
+        }
 
         function validateForm() {
             // Mendefinisikan variabel untuk menyimpan kolom yang belum diisi
@@ -372,8 +364,24 @@
         // ADD ROW
         function addRow() {
             if (validateForm()) {
-                // Mengambil nilai dari input
                 let nomor_job = $('#nomor_job').val();
+
+                // Periksa apakah nomor job sudah ada dalam tabel
+                if ($('#dataTable tbody tr td:nth-child(1)').filter(function() {
+                        return $(this).text() === nomor_job;
+                    }).length > 0) {
+                    // Nomor job sudah ada dalam tabel, tampilkan pesan dan hentikan proses
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Nomor job sudah ada dalam tabel.',
+                    });
+                    return;
+                }
+                // Hapus opsi nomor_job yang sudah dipilih dari dropdown
+                $('#nomor_job option[value="' + nomor_job + '"]').remove();
+                // Mengambil nilai dari input
+                // let nomor_job = $('#nomor_job').val();
                 let nomor_grading = $('#nomor_grading').val();
                 let nomor_nota_internal = $('#nomor_nota_internal').val();
                 let id_box_grading_kasar = $('#id_box_grading_kasar').val();
@@ -422,31 +430,9 @@
                     `</tr>`
                 $('#dataTable tbody').append(newRow);
 
-                let totalPcsKirim = 0;
-                $('#dataTable tbody tr').each(function() {
-                    let pcsKirim = parseFloat($(this).find('td:eq(11)')
-                        .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
-                    if (!isNaN(pcsKirim)) {
-                        totalPcsKirim += pcsKirim;
-                    }
-                });
-
-                $('#total_pcs').val(totalPcsKirim);
-
-                let totalBeratKirim = 0;
-                $('#dataTable tbody tr').each(function() {
-                    let beratKirim = parseFloat($(this).find('td:eq(10)')
-                        .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
-                    if (!isNaN(beratKirim)) {
-                        totalBeratKirim += beratKirim;
-                    }
-                });
-
-                $('#total_berat').val(totalBeratKirim);
-
-                let jumlahBaris = $('#dataTable tbody tr').length;
-                // Tampilkan Jumlah Baris di Input dengan ID "total_box"
-                $('#total_box').val(jumlahBaris);
+                calculateTotalBerat();
+                calculateTotalPcs();
+                calculateTotalBox();
 
                 dataArray.push({
                     nomor_job: nomor_job,
@@ -464,8 +450,8 @@
                     tujuan_kirim: tujuan_kirim,
                     modal: modal,
                     total_modal: total_modal,
-                    berat_adding: totalBeratKirim,
-                    pcs_adding: totalPcsKirim,
+                    // berat_adding: totalBeratKirim,
+                    // pcs_adding: totalPcsKirim,
                     user_created: user_created,
 
                 });
@@ -478,140 +464,86 @@
 
         }
 
-        // function hapusBaris(button) {
-        //     // Dapatkan elemen baris terkait dengan tombol delete yang diklik
-        //     let row = $(button).closest('tr');
-
-        //     // Hapus baris dari dataArray berdasarkan indeks baris di tabel
-        //     let rowIndex = row.index();
-        //     dataArray.splice(rowIndex, 1);
-        //     // Hapus baris dari tabel
-        //     row.remove();
-        //     // Total Berat
-        //     let totalBeratKirim = 0;
-        //     $('#dataTable tbody tr').each(function() {
-        //         let beratKirim = parseFloat($(this).find('td:eq(10)')
-        //             .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
-        //         if (!isNaN(beratKirim)) {
-        //             totalBeratKirim += beratKirim;
-        //         }
-        //     });
-        //     $('#total_berat').val(totalBeratKirim);
-        //     // Total Pcs
-        //     let totalPcsKirim = 0;
-        //     $('#dataTable tbody tr').each(function() {
-        //         let pcsKirim = parseFloat($(this).find('td:eq(11)')
-        //             .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
-        //         if (!isNaN(pcsKirim)) {
-        //             totalPcsKirim += pcsKirim;
-        //         }
-        //     });
-        //     $('#total_pcs').val(totalPcsKirim);
-
-        //     let jumlahBaris = $('#dataTable tbody tr').length;
-        //     $('#total_box').val(jumlahBaris);
-        // }
-
-        // function hapusBaris(button) {
-        //     // Dapatkan elemen baris terkait dengan tombol delete yang diklik
-        //     let row = $(button).closest('tr');
-
-        //     // Hapus baris dari dataArray berdasarkan indeks baris di tabel
-        //     let rowIndex = row.index();
-        //     dataArray.splice(rowIndex, 1);
-        //     // Hapus baris dari tabel
-        //     row.remove();
-
-        //     // Periksa apakah tabel kosong setelah menghapus baris
-        //     let jumlahBaris = $('#dataTable tbody tr').length;
-        //     if (jumlahBaris === 0) {
-        //         // Jika tabel kosong, kosongkan nilai dari elemen '#nomor_grading'
-        //         $('#nomor_grading').val('').prop('readonly', false); // Mengaktifkan kembali input nomor grading
-        //         $('#nomor_job').val(''); // Mengosongkan nilai dari elemen '#nomor_job'
-        //         // $('#plant').val('').prop('disabled', false);
-        //         $('#plant').val($('#plant option:first').val()).trigger('change').prop('disabled', false);
-        //         // Mengaktifkan kembali dropdown "Plant" dan mengosongkan nilainya
-        //     } else {
-        //         // Jika tidak kosong, lakukan perhitungan total seperti biasa
-        //         // Total Berat
-        //         let totalBeratKirim = 0;
-        //         $('#dataTable tbody tr').each(function() {
-        //             let beratKirim = parseFloat($(this).find('td:eq(10)').text());
-        //             if (!isNaN(beratKirim)) {
-        //                 totalBeratKirim += beratKirim;
-        //             }
-        //         });
-        //         $('#total_berat').val(totalBeratKirim);
-
-        //         // Total Pcs
-        //         let totalPcsKirim = 0;
-        //         $('#dataTable tbody tr').each(function() {
-        //             let pcsKirim = parseFloat($(this).find('td:eq(11)').text());
-        //             if (!isNaN(pcsKirim)) {
-        //                 totalPcsKirim += pcsKirim;
-        //             }
-        //         });
-        //         $('#total_pcs').val(totalPcsKirim);
-        //     }
-
-        //     // Total Box
-        //     $('#total_box').val(jumlahBaris);
-        // }
-
         function hapusBaris(button) {
             // Dapatkan elemen baris terkait dengan tombol delete yang diklik
             let row = $(button).closest('tr');
 
+            // Dapatkan nomor_job dari baris yang dihapus
+            let nomorJobDihapus = row.find('td:eq(0)').text();
+
+            // Buat kembali opsi nomor_job yang dihapus dan tambahkan ke dalam dropdown
+            $('#nomor_job').append('<option value="' + nomorJobDihapus + '">' + nomorJobDihapus + '</option>');
+
+            // Urutkan opsi nomor_job dalam dropdown
+            let options = $('#nomor_job option');
+            options.detach().sort(function(a, b) {
+                let at = $(a).text();
+                let bt = $(b).text();
+                return (at > bt) ? 1 : ((at < bt) ? -1 : 0);
+            });
+            $('#nomor_job').append(options);
+
             // Hapus baris dari dataArray berdasarkan indeks baris di tabel
             let rowIndex = row.index();
             dataArray.splice(rowIndex, 1);
+
             // Hapus baris dari tabel
             row.remove();
 
-            // Periksa apakah tabel kosong setelah menghapus baris
             let jumlahBaris = $('#dataTable tbody tr').length;
             if (jumlahBaris === 0) {
-                // Jika tabel kosong, kosongkan nilai dari elemen '#nomor_grading'
-                $('#nomor_grading').val('').prop('readonly', false); // Mengaktifkan kembali input nomor grading
-                $('#nomor_job').val(''); // Mengosongkan nilai dari elemen '#nomor_job'
-                $('#nomor_grading').val('');
-                // $('#plant').val('').prop('disabled', false);
+                // Jika tidak ada baris lagi, kosongkan nilai dari #plant dan #nomor_bstb
+                // $('#plant').val('');
                 $('#plant').val($('#plant option:first').val()).trigger('change').prop('disabled', false);
-                // Mengaktifkan kembali dropdown "Plant" dan mengosongkan nilainya
-            } else {
-                // Jika tidak kosong, lakukan perhitungan total seperti biasa
-                // Total Berat
+                $('#nomor_bstb').val('').prop('readonly', false);
+                $('#nomor_bstb').val('');
+
                 let totalBeratKirim = 0;
                 $('#dataTable tbody tr').each(function() {
-                    let beratKirim = parseFloat($(this).find('td:eq(10)').text());
+                    let beratKirim = parseFloat($(this).find('td:eq(10)')
+                        .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
                     if (!isNaN(beratKirim)) {
                         totalBeratKirim += beratKirim;
                     }
                 });
                 $('#total_berat').val(totalBeratKirim);
-
                 // Total Pcs
                 let totalPcsKirim = 0;
                 $('#dataTable tbody tr').each(function() {
-                    let pcsKirim = parseFloat($(this).find('td:eq(11)').text());
+                    let pcsKirim = parseFloat($(this).find('td:eq(11)')
+                        .text()); // Ganti angka 11 dengan indeks kolom pcs_kirim dalam tabel
                     if (!isNaN(pcsKirim)) {
                         totalPcsKirim += pcsKirim;
                     }
                 });
                 $('#total_pcs').val(totalPcsKirim);
 
-                // Regenerate nomor grading karena ada perubahan dalam tabel
-                const selectedPlant = $('#plant').val();
-                const nomorGrading = generateNomorGrading(selectedPlant);
-                $('#nomor_grading').val('');
+                $('#total_box').val(jumlahBaris);
+            } else {
+                // Total Berat
+                let totalBeratKirim = 0;
+                $('#dataTable tbody tr').each(function() {
+                    let beratKirim = parseFloat($(this).find('td:eq(10)')
+                        .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
+                    if (!isNaN(beratKirim)) {
+                        totalBeratKirim += beratKirim;
+                    }
+                });
+                $('#total_berat').val(totalBeratKirim);
+                // Total Pcs
+                let totalPcsKirim = 0;
+                $('#dataTable tbody tr').each(function() {
+                    let pcsKirim = parseFloat($(this).find('td:eq(11)')
+                        .text()); // Ganti angka 11 dengan indeks kolom pcs_kirim dalam tabel
+                    if (!isNaN(pcsKirim)) {
+                        totalPcsKirim += pcsKirim;
+                    }
+                });
+                $('#total_pcs').val(totalPcsKirim);
+
+                $('#total_box').val(jumlahBaris);
             }
-
-            // Total Box
-            $('#total_box').val(jumlahBaris);
         }
-
-
-
 
 
         function simpanData() {
@@ -659,21 +591,93 @@
                     // Redirect atau lakukan tindakan lain setelah berhasil
                     window.location.href = `{{ route('PreGradingHalusAdding.index') }}`;
                 },
-                error: function(error) {
+                error: function(xhr, status, error) {
                     console.error('Error sending data:', error);
 
-                    // Menampilkan SweetAlert untuk pesan error
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
-                    });
+                    // Handling duplicate entry error
+                    if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.includes(
+                            'Integrity constraint violation: 1062')) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal Menyimpan Data',
+                            text: 'Data tidak dapat disimpan karena terdapat duplikasi entri kunci unik pada basis data.'
+                        });
+                    } else {
+                        // Menampilkan SweetAlert untuk pesan error umum
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
+                        });
+                    }
                 },
-                complete: function() {
-                    // Menutup SweetAlert setelah permintaan selesai, terlepas dari berhasil atau gagal
-                    Swal.close();
-                }
+                // complete: function() {
+                //     // Menutup SweetAlert setelah permintaan selesai, terlepas dari berhasil atau gagal
+                //     Swal.close();
+                // }
             });
         }
+
+        // function simpanData() {
+        //     console.log(dataArray);
+        //     // Cek apakah data kosong
+        //     if (dataArray.length === 0) {
+        //         // Menampilkan SweetAlert untuk pesan error
+        //         Swal.fire({
+        //             icon: 'error',
+        //             title: 'Astagfirullah',
+        //             text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
+        //         });
+        //         return; // Menghentikan eksekusi fungsi jika data kosong
+        //     }
+        //     // Mengirim data ke server menggunakan AJAX
+        //     $.ajax({
+        //         url: `{{ route('PreGradingHalusAdding.simpanData') }}`,
+        //         method: 'POST',
+        //         data: {
+        //             data: JSON.stringify(dataArray),
+        //             _token: '{{ csrf_token() }}'
+        //         },
+        //         dataType: 'json',
+        //         beforeSend: function() {
+        //             // Menampilkan SweetAlert sebagai indikator loading sebelum permintaan dikirimkan
+        //             Swal.fire({
+        //                 title: 'Loading...',
+        //                 allowOutsideClick: false,
+        //                 showConfirmButton: false,
+        //                 onBeforeOpen: () => {
+        //                     Swal.showLoading();
+        //                 }
+        //             });
+        //         },
+        //         success: function(response) {
+        //             console.log('Data sent successfully:', response);
+
+        //             // Menampilkan SweetAlert untuk pesan sukses
+        //             Swal.fire({
+        //                 icon: 'success',
+        //                 title: 'Alhamdulillah',
+        //                 text: 'Data berhasil dikirim.'
+        //             });
+
+        //             // Redirect atau lakukan tindakan lain setelah berhasil
+        //             window.location.href = `{{ route('PreGradingHalusAdding.index') }}`;
+        //         },
+        //         error: function(error) {
+        //             console.error('Error sending data:', error);
+
+        //             // Menampilkan SweetAlert untuk pesan error
+        //             Swal.fire({
+        //                 icon: 'error',
+        //                 title: 'Error',
+        //                 text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
+        //             });
+        //         },
+        //         complete: function() {
+        //             // Menutup SweetAlert setelah permintaan selesai, terlepas dari berhasil atau gagal
+        //             Swal.close();
+        //         }
+        //     });
+        // }
     </script>
 @endsection
