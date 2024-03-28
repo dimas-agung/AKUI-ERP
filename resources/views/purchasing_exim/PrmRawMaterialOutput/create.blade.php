@@ -189,7 +189,7 @@
 
 
         <div class="col-md-12">
-            <div class="card mt-2 border border-primary border-3">
+            <div class="card mt-2">
                 <div class="card-header">
                     <div class="card-title">Validasi Data Input</div>
                     <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
@@ -474,8 +474,8 @@
             });
         });
 
-        $('#tujuan_kirim').on('change', function() {
-            // Mengambil nilai id_box yang dipilih
+        $('#tujuan_kirim, #tujuan_kirim_edit').on('change', function() {
+            // Mengambil nilai tujuan_kirim yang dipilih
             let selectedPcc = $(this).val();
 
             // Melakukan permintaan AJAX ke controller untuk mendapatkan data
@@ -901,7 +901,8 @@
                     }).then((result) => {
                         // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
                         if (result.isConfirmed) {
-                            window.location.href = response.redirectTo; // Ganti dengan URL tujuan redirect Anda
+                            window.location.href = response
+                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
                         }
                     });
                 },
@@ -911,7 +912,7 @@
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });
-
+                    console.log('Validation Errors:', response.responseJSON.errors);
                 }
             });
         }
