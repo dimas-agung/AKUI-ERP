@@ -14,20 +14,79 @@
                     {{-- card header --}}
                     <div class="card-header">
                         <h5 class="card-title">
-                            <div class="col-sm-12 d-flex justify-content-between">
-                                Data Purchasing Raw Material Input
-                                <div>
-                                    <button onclick="redirectToPage('detail')" type="button"
-                                        class="btn btn-outline-warning rounded-pill">
-                                        <strong><i class="bi bi-eye"></i> Detail Data </strong>
-                                    </button>
-                                    <button onclick="redirectToPage('create')" type="button"
-                                        class="btn btn-outline-success rounded-pill">
-                                        <strong><i class="bi bi-plus-circle"></i> Add Data
-                                            <i class="bi bi-plus-circle"></i></strong>
-                                    </button>
+                            <div class="col-sm-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Data Purchasing Raw Material Input</span>
+                                    <div>
+                                        {{-- <form action="{{ route('PrmRawMaterialInput.importExcel') }}" method="POST"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="file" id="upload-file" name="file"
+                                                accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                                hidden />
+                                            <label class="btn btn-outline-primary rounded-pill" for="upload-file"><strong><i
+                                                        class="bi bi-eye"></i> Import Excel</strong></label>
+                                            <button type="submit">Import</button>
+                                        </form> --}}
+
+                                        <button type="button" class="btn btn-outline-primary rounded-pill"
+                                            data-bs-toggle="modal" data-bs-target="#import">
+                                            <strong>
+                                                <i class="bi bi-file-earmark-excel"></i>
+                                                Import Excel
+                                            </strong>
+                                        </button>
+                                        <div class="modal fade text-left" id="import" tabindex="-1" role="dialog"
+                                            aria-labelledby="myModalLabel160" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                                role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-success">
+                                                        <h5 class="modal-title white" id="myModalLabel160">Import Form Excel
+                                                        </h5>
+                                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="{{ route('PrmRawMaterialInput.importExcel') }}"
+                                                            method="POST" enctype="multipart/form-data">
+                                                            @csrf
+                                                            <input class="form-control" type="file" id="upload-file"
+                                                                name="file"
+                                                                accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                                                            {{-- <input type="file" id="upload-file" name="file"
+                                                                accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" /> --}}
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger"
+                                                                    data-bs-dismiss="modal">
+                                                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                                                    <span class="d-none d-sm-block">Close</span>
+                                                                </button>
+                                                                <button type="submit" class="btn btn-success ms-1">
+                                                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                                                    <span class="d-none d-sm-block">Import</span>
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button onclick="redirectToPage('detail')" type="button"
+                                            class="btn btn-outline-warning rounded-pill"><strong><i class="bi bi-eye"></i>
+                                                Detail Data </strong></button>
+                                        <button onclick="redirectToPage('create')" type="button"
+                                            class="btn btn-outline-success rounded-pill"><strong><i
+                                                    class="bi bi-plus-circle"></i> Add Data <i
+                                                    class="bi bi-plus-circle"></i></strong></button>
+                                    </div>
                                 </div>
                             </div>
+
+
                         </h5>
                     </div>
                     {{-- card body --}}
@@ -75,7 +134,8 @@
                                                         action="{{ route('PrmRawMaterialInput.destroyInput', $MasterPRIM->id) }}"
                                                         method="POST">
                                                         <a href="{{ route('PrmRawMaterialInput.show', $MasterPRIM->id) }}"
-                                                            class="btn btn-link" title="View" data-original-title="View">
+                                                            class="btn btn-link" title="View"
+                                                            data-original-title="View">
                                                             <i class="bi bi-eye"></i>
                                                         </a>
                                                         @csrf
@@ -106,9 +166,9 @@
 <script>
     function redirectToPage(pageType) {
         if (pageType === 'create') {
-            window.location.href = "{{ url('/prm_raw_material_input/create') }}";
+            window.location.href = "{{ route('PrmRawMaterialInput.create') }}";
         } else if (pageType === 'detail') {
-            window.location.href = "{{ url('/prm_raw_material_input/detail') }}";
+            window.location.href = "{{ route('PrmRawMaterialInput.detail') }}";
         }
     }
 

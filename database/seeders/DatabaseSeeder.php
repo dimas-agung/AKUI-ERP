@@ -12,6 +12,7 @@ use App\Models\MasterJenisGradingKasar;
 use App\Models\MasterOperator;
 use App\Models\PrmRawMaterialStock;
 use App\Models\TransitGradingKasar;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -55,5 +56,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterOngkosCuciSeeder::class);
         $this->call(PerusahaanSeeder::class);
         $this->call(MasterJenisGradingHalusSeeder::class);
+        $this->call(RoleSeeder::class);
+        $this->call(UsersSeeder::class);
     }
 }

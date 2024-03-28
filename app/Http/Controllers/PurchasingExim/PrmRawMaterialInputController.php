@@ -2,24 +2,57 @@
 
 namespace App\Http\Controllers\PurchasingExim;
 
-use App\Models\PrmRawMaterialInput;
-use App\Models\PrmRawMaterialInputItem;
-use App\Models\PrmRawMaterialStock;
-use App\Models\PrmRawMaterialStockHistory;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\PrmRawMaterialRequest;
-use App\Http\Requests\PrmRawMaterialItemRequest;
-use App\Models\MasterJenisRawMaterial;
 use Illuminate\Http\Request;
-use App\Models\MasterSupplierRawMaterial;
-use Illuminate\Http\RedirectResponse;
-use App\Services\PrmRawMaterialInputService;
-use App\Services\PrmRawMaterialInputItemService;
+use App\Imports\prmExcelImport;
 use Illuminate\Support\Facades\DB;
+use App\Models\PrmRawMaterialInput;
+use App\Models\PrmRawMaterialStock;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\RedirectResponse;
+use App\Models\MasterJenisRawMaterial;
+use App\Models\PrmRawMaterialInputItem;
+use App\Models\MasterSupplierRawMaterial;
+use App\Models\PrmRawMaterialStockHistory;
+use App\Http\Requests\PrmRawMaterialRequest;
+use App\Services\PrmRawMaterialInputService;
+use App\Http\Requests\PrmRawMaterialItemRequest;
+use App\Services\PrmRawMaterialInputItemService;
 
 
 class PrmRawMaterialInputController extends Controller
 {
+    // import
+    // public function importExcel(Request $request)
+    // {
+    //     Excel::import(new prmExcelImport, $request->file('file'));
+
+    //     return redirect()->route('PrmRawMaterialInput.index')->with('success', 'All good!');
+    // }
+
+    public function importExcel(Request $request)
+    {
+        Excel::import(new prmExcelImport, $request->file('file'), null, \Maatwebsite\Excel\Excel::XLSX);
+        // return response()->json($data);
+        return redirect()->route('PrmRawMaterialInput.index')->with('success', 'Data Berhasil di Import!');
+    }
+
+
+    // public function import(Request $request)
+    // {
+    //     $request->validate([
+    //         'file' => 'required|file|mimes:xlsx,xls',
+    //     ]);
+
+    //     $file = $request->file('file');
+
+    //     try {
+    //         Excel::import(new prmExcelImport, $file);
+    //         return redirect()->back()->with('success', 'Data berhasil diimpor.');
+    //     } catch (\Exception $e) {
+    //         return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+    //     }
+    // }
     //index
     public function index()
     {
