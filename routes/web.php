@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function (){
         Route::post('/reset/create', 'update')->name('reset.create');
         Route::post('/reset/store', 'store')->name('reset.store');
     });
-    Route::prefix('master')->middleware(['role:master'])->group(function (){
+    Route::prefix('master')->middleware(['role:master|admin'])->group(function (){
         Route::controller(App\Http\Controllers\PerusahaanController::class)->group(function () {
             Route::get('/perusahaan', 'index')->name('Perusahaan.index');
             Route::get('/perusahaan/create', 'create')->name('Perusahaan.create');
@@ -135,7 +135,7 @@ Route::middleware('auth')->group(function (){
             Route::delete('/master_ongkos_cuci/destroy/{id}', 'destroy')->name('MasterOngkosCuci.destroy');
         });
     });
-    Route::prefix('purchasing')->middleware(['role:purchasing'])->group(function (){
+    Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function (){
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
             Route::get('/prm_raw_material_input', 'index')->name('PrmRawMaterialInput.index');
             Route::get('/prm_raw_material_input/create', 'create')->name('PrmRawMaterialInput.create');
@@ -176,8 +176,8 @@ Route::middleware('auth')->group(function (){
             Route::get('/prm_raw_material_output/getBerat/{id}', 'getBerat')->name('PrmRawMaterialOutput.getBerat');
         });
     });
-    Route::prefix('bahan_baku')->middleware(['role:bahan_baku'])->group(function (){
-        Route::prefix('grading_kasar')->group(function (){
+    Route::prefix('bahan_baku')->middleware(['role:bahan_baku|admin'])->group(function (){
+        Route::prefix('grading_kasar')->middleware('role:purchasing|admin')->group(function (){
             // Untuk menangani beberapa role menggunakan cara dibawah
             // Route::middleware(['role:pur_input','role:output'])->group(function () {
             // });
@@ -227,9 +227,9 @@ Route::middleware('auth')->group(function (){
             Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
                 Route::get('/stock_transit_grading_kasar', 'index')->name('StockTransitGradingKasar.index');
             });
-        })->middleware('role:purchasing');
+        });
 
-        Route::prefix('pre_cleaning')->group(function (){
+        Route::prefix('pre_cleaning')->middleware('role:pre_cleaning|admin')->group(function (){
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
                 Route::get('/pre_cleaning_input', 'index')->name('PreCleaningInput.index');
                 Route::get('/pre_cleaning_input/create', 'create')->name('PreCleaningInput.create');
@@ -259,9 +259,9 @@ Route::middleware('auth')->group(function (){
             Route::controller(App\Http\Controllers\PreCleaning\TransitPreCleaningStockController::class)->group(function () {
                 Route::get('/transit_pre_cleaning_stock', 'index')->name('TransitPreCleaningStock.index');
             });
-        })->middleware('role:pre_cleaning');
+        });
 
-        Route::prefix('grading_halus')->group(function (){
+        Route::prefix('grading_halus')->middleware('role:grading_halus|admin')->group(function (){
             Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusInputController::class)->group(function () {
                 Route::get('/pre_grading_halus_input', 'index')->name('PreGradingHalusInput.index');
                 Route::get('/pre_grading_halus_input/create', 'create')->name('PreGradingHalusInput.create');
@@ -326,17 +326,19 @@ Route::middleware('auth')->group(function (){
             Route::controller(App\Http\Controllers\PreGradingHalus\TransitGradingHalusController::class)->group(function () {
                 Route::get('/transit_grading_halus', 'index')->name('TransitGradingHalus.index');
             });
-        })->middleware('role:grading_halus');
-        Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
-            Route::get('/pre_wash_output', 'index')->name('PreWashOutput.index');
-            Route::get('/pre_wash_output/create', 'create')->name('PreWashOutput.create');
-            Route::post('/pre_wash_output/store', 'store')->name('PreWashOutput.store');
-            Route::get('/pre_wash_output/show/{id}', 'show')->name('PreWashOutput.show');
-            Route::get('/pre_wash_output/edit/{id}', 'edit')->name('PreWashOutput.edit');
-            Route::put('/pre_wash_output/update/{id}', 'update')->name('PreWashOutput.update');
-            Route::delete('/pre_wash_output/destroy/{nomor_bstb}', 'destroy')->name('PreWashOutput.destroy');
-            Route::get('/pre_wash_output/get_data_nomor_job', 'set')->name('preWashOutput.set');
-            Route::post('/pre_wash_output/simpanData', 'simpanData')->name('PreWashOutput.simpanData');
+        });
+        Route::prefix('pre_wash')->middleware('role:pre_wash|admin')->group(function (){
+            Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
+                Route::get('/pre_wash_output', 'index')->name('PreWashOutput.index');
+                Route::get('/pre_wash_output/create', 'create')->name('PreWashOutput.create');
+                Route::post('/pre_wash_output/store', 'store')->name('PreWashOutput.store');
+                Route::get('/pre_wash_output/show/{id}', 'show')->name('PreWashOutput.show');
+                Route::get('/pre_wash_output/edit/{id}', 'edit')->name('PreWashOutput.edit');
+                Route::put('/pre_wash_output/update/{id}', 'update')->name('PreWashOutput.update');
+                Route::delete('/pre_wash_output/destroy/{nomor_bstb}', 'destroy')->name('PreWashOutput.destroy');
+                Route::get('/pre_wash_output/get_data_nomor_job', 'set')->name('preWashOutput.set');
+                Route::post('/pre_wash_output/simpanData', 'simpanData')->name('PreWashOutput.simpanData');
+            });
         });
     });
     // Route::prefix('user3')->group(function (){

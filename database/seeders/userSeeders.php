@@ -26,7 +26,7 @@ class userSeeders extends Seeder
             'birth_date' => '2000-04-09',
 
         ]);
-        $user->assignRole(['purchasing']);
+        $user->assignRole(['master', 'bahan_baku']);
         $superdmin = User::create([
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin'),
@@ -38,6 +38,6 @@ class userSeeders extends Seeder
             'birth_date' => '2000-04-09',
 
         ]);
-        $superdmin->assignRole(['master', 'purchasing', 'bahan_baku']);
+        $superdmin->assignRole(['admin']);
     }
 }
