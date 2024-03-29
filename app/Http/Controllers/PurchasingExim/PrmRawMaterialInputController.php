@@ -60,7 +60,7 @@ class PrmRawMaterialInputController extends Controller
         $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
         $PrmRawMaterialInputItem = PrmRawMaterialInputItem::with('PrmRawMaterialInput')->get();
-        $PrmRawMaterialInput = PrmRawMaterialInput::with('MasterSupplierRawMaterial')->get();
+        $PrmRawMaterialInput = PrmRawMaterialInput::with(['MasterSupplierRawMaterial', 'PrmRawMaterialStock'])->get();
         // return $PrmRawMaterialInput;
         // return $MasterSupplierRawMaterial;
         // return $MasterJenisRawMaterial;
@@ -181,9 +181,68 @@ class PrmRawMaterialInputController extends Controller
         ]);
     }
     // test
+    // public function destroyInput($id): RedirectResponse
+    // {
+
+    //     try {
+    //         // Gunakan transaksi database untuk memastikan konsistensi
+    //         DB::beginTransaction();
+
+    //         // Temukan record berdasarkan ID
+    //         $prmRawMaterialInput = PrmRawMaterialInput::findOrFail($id);
+
+    //         // Simpan id_box dari input yang akan dihapus
+    //         $idBoxToDelete = $prmRawMaterialInput->id_box;
+
+    //         // Hitung total kadar air untuk id_box sebelum item dihapus
+    //         $totalKadarAirSebelumnya = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->sum('avg_kadar_air');
+
+    //         // Hitung jumlah baris untuk id_box sebelum item dihapus
+    //         $jumlahBarisSebelumnya = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->count();
+
+    //         // Hapus semua item terkait
+    //         $prmRawMaterialInput->PrmRawMaterialInputItem()->delete();
+    //         $prmRawMaterialInput->PrmRawMaterialStock()->delete();
+    //         $prmRawMaterialInput->PrmRawMaterialStockHistory()->delete();
+
+    //         // Hitung total kadar air untuk id_box setelah item dihapus
+    //         $totalKadarAirSesudah = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->sum('avg_kadar_air');
+
+    //         // Hitung jumlah baris untuk id_box setelah item dihapus
+    //         $jumlahBarisSesudah = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->count();
+
+    //         // Hitung ulang rata-rata kadar air untuk id_box yang terpengaruh
+    //         $averageKadarAir = 0;
+    //         if ($jumlahBarisSesudah > 0) {
+    //             $averageKadarAir = ($totalKadarAirSebelumnya - $totalKadarAirSesudah) / ($jumlahBarisSebelumnya - $jumlahBarisSesudah);
+    //         }
+
+    //         $prmStock = PrmRawMaterialStock::where('id_box', $idBoxToDelete)->first();
+    //         if ($prmStock) {
+    //             // Pastikan nilai avg_kadar_air di-format sebagai desimal sebelum disimpan
+    //             $prmStock->avg_kadar_air = number_format($averageKadarAir, 2); // Format dengan 2 digit desimal
+    //             $prmStock->save();
+    //         }
+
+    //         // Hapus record utama
+    //         $prmRawMaterialInput->delete();
+
+    //         // Jika tidak ada kesalahan, komit transaksi
+    //         DB::commit();
+
+    //         // Kembali ke halaman index dengan pesan sukses
+    //         return redirect()->route('PrmRawMaterialInput.index')->with('success', 'Data berhasil dihapus');
+    //     } catch (\Exception $e) {
+    //         // Jika terjadi kesalahan, rollback transaksi
+    //         DB::rollback();
+
+    //         // Kembali ke halaman index dengan pesan error
+    //         return redirect()->route('PrmRawMaterialInput.index')->with('error', 'Gagal menghapus data');
+    //     }
+    // }
+
     public function destroyInput($id): RedirectResponse
     {
-
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
@@ -191,47 +250,53 @@ class PrmRawMaterialInputController extends Controller
             // Temukan record berdasarkan ID
             $prmRawMaterialInput = PrmRawMaterialInput::findOrFail($id);
 
-            // Simpan id_box dari input yang akan dihapus
-            $idBoxToDelete = $prmRawMaterialInput->id_box;
+            // Periksa apakah nilai berat_keluar = 0 dan nomor nota internal cocok
+            if ($prmRawMaterialInput->PrmRawMaterialStock->berat_keluar == 0 && $prmRawMaterialInput->nomor_nota_internal == $prmRawMaterialInput->PrmRawMaterialStock->nomor_nota_internal) {
+                // Simpan id_box dari input yang akan dihapus
+                $idBoxToDelete = $prmRawMaterialInput->id_box;
 
-            // Hitung total kadar air untuk id_box sebelum item dihapus
-            $totalKadarAirSebelumnya = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->sum('avg_kadar_air');
+                // Hitung total kadar air untuk id_box sebelum item dihapus
+                $totalKadarAirSebelumnya = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->sum('avg_kadar_air');
 
-            // Hitung jumlah baris untuk id_box sebelum item dihapus
-            $jumlahBarisSebelumnya = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->count();
+                // Hitung jumlah baris untuk id_box sebelum item dihapus
+                $jumlahBarisSebelumnya = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->count();
 
-            // Hapus semua item terkait
-            $prmRawMaterialInput->PrmRawMaterialInputItem()->delete();
-            $prmRawMaterialInput->PrmRawMaterialStock()->delete();
-            $prmRawMaterialInput->PrmRawMaterialStockHistory()->delete();
+                // Hapus semua item terkait
+                $prmRawMaterialInput->PrmRawMaterialInputItem()->delete();
+                $prmRawMaterialInput->PrmRawMaterialStock()->delete();
+                $prmRawMaterialInput->PrmRawMaterialStockHistory()->delete();
 
-            // Hitung total kadar air untuk id_box setelah item dihapus
-            $totalKadarAirSesudah = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->sum('avg_kadar_air');
+                // Hitung total kadar air untuk id_box setelah item dihapus
+                $totalKadarAirSesudah = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->sum('avg_kadar_air');
 
-            // Hitung jumlah baris untuk id_box setelah item dihapus
-            $jumlahBarisSesudah = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->count();
+                // Hitung jumlah baris untuk id_box setelah item dihapus
+                $jumlahBarisSesudah = PrmRawMaterialStockHistory::where('id_box', $idBoxToDelete)->count();
 
-            // Hitung ulang rata-rata kadar air untuk id_box yang terpengaruh
-            $averageKadarAir = 0;
-            if ($jumlahBarisSesudah > 0) {
-                $averageKadarAir = ($totalKadarAirSebelumnya - $totalKadarAirSesudah) / ($jumlahBarisSebelumnya - $jumlahBarisSesudah);
+                // Hitung ulang rata-rata kadar air untuk id_box yang terpengaruh
+                $averageKadarAir = 0;
+                if ($jumlahBarisSesudah > 0) {
+                    $averageKadarAir = ($totalKadarAirSebelumnya - $totalKadarAirSesudah) / ($jumlahBarisSebelumnya - $jumlahBarisSesudah);
+                }
+
+                $prmStock = PrmRawMaterialStock::where('id_box', $idBoxToDelete)->first();
+                if ($prmStock) {
+                    // Pastikan nilai avg_kadar_air di-format sebagai desimal sebelum disimpan
+                    $prmStock->avg_kadar_air = number_format($averageKadarAir, 2); // Format dengan 2 digit desimal
+                    $prmStock->save();
+                }
+
+                // Hapus record utama
+                $prmRawMaterialInput->delete();
+
+                // Jika tidak ada kesalahan, komit transaksi
+                DB::commit();
+
+                // Kembali ke halaman index dengan pesan sukses
+                return redirect()->route('PrmRawMaterialInput.index')->with('success', 'Data berhasil dihapus');
+            } else {
+                // Jika kondisi tidak memenuhi, kembalikan dengan pesan error
+                return redirect()->route('PrmRawMaterialInput.index')->with('error', 'Tidak dapat menghapus data. Periksa nilai berat_keluar dan nomor nota internal.');
             }
-
-            $prmStock = PrmRawMaterialStock::where('id_box', $idBoxToDelete)->first();
-            if ($prmStock) {
-                // Pastikan nilai avg_kadar_air di-format sebagai desimal sebelum disimpan
-                $prmStock->avg_kadar_air = number_format($averageKadarAir, 2); // Format dengan 2 digit desimal
-                $prmStock->save();
-            }
-
-            // Hapus record utama
-            $prmRawMaterialInput->delete();
-
-            // Jika tidak ada kesalahan, komit transaksi
-            DB::commit();
-
-            // Kembali ke halaman index dengan pesan sukses
-            return redirect()->route('PrmRawMaterialInput.index')->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, rollback transaksi
             DB::rollback();
@@ -240,6 +305,7 @@ class PrmRawMaterialInputController extends Controller
             return redirect()->route('PrmRawMaterialInput.index')->with('error', 'Gagal menghapus data');
         }
     }
+
 
     // test
     // public function destroyInput($id): RedirectResponse

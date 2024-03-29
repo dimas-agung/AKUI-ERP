@@ -172,7 +172,7 @@
 @endsection
 <script>
     function redirectToPage() {
-        window.location.href = "{{ url('/grading_kasar_hasil/create') }}";
+        window.location.href = "{{ route('GradingKasarHasil.create') }}";
     }
 
     function confirmDelete(id) {

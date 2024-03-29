@@ -118,7 +118,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ url('/pre_grading_halus_adding/create') }}";
+            window.location.href = "{{ route('PreGradingHalusAdding.create') }}";
         }
 
         function confirmDelete(id) {

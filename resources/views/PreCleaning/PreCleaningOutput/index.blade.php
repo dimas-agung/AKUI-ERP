@@ -163,7 +163,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ url('/pre_cleaning_output/create') }}";
+            window.location.href = "{{ route('PreCleaningOutput.create') }}";
         }
 
         function confirmDelete(id) {
