@@ -12,21 +12,19 @@ class UsersSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function update(): void
+    public function run(): void
     {
-        $user = User::update([
+        $user = User::create([
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin123'),
             'fullname' => 'Example',
-            'nip' => '2002050703',
+            'nip' => '12345678',
             'unit_id' => '1',
             'username' => 'Example',
             'phone_number' => '0111111111',
             'birth_date' => '2000-04-09',
-
-        ])->where('id', $id);
-        //['bahan_baku','master']
-        $user->syncRoles($request->input('role'));
+        ]);
+        $user->syncRoles(['master']);
         // foreach ($request->input('role') as $key => $value) {
         //     # code...
         //     $user->assignRole([$value]);
