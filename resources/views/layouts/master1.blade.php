@@ -347,7 +347,7 @@
                                     </ul>
                                 </li>
                                 <li
-                                    class="submenu-item has-sub {{ Request::is('transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*', 'adjustment_adding*', 'adjustment_stock*', 'adjustment_input*','grading_halus_input*', 'grading_halus_stock*', 'grading_halus_output*') ? 'active' : '' }}">
+                                    class="submenu-item has-sub {{ Request::is('transit_pre_cleaning_stock*', 'pre_grading_halus_input*', 'pre_grading_halus_stock*', 'pre_grading_halus_adding*', 'pre_grading_halus_adding_stock*', 'adjustment_adding*', 'adjustment_stock*', 'adjustment_input*', 'grading_halus_input*', 'grading_halus_stock*', 'grading_halus_output*') ? 'active' : '' }}">
                                     <a href="#" class='submenu-link'>
                                         <span>Pre-Grading Halus</span>
                                     </a>
@@ -377,7 +377,7 @@
                                             <a href="{{ route('PreGradingHalusStock.index') }}"
                                                 class="submenu-link">Pre-Grading Halus Stock</a>
                                         </li>
-                                        
+
                                         <li
                                             class="submenu-item {{ Request::is('grading_halus_input*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingHalusInput.index') }}"
@@ -390,7 +390,7 @@
                                         </li>
                                         <li
                                             class="submenu-item {{ Request::is('adjustment_adding') ? 'active' : '' }}">
-                                            <a href="{{ route('AdjustmentAdding.index') }}"
+                                            <a href="{{ route('GradingHalusAdjustmentAdding.index') }}"
                                                 class="submenu-link">Adjustment Adding</a>
                                         </li>
                                         <li

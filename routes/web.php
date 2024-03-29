@@ -50,13 +50,13 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::controller(App\Http\Controllers\BiayaHppController::class)->group(function () {
-            Route::get('/biayahpp', 'index')->name('Biaya.index');
-            Route::post('/biayahpp/store', 'store')->name('Biaya.store');
-            Route::get('/biayahpp/create', 'create')->name('Biaya.create');
-            Route::get('/biayahpp/show/{id}', 'show')->name('Biaya.show');
-            Route::get('/biayahpp/edit/{id}', 'edit')->name('Biaya.edit');
-            Route::put('/biayahpp/update/{id}', 'update')->name('Biaya.update');
-            Route::delete('/biayahpp/hapus/{id}', 'destroy')->name('Biaya.destroy');
+            Route::get('/biayahpp', 'index')->name('BiayaHpp.index');
+            Route::post('/biayahpp/store', 'store')->name('BiayaHpp.store');
+            Route::get('/biayahpp/create', 'create')->name('BiayaHpp.create');
+            Route::get('/biayahpp/show/{id}', 'show')->name('BiayaHpp.show');
+            Route::get('/biayahpp/edit/{id}', 'edit')->name('BiayaHpp.edit');
+            Route::put('/biayahpp/update/{id}', 'update')->name('BiayaHpp.update');
+            Route::delete('/biayahpp/hapus/{id}', 'destroy')->name('BiayaHpp.destroy');
         });
 
         Route::controller(App\Http\Controllers\MasterSupplierRawMaterialController::class)->group(function () {
@@ -191,8 +191,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/stock_transit_raw_material', 'index')->name('StockTransitRawMaterial.index');
         });
     });
-    Route::prefix('bahan_baku')->middleware(['role:bahan_baku'])->group(function () {
-        Route::prefix('grading_kasar')->middleware('role:grading_kasar')->group(function () {
+    Route::prefix('bahan_baku')->middleware(['role:bahan_baku|admin'])->group(function () {
+        Route::prefix('grading_kasar')->middleware('role:grading_kasar|admin')->group(function () {
             Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputController::class)->group(function(){
                 Route::get('/grading_kasar_input', 'index')->name('GradingKasarInput.index');
                 Route::get('/grading_kasar_input/create', 'create')->name('GradingKasarInput.create');
@@ -250,7 +250,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/stock_transit_grading_kasar/destroy/{id}', 'destroy')->name('StockTransitGradingKasar.destroy');
             });
         });
-        Route::prefix('pre_cleaning')->middleware('role:pre_cleaning')->group(function () {
+        Route::prefix('pre_cleaning')->middleware('role:pre_cleaning|admin')->group(function () {
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
                 Route::get('/pre_cleaning_input', 'index')->name('PreCleaningInput.index');
                 Route::get('/pre_cleaning_input/create', 'create')->name('PreCleaningInput.create');
@@ -287,7 +287,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/transit_pre_cleaning_stock/destroy/{id}', 'destroy')->name('TransitPreCleaningStock.destroy');
             });
         });
-        Route::prefix('grading_halus')->middleware('role:grading_halus')->group(function () {
+        Route::prefix('grading_halus')->middleware('role:grading_halus|admin')->group(function () {
             Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusInputController::class)->group(function () {
                 Route::get('/pre_grading_halus_input', 'index')->name('PreGradingHalusInput.index');
                 Route::get('/pre_grading_halus_input/create', 'create')->name('PreGradingHalusInput.create');
@@ -404,3 +404,4 @@ Route::middleware('auth')->group(function () {
 });
 
 Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
