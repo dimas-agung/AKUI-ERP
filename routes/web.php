@@ -17,8 +17,14 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::middleware('auth')->group(function () {
+  
+    Route::controller(App\Http\Controllers\RegisterController::class)->group(function () {
+        Route::get('/reset', 'index')->name('reset.index');
+        Route::post('/reset/create', 'update')->name('reset.create');
+        Route::post('/reset/store', 'store')->name('reset.store');
+    });
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    Route::prefix('master')->middleware(['role:master'])->group(function () {
+    Route::prefix('master')->middleware(['role:master|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PerusahaanController::class)->group(function () {
             Route::get('/perusahaan', 'index')->name('Perusahaan.index');
             Route::get('/perusahaan/create', 'create')->name('Perusahaan.create');
@@ -149,7 +155,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/master_jenis_grading_halus/destroy/{id}', 'destroy')->name('MasterJenisGradingHalus.destroy');
         });
     });
-    Route::prefix('purchasing')->middleware(['role:purchasing'])->group(function () {
+    Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
             Route::get('/prm_raw_material_input', 'index')->name('PrmRawMaterialInput.index');
             Route::get('/prm_raw_material_input/create', 'create')->name('PrmRawMaterialInput.create');

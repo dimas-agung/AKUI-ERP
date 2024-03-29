@@ -88,63 +88,55 @@
                 {{-- <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
-
+    
                         <li class="sidebar-item active ">
                             <a href="/" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
-
-
+    
+    
                         </li>
-
+    
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Master</span>
                             </a>
-
+    
                             <ul class="submenu ">
-
+    
                                 <li class="submenu-item  ">
                                     <a href="{{ url('/master_jenis_raw_material') }}" class="submenu-link">Master
                                         Jenis</a>
-
+    
                                 </li>
-
+    
                             </ul>
-
+    
                         </li>
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Purchasing & Exim</span>
                             </a>
-
+    
                             <ul class="submenu ">
-
+    
                                 <li class="submenu-item  ">
                                     <a href="{{ url('/purchasing_exim/prm_raw_material_input') }}"
                                         class="submenu-link">PRM INPUT</a>
-
+    
                                 </li>
-
+    
                             </ul>
-
+    
                         </li>
-
+    
                     </ul>
                 </div> --}}
                 <div class="sidebar-menu">
                     <ul class="menu">
-
-                        <li class="sidebar-item  {{ Request::is('/') ? 'active' : '' }} ">
-                            <form action="{{ route('logout') }}" method="POST">
-                                @method('POST')
-                                {{ csrf_field() }}
-                                <button type="submit">LOGOUT</button>
-                            </form>
-                        </li>
                         <li class="sidebar-item  {{ Request::is('/') ? 'active' : '' }} ">
                             <a href="{{ route('home') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
@@ -224,7 +216,7 @@
                                 </li>
                             </ul>
                         </li>
-
+    
                         <li class="sidebar-title">Purchasing & EXIM</li>
                         <li
                             class="sidebar-item  has-sub {{ Request::is('prm_raw_material_input*', 'prm_raw_material_stock*', 'prm_raw_material_output*', 'stock_transit_raw_material*') ? 'active' : '' }}">
@@ -377,7 +369,7 @@
                                             <a href="{{ route('PreGradingHalusStock.index') }}"
                                                 class="submenu-link">Pre-Grading Halus Stock</a>
                                         </li>
-
+    
                                         <li
                                             class="submenu-item {{ Request::is('grading_halus_input*') ? 'active' : '' }}">
                                             <a href="{{ route('GradingHalusInput.index') }}"
@@ -417,7 +409,7 @@
                                 </li>
                             </ul>
                         </li>
-
+    
                         <li class="sidebar-title">Cleaning</li>
                     </ul>
                 </div>
@@ -426,72 +418,20 @@
         <div id="main" class="position:relative">
             <header class="mb-3">
                 <nav class="navbar navbar-expand navbar-light navbar-top">
-                    <a href="#" class="burger-btn d-block d-xl-none">
-                        <i class="bi bi-justify fs-3"></i>
-                    </a>
                     <div class="container-fluid">
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <a href="#" class="burger-btn d-block d-xl-none">
+                                <i class="bi bi-justify fs-3"></i>
+                            </a>
                             <ul class="navbar-nav ms-auto mb-lg-0">
-                                {{-- <li class="nav-item dropdown me-1">
-                                    <a class="nav-link active dropdown-toggle text-gray-600" href="#"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class='bi bi-envelope bi-sub fs-4'></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                        <li>
-                                            <h6 class="dropdown-header">Mail</h6>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#">No new mail</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown me-3">
-                                    <a class="nav-link active dropdown-toggle text-gray-600" href="#"
-                                        data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                                        <i class='bi bi-bell bi-sub fs-4'></i>
-                                        <span class="badge badge-notification bg-danger">7</span>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end notification-dropdown"
-                                        aria-labelledby="dropdownMenuButton">
-                                        <li class="dropdown-header">
-                                            <h6>Notifications</h6>
-                                        </li>
-                                        <li class="dropdown-item notification-item">
-                                            <a class="d-flex align-items-center" href="#">
-                                                <div class="notification-icon bg-primary">
-                                                    <i class="bi bi-cart-check"></i>
-                                                </div>
-                                                <div class="notification-text ms-4">
-                                                    <p class="notification-title font-bold">Successfully check out</p>
-                                                    <p class="notification-subtitle font-thin text-sm">Order ID #256
-                                                    </p>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="dropdown-item notification-item">
-                                            <a class="d-flex align-items-center" href="#">
-                                                <div class="notification-icon bg-success">
-                                                    <i class="bi bi-file-earmark-check"></i>
-                                                </div>
-                                                <div class="notification-text ms-4">
-                                                    <p class="notification-title font-bold">Homework submitted</p>
-                                                    <p class="notification-subtitle font-thin text-sm">Algebra math
-                                                        homework</p>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <p class="text-center py-2 mb-0"><a href="#">See all
-                                                    notification</a></p>
-                                        </li>
-                                    </ul>
-                                </li> --}}
                             </ul>
                             <div class="dropdown-end">
-                                <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <div class="user-menu d-flex">
+                                <a href="#" data-bs-toggle="dropdown" aria-expanded="false"
+                                    class="dropdown-toggle">
+                                    <div class="user-menu d-flex align-items-center">
                                         <div class="user-name text-end me-3">
-                                            <h6 class="mb-0 text-gray-600">John Ducky</h6>
-                                            <p class="mb-0 text-sm text-gray-600">Administrator</p>
+                                            <h6 class="mb-0 text-gray-600" style="text-align: center">
+                                                {{ Auth::user()->username }}</h6>
                                         </div>
                                         <div class="user-img d-flex align-items-center">
                                             <div class="avatar avatar-md">
@@ -503,27 +443,113 @@
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"
                                     style="min-width: 11rem;">
                                     <li>
-                                        <h6 class="dropdown-header">Hello, John!</h6>
+                                        <h6 class="dropdown-header">Hello, {{ Auth::user()->username }}!</h6>
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="icon-mid bi bi-person me-2"></i> My
-                                            Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="icon-mid bi bi-gear me-2"></i>
-                                            Settings</a></li>
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="icon-mid bi bi-wallet me-2"></i>
-                                            Wallet</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#">
-                                            <i class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
+                                    <li><button class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#resetForm"><i class="icon-mid bi bi-gear me-2"></i>
+                                            Rubah Kata
+                                            Sandi</button></li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @method('POST')
+                                            {{ csrf_field() }}<button type="submit" class="dropdown-item"
+                                                href="#"><i class="icon-mid bi bi-box-arrow-left me-2"></i>
+                                                Logout
+    
+                                            </button></form>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </nav>
+                <div class="card-body" style="overflow: auto">
+                    <div class="modal fade text-left border border-primary border-3" id="resetForm" role="dialog"
+                        aria-labelledby="myModalLabel33" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                            <div class="modal-content border border-primary border-3">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel33">
+                                        <span class="fw-mediumbold">
+                                            Update</span>
+                                        <span class="fw-light">
+                                            Password
+                                        </span>
+                                    </h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="{{ route('reset.create') }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Password Lama</label>
+                                                    <input type="text"
+                                                        class="form-control @error('current_password') is-invalid @enderror"
+                                                        name="current_password"
+                                                        value="{{ old('current_password') }}"
+                                                        placeholder="Masukkan password">
+    
+                                                    <!-- error message untuk title -->
+                                                    @error('current_password')
+                                                        <div class="alert alert-danger mt-2">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Password Baru</label>
+                                                    <input type="password"
+                                                        class="form-control @error('new_password') is-invalid @enderror"
+                                                        name="new_password" value="{{ old('new_password') }}"
+                                                        placeholder="Masukkan Password Baru">
+    
+                                                    <!-- error message untuk title -->
+                                                    @error('new_password')
+                                                        <div class="alert alert-danger mt-2">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Konfirmasi Password Baru</label>
+                                                    <input type="password"
+                                                        class="form-control @error('new_password_confirmation') is-invalid @enderror"
+                                                        name="new_password_confirmation"
+                                                        value="{{ old('new_password_confirmation') }}"
+                                                        placeholder="Konfirmasi Password Baru">
+    
+                                                    <!-- error message untuk title -->
+                                                    @error('new_password_confirmation')
+                                                        <div class="alert alert-danger mt-2">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer no-bd">
+                                        <button type="submit" class="btn btn-primary">Ubah Password</button>
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </header>
             <div class="page-heading">
                 <div class="page-title">
@@ -546,7 +572,7 @@
             <div class="page-content">
                 @yield('content')
             </div>
-
+    
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
                     <div class="float-start">
@@ -560,7 +586,6 @@
             </footer>
         </div>
     </div>
-    <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js') }}"></script>
@@ -697,6 +722,22 @@
             //     ],
             //     scrollX: true,
             // });
+        });
+
+        // Profil
+        document.querySelectorAll('.dropdown-toggle').forEach(function(dropdownToggle) {
+            dropdownToggle.addEventListener('click', function() {
+                var dropdownMenu = dropdownToggle.nextElementSibling;
+                var ariaExpanded = dropdownToggle.getAttribute('aria-expanded');
+
+                if (ariaExpanded === 'false') {
+                    dropdownToggle.setAttribute('aria-expanded', 'true');
+                    dropdownMenu.classList.add('show');
+                } else {
+                    dropdownToggle.setAttribute('aria-expanded', 'false');
+                    dropdownMenu.classList.remove('show');
+                }
+            });
         });
     </script>
     @yield('script')
