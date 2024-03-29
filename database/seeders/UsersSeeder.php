@@ -24,7 +24,7 @@ class UsersSeeder extends Seeder
             'phone_number' => '0111111111',
             'birth_date' => '2000-04-09',
         ]);
-        $user->syncRoles(['master']);
+        $user->syncRoles(['master','admin']);
         // foreach ($request->input('role') as $key => $value) {
         //     # code...
         //     $user->assignRole([$value]);
