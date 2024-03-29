@@ -104,7 +104,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ url('/grading_halus_adjustment_adding/create') }}";
+            window.location.href = "{{ route('GradingHalusAdjustmentAdding.create') }}";
         }
 
         function confirmDelete(id) {

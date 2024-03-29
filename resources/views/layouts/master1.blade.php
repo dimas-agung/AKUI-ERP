@@ -146,7 +146,7 @@
                             </form>
                         </li>
                         <li class="sidebar-item  {{ Request::is('/') ? 'active' : '' }} ">
-                            <a href="{{ route('home') }}" class='sidebar-link'>
+                            <a href="{{ route('dashboard') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -169,9 +169,9 @@
                                 <li class="submenu-item  {{ Request::is('unit*') ? 'active' : '' }} ">
                                     <a href="{{ route('Unit.index') }}" class="submenu-link">Unit</a>
                                 </li>
-                                <li class="submenu-item  {{ Request::is('biayahpp*') ? 'active' : '' }} ">
+                                {{-- <li class="submenu-item  {{ Request::is('biayahpp*') ? 'active' : '' }} ">
                                     <a href="{{ route('Biaya.index') }}" class="submenu-link">Biaya HPP</a>
-                                </li>
+                                </li> --}}
                                 <li
                                     class="submenu-item  {{ Request::is('master_supplier_raw_material*') ? 'active' : '' }} ">
                                     <a href="{{ route('MasterSupplierRawMaterial.index') }}"
