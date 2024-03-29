@@ -130,22 +130,25 @@
 
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
-                                                        action="{{ route('PrmRawMaterialInput.destroyInput', $MasterPRIM->id) }}"
-                                                        method="POST">
-                                                        <a href="{{ route('PrmRawMaterialInput.show', $MasterPRIM->id) }}"
-                                                            class="btn btn-link" title="View"
-                                                            data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $MasterPRIM->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
+
+                                                    @if ($MasterPRIM->PrmRawMaterialStock->sum('berat_keluar') == 0)
+                                                        <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
+                                                            action="{{ route('PrmRawMaterialInput.destroyInput', $MasterPRIM->id) }}"
+                                                            method="POST">
+                                                            <a href="{{ route('PrmRawMaterialInput.show', $MasterPRIM->id) }}"
+                                                                class="btn btn-link" title="View"
+                                                                data-original-title="View">
+                                                                <i class="bi bi-eye"></i>
+                                                            </a>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-link"
+                                                                data-original-title="Remove"
+                                                                onclick="confirmDelete({{ $MasterPRIM->id }})">
+                                                                <i class="bi bi-trash3 text-danger"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
