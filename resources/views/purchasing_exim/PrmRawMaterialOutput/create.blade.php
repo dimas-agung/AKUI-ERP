@@ -433,7 +433,7 @@
                         $('#nama_supplier').val(response.nama_supplier);
                         $('#jenis').val(response.jenis);
                         $('#kadar_air').val(response.avg_kadar_air);
-                        $('#berat_masuk').val(response.berat_masuk);
+                        $('#berat_masuk').val(response.sisa_berat);
                         $('#modal').val(response.modal);
                         $('#nomor_nota_internal').val(response.nomor_nota_internal);
 
@@ -453,7 +453,7 @@
                         $('#nama_supplier_edit').val(response.nama_supplier);
                         $('#jenis_edit').val(response.jenis);
                         $('#kadar_air_edit').val(response.avg_kadar_air);
-                        $('#berat_masuk_edit').val(response.berat_masuk);
+                        $('#berat_masuk_edit').val(response.sisa_berat);
                         $('#modal_edit').val(response.modal);
                         $('#nomor_nota_internal_edit').val(response.nomor_nota_internal);
                     } else {
