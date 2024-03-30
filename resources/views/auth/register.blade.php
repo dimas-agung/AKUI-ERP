@@ -1,9 +1,9 @@
-@extends('layouts.auth')
+@extends('layouts.auth1')
 @section('title')
-REGISTER
+    Register
 @endsection
 @section('content')
-<div class="container">
+    {{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -75,5 +75,51 @@ REGISTER
             </div>
         </div>
     </div>
-</div>
+</div> --}}
+    <div class="row h-100">
+        <div class="col-lg-5 col-12">
+            <div id="auth-left">
+                <div class="auth-logo" style="margin-bottom: 1rem!important;">
+                    <a href="index.html"><img src='{{ asset('assets/compiled/jpg/LOGO NO REG.png') }}' alt="Logo"></a>
+                </div>
+                <h1 class="auth-title">Sign Up</h1>
+                <p class="auth-subtitle mb-1">Input your data to register to our website.</p>
+
+                <form action="index.html">
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <input type="text" class="form-control form-control-xl" placeholder="Email">
+                        <div class="form-control-icon">
+                            <i class="bi bi-envelope"></i>
+                        </div>
+                    </div>
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <input type="text" class="form-control form-control-xl" placeholder="Username">
+                        <div class="form-control-icon">
+                            <i class="bi bi-person"></i>
+                        </div>
+                    </div>
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <input type="password" class="form-control form-control-xl" placeholder="Password">
+                        <div class="form-control-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                    </div>
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <input type="password" class="form-control form-control-xl" placeholder="Confirm Password">
+                        <div class="form-control-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Sign Up</button>
+                </form>
+
+            </div>
+        </div>
+        <div class="col-lg-7 d-none d-lg-block ">
+            <div id="auth-right" class="border"
+                style="background: unset; background-color: white;backdrop-filter: blur(20px);">
+                <img style="width: 100%; height:auto;margin:15% 0;" src='{{}}' alt="">
+            </div>
+        </div>
+    </div>
 @endsection

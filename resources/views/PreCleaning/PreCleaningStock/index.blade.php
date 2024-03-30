@@ -30,8 +30,10 @@
                                 <th class="text-center">Jenis Kirim</th>
                                 <th class="text-center">Berat Masuk</th>
                                 <th class="text-center">Berat Keluar</th>
+                                <th class="text-center">Sisa Berat</th>
                                 <th class="text-center">Pcs Masuk</th>
                                 <th class="text-center">Pcs Keluar</th>
+                                <th class="text-center">Sisa Pcs</th>
                                 <th class="text-center">Avg Kadar Air</th>
                                 <th class="text-center">Nomor Grading</th>
                                 <th class="text-center">Tujuan Kirim</th>

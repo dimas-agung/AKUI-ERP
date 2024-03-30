@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BiayaHppSeeder::class);
         $this->call(MasterSupplierRawMaterialSeeder::class);
         $this->call(MasterJenisRawMaterialSeeder::class);
-        $this->call(MasterJenisGradingHalusSeeder::class);
+        // $this->call(MasterJenisGradingHalusSeeder::class);
         $this->call(MasterTujuanKirimRawMaterialSeeder::class);
         $this->call(MasterTujuanKirimGradingHalusSeeder::class);
         $this->call(MasterOperatorSeeder::class);

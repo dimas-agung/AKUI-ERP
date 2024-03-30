@@ -8,6 +8,11 @@ use Illuminate\Http\RedirectResponse;
 
 class MasterJenisGradingHalusController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware(['role:purchasing']);
+
+    }
     //index
     public function index()
     {

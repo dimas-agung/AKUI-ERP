@@ -134,7 +134,7 @@
                                     <div class="form-group">
                                         <label>NIP Admin</label>
                                         <input type="text" id="user_created" class="form-control" name="user_created"
-                                            placeholder="Masukkan User Created" data-parsley-required="true">
+                                            value="{{ auth()->user()->nip }}" readonly data-parsley-required="true">
                                     </div>
                                 </div>
                                 <div class="col-md-6">

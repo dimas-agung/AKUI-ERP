@@ -24,9 +24,10 @@ class User extends Authenticatable
         'password',
         'fullname',
         'username',
+        'nip',
         'phone_number',
         'birth_date',
-        'roles_id',
+        'unit_id',
     ];
 
     /**
@@ -48,8 +49,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function role()
+    public function unit()
     {
-        return $this->belongsTo(Roles::class, 'id', 'roles_id');
+        return $this->belongsTo(Unit::class, 'id', 'unit_id');
     }
 }

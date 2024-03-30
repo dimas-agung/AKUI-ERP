@@ -56,6 +56,9 @@ class PrmRawMaterialInputController extends Controller
     //index
     public function index()
     {
+        // $user = Auth::user();
+        // var_dump( $user->hasRole('purchasing'));
+        // return;
         $i = 1;
         $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();

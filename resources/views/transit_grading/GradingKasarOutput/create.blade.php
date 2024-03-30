@@ -220,8 +220,7 @@
                                         <div class="form-group">
                                             <label>NIP Admin</label>
                                             <input type="text" id="user_created" class="form-control"
-                                                name="user_created" value="{{ old('user_created') }}"
-                                                placeholder="Masukkan User Created">
+                                                name="user_created" value="{{ auth()->user()->nip }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">

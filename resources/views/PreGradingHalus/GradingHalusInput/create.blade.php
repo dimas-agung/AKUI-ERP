@@ -169,32 +169,11 @@
                                             placeholder="Masukkan pcs grading" data-parsley-required="true">
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Susut Depan</label>
-                                        <input type="text" id="susut_depan" class="form-control" name="susut_depan"
-                                            readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Susut Belakang</label>
-                                        <input type="text" id="susut_belakang" class="form-control"
-                                            name="susut_belakang" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Kontribusi</label>
-                                        <input type="text" id="kontribusi" class="form-control" name="kontribusi"
-                                            readonly>
-                                    </div>
-                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>NIP Admin</label>
                                         <input type="text" id="user_created" class="form-control" name="user_created"
-                                            placeholder="Masukkan User Created" data-parsley-required="true">
+                                            value="{{ auth()->user()->nip }}" readonly data-parsley-required="true">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
