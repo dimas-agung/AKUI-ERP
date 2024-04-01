@@ -148,7 +148,14 @@
                                                                 <i class="bi bi-trash3 text-danger"></i>
                                                             </button>
                                                         </form>
+                                                    @else
+                                                        <a href="{{ route('PrmRawMaterialInput.show', $MasterPRIM->id) }}"
+                                                            class="btn btn-link" title="View"
+                                                            data-original-title="View">
+                                                            <i class="bi bi-eye"></i>
+                                                        </a>
                                                     @endif
+
                                                 </div>
                                             </td>
                                         </tr>
