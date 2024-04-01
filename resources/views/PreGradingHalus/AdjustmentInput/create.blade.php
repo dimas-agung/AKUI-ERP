@@ -96,7 +96,8 @@
                     </div>
                     <div class="col-md-3">
                         <label for="user_created" class="form-label">NIP Admin</label>
-                        <input type="text" class="form-control" id="user_created">
+                        <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}"
+                            readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="susut_depan" class="form-label">Susut Depan</label>
