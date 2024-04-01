@@ -163,8 +163,8 @@ class PrmRawMaterialInputService
             'modal'                 => $itemObject->fix_harga_deal,
             'total_modal'           => $itemObject->fix_harga_deal * $itemObject->berat_bersih,
             'keterangan'            => $itemObject->keterangan,
-            // 'user_created'          => $itemObject->user_created,
-            // 'user_updated'          => $itemObject->user_updated ?? '',
+            'user_created'          => $itemObject->user_created,
+            'user_updated'          => $itemObject->user_updated ?? '',
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
         //
