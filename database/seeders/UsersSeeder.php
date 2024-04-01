@@ -25,6 +25,17 @@ class UsersSeeder extends Seeder
             'birth_date' => '2000-04-09',
         ]);
         $user->syncRoles(['master','admin']);
+        $user = User::create([
+            'email' => 'Purchasing@akuibirdnest.com',
+            'password' => Hash::make('purchasing123'),
+            'fullname' => 'NUR FADHILLAH',
+            'nip' => '222040347',
+            'username' => 'NUR FADHILLAH',
+            'phone_number' => '12348191',
+            'birth_date' => '2000-04-09',
+
+        ]);
+        $user->assignRole(['purchasing']);
         // foreach ($request->input('role') as $key => $value) {
         //     # code...
         //     $user->assignRole([$value]);
