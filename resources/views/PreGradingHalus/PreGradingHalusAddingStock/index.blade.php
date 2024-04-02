@@ -57,10 +57,10 @@
                                             {{-- <td class="text-center">{{ $PGHAS->kadar_air }}</td> --}}
                                             <td class="text-center">{{ number_format($PGHAS->kadar_air, 2, ',', '.') }}</td>
                                             {{-- <td class="text-center">{{ $PGHAS->berat_adding }}</td> --}}
-                                            <td class="text-center">{{ number_format($PGHAS->berat_adding, 0, ',', '.') }}
+                                            <td class="text-center">{{ number_format($PGHAS->berat_adding, 1, ',', '.') }}
                                             </td>
                                             {{-- <td class="text-center">{{ $PGHAS->pcs_adding }}</td> --}}
-                                            <td class="text-center">{{ number_format($PGHAS->pcs_adding, 0, ',', '.') }}
+                                            <td class="text-center">{{ number_format($PGHAS->pcs_adding, 1, ',', '.') }}
                                             </td>
                                             {{-- <td class="text-center">{{ $PGHAS->modal }}</td> --}}
                                             <td class="text-center">{{ number_format($PGHAS->modal, 2, ',', '.') }}</td>

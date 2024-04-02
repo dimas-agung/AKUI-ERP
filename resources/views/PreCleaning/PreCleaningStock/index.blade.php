@@ -56,10 +56,10 @@
                                     <td class="text-center">{{ $item->id_box_raw_material }}</td>
                                     <td class="text-center">{{ $item->jenis_raw_material }}</td>
                                     <td class="text-center">{{ $item->jenis_kirim }}</td>
-                                    <td class="text-center">{{ number_format($item->berat_masuk, 0, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->berat_keluar, 0, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->pcs_masuk, 0, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->pcs_keluar, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->berat_masuk, 1, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->berat_keluar, 1, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->pcs_masuk, 1, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->pcs_keluar, 1, ',', '.') }}</td>
                                     <td class="text-center">{{ number_format($item->kadar_air, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->nomor_grading }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>

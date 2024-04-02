@@ -77,15 +77,15 @@
                                             <td class="text-center">{{ $GradingKH->nama_supplier }}</td>
                                             <td class="text-center">{{ $GradingKH->nomor_nota_internal }}</td>
                                             <td class="text-center">{{ $GradingKH->jenis_raw_material }}</td>
-                                            <td class="text-center">{{ number_format($GradingKH->berat, 0, ',', '.') }}
+                                            <td class="text-center">{{ number_format($GradingKH->berat, 1, ',', '.') }}
                                             </td>
                                             <td class="text-center">{{ number_format($GradingKH->kadar_air, 2, ',', '.') }}
                                             </td>
                                             <td class="text-center">{{ $GradingKH->jenis_grading }}</td>
                                             <td class="text-center">
-                                                {{ number_format($GradingKH->berat_grading, 0, ',', '.') }}</td>
+                                                {{ number_format($GradingKH->berat_grading, 1, ',', '.') }}</td>
                                             <td class="text-center">
-                                                {{ number_format($GradingKH->pcs_grading, 0, ',', '.') }}</td>
+                                                {{ number_format($GradingKH->pcs_grading, 1, ',', '.') }}</td>
                                             <td class="text-center">{{ number_format($GradingKH->susut, 2, ',', '.') }}
                                             </td>
                                             <td class="text-center">
