@@ -85,7 +85,7 @@
         //     });
         // @enderror
     </script>
-@endsecstion
+@endsection
 
 {{-- @extends('layouts.auth')
 @section('title')
