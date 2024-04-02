@@ -23,4 +23,8 @@ class PreWashInput extends Model
         'user_created',
         'user_updated',
     ];
+    public function TransitGradingHalus()
+    {
+        return $this->hasMany(TransitGradingHalus::class, 'nomor_job', 'nomor_job');
+    }
 }

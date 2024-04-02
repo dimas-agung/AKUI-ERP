@@ -398,6 +398,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/pre_wash_input', 'index')->name('PreWashInput.index');
                 Route::get('/pre_wash_input/create', 'create')->name('PreWashInput.create');
                 Route::post('/pre_wash_input/store', 'store')->name('PreWashInput.store');
+                Route::get('/pre_wash_input/set', 'set')->name('PreWashInput.set');
             });
 
             Route::controller(App\Http\Controllers\PreWash\PreWashStockController::class)->group(function () {

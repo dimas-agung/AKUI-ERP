@@ -30,4 +30,8 @@ class TransitGradingHalus extends Model
     {
         return $this->hasMany(GradingHalusOutput::class, 'nomor_job', 'nomor_job');
     }
+    public function PreWashInput()
+    {
+        return $this->hasMany(PreWashInput::class, 'nomor_job', 'nomor_job');
+    }
 }
