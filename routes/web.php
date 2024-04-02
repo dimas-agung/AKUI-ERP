@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::middleware('auth')->group(function () {
-  
+
     Route::controller(App\Http\Controllers\RegisterController::class)->group(function () {
         Route::get('/reset', 'index')->name('reset.index');
         Route::post('/reset/create', 'update')->name('reset.create');
@@ -199,7 +199,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('bahan_baku')->middleware(['role:bahan_baku|admin'])->group(function () {
         Route::prefix('grading_kasar')->middleware('role:grading_kasar|admin')->group(function () {
-            Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputController::class)->group(function(){
+            Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputController::class)->group(function () {
                 Route::get('/grading_kasar_input', 'index')->name('GradingKasarInput.index');
                 Route::get('/grading_kasar_input/create', 'create')->name('GradingKasarInput.create');
                 Route::get('/grading_kasar_input/get_data', 'set')->name('GradingKasarInput.set');
@@ -392,6 +392,16 @@ Route::middleware('auth')->group(function () {
 
             Route::controller(App\Http\Controllers\PreGradingHalus\TransitGradingHalusController::class)->group(function () {
                 Route::get('/transit_grading_halus', 'index')->name('TransitGradingHalus.index');
+            });
+
+            Route::controller(App\Http\Controllers\PreWash\PreWashInputController::class)->group(function () {
+                Route::get('/pre_wash_input', 'index')->name('PreWashInput.index');
+                Route::get('/pre_wash_input/create', 'create')->name('PreWashInput.create');
+                Route::post('/pre_wash_input/store', 'store')->name('PreWashInput.store');
+            });
+
+            Route::controller(App\Http\Controllers\PreWash\PreWashStockController::class)->group(function () {
+                Route::get('/pre_wash_stock', 'index')->name('PreWashStock.index');
             });
         });
 
