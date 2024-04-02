@@ -10,8 +10,13 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+<<<<<<< HEAD
         "laravel/ui": "^4.5",
         "maatwebsite/excel": "^3.0",
+=======
+        "laravel/ui": "^4.2",
+        "maatwebsite/excel": "^3.1",
+>>>>>>> dev-al
         "realrashid/sweet-alert": "^7.1",
         "spatie/laravel-permission": "^6.4",
         "yajra/laravel-datatables-oracle": "^10.0"

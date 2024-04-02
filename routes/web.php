@@ -174,6 +174,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/prm_raw_material_input/importExcel', 'importExcel')->name('PrmRawMaterialInput.importExcel');
         });
 
+        Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->group(function () {
+            Route::get('/stock_transit_raw_material', 'index')->name('StockTransitRawMaterial.index');
+        });
+
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
             Route::get('/prm_raw_material_stock', 'index')->name('PrmRawMaterialStock.index');
             Route::get('/prm_raw_material_stock/show/{id_box}', 'show')->name('PrmRawMaterialStock.show');
@@ -191,10 +195,8 @@ Route::middleware('auth')->group(function () {
             Route::delete('/prm_raw_material_output/destroyHead/{id}', 'destroyHead')->name('PrmRawMaterialOutput.destroyHead');
             Route::get('/prm_raw_material_output/get_data_id_box', 'set')->name('PrmRawMaterialOutput.set');
             Route::get('/prm_raw_material_output/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
-        });
-
-        Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->group(function () {
-            Route::get('/stock_transit_raw_material', 'index')->name('StockTransitRawMaterial.index');
+            Route::post('/prm_raw_material_output/cek_data', 'CeksendData')->name('PrmRawMaterialOutput.CeksendData');
+            Route::get('/prm_raw_material_output/getBerat/{id}', 'getBerat')->name('PrmRawMaterialOutput.getBerat');
         });
     });
     Route::prefix('bahan_baku')->middleware(['role:bahan_baku|admin'])->group(function () {
@@ -206,6 +208,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('/grading_kasar_input/store', 'store')->name('GradingKasarInput.store');
                 Route::post('/grading_kasar_input/sendData', 'sendData')->name('GradingKasarInput.sendData');
                 Route::delete('/grading_kasar_input/destroy/{nomor_bstb}', 'destroy')->name('GradingKasarInput.destroy');
+                Route::post('/grading_kasar_input/cek_data', 'CeksendData')->name('GradingKasarInput.CeksendData');
             });
 
             Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarHasilController::class)->group(function () {
@@ -244,6 +247,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/grading_kasar_output/get_data_id_box', 'set')->name('GradingKasarOutput.set');
                 Route::post('/grading_kasar_output/post_data_nomor_job', 'validasi')->name('GradingKasarOutput.validasi');
                 Route::get('/grading_kasar_output/get_pcc', 'setpcc')->name('GradingKasarOutput.setpcc');
+                Route::post('/grading_kasar_output/cek_data', 'CeksendData')->name('GradingKasarOutput.CeksendData');
             });
 
             Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
@@ -265,6 +269,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/pre_cleaning_input/destroy/{nomor_bstb}', 'destroy')->name('PreCleaningInput.destroy');
                 Route::get('/pre_cleaning_input/get_data_id_box', 'set')->name('PreCleaningInput.set');
                 Route::get('/pre_cleaning_input/get_pcc', 'setpcc')->name('PreCleaningInput.setpcc');
+                Route::post('/pre_cleaning_input/cek_data', 'CeksendData')->name('PreCleaningInput.CeksendData');
             });
 
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::class)->group(function () {
@@ -302,6 +307,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('/pre_grading_halus_input/sendData', 'sendData')->name('PreGradingHalusInput.sendData');
                 Route::post('/pre_grading_halus_input/store', 'store')->name('PreGradingHalusInput.store');
                 Route::delete('/pre_grading_halus_input/destroy/{nomor_bstb}', 'destroy')->name('PreGradingHalusInput.destroy');
+                Route::post('/pre_grading_halus_input/cek_data', 'CeksendData')->name('PreGradingHalusInput.CeksendData');
             });
 
             Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusStockController::class)->group(function () {
@@ -339,6 +345,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('/grading_halus_input/sendData', 'sendData')->name('GradingHalusInput.sendData');
                 Route::post('/grading_halus_input/store', 'store')->name('GradingHalusInput.store');
                 Route::delete('/grading_halus_input/destroy/{nomor_grading}', 'destroy')->name('GradingHalusInput.destroy');
+                Route::post('/grading_halus_input/cek_data', 'CeksendData')->name('GradingHalusInput.CeksendData');
             });
 
             Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusStockContoller::class)->group(function () {
@@ -394,17 +401,19 @@ Route::middleware('auth')->group(function () {
                 Route::get('/transit_grading_halus', 'index')->name('TransitGradingHalus.index');
             });
         });
-
-        Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
-            Route::get('/pre_wash_output', 'index')->name('PreWashOutput.index');
-            Route::get('/pre_wash_output/create', 'create')->name('PreWashOutput.create');
-            Route::post('/pre_wash_output/store', 'store')->name('PreWashOutput.store');
-            Route::get('/pre_wash_output/show/{id}', 'show')->name('PreWashOutput.show');
-            Route::get('/pre_wash_output/edit/{id}', 'edit')->name('PreWashOutput.edit');
-            Route::put('/pre_wash_output/update/{id}', 'update')->name('PreWashOutput.update');
-            Route::delete('/pre_wash_output/destroy/{nomor_bstb}', 'destroy')->name('PreWashOutput.destroy');
-            Route::get('/pre_wash_output/get_data_nomor_job', 'set')->name('preWashOutput.set');
-            Route::post('/pre_wash_output/simpanData', 'simpanData')->name('PreWashOutput.simpanData');
+        Route::prefix('pre_wash')->middleware('role:pre_wash|admin')->group(function (){
+            Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
+                Route::get('/pre_wash_output', 'index')->name('PreWashOutput.index');
+                Route::get('/pre_wash_output/create', 'create')->name('PreWashOutput.create');
+                Route::post('/pre_wash_output/store', 'store')->name('PreWashOutput.store');
+                Route::get('/pre_wash_output/show/{id}', 'show')->name('PreWashOutput.show');
+                Route::get('/pre_wash_output/edit/{id}', 'edit')->name('PreWashOutput.edit');
+                Route::put('/pre_wash_output/update/{id}', 'update')->name('PreWashOutput.update');
+                Route::delete('/pre_wash_output/destroy/{nomor_bstb}', 'destroy')->name('PreWashOutput.destroy');
+                Route::get('/pre_wash_output/get_data_nomor_job', 'set')->name('preWashOutput.set');
+                Route::post('/pre_wash_output/simpanData', 'simpanData')->name('PreWashOutput.simpanData');
+                Route::post('/pre_wash_output/cek_data', 'CeksendData')->name('PreWashOutput.CeksendData');
+            });
         });
     });
 });

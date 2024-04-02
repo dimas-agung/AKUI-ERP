@@ -122,7 +122,7 @@
                                                 <div class="col-md-12">
                                                     {{-- <button type="submit" class="btn btn-primary">Add</button> --}}
                                                     <a href="#" class="btn btn-primary"
-                                                        onclick="sendData()">Submit</a>
+                                                        onclick="CeksendData()">Submit</a>
                                                     <a href="{{ Route('PreCleaningInput.index') }}" type="button"
                                                         class="btn btn-danger" data-dismiss="modal">Close</a>
                                                 </div>
@@ -231,65 +231,114 @@
             }
         });
 
-        function sendData() {
-            var doc_no = $('#doc_no').val() || '';
-            var keterangan = $('#keterangan').val() || '';
+        function CeksendData() {
+            var i = 0;
+            var idBoxes = []; // Array untuk menyimpan id box yang akan dicek
 
-            // Mengirim data ke server menggunakan AJAX
+            // Mengumpulkan id box dari dataArray
+            dataArray.forEach(function(item) {
+                idBoxes.push(item.nomor_bstb);
+            });
+
+            // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
             $.ajax({
-                url: '{{ route('PreCleaningInput.store') }}',
+                url: `{{ route('PreCleaningInput.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
                 method: 'POST',
-                beforeSend: function() {
-                    Swal.fire({
-                        title: 'Loading...',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        onBeforeOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
+                data: {
+                    idBoxes: JSON.stringify(idBoxes),
+                    _token: '{{ csrf_token() }}'
                 },
-                data: function() {
-                    var postData = {
-                        dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
-                        doc_no: doc_no,
-                        user_created: $('#user_created').val() || '',
-                        user_updated: $('#user_createds').val() || '',
-                        _token: '{{ csrf_token() }}'
-                    };
-
-                    // Hanya mengirim keterangan jika memiliki nilai
-                    if (keterangan.trim() !== '') {
-                        postData.keterangan = keterangan;
-                    }
-
-                    return postData;
-                }(),
+                dataType: 'json',
                 success: function(response) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Data berhasil disimpan.',
-                        icon: 'success'
-                    }).then((result) => {
-                        // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
-                        if (result.isConfirmed) {
-                            window.location.href = response
-                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
-                        }
-                    });
+                    var unavailableBoxes = response.unavailableBoxes;
+
+                    if (unavailableBoxes.length > 0) {
+                        // Ada id box yang tidak tersedia, tampilkan pesan kesalahan
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Beberapa nomor bstb sudah tidak tersedia.',
+                            icon: 'error',
+                            showCancelButton: false, // Sembunyikan tombol cancel
+                            confirmButtonText: 'OK' // Ganti teks tombol konfirmasi
+                        }).then((result) => {
+                            // Jika pengguna menekan tombol "OK", refresh halaman
+                            if (result.isConfirmed) {
+                                location.reload(); // Refresh halaman
+                            }
+                        });
+                    } else {
+                        // Semua id box tersedia, kirim data ke server
+                        sendData();
+                    }
                 },
                 error: function(error) {
                     Swal.fire({
                         title: 'Failed!',
-                        text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
+                        text: 'Terjadi kesalahan saat memeriksa ketersediaan nomor bstb. Silakan coba lagi.',
                         icon: 'error'
                     });
                     console.log('Error:', error);
                 }
             });
+
+            function sendData() {
+                var doc_no = $('#doc_no').val() || '';
+                var keterangan = $('#keterangan').val() || '';
+
+                // Mengirim data ke server menggunakan AJAX
+                $.ajax({
+                    url: '{{ route('PreCleaningInput.store') }}',
+                    method: 'POST',
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Loading...',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            onBeforeOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    data: function() {
+                        var postData = {
+                            dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
+                            doc_no: doc_no,
+                            user_created: $('#user_created').val() || '',
+                            user_updated: $('#user_createds').val() || '',
+                            _token: '{{ csrf_token() }}'
+                        };
+
+                        // Hanya mengirim keterangan jika memiliki nilai
+                        if (keterangan.trim() !== '') {
+                            postData.keterangan = keterangan;
+                        }
+
+                        return postData;
+                    }(),
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Data berhasil disimpan.',
+                            icon: 'success'
+                        }).then((result) => {
+                            // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
+                            if (result.isConfirmed) {
+                                window.location.href = response
+                                    .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        Swal.fire({
+                            title: 'Failed!',
+                            text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
+                            icon: 'error'
+                        });
+                        console.log('Error:', error);
+                    }
+                });
+            }
         }
-
-
 
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;

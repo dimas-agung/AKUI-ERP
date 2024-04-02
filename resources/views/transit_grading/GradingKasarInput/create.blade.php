@@ -205,7 +205,7 @@
                         <tbody id="tableBody">
                         </tbody>
                     </table>
-                    <a href="#" class="btn btn-primary" onclick="sendData()">Submit</a>
+                    <a href="#" class="btn btn-primary" onclick="CeksendData()">Submit</a>
                 </div>
             </div>
         </div>
@@ -425,42 +425,93 @@
             console.log(dataArray);
         }
 
-        function sendData() {
-            console.log(dataArray);
-            // Mengirim data ke server menggunakan AJAX
+        function CeksendData() {
+            var i = 0;
+            var idBoxes = []; // Array untuk menyimpan id box yang akan dicek
+
+            // Mengumpulkan id box dari dataArray
+            dataArray.forEach(function(item) {
+                idBoxes.push(item.nomor_bstb);
+            });
+
+            // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
             $.ajax({
-                url: `{{ route('GradingKasarInput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai
+                url: `{{ route('GradingKasarInput.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
                 method: 'POST',
                 data: {
-                    data: JSON.stringify(dataArray),
+                    idBoxes: JSON.stringify(idBoxes),
                     _token: '{{ csrf_token() }}'
                 },
-                dataType: 'json', // payload is json,
+                dataType: 'json',
                 success: function(response) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Data berhasil disimpan.',
-                        icon: 'success'
-                    }).then((result) => {
-                        // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
-                        if (result.isConfirmed) {
-                            window.location.href = response
-                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
-                        }
-                    });
+                    var unavailableBoxes = response.unavailableBoxes;
+
+                    if (unavailableBoxes.length > 0) {
+                        // Ada id box yang tidak tersedia, tampilkan pesan kesalahan
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Beberapa nomor bstb sudah tidak tersedia.',
+                            icon: 'error',
+                            showCancelButton: false, // Sembunyikan tombol cancel
+                            confirmButtonText: 'OK' // Ganti teks tombol konfirmasi
+                        }).then((result) => {
+                            // Jika pengguna menekan tombol "OK", refresh halaman
+                            if (result.isConfirmed) {
+                                location.reload(); // Refresh halaman
+                            }
+                        });
+                    } else {
+                        // Semua id box tersedia, kirim data ke server
+                        sendData();
+                    }
                 },
                 error: function(error) {
                     Swal.fire({
-                        title: 'Error!',
-                        text: 'Terjadi kesalahan. Silakan coba lagi.',
+                        title: 'Failed!',
+                        text: 'Terjadi kesalahan saat memeriksa ketersediaan ID Box. Silakan coba lagi.',
                         icon: 'error'
                     });
-                    // console.log('Validation Errors:', response.responseJSON.errors);
+                    console.log('Error:', error);
                 }
             });
 
-            // Membersihkan array setelah data dikirim
-            // dataArray = [];
+            function sendData() {
+                console.log(dataArray);
+                // Mengirim data ke server menggunakan AJAX
+                $.ajax({
+                    url: `{{ route('GradingKasarInput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai
+                    method: 'POST',
+                    data: {
+                        data: JSON.stringify(dataArray),
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json', // payload is json,
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Data berhasil disimpan.',
+                            icon: 'success'
+                        }).then((result) => {
+                            // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
+                            if (result.isConfirmed) {
+                                window.location.href = response
+                                    .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Terjadi kesalahan. Silakan coba lagi.',
+                            icon: 'error'
+                        });
+                        console.log('Validation Errors:', response.responseJSON.errors);
+                    }
+                });
+
+                // Membersihkan array setelah data dikirim
+                // dataArray = [];
+            }
         }
     </script>
 @endsection

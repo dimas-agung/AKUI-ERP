@@ -247,7 +247,7 @@
                         <tbody id="tableBody">
                         </tbody>
                     </table>
-                    <a href="#" class="btn btn-primary" onclick="sendData()">Submit</a>
+                    <a href="#" class="btn btn-primary" onclick="CeksendData()">Submit</a>
                 </div>
             </div>
         </div>
@@ -649,79 +649,130 @@
             currentRowIndex--;
         }
 
-        function sendData() {
-            console.log("Isi data=",
-                dataArray);
-            // Mengirim data ke server menggunakan AJAX
+        function CeksendData() {
+            var i = 0;
+            var idBoxes = []; // Array untuk menyimpan id box yang akan dicek
+
+            // Mengumpulkan id box dari dataArray
+            dataArray.forEach(function(item) {
+                idBoxes.push(item.nomor_grading);
+            });
+
+            // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
             $.ajax({
-                url: '{{ route('GradingHalusInput.store') }}',
+                url: `{{ route('GradingHalusInput.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
                 method: 'POST',
-                beforeSend: function() {
-                    Swal.fire({
-                        title: 'Loading...',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        onBeforeOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
+                data: {
+                    idBoxes: JSON.stringify(idBoxes),
+                    _token: '{{ csrf_token() }}'
                 },
-                data: function() {
-                    // Inisialisasi array untuk menyimpan data tiap baris
-                    var tableDataArray = [];
-
-                    // Iterasi melalui setiap baris tabel
-                    $('#tableBody tr').each(function() {
-                        // Mengambil nilai susut_depan dan susut_belakang dari tiap baris
-                        var susutDepan = parseFloat($(this).find('td:eq(17)').text());
-                        var susutBelakang = parseFloat($(this).find('td:eq(18)').text());
-                        var kontribusi = parseFloat($(this).find('td:eq(20)').text());
-
-                        // Debugging: Cetak nilai susut_depan, susut_belakang, dan kontribusi ke konsol
-                        console.log("Nilai susut_depan:", susutDepan);
-                        console.log("Nilai susut_belakang:", susutBelakang);
-                        console.log("Nilai kontribusi:", kontribusi);
-
-                        // Menambahkan data ke dalam array
-                        tableDataArray.push({
-                            susut_depan: susutDepan,
-                            susut_belakang: susutBelakang,
-                            kontribusi: kontribusi
-                        });
-                    });
-
-                    // Mengirim dataArray dan data tabel ke server sebagai string JSON
-                    var postData = {
-                        dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
-                        tableDataArray: JSON.stringify(
-                            tableDataArray), // Mengirim data tabel sebagai string JSON
-                        _token: '{{ csrf_token() }}'
-                    };
-                    return postData;
-                }(),
+                dataType: 'json',
                 success: function(response) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Data berhasil disimpan.',
-                        icon: 'success'
-                    }).then((result) => {
-                        // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
-                        if (result.isConfirmed) {
-                            window.location.href = response
-                                .redirectTo;
-                            // Ganti dengan URL tujuan redirect Anda
-                        }
-                    });
+                    var unavailableBoxes = response.unavailableBoxes;
+
+                    if (unavailableBoxes.length > 0) {
+                        // Ada id box yang tidak tersedia, tampilkan pesan kesalahan
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Beberapa nomor grading sudah tidak tersedia.',
+                            icon: 'error',
+                            showCancelButton: false, // Sembunyikan tombol cancel
+                            confirmButtonText: 'OK' // Ganti teks tombol konfirmasi
+                        }).then((result) => {
+                            // Jika pengguna menekan tombol "OK", refresh halaman
+                            if (result.isConfirmed) {
+                                location.reload(); // Refresh halaman
+                            }
+                        });
+                    } else {
+                        // Semua id box tersedia, kirim data ke server
+                        sendData();
+                    }
                 },
                 error: function(error) {
                     Swal.fire({
                         title: 'Failed!',
-                        text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
+                        text: 'Terjadi kesalahan saat memeriksa ketersediaan nomor grading. Silakan coba lagi.',
                         icon: 'error'
                     });
                     console.log('Error:', error);
                 }
             });
+
+            function sendData() {
+                console.log("Isi data=",
+                    dataArray);
+                // Mengirim data ke server menggunakan AJAX
+                $.ajax({
+                    url: '{{ route('GradingHalusInput.store') }}',
+                    method: 'POST',
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Loading...',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            onBeforeOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    data: function() {
+                        // Inisialisasi array untuk menyimpan data tiap baris
+                        var tableDataArray = [];
+
+                        // Iterasi melalui setiap baris tabel
+                        $('#tableBody tr').each(function() {
+                            // Mengambil nilai susut_depan dan susut_belakang dari tiap baris
+                            var susutDepan = parseFloat($(this).find('td:eq(17)').text());
+                            var susutBelakang = parseFloat($(this).find('td:eq(18)').text());
+                            var kontribusi = parseFloat($(this).find('td:eq(20)').text());
+
+                            // Debugging: Cetak nilai susut_depan, susut_belakang, dan kontribusi ke konsol
+                            console.log("Nilai susut_depan:", susutDepan);
+                            console.log("Nilai susut_belakang:", susutBelakang);
+                            console.log("Nilai kontribusi:", kontribusi);
+
+                            // Menambahkan data ke dalam array
+                            tableDataArray.push({
+                                susut_depan: susutDepan,
+                                susut_belakang: susutBelakang,
+                                kontribusi: kontribusi
+                            });
+                        });
+
+                        // Mengirim dataArray dan data tabel ke server sebagai string JSON
+                        var postData = {
+                            dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
+                            tableDataArray: JSON.stringify(
+                                tableDataArray), // Mengirim data tabel sebagai string JSON
+                            _token: '{{ csrf_token() }}'
+                        };
+                        return postData;
+                    }(),
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Data berhasil disimpan.',
+                            icon: 'success'
+                        }).then((result) => {
+                            // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
+                            if (result.isConfirmed) {
+                                window.location.href = response
+                                    .redirectTo;
+                                // Ganti dengan URL tujuan redirect Anda
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        Swal.fire({
+                            title: 'Failed!',
+                            text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
+                            icon: 'error'
+                        });
+                        console.log('Error:', error);
+                    }
+                });
+            }
         }
     </script>
 @endsection
