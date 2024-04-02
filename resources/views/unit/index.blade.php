@@ -176,28 +176,6 @@
             });
         }
 
-        // function getWorkstations(perusahaan_id) {
-        //     var workstationSelect = document.getElementById("workstation_id");
-        //     // Clear previous workstation options
-        //     workstationSelect.innerHTML = "";
-
-        //     // Send AJAX request to get workstations based on selected company
-        //     fetch("{{ route('Unit.getWorkstations', '') }}/" + perusahaan_id)
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             $('#workstation_id').empty();
-        //             renderSelect2(); // Kosongkan opsi sebelum menambahkan yang baru
-        //             data.forEach(workstation => {
-        //                 $('#workstation_id').append($('<option>', {
-        //                     value: workstation.id,
-        //                     text: workstation.nama
-        //                 }));
-        //             });
-        //         });
-
-        //     .catch(error => console.error('Error:', error));
-        // }
-
         function getWorkstations(perusahaan_id) {
             $.ajax({
                 url: '{{ route('Unit.getWorkstations', ['perusahaan_id' => ':perusahaan_id']) }}'.replace(

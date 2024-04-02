@@ -60,7 +60,7 @@
                                             <td class="text-center">
                                                 {{ $MasterStock->sisa_berat }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterStock->avg_kadar_air, 2, ',', '.') }}</td>
+                                                {{ $MasterStock->avg_kadar_air }}</td>
                                             <td class="text-center">
                                                 {{ number_format($MasterStock->modal, 2, ',', '.') }}
                                             </td>
