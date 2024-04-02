@@ -59,6 +59,21 @@ class PreGradingHalusInputController extends Controller
         return response()->json($data);
     }
 
+    public function CeksendData(Request $request)
+    {
+        // Ambil id box dari request dan konversi ke dalam array
+        $idBoxes = json_decode($request->idBoxes);
+
+        // Cek ketersediaan id box dalam database
+        $unavailableBoxes = TransitPreCleaningStock::whereIn('nomor_bstb', $idBoxes)->pluck('nomor_bstb')->toArray();
+
+        // Filter id box yang tidak tersedia
+        $availableBoxes = array_diff($idBoxes, $unavailableBoxes);
+
+        // Kembalikan daftar id box yang tidak tersedia sebagai respons
+        return response()->json(['unavailableBoxes' => $availableBoxes]);
+    }
+
     protected $PreGradingHalusInputService;
 
     public function __construct(PreGradingHalusInputService $PreGradingHalusInputService)

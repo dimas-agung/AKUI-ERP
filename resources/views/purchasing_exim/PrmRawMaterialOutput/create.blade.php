@@ -220,7 +220,7 @@
                         </table>
                     </div>
                     <div class="col-12 mt-2 text-end">
-                        <a href="#" class="btn btn-primary" onclick="sendData()">Submit</a>
+                        <a href="#" class="btn btn-primary" onclick="CeksendData()">Submit</a>
                     </div>
                 </div>
             </div>
@@ -826,19 +826,25 @@
             // Tambahkan kembali semua data dari dataArray ke dalam tabel
             for (var i = 0; i < dataArray.length; i++) {
                 var rowData = dataArray[i];
-                var newRow = '<tr><td>' + rowData.doc_no + '</td><td>' + rowData.nomor_bstb + '</td><td>' + rowData
-                    .nomor_batch + '</td><td>' +
-                    rowData.id_box + '</td><td>' + rowData.nama_supplier + '</td><td>' + rowData.jenis + '</td><td>' +
-                    rowData.berat_masuk +
-                    '</td><td>' + rowData.berat + '</td><td>' + rowData.selisih_berat + '</td><td>' + rowData.kadar_air +
-                    '</td><td>' +
-                    rowData.tujuan_kirim + '</td><td>' + rowData.letak_tujuan + '</td><td>' + rowData.inisial_tujuan +
-                    '</td><td>' +
-                    rowData.modal + '</td><td>' + rowData.total_modal + '</td><td class="d-none">' + rowData
-                    .total_modal_stock + '</td><td>' + rowData.keterangan_item +
-                    '</td><td>' +
-                    rowData.user_created + '</td><td><button onclick="editRow(' + i +
-                    ')" class="btn btn-warning" data-toggle="modal" data-target="#editModal">Edit</button></td>' +
+                var newRow = '<tr><td>' + rowData.doc_no +
+                    '</td> <td > ' + rowData.nomor_bstb +
+                    ' < /td> <td > ' + rowData.nomor_batch +
+                    ' < /td> <td > ' + rowData.id_box +
+                    ' < /td> <td > ' + rowData.nama_supplier +
+                    ' < /td> <td > ' + rowData.jenis +
+                    ' < /td> <td > ' + rowData.berat_masuk +
+                    ' < /td> <td > ' + rowData.berat +
+                    ' < /td> <td > ' + rowData.selisih_berat +
+                    ' < /td> <td > ' + rowData.kadar_air +
+                    ' < /td> <td > ' + rowData.tujuan_kirim +
+                    ' < /td> <td > ' + rowData.letak_tujuan +
+                    ' < /td> <td > ' + rowData.inisial_tujuan +
+                    ' < /td> <td > ' + rowData.modal +
+                    ' < /td> <td > td class = "d-none" > ' + rowData.total_modal_stock +
+                    ' < /td> <td > ' + rowData.keterangan_item +
+                    ' < /td> <td > ' + rowData.user_created +
+                    ' < /td> <td > < button onclick = "editRow(' + i +
+                    ')"class = "btn btn-warning" data - toggle = "modal" data - target = "#editModal" > Edit < /button></td > ' +
                     '<td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
 
                 $('#tableBody').append(newRow);
@@ -869,51 +875,102 @@
             console.log(dataArray);
         }
 
-        function sendData() {
+        function CeksendData() {
             var i = 0;
-            console.log(dataArray);
-            // Mengirim data ke server menggunakan AJAX
+            var idBoxes = []; // Array untuk menyimpan id box yang akan dicek
+
+            // Mengumpulkan id box dari dataArray
+            dataArray.forEach(function(item) {
+                idBoxes.push(item.id_box);
+            });
+
+            // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
             $.ajax({
-                url: `{{ route('PrmRawMaterialOutput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai
+                url: `{{ route('PrmRawMaterialOutput.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
                 method: 'POST',
-                beforeSend: function() {
-                    Swal.fire({
-                        title: 'Loading...',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        onBeforeOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                },
                 data: {
-                    data: JSON.stringify(dataArray),
-                    dataStock: JSON.stringify(dataStock),
+                    idBoxes: JSON.stringify(idBoxes),
                     _token: '{{ csrf_token() }}'
                 },
-                dataType: 'json', // payload is json,
+                dataType: 'json',
                 success: function(response) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Data berhasil disimpan.',
-                        icon: 'success'
-                    }).then((result) => {
-                        // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
-                        if (result.isConfirmed) {
-                            window.location.href = response
-                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
-                        }
-                    });
+                    var unavailableBoxes = response.unavailableBoxes;
+
+                    if (unavailableBoxes.length > 0) {
+                        // Ada id box yang tidak tersedia, tampilkan pesan kesalahan
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Beberapa ID Box sudah tidak tersedia.',
+                            icon: 'error',
+                            showCancelButton: false, // Sembunyikan tombol cancel
+                            confirmButtonText: 'OK' // Ganti teks tombol konfirmasi
+                        }).then((result) => {
+                            // Jika pengguna menekan tombol "OK", refresh halaman
+                            if (result.isConfirmed) {
+                                location.reload(); // Refresh halaman
+                            }
+                        });
+                    } else {
+                        // Semua id box tersedia, kirim data ke server
+                        sendData();
+                    }
                 },
                 error: function(error) {
                     Swal.fire({
                         title: 'Failed!',
-                        text: 'Terjadi kesalahan. Silakan coba lagi.',
+                        text: 'Terjadi kesalahan saat memeriksa ketersediaan ID Box. Silakan coba lagi.',
                         icon: 'error'
                     });
-                    console.log('Validation Errors:', response.responseJSON.errors);
+                    console.log('Error:', error);
                 }
             });
+
+            function sendData() {
+                var i = 0;
+                console.log(dataArray);
+                // Mengirim data ke server menggunakan AJAX
+                $.ajax({
+                    url: `{{ route('PrmRawMaterialOutput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai
+                    method: 'POST',
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Loading...',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            onBeforeOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    data: {
+                        data: JSON.stringify(dataArray),
+                        dataStock: JSON.stringify(dataStock),
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json', // payload is json,
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Data berhasil disimpan.',
+                            icon: 'success'
+                        }).then((result) => {
+                            // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
+                            if (result.isConfirmed) {
+                                window.location.href = response
+                                    .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        Swal.fire({
+                            title: 'Failed!',
+                            text: 'Terjadi kesalahan. Silakan coba lagi.',
+                            icon: 'error'
+                        });
+                        console.log('Validation Errors:', error.responseJSON.errors);
+                    }
+                });
+            }
         }
     </script>
 @endsection

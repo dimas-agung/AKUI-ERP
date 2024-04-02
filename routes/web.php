@@ -144,12 +144,14 @@ Route::middleware('auth')->group(function (){
             Route::get('/prm_raw_material_input/show/{id}', 'show')->name('PrmRawMaterialInput.show');
             Route::get('/prm_raw_material_input/edit/{id}', 'edit')->name('PrmRawMaterialInput.edit');
             Route::post('/prm_raw_material_input/update/{id}', 'update')->name('PrmRawMaterialInput.update');
+            Route::delete('/prm_raw_material_input/destroy/{id}', 'destroy')->name('PrmRawMaterialInput.destroy');
             Route::delete('/prm_raw_material_input/destroyInput/{id}', 'destroyInput')->name('PrmRawMaterialInput.destroyInput');
             Route::delete('/prm_raw_material_input/destroyItem/{id}', 'destroyItem')->name('PrmRawMaterialInput.destroyItem');
             Route::get('/prm_raw_material_input/getDataSupplier', 'getDataSupplier')->name('PrmRawMaterialInput.getDataSupplier');
             Route::get('/prm_raw_material_input/getDataJenis', 'getDataJenis')->name('PrmRawMaterialInput.getDataJenis');
             Route::post('/prm_raw_material_input/simpanData', 'simpanData')->name('PrmRawMaterialInput.simpanData');
             Route::post('/prm_raw_material_input/simpanDataItem', 'simpanDataItem')->name('PrmRawMaterialInput.simpanDataItem');
+            Route::post('/prm_raw_material_input/importExcel', 'importExcel')->name('PrmRawMaterialInput.importExcel');
         });
 
         Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->group(function () {
@@ -173,6 +175,7 @@ Route::middleware('auth')->group(function (){
             Route::delete('/prm_raw_material_output/destroyHead/{id}', 'destroyHead')->name('PrmRawMaterialOutput.destroyHead');
             Route::get('/prm_raw_material_output/get_data_id_box', 'set')->name('PrmRawMaterialOutput.set');
             Route::get('/prm_raw_material_output/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
+            Route::post('/prm_raw_material_output/cek_data', 'CeksendData')->name('PrmRawMaterialOutput.CeksendData');
             Route::get('/prm_raw_material_output/getBerat/{id}', 'getBerat')->name('PrmRawMaterialOutput.getBerat');
         });
     });
@@ -188,6 +191,7 @@ Route::middleware('auth')->group(function (){
                 Route::post('/grading_kasar_input/store', 'store')->name('GradingKasarInput.store');
                 Route::post('/grading_kasar_input/sendData', 'sendData')->name('GradingKasarInput.sendData');
                 Route::delete('/grading_kasar_input/destroy/{nomor_bstb}', 'destroy')->name('GradingKasarInput.destroy');
+                Route::post('/grading_kasar_input/cek_data', 'CeksendData')->name('GradingKasarInput.CeksendData');
             });
             Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarHasilController::class)->group(function () {
                 Route::get('/grading_kasar_hasil', 'index')->name('GradingKasarHasil.index');
@@ -223,6 +227,7 @@ Route::middleware('auth')->group(function (){
                 Route::get('/grading_kasar_output/get_data_id_box', 'set')->name('GradingKasarOutput.set');
                 Route::post('/grading_kasar_output/post_data_nomor_job', 'validasi')->name('GradingKasarOutput.validasi');
                 Route::get('/grading_kasar_output/get_pcc', 'setpcc')->name('GradingKasarOutput.setpcc');
+                Route::post('/grading_kasar_output/cek_data', 'CeksendData')->name('GradingKasarOutput.CeksendData');
             });
             Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
                 Route::get('/stock_transit_grading_kasar', 'index')->name('StockTransitGradingKasar.index');
@@ -238,6 +243,7 @@ Route::middleware('auth')->group(function (){
                 Route::delete('/pre_cleaning_input/destroy/{nomor_bstb}', 'destroy')->name('PreCleaningInput.destroy');
                 Route::get('/pre_cleaning_input/get_data_id_box', 'set')->name('PreCleaningInput.set');
                 Route::get('/pre_cleaning_input/get_pcc', 'setpcc')->name('PreCleaningInput.setpcc');
+                Route::post('/pre_cleaning_input/cek_data', 'CeksendData')->name('PreCleaningInput.CeksendData');
             });
 
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::class)->group(function () {
@@ -270,6 +276,7 @@ Route::middleware('auth')->group(function (){
                 Route::post('/pre_grading_halus_input/sendData', 'sendData')->name('PreGradingHalusInput.sendData');
                 Route::post('/pre_grading_halus_input/store', 'store')->name('PreGradingHalusInput.store');
                 Route::delete('/pre_grading_halus_input/destroy/{nomor_bstb}', 'destroy')->name('PreGradingHalusInput.destroy');
+                Route::post('/pre_grading_halus_input/cek_data', 'CeksendData')->name('PreGradingHalusInput.CeksendData');
             });
 
             Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusStockController::class)->group(function () {
@@ -307,6 +314,7 @@ Route::middleware('auth')->group(function (){
                 Route::post('/grading_halus_input/sendData', 'sendData')->name('GradingHalusInput.sendData');
                 Route::post('/grading_halus_input/store', 'store')->name('GradingHalusInput.store');
                 Route::delete('/grading_halus_input/destroy/{nomor_grading}', 'destroy')->name('GradingHalusInput.destroy');
+                Route::post('/grading_halus_input/cek_data', 'CeksendData')->name('GradingHalusInput.CeksendData');
             });
 
             Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusStockController::class)->group(function () {
@@ -338,6 +346,7 @@ Route::middleware('auth')->group(function (){
                 Route::delete('/pre_wash_output/destroy/{nomor_bstb}', 'destroy')->name('PreWashOutput.destroy');
                 Route::get('/pre_wash_output/get_data_nomor_job', 'set')->name('preWashOutput.set');
                 Route::post('/pre_wash_output/simpanData', 'simpanData')->name('PreWashOutput.simpanData');
+                Route::post('/pre_wash_output/cek_data', 'CeksendData')->name('PreWashOutput.CeksendData');
             });
         });
     });

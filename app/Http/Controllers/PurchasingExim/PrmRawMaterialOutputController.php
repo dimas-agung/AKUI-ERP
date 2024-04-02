@@ -57,6 +57,21 @@ class PrmRawMaterialOutputController extends Controller
         return response()->json($data);
     }
 
+    public function CeksendData(Request $request)
+    {
+        // Ambil id box dari request dan konversi ke dalam array
+        $idBoxes = json_decode($request->idBoxes);
+
+        // Cek ketersediaan id box dalam database
+        $unavailableBoxes = PrmRawMaterialStock::whereIn('id_box', $idBoxes)->pluck('id_box')->toArray();
+
+        // Filter id box yang tidak tersedia
+        $availableBoxes = array_diff($idBoxes, $unavailableBoxes);
+
+        // Kembalikan daftar id box yang tidak tersedia sebagai respons
+        return response()->json(['unavailableBoxes' => $availableBoxes]);
+    }
+
     public function setpcc(Request $request)
     {
         $tujuan_kirim = $request->tujuan_kirim;

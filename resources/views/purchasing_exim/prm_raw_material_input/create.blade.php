@@ -31,7 +31,6 @@
                         <label for="nomor_nota_supplier" class="form-label">Nomor Nota Supplier</label>
                         <input type="text" class="form-control" id="nomor_nota_supplier">
                     </div>
-
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
                         <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
@@ -251,6 +250,8 @@
 
                         // Menampilkan nomor nota internal pada input nomor nota internal
                         $('#nomor_nota_internal').val(nomorNotaInternal);
+                        // Panggil generateIdBox setelah nomor nota internal diperbarui
+                        generateIdBox();
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -568,7 +569,6 @@
                     Swal.close();
                 }
             });
-
         }
     </script>
 @endsection
