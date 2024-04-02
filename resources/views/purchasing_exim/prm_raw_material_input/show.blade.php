@@ -77,22 +77,19 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
-                                                        action="{{ route('PrmRawMaterialInput.destroyItem', $MasterPRIM->id) }}"
-                                                        method="POST">
-                                                        {{-- <a href="{{ route('PrmRawMaterialInput.edit', $MasterPRIM->id) }}"
-                                                            class="btn btn-link" title="Edit Task"
-                                                            data-original-title="Edit Task">
-                                                            <i class="bi bi-pencil-square text-success"></i>
-                                                        </a> --}}
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $MasterPRIM->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
+                                                    @if ($MasterPRIM->PrmRawMaterialStock->sum('berat_keluar') == 0)
+                                                        <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
+                                                            action="{{ route('PrmRawMaterialInput.destroyItem', $MasterPRIM->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-link"
+                                                                data-original-title="Remove"
+                                                                onclick="confirmDelete({{ $MasterPRIM->id }})">
+                                                                <i class="bi bi-trash3 text-danger"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
