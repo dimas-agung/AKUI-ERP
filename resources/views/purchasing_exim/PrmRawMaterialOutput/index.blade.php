@@ -52,7 +52,7 @@
                                     <td class="text-center">{{ $item->nama_supplier }}</td>
                                     <td class="text-center">{{ $item->jenis }}</td>
                                     <td class="text-center">{{ $item->berat }}</td>
-                                    <td class="text-center">{{ number_format($item->kadar_air, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->kadar_air, 1, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ $item->letak_tujuan }}</td>
                                     <td class="text-center">{{ $item->inisial_tujuan }}</td>

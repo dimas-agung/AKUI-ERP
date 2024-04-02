@@ -26,6 +26,11 @@
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">No Doc</th>
+                                        <th scope="col" class="text-center">Nomor PO</th>
+                                        <th scope="col" class="text-center">Nomor Batch</th>
+                                        <th scope="col" class="text-center">Nomor Nota Supplier</th>
+                                        <th scope="col" class="text-center">Nomor Nota Internal</th>
+                                        <th scope="col" class="text-center">Nama Supplier</th>
                                         <th scope="col" class="text-center">Jenis</th>
                                         <th scope="col" class="text-center">Berat Nota</th>
                                         <th scope="col" class="text-center">Berat kotor</th>
@@ -48,24 +53,30 @@
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $MasterPRIM->doc_no }}</td>
+                                           
+                                            <td class="text-center">{{ $MasterPRIM->PrmRawMaterialInput->nomor_po }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->PrmRawMaterialInput->nomor_batch }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->PrmRawMaterialInput->nomor_nota_supplier }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->PrmRawMaterialInput->nomor_nota_internal }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->PrmRawMaterialInput->nama_supplier }}</td>
                                             <td class="text-center">{{ $MasterPRIM->jenis }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterPRIM->berat_nota, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterPRIM->berat_nota, 0, '.', ',') }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterPRIM->berat_kotor, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterPRIM->berat_kotor, 0, '.', ',') }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterPRIM->berat_bersih, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterPRIM->berat_bersih, 0, '.', ',') }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterPRIM->selisih_berat, 0, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($MasterPRIM->kadar_air, 2, ',', '.') }}
+                                                {{ number_format($MasterPRIM->selisih_berat, 0, '.', ',') }}</td>
+                                            <td class="text-center">{{ number_format($MasterPRIM->kadar_air, 2, '.', ',') }}
                                             </td>
                                             <td class="text-center">{{ $MasterPRIM->id_box }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterPRIM->harga_nota, 2, ',', '.') }}</td>
+                                                {{ number_format($MasterPRIM->harga_nota, 2, '.', ',') }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterPRIM->total_harga_nota, 2, ',', '.') }}</td>
+                                                {{ number_format($MasterPRIM->total_harga_nota, 2, '.', ',') }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterPRIM->harga_deal, 2, ',', '.') }}</td>
+                                                {{ number_format($MasterPRIM->harga_deal, 2, '.', ',') }}</td>
                                             <td class="text-center">{{ $MasterPRIM->keterangan }}</td>
                                             <td class="text-center">{{ $MasterPRIM->user_created }}</td>
                                             <td class="text-center">{{ $MasterPRIM->user_updated }}</td>

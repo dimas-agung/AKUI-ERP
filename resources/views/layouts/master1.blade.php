@@ -150,11 +150,7 @@
                         </li>
                         <li class="sidebar-title">Master</li>
                         <li
-<<<<<<< HEAD
-                            class="sidebar-item  has-sub {{ Request::is('perusahaan*', 'workstation*', 'unit*', 'biayahpp*', 'master_supplier_raw_material*', 'master_jenis_raw_material*', 'master_tujuan_kirim_raw_material*', 'master_jenis_grading_kasar*', 'master_tujuan_kirim_grading_kasar*', 'master_operator*', 'master_ongkos_cuci*', 'master_jenis_grading_halus*') ? 'active' : '' }}">
-=======
                             class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*') ? 'active' : '' }}">
->>>>>>> dev-al
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Master</span>
@@ -164,14 +160,9 @@
                                     <a href="{{ route('Perusahaan.index') }}" class="submenu-link">Master
                                         Perusahaan</a>
                                 </li>
-<<<<<<< HEAD
-                                <li class="submenu-item  {{ Request::is('workstation*') ? 'active' : '' }} ">
-                                    <a href="{{ route('Workstation.index') }}" class="submenu-link">Workstation</a>
-=======
                                 <li class="submenu-item {{ Route::is('Workstation.*') ? 'active' : '' }}">
                                     <a href="{{ route('Workstation.index') }}" class="submenu-link">Master
                                         Workstation</a>
->>>>>>> dev-al
                                 </li>
                                 <li class="submenu-item {{ Route::is('Unit.*') ? 'active' : '' }}">
                                     <a href="{{ route('Unit.index') }}" class="submenu-link">Master Unit</a>
@@ -207,16 +198,11 @@
                                     <a href="{{ route('MasterJenisGradingKasar.index') }}"
                                         class="submenu-link">Master Jenis Grading Kasar</a>
                                 </li>
-<<<<<<< HEAD
-                              
-                                <li class="submenu-item  {{ Request::is('master_operator*') ? 'active' : '' }} ">
-=======
                                 <li class="submenu-item {{ Route::is('MasterJenisGradingHalus*') ? 'active' : '' }}">
                                     <a href="{{ route('MasterJenisGradingHalus.index') }}"
                                         class="submenu-link">Master Jenis Grading Halus</a>
                                 </li>
                                 <li class="submenu-item {{ Route::is('MasterOperator*') ? 'active' : '' }}">
->>>>>>> dev-al
                                     <a href="{{ route('MasterOperator.index') }}" class="submenu-link">Master
                                         Operator</a>
                                 </li>
@@ -334,12 +320,8 @@
                                             <a href="{{ route('PreCleaningInput.index') }}"
                                                 class="submenu-link">Pre-Cleaning Input</a>
                                         </li>
-<<<<<<< HEAD
                                         {{-- <li
                                             class="submenu-item {{ Request::is('pre_cleaning_stock*') ? 'active' : '' }}">
-=======
-                                        <li class="submenu-item {{ Route::is('PreCleaningStock*') ? 'active' : '' }}">
->>>>>>> dev-al
                                             <a href="{{ route('PreCleaningStock.index') }}"
                                                 class="submenu-link">Pre-Cleaning Stock</a>
                                         </li> --}}
@@ -355,9 +337,6 @@
                                         </li>
                                     </ul>
                                 </li>
-<<<<<<< HEAD
-                          
-=======
 
                                 <li
                                     class="submenu-item has-sub {{ Route::is('TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock*', 'GradingHalusOutput*', 'TransitGradingHalus*') ? 'active' : '' }}">
@@ -430,7 +409,6 @@
 
                                     </ul>
                                 </li>
->>>>>>> dev-al
                             </ul>
                         </li>
 

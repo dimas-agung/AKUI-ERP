@@ -21,6 +21,7 @@ class UnitController extends Controller
         $i = 1;
         $workstation = Workstation::with('unit')->get();
         $perusahaan = Perusahaan::with('unit')->get();
+        $workstation = Workstation::with('perusahaan')->get();
         $unit = unit::with('perusahaan', 'workstation')->get();
         // return $unit;
         return response()->view('unit.index', [

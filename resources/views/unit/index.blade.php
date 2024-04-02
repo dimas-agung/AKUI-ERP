@@ -66,6 +66,11 @@
                                             <label>Pilih Workstation ID:</label>
                                             <select id="workstation_id" class="select2 form-select" name="workstation_id">
                                                 <option></option>
+                                                @foreach ($workstation as $work)
+                                                <option value="{{ $work->id }}">
+                                                    {{$work->perusahaan->nama}} - {{ $work->nama }} 
+                                                </option>
+                                            @endforeach
                                             </select>
 
                                             <!-- error message untuk workstation -->
@@ -177,25 +182,25 @@
         }
 
         function getWorkstations(perusahaan_id) {
-            var workstationSelect = document.getElementById("workstation_id");
-            // Clear previous workstation options
-            workstationSelect.innerHTML = "";
+            // var workstationSelect = document.getElementById("workstation_id");
+            // // Clear previous workstation options
+            // workstationSelect.innerHTML = "";
 
-            // Send AJAX request to get workstations based on selected company
-            fetch("/get-workstations/" + perusahaan_id)
-                .then(response => response.json())
-                .then(data => {
-                    $('#workstation_id').empty();
-                    renderSelect2() // Kosongkan opsi sebelum menambahkan yang baru
-                    data.forEach(workstation => {
-                        console.log(data);
-                        $('#workstation_id').append($('<option>', {
-                            value: workstation.id,
-                            text: workstation.nama
-                        }));
-                    });
-                })
-                .catch(error => console.error('Error:', error));
+            // // Send AJAX request to get workstations based on selected company
+            // fetch("/get-workstations/" + perusahaan_id)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         // $('#workstation_id').empty();
+            //         // renderSelect2() // Kosongkan opsi sebelum menambahkan yang baru
+            //         data.forEach(workstation => {
+            //             console.log(data);
+            //             $('#workstation_id').append($('<option>', {
+            //                 value: workstation.id,
+            //                 text: workstation.nama
+            //             }));
+            //         });
+            //     })
+            //     .catch(error => console.error('Error:', error));
         }
 
 

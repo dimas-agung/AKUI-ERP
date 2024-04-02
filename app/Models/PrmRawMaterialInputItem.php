@@ -27,14 +27,14 @@ class PrmRawMaterialInputItem extends Model
         'user_created',
         'user_updated'
     ];
-    // public function PrmRawMaterialInput()
-    // {
-    //     return $this->hasMany(PrmRawMaterialInput::class, 'doc_no', 'doc_no');
-    // }
     public function PrmRawMaterialInput()
     {
-        return $this->hasMany(PrmRawMaterialInput::class, 'nomor_nota_internal', 'id_box');
+        return $this->hasOne(PrmRawMaterialInput::class, 'doc_no', 'doc_no');
     }
+    // public function PrmRawMaterialInput()
+    // {
+    //     return $this->hasMany(PrmRawMaterialInput::class, 'nomor_nota_internal', 'id_box');
+    // }
     public function PrmRawMaterialStock()
     {
         return $this->hasMany(PrmRawMaterialStock::class, 'id_box', 'id_box');

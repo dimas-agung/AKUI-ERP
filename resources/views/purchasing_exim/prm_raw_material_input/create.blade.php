@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
-                        <input type="text" class="form-control" id="nomor_nota_internal" readonly>
+                        <input type="text" class="form-control" id="nomor_nota_internal" >
                     </div>
                     <div class="col-md-flex">
                         <hr>
@@ -125,7 +125,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="user_created" class="form-label">NIP Admin</label>
-                        <input type="text" class="form-control" id="user_created">
+                        <input type="text" readonly class="form-control" value="{{Auth::user()->nip}}" id="user_created">
                     </div>
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" onclick="addRow()">Tambah</button>

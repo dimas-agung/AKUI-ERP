@@ -51,9 +51,9 @@ class PrmRawMaterialInputService
             ->where('created_at')
             ->first();
         // return $existingItem
-
+        $doc_no = PrmRawMaterialInput::max('id')+1;
         $dataToUpdate = [
-            // 'doc_no'                => $dataHeader->doc_no,
+            'doc_no'                => $doc_no,
             'nomor_po'              => $header->nomor_po,
             'nomor_batch'           => $header->nomor_batch,
             'nomor_nota_supplier'   => $header->nomor_nota_supplier,
@@ -79,9 +79,10 @@ class PrmRawMaterialInputService
         $defaultBeratKeluar = 0;
         // $defaultIdBox = '';
         // Creat Prm Raw Material Stock History
+        $doc_no = PrmRawMaterialInput::latest()->get()->first();
         PrmRawMaterialStockHistory::create([
             'id_box'        => $item->id_box,
-            // 'doc_no'        => $defaultIdBox,
+            'doc_no'        => $doc_no->doc_no,
             // 'doc_no'        => $item->nomor_nota_internal,
             'berat_masuk'   => $item->berat_bersih,
             'berat_keluar'  => $defaultBeratKeluar,

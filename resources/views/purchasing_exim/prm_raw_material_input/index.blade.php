@@ -106,9 +106,9 @@
 <script>
     function redirectToPage(pageType) {
         if (pageType === 'create') {
-            window.location.href = "{{ url('/prm_raw_material_input/create') }}";
+            window.location.href = "{{ route('PrmRawMaterialInput.create') }}";
         } else if (pageType === 'detail') {
-            window.location.href = "{{ url('/prm_raw_material_input/detail') }}";
+            window.location.href = "{{route('PrmRawMaterialInput.detail') }}";
         }
     }
 
