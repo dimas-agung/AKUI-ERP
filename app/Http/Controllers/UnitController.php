@@ -19,10 +19,10 @@ class UnitController extends Controller
     public function index()
     {
         $i = 1;
-        $workstation = Workstation::with('unit')->get();
-        $perusahaan = Perusahaan::with('unit')->get();
+        $perusahaan = Perusahaan::with('Workstation')->get();
+        $workstation = Workstation::with('Perusahaan')->get();
         $unit = unit::with('perusahaan', 'workstation')->get();
-        // return $unit;
+        // return $workstation;
         return response()->view('unit.index', [
             'unit' => $unit,
             'workstation' => $workstation,
@@ -35,15 +35,13 @@ class UnitController extends Controller
 
     public function create(): View
     {
-        return view('unit.create');
+        return view('unit.show');
     }
 
     public function getWorkstations($perusahaan_id)
     {
-        // Ambil workstation berdasarkan perusahaan yang dipilih
         $workstations = Workstation::where('perusahaan_id', $perusahaan_id)->get();
 
-        // Mengembalikan data workstation dalam format JSON
         return response()->json($workstations);
     }
 

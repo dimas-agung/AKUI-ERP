@@ -22,7 +22,7 @@
             {{-- Create Data --}}
             <div class="modal fade text-left border border-primary border-3" id="inlineForm" role="dialog"
                 aria-labelledby="myModalLabel33" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content border border-primary border-3">
                         <div class="modal-header">
                             <h5 class="modal-title" id="myModalLabel33">
@@ -176,26 +176,48 @@
             });
         }
 
-        function getWorkstations(perusahaan_id) {
-            var workstationSelect = document.getElementById("workstation_id");
-            // Clear previous workstation options
-            workstationSelect.innerHTML = "";
+        // function getWorkstations(perusahaan_id) {
+        //     var workstationSelect = document.getElementById("workstation_id");
+        //     // Clear previous workstation options
+        //     workstationSelect.innerHTML = "";
 
-            // Send AJAX request to get workstations based on selected company
-            fetch("/get-workstations/" + perusahaan_id)
-                .then(response => response.json())
-                .then(data => {
-                    $('#workstation_id').empty();
-                    renderSelect2() // Kosongkan opsi sebelum menambahkan yang baru
-                    data.forEach(workstation => {
-                        console.log(data);
-                        $('#workstation_id').append($('<option>', {
-                            value: workstation.id,
-                            text: workstation.nama
-                        }));
+        //     // Send AJAX request to get workstations based on selected company
+        //     fetch("{{ route('Unit.getWorkstations', '') }}/" + perusahaan_id)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             $('#workstation_id').empty();
+        //             renderSelect2(); // Kosongkan opsi sebelum menambahkan yang baru
+        //             data.forEach(workstation => {
+        //                 $('#workstation_id').append($('<option>', {
+        //                     value: workstation.id,
+        //                     text: workstation.nama
+        //                 }));
+        //             });
+        //         });
+
+        //     .catch(error => console.error('Error:', error));
+        // }
+
+        function getWorkstations(perusahaan_id) {
+            $.ajax({
+                url: '{{ route('Unit.getWorkstations', ['perusahaan_id' => ':perusahaan_id']) }}'.replace(
+                    ':perusahaan_id', perusahaan_id),
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#workstation_id').empty(); // Kosongkan opsi select sebelum memuat data baru
+                    $.each(data, function(index, workstation) {
+                        $('#workstation_id').append('<option value="' + workstation.id + '">' +
+                            workstation.nama + '</option>');
                     });
-                })
-                .catch(error => console.error('Error:', error));
+                    // Setelah memperbarui opsi, panggil fungsi renderSelect2 (jika diperlukan)
+                    renderSelect2(); // Pastikan fungsi renderSelect2 telah didefinisikan
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    // Tambahkan penanganan kesalahan di sini jika diperlukan
+                }
+            });
         }
 
 
