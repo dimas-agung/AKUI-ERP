@@ -60,7 +60,7 @@
                                     <td class="text-center">{!! $item->jenis_grading !!}</td>
                                     <td class="text-center">{!! $item->berat_keluar !!}</td>
                                     <td class="text-center">{!! $item->pcs_keluar !!}</td>
-                                    <td class="text-center">{!! number_format($item->avg_kadar_air, 2, ',', '.') !!}</td>
+                                    <td class="text-center">{!! $item->avg_kadar_air !!}</td>
                                     <td class="text-center">{!! $item->tujuan_kirim !!}</td>
                                     <td class="text-center">{!! $item->nomor_grading !!}</td>
                                     <td class="text-center">{!! number_format($item->modal, 2, ',', '.') !!}</td>
