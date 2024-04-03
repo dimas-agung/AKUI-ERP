@@ -147,7 +147,7 @@
                     </table>
                 </div>
                 <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-success" onclick="simpanData()">Simpan</button>
+                    <button type="submit" class="btn btn-success" onclick="CeksendData()">Simpan</button>
                 </div>
             </div>
         </div>
