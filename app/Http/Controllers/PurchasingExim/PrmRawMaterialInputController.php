@@ -72,9 +72,11 @@ class PrmRawMaterialInputController extends Controller
 
         // $PrmRawMaterialInputItem = PrmRawMaterialInputItem::with('PrmRawMaterialInput')->get();
         $PrmRawMaterialInputItem = PrmRawMaterialInputItem::all();
-        // return $PrmRawMaterialInputItem;
+        $PrmRawMaterialInput = PrmRawMaterialInput::with('PrmRawMaterialInputItem')->get();
+        // return $PrmRawMaterialInput;
         return response()->view('purchasing_exim.prm_raw_material_input.detail', [
             'prm_raw_material_input_items'  => $PrmRawMaterialInputItem,
+            'prm_raw_material_inputs'  => $PrmRawMaterialInput,
             'i' => $i,
         ]);
     }

@@ -61,11 +61,11 @@
                                             <td class="text-center">{{ $PGHA->nomor_nota_internal }}</td>
                                             <td class="text-center">{{ $PGHA->nama_supplier }}</td>
                                             <td class="text-center">{{ $PGHA->jenis_raw_material }}</td>
-                                            <td class="text-center">{{ number_format($PGHA->kadar_air, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ $PGHA->kadar_air }}</td>
                                             <td class="text-center">{{ $PGHA->jenis_kirim }}</td>
-                                            <td class="text-center">{{ number_format($PGHA->berat_kirim, 1, ',', '.') }}
+                                            <td class="text-center">{{ $PGHA->berat_kirim }}
                                             </td>
-                                            <td class="text-center">{{ number_format($PGHA->pcs_kirim, 1, ',', '.') }}</td>
+                                            <td class="text-center">{{ $PGHA->pcs_kirim }}</td>
                                             <td class="text-center">{{ $PGHA->tujuan_kirim }}</td>
                                             <td class="text-center">{{ number_format($PGHA->modal, 2, ',', '.') }}</td>
                                             <td class="text-center">{{ number_format($PGHA->total_modal, 2, ',', '.') }}

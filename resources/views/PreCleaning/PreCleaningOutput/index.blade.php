@@ -81,10 +81,10 @@
                                             {{-- <td class="text-center">{{ $PCO->kadar_air }}</td> --}}
                                             <td class="text-center">{{ $PCO->jenis_kirim }}</td>
                                             {{-- <td class="text-center">{{ $PCO->berat_kirim }}</td> --}}
-                                            <td class="text-center">{{ number_format($PCO->berat_kirim, 1, ',', '.') }}
+                                            <td class="text-center">{{ $PCO->berat_kirim }}
                                             </td>
                                             {{-- <td class="text-center">{{ $PCO->pcs_kirim }}</td> --}}
-                                            <td class="text-center">{{ number_format($PCO->pcs_kirim, 1, ',', '.') }}</td>
+                                            <td class="text-center">{{ $PCO->pcs_kirim }}</td>
                                             {{-- <td class="text-center">{{ $PCO->tujuan_kirim }}</td> --}}
                                             {{-- <td class="text-center">{{ $PCO->modal }}</td> --}}
                                             <td class="text-center">{{ number_format($PCO->modal, 2, ',', '.') }}</td>
@@ -95,30 +95,30 @@
                                             <td class="text-center">{{ $PCO->operator_flek_n_poles }}</td>
                                             <td class="text-center">{{ $PCO->operator_cutter }}</td>
                                             {{-- <td class="text-center">{{ $PCO->kuningan }}</td> --}}
-                                            <td class="text-center">{{ number_format($PCO->kuningan, 1, ',', '.') }}</td>
+                                            <td class="text-center">{{ $PCO->kuningan }}</td>
                                             {{-- <td class="text-center">{{ $PCO->sterofoam }}</td> --}}
-                                            <td class="text-center">{{ number_format($PCO->sterofoam, 1, ',', '.') }}</td>
+                                            <td class="text-center">{{ $PCO->sterofoam }}</td>
                                             {{-- <td class="text-center">{{ $PCO->karat }}</td> --}}
-                                            <td class="text-center">{{ number_format($PCO->karat, 1, ',', '.') }}</td>
+                                            <td class="text-center">{{ $PCO->karat }}</td>
                                             {{-- <td class="text-center">{{ $PCO->rontokan_fisik }}</td> --}}
-                                            <td class="text-center">{{ number_format($PCO->rontokan_flek, 1, ',', '.') }}
+                                            <td class="text-center">{{ $PCO->rontokan_flek }}
                                             </td>
                                             {{-- <td class="text-center">{{ $PCO->rontokan_bahan }}</td> --}}
-                                            <td class="text-center">{{ number_format($PCO->rontokan_bahan, 1, ',', '.') }}
+                                            <td class="text-center">{{ $PCO->rontokan_bahan }}
                                             </td>
                                             {{-- <td class="text-center">{{ $PCO->rontokan_serabut }}</td> --}}
                                             <td class="text-center">
-                                                {{ number_format($PCO->rontokan_serabut, 1, ',', '.') }}</td>
+                                                {{ $PCO->rontokan_serabut }}</td>
                                             {{-- <td class="text-center">{{ $PCO->ws_0_0_0 }}</td> --}}
-                                            <td class="text-center">{{ number_format($PCO->ws_0_0_0, 1, ',', '.') }}</td>
+                                            <td class="text-center">{{ $PCO->ws_0_0_0 }}</td>
                                             {{-- <td class="text-center">{{ $PCO->berat_pre_cleaning }}</td> --}}
                                             <td class="text-center">
-                                                {{ number_format($PCO->berat_pre_cleaning, 1, ',', '.') }}</td>
+                                                {{ $PCO->berat_pre_cleaning }}</td>
                                             {{-- <td class="text-center">{{ $PCO->pcs_pre_cleaning }}</td> --}}
                                             <td class="text-center">
-                                                {{ number_format($PCO->pcs_pre_cleaning, 1, ',', '.') }}</td>
+                                                {{ $PCO->pcs_pre_cleaning }}</td>
                                             {{-- <td class="text-center">{{ $PCO->susut }}</td> --}}
-                                            <td class="text-center">{{ number_format($PCO->susut, 1, ',', '.') }}</td>
+                                            <td class="text-center">{{ $PCO->susut }}</td>
                                             <td class="text-center">{{ $PCO->user_created }}</td>
                                             <td class="text-center">{{ $PCO->user_updated }}</td>
                                             <td class="text-center">{{ $PCO->created_at }}</td>

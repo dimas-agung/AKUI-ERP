@@ -69,13 +69,13 @@
                                             <td class="text-center">{{ $ADJI->id_box_grading_halus }}</td>
                                             <td class="text-center">{{ $ADJI->nomor_adjustment }}</td>
                                             <td class="text-center">{{ $ADJI->nomor_batch }}</td>
-                                            <td class="text-center">{{ number_format($ADJI->berat_adding, 1, ',', '.') }}
+                                            <td class="text-center">{{ $ADJI->berat_adding }}
                                             </td>
-                                            <td class="text-center">{{ number_format($ADJI->pcs_adding, 1, ',', '.') }}</td>
+                                            <td class="text-center">{{ $ADJI->pcs_adding }}</td>
                                             <td class="text-center">{{ $ADJI->jenis_adjustment }}</td>
                                             <td class="text-center">
-                                                {{ number_format($ADJI->berat_adjustment, 1, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($ADJI->pcs_adjustment, 1, ',', '.') }}
+                                                {{ $ADJI->berat_adjustment }}</td>
+                                            <td class="text-center">{{ $ADJI->pcs_adjustment }}
                                             </td>
                                             <td class="text-center">{{ $ADJI->keterangan }}</td>
                                             <td class="text-center">{{ number_format($ADJI->modal, 2, ',', '.') }}</td>
