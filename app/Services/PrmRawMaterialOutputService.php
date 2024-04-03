@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services;
+
+use App\Models\PrmRawMaterialInputItem;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\PrmRawMaterialStock;
 use App\Models\PrmRawMaterialStockHistory;
@@ -15,9 +17,10 @@ class PrmRawMaterialOutputService
     {
         try {
             DB::beginTransaction();
-
+            $lastData = PrmRawMaterialInputItem::lastest()->first();
+            $doc_no = $lastData->id+1;
             foreach ($dataArray as $item) {
-                $this->createItem($item);
+                $this->createItem($item,$doc_no);
             }
 
             // foreach ($dataStock as $item) {
@@ -43,10 +46,10 @@ class PrmRawMaterialOutputService
     }
 
 
-    private function createItem($item)
+    private function createItem($item,$doc_no)
     {
         PrmRawMaterialOutputItem::create([
-            'doc_no'        => $item->doc_no,
+            'doc_no'        => $doc_no,
             'nomor_bstb'    => $item->nomor_bstb,
             'nomor_batch'   => $item->nomor_batch,
             'id_box'        => $item->id_box,

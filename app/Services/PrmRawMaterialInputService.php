@@ -18,14 +18,15 @@ class PrmRawMaterialInputService
     {
         try {
             DB::beginTransaction();
-
-            $this->createHeader($dataHeader);
+            $lastData = PrmRawMaterialInput::lastest()->first();
+            $doc_no = $lastData->id+1;
+            $this->createHeader($dataHeader,$doc_no);
             // foreach ($dataHeader as $header) {
             //     $this->createHeader($header);
             // }
 
             foreach ($dataArray as $item) {
-                $this->createItem($item);
+                $this->createItem($item,$doc_no);
             }
 
             DB::commit();
@@ -54,9 +55,9 @@ class PrmRawMaterialInputService
             ->where('created_at')
             ->first();
         // return $existingItem
-
+        
         $dataToUpdate = [
-            // 'doc_no'                => $dataHeader->doc_no,
+            'doc_no'                => $doc_no,
             'nomor_po'              => $header->nomor_po,
             'nomor_batch'           => $header->nomor_batch,
             'nomor_nota_supplier'   => $header->nomor_nota_supplier,
@@ -77,14 +78,14 @@ class PrmRawMaterialInputService
         }
     }
 
-    private function createItem($item)
+    private function createItem($item,$doc_no)
     {
         $defaultBeratKeluar = 0;
         // $defaultIdBox = '';
         // Creat Prm Raw Material Stock History
         PrmRawMaterialStockHistory::create([
             'id_box'        => $item->id_box,
-            // 'doc_no'        => $defaultIdBox,
+            'doc_no'        => $doc_no,
             // 'doc_no'        => $item->nomor_nota_internal,
             'berat_masuk'   => $item->berat_bersih,
             'berat_keluar'  => $defaultBeratKeluar,
