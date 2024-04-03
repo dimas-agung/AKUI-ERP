@@ -103,7 +103,7 @@
                                             <td class="text-center">{{ $MasterOC->unit }}</td>
                                             <td class="text-center">{{ $MasterOC->jenis_bulu }}</td>
                                             <td class="text-center">Rp
-                                                {{ number_format($MasterOC->biaya_per_gram, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterOC->biaya_per_gram, 1, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterOC->status == 1)
                                                     Aktif

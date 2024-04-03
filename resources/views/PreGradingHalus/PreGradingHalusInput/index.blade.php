@@ -65,7 +65,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center">{{ $item->jenis_raw_material }}</td>
-                                    <td class="text-center">{{ number_format($item->kadar_air, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ $item->kadar_air }}</td>
                                     <td class="text-center">{{ $item->jenis_kirim }}</td>
                                     <td class="text-center">{{ $item->berat_kirim }}</td>
                                     <td class="text-center">{{ $item->pcs_kirim }}</td>
