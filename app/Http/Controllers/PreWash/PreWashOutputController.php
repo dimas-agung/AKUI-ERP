@@ -45,6 +45,21 @@ class PreWashOutputController extends Controller
         return response()->json($data);
     }
 
+    public function CeksendData(Request $request)
+    {
+        // Ambil id box dari request dan konversi ke dalam array
+        $idBoxes = json_decode($request->idBoxes);
+
+        // Cek ketersediaan id box dalam database
+        $unavailableBoxes = PreWashStock::whereIn('nomor_job', $idBoxes)->pluck('nomor_job')->toArray();
+
+        // Filter id box yang tidak tersedia
+        $availableBoxes = array_diff($idBoxes, $unavailableBoxes);
+
+        // Kembalikan daftar id box yang tidak tersedia sebagai respons
+        return response()->json(['unavailableBoxes' => $availableBoxes]);
+    }
+
     protected $PreWashOutputService;
 
     public function __construct(PreWashOutputService $PreWashOutputService)

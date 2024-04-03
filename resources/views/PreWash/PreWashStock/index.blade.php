@@ -33,7 +33,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($grading_halus_stocks as $item)
+                            @forelse ($pre_wash_stocks as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{{ $item->unit }}</td>
