@@ -426,6 +426,10 @@ Route::middleware('auth')->group(function () {
                 Route::post('/pre_wash_output/simpanData', 'simpanData')->name('PreWashOutput.simpanData');
                 Route::post('/pre_wash_output/cek_data', 'CeksendData')->name('PreWashOutput.CeksendData');
             });
+
+            Route::controller(App\Http\Controllers\PreWash\PreWashStockController::class)->group(function () {
+                Route::get('/pre_wash_stock', 'index')->name('PreWashStock.index');
+            });
         });
     });
 });
