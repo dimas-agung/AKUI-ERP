@@ -311,66 +311,117 @@
             row.remove();
         }
 
-        function simpanData() {
-            console.log(dataArray);
-            // Cek apakah data kosong
-            if (dataArray.length === 0) {
-                // Menampilkan SweetAlert untuk pesan error
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
-                });
-                return; // Menghentikan eksekusi fungsi jika data kosong
-            }
-            // Mengirim data ke server menggunakan AJAX
+        function CeksendData() {
+            var i = 0;
+            var idBoxes = []; // Array untuk menyimpan id box yang akan dicek
+
+            // Mengumpulkan id box dari dataArray
+            dataArray.forEach(function(item) {
+                idBoxes.push(item.nomor_job);
+            });
+
+            // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
             $.ajax({
-                url: '{{ route('PreWashOutput.store') }}',
+                url: `{{ route('PreWashOutput.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
                 method: 'POST',
                 data: {
-                    data: JSON.stringify(dataArray),
+                    idBoxes: JSON.stringify(idBoxes),
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json',
-                beforeSend: function() {
-                    // Menampilkan SweetAlert sebagai indikator loading sebelum permintaan dikirimkan
-                    Swal.fire({
-                        title: 'Loading...',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        onBeforeOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                },
                 success: function(response) {
-                    console.log('Data sent successfully:', response);
+                    var unavailableBoxes = response.unavailableBoxes;
 
-                    // Menampilkan SweetAlert untuk pesan sukses
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: 'Data berhasil disimpan.'
-                    });
-
-                    // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('PreWashOutput.index') }}`;
+                    if (unavailableBoxes.length > 0) {
+                        // Ada id box yang tidak tersedia, tampilkan pesan kesalahan
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Beberapa nomor job sudah tidak tersedia.',
+                            icon: 'error',
+                            showCancelButton: false, // Sembunyikan tombol cancel
+                            confirmButtonText: 'OK' // Ganti teks tombol konfirmasi
+                        }).then((result) => {
+                            // Jika pengguna menekan tombol "OK", refresh halaman
+                            if (result.isConfirmed) {
+                                location.reload(); // Refresh halaman
+                            }
+                        });
+                    } else {
+                        // Semua id box tersedia, kirim data ke server
+                        simpanData();
+                    }
                 },
                 error: function(error) {
-                    console.error('Error sending data:', error);
+                    Swal.fire({
+                        title: 'Failed!',
+                        text: 'Terjadi kesalahan saat memeriksa ketersediaan nomor job. Silakan coba lagi.',
+                        icon: 'error'
+                    });
+                    console.log('Error:', error);
+                }
+            });
 
+            function simpanData() {
+                console.log(dataArray);
+                // Cek apakah data kosong
+                if (dataArray.length === 0) {
                     // Menampilkan SweetAlert untuk pesan error
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
+                        text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
                     });
-                },
-                complete: function() {
-                    // Menutup SweetAlert setelah permintaan selesai, terlepas dari berhasil atau gagal
-                    Swal.close();
+                    return; // Menghentikan eksekusi fungsi jika data kosong
                 }
-            });
+                // Mengirim data ke server menggunakan AJAX
+                $.ajax({
+                    url: '{{ route('PreWashOutput.store') }}',
+                    method: 'POST',
+                    data: {
+                        data: JSON.stringify(dataArray),
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json',
+                    beforeSend: function() {
+                        // Menampilkan SweetAlert sebagai indikator loading sebelum permintaan dikirimkan
+                        Swal.fire({
+                            title: 'Loading...',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            onBeforeOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    success: function(response) {
+                        console.log('Data sent successfully:', response);
+
+                        // Menampilkan SweetAlert untuk pesan sukses
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Data berhasil disimpan.'
+                        });
+
+                        // Redirect atau lakukan tindakan lain setelah berhasil
+                        window.location.href = `{{ route('PreWashOutput.index') }}`;
+                    },
+                    error: function(error) {
+                        console.error('Error sending data:', error);
+
+                        // Menampilkan SweetAlert untuk pesan error
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
+                        });
+                    },
+                    complete: function() {
+                        // Menutup SweetAlert setelah permintaan selesai, terlepas dari berhasil atau gagal
+                        Swal.close();
+                    }
+                });
+            }
         }
     </script>
 @endsection
