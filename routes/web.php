@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
         Route::controller(App\Http\Controllers\UnitController::class)->group(function () {
             Route::get('/unit', 'index')->name('Unit.index');
             Route::get('/unit/create', 'create')->name('Unit.create');
+            Route::get('/unit/getWorkstations/{perusahaan_id}', 'getWorkstations')->name('Unit.getWorkstations');
             Route::post('/unit/store', 'store')->name('Unit.store');
             Route::get('/unit/show/{id}', 'show')->name('Unit.show');
             Route::get('/unit/edit/{id}', 'edit')->name('Unit.edit');
