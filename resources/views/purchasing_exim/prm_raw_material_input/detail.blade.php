@@ -48,36 +48,41 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($prm_raw_material_input_items as $MasterPRIM)
-                                        <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->doc_no }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->jenis }}</td>
-                                            <td class="text-center">
-                                                {{ $MasterPRIM->berat_nota }}</td>
-                                            <td class="text-center">
-                                                {{ $MasterPRIM->berat_kotor }}</td>
-                                            <td class="text-center">
-                                                {{ $MasterPRIM->berat_bersih }}</td>
-                                            <td class="text-center">
-                                                {{ $MasterPRIM->selisih_berat }}</td>
-                                            <td class="text-center">
-                                                {{ $MasterPRIM->kadar_air }}
-                                            </td>
-                                            <td class="text-center">{{ $MasterPRIM->id_box }}</td>
-                                            <td class="text-center">
-                                                {{ number_format($MasterPRIM->harga_nota, 2, ',', '.') }}</td>
-                                            <td class="text-center">
-                                                {{ number_format($MasterPRIM->total_harga_nota, 2, ',', '.') }}</td>
-                                            <td class="text-center">
-                                                {{ number_format($MasterPRIM->harga_deal, 2, ',', '.') }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->keterangan }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->user_created }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->user_updated }}</td>
-                                            <td class="text-center">{{ $MasterPRIM->created_at }}</td>
-                                            <td class="text-center">
-                                                {{ $MasterPRIM->created_at != $MasterPRIM->updated_at ? $MasterPRIM->updated_at : '' }}
-                                            </td>
+                                    @forelse ($prm_raw_material_inputs as $prmRawMaterialInput)
+                                        @foreach ($prmRawMaterialInput->prmRawMaterialInputItem as $prmRawMaterialInputItem)
+                                            <tr>
+                                                <td class="text-center">{{ $i++ }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInput->doc_no }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInput->nomor_batch }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInput->nomor_nota_supplier }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInput->nomor_nota_internal }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInput->nama_supplier }}</td>
+                                                <!-- Menampilkan data dari relasi -->
+                                                <td class="text-center">{{ $prmRawMaterialInputItem->jenis }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInputItem->berat_nota }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInputItem->berat_kotor }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInputItem->berat_bersih }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInputItem->selisih_berat }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInputItem->kadar_air }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInputItem->id_box }}</td>
+                                                <td class="text-center">
+                                                    {{ number_format($prmRawMaterialInputItem->harga_nota, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($prmRawMaterialInputItem->total_harga_nota, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($prmRawMaterialInputItem->harga_deal, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">{{ $prmRawMaterialInputItem->keterangan }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInputItem->user_created }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInputItem->user_updated }}</td>
+                                                <td class="text-center">{{ $prmRawMaterialInputItem->created_at }}</td>
+                                                <td class="text-center">
+                                                    {{ $prmRawMaterialInputItem->created_at != $prmRawMaterialInputItem->updated_at ? $prmRawMaterialInputItem->updated_at : '' }}
+                                                </td>
+                                                <!-- Menampilkan kolom lainnya dari prmRawMaterialInputItem sesuai kebutuhan -->
+                                        @endforeach
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
@@ -85,6 +90,7 @@
                                         </div>
                                     @endforelse
                                 </tbody>
+
                             </table>
                         </div>
                         <div class=" d-flex justify-content-end model-footer no-bd">

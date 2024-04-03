@@ -66,20 +66,17 @@ class PrmRawMaterialInputController extends Controller
             'master_jenis_raw_materials'    => $MasterJenisRawMaterial,
         ]);
     }
+
     public function detail()
     {
         $i = 1;
-
-        // $PrmRawMaterialInputItem = PrmRawMaterialInputItem::with('PrmRawMaterialInput')->get();
-        $PrmRawMaterialInputItem = PrmRawMaterialInputItem::all();
-        $PrmRawMaterialInput = PrmRawMaterialInput::with('PrmRawMaterialInputItem')->get();
-        // return $PrmRawMaterialInput;
-        return response()->view('purchasing_exim.prm_raw_material_input.detail', [
-            'prm_raw_material_input_items'  => $PrmRawMaterialInputItem,
-            'prm_raw_material_inputs'  => $PrmRawMaterialInput,
+        $prmRawMaterialInputs = PrmRawMaterialInput::with('prmRawMaterialInputItem')->get();
+        return view('purchasing_exim.prm_raw_material_input.detail', [
+            'prm_raw_material_inputs' => $prmRawMaterialInputs,
             'i' => $i,
         ]);
     }
+
 
     // get Data Supplier
     public function getDataSupplier(Request $request)
