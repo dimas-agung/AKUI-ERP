@@ -60,8 +60,8 @@ class PreWashOutputService
                         'nomor_job'             => $mergedData['nomor_job'],
                         'nomor_bstb'            => $mergedData['nomor_bstb'],
                         'jenis_job'             => $mergedData['jenis_job'],
-                        'berat_job'           => $mergedData['berat_job'] ?? 0,
-                        'pcs_job'             => $mergedData['pcs_job'] ?? 0,
+                        'berat_job'             => $mergedData['berat_job'] ?? 0,
+                        'pcs_job'               => $mergedData['pcs_job'] ?? 0,
                         'tujuan_kirim'          => $mergedData['tujuan_kirim'],
                         'keterangan'            => $mergedData['keterangan'],
                         'modal'                 => $mergedData['modal'],
@@ -76,28 +76,18 @@ class PreWashOutputService
                     ->get();
 
                     foreach ($existingItems as $existingItem) {
+                        // Hitung sisa berat dan sisa pcs
+                        $sisaBerat = $existingItem->berat_job - ($itemObject->berat_job ?? 0);
+                        $sisaPcs = $existingItem->pcs_job - ($itemObject->pcs_job ?? 0);
                         // Update data dengan nilai baru
                         $existingItem->update([
                             // Update data PreGradingHalusAddingStock
-                            'berat_job' => $itemObject->berat_jobs ?? 0,
-                            'pcs_job'   => $itemObject->pcs_jobs ?? 0,
+                            'berat_job' => $sisaBerat ?? 0,
+                            'pcs_job'   => $sisaPcs ?? 0,
                             'total_modal'  => $itemObject->total_modal,
                             'user_updated' => $itemObject->user_created ?? "There isn't any",
                         ]);
                     }
-
-                    // $existingItems = PreWashInput::where('nomor_job', $itemObject->nomor_job)
-                    // ->get();
-
-                    // $dataToUpdate = [
-                    //     'status'                => $itemObject->status ?? 0,
-                    // ];
-
-                    // if ($existingItems) {
-                    //     foreach ($existingItems as $existingItem) {
-                    //         $existingItem->update($dataToUpdate);
-                    //     }
-                    // }
 
                     DB::commit();
                 } catch (\Exception $e) {
@@ -120,14 +110,14 @@ class PreWashOutputService
         ], 201);
     }
 
-    public function destroy($nomor_bstb): RedirectResponse
+    public function destroy($nomor_job): RedirectResponse
     {
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
-            // Ambil data PreCleaningInput berdasarkan id_box_grading$nomor_bstb
-            $GradingHalusInputs = PreWashOutput::where('nomor_bstb', '=', $nomor_bstb)->get();
+            // Ambil data PreCleaningInput berdasarkan id_box_grading$nomor_job
+            $GradingHalusInputs = PreWashOutput::where('nomor_job', '=', $nomor_job)->get();
 
             if ($GradingHalusInputs->isEmpty()) {
                 // Redirect ke index dengan pesan error jika data tidak ditemukan
@@ -136,7 +126,7 @@ class PreWashOutputService
 
             foreach ($GradingHalusInputs as $PreCleaningI) {
                 // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
-                $PreCleaningS = TransitPreWash::where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
+                $PreCleaningS = TransitPreWash::where('nomor_job', '=', $PreCleaningI->nomor_job)
                     ->first();
 
                     if ($PreCleaningS) {
@@ -150,17 +140,17 @@ class PreWashOutputService
                             $pcsSebelumnya = $stockPrmRawMaterial->pcs_job;
 
                             // Hitung perbedaan berat dan pcs
-                            $perbedaanBerat = $PreCleaningI->berat_job;
-                            $perbedaanPcs = $PreCleaningI->pcs_job;
+                            $perbedaanBerat = $beratSebelumnya + $PreCleaningI->berat_job;
+                            $perbedaanPcs = $pcsSebelumnya + $PreCleaningI->pcs_job;
 
                             // Hitung total modal baru
                             $totalModalBaru = $perbedaanBerat * $PreCleaningI->modal;
 
                             // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
                             $stockPrmRawMaterial->update([
-                                'berat_job' => max($PreCleaningI->berat_job, 0),
-                                'pcs_job' => max($PreCleaningI->pcs_job, 0),
-                                'total_modal' => max($perbedaanBerat * $PreCleaningI->modal, 0),
+                                'berat_job' => max($perbedaanBerat, 0),
+                                'pcs_job' => max($perbedaanPcs, 0),
+                                // 'total_modal' => max($perbedaanBerat * $PreCleaningI->modal, 0),
                             ]);
                         }
                     }

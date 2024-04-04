@@ -222,7 +222,7 @@ class PrmRawMaterialOutputController extends Controller
                 $Modal = $gradingKI->modal;
                 $Beratkeluar = $beratSebelumnya - $beratTadi;
                 $sisaBerat = $beratMasuk - $Beratkeluar;
-                $TotalModal = $Beratkeluar * $Modal;
+                $TotalModal = $sisaBerat * $Modal;
 
                 // Update data pada PrmRawMaterialStock
                 $dataToUpdate = [

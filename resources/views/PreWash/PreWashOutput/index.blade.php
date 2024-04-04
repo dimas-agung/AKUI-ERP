@@ -66,14 +66,14 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     @if ($PCO->status == 1)
-                                                        <form style="display: flex" id="deleteForm{{ $PCO->nomor_bstb }}"
-                                                            action="{{ route('PreWashOutput.destroy', $PCO->nomor_bstb) }}"
+                                                        <form style="display: flex" id="deleteForm{{ $PCO->nomor_job }}"
+                                                            action="{{ route('PreWashOutput.destroy', $PCO->nomor_job) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="button" class="btn btn-link"
                                                                 data-original-title="Remove"
-                                                                onclick="confirmDelete('{{ $PCO->nomor_bstb }}')">
+                                                                onclick="confirmDelete('{{ $PCO->nomor_job }}')">
                                                                 <i class="bi bi-trash3 text-danger"></i>
                                                             </button>
                                                         </form>
