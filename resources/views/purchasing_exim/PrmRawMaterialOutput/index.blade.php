@@ -38,6 +38,8 @@
                                 <th class="text-center">Total Modal</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
+                                <th scope="col" class="text-center">Created At</th>
+                                <th scope="col" class="text-center">Updated At</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -60,6 +62,10 @@
                                     <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->keterangan_item }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
+                                    <td class="text-center">{{ $item->created_at }}</td>
+                                    <td class="text-center">
+                                        {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
+                                    </td>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
