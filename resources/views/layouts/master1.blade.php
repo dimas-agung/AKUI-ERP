@@ -350,6 +350,10 @@
                                                 <a href="{{ route('TransitGradingHalus.index') }}"
                                                     class="submenu-link">Transit Grading Halus</a>
                                             </li>
+                                            <li class="submenu-item {{ Route::is('PreWashInput*') ? 'active' : '' }}">
+                                                <a href="{{ route('PreWashInput.index') }}" class="submenu-link">Pre Wash
+                                                    <br>Input</a>
+                                            </li>
                                             <li class="submenu-item {{ Route::is('PreWashStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('PreWashStock.index') }}" class="submenu-link">Pre-Wahs
                                                     Stock</a>

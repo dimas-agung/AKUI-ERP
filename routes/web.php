@@ -402,18 +402,18 @@ Route::middleware('auth')->group(function () {
                 Route::get('/transit_grading_halus', 'index')->name('TransitGradingHalus.index');
             });
 
+        });
+        Route::prefix('pre_wash')->middleware('role:pre_wash|admin')->group(function (){
             Route::controller(App\Http\Controllers\PreWash\PreWashInputController::class)->group(function () {
                 Route::get('/pre_wash_input', 'index')->name('PreWashInput.index');
                 Route::get('/pre_wash_input/create', 'create')->name('PreWashInput.create');
                 Route::post('/pre_wash_input/store', 'store')->name('PreWashInput.store');
                 Route::get('/pre_wash_input/set', 'set')->name('PreWashInput.set');
             });
-
+    
             Route::controller(App\Http\Controllers\PreWash\PreWashStockController::class)->group(function () {
                 Route::get('/pre_wash_stock', 'index')->name('PreWashStock.index');
             });
-        });
-        Route::prefix('pre_wash')->middleware('role:pre_wash|admin')->group(function (){
             Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
                 Route::get('/pre_wash_output', 'index')->name('PreWashOutput.index');
                 Route::get('/pre_wash_output/create', 'create')->name('PreWashOutput.create');
@@ -425,10 +425,6 @@ Route::middleware('auth')->group(function () {
                 Route::get('/pre_wash_output/get_data_nomor_job', 'set')->name('preWashOutput.set');
                 Route::post('/pre_wash_output/simpanData', 'simpanData')->name('PreWashOutput.simpanData');
                 Route::post('/pre_wash_output/cek_data', 'CeksendData')->name('PreWashOutput.CeksendData');
-            });
-
-            Route::controller(App\Http\Controllers\PreWash\PreWashStockController::class)->group(function () {
-                Route::get('/pre_wash_stock', 'index')->name('PreWashStock.index');
             });
 
             Route::controller(App\Http\Controllers\PreWash\TransitPreWashController::class)->group(function () {

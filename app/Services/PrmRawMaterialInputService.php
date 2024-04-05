@@ -18,7 +18,7 @@ class PrmRawMaterialInputService
     {
         try {
             DB::beginTransaction();
-            $lastData = PrmRawMaterialInput::lastest()->first();
+            $lastData = PrmRawMaterialInput::latest()->first();
             $doc_no = $lastData->id+1;
             $this->createHeader($dataHeader,$doc_no);
             // foreach ($dataHeader as $header) {
@@ -46,7 +46,7 @@ class PrmRawMaterialInputService
         }
     }
 
-    private function createHeader($header)
+    private function createHeader($header,$doc_no)
     {
         // stok
         $itemObject = (object)$header;
