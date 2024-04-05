@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
-                        <input type="text" class="form-control" id="nomor_nota_internal" readonly>
+                        <input type="text" class="form-control" id="nomor_nota_internal" >
                     </div>
                     <div class="col-md-flex">
                         <hr>
