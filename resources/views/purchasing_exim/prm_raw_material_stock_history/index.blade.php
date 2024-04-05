@@ -39,10 +39,10 @@
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td class="text-center">{{ $MasterStock->id_box }}</td>
                                 <td class="text-center">{{ $MasterStock->doc_no }}</td>
-                                <td class="text-center">{{ number_format($MasterStock->berat_masuk, 1, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($MasterStock->berat_keluar, 1, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($MasterStock->sisa_berat, 1, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($MasterStock->avg_kadar_air, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ $MasterStock->berat_masuk }}</td>
+                                <td class="text-center">{{ $MasterStock->berat_keluar }}</td>
+                                <td class="text-center">{{ $MasterStock->sisa_berat }}</td>
+                                <td class="text-center">{{ $MasterStock->avg_kadar_air }}</td>
                                 <td class="text-center">{{ number_format($MasterStock->modal, 2, ',', '.') }}</td>
                                 <td class="text-center">{{ number_format($MasterStock->total_modal, 2, ',', '.') }}</td>
                                 <td class="text-center">{{ $MasterStock->keterangan }}</td>

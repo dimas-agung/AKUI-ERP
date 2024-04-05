@@ -4,7 +4,6 @@ namespace App\Http\Controllers\TransitGradingKasar;
 
 use App\Http\Controllers\Controller;
 use App\Models\GradingKasarHasil;
-use App\Models\GradingKasarStock;
 use App\Models\GradingKasarInput;
 use App\Models\MasterJenisGradingKasar;
 use App\Services\GradingKasarHasilService;

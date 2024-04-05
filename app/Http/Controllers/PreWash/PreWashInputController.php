@@ -41,7 +41,7 @@ class PreWashInputController extends Controller
     public function set(Request $request)
     {
         $nomor_bstb = $request->nomor_bstb;
-        $data = TransitGradingHalus::where('nomor_bstb', $nomor_bstb)->first();
+        $data = TransitGradingHalus::where('nomor_bstb', $nomor_bstb)->get();
 
         return response()->json($data);
     }

@@ -57,7 +57,7 @@ class PrmRawMaterialInputService
         // return $existingItem
         
         $dataToUpdate = [
-            'doc_no'                => $doc_no,
+            'doc_no'                => $header->doc_no,
             'nomor_po'              => $header->nomor_po,
             'nomor_batch'           => $header->nomor_batch,
             'nomor_nota_supplier'   => $header->nomor_nota_supplier,
@@ -85,8 +85,8 @@ class PrmRawMaterialInputService
         // Creat Prm Raw Material Stock History
         PrmRawMaterialStockHistory::create([
             'id_box'        => $item->id_box,
-            'doc_no'        => $doc_no,
-            // 'doc_no'        => $item->nomor_nota_internal,
+            // 'doc_no'        => $defaultIdBox,
+            // 'doc_no'        => $item->doc_no,
             'berat_masuk'   => $item->berat_bersih,
             'berat_keluar'  => $defaultBeratKeluar,
             'sisa_berat'    => $item->berat_bersih,
@@ -102,6 +102,7 @@ class PrmRawMaterialInputService
         ]);
         // Input Item
         PrmRawMaterialInputItem::create([
+            'doc_no'             => $item->doc_no,
             'jenis'             => $item->jenis,
             'id_box'            => $item->id_box,
             'berat_nota'        => $item->berat_nota,

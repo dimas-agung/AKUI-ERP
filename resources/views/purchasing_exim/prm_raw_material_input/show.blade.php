@@ -52,14 +52,14 @@
                                             <td class="text-center">{{ $MasterPRIM->doc_no }}</td>
                                             <td class="text-center">{{ $MasterPRIM->jenis }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterPRIM->berat_nota, 1, ',', '.') }}</td>
+                                                {{ $MasterPRIM->berat_nota }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterPRIM->berat_kotor, 1, ',', '.') }}</td>
+                                                {{ $MasterPRIM->berat_kotor }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterPRIM->berat_bersih, 1, ',', '.') }}</td>
+                                                {{ $MasterPRIM->berat_bersih }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterPRIM->selisih_berat, 1, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($MasterPRIM->kadar_air, 2, ',', '.') }}
+                                                {{ $MasterPRIM->selisih_berat }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->kadar_air }}
                                             </td>
                                             <td class="text-center">{{ $MasterPRIM->id_box }}</td>
                                             <td class="text-center">

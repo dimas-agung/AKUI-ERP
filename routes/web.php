@@ -173,6 +173,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/prm_raw_material_input/simpanData', 'simpanData')->name('PrmRawMaterialInput.simpanData');
             Route::post('/prm_raw_material_input/simpanDataItem', 'simpanDataItem')->name('PrmRawMaterialInput.simpanDataItem');
             Route::post('/prm_raw_material_input/importExcel', 'importExcel')->name('PrmRawMaterialInput.importExcel');
+            Route::get('/prm_raw_material_input/nextDocNo', 'getNextDocumentNumber')->name('PrmRawMaterialInput.getNextDocumentNumber');
         });
 
         Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->group(function () {
