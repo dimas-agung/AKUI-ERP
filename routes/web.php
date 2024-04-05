@@ -399,7 +399,9 @@ Route::middleware('auth')->group(function () {
                 Route::get('/pre_wash_input', 'index')->name('PreWashInput.index');
                 Route::get('/pre_wash_input/create', 'create')->name('PreWashInput.create');
                 Route::post('/pre_wash_input/store', 'store')->name('PreWashInput.store');
+                Route::post('/pre_wash_input/cek_data', 'CeksendData')->name('PreWashInput.CeksendData');
                 Route::get('/pre_wash_input/set', 'set')->name('PreWashInput.set');
+                Route::delete('/pre_wash_input/destroy/{nomor_bstb}', 'destroy')->name('PreWashInput.destroy');
             });
 
             Route::controller(App\Http\Controllers\PreWash\PreWashStockController::class)->group(function () {
