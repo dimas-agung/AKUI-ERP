@@ -36,7 +36,7 @@
                                 <th class="text-center">Modal</th>
                                 <th class="text-center">Total Modal</th>
                                 <th class="text-center" scope="col">Keterangan</th>
-                                <th class="text-center" scope="col">NIP Admin</th>
+                                <th class="text-center" scope="col">User Created</th>
                                 <th class="text-center" scope="col">User Updated</th>
                                 {{-- <th class="text-center">Action</th> --}}
                             </tr>
@@ -54,15 +54,15 @@
                                     <td class="text-center">{{ $GradingKS->jenis_grading }}</td>
                                     <td class="text-center">{{ $GradingKS->id_box_raw_material }}</td>
                                     {{-- <td class="text-center">{{ $GradingKS->berat_masuk }}</td> --}}
-                                    <td class="text-center">{{ number_format($GradingKS->berat_masuk, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ $GradingKS->berat_masuk }}</td>
                                     {{-- <td class="text-center">{{ $GradingKS->berat_keluar }}</td> --}}
-                                    <td class="text-center">{{ number_format($GradingKS->berat_keluar, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ $GradingKS->berat_keluar }}</td>
                                     {{-- <td class="text-center">{{ $GradingKS->pcs_masuk }}</td> --}}
-                                    <td class="text-center">{{ number_format($GradingKS->pcs_masuk, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ $GradingKS->pcs_masuk }}</td>
                                     {{-- <td class="text-center">{{ $GradingKS->pcs_keluar }}</td> --}}
-                                    <td class="text-center">{{ number_format($GradingKS->pcs_keluar, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ $GradingKS->pcs_keluar }}</td>
                                     {{-- <td class="text-center">{{ $GradingKS->avg_kadar_air }}</td> --}}
-                                    <td class="text-center">{{ number_format($GradingKS->avg_kadar_air, 2, ',', '.') }}
+                                    <td class="text-center">{{ $GradingKS->avg_kadar_air }}
                                     </td>
                                     <td class="text-center">{{ $GradingKS->nomor_grading }}</td>
                                     {{-- <td class="text-center">{{ $GradingKS->modal }}</td> --}}

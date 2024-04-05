@@ -48,48 +48,48 @@
                                     {{-- @forelse ($PrmInput->PrmRawMaterialInputItem as $MasterPRIM) --}}
                                     @forelse ($MasterPRIM->PrmRawMaterialInputItem as $MasterPRIM)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $MasterPRIM->doc_no }}</td>
-                                            <td>{{ $MasterPRIM->jenis }}</td>
-                                            <td>{{ number_format($MasterPRIM->berat_nota, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->berat_kotor }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->berat_kotor, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->berat_bersih }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->berat_bersih, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->selisih_berat }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->selisih_berat, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->kadar_air }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->kadar_air, 2, ',', '.') }}</td>
-                                            <td>{{ $MasterPRIM->id_box }}</td>
-                                            {{-- <td>{{ $MasterPRIM->harga_nota }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->harga_nota, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->total_harga_nota }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->total_harga_nota, 2, ',', '.') }}</td>
-                                            {{-- <td>{{ $MasterPRIM->harga_deal }}</td> --}}
-                                            <td>{{ number_format($MasterPRIM->harga_deal, 2, ',', '.') }}</td>
-                                            <td>{{ $MasterPRIM->keterangan }}</td>
-                                            <td>{{ $MasterPRIM->user_created }}</td>
-                                            <td>{{ $MasterPRIM->user_updated }}</td>
-                                            <td>{{ $MasterPRIM->created_at }}</td>
-                                            <td>{{ $MasterPRIM->updated_at }}</td>
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->doc_no }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->jenis }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterPRIM->berat_nota }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterPRIM->berat_kotor }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterPRIM->berat_bersih }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterPRIM->selisih_berat }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->kadar_air }}
+                                            </td>
+                                            <td class="text-center">{{ $MasterPRIM->id_box }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->harga_nota, 2, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->total_harga_nota, 2, ',', '.') }}</td>
+                                            <td class="text-center">
+                                                {{ number_format($MasterPRIM->harga_deal, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->keterangan }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->user_created }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->user_updated }}</td>
+                                            <td class="text-center">{{ $MasterPRIM->created_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterPRIM->created_at != $MasterPRIM->updated_at ? $MasterPRIM->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
-                                                        action="{{ route('PrmRawMaterialInput.destroyItem', $MasterPRIM->id) }}"
-                                                        method="POST">
-                                                        <a href="{{ route('PrmRawMaterialInput.edit', $MasterPRIM->id) }}"
-                                                            class="btn btn-link" title="Edit Task"
-                                                            data-original-title="Edit Task">
-                                                            <i class="bi bi-pencil-square text-success"></i>
-                                                        </a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $MasterPRIM->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
+                                                    @if ($MasterPRIM->PrmRawMaterialStock->sum('berat_keluar') == 0)
+                                                        <form style="display: flex" id="deleteForm{{ $MasterPRIM->id }}"
+                                                            action="{{ route('PrmRawMaterialInput.destroyItem', $MasterPRIM->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-link"
+                                                                data-original-title="Remove"
+                                                                onclick="confirmDelete({{ $MasterPRIM->id }})">
+                                                                <i class="bi bi-trash3 text-danger"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
@@ -102,7 +102,7 @@
                             </table>
                         </div>
                         <div class=" d-flex justify-content-end model-footer no-bd">
-                            <a href="{{ url('/prm_raw_material_input') }}" type="button" class="btn btn-danger mt-3"
+                            <a href="{{ route('PrmRawMaterialInput.index') }}" type="button" class="btn btn-danger mt-3"
                                 data-dismiss="modal">Close</a>
                         </div>
                     </div>

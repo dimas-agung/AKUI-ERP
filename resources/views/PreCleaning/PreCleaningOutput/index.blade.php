@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="col-md-12">
-        <div class="card border border-primary border-3 mt-2">
+        <div class="card mt-2 border border-primary border-3">
             <div class="card-body">
                 <div class="card">
                     <div class="card-header">
@@ -27,7 +27,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Doc NO</th>
+                                        {{-- <th scope="col" class="text-center">Doc NO</th> --}}
                                         <th scope="col" class="text-center">Nomor Job</th>
                                         <th scope="col" class="text-center">ID Box Grading Kasar</th>
                                         <th scope="col" class="text-center">Nomor BSTB</th>
@@ -40,8 +40,11 @@
                                         <th scope="col" class="text-center">Jenis Kirim</th>
                                         <th scope="col" class="text-center">Berat Kirim</th>
                                         <th scope="col" class="text-center">Pcs Kirim</th>
+                                        {{-- <th scope="col" class="text-center">Tujuan Kirim</th> --}}
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
+                                        {{-- <th scope="col" class="text-center">Sisa Berat</th> --}}
+                                        {{-- <th scope="col" class="text-center">Sisa Berat</th> --}}
                                         <th scope="col" class="text-center">Operator Flek & Kompresor</th>
                                         <th scope="col" class="text-center">Operator Flek & Poles</th>
                                         <th scope="col" class="text-center">Operator Cutter</th>
@@ -66,7 +69,7 @@
                                     @forelse ($pre_cleaning_outputs as $PCO)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $PCO->doc_no }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->doc_no }}</td> --}}
                                             <td class="text-center">{{ $PCO->nomor_job }}</td>
                                             <td class="text-center">{{ $PCO->id_box_grading_kasar }}</td>
                                             <td class="text-center">{{ $PCO->nomor_bstb }}</td>
@@ -77,47 +80,69 @@
                                             <td class="text-center">{{ $PCO->jenis_raw_material }}</td>
                                             {{-- <td class="text-center">{{ $PCO->kadar_air }}</td> --}}
                                             <td class="text-center">{{ $PCO->jenis_kirim }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->berat_kirim }}</td> --}}
                                             <td class="text-center">{{ $PCO->berat_kirim }}
                                             </td>
+                                            {{-- <td class="text-center">{{ $PCO->pcs_kirim }}</td> --}}
                                             <td class="text-center">{{ $PCO->pcs_kirim }}</td>
-                                            <td class="text-center">{{ number_format($PCO->modal, 0, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($PCO->total_modal, 0, ',', '.') }}
+                                            {{-- <td class="text-center">{{ $PCO->tujuan_kirim }}</td> --}}
+                                            {{-- <td class="text-center">{{ $PCO->modal }}</td> --}}
+                                            <td class="text-center">{{ number_format($PCO->modal, 2, ',', '.') }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->total_modal }}</td> --}}
+                                            <td class="text-center">{{ number_format($PCO->total_modal, 2, ',', '.') }}
                                             </td>
-                                            <td class="text-center">{{ $PCO->operator_sikat_kompresor }}</td>
-                                            <td class="text-center">{{ $PCO->operator_flek_poles }}</td>
-                                            <td class="text-center">{{ $PCO->operator_flek_cutter }}</td>
+                                            <td class="text-center">{{ $PCO->operator_sikat_n_kompresor }}</td>
+                                            <td class="text-center">{{ $PCO->operator_flek_n_poles }}</td>
+                                            <td class="text-center">{{ $PCO->operator_cutter }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->kuningan }}</td> --}}
                                             <td class="text-center">{{ $PCO->kuningan }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->sterofoam }}</td> --}}
                                             <td class="text-center">{{ $PCO->sterofoam }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->karat }}</td> --}}
                                             <td class="text-center">{{ $PCO->karat }}</td>
-                                            <td class="text-center">{{ $PCO->rontokan_fisik }}</td>
-                                            <td class="text-center">{{ $PCO->rontokan_bahan }}</td>
-                                            <td class="text-center">{{ $PCO->rontokan_serabut }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->rontokan_fisik }}</td> --}}
+                                            <td class="text-center">{{ $PCO->rontokan_flek }}
+                                            </td>
+                                            {{-- <td class="text-center">{{ $PCO->rontokan_bahan }}</td> --}}
+                                            <td class="text-center">{{ $PCO->rontokan_bahan }}
+                                            </td>
+                                            {{-- <td class="text-center">{{ $PCO->rontokan_serabut }}</td> --}}
+                                            <td class="text-center">
+                                                {{ $PCO->rontokan_serabut }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->ws_0_0_0 }}</td> --}}
                                             <td class="text-center">{{ $PCO->ws_0_0_0 }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->berat_pre_cleaning }}</td> --}}
                                             <td class="text-center">
-                                                {{ number_format($PCO->berat_pre_cleaning, 2, ',', '.') }}</td>
+                                                {{ $PCO->berat_pre_cleaning }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->pcs_pre_cleaning }}</td> --}}
                                             <td class="text-center">
-                                                {{ number_format($PCO->pcs_pre_cleaning, 0, ',', '.') }}</td>
+                                                {{ $PCO->pcs_pre_cleaning }}</td>
+                                            {{-- <td class="text-center">{{ $PCO->susut }}</td> --}}
                                             <td class="text-center">{{ $PCO->susut }}</td>
                                             <td class="text-center">{{ $PCO->user_created }}</td>
                                             <td class="text-center">{{ $PCO->user_updated }}</td>
                                             <td class="text-center">{{ $PCO->created_at }}</td>
-                                            <td class="text-center">{{ $PCO->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $PCO->created_at != $PCO->updated_at ? $PCO->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    @if ($PCO->status == 1)
-                                                        <form style="display: flex" id="deleteForm{{ $PCO->id }}"
-                                                            action="{{ route('PreCleaningOutput.destroy', $PCO->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button"
-                                                                class="btn btn-link btn-danger delete-button"
-                                                                data-original-title="Remove"
-                                                                onclick="confirmDelete({{ $PCO->id }})">
-                                                                <i class="bi bi-trash3 text-danger"></i>
-                                                            </button>
-                                                        </form>
-                                                    @endif
+                                                    <form style="display: flex" id="deleteForm{{ $PCO->id }}"
+                                                        action="{{ route('PreCleaningOutput.destroy', $PCO->id) }}"
+                                                        method="POST">
+                                                        <a href="{{ route('PreCleaningOutput.show', $PCO->id) }}"
+                                                            class="btn btn-link" title="View"
+                                                            data-original-title="View">
+                                                            <i class="bi bi-eye"></i>
+                                                        </a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-link"
+                                                            data-original-title="Remove"
+                                                            onclick="confirmDelete({{ $PCO->id }})">
+                                                            <i class="bi bi-trash3 text-danger"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
@@ -138,7 +163,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ Route('PreCleaningOutput.create') }}";
+            window.location.href = "{{ route('PreCleaningOutput.create') }}";
         }
 
         function confirmDelete(id) {

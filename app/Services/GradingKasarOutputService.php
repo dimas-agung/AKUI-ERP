@@ -61,13 +61,13 @@ class GradingKasarOutputService
             'fix_total_modal'   => $item->fix_total_modal,
             'keterangan'        => $item->keterangan,
             'user_created'      => $item->user_created,
-            'user_updated'      => $item->user_updated ?? "There isn't any",
+            'user_updated'      => $item->user_updated ?? " ",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
 
         // Creat Prm Raw Material Stock
         $itemObject = (object)$item;
-        $existingItem = StockTransitGradingKasar::where('id_box_grading_kasar', $itemObject->id_box_grading_kasar)
+        $existingItem = StockTransitGradingKasar::where('nomor_job', $itemObject->nomor_job)
             ->where('nomor_bstb', $itemObject->nomor_bstb)
             ->first();
             // return $existingItem
@@ -104,7 +104,7 @@ class GradingKasarOutputService
             'nama_supplier'                     => $itemObject->nama_supplier,
             'nomor_nota_internal'               => $itemObject->nomor_nota_internal,
             'jenis_raw_material'                => $itemObject->jenis_raw_material,
-            'jenis_grading'                     => $itemObject->jenis_grading[0],
+            'jenis_grading'                     => $itemObject->jenis_grading,
             'id_box_raw_material'               => $itemObject->id_box_raw_material,
             'avg_kadar_air'                     => $itemObject->avg_kadar_air,
             'tujuan_kirim'                     => $itemObject->tujuan_kirim,
@@ -113,7 +113,7 @@ class GradingKasarOutputService
             'modal'                             => $itemObject->modal,
             'fix_total_modal'                   => $itemObject->fix_total_modal,
             'user_created'                      => $itemObject->user_created ?? 'Admin',
-            'user_updated'                      => $itemObject->user_updated ?? "There isn't any",
+            'user_updated'                      => $itemObject->user_updated ?? " ",
             ]));
         }
 
@@ -130,7 +130,7 @@ class GradingKasarOutputService
             'pcs_keluar'    => $itemObject->pcs_keluar,
             'total_modal'   => $itemObject->total_modal,
             'keterangan'    => $itemObject->keterangan,
-            'user_updated'  => $itemObject->user_created ?? "There isn't any",
+            'user_updated'  => $itemObject->user_created ?? " ",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
 

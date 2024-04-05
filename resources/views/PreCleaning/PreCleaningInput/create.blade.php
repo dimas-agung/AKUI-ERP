@@ -123,7 +123,7 @@
                                                     {{-- <button type="submit" class="btn btn-primary">Add</button> --}}
                                                     <a href="#" class="btn btn-primary"
                                                         onclick="sendData()">Submit</a>
-                                                    <a href="{{ url('/PreCleaningInput') }}" type="button"
+                                                    <a href="{{ Route('PreCleaningInput.index') }}" type="button"
                                                         class="btn btn-danger" data-dismiss="modal">Close</a>
                                                 </div>
                                             </div>
@@ -170,8 +170,8 @@
                                 var newRow = $('<tr>');
                                 // Tambahkan kolom-kolom sesuai kebutuhan
                                 newRow.append('<td>' + rowData.nomor_bstb + '</td>');
-                                newRow.append('<td>' + rowData.nomor_job + '</td>');
                                 newRow.append('<td>' + rowData.id_box_grading_kasar + '</td>');
+                                newRow.append('<td>' + rowData.nomor_job + '</td>');
                                 newRow.append('<td>' + rowData.nomor_batch + '</td>');
                                 newRow.append('<td>' + rowData.nomor_nota_internal + '</td>');
                                 newRow.append('<td>' + rowData.nama_supplier + '</td>');
@@ -254,7 +254,7 @@
                         dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
                         doc_no: doc_no,
                         user_created: $('#user_created').val() || '',
-                        user_updated: 'Asc-186',
+                        user_updated: $('#user_createds').val() || '',
                         _token: '{{ csrf_token() }}'
                     };
 

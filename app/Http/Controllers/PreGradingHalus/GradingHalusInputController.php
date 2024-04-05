@@ -7,6 +7,7 @@ use App\Models\PreGradingHalusAddingStock;
 use App\Models\TransitPreCleaningStock;
 use App\Models\MasterJenisGradingHalus;
 use App\Services\GradingHalusInputService;
+use App\Services\HppService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -57,7 +58,7 @@ class GradingHalusInputController extends Controller
 
     protected $GradingHalusInputService;
 
-    public function __construct(GradingHalusInputService $GradingHalusInputService)
+    public function __construct(GradingHalusInputService $GradingHalusInputService, HppService $HppService)
     {
         $this->GradingHalusInputService = $GradingHalusInputService;
     }
@@ -68,8 +69,8 @@ class GradingHalusInputController extends Controller
     }
 
 
-    public function destroy($nomor_bstb): RedirectResponse
+    public function destroy($nomor_grading): RedirectResponse
     {
-        return $this->GradingHalusInputService->destroy($nomor_bstb);
+        return $this->GradingHalusInputService->destroy($nomor_grading);
     }
 }

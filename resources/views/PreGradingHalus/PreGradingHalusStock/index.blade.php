@@ -67,7 +67,7 @@
                                             <td class="text-center">{{ $TPCS->sisa_berat }}
                                             </td>
                                             <td class="text-center">{{ $TPCS->sisa_pcs }}</td>
-                                            <td class="text-center">{{ number_format($TPCS->kadar_air, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ $TPCS->kadar_air }}</td>
                                             <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
                                             <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
                                             <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}

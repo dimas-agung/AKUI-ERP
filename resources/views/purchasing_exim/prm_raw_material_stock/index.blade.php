@@ -54,13 +54,13 @@
                                             <td class="text-center">{{ $MasterStock->nama_supplier }}</td>
                                             <td class="text-center">{{ $MasterStock->jenis }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterStock->berat_masuk, 2, ',', '.') }}</td>
+                                                {{ $MasterStock->berat_masuk }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterStock->berat_keluar, 2, ',', '.') }}</td>
+                                                {{ $MasterStock->berat_keluar }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterStock->sisa_berat, 2, ',', '.') }}</td>
+                                                {{ $MasterStock->sisa_berat }}</td>
                                             <td class="text-center">
-                                                {{ number_format($MasterStock->avg_kadar_air, 2, ',', '.') }}</td>
+                                                {{ $MasterStock->avg_kadar_air }}</td>
                                             <td class="text-center">
                                                 {{ number_format($MasterStock->modal, 2, ',', '.') }}
                                             </td>
@@ -70,7 +70,9 @@
                                             <td class="text-center">{{ $MasterStock->user_created }}</td>
                                             <td class="text-center">{{ $MasterStock->user_updated }}</td>
                                             <td class="text-center">{{ $MasterStock->created_at }}</td>
-                                            <td class="text-center">{{ $MasterStock->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterStock->created_at != $MasterStock->updated_at ? $MasterStock->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form>
@@ -120,8 +122,9 @@
                 document.getElementById('deleteForm' + id).submit();
             }
         });
-    }
-<<<<<<< HEAD
+    } <<
+    <<
+    << < HEAD
 </script>
 =======
 </script>

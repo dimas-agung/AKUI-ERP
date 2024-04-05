@@ -131,7 +131,9 @@
                                     @endif
                                 </td>
                                 <td class="text-center">{!! $post->created_at !!}</td>
-                                <td class="text-center">{!! $post->updated_at !!}</td>
+                                <td class="text-center">
+                                    {{ $post->created_at != $post->updated_at ? $post->updated_at : '' }}
+                                </td>
                                 <td class="text-center">
                                     <div class="form-button-action">
                                         <form style="display: flex" id="deleteForm{{ $post->id }}"

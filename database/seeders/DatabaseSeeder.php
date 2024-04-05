@@ -7,10 +7,12 @@ namespace Database\Seeders;
 // use App\Models\GradingKasarInput;
 
 use App\Models\GradingHalusStock;
+use App\Models\MasterJenisGradingHalus;
 use App\Models\MasterJenisGradingKasar;
 use App\Models\MasterOperator;
 use App\Models\PrmRawMaterialStock;
 use App\Models\TransitGradingKasar;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -34,7 +36,9 @@ class DatabaseSeeder extends Seeder
         $this->call(BiayaHppSeeder::class);
         $this->call(MasterSupplierRawMaterialSeeder::class);
         $this->call(MasterJenisRawMaterialSeeder::class);
+        $this->call(MasterJenisGradingHalusSeeder::class);
         $this->call(MasterTujuanKirimRawMaterialSeeder::class);
+        $this->call(MasterTujuanKirimGradingHalusSeeder::class);
         $this->call(MasterOperatorSeeder::class);
         $this->call(MsterJenisGradingKasarSeeder::class);
         $this->call(PrmRawMaterialStockSeeder::class);
@@ -42,13 +46,17 @@ class DatabaseSeeder extends Seeder
         $this->call(StockTransitRawMaterialSeeder::class);
         $this->call(TestSeeder::class);
         $this->call(MasterOngkosCuciSeeder::class);
+        $this->call(TransitPreCleaningStockSeeder::class);
         // $this->call(PrmRawMaterialStockSeeder::class);
         $this->call(GradingKasarInputSeeder::class);
         $this->call(PreCleaningStockSeeder::class);
         $this->call(MasterOperatorSeeder::class);
         $this->call(PreGradingHalusStockSeeder::class);
-        $this->call(PreGradingHalusStockSeeder::class);
         $this->call(GradingHalusStockSeeder::class);
         $this->call(MasterOngkosCuciSeeder::class);
+        // $this->call(PerusahaanSeeder::class);
+        // $this->call(MasterJenisGradingHalusSeeder::class);
+        $this->call(RoleSeeder::class);
+        $this->call(UsersSeeder::class);
     }
 }

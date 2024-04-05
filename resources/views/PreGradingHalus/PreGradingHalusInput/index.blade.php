@@ -23,6 +23,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
+                                <th class="text-center" scope="col">Unit</th>
                                 <th class="text-center" scope="col">Nomor Job</th>
                                 <th class="text-center" scope="col">Id Box Grading Kasar</th>
                                 <th class="text-center" scope="col">Nomor BSTB</th>
@@ -47,6 +48,7 @@
                             @forelse ($PreGHI as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
+                                    <td class="text-center">{{ $item->unit }}</td>
                                     <td class="text-center">{{ $item->nomor_job }}</td>
                                     <td class="text-center">{{ $item->id_box_grading_kasar }}</td>
                                     <td class="text-center">{{ $item->nomor_bstb }}</td>
@@ -63,7 +65,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center">{{ $item->jenis_raw_material }}</td>
-                                    <td class="text-center">{{ number_format($item->kadar_air, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ $item->kadar_air }}</td>
                                     <td class="text-center">{{ $item->jenis_kirim }}</td>
                                     <td class="text-center">{{ $item->berat_kirim }}</td>
                                     <td class="text-center">{{ $item->pcs_kirim }}</td>

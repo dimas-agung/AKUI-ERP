@@ -21,4 +21,10 @@ class RupiahFormatterHelper
 
         return $formatter->format($money);
     }
+    public function generate_doc_no($last_count)
+    {
+        $prefix = 'DOCNO' . date('ymd');
+        $doc_no = $prefix . $last_count + 1;
+        return $doc_no;
+    }
 }

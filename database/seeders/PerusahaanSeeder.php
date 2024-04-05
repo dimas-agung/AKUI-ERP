@@ -13,6 +13,16 @@ class PerusahaanSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Perusahaan::factory(1)->create();
+        //
+        Perusahaan::create([
+            'nama' => 'Akui Bird Nest Indonesia',
+            'plant' => 'A',
+            'status' => 1,
+        ]);
+        Perusahaan::create([
+            'nama' => 'Original Berkah Indonesia',
+            'plant' => 'O',
+            'status' => 1,
+        ]);
     }
 }

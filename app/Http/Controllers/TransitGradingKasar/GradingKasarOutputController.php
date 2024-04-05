@@ -32,12 +32,13 @@ class GradingKasarOutputController extends Controller
         /**
      * Create
      */
-    public function create(): View
+    public function create()
     {
         $GradingKO = GradingKasarOutput::with('GradingKasarStock')->get();
         $MasTujKir = MasterTujuanKirimRawMaterial::with('PrmRawMaterialOutputItem')->get();
         $GradingKS = GradingKasarStock::with('GradingKasarOutput')->get();
-        // return $PrmRawMOIC;
+        // return $data;
+
         return view('transit_grading.GradingKasarOutput.create', compact('GradingKO', 'GradingKS', 'MasTujKir'));
     }
 
@@ -48,6 +49,15 @@ class GradingKasarOutputController extends Controller
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
+    }
+
+    public function validasi(Request $request)
+    {
+        $nomor_job = $request->nomor_job;
+        $data = GradingKasarOutput::where('nomor_job', $nomor_job)->first();
+
+        // Jika data ditemukan, kembalikan "exists", jika tidak, kembalikan null
+        return response()->json(['exists' => $data !== null]);
     }
 
     public function setpcc(Request $request)

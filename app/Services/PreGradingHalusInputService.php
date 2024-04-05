@@ -39,6 +39,7 @@ class PreGradingHalusInputService
             // Validasi untuk setiap item dalam dataArray
             $validator = Validator::make($mergedData, [
                 'nomor_bstb' => 'required', // Ganti dengan nama field yang sesuai
+                'unit' => 'required', // Ganti dengan nama field yang sesuai
                 // ... tambahkan validasi lain sesuai kebutuhan
             ]);
 
@@ -76,7 +77,7 @@ class PreGradingHalusInputService
                         'modal'             => $mergedData['modal'],
                         'total_modal'       => $mergedData['total_modal'],
                         'user_created'  => $mergedData['user_created'],
-                        'user_update'   => $mergedData['user_updated'] ?? `"There isn't any"`,
+                        'user_update'   => $mergedData['user_updated'] ?? `" "`,
                         'nomor_nota_internal'   => $mergedData['nomor_nota_internal']
                     ]);
 
@@ -95,7 +96,7 @@ class PreGradingHalusInputService
                             'berat_kirim' => $itemObject->berat_kirims ?? 0,
                             'pcs_kirim'   => $itemObject->pcs_kirims ?? 0,
                             'total_modal'  => $itemObject->total_modals ?? 0,
-                            'user_updated' => $itemObject->user_created ?? "There isn't any",
+                            'user_updated' => $itemObject->user_created ?? " ",
                         ]);
                     }
 
@@ -181,24 +182,10 @@ class PreGradingHalusInputService
                     }
                 }
 
-                // Simpan data sebelum dihapus
-                $beratSebelumHapus = $PreCleaningI->berat_kirim;
-                $pcsSebelumHapus = $PreCleaningI->pcs_kirim;
-                $totalModalSebelumHapus = $PreCleaningI->total_modal;
-
                 // Hapus data PreGradingHalusInput dan PreCleaningStock
                 $PreCleaningI->delete();
                 if ($PreCleaningS) {
                     $PreCleaningS->delete();
-                }
-
-                // Kembalikan nilai sebelum dihapus
-                if ($stockPrmRawMaterial) {
-                    $stockPrmRawMaterial->update([
-                        'berat_keluar' => $stockPrmRawMaterial->berat_keluar + $beratSebelumHapus,
-                        'pcs_keluar' => $stockPrmRawMaterial->pcs_keluar + $pcsSebelumHapus,
-                        'total_modal' => $stockPrmRawMaterial->total_modal + $totalModalSebelumHapus,
-                    ]);
                 }
 
                 // Perbarui status PreCleaningOutput jika ada
@@ -212,13 +199,6 @@ class PreGradingHalusInputService
                         // Perbarui data untuk setiap item yang ada
                         $existingItem->update(['status' => 1]);
                     }
-                } else {
-                    // Jika tidak ada item PreCleaningOutput yang sesuai, buat baru dengan status 1
-                    PreCleaningOutput::create([
-                        'nomor_bstb' => $PreCleaningI->nomor_bstb,
-                        'status' => 1,
-                        // Tambahkan kolom-kolom lain sesuai kebutuhan
-                    ]);
                 }
             }
 

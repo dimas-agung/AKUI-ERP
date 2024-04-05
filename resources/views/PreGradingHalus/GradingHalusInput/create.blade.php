@@ -64,14 +64,14 @@
                                     <div class="form-group">
                                         <label>Id Box Raw Material</label>
                                         <input type="text" class="form-control" id="id_box_raw_material"
-                                            name="id_box_raw_material" readonly>
+                                            name="id_box_raw_material">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Id Box Grading Halus</label>
                                         <input type="text" class="form-control" id="id_box_grading_halus"
-                                            name="id_box_grading_halus" readonly>
+                                            name="id_box_grading_halus">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -169,6 +169,27 @@
                                             placeholder="Masukkan pcs grading" data-parsley-required="true">
                                     </div>
                                 </div>
+                                {{-- <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Susut Depan</label>
+                                        <input type="text" id="susut_depan" class="form-control" name="susut_depan"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Susut Belakang</label>
+                                        <input type="text" id="susut_belakang" class="form-control"
+                                            name="susut_belakang" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Kontribusi</label>
+                                        <input type="text" id="kontribusi" class="form-control" name="kontribusi"
+                                            readonly>
+                                    </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>NIP Admin</label>
@@ -226,10 +247,10 @@
                                 <th class="text-center" scope="col">Id Box Grading Halus</th>
                                 <th class="text-center" scope="col">Susut Depan</th>
                                 <th class="text-center" scope="col">Susut Belakang</th>
-                                <th class="text-center" scope="col">Biaya Produksi</th>
-                                <th class="text-center" scope="col">kontribusi</th>
+                                {{-- <th class="text-center" scope="col">Biaya Produksi</th> --}}
                                 <th class="text-center" scope="col">harga_estimasi</th>
-                                <th class="text-center" scope="col">total_harga</th>
+                                <th class="text-center" scope="col">kontribusi</th>
+                                {{-- <th class="text-center" scope="col">total_harga</th>
                                 <th class="text-center" scope="col">nilai_laba_rugi</th>
                                 <th class="text-center" scope="col">nilai_prosentase_total_keuntungan</th>
                                 <th class="text-center" scope="col">prosentase_harga_gramasi</th>
@@ -238,7 +259,7 @@
                                 <th class="text-center" scope="col">hpp</th>
                                 <th class="text-center" scope="col">total_hpp</th>
                                 <th class="text-center" scope="col">fix_hpp</th>
-                                <th class="text-center" scope="col">fix_total_hpp</th>
+                                <th class="text-center" scope="col">fix_total_hpp</th> --}}
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
@@ -335,7 +356,7 @@
                     0) {
                     $('#harga_estimasi').val(harga_estimasi);
                 } else {
-                    $('#harga_estimasi').val(pengurangan_harga_number * modal_number);
+                    $('#harga_estimasi').val(modal_number - (modal_number * pengurangan_harga_number));
                 }
             } else {
                 // Jika nomor_grading atau jenis_grading belum terisi, tidak melakukan perhitungan
@@ -379,16 +400,14 @@
             let totalBeratAdding = parseFloat($('#berat_adding').val()); // Menggunakan berat adding dari input form
             let beratGradingPerAddingSD = totalBeratAdding !== 0 ? beratGradingSD / totalBeratAdding : 0;
 
-            // Memperbarui tabel dengan hasil perhitungan untuk kategori SD
             $('#tableBody tr').each(function() {
-                let currentKategoriSusut = $(this).find('td:eq(15)').text(); // Kolom 15 berisi kategori susut
+                let currentKategoriSusut = $(this).find('td:eq(15)').text();
                 if (currentKategoriSusut === "SD") {
-                    $(this).find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(
-                        2)); // Kolom 17 untuk menampilkan hasil perhitungan
+                    let row = $(this);
+                    row.find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(2)); // Update nilai di tabel
                 } else {
-                    $(this).find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(
-                        2
-                    )); // Kolom 17 untuk kategori selain SD akan menggunakan hasil perhitungan yang sama dengan kategori SD
+                    let row = $(this);
+                    row.find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(2)); // Update nilai di tabel
                 }
             });
         }
@@ -460,6 +479,9 @@
             }
         }
 
+        // Variabel global untuk menyimpan indeks baris terakhir
+        var currentRowIndex = 0;
+        var dataArray = [];
 
         function addRow() {
             // Mengambil nilai dari input
@@ -482,8 +504,8 @@
             var id_box_grading_halus = $('#id_box_grading_halus').val();
             var susut_depan = $('#susut_depan').val();
             var susut_belakang = $('#susut_belakang').val();
-            var biaya_produksi = $('#biaya_produksi').val();
             var kontribusi = $('#kontribusi').val();
+            var biaya_produksi = $('#biaya_produksi').val();
             var harga_estimasi = $('#harga_estimasi').val();
             var total_harga = $('#total_harga').val();
             var nilai_laba_rugi = $('#nilai_laba_rugi').val();
@@ -496,7 +518,6 @@
             var fix_hpp = $('#fix_hpp').val();
             var fix_total_hpp = $('#fix_total_hpp').val();
             var user_created = $('#user_created').val();
-
 
             // Inisialisasi array untuk menyimpan field yang belum terisi
             let fieldsNotFilled = [];
@@ -541,19 +562,19 @@
                 '<td>' + id_box_grading_halus + '</td>' +
                 '<td>' + susut_depan + '</td>' +
                 '<td>' + susut_belakang + '</td>' +
-                '<td>' + biaya_produksi + '</td>' +
-                '<td>' + kontribusi + '</td>' +
+                // '<td>' + biaya_produksi + '</td>' +
                 '<td>' + harga_estimasi + '</td>' +
-                '<td>' + total_harga + '</td>' +
-                '<td>' + nilai_laba_rugi + '</td>' +
-                '<td>' + nilai_prosentase_total_keuntungan + '</td>' +
-                '<td>' + prosentase_harga_gramasi + '</td>' +
-                '<td>' + selisih_laba_rugi_kg + '</td>' +
-                '<td>' + selisih_laba_rugi_per_gram + '</td>' +
-                '<td>' + hpp + '</td>' +
-                '<td>' + total_hpp + '</td>' +
-                '<td>' + fix_hpp + '</td>' +
-                '<td>' + fix_total_hpp + '</td>' +
+                '<td>' + kontribusi + '</td>' +
+                // '<td>' + total_harga + '</td>' +
+                // '<td>' + nilai_laba_rugi + '</td>' +
+                // '<td>' + nilai_prosentase_total_keuntungan + '</td>' +
+                // '<td>' + prosentase_harga_gramasi + '</td>' +
+                // '<td>' + selisih_laba_rugi_kg + '</td>' +
+                // '<td>' + selisih_laba_rugi_per_gram + '</td>' +
+                // '<td>' + hpp + '</td>' +
+                // '<td>' + total_hpp + '</td>' +
+                // '<td>' + fix_hpp + '</td>' +
+                // '<td>' + fix_total_hpp + '</td>' +
                 '<td>' + user_created + '</td>' +
                 '</td><td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
 
@@ -604,27 +625,27 @@
                 user_created: user_created,
             });
             // Membersihkan nilai input setelah ditambahkan
-            $('#id_box').val('');
-            $('#tujuan_kirim').val('');
-            $('#nomor_batch').val('');
-            $('#nama_supplier').val('');
-            $('#jenis').val('');
-            $('#berat_masuk').val('');
-            $('#berat').val('');
-            $('#selisih_berat').val('');
-            $('#kadar_air').val('');
-            $('#tujuan_kirim').val($('#tujuan_kirim option:first').val());
-            $('#nomor_nota_internal').val('');
-            $('#letak_tujuan').val('');
-            $('#inisial_tujuan').val('');
-            $('#modal').val('');
-            $('#total_modal').val('');
-            $('#keterangan_item').val('');
-            $('#doc_no').prop('readonly', true);
-            $('#nomor_bstb').prop('readonly', true);
-            $('#nomor_batch').prop('readonly', true);
-            $('#keterangan').prop('readonly', true);
+            $('#berat_grading').val('');
+            $('#pcs_grading').val('');
+            $('#keterangan').val('');
+            $('#susut_depan').val('');
+            $('#susut_belakang').val('');
+            $('#biaya_produksi').val('');
+            $('#kontribusi').val('');
+            $('#total_harga').val('');
+            $('#nilai_laba_rugi').val('');
+            $('#nilai_prosentase_total_keuntungan').val('');
+            $('#prosentase_harga_gramasi').val('');
+            $('#selisih_laba_rugi_kg').val('');
+            $('#selisih_laba_rugi_per_gram').val('');
+            $('#hpp').val('');
+            $('#total_hpp').val('');
+            $('#fix_hpp').val('');
+            $('#fix_total_hpp').val('');
+            $('#jenis_grading').val($('#jenis_grading').val()).trigger('change');
+            $('#nomor_grading').prop('disabled', true);
             $('#user_created').prop('readonly', true);
+            $('#tujuan_kirim').val($('#tujuan_kirim option:first').val());
 
             // Update indeks baris terakhir
             currentRowIndex++;
@@ -649,9 +670,11 @@
         }
 
         function sendData() {
+            console.log("Isi data=",
+                dataArray);
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: '{{ route('PreGradingHalusInput.store') }}',
+                url: '{{ route('GradingHalusInput.store') }}',
                 method: 'POST',
                 beforeSend: function() {
                     Swal.fire({
@@ -664,13 +687,36 @@
                     });
                 },
                 data: function() {
+                    // Inisialisasi array untuk menyimpan data tiap baris
+                    var tableDataArray = [];
+
+                    // Iterasi melalui setiap baris tabel
+                    $('#tableBody tr').each(function() {
+                        // Mengambil nilai susut_depan dan susut_belakang dari tiap baris
+                        var susutDepan = parseFloat($(this).find('td:eq(17)').text());
+                        var susutBelakang = parseFloat($(this).find('td:eq(18)').text());
+                        var kontribusi = parseFloat($(this).find('td:eq(20)').text());
+
+                        // Debugging: Cetak nilai susut_depan, susut_belakang, dan kontribusi ke konsol
+                        console.log("Nilai susut_depan:", susutDepan);
+                        console.log("Nilai susut_belakang:", susutBelakang);
+                        console.log("Nilai kontribusi:", kontribusi);
+
+                        // Menambahkan data ke dalam array
+                        tableDataArray.push({
+                            susut_depan: susutDepan,
+                            susut_belakang: susutBelakang,
+                            kontribusi: kontribusi
+                        });
+                    });
+
+                    // Mengirim dataArray dan data tabel ke server sebagai string JSON
                     var postData = {
                         dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
-                        user_created: $('#user_created').val() || '',
-                        user_updated: 'Asc-186',
+                        tableDataArray: JSON.stringify(
+                            tableDataArray), // Mengirim data tabel sebagai string JSON
                         _token: '{{ csrf_token() }}'
                     };
-
                     return postData;
                 }(),
                 success: function(response) {
@@ -682,7 +728,8 @@
                         // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
                         if (result.isConfirmed) {
                             window.location.href = response
-                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                                .redirectTo;
+                            // Ganti dengan URL tujuan redirect Anda
                         }
                     });
                 },

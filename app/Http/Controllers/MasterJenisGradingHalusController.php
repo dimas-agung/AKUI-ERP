@@ -62,17 +62,17 @@ class MasterJenisGradingHalusController extends Controller
 
         //validate form
         $this->validate($request, [
-            'jenis'                          => 'required',
+            'jenis'                         => 'required',
             'kategori_susut'                => 'required',
             'upah_operator'                 => 'required',
             'pengurangan_harga'             => 'required',
-            'status'             => 'required',
+            'status'                        => 'required',
             'harga_estimasi'                => 'required',
             'user_created'                  => 'required',
         ]);
 
         $MasterJGK->update([
-            'jenis'                          => $request->jenis,
+            'jenis'                         => $request->jenis,
             'kategori_susut'                => $request->kategori_susut,
             'upah_operator'                 => $request->upah_operator,
             'status'                        => $request->status,

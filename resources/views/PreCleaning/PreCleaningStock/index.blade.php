@@ -1,16 +1,16 @@
 @extends('layouts.master1')
 @section('menu')
-    Grading Kasar
+    Pre Cleaning
 @endsection
 @section('title')
-    Grading Kasar Stock
+    Pre Cleaning Stock
 @endsection
 @section('content')
     <div class="section">
         <div class="card border border-primary border-3">
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
-                    <h4 class="card-title">Data Grading Kasar Stock</h4>
+                    <h4 class="card-title">Data Pre Cleaning Stock</h4>
                 </div>
             </div>
             <div class="card-body" style="overflow: auto;">
@@ -60,7 +60,7 @@
                                     <td class="text-center">{{ $item->berat_keluar }}</td>
                                     <td class="text-center">{{ $item->pcs_masuk }}</td>
                                     <td class="text-center">{{ $item->pcs_keluar }}</td>
-                                    <td class="text-center">{{ number_format($item->avg_kadar_air, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ $item->kadar_air }}</td>
                                     <td class="text-center">{{ $item->nomor_grading }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>

@@ -41,12 +41,14 @@ class GradingKasarHasilService
     private function createItem($item, $total_susut)
     {
         // stok
+
         $itemObject = (object)$item;
         // Cari item berdasarkan id_box dan nomor_batch
-        // $existingItem = GradingKasarStock::where('id_box_grading_kasar', $itemObject->id_box_grading_kasar)
-        //     ->where('nomor_batch', $itemObject->nomor_batch)
-        //     ->first();
+        $existingItem = GradingKasarStock::where('id_box_grading_kasar', $itemObject->id_box_grading_kasar)
+            ->where('nomor_batch', $itemObject->nomor_batch)
+            ->first();
         // return $existingItem
+        // $total_modal = $itemObject->berat_grading * $item->modal;
 
         $dataToUpdate = [
             // 'doc_no'                            => $itemObject->doc_no,
@@ -66,8 +68,8 @@ class GradingKasarHasilService
             'modal'                             => $itemObject->modal,
             'total_modal'                       => $itemObject->total_modal,
             'keterangan'                        => $itemObject->keterangan,
-            'user_created'                      => $itemObject->user_created ?? 'Admin',
-            'user_updated'                      => $itemObject->user_updated ?? 'Admin'
+            'user_created'                      => $itemObject->user_created,
+            // 'user_updated'                      => $itemObject->user_updated
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ];
         GradingKasarStock::create($dataToUpdate);
@@ -100,8 +102,8 @@ class GradingKasarHasilService
             'hpp'                               => $item->hpp,
             'total_hpp'                         => $item->total_hpp,
             'keterangan'                        => $item->keterangan,
-            'user_created'                      => $item->user_created ?? 'Admin',
-            'user_updated'                      => $item->user_updated ?? 'Admin',
+            'user_created'                      => $item->user_created,
+            // 'user_updated'                      => $item->user_updated,
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
         ]);
         return $GradingKasarHasil->id;

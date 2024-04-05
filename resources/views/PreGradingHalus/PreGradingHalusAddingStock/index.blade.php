@@ -36,8 +36,8 @@
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
                                         <th scope="col" class="text-center">Status Stock</th>
-                                        <th scope="col" class="text-center">User Created</th>
-                                        <th scope="col" class="text-center">User Updated</th>
+                                        {{-- <th scope="col" class="text-center">User Created</th>
+                                        <th scope="col" class="text-center">User Updated</th> --}}
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
                                         <th scope="col" class="text-center">Action</th>
@@ -55,12 +55,12 @@
                                             <td class="text-center">{{ $PGHAS->nama_supplier }}</td>
                                             <td class="text-center">{{ $PGHAS->jenis_raw_material }}</td>
                                             {{-- <td class="text-center">{{ $PGHAS->kadar_air }}</td> --}}
-                                            <td class="text-center">{{ number_format($PGHAS->kadar_air, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ $PGHAS->kadar_air }}</td>
                                             {{-- <td class="text-center">{{ $PGHAS->berat_adding }}</td> --}}
-                                            <td class="text-center">{{ number_format($PGHAS->berat_adding, 0, ',', '.') }}
+                                            <td class="text-center">{{ $PGHAS->berat_adding }}
                                             </td>
                                             {{-- <td class="text-center">{{ $PGHAS->pcs_adding }}</td> --}}
-                                            <td class="text-center">{{ number_format($PGHAS->pcs_adding, 0, ',', '.') }}
+                                            <td class="text-center">{{ $PGHAS->pcs_adding }}
                                             </td>
                                             {{-- <td class="text-center">{{ $PGHAS->modal }}</td> --}}
                                             <td class="text-center">{{ number_format($PGHAS->modal, 2, ',', '.') }}</td>
@@ -68,19 +68,21 @@
                                             <td class="text-center">{{ number_format($PGHAS->total_modal, 2, ',', '.') }}
                                             </td>
                                             <td class="text-center">{{ $PGHAS->status_stock }}</td>
-                                            <td class="text-center">{{ $PGHAS->user_created }}</td>
-                                            <td class="text-center">{{ $PGHAS->user_updated }}</td>
+                                            {{-- <td class="text-center">{{ $PGHAS->user_created }}</td>
+                                            <td class="text-center">{{ $PGHAS->user_updated }}</td> --}}
                                             <td class="text-center">{{ $PGHAS->created_at }}</td>
-                                            <td class="text-center">{{ $PGHAS->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $PGHAS->created_at != $PGHAS->updated_at ? $PGHAS->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $PGHAS->id }}"
                                                         action="{{ route('PreGradingHalusAddingStock.destroy', $PGHAS->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('PreGradingHalusAddingStock.show', $PGHAS->id) }}"
+                                                        {{-- <a href="{{ route('PreGradingHalusAddingStock.show', $PGHAS->id) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
