@@ -84,15 +84,14 @@
                                         <div class="form-group">
                                             <label>Nama Supplier</label>
                                             <input type="text" class="form-control" id="nama_supplier"
-                                                name="nama_supplier"
-                                                onchange="handleChange(this.{{ old('nama_supplier') }})" readonly>
+                                                name="nama_supplier" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Nomor Batch</label>
                                             <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
-                                                onchange="handleChange(this.{{ old('nomor_batch') }})" readonly>
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -106,7 +105,7 @@
                                         <div class="form-group">
                                             <label>Letak Tujuan</label>
                                             <input type="text" id="letak_tujuan" class="form-control" name="letak_tujuan"
-                                                onchange="handleChange(this.{{ old('letak_tujuan') }})" readonly>
+                                                onchange="handleChange(this)" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -136,27 +135,28 @@
                                         <div class="form-group">
                                             <label>Modal</label>
                                             <input type="text" id="modal" class="form-control" name="modal"
-                                                value="{{ old('modal') }}" onchange="handleChange(this)" readonly>
+                                                onchange="handleChange(this)" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Total Modal</label>
                                             <input type="text" id="total_modal" class="form-control"
                                                 name="total_modal" value="{{ old('total_modal') }}" readonly>
+                                            <input type="hidden" id="total_modal_stock" name="total_modal_stock">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Berat Masuk</label>
                                             <input type="text" class="form-control" id="berat_masuk"
-                                                name="berat_masuk" onchange="handleChange(this.{{ old('berat_masuk') }})"
-                                                readonly>
+                                                name="berat_masuk" onchange="handleChange(this)" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Berat Keluar</label>
                                             <input type="text" id="berat" pattern="[0-9]*" inputmode="numeric"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 class="form-control" name="berat" value="{{ old('berat') }}"
-                                                placeholder="Masukkan berat keluar" data-parsley-required="true">
+                                                placeholder="Masukkan berat keluar" data-parsley-required="true"
+                                                onchange="validateBeratKeluar()">
                                         </div>
                                         <div class="form-group">
                                             <label>Sisa Berat</label>
@@ -189,7 +189,7 @@
 
 
         <div class="col-md-12">
-            <div class="card mt-2 border border-primary border-3">
+            <div class="card mt-2">
                 <div class="card-header">
                     <div class="card-title">Validasi Data Input</div>
                     <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
@@ -353,6 +353,8 @@
                                             <label>Total Modal</label>
                                             <input type="text" id="total_modal_edit" class="form-control"
                                                 name="total_modal_edit" readonly>
+                                            <input type="hidden" id="total_modal_edit_stock"
+                                                name="total_modal_edit_stock">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -366,7 +368,7 @@
                                             <input type="text" id="berat_edit" pattern="[0-9]*" inputmode="numeric"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 class="form-control" name="berat_edit"
-                                                placeholder="Masukkan berat keluar">
+                                                placeholder="Masukkan berat keluar" onchange="validateBeratKeluar()">
                                         </div>
                                         <div class="form-group">
                                             <label>Sisa Berat</label>
@@ -436,6 +438,9 @@
                         $('#modal').val(response.modal);
                         $('#nomor_nota_internal').val(response.nomor_nota_internal);
 
+                        // Panggil fungsi updateSelisihBerat() setelah perubahan nilai
+                        updateSelisihBerat();
+
                         // Panggil fungsi handleChange untuk menghapus atribut readonly
                         handleChange(document.getElementById('nomor_batch_edit'));
                         handleChange(document.getElementById('nama_supplier_edit'));
@@ -469,8 +474,8 @@
             });
         });
 
-        $('#tujuan_kirim').on('change', function() {
-            // Mengambil nilai id_box yang dipilih
+        $('#tujuan_kirim, #tujuan_kirim_edit').on('change', function() {
+            // Mengambil nilai tujuan_kirim yang dipilih
             let selectedPcc = $(this).val();
 
             // Melakukan permintaan AJAX ke controller untuk mendapatkan data
@@ -529,33 +534,9 @@
             console.log(nomor_bstb);
         }
 
-        // Event listener untuk perubahan nilai pada total modal
-        $('#modal').on('input', updateTotalmodal);
-        $('#berat').on('input', updateTotalmodal);
-        $('#modal_edit').on('input', updateTotalmodal);
-        $('#berat_edit').on('input', updateTotalmodal);
-
-        function updateTotalmodal() {
-            // Mendapatkan nilai berat nota dan berat bersih
-            const modal = parseFloat($('#modal').val());
-            const berat = parseFloat($('#berat').val());
-            const modal_e = parseFloat($('#modal_edit').val());
-            const berat_e = parseFloat($('#berat_edit').val());
-
-            // Melakukan perhitungan selisih berat
-            const totalmodal = berat * modal;
-            const totalmodale = berat_e * modal_e;
-
-            // Memasukkan hasil perhitungan ke dalam input selisih berat
-            $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal);
-            $('#total_modal_edit').val(isNaN(totalmodale) ? '' : totalmodale);
-        }
-
         // Event listener untuk perubahan nilai pada berat nota atau berat bersih
-        $('#berat_masuk').on('change', updateSelisihBerat);
-        $('#berat').on('input', updateSelisihBerat);
-        $('#berat_masuk_edit').on('change', updateSelisihBerat);
-        $('#berat_edit').on('input', updateSelisihBerat);
+        $('#modal, #modal_edit, #berat_masuk, #berat, #berat_masuk_edit, #berat_edit').on('change input',
+            updateSelisihBerat);
 
         function updateSelisihBerat() {
             // Mendapatkan nilai berat nota dan berat bersih
@@ -563,13 +544,50 @@
             const berat_masuk_edit = parseFloat($('#berat_masuk_edit').val());
             const berat = parseFloat($('#berat').val());
             const berat_edit = parseFloat($('#berat_edit').val());
+            const modal = parseFloat($('#modal').val());
+            const modal_e = parseFloat($('#modal_edit').val());
+
             const selisihBerat = berat_masuk - berat;
             const selisihBerate = berat_masuk_edit - berat_edit;
 
+            // Melakukan perhitungan selisih berat stock
+            const totalmodalstk = selisihBerat * modal;
+            const totalmodalestk = selisihBerate * modal_e;
+
+            // Melakukan perhitungan selisih berat
+            const totalmodal = berat * modal;
+            const totalmodale = berat_edit * modal_e;
+
             // Memasukkan hasil perhitungan ke dalam input selisih berat
-            $('#selisih_berat').val(isNaN(selisihBerat) ? '' : selisihBerat);
-            $('#selisih_berat_edit').val(isNaN(selisihBerate) ? '' : selisihBerate);
+            console.log(selisihBerat);
+            console.log(totalmodal);
+            console.log(totalmodalstk);
+            $('#selisih_berat').val(isFinite(selisihBerat) ? selisihBerat.toFixed(2) : '');
+            $('#selisih_berat_edit').val(isFinite(selisihBerate) ? selisihBerate.toFixed(2) : '');
+            $('#total_modal').val(isFinite(totalmodal) ? totalmodal.toFixed(2) : '');
+            $('#total_modal_edit').val(isFinite(totalmodale) ? totalmodale.toFixed(2) : '');
+            $('#total_modal_stock').val(isFinite(totalmodalstk) ? totalmodalstk.toFixed(2) : '');
+            $('#total_modal_edit_stock').val(isFinite(totalmodalestk) ? totalmodalestk.toFixed(2) : '');
         }
+
+        // Fungsi untuk memeriksa apakah berat melebihi sisa berat
+        function validateBeratKeluar() {
+            var beratMasuk = parseFloat(document.getElementById('berat_masuk').value);
+            var beratKeluarInput = parseFloat(document.getElementById('berat').value);
+            var beratKeluarEdit = parseFloat(document.getElementById('berat_edit').value);
+
+            if (beratKeluarInput > beratMasuk || beratKeluarEdit > beratMasuk) {
+                Swal.fire({
+                    title: 'Warning!',
+                    text: "Berat keluar tidak boleh melebihi sisa berat.",
+                    icon: 'warning'
+                });
+                document.getElementById('berat').value = ''; // Mengosongkan input berat keluar
+                document.getElementById('berat_edit').value = ''; // Mengosongkan input berat edit
+                return;
+            }
+        }
+
 
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;
@@ -592,6 +610,7 @@
             var inisial_tujuan = $('#inisial_tujuan').val();
             var modal = $('#modal').val();
             var total_modal = $('#total_modal').val();
+            var total_modal_stock = $('#total_modal_stock').val();
             var keterangan_item = $('#keterangan_item').val();
             var user_created = $('#user_created').val();
             var nomor_nota_internal = $('#nomor_nota_internal').val();
@@ -639,6 +658,7 @@
                 '<td>' + inisial_tujuan + '</td>' +
                 '<td>' + modal + '</td>' +
                 '<td>' + total_modal + '</td>' +
+                '<td class="d-none">' + total_modal_stock + '</td>' +
                 '<td>' + keterangan_item + '</td>' +
                 '<td>' + user_created + '</td>' +
                 '<td><button onclick="editRow(' + currentRowIndex +
@@ -649,7 +669,6 @@
             $('#tableBody').append(newRow);
 
             // Menambahkan data ke dalam array
-            // dataArrayDocNo.push(doc_no)
             dataArray.push({
                 doc_no: doc_no,
                 nomor_bstb: nomor_bstb,
@@ -666,6 +685,7 @@
                 inisial_tujuan: inisial_tujuan,
                 modal: modal,
                 total_modal: total_modal,
+                total_modal_stock: total_modal_stock,
                 keterangan_item: keterangan_item,
                 user_created: user_created,
                 nomor_nota_internal: nomor_nota_internal,
@@ -686,6 +706,7 @@
             $('#inisial_tujuan').val('');
             $('#modal').val('');
             $('#total_modal').val('');
+            $('#total_modal_stock').val('');
             $('#keterangan_item').val('');
             // Menonaktif kan nilai input ketika ditambah
             $('#doc_no').prop('readonly', true);
@@ -722,6 +743,7 @@
             editModal.find('#inisial_tujuan_edit').val(editedData.inisial_tujuan);
             editModal.find('#modal_edit').val(editedData.modal);
             editModal.find('#total_modal_edit').val(editedData.total_modal);
+            editModal.find('#total_modal_edit_stock').val(editedData.total_modal_stock);
             editModal.find('#keterangan_item_edit').val(editedData.keterangan_item);
             editModal.find('#user_created_edit').val(editedData.user_created);
             editModal.find('#nomor_nota_internal_edit').val(editedData.nomor_nota_internal);
@@ -752,6 +774,7 @@
                 inisial_tujuan: $('#inisial_tujuan_edit').val(),
                 modal: $('#modal_edit').val(),
                 total_modal: $('#total_modal_edit').val(),
+                total_modal_stock: $('#total_modal_edit_stock').val(),
                 keterangan_item: $('#keterangan_item_edit').val(),
                 user_created: $('#user_created_edit').val(),
                 nomor_nota_internal: $('#nomor_nota_internal_edit').val(),
@@ -812,7 +835,8 @@
                     '</td><td>' +
                     rowData.tujuan_kirim + '</td><td>' + rowData.letak_tujuan + '</td><td>' + rowData.inisial_tujuan +
                     '</td><td>' +
-                    rowData.modal + '</td><td>' + rowData.total_modal + '</td><td>' + rowData.keterangan_item +
+                    rowData.modal + '</td><td>' + rowData.total_modal + '</td><td class="d-none">' + rowData
+                    .total_modal_stock + '</td><td>' + rowData.keterangan_item +
                     '</td><td>' +
                     rowData.user_created + '</td><td><button onclick="editRow(' + i +
                     ')" class="btn btn-warning" data-toggle="modal" data-target="#editModal">Edit</button></td>' +
@@ -877,7 +901,8 @@
                     }).then((result) => {
                         // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
                         if (result.isConfirmed) {
-                            window.location.href = response.redirectTo; // Ganti dengan URL tujuan redirect Anda
+                            window.location.href = response
+                                .redirectTo; // Ganti dengan URL tujuan redirect Anda
                         }
                     });
                 },
@@ -887,7 +912,7 @@
                         text: 'Terjadi kesalahan. Silakan coba lagi.',
                         icon: 'error'
                     });
-
+                    console.log('Validation Errors:', response.responseJSON.errors);
                 }
             });
         }

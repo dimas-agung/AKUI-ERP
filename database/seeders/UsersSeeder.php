@@ -14,32 +14,50 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
+        $user = User::create([
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin123'),
+            'fullname' => 'admin',
+            'nip' => '12345678',
+            'unit_id' => '1',
+            'username' => 'admin',
+            'phone_number' => '0111111111',
+            'birth_date' => '2000-04-09',
+        ]);
+        $user->syncRoles(['master','admin']);
+        // foreach ($request->input('role') as $key => $value) {
+        //     # code...
+        //     $user->assignRole([$value]);
+        // }
+        // $user->assignRole(['bahan_baku']);
+        // $user->assignRole(['purchasing']);
+
         //
-        $data = [
-            [
-                'username' => 'Admin',
-                'fullname' => 'Admin',
-                'email' => 'admin@gmail',
-                'phone_number' => '081334105643',
-                'birth_date'=> '2023-01-01',
-                'roles_id' => 1,
-                'password' => 'admin123',
-            ],
+        // $data = [
+        //     [
+        //         'username' => 'Admin',
+        //         'fullname' => 'Admin',
+        //         'email' => 'admin@gmail',
+        //         'phone_number' => '081334105643',
+        //         'birth_date' => '2023-01-01',
+        //         'roles_id' => 1,
+        //         'password' => 'admin123',
+        //     ],
 
-        ];
+        // ];
 
-        foreach ($data as $key => $value) {
-            $hashPassword = Hash::make($value['password']);
-            $user = User::create([
-                'username' => $value['username'],
-                'fullname' => $value['fullname'],
-                'phone_number' => $value['phone_number'],
-                'email' => $value['email'],
-                'birth_date' => $value['birth_date'],
-                'roles_id' => $value['roles_id'],
-                'password' => $hashPassword,
-            ]);
-            $users[] = $user;
-        }
+        // foreach ($data as $key => $value) {
+        //     $hashPassword = Hash::make($value['password']);
+        //     $user = User::create([
+        //         'username' => $value['username'],
+        //         'fullname' => $value['fullname'],
+        //         'phone_number' => $value['phone_number'],
+        //         'email' => $value['email'],
+        //         'birth_date' => $value['birth_date'],
+        //         'roles_id' => $value['roles_id'],
+        //         'password' => $hashPassword,
+        //     ]);
+        //     $users[] = $user;
+        // }
     }
 }

@@ -103,7 +103,7 @@
                                             <td class="text-center">{{ $MasterOC->unit }}</td>
                                             <td class="text-center">{{ $MasterOC->jenis_bulu }}</td>
                                             <td class="text-center">Rp
-                                                {{ number_format($MasterOC->biaya_per_gram, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterOC->biaya_per_gram, 2, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterOC->status == 1)
                                                     Aktif
@@ -114,7 +114,9 @@
                                             <td class="text-center">{{ $MasterOC->user_created }}</td>
                                             <td class="text-center">{{ $MasterOC->user_updated }}</td>
                                             <td class="text-center">{{ $MasterOC->created_at }}</td>
-                                            <td class="text-center">{{ $MasterOC->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterOC->created_at != $MasterOC->updated_at ? $MasterOC->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterOC->id }}"

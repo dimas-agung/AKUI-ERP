@@ -63,10 +63,10 @@
                                     <td class="text-center">{!! $item->avg_kadar_air !!}</td>
                                     <td class="text-center">{!! $item->tujuan_kirim !!}</td>
                                     <td class="text-center">{!! $item->nomor_grading !!}</td>
-                                    <td class="text-center">{!! $item->modal !!}</td>
-                                    <td class="text-center">{!! $item->total_modal !!}</td>
-                                    <td class="text-center">{!! $item->biaya_produksi !!}</td>
-                                    <td class="text-center">{!! $item->fix_total_modal !!}</td>
+                                    <td class="text-center">{!! number_format($item->modal, 2, ',', '.') !!}</td>
+                                    <td class="text-center">{!! number_format($item->total_modal, 2, ',', '.') !!}</td>
+                                    <td class="text-center">{!! number_format($item->biaya_produksi, 2, ',', '.') !!}</td>
+                                    <td class="text-center">{!! number_format($item->fix_total_modal, 2, ',', '.') !!}</td>
                                     <td class="text-center">{!! $item->keterangan !!}</td>
                                     <td class="text-center">{!! $item->user_created !!}</td>
                                     <td class="text-center">{!! $item->user_updated !!}</td>

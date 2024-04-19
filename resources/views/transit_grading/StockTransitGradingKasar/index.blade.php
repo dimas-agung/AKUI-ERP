@@ -39,6 +39,7 @@
                                 <th class="text-center">Keterangan</th>
                                 <th class="text-center">NIP Admin</th>
                                 <th class="text-center">User Updated</th>
+                                {{-- <th class="text-center">Nomor Nota Internal</th> --}}
                                 {{-- <th style="width: 10%" class="text-center">Action</th> --}}
                             </tr>
                         </thead>
@@ -61,10 +62,10 @@
                                 <td class="text-center">{!! $post->avg_kadar_air !!}</td>
                                 <td class="text-center">{!! $post->tujuan_kirim !!}</td>
                                 <td class="text-center">{!! $post->nomor_grading !!}</td>
-                                <td class="text-center">{!! $post->modal !!}</td>
-                                <td class="text-center">{!! $post->total_modal !!}</td>
-                                <td class="text-center">{!! $post->biaya_produksi !!}</td>
-                                <td class="text-center">{!! $post->fix_total_modal !!}</td>
+                                <td class="text-center">{!! number_format($post->modal, 2, ',', '.') !!}</td>
+                                <td class="text-center">{!! number_format($post->total_modal, 2, ',', '.') !!}</td>
+                                <td class="text-center">{!! number_format($post->biaya_produksi, 2, ',', '.') !!}</td>
+                                <td class="text-center">{!! number_format($post->fix_total_modal, 2, ',', '.') !!}</td>
                                 <td class="text-center">{!! $post->keterangan !!}</td>
                                 <td class="text-center">{!! $post->user_created !!}</td>
                                 <td class="text-center">{!! $post->user_updated !!}</td>

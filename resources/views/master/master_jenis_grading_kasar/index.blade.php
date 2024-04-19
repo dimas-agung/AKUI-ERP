@@ -131,7 +131,7 @@ is-invalid
                                             <td class="text-center">{{ $MasterJGK->kategori_susut }}</td>
                                             {{-- <td class="text-center">{{ $MasterJGK->upah_operator }}</td> --}}
                                             <td class="text-center">Rp
-                                                {{ number_format($MasterJGK->upah_operator, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterJGK->upah_operator, 2, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterJGK->presentase_pengurangan_harga == '')
                                                 @else
@@ -141,7 +141,7 @@ is-invalid
                                             {{-- <td>{{ $MasterJGK->presentase_pengurangan_harga }}</td> --}}
                                             {{-- <td class="text-center">{{ $MasterJGK->harga_estimasi }}</td> --}}
                                             <td class="text-center">Rp
-                                                {{ number_format($MasterJGK->harga_estimasi, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterJGK->harga_estimasi, 2, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterJGK->status == 1)
                                                     Aktif
@@ -152,7 +152,9 @@ is-invalid
                                             <td class="text-center">{{ $MasterJGK->user_created }}</td>
                                             <td class="text-center">{{ $MasterJGK->user_updated }}</td>
                                             <td class="text-center">{{ $MasterJGK->created_at }}</td>
-                                            <td class="text-center">{{ $MasterJGK->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterJGK->created_at != $MasterJGK->updated_at ? $MasterJGK->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterJGK->id }}"

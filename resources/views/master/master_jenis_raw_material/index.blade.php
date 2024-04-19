@@ -123,7 +123,7 @@ is-invalid
                                             <td class="text-center">{{ $MasterJRM->jenis }}</td>
                                             <td class="text-center">{{ $MasterJRM->kategori_susut }}</td>
                                             <td class="text-center">Rp
-                                                {{ number_format($MasterJRM->upah_operator, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterJRM->upah_operator, 2, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterJRM->pengurangan_harga == '')
                                                 @else
@@ -131,7 +131,7 @@ is-invalid
                                                 @endif
                                             </td>
                                             <td class="text-center">Rp
-                                                {{ number_format($MasterJRM->harga_estimasi, 0, ',', '.') }}</td>
+                                                {{ number_format($MasterJRM->harga_estimasi, 2, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($MasterJRM->status == 1)
                                                     Aktif
@@ -140,7 +140,9 @@ is-invalid
                                                 @endif
                                             </td>
                                             <td class="text-center">{{ $MasterJRM->created_at }}</td>
-                                            <td class="text-center">{{ $MasterJRM->updated_at }}</td>
+                                            <td class="text-center">
+                                                {{ $MasterJRM->created_at != $MasterJRM->updated_at ? $MasterJRM->updated_at : '' }}
+                                            </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $MasterJRM->id }}"

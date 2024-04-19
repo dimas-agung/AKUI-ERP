@@ -19,8 +19,12 @@ class MasterJenisGradingHalus extends Model
         'user_created',
         'user_updated',
     ];
-    public function GradingKasarHasil()
+    public function GradingHalusInput()
     {
-        return $this->belongsTo(GradingKasarHasil::class, 'nama', 'jenis_grading');
+        return $this->belongsTo(GradingHalusInput::class, 'jenis_grading', 'jenis');
+    }
+    public function AdjustmentInput()
+    {
+        return $this->hasMany(AdjustmentInput::class, 'jenis_adjustment', 'jenis');
     }
 }

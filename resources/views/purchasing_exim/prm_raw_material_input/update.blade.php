@@ -18,48 +18,44 @@
                     {{-- <div class="col-md-4">
                         <label for="no_doc" class="form-label">Nomor DOC</label>
                         <input type="text" class="form-control" id="no_doc" value="1" readonly>
-                    </div> --}}
-                    {{-- <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
                         <label for="nomor_po" class="form-label">Nomor PO</label>
-                        <input type="text" class="form-control" id="nomor_po"
-                            value="{{ old('nomor_po', $prm_raw_material_inputs->nomor_po) }}" readonly>
+                        <input type="text" class="form-control" id="nomor_po">
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_batch" class="form-label">Nomor Batch</label>
-                        <input type="text" class="form-control" id="nomor_batch"
-                            value="{{ old('nomor_batch', $prm_raw_material_inputs->nomor_batch) }}" readonly>
+                        <input type="text" class="form-control" id="nomor_batch">
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_nota_supplier" class="form-label">Nomor Nota Supplier</label>
-                        <input type="text" class="form-control" id="nomor_nota_supplier"
-                            value="{{ old('nomor_nota_internal', $prm_raw_material_inputs->nomor_nota_internal) }}"
-                            readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
-                        <input type="text" class="form-control" id="nomor_nota_internal"
-                            value="{{ old('nomor_nota_internal', $prm_raw_material_inputs->nomor_nota_internal) }}"
-                            readonly>
+                        <input type="text" class="form-control" id="nomor_nota_supplier">
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Pilih Nama Supplier :</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
-                            name="nama_supplier" id="nama_supplier" data-placeholder="Pilih Nama Supplier" readonly>
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                            name="nama_supplier" id="nama_supplier" placeholder="Pilih Nama Supplier">
                             <option value="">Pilih Nama Supplier</option>
-                            @foreach ($master_supplier_raw_materials as $MasterSPRM)
-                                <option value="{{ $MasterSPRM->nama_supplier }}"
-                                    {{ old('nama_supplier', $prm_raw_material_inputs->nama_supplier) == $MasterSPRM->nama_supplier ? 'selected' : '' }}>
-                                    {{ $MasterSPRM->nama_supplier }}</option>
+                            @foreach ($master_supplier_raw_materials->sortBy('nama_supplier') as $MasterSPRM)
+                                @if ($MasterSPRM->status == 1)
+                                    <option value="{{ $MasterSPRM->nama_supplier }}">
+                                        {{ $MasterSPRM->nama_supplier }}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
+                        <input type="text" class="form-control" id="nomor_nota_internal" readonly>
                     </div> --}}
                     <div class="col-md-flex">
                         <hr>
                     </div>
                     <div class="col-md-3">
                         <label for="basic-usage" class="form-label">Pilih Jenis :</label>
-                        <select class="choices form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
-                            name="jenis" id="jenis" data-placeholder="Pilih Jenis">
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                            name="jenis" id="jenis" data-placeholder="Pilih Jenis" readonly>
                             <option value="">Pilih Jenis</option>
                             @foreach ($master_jenis_raw_materials as $MasterJRM)
                                 <option value="{{ $MasterJRM->jenis }}"
@@ -203,6 +199,10 @@
                     console.error('Error:', error);
                 }
             });
+        });
+        $(document).ready(function() {
+            // Disable user interaction with the select element
+            $('#jenis').prop('disabled', true);
         });
         // generate nomor internal
         function generateNomorNotaInternal(inisial_supplier) {

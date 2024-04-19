@@ -56,8 +56,8 @@
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ $item->letak_tujuan }}</td>
                                     <td class="text-center">{{ $item->inisial_tujuan }}</td>
-                                    <td class="text-center">{{ $item->modal }}</td>
-                                    <td class="text-center">{{ $item->total_modal }}</td>
+                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->keterangan_item }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">

@@ -36,18 +36,18 @@ return new class extends Migration
             $table->float('biaya_produksi', 16, 4)->nullable();
             $table->string('kontribusi')->nullable();
             $table->float('harga_estimasi', 16, 4);
-            $table->float('total_harga', 16, 4);
+            $table->float('total_harga', 16, 4)->nullable();
             $table->float('nilai_laba_rugi')->nullable();
-            $table->float('nilai_prosentase_total_keuntungan')->nullable();
+            $table->float('nilai_prosentase_total_keuntungan', 16, 4)->nullable();
             $table->float('prosentase_harga_gramasi', 16, 4)->nullable();
-            $table->float('selisih_laba_rugi_kg')->nullable();
-            $table->float('selisih_laba_rugi_per_gram')->nullable();
-            $table->float('hpp');
-            $table->float('total_hpp');
-            $table->float('fix_hpp');
-            $table->float('fix_total_hpp');
+            $table->float('selisih_laba_rugi_kg', 16, 4)->nullable();
+            $table->float('selisih_laba_rugi_per_gram', 16, 4)->nullable();
+            $table->float('hpp', 16, 4)->nullable();
+            $table->float('total_hpp', 16, 4)->nullable();
+            $table->float('fix_hpp', 16, 4)->nullable();
+            $table->float('fix_total_hpp', 16, 4)->nullable();
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

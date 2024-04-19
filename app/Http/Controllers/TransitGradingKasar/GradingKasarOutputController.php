@@ -9,6 +9,7 @@ use App\Models\GradingKasarOutput;
 use Illuminate\Http\Request;
 use App\Services\GradingKasarOutputService;
 use App\Http\Requests\GradingKasarOutputRequest;
+use App\Models\GradingKasarHasil;
 use App\Models\GradingKasarStock;
 use App\Models\MasterTujuanKirimRawMaterial;
 //return type redirectResponse
@@ -31,12 +32,13 @@ class GradingKasarOutputController extends Controller
         /**
      * Create
      */
-    public function create(): View
+    public function create()
     {
         $GradingKO = GradingKasarOutput::with('GradingKasarStock')->get();
         $MasTujKir = MasterTujuanKirimRawMaterial::with('PrmRawMaterialOutputItem')->get();
         $GradingKS = GradingKasarStock::with('GradingKasarOutput')->get();
-        // return $PrmRawMOIC;
+        // return $data;
+
         return view('transit_grading.GradingKasarOutput.create', compact('GradingKO', 'GradingKS', 'MasTujKir'));
     }
 
@@ -47,6 +49,15 @@ class GradingKasarOutputController extends Controller
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
+    }
+
+    public function validasi(Request $request)
+    {
+        $nomor_job = $request->nomor_job;
+        $data = GradingKasarOutput::where('nomor_job', $nomor_job)->first();
+
+        // Jika data ditemukan, kembalikan "exists", jika tidak, kembalikan null
+        return response()->json(['exists' => $data !== null]);
     }
 
     public function setpcc(Request $request)
@@ -126,6 +137,23 @@ class GradingKasarOutputController extends Controller
                     $stockGradingKasar->update($dataToUpdate);
                 }
 
+                $existingItems = GradingKasarHasil::where('id_box_grading_kasar', $GradingKO->id_box_grading_kasar)
+                ->where('jenis_grading', $GradingKO->jenis_grading)
+                ->get();
+
+                // Logika Update Status
+                if ($existingItems) {
+                    foreach ($existingItems as $existingItem) {
+                        // Perbarui data untuk setiap item yang ada
+                        $existingItem->update(['status' => 1]);
+                    }
+                } else {
+                    // Jika tidak ada item GradingKasarHasil yang sesuai, buat baru dengan status 1
+                    GradingKasarHasil::create([
+                        'status' => 1,
+                        // Tambahkan kolom-kolom lain sesuai kebutuhan
+                    ]);
+                }
 
                 $stockPRM = StockTransitGradingKasar::where('id_box_raw_material', '=', $GradingKO->id_box_raw_material)
                 ->where('created_at', $GradingKO->created_at)

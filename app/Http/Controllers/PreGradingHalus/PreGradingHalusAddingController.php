@@ -26,8 +26,10 @@ class PreGradingHalusAddingController extends Controller
     public function create()
     {
         $PreGradingHalusStock = PreGradingHalusStock::with('PreGradingHalusAdding')->get();
+        $Perusahaan = Perusahaan::all();
         return view('PreGradingHalus.PreGradingHalusAdding.create', [
             'pre_grading_halus_stocks' => $PreGradingHalusStock,
+            'perusahaan' => $Perusahaan,
         ]);
     }
     // get Data Stock Grading Halus

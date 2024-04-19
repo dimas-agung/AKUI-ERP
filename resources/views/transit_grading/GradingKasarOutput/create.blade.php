@@ -89,7 +89,7 @@
                                         <div class="form-group">
                                             <label>Nomor Job</label>
                                             <input type="text" class="form-control" id="nomor_job" name="nomor_job"
-                                                value="{{ old('nomor_job') }}" placeholder="Masukkan Nomor Job">
+                                                placeholder="Masukkan Nomor Job">
                                         </div>
                                     </div>
                                 </div>
@@ -166,11 +166,36 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
+                                            <label>Sisa Berat</label>
+                                            <input type="text" id="berat_masuk" class="form-control"
+                                                name="berat_masuk" value="{{ old('berat_masuk') }}"
+                                                onchange="handleChange(this)" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Sisa Pcs</label>
+                                            <input type="text" id="sisa_pcs" class="form-control" name="sisa_pcs"
+                                                value="{{ old('sisa_pcs') }}" onchange="handleChange(this)" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Fix Total Modal</label>
+                                            <input type="text" class="form-control" id="fix_total_modal"
+                                                name="fix_total_modal" onchange="handleChange(this)" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
                                             <label>Berat Keluar</label>
                                             <input type="text" id="berat_keluar" pattern="[0-9.]*"
                                                 inputmode="numeric"
                                                 onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                                                class="form-control" placeholder="Masukkan berat keluar">
+                                                class="form-control" placeholder="Masukkan berat keluar"
+                                                onchange="validateBeratKeluar()">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -178,7 +203,32 @@
                                             <label>PCS Keluar</label>
                                             <input type="text" id="pcs_keluar" pattern="[0-9.]*" inputmode="numeric"
                                                 onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                                                class="form-control" placeholder="Masukkan pcs keluar">
+                                                class="form-control" placeholder="Masukkan pcs keluar"
+                                                onchange="validateBeratKeluar()">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Biaya Produksi</label>
+                                            <input type="text" id="biaya_produksi" pattern="[0-9.]*"
+                                                inputmode="numeric"
+                                                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                                                class="form-control" placeholder="Masukkan Biaya Produksi">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>NIP Admin</label>
+                                            <input type="text" id="user_created" class="form-control"
+                                                name="user_created" value="{{ old('user_created') }}"
+                                                placeholder="Masukkan User Created">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Keterangan</label>
+                                            <input type="text" id="keterangan" class="form-control" name="keterangan"
+                                                placeholder="Masukkan keterangan">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -189,44 +239,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Biaya Produksi</label>
-                                            <input type="text" id="biaya_produksi" pattern="[0-9.]*"
-                                                inputmode="numeric"
-                                                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                                                class="form-control" placeholder="Masukkan Biaya Produksi">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Fix Total Modal</label>
-                                            <input type="text" class="form-control" id="fix_total_modal"
-                                                name="fix_total_modal" onchange="handleChange(this)" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>NIP Admin</label>
-                                            <input type="text" id="user_created" class="form-control"
-                                                name="user_created" value="{{ old('user_created') }}"
-                                                placeholder="Masukkan User Created">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Keterangan</label>
-                                            <input type="text" id="keterangan" class="form-control" name="keterangan"
-                                                placeholder="Masukkan keterangan">
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-md-12">
                                     <button type="button" id="tombol_add" class="btn btn-primary"
                                         onclick="addRow()">Add</button>
-                                    <a href="{{ url('/PrmRawMaterialOutput') }}" type="button" class="btn btn-danger"
-                                        data-dismiss="modal">Close</a>
+                                    <a href="{{ route('GradingKasarOutput.index') }}" type="button"
+                                        class="btn btn-danger" data-dismiss="modal">Close</a>
                                 </div>
                             </div>
                         </div>
@@ -303,6 +320,16 @@
                     $('#nomor_grading').val(response.nomor_grading);
                     $('#modal, #fix_total_modal').val(response.modal);
                     $('#nomor_nota_internal').val(response.nomor_nota_internal);
+
+                    // Perhitungan sisa berat
+                    let beratMasuk = parseFloat(response.berat_masuk);
+                    let beratKeluar = parseFloat(response.berat_keluar);
+                    let pcsMasuk = parseFloat(response.pcs_masuk);
+                    let pcsKeluar = parseFloat(response.pcs_keluar);
+                    let sisaBerat = beratMasuk - beratKeluar;
+                    let sisaPcs = pcsMasuk - pcsKeluar;
+                    $('#berat_masuk').val(sisaBerat);
+                    $('#sisa_pcs').val(sisaPcs);
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -343,10 +370,10 @@
                         }
 
                         // Memeriksa apakah nomor_job sudah terisi, jika belum maka diisi
-                        if (!tombolAddDiklik) {
-                            const nomor_job = generateNomorBSTB(response.inisial_tujuan, 'JOB');
-                            $('#nomor_job').val(nomor_job);
-                        }
+                        // if (!tombolAddDiklik) {
+                        const nomor_job = generateNomorBSTB(response.inisial_tujuan, 'JOB');
+                        $('#nomor_job').val(nomor_job);
+                        // }
                     }
                 },
                 error: function(error) {
@@ -355,25 +382,57 @@
             });
         });
 
+        $('#nomor_job').blur(function() {
+            var nomor_job = $(this).val();
+            $.ajax({
+                url: '{{ route('GradingKasarOutput.validasi') }}',
+                method: 'POST',
+                data: {
+                    nomor_job: nomor_job,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.exists) {
+                        // Nomor job sudah ada dalam database
+                        $('#nomor_job').val(''); // Mengosongkan nilai input
+                        Swal.fire({
+                            title: 'Warning!',
+                            text: 'Nomor job sudah ada. Silakan masukkan nomor job yang berbeda.',
+                            icon: 'warning'
+                        });
+                        return;
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Tangani kesalahan
+                    console.error('Terjadi kesalahan:', errorThrown);
+                }
+            });
+        });
 
         function generateNomorBSTB(inisial_tujuan, prefix) {
-            const now = new Date();
-            const tahun = now.getFullYear().toString().substr(-2);
-            const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
-            const tanggal = ('0' + now.getDate()).slice(-2);
-            const jam = ('0' + now.getHours()).slice(-2);
-            const menit = ('0' + now.getMinutes()).slice(-2);
-            const detik = ('0' + now.getSeconds()).slice(-2);
+            let nomor;
+            const existingNomorJobs = dataArray.map(data => data
+                .nomor_job); // dataArray harus diisi dengan data yang sesuai
 
-            // Menambahkan prefix yang sesuai
-            const nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_ugk`;
-            if (prefix === 'BSTB') {
-                return `BSTB_${nomor}`;
-            } else if (prefix === 'JOB') {
-                return `${nomor}`;
-            } else {
-                return nomor;
-            }
+            do {
+                const now = new Date();
+                const tahun = now.getFullYear().toString().substr(-2);
+                const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+                const tanggal = ('0' + now.getDate()).slice(-2);
+                const jam = ('0' + now.getHours()).slice(-2);
+                const menit = ('0' + now.getMinutes()).slice(-2);
+                const detik = ('0' + now.getSeconds()).slice(-2);
+
+                // Menambahkan prefix yang sesuai
+                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_ugk`;
+                if (prefix === 'BSTB') {
+                    nomor = `BSTB_${nomor}`;
+                }
+                // Memeriksa apakah nomor job yang dihasilkan sudah ada dalam data yang sudah diinputkan sebelumnya
+            } while (existingNomorJobs.includes(nomor));
+
+            return nomor;
         }
 
 
@@ -392,6 +451,40 @@
             // Memasukkan hasil perhitungan ke dalam input selisih berat
             $('#total_modal').val(isNaN(totalmodal) ? '' : totalmodal);
         }
+
+        // Fungsi untuk memeriksa apakah berat melebihi sisa berat
+        function validateBeratKeluar() {
+            var beratMasuk = parseFloat(document.getElementById('berat_masuk').value);
+            var beratKeluarInput = parseFloat(document.getElementById('berat_keluar').value);
+            var pcsMasuk = parseFloat(document.getElementById('sisa_pcs').value);
+            var pcsKeluarInput = parseFloat(document.getElementById('pcs_keluar').value);
+
+            if (beratKeluarInput > beratMasuk || pcsKeluarInput > pcsMasuk) {
+                if (beratKeluarInput > beratMasuk && pcsKeluarInput > pcsMasuk) {
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: "Berat keluar tidak boleh melebihi sisa berat dan pcs.",
+                        icon: 'warning'
+                    });
+                } else if (beratKeluarInput > beratMasuk) {
+                    document.getElementById('berat_keluar').value = ''; // Mengosongkan input berat keluar
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: "Berat keluar tidak boleh melebihi sisa berat.",
+                        icon: 'warning'
+                    });
+                } else {
+                    document.getElementById('pcs_keluar').value = ''; // Mengosongkan input berat keluar
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: "Berat keluar tidak boleh melebihi sisa pcs.",
+                        icon: 'warning'
+                    });
+                }
+                return;
+            }
+        }
+
 
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;
@@ -425,7 +518,6 @@
             // Validasi input (sesuai kebutuhan)
             // Inisialisasi array untuk menyimpan field yang belum terisi
             let fieldsNotFilled = [];
-            // Periksa setiap field
             if (!nomor_bstb) fieldsNotFilled.push('Nomor BSTB');
             if (!id_box_grading_kasar) fieldsNotFilled.push('ID box grading kasar');
             if (!nama_supplier) fieldsNotFilled.push('Nama supllier');
@@ -442,6 +534,16 @@
                 Swal.fire({
                     title: 'Warning!',
                     text: message,
+                    icon: 'warning'
+                });
+                return;
+            }
+
+            // Memeriksa apakah nomor job sudah ada dalam dataArray
+            if (dataArray.some(data => data.nomor_job === nomor_job)) {
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Nomor job sudah ada. Silakan masukkan nomor job yang berbeda.',
                     icon: 'warning'
                 });
                 return;

@@ -62,7 +62,7 @@ class PreCleaningInputController extends Controller
         $validatedData = $request->validate([
             'doc_no' => 'required',
             'user_created' => 'required',
-            'user_updated' => 'required',
+            'user_updated' => 'sometimes',
             'keterangan' => 'sometimes',
         ]);
 

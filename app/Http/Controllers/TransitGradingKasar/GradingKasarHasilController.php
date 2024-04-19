@@ -4,6 +4,7 @@ namespace App\Http\Controllers\TransitGradingKasar;
 
 use App\Http\Controllers\Controller;
 use App\Models\GradingKasarHasil;
+use App\Models\GradingKasarStock;
 use App\Models\GradingKasarInput;
 use App\Models\MasterJenisGradingKasar;
 use App\Services\GradingKasarHasilService;
@@ -70,7 +71,7 @@ class GradingKasarHasilController extends Controller
             $harga_estimasi[] = $value->harga_estimasi;
             $totalModal[] = $value->total_modal;
         };
-        $dataHpp = 'dataHPPService';
+        // $dataHpp = 'dataHPPService';
         //panggil service
 
         $result = $GradingKasarHasilService->simpanData($dataArray, $total_susut); //ngambil array id dari data yang diinput
@@ -92,6 +93,22 @@ class GradingKasarHasilController extends Controller
                 'hpp'                                   => $dataHpp[$key]['hpp'],
                 'total_hpp'                             => $dataHpp[$key]['total_hpp'],
             ]);
+            // $data = GradingKasarStock::where('id', $value)->update([
+            //     'modal' => $dataHpp[$key]['hpp']
+            // ]);
+        }
+        foreach ($arrayIds as $key => $value) {
+            // Ambil nilai HPP dari hasil perhitungan HppService
+            // $modal = $dataHpp[$key]['hpp'];
+            // $total_modal = $dataHpp[$key]['hpp'] * $berat_gradings[$key];
+            $GradingKasarHasil = GradingKasarHasil::where('id', $value)->first();
+            // Update modal di GradingKasarStock dengan nilai HPP.
+            $data = GradingKasarStock::where('id_box_grading_kasar', $GradingKasarHasil->id_box_grading_kasar)->update([
+                // 'modal'         => $modal,
+                'modal'         => $dataHpp[$key]['hpp'],
+                'total_modal'   => $dataHpp[$key]['hpp'] * $dataHpp[$key]['berat_grading'],
+
+            ]);
         }
         if ($result['success']) {
             return response()->json($result);
@@ -100,6 +117,33 @@ class GradingKasarHasilController extends Controller
         }
     }
 
+    // show
+    // public function show(string $id)
+    // {
+    //     $i = 1;
+    //     // $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+    //     // $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
+    //     //get by ID
+    //     $MasterGKH = PrmRawMaterialInput::findOrFail($id);
+    //     $MasterPRIM = PrmRawMaterialInput::with('PrmRawMaterialInputItem')
+    //         ->where(['id' => $id])
+    //         ->first();
+
+
+    //     return response()->view('purchasing_exim.prm_raw_material_input.show', compact('MasterPRIM', 'i'));
+    // }
+    // destroy
+    // public function destroyInput($id): RedirectResponse
+    // {
+    //     //get by ID
+    //     $GradingKasarHasil = GradingKasarHasil::findOrFail($id);
+
+    //     //delete
+    //     $GradingKasarHasil->delete();
+
+    //     //redirect to index
+    //     return redirect()->route('grading_kasar_hasil.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    // }
     public function destroyInput($id): RedirectResponse
     {
         try {

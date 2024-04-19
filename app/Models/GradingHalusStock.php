@@ -23,8 +23,21 @@ class GradingHalusStock extends Model
         'modal',
         'total_modal',
     ];
-    public function AdjustmentAdding()
+    public function GradingHalusAdjustmentAdding()
     {
-        return $this->hasMany(AdjustmentAdding::class, 'id_box_grading_halus', 'id_box_grading_halus');
+        return $this->hasMany(GradingHalusAdjustmentAdding::class, 'id_box_grading_halus', 'id_box_grading_halus');
+    }
+    public function GradingHalusAdjustmentInput()
+    {
+        return $this->hasMany(GradingHalusAdjustmentInput::class, 'id_box_grading_halus', 'id_box_grading_halus');
+    }
+
+    public function GradingHalusInput()
+    {
+        return $this->belongsTo(GradingHalusInput::class, 'id_box_grading_halus', 'id_box_grading_halus');
+    }
+    public function GradingHalusOutput()
+    {
+        return $this->hasMany(GradingHalusOutput::class, 'id_box_grading_halus', 'id_box_grading_halus');
     }
 }

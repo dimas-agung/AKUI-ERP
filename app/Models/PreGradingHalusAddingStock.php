@@ -13,6 +13,7 @@ class PreGradingHalusAddingStock extends Model
         'unit',
         'nomor_grading',
         'id_box_grading_kasar',
+        'id_box_raw_material',
         'nomor_batch',
         'nomor_nota_internal',
         'nama_supplier',
@@ -24,4 +25,8 @@ class PreGradingHalusAddingStock extends Model
         'total_modal',
         'status_stock',
     ];
+    public function GradingHalusInput()
+    {
+        return $this->hasMany(GradingHalusInput::class, 'nomor_grading', 'nomor_grading');
+    }
 }

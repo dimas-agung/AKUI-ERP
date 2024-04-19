@@ -10,6 +10,7 @@ class PreGradingHalusInput extends Model
     use HasFactory;
     protected $table = 'pre_grading_halus_inputs';
     protected $fillable = [
+        'unit',
         'nomor_job',
         'id_box_grading_kasar',
         'nomor_bstb',
