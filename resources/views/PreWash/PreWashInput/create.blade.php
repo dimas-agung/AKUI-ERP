@@ -23,10 +23,40 @@
                                         <select class="select2 form-select" style="width: 100%;" name="nomor_bstb"
                                             id="nomor_bstb" data-placeholder="Pilih Nomor BSTB">
                                             <option value="">Pilih Nomor BSTB</option>
-                                            @foreach ($transit_grading_haluses as $item)
+                                            {{-- @foreach ($transit_grading_haluses as $item)
                                                 <option value="{{ $item->nomor_bstb }}">
                                                     {{ $item->nomor_bstb }}
                                                 </option>
+                                            @endforeach --}}
+
+                                            {{-- @if (isset($transit_grading_haluses) && is_array($transit_grading_haluses) && count($transit_grading_haluses) > 0)
+                                                @foreach ($transit_grading_haluses as $item)
+                                                    <option value="{{ $item->nomor_bstb }}">
+                                                        {{ $item->nomor_bstb }}
+                                                    </option>
+                                                @endforeach
+                                            @endif --}}
+
+                                            {{-- test --}}
+                                            @php
+                                                $selectedNomorBSTB = ''; // Inisialisasi variabel untuk menyimpan nomor_bstb yang sudah ditampilkan
+                                            @endphp
+                                            @foreach ($transit_grading_haluses as $post)
+                                                @if ($selectedNomorBSTB != $post->nomor_bstb)
+                                                    @php
+                                                        $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
+                                                    @endphp
+                                                    @foreach ($transit_grading_haluses as $innerPost)
+                                                        @if ($innerPost->nomor_bstb == $post->nomor_bstb)
+                                                            <option value="{{ $innerPost->nomor_bstb }}">
+                                                                {{ old('nomor_bstb', $innerPost->nomor_bstb) }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                    @php
+                                                        $selectedNomorBSTB = $post->nomor_bstb; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
+                                                    @endphp
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -57,7 +87,7 @@
                                                             <th class="text-center">No</th>
                                                             <th class="text-center">Nomor Job</th>
                                                             <th class="text-center">Nomor Batch</th>
-                                                            <th class="text-center">Status</th>
+                                                            {{-- <th class="text-center">Status</th> --}}
                                                             <th class="text-center">Jenis Job</th>
                                                             <th class="text-center">Berat Job</th>
                                                             <th class="text-center">Pcs Job</th>
@@ -73,6 +103,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12 text-end">
+                                            {{-- <a href="#" class="btn btn-primary" onclick="CeksendData()">Simpan</a> --}}
                                             <a href="#" class="btn btn-primary" onclick="sendData()">Simpan</a>
                                             <a href="{{ Route('PreCleaningInput.index') }}" type="button"
                                                 class="btn btn-danger" data-dismiss="modal">Close</a>
@@ -90,44 +121,67 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            function addDataToTable(data, rowCount) {
+            dataArray = []; // letiabel untuk menampung semua data
+
+            function addDataToTable(rowData, rowCount) {
                 let newRow = $('<tr>');
 
                 // Tambahkan nomor urut sebagai kolom pertama
                 newRow.append('<td>' + rowCount + '</td>');
                 // Tambahkan kolom-kolom sesuai kebutuhan
-                newRow.append('<td>' + data.nomor_job + '</td>');
-                newRow.append('<td>' + data.nomor_batch + '</td>');
-                newRow.append('<td>' + data.status + '</td>');
-                newRow.append('<td>' + data.jenis_job + '</td>');
-                newRow.append('<td>' + data.berat_job + '</td>');
-                newRow.append('<td>' + data.pcs_job + '</td>');
-                newRow.append('<td>' + data.tujuan_kirim + '</td>');
-                newRow.append('<td>' + data.nomor_bstb + '</td>');
-                newRow.append('<td>' + data.modal + '</td>');
-                newRow.append('<td>' + data.total_modal + '</td>');
+                newRow.append('<td>' + rowData.nomor_job + '</td>');
+                newRow.append('<td>' + rowData.nomor_batch + '</td>');
+                // newRow.append('<td>' + rowData.status + '</td>');
+                newRow.append('<td>' + rowData.jenis_job + '</td>');
+                newRow.append('<td>' + rowData.berat_job + '</td>');
+                newRow.append('<td>' + rowData.pcs_job + '</td>');
+                newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
+                newRow.append('<td>' + rowData.nomor_bstb + '</td>');
+                newRow.append('<td>' + rowData.modal + '</td>');
+                newRow.append('<td>' + rowData.total_modal + '</td>');
 
                 // Tambahkan baris ke dalam tabel
                 $('#tableBody').append(newRow);
+
+                // Tambahkan rowData ke dalam letiabel allData
+                // allData.push(data);
+                dataArray.push({
+                    nomor_job: rowData.nomor_job,
+                    nomor_batch: rowData.nomor_batch,
+                    status: rowData.status,
+                    jenis_job: rowData.jenis_job,
+                    berat_job: rowData.berat_job,
+                    pcs_job: rowData.pcs_job,
+                    tujuan_kirim: rowData.tujuan_kirim,
+                    nomor_bstb: rowData.nomor_bstb,
+                    modal: rowData.modal,
+                    total_modal: rowData.total_modal,
+                });
+
+                // Tampilkan data yang disimpan ke dalam konsol
+                // console.log("Data yang disimpan:", allData);
             }
+            console.log("Data yang disimpan: ", dataArray);
 
             $('#nomor_bstb').on('change', function() {
-                let selectedIdBox = $(this).val();
-                if (selectedIdBox) {
+                let selectedNomorBSTB = $(this).val();
+                if (selectedNomorBSTB) {
                     $.ajax({
                         url: `{{ route('PreWashInput.set') }}`,
                         method: 'GET',
                         data: {
-                            nomor_bstb: selectedIdBox
+                            nomor_bstb: selectedNomorBSTB
                         },
                         success: function(response) {
                             console.log(response);
-                            $('#tableBody')
-                        .empty(); // Bersihkan tabel sebelum menambahkan data baru
+                            // Bersihkan tabel sebelum menambahkan data baru
+                            $('#tableBody').empty();
+                            // Reset letiabel allData
+                            dataArray = [];
                             let rowCount = 1;
-                            response.forEach(function(rowData) {
-                                addDataToTable(rowData,
-                                rowCount++); // Tambahkan data ke tabel
+                            response.forEach(function(data) {
+                                addDataToTable(data,
+                                    rowCount++); // Tambahkan data ke tabel
                             });
                         },
                         error: function(error) {
@@ -152,42 +206,122 @@
             });
         });
 
+        // function CeksendData() {
+        //     let i = 0;
+        //     let nomorBSTB = []; // Array untuk menyimpan id box yang akan dicek
 
-        // function sendData() {
-        //     let selectedNomorBSTB = $('#nomor_bstb').val();
-        //     if (selectedNomorBSTB) {
-        //         $.ajax({
-        //             url: `{{ route('PreWashInput.set') }}`,
-        //             method: 'POST',
-        //             data: {
-        //                 nomor_bstb: selectedNomorBSTB
-        //             },
-        //             success: function(response) {
-        //                 console.log(response);
-        //                 $('#tableBody').empty(); // Bersihkan tabel sebelum menambahkan data baru
-        //                 response.forEach(function(rowData) {
-        //                     addDataToTable(rowData); // Tambahkan data ke tabel
+        //     // Mengumpulkan id box dari dataArray
+        //     dataArray.forEach(function(item) {
+        //         nomorBSTB.push(item.nomor_bstb);
+        //     });
+
+        //     // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
+        //     $.ajax({
+        //         url: `{{ route('PreWashInput.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
+        //         method: 'POST',
+        //         data: {
+        //             nomorBSTB: JSON.stringify(nomorBSTB),
+        //             _token: '{{ csrf_token() }}'
+        //         },
+        //         dataType: 'json',
+        //         success: function(response) {
+        //             let unavailableNomorBSTB = response.unavailableNomorBSTB;
+
+        //             if (unavailableNomorBSTB.length > 0) {
+        //                 // Ada id box yang tidak tersedia, tampilkan pesan kesalahan
+        //                 Swal.fire({
+        //                     title: 'Error!',
+        //                     text: 'Beberapa nomor bstb sudah tidak tersedia.',
+        //                     icon: 'error',
+        //                     showCancelButton: false, // Sembunyikan tombol cancel
+        //                     confirmButtonText: 'OK' // Ganti teks tombol konfirmasi
+        //                 }).then((result) => {
+        //                     // Jika pengguna menekan tombol "OK", refresh halaman
+        //                     if (result.isConfirmed) {
+        //                         location.reload(); // Refresh halaman
+        //                     }
         //                 });
-        //             },
-        //             error: function(error) {
-        //                 console.error('Error:', error);
+        //             } else {
+        //                 // Semua id box tersedia, kirim data ke server
+        //                 sendData();
         //             }
-        //         });
-        //     } else {
-        //         alert('Mohon pilih nomor BSTB terlebih dahulu.');
-        //     }
+        //         },
+        //         error: function(error) {
+        //             Swal.fire({
+        //                 title: 'Failed!',
+        //                 text: 'Terjadi kesalahan saat memeriksa ketersediaan nomor bstb. Silakan coba lagi.',
+        //                 icon: 'error'
+        //             });
+        //             console.log('Error:', error);
+        //         }
+        //     });
+
+        function sendData() {
+            // let doc_no = $('#doc_no').val() || '';
+            let keterangan = $('#keterangan').val() || '';
+
+            // Mengirim data ke server menggunakan AJAX
+            $.ajax({
+                url: '{{ route('PreWashInput.store') }}',
+                method: 'POST',
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Loading...',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
+                data: function() {
+                    let postData = {
+                        dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
+                        // doc_no: doc_no,
+                        user_created: $('#user_created').val() || '',
+                        user_updated: $('#user_createds').val() || '',
+                        _token: '{{ csrf_token() }}'
+                    };
+
+                    // Hanya mengirim keterangan jika memiliki nilai
+                    if (keterangan.trim() !== '') {
+                        postData.keterangan = keterangan;
+                    }
+
+                    return postData;
+                }(),
+                success: function(response) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Data berhasil disimpan.',
+                        icon: 'success'
+                    }).then((result) => {
+                        // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
+                        if (result.isConfirmed) {
+                            window.location.href = response.redirectTo;
+                            // Ganti dengan URL tujuan redirect Anda
+                        }
+                    });
+                },
+                error: function(error) {
+                    Swal.fire({
+                        title: 'Failed!',
+                        text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
+                        icon: 'error'
+                    });
+                    console.log('Error:', error);
+                }
+            });
+        }
         // }
 
+        // letiabel global untuk menyimpan indeks baris terakhir
+        let currentRowIndex = 0;
+        let dataStock = [];
 
-
-
-        // // letiabel global untuk menyimpan indeks baris terakhir
-        // let currentRowIndex = 0;
-        // let dataStock = [];
-
-        // // Mendefinisikan array jika belum
-        // if (typeof dataArray === 'undefined') {
-        //     let dataArray = [];
-        // }
+        // Mendefinisikan array jika belum
+        if (typeof dataArray === 'undefined') {
+            let dataArray = [];
+        }
     </script>
 @endsection
