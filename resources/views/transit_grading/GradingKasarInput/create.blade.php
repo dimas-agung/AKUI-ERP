@@ -35,7 +35,7 @@
                                 </div>
                             @endif
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tanggal Adding</label>
                                         <input type="date" id="tgl_add" class="form-control mb-3 flatpickr-date"
@@ -43,7 +43,7 @@
                                             placeholder="Masukkan Tanggal Adding">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Plant</label>
                                         <select id="plant" class="select2 form-select" name="plant">
@@ -58,6 +58,13 @@
                                         <label>NIP Admin</label>
                                         <input type="text" id="user_created" class="form-control" name="user_created"
                                             value="{{ auth()->user()->nip }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Nomor Grading</label>
+                                        <input type="text" id="nomor_grading" class="form-control" name="nomor_grading"
+                                            value="{{ old('nomor_grading') }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -255,22 +262,32 @@
             });
         });
 
+        // Menambahkan event listener untuk perubahan pada input tanggal dan select plant
+        $('#tgl_add, #plant').change(function() {
+            generateNomorGrading();
+        });
+
         function generateNomorGrading() {
-            const now = new Date();
-            const jam = ('0' + now.getHours()).slice(-2);
-            const menit = ('0' + now.getMinutes()).slice(-2);
-            const detik = ('0' + now.getSeconds()).slice(-2);
-            // Mengambil nilai dari input tanggal dan plant
             const tanggal = $('#tgl_add').val();
             const plant = $('#plant').val();
-            // Memformat tanggal menjadi ddmmyy
-            const formattedTanggal = formatDateToDdmmyy(tanggal);
-            // Menggabungkan nilai-nilai tersebut untuk membentuk nomor grading
-            const nomor_grading = `NG_${formattedTanggal}-${jam}${menit}${detik}_${plant}_UGK`;
-            // Menampilkan hasil di konsol (opsional)
-            console.log(nomor_grading);
 
-            return nomor_grading;
+            // Hanya lakukan generate jika kedua tanggal dan plant sudah terpilih
+            if (tanggal && plant) {
+                const now = new Date();
+                const jam = ('0' + now.getHours()).slice(-2);
+                const menit = ('0' + now.getMinutes()).slice(-2);
+                const detik = ('0' + now.getSeconds()).slice(-2);
+
+                // Memformat tanggal menjadi ddmmyy
+                const formattedTanggal = formatDateToDdmmyy(tanggal);
+                // Menggabungkan nilai-nilai tersebut untuk membentuk nomor grading
+                const nomor_grading = `NG_${formattedTanggal}-${jam}${menit}${detik}_${plant}_UGK`;
+                // Menampilkan hasil di konsol (opsional)
+                console.log(nomor_grading);
+                // Menampilkan hasil di input nomor_grading
+                $('#nomor_grading').val(nomor_grading);
+                return nomor_grading;
+            }
         }
 
         function formatDateToDdmmyy(inputDate) {
@@ -320,9 +337,7 @@
             var keterangan = $('#keterangan').val();
             var user_created = $('#user_created').val();
             var nomor_nota_internal = $('#no_nota').val();
-
-            // Memanggil fungsi generateNomorGrading untuk mendapatkan nomor_grading
-            var nomor_grading = generateNomorGrading();
+            var nomor_grading = $('#nomor_grading').val();
 
 
             // Inisialisasi array untuk menyimpan field yang belum terisi
@@ -353,7 +368,8 @@
                 '</td><td>' + nama_supplier + '</td><td>' + jenis + '</td><td>' +
                 berat_masuk + '</td><td>' +
                 berat + '</td><td>' + kadar_air + '</td><td id="nomor_grading">' +
-                nomor_grading + '</td><td>' + modal + '</td><td>' + total_modal + '</td><td>' + keterangan + '</td><td>' +
+                nomor_grading + '</td><td>' + modal + '</td><td>' + total_modal + '</td><td>' + keterangan +
+                '</td><td>' +
                 user_created + '</td><td><button onclick="deleteRow(' + currentRowIndex +
                 ')" class="btn btn-danger" data-dismiss="modal">Hapus</button></td></tr>';
 
