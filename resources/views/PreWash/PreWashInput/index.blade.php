@@ -59,12 +59,11 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                action="{{ route('PreWashInput.destroyInput', $item->id) }}"
-                                                method="POST">
-                                                <a href="{{ route('PreWashInput.show', $item->id) }}" class="btn btn-link"
+                                                action="{{ route('PreWashInput.destroy', $item->id) }}" method="POST">
+                                                {{-- <a href="{{ route('PreWashInput.show', $item->id) }}" class="btn btn-link"
                                                     title="View" data-original-title="View">
                                                     <i class="bi bi-eye"></i>
-                                                </a>
+                                                </a> --}}
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn btn-link" data-original-title="Remove"

@@ -19,12 +19,12 @@ return new class extends Migration
             $table->float('berat_job');
             $table->float('pcs_job');
             $table->string('tujuan_kirim');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();
             $table->string('nomor_bstb');
-            $table->float('modal');
-            $table->float('total_modal');
+            $table->float('modal', 16, 4);
+            $table->float('total_modal', 16, 4);
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }
