@@ -331,7 +331,9 @@
             }
 
             let beratAdding = parseFloat($('#berat_adding').val());
-
+            if (totalBeratGradingtest == 0) {
+                return 0;
+            }
             if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding)) {
                 let nilaiSusut = (1 - totalBeratGradingtest / beratAdding);
                 console.log("totalTest = " + totalBeratGradingtest);
@@ -581,7 +583,7 @@
                 $('#berat_grading').val('');
                 $('#pcs_grading').val('');
                 $('#keterangan').val('');
-                $('#user_created').val('');
+                //$('#user_created').val('');
             }
         }
 
@@ -599,7 +601,7 @@
             // Hapus baris dari tabel
             row.remove();
             // Kurangkan nilai dari total_pcs dan total_berat
-            hitungNilaiSusut();
+            // let total_susut = hitungNilaiSusut();
             // Mengaktifkan kembali select2 pada elemen #nomor_grading
             $('#nomor_grading').prop('disabled', false).trigger('change');
             // Mengaktifkan dan men-trigger change
@@ -613,6 +615,8 @@
                 }
             });
             $('#total_berat').val(totalBeratGrading);
+             let total_susut = hitungNilaiSusut();
+            $('#total_susut').val(total_susut);
             // Total Pcs
             let totalPcsGrading = 0;
             // Loop melalui setiap baris tabel untuk menghitung total pcs_grading
@@ -637,7 +641,7 @@
                 // Menampilkan SweetAlert untuk pesan error
                 Swal.fire({
                     icon: 'error',
-                    title: 'Astagfirullah',
+                    title: 'Error',
                     text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
                 });
                 return; // Menghentikan eksekusi fungsi jika data kosong
@@ -669,7 +673,7 @@
                     // Menampilkan SweetAlert untuk pesan sukses
                     Swal.fire({
                         icon: 'success',
-                        title: 'Alhamdulillah',
+                        title: 'Sukses',
                         text: 'Data berhasil dikirim.'
                     });
 

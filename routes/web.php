@@ -201,8 +201,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/prm_raw_material_output/getBerat/{id}', 'getBerat')->name('PrmRawMaterialOutput.getBerat');
         });
     });
-    Route::prefix('bahan_baku')->middleware(['role:bahan_baku|admin'])->group(function () {
-        Route::prefix('grading_kasar')->middleware('role:grading_kasar|admin')->group(function () {
+    Route::prefix('bahan_baku')->group(function () {
+        Route::prefix('grading_kasar')->group(function () {
             Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputController::class)->group(function () {
                 Route::get('/grading_kasar_input', 'index')->name('GradingKasarInput.index');
                 Route::get('/grading_kasar_input/create', 'create')->name('GradingKasarInput.create');
@@ -404,7 +404,7 @@ Route::middleware('auth')->group(function () {
             });
 
         });
-        Route::prefix('pre_wash')->middleware('role:pre_wash|admin')->group(function (){
+        Route::prefix('pre_wash')->group(function (){
             Route::controller(App\Http\Controllers\PreWash\PreWashInputController::class)->group(function () {
                 Route::get('/pre_wash_input', 'index')->name('PreWashInput.index');
                 Route::get('/pre_wash_input/create', 'create')->name('PreWashInput.create');
