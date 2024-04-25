@@ -105,7 +105,7 @@
                                         <div class="col-md-12 text-end">
                                             {{-- <a href="#" class="btn btn-primary" onclick="CeksendData()">Simpan</a> --}}
                                             <a href="#" class="btn btn-primary" onclick="sendData()">Simpan</a>
-                                            <a href="{{ Route('PreCleaningInput.index') }}" type="button"
+                                            <a href="{{ Route('PreWashInput.index') }}" type="button"
                                                 class="btn btn-danger" data-dismiss="modal">Close</a>
                                         </div>
                                     </div>
