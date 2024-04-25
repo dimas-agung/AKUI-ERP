@@ -3,7 +3,7 @@
     Master
 @endsection
 @section('title')
-    Master Jenis Raw Material
+    Master Operator
 @endsection
 @section('content')
     <div class="container">
@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <div class="card border border-primary border-3">
                     <div class="card-header">
-                        <h4>UPDATE DATA MASTER JENIS RAW MATERIAL</h4>
+                        <h4>UPDATE DATA MASTER OPERATOR</h4>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('MasterOperator.update', $MasterOP->id) }}" method="POST">
@@ -66,11 +66,23 @@
                                     placeholder="Masukan Kategori Susut">
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Job</label>
-                                <input type="text" class="form-control @error('job') is-invalid @enderror" name="job"
-                                    value="{{ old('job', $MasterOP->job) }}" placeholder="Masukan Kategori Susut">
+                                <label class="font-weight-bold">Grade</label>
+                                <input type="text" class="form-control @error('grade') is-invalid @enderror"
+                                    name="grade" value="{{ old('grade', $MasterOP->grade) }}"
+                                    placeholder="Masukan Kategori Susut">
                             </div>
-
+                            <div class="form-group">
+                                <label class="font-weight-bold">Atasan</label>
+                                <input type="text" class="form-control @error('atasan') is-invalid @enderror"
+                                    name="atasan" value="{{ old('atasan', $MasterOP->atasan) }}"
+                                    placeholder="Masukan Kategori Susut">
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Job</label>
+                                <input type="text" class="form-control @error('job') is-invalid @enderror"
+                                    name="job" value="{{ old('job', $MasterOP->job) }}"
+                                    placeholder="Masukan Kategori Susut">
+                            </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Status</label>
                                 <select class="select2 form-control" @error('status') is-invalid @enderror" name="status">
