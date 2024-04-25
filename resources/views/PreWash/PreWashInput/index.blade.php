@@ -23,6 +23,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
+                                {{-- <th class="text-center" scope="col">Unit</th> --}}
                                 <th class="text-center" scope="col">Nomor Job</th>
                                 <th class="text-center" scope="col">Nomor Batch</th>
                                 <th class="text-center" scope="col">Jenis Job</th>
@@ -43,7 +44,7 @@
                             @forelse ($pre_wash_inputs as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{{ $item->unit }}</td>
+                                    {{-- <td class="text-center">{{ $item->unit }}</td> --}}
                                     <td class="text-center">{{ $item->nomor_job }}</td>
                                     <td class="text-center">{{ $item->nomor_batch }}</td>
                                     <td class="text-center">{{ $item->jenis_job }}</td>
@@ -51,11 +52,14 @@
                                     <td class="text-center">{{ number_format($item->pcs_job, 0, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
+                                    <td class="text-center">{{ $item->nomor_bstb }}</td>
                                     <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">{{ $item->created_at }}</td>
-                                    <td class="text-center">{{ $item->updated_at }}</td>
+                                    <td class="text-center">
+                                        {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
+                                    </td>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" id="deleteForm{{ $item->id }}"
