@@ -19,6 +19,8 @@ class MasterOperator extends Model
         'bagian',
         'workstation',
         'unit',
+        'grade',
+        'atasan',
         'job',
         'status',
     ];

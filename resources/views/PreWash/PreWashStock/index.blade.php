@@ -52,7 +52,9 @@
                                     <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">{{ $item->created_at }}</td>
-                                    <td class="text-center">{{ $item->updated_at }}</td>
+                                    <td class="text-center">
+                                        {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
+                                    </td>
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">

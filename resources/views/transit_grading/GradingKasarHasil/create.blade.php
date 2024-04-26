@@ -299,58 +299,10 @@
             });
         });
 
-        $(document).ready(function() {
-            // Mengambil daftar nomor grading yang belum digunakan
-            $.ajax({
-                url: `{{ route('GradingKasarHasil.getUnusedNomorGrading') }}`,
-                method: 'GET',
-                success: function(response) {
-                    // Mengisi dropdown dengan nomor grading yang belum digunakan
-                    response.forEach(nomorGrading => {
-                        $('#nomor_grading').append(
-                            `<option value="${nomorGrading}">${nomorGrading}</option>`);
-                    });
-                },
-                error: function(error) {
-                    console.error('Error:', error);
-                }
-            });
-
-            // Event change pada dropdown nomor grading
-            $('#nomor_grading').on('change', function() {
-                // Implementasikan logika yang ada di sini
-            });
-
-            // Event change pada input berat grading
-            $('#berat_grading').on('change', function() {
-                // Implementasikan logika yang ada di sini
-            });
-        });
         // hitung nilai berat
         function hitungNilaiBerat() {
             let totalBerat
         }
-
-        // function hitungNilaiSusut() {
-        //     let totalBeratGradingtest = parseFloat($('#total_berat').val());
-
-        //     if (isNaN(totalBeratGradingtest)) {
-        //         totalBeratGradingtest = parseFloat($('#berat_grading').val()) || 0;
-        //     }
-
-        //     let beratAdding = parseFloat($('#berat_adding').val());
-
-        //     if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding) && beratAdding !== 0) {
-        //         let nilaiSusut = (1 - totalBeratGradingtest / beratAdding);
-        //         console.log("totalTest = " + totalBeratGradingtest);
-        //         console.log("Berat Adding = " + beratAdding);
-        //         console.log("Susut = " + nilaiSusut);
-        //         return nilaiSusut;
-        //     } else {
-        //         console.error('Input tidak valid untuk berat_grading atau berat');
-        //         return null;
-        //     }
-        // }
 
         function hitungNilaiSusut() {
             let totalBeratGradingtest = parseFloat($('#total_berat').val());
