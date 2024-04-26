@@ -356,6 +356,21 @@
 
                                         </ul>
                                     </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('CabutBuluPenyebaran*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Cabut Bulu</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutBuluPenyebaran*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutBuluPenyebaran.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Bulu
+                                                    <br>Penyebaran</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
                         @endrole

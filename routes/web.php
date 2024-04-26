@@ -407,6 +407,15 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\PreWash\PreWashStockController::class)->group(function () {
                 Route::get('/pre_wash_stock', 'index')->name('PreWashStock.index');
             });
+
+            Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenyebaranContoller::class)->group(function () {
+                Route::get('/cabut_bulu_penyebaran', 'index')->name('CabutBuluPenyebaran.index');
+                Route::get('/cabut_bulu_penyebaran/create', 'create')->name('CabutBuluPenyebaran.create');
+                Route::post('/cabut_bulu_penyebaran/store', 'store')->name('CabutBuluPenyebaran.store');
+                Route::post('/cabut_bulu_penyebaran/cek_data', 'CeksendData')->name('CabutBuluPenyebaran.CeksendData');
+                Route::get('/cabut_bulu_penyebaran/set', 'set')->name('CabutBuluPenyebaran.set');
+                Route::delete('/cabut_bulu_penyebaran/destroy/{nomor_bstb}', 'destroy')->name('CabutBuluPenyebaran.destroy');
+            });
         });
 
         // Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
