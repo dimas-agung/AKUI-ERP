@@ -626,6 +626,12 @@
             $('#user_created').prop('readonly', true);
             // Update indeks baris terakhir
             currentRowIndex++;
+            generateQrCode(nomor_job)
+            $('#cetak_nomor_job').val(nomor_job)
+            $('#cetak_jenis').val(jenis_grading)
+            $('#cetak_gramasi').val(berat_keluar)
+            $('#cetak_pcs').val(pcs_keluar)
+            window.print()
         }
 
         // Ambil indeks terakhir sebelum menghapus baris
@@ -738,4 +744,37 @@
             }
         }
     </script>
+@endsection
+@section('printArea')
+    <style>
+        @media print {
+            body {
+            visibility: hidden;
+            /* display: none; */
+            /* position: relative; */
+            }
+            #printableArea1 {
+            visibility: visible;
+            /* display: inline; */
+            position: absolute;
+            left: 0;
+            top: 0;
+            /* bottom: 0; */
+            /* right: 0; */
+            }
+            .no-print {
+                display: none; /* Menyembunyikan elemen dengan class "no-print" saat mencetak */
+            }
+        }
+    </style>
+    <div class="row" id="printableArea1" style="max-width: 200px;margin: 10px;">
+
+        <div id="qrcode" class="col" style="max-width: 70px;padding-right:0;padding-left:0;"></div>
+        <div class="col" style="font-size: 9px;width: 220px;padding-right:0;padding-left:0;" >
+            <span style="text-align: cendter;" id="cetak_nomor_batch">1234567890</span><br>
+            <span  id="cetak_jenis">PT12</span><br>
+            <span  id="cetak_nomor_job">010324-083609_AKI_ugk</span><br>
+            <span  id="cetak_gramasi">100</span>gr / <span  id="cetak_pcs">20</span>pcs
+        </div>
+    </div>
 @endsection
