@@ -212,7 +212,7 @@
                         @role('bahan_baku|admin')
                             <li class="sidebar-title">Production</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock', 'GradingHalusOutput*', 'TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock*', 'GradingHalusOutput*', 'TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*', 'CabutBuluPenerimaan*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Bahan Baku</span>
@@ -358,16 +358,39 @@
                                                     <br>Input</a>
                                             </li>
                                             <li class="submenu-item {{ Route::is('PreWashStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('PreWashStock.index') }}" class="submenu-link">Pre-Wahs
+                                                <a href="{{ route('PreWashStock.index') }}" class="submenu-link">Pre-Wash
                                                     Stock</a>
                                             </li>
                                             <li class="submenu-item {{ Route::is('PreWashOutput*') ? 'active' : '' }}">
                                                 <a href="{{ route('PreWashOutput.index') }}"
-                                                    class="submenu-link">Pre-Wahs Output</a>
+                                                    class="submenu-link">Pre-Wash Output</a>
                                             </li>
                                             <li class="submenu-item {{ Route::is('TransitPreWash*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitPreWash.index') }}"
-                                                    class="submenu-link">Transit Pre-Wahs</a>
+                                                    class="submenu-link">Transit Pre-Wash</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('TransitPreWash*', 'CabutBuluPenerimaan*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Cabut Bulu</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li class="submenu-item {{ Route::is('TransitPreWash*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitPreWash.index') }}"
+                                                    class="submenu-link">Transit Pre-Wash</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutBuluPenerimaan*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutBuluPenerimaan.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Bulu Penerimaan</a>
+                                            </li>
+                                            <li class="submenu-item {{ Route::is('PreWashOutput*') ? 'active' : '' }}">
+                                                <a href="{{ route('PreWashOutput.index') }}"
+                                                    class="submenu-link">Pre-Wash Output</a>
                                             </li>
 
                                         </ul>

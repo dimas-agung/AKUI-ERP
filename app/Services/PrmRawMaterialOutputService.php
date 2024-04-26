@@ -164,7 +164,7 @@ class PrmRawMaterialOutputService
             // return $existingItem
 
         $dataToUpdate = [
-            'berat_masuk'   => $itemObject->berat_masuk,
+            // 'berat_masuk'   => $itemObject->berat_masuk,
             'berat_keluar'  => $itemObject->berat,
             'sisa_berat'    => $itemObject->selisih_berat,
             'total_modal'   => $itemObject->total_modal_stock,
