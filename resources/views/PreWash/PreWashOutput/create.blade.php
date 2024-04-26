@@ -126,8 +126,8 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">Nomor Job</th>
-                                <th scope="col" class="text-center">Nomor Batch</th>
                                 <th scope="col" class="text-center">Nomor BSTB</th>
+                                <th scope="col" class="text-center">Nomor Batch</th>
                                 <th scope="col" class="text-center">Operator Perendaman</th>
                                 <th scope="col" class="text-center">Operator Bilas</th>
                                 <th scope="col" class="text-center">Operator Box</th>
@@ -295,7 +295,7 @@
             });
 
             // Mengosongkan nilai dropdown nomor_job
-            $('#nomor_job, #nomor_bstb, #nomor_batch, #jenis_job, #tujuan_kirim, #modal, #total_modal, #pcs_job, #berat_job, #operator_perendaman, #operator_bilas, #operator_box, #keterangan, #user_created')
+            $('#operator_perendaman, #operator_bilas, #operator_box, #keterangan')
                 .val('');
 
         }
