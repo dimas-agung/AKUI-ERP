@@ -626,11 +626,13 @@
             $('#user_created').prop('readonly', true);
             // Update indeks baris terakhir
             currentRowIndex++;
+            //cetak barcode
             generateQrCode(nomor_job)
-            $('#cetak_nomor_job').val(nomor_job)
-            $('#cetak_jenis').val(jenis_grading)
-            $('#cetak_gramasi').val(berat_keluar)
-            $('#cetak_pcs').val(pcs_keluar)
+            $('#cetak_nomor_batch').html(nomor_batch)
+            $('#cetak_nomor_job').html(nomor_job)
+            $('#cetak_jenis').html(jenis_grading)
+            $('#cetak_gramasi').html(berat_keluar)
+            $('#cetak_pcs').html(pcs_keluar)
             window.print()
         }
 
@@ -771,7 +773,7 @@
 
         <div id="qrcode" class="col" style="max-width: 70px;padding-right:0;padding-left:0;"></div>
         <div class="col" style="font-size: 9px;width: 220px;padding-right:0;padding-left:0;" >
-            <span style="text-align: cendter;" id="cetak_nomor_batch">1234567890</span><br>
+            <span style="text-align: center;" id="cetak_nomor_batch">1234567890</span><br>
             <span  id="cetak_jenis">PT12</span><br>
             <span  id="cetak_nomor_job">010324-083609_AKI_ugk</span><br>
             <span  id="cetak_gramasi">100</span>gr / <span  id="cetak_pcs">20</span>pcs

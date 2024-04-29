@@ -443,7 +443,7 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\PreWash\TransitPreWashController::class)->group(function () {
                 Route::get('/transit_pre_wash', 'index')->name('TransitPreWash.index');
             });
-        });
+
         Route::prefix('cabut_bulu')->middleware('role:cabut_bulu|admin')->group(function (){
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenerimaanController::class)->group(function () {
                 Route::get('/cabut_bulu_penerimaan', 'index')->name('CabutBuluPenerimaan.index');
