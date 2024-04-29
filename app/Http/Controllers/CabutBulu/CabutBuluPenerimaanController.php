@@ -20,6 +20,7 @@ class CabutBuluPenerimaanController extends Controller
         $i =1;
         $CBPenerimaan = CabutBuluPenerimaan::get();
 
+
         return response()->view('CabutBulu.CabutBuluPenerimaan.index', [
             'CBPenerimaan' => $CBPenerimaan,
             'i' => $i,

@@ -365,10 +365,14 @@ Route::middleware('auth')->group(function (){
                 Route::get('/cabut_bulu_penerimaan/show/{id}', 'show')->name('CabutBuluPenerimaan.show');
                 Route::get('/cabut_bulu_penerimaan/edit/{id}', 'edit')->name('CabutBuluPenerimaan.edit');
                 Route::put('/cabut_bulu_penerimaan/update/{id}', 'update')->name('CabutBuluPenerimaan.update');
-                Route::delete('/cabut_bulu_penerimaan/destroy/{nomor_job}', 'destroy')->name('CabutBuluPenerimaan.destroy');
+                Route::delete('/cabut_bulu_penerimaan/destroy/{nomor_bstb}', 'destroy')->name('CabutBuluPenerimaan.destroy');
                 Route::get('/cabut_bulu_penerimaan/get_data_nomor_job', 'set')->name('CabutBuluPenerimaan.set');
                 Route::post('/cabut_bulu_penerimaan/simpanData', 'simpanData')->name('CabutBuluPenerimaan.simpanData');
                 Route::post('/cabut_bulu_penerimaan/cek_data', 'CeksendData')->name('CabutBuluPenerimaan.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\CabutBulu\CabutBuluStockController::class)->group(function () {
+                Route::get('/cabut_bulu_stock', 'index')->name('CabutBuluStock.index');
             });
         });
     });

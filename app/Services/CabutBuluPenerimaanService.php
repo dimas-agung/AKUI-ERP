@@ -9,6 +9,7 @@ use App\Models\TransitPreWash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 
 class CabutBuluPenerimaanService
 {
@@ -133,24 +134,22 @@ class CabutBuluPenerimaanService
             DB::beginTransaction();
 
             // Ambil data PreCleaningInput berdasarkan nomor_bstb
-            $PreGradingHalusInputs = CabutBuluPenerimaan::where('nomor_bstb', '=', $nomor_bstb)->get();
-            // $PreGradingHalusInputs = PreGradingHalusInput::findOrFail($id);
+            $PreCleaningInputs = CabutBuluPenerimaan::where('nomor_bstb', '=', $nomor_bstb)->get();
 
-            if ($PreGradingHalusInputs->isEmpty()) {
+            if ($PreCleaningInputs->isEmpty()) {
                 // Redirect ke index dengan pesan error jika data tidak ditemukan
                 return redirect()->route('CabutBuluPenerimaan.index')->with(['error' => 'Data tidak ditemukan!']);
             }
 
-            foreach ($PreGradingHalusInputs as $PreCleaningI) {
-                // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
+            foreach ($PreCleaningInputs as $PreCleaningI) {
+                // Ambil data PreCleaningStock berdasarkan id_box_grading_kasar dan id_box_raw_material
                 $PreCleaningS = CabutBuluStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
-                    ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
                     ->first();
 
                 if ($PreCleaningS) {
-                    // Ambil data TransitPreCleaningStock berdasarkan nomor job dan nomor bstb
-                    $stockPrmRawMaterial = TransitPreWash::where('nomor_job', '=', $PreCleaningI->nomor_job)
-                        ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
+                    // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
+                    $stockPrmRawMaterial = TransitPreWash::where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
+                        ->where('nomor_job', '=', $PreCleaningI->nomor_job)
                         ->first();
 
                     if ($stockPrmRawMaterial) {
@@ -158,37 +157,58 @@ class CabutBuluPenerimaanService
                         $beratSebelumnya = $stockPrmRawMaterial->berat_job;
                         $pcsSebelumnya = $stockPrmRawMaterial->pcs_job;
 
-                        // Hitung total modal baru berdasarkan perbedaan berats
-                        $perbedaanBerat = $beratSebelumnya + $PreCleaningI->berat_job;
-                        $perbedaanPcs = $pcsSebelumnya + $PreCleaningI->pcs_job;
-                        // $totalModalBaru = $perbedaanBerat * $PreCleaningI->modal;
+                        // Hitung perbedaan berat dan pcs
+                        $perbedaanBerat = $PreCleaningI->berat_job;
+                        $perbedaanPcs = $PreCleaningI->pcs_job;
 
-                        // Update data TransitPreCleaningStock dengan berat, pcs, dan total modal yang baru
+                        // Hitung total modal baru
+                        // $totalModalBaru = $totalModalSebelumnya - ($beratSebelumnya * $PreCleaningI->modal);
+
+                        // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
                         $stockPrmRawMaterial->update([
-                            'berat_job' => max($perbedaanBerat, 0),
-                            'pcs_job' => max($perbedaanPcs, 0),
+                            'berat_job' => max($beratSebelumnya - $perbedaanBerat, 0),
+                            'pcs_job' => max($pcsSebelumnya - $perbedaanPcs, 0),
                             // 'total_modal' => max($totalModalBaru, 0),
                         ]);
                     }
                 }
 
-                // Hapus data PreGradingHalusInput dan PreCleaningStock
+                // Simpan data sebelum dihapus
+                $beratSebelumHapus = $PreCleaningI->berat_job;
+                $pcsSebelumHapus = $PreCleaningI->pcs_job;
+                $totalModalSebelumHapus = $PreCleaningI->total_modal;
+
+                // Hapus data PreCleaningInput dan PreCleaningStock
                 $PreCleaningI->delete();
                 if ($PreCleaningS) {
                     $PreCleaningS->delete();
                 }
 
-                // Perbarui status PreCleaningOutput jika ada
-                $existingItems = PreWashOutput::where('nomor_job', $PreCleaningI->nomor_job)
-                    ->where('nomor_bstb', $PreCleaningI->nomor_bstb)
-                    ->get();
+                // Kembalikan nilai sebelum dihapus
+                if ($stockPrmRawMaterial) {
+                    $stockPrmRawMaterial->update([
+                        'berat_job' => $stockPrmRawMaterial->berat_job + $beratSebelumHapus,
+                        'pcs_job' => $stockPrmRawMaterial->pcs_job + $pcsSebelumHapus
+                    ]);
+                }
+
+                $existingItems = PreWashOutput::where('nomor_bstb', $PreCleaningI->nomor_bstb)
+                ->where('nomor_job', $PreCleaningI->nomor_job)
+                ->get();
 
                 // Logika Update Status
-                if ($existingItems->isNotEmpty()) {
+                if ($existingItems) {
                     foreach ($existingItems as $existingItem) {
                         // Perbarui data untuk setiap item yang ada
                         $existingItem->update(['status' => 1]);
                     }
+                } else {
+                    // Jika tidak ada item PreWashOutput yang sesuai, buat baru dengan status 1
+                    PreWashOutput::create([
+                        'nomor_bstb' => $PreCleaningI->nomor_bstb,
+                        'status' => 1,
+                        // Tambahkan kolom-kolom lain sesuai kebutuhan
+                    ]);
                 }
             }
 
