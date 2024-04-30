@@ -6,6 +6,7 @@
     Input Grading Kasar
 @endsection
 @section('content')
+
     {{-- <div class="container"> --}}
     <div class="card border border-primary border-3 mt-2">
         <form action="{{ route('PrmRawMaterialOutput.store') }}" method="POST">
@@ -219,6 +220,7 @@
     </div>
     </form>
 
+
 @endsection
 @section('script')
     <script>
@@ -410,6 +412,8 @@
 
             // Update indeks baris terakhir
             currentRowIndex++;
+
+
         }
 
         // Ambil indeks terakhir sebelum menghapus baris
@@ -531,3 +535,4 @@
         }
     </script>
 @endsection
+

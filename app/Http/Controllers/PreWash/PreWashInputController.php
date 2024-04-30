@@ -111,32 +111,20 @@ class PreWashInputController extends Controller
                     // Buat instansi PreCleaningInput
                     PreWashInput::create($mergedData);
 
-                    // PreWashStock::create([
-                    //     'unit'      => 'Pre Cleaning',
-                    //     'nomor_job'             => $mergedData['nomor_job'],
-                    //     'id_box_grading_kasar'  => $mergedData['id_box_grading_kasar'],
-                    //     'nomor_bstb'    => $mergedData['nomor_bstb'],
-                    //     'nomor_batch'   => $mergedData['nomor_batch'],
-                    //     'nama_supplier' => $mergedData['nama_supplier'],
-                    //     'id_box_raw_material'        => $mergedData['id_box_raw_material'],
-                    //     'jenis_raw_material'         => $mergedData['jenis_raw_material'],
-                    //     'kadar_air'         => $mergedData['kadar_air'],
-                    //     'tujuan_kirim'      => $mergedData['tujuan_kirim'],
-                    //     'jenis_kirim'       => $mergedData['jenis_kirim'],
-                    //     'berat_keluar'      => $mergedData['berat_keluar'] ?? 0,
-                    //     'berat_masuk'       => $mergedData['berat_kirim'] ?? 0,
-                    //     'sisa_berat'       => $mergedData['berat_kirim'] ?? 0,
-                    //     'pcs_keluar'        => $mergedData['pcs_keluar'] ?? 0,
-                    //     'pcs_masuk'         => $mergedData['pcs_kirim'] ?? 0,
-                    //     'sisa_pcs'         => $mergedData['pcs_kirim'] ?? 0,
-                    //     'nomor_grading'     => $mergedData['nomor_grading'],
-                    //     'modal'             => $mergedData['modal'],
-                    //     'total_modal'       => $mergedData['total_modal'],
-                    //     'keterangan'        => $mergedData['keterangan'] ?? 0,
-                    //     'user_created'  => $mergedData['user_created'],
-                    //     'user_update'   => $mergedData['user_updated'] ?? `"There isn't any"`,
-                    //     'nomor_nota_internal'   => $mergedData['nomor_nota_internal']
-                    // ]);
+                    PreWashStock::create([
+                        'unit'                  => 'Pre Wash',
+                        'nomor_job'             => $mergedData['nomor_job'],
+                        'nomor_batch'           => $mergedData['nomor_batch'],
+                        'jenis_job'             => $mergedData['jenis_job'],
+                        'berat_job'             => $mergedData['berat_job'],
+                        'pcs_job'               => $mergedData['pcs_job'],
+                        'tujuan_kirim'          => $mergedData['tujuan_kirim'],
+                        'modal'                 => $mergedData['modal'],
+                        'total_modal'           => $mergedData['total_modal'],
+                        'keterangan'            => $mergedData['keterangan'] ?? 0,
+                        'user_created'          => $mergedData['user_created'],
+                        'user_update'           => $mergedData['user_updated'] ?? `"There isn't any"`,
+                    ]);
 
                     // $itemObject = (object) $mergedData;
 

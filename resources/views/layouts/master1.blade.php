@@ -28,13 +28,15 @@
     <link rel="stylesheet" href="{{ asset('https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css') }}">
     <link rel="stylesheet"
         href="{{ asset('https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css') }}">
-
-
+{{-- qrcode --}}
+        <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
-
+    {{-- <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.css"></script> --}}
 
     <!-- Tag head lainnya -->
     <style>
+
         .dataTables_wrapper {
             overflow-x: hidden;
         }
@@ -58,8 +60,9 @@
 </head>
 
 <body>
+
     <script src="assets/static/js/initTheme.js"></script>
-    <div id="app">
+    <div id="app" class="no-print">
         <div id="sidebar">
             <div class="sidebar-wrapper border-end border-primary border-3 active">
                 <div class="sidebar-header position-relative">
@@ -209,7 +212,7 @@
                         @role('bahan_baku|admin')
                             <li class="sidebar-title">Production</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock', 'GradingHalusOutput*', 'TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock*', 'GradingHalusOutput*', 'TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*', 'CabutBuluPenerimaan*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Bahan Baku</span>
@@ -355,18 +358,56 @@
                                                     <br>Input</a>
                                             </li>
                                             <li class="submenu-item {{ Route::is('PreWashStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('PreWashStock.index') }}" class="submenu-link">Pre-Wahs
+                                                <a href="{{ route('PreWashStock.index') }}" class="submenu-link">Pre-Wash
                                                     Stock</a>
                                             </li>
                                             <li class="submenu-item {{ Route::is('PreWashOutput*') ? 'active' : '' }}">
                                                 <a href="{{ route('PreWashOutput.index') }}"
-                                                    class="submenu-link">Pre-Wahs Output</a>
+                                                    class="submenu-link">Pre-Wash Output</a>
                                             </li>
                                             <li class="submenu-item {{ Route::is('TransitPreWash*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitPreWash.index') }}"
-                                                    class="submenu-link">Transit Pre-Wahs</a>
+                                                    class="submenu-link">Transit Pre-Wash</a>
                                             </li>
 
+                                        </ul>
+                                    </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('TransitPreWash*', 'CabutBuluPenerimaan*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Cabut Bulu</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li class="submenu-item {{ Route::is('TransitPreWash*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitPreWash.index') }}"
+                                                    class="submenu-link">Transit Pre-Wash</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutBuluPenerimaan*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutBuluPenerimaan.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Bulu Penerimaan</a>
+                                            </li>
+                                            <li class="submenu-item {{ Route::is('PreWashOutput*') ? 'active' : '' }}">
+                                                <a href="{{ route('PreWashOutput.index') }}"
+                                                    class="submenu-link">Pre-Wash Output</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('CabutBuluPenyebaran*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Cabut Bulu</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutBuluPenyebaran*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutBuluPenyebaran.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Bulu
+                                                    <br>Penyebaran</a>
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -544,6 +585,7 @@
                 </div>
             </footer>
         </div>
+
     </div>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -582,8 +624,9 @@
     </script>
 
 
+
     <script>
-        $(document).ready(function() {
+    $(document).ready(function() {
             $('.select2').select2();
         });
 
@@ -719,7 +762,21 @@
             });
         });
     </script>
+    <script>
+        function generateQrCode(value) {
+
+            var qr = new QRCode(document.getElementById("qrcode"), {
+               text: value,
+               width: 60,
+               height: 60,
+               colorDark : "#000000",
+               colorLight : "#ffffff",
+               correctLevel : QRCode.CorrectLevel.H
+           });
+        }
+    </script>
     @yield('script')
+    @yield('printArea')
 </body>
 
 </html>
