@@ -30,8 +30,4 @@ class MasterOperator extends Model
     {
         return $this->hasMany(PreWashOutput::class, 'operator_perendaman', 'nama');
     }
-    public function PreWashOutput()
-    {
-        return $this->hasMany(PreWashOutput::class, 'operator_perendaman', 'nama');
-    }
 }
