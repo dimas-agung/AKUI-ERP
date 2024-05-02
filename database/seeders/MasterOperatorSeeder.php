@@ -23,6 +23,8 @@ class MasterOperatorSeeder extends Seeder
             'workstation' => 'Bahan Baku',
             'unit' => 'Pre Cleaning',
             'job' => 'Cutter',
+            'grade_operator' => 'A',
+            'nama_team_leader' => 'Andi',
             'status' => 1,
         ]);
         MasterOperator::create([
@@ -35,6 +37,8 @@ class MasterOperatorSeeder extends Seeder
             'workstation' => 'Bahan Baku',
             'unit' => 'Pre Cleaning',
             'job' => 'Sikat + Kompresor',
+            'grade_operator' => 'B',
+            'nama_team_leader' => 'Budi',
             'status' => 1,
         ]);
         MasterOperator::create([
@@ -47,6 +51,8 @@ class MasterOperatorSeeder extends Seeder
             'workstation' => 'Bahan Baku',
             'unit' => 'Pre Cleaning',
             'job' => 'Flek + Poles',
+            'grade_operator' => 'C',
+            'nama_team_leader' => 'Cici',
             'status' => 1,
         ]);
         MasterOperator::create([
@@ -59,6 +65,8 @@ class MasterOperatorSeeder extends Seeder
             'workstation' => 'Bahan Baku',
             'unit' => 'Pre Cleaning',
             'job' => 'Cutter',
+            'grade_operator' => 'A',
+            'nama_team_leader' => 'Andi',
             'status' => 1,
         ]);
         MasterOperator::create([
@@ -71,6 +79,8 @@ class MasterOperatorSeeder extends Seeder
             'workstation' => 'Bahan Baku',
             'unit' => 'Pre Cleaning',
             'job' => 'Sikat + Kompresor',
+            'grade_operator' => 'B',
+            'nama_team_leader' => 'Budi',
             'status' => 1,
         ]);
         MasterOperator::create([
@@ -83,6 +93,8 @@ class MasterOperatorSeeder extends Seeder
             'workstation' => 'Bahan Baku',
             'unit' => 'Pre Cleaning',
             'job' => 'Flek + Poles',
+            'grade_operator' => 'C',
+            'nama_team_leader' => 'Cici',
             'status' => 1,
         ]);
     }

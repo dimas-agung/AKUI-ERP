@@ -50,7 +50,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(PrmRawMaterialStockSeeder::class);
         $this->call(GradingKasarInputSeeder::class);
         $this->call(PreCleaningStockSeeder::class);
-        $this->call(MasterOperatorSeeder::class);
         $this->call(PreGradingHalusStockSeeder::class);
         $this->call(GradingHalusStockSeeder::class);
         $this->call(MasterOngkosCuciSeeder::class);
@@ -59,5 +58,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(MasterJenisGradingHalusSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UsersSeeder::class);
+        $this->call(CabutBuluStockSeeder::class);
     }
 }

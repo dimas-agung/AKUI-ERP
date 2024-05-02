@@ -19,11 +19,18 @@
                         <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
-                            @foreach ($cabut_bulu_stocks as $item)
+                            {{-- @foreach ($cabut_bulu_stocks as $item)
                                 <option value="{{ $item->nomor_job }}">
                                     {{ $item->nomor_job }}
                                 </option>
+                            @endforeach --}}
+                            @foreach ($get_unused_nomor_job as $item)
+                                @if ($item->cabut_bulu_penyebaran_count == 0)
+                                    <option value="{{ $item->nomor_job }}">
+                                        {{ $item->nomor_job }}</option>
+                                @endif
                             @endforeach
+
                         </select>
                     </div>
 
@@ -67,18 +74,15 @@
                         <input type="text" class="form-control" id="total_modal" readonly>
                     </div>
 
-                    <div class="col-md-12">
-                        <label for="basic-usage" class="form-label">Operator Sikat & Kompresor</label>
+                    <div class="col-md-6">
+                        <label for="basic-usage" class="form-label">NIP Operator</label>
                         <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
-                            name="operator_sikat_dan_kompresor" id="operator_sikat_dan_kompresor"
-                            data-placeholder="Pilih Operator Sikat & Kompresor">
-                            <option value="">Pilih Operator Sikat & Kompresor</option>
-                            @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Sikat + Kompresor' && $MasterSPRM->status == 1)
-                                    <option value="{{ $MasterSPRM->nama }}">
-                                        {{ $MasterSPRM->nama }}
-                                    </option>
-                                @endif
+                            name="nip_operator" id="nip_operator" data-placeholder="Pilih NIP Operator">
+                            <option value="">NIP Operator</option>
+                            @foreach ($master_operators->sortBy('nip') as $MasterSPRM)
+                                <option value="{{ $MasterSPRM->nip }}">
+                                    {{ $MasterSPRM->nip }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -102,11 +106,18 @@
                         <label for="keterangan_2" class="form-label">Keterangan 2</label>
                         <input type="text" class="form-control" id="keterangan_2">
                     </div>
+                    <div class="col-md-6">
+                        <label for="user_created" class="form-label">NIP Admin</label>
+                        <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}">
+                    </div>
 
 
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" id="tambah_data"
                             onclick="addRow()">Tambah</button>
+                        <a href="{{ Route('CabutBuluPenyebaran.index') }}" type="button"
+                            class="btn btn-danger">Close</a>
+
                     </div>
                 </form>
             </div>
@@ -121,34 +132,19 @@
                             <tr>
                                 {{-- <th scope="col" class="text-center">No</th> --}}
                                 <th scope="col" class="text-center">Nomor Job</th>
-                                <th scope="col" class="text-center">ID Box Grading Kasar</th>
-                                <th scope="col" class="text-center">Nomor BSTB</th>
-                                <th scope="col" class="text-center">ID Box Raw Material</th>
                                 <th scope="col" class="text-center">Nomor Batch</th>
-                                <th scope="col" class="text-center">Nomor Nota Internal</th>
-                                <th scope="col" class="text-center">Nama Supplier</th>
-                                <th scope="col" class="text-center">Jenis Raw Material</th>
-                                <th scope="col" class="text-center">Kadar Air</th>
-                                <th scope="col" class="text-center">Jenis Kirim</th>
-                                <th scope="col" class="text-center">Berat Kirim</th>
-                                <th scope="col" class="text-center">Pcs Kirim</th>
+                                <th scope="col" class="text-center">Jenis Job</th>
+                                <th scope="col" class="text-center">Berat Job</th>
+                                <th scope="col" class="text-center">Pcs Job</th>
                                 <th scope="col" class="text-center">Tujuan Kirim</th>
+                                <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
-                                {{-- <th scope="col" class="text-center">Sisa Berat</th> --}}
-                                <th scope="col" class="text-center">Operator Flek & Kompresor</th>
-                                <th scope="col" class="text-center">Operator Flek & Poles</th>
-                                <th scope="col" class="text-center">Operator Cutter</th>
-                                <th scope="col" class="text-center">Kuningan</th>
-                                <th scope="col" class="text-center">Sterofoam</th>
-                                <th scope="col" class="text-center">Karat</th>
-                                <th scope="col" class="text-center">Rontokan Flex</th>
-                                <th scope="col" class="text-center">Rontokan Bahan</th>
-                                <th scope="col" class="text-center">Rontokan Serabut</th>
-                                <th scope="col" class="text-center">WS-0-0-0</th>
-                                <th scope="col" class="text-center">Berat Pre Cleaning</th>
-                                <th scope="col" class="text-center">Pcs</th>
-                                <th scope="col" class="text-center">Susut</th>
+                                <th scope="col" class="text-center">Nip Operator</th>
+                                <th scope="col" class="text-center">Nama Operator</th>
+                                <th scope="col" class="text-center">Grade Operator</th>
+                                <th scope="col" class="text-center">Nama Team Leader</th>
+                                <th scope="col" class="text-center">Keterangan 2</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
@@ -158,7 +154,7 @@
                     </table>
                 </div>
                 <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-success" onclick="simpanData()">Simpan</button>
+                    <button type="submit" class="btn btn-success" onclick="CeksendData()">Simpan</button>
                 </div>
             </div>
         </div>
@@ -181,42 +177,15 @@
                     success: function(response) {
                         console.log(response);
 
-                        // Menghitung berat_masuk - berat_keluar
-                        let sisaBerat = response.berat_masuk - response.berat_keluar;
-
-                        // Pemeriksaan jika sisaBerat tidak sama dengan 0
-                        if (sisaBerat !== 0) {
-                            // Menyimpan sisaBerat dalam variabel baru
-                            let sisaBeratFormatted = parseFloat(sisaBerat).toFixed(2);
-
-                            // Mengatur nilai Nomor Batch sesuai dengan respons dari server
-                            $('#nomor_batch').val(response.nomor_batch);
-                            $('#jenis_job').val(response.jenis_job);
-                            $('#berat_job').val(response.berat_job);
-                            $('#pcs_job').val(response.pcs_job);
-                            $('#tujuan_kirim').val(response.tujuan_kirim);
-                            $('#modal').val(response.modal);
-                            $('#keterangan').val(response.keterangan);
-                            $('#total_modal').val(response.total_modal);
-                            if (!isNaN(sisaBeratFormatted)) {
-                                $('#sisa_berat').val(sisaBeratFormatted);
-                            } else {
-                                console.error('Nilai sisa berat tidak valid.');
-                            }
-                        } else {
-                            // Jika sisaBerat === 0, hapus opsi dan reset nilai input
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Berat masuk - berat keluar sama dengan 0. Pilih nomor job lain.',
-                            }).then(() => {
-                                // Hapus opsi nomor job yang sudah dipilih
-                                $('#nomor_job option[value="' + selectedNomorJob + '"]')
-                                    .remove();
-                                // Reset nilai input
-                                $('#nomor_job').val('').trigger('change');
-                            });
-                        }
+                        // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                        $('#nomor_batch').val(response.nomor_batch);
+                        $('#jenis_job').val(response.jenis_job);
+                        $('#berat_job').val(response.berat_job);
+                        $('#pcs_job').val(response.pcs_job);
+                        $('#tujuan_kirim').val(response.tujuan_kirim);
+                        $('#modal').val(response.modal);
+                        $('#keterangan').val(response.keterangan);
+                        $('#total_modal').val(response.total_modal);
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -225,95 +194,33 @@
             });
         });
 
+        // DropDown NIP
         $(document).ready(function() {
-            // Menangani perubahan pada dropdown nomor_job
-            $('#plant').on('change', function() {
-                const selectedPlant = $(this).val();
-                if (selectedPlant) { // Check if selectedPlant is not empty
-                    const nomorGrading = generateNomorGrading(selectedPlant);
-                    $('#nomor_bstb').val(nomorGrading);
-                } else {
-                    $('#nomor_bstb').val(''); // Clear nomor_grading if plant is empty
-                }
+            let selectedNip = '';
+
+            $('#nip_operator').on('change', function() {
+                selectedNip = $(this).val();
+
+                $.ajax({
+                    url: '{{ route('CabutBuluPenyebaran.setNip') }}',
+                    method: 'GET',
+                    data: {
+                        nip: selectedNip
+                    },
+                    success: function(response) {
+                        console.log(response);
+
+                        // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                        $('#nama_operator').val(response.nama);
+                        $('#grade_operator').val(response.grade_operator);
+                        $('#nama_team_leader').val(response.nama_team_leader);
+
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
             });
-
-            function generateNomorGrading(selectedPlant) {
-                const now = new Date();
-                const tahun = now.getFullYear().toString().substr(-2);
-                const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
-                const tanggal = ('0' + now.getDate()).slice(-2);
-                const jam = ('0' + now.getHours()).slice(-2);
-                const menit = ('0' + now.getMinutes()).slice(-2);
-                const detik = ('0' + now.getSeconds()).slice(-2);
-
-                const nomorGrading = `BSTB_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_${selectedPlant}_UPC`;
-
-                return nomorGrading;
-            }
-
-        });
-        // Fungsi untuk menghitung persentase susut
-        function hitungPersentaseSusut(nilaiAwal, nilaiAkhir) {
-            // Menghitung nilai susut
-            var nilaiSusut = nilaiAwal - nilaiAkhir;
-
-            // Menghitung persentase susut
-            var persentaseSusut = (nilaiSusut / nilaiAwal) * 100;
-
-            // Mengembalikan hasil
-            return persentaseSusut;
-        }
-
-        function calculateTotalBerat() {
-            let totalBerat = 0;
-            // Iterasi melalui setiap baris dalam tabel
-            $('#dataTable tbody tr').each(function() {
-                // Mendapatkan nilai berat adding dari baris saat ini dan menambahkannya ke totalBerat
-                let beratAdding = parseFloat($(this).find('td:eq(10)').text()) || 0;
-                totalBerat += beratAdding;
-            });
-            // Menampilkan total berat di input #total_berat
-            $('#total_berat').val(totalBerat);
-        }
-
-        function calculateTotalPcs() {
-            let totalPcs = 0;
-            // Iterasi melalui setiap baris dalam tabel
-            $('#dataTable tbody tr').each(function() {
-                // Mendapatkan nilai pcs adding dari baris saat ini dan menambahkannya ke totalPcs
-                let pcsAdding = parseFloat($(this).find('td:eq(11)').text()) || 0;
-                totalPcs += pcsAdding;
-            });
-            // Menampilkan total pcs di input #total_pcs
-            $('#total_pcs').val(totalPcs);
-        }
-
-        function calculateTotalBox() {
-            let jumlahBaris = $('#dataTable tbody tr').length;
-            // Tampilkan Jumlah Baris di Input dengan ID "total_box"
-            $('#total_box').val(jumlahBaris);
-        }
-
-        // Event listener untuk menghitung persentase susut saat input berubah
-        $("#berat_precleaning").on("input", function() {
-            // Mendapatkan nilai awal dan nilai akhir dari input
-            let nilaiAwal = parseFloat($("#berat_kirim").val()) || 0; // Jika tidak valid, asumsi nilai 0
-            let nilaiAkhir = parseFloat($(this).val()) || 0; // Jika tidak valid, asumsi nilai 0
-
-            // Memastikan nilai akhir tidak nol untuk menghindari pembagian oleh nol
-            if (nilaiAkhir !== 0) {
-                // Menghitung persentase susut
-                let persentaseSusut = hitungPersentaseSusut(nilaiAwal, nilaiAkhir);
-
-                // Menampilkan hasil pada input susut
-                $("#susut").val(persentaseSusut.toFixed(2) + " %");
-                // Menampilkan hasil dengan dua desimal dan tambahkan simbol persen
-
-
-            } else {
-                // Jika nilai akhir nol, tampilkan pesan atau ambil tindakan lain
-                $("#susut").val("Tidak dapat melakukan pembagian oleh nol");
-            }
         });
 
         function validateForm() {
@@ -322,51 +229,12 @@
 
             // Mendapatkan nilai dari semua input
             let nomor_job = $('#nomor_job').val();
-            let plant = $('#plant').val();
-            let id_box_grading_kasar = $('#id_box_grading_kasar').val();
-            let nomor_bstb = $('#nomor_bstb').val();
-            let id_box_raw_material = $('#id_box_raw_material').val();
-            let nomor_batch = $('#nomor_batch').val();
-            let nomor_nota_internal = $('#nomor_nota_internal').val();
-            let nama_supplier = $('#nama_supplier').val();
-            let jenis_raw_material = $('#jenis_raw_material').val();
-            let jenis_kirim = $('#jenis_kirim').val();
-            let tujuan_kirim = $('#tujuan_kirim').val();
-            let modal = $('#modal').val();
-            let total_modal = $('#total_modal').val();
-            let kadar_air = $('#kadar_air').val();
-            let pcs_kirim = $('#pcs_kirim').val();
-            let berat_kirim = $('#berat_kirim').val();
-            let operator_sikat_n_kompresor = $('#operator_sikat_dan_kompresor').val();
-            let operator_flek_n_poles = $('#operator_flex_dan_poles').val();
-            let operator_cutter = $('#operator_cutter').val();
-            let kuningan = $('#kuningan').val();
-            let sterofoam = $('#Sterofoam').val();
-            let karat = $('#karat').val();
-            let rontokan_flek = $('#rontokan_flex').val();
-            let rontokan_bahan = $('#rontokan_bahan').val();
-            let rontokan_serabut = $('#rontokan_serabut').val();
-            let ws_0_0_0 = $('#ws').val();
-            let berat_pre_cleaning = $('#berat_precleaning').val();
-            let pcs_pre_cleaning = $('#pcs').val();
-            let susut = $('#susut').val();
+            let nip_operator = $('#nip_operator').val();
             let user_created = $('#user_created').val();
 
             // Memeriksa setiap input, dan jika kosong, tambahkan ke daftar kolom yang belum diisi
             if (!nomor_job) emptyFields.push('Nomor Job');
-            if (!plant) emptyFields.push('Plant');
-            if (!operator_sikat_n_kompresor) emptyFields.push('Operator Sikat Kompresor');
-            if (!operator_flek_n_poles) emptyFields.push('Operator Flek Poles');
-            if (!operator_cutter) emptyFields.push('Operator Flek Cutter');
-            if (!kuningan) emptyFields.push('Kuningan');
-            if (!sterofoam) emptyFields.push('Sterofoam');
-            if (!karat) emptyFields.push('Karat');
-            if (!rontokan_flek) emptyFields.push('Rontokan Flek');
-            if (!rontokan_bahan) emptyFields.push('Rontokan Bahan');
-            if (!rontokan_serabut) emptyFields.push('Rontokan Serabut');
-            if (!ws_0_0_0) emptyFields.push('ws_0_0_0');
-            if (!berat_pre_cleaning) emptyFields.push('Berat Pre Cleaning');
-            if (!pcs_pre_cleaning) emptyFields.push('Pcs Pre Cleaning');
+            if (!nip_operator) emptyFields.push('Nip Operator');
             if (!user_created) emptyFields.push('NIP Admin');
 
             // Jika daftar kolom yang belum diisi tidak kosong, tampilkan pesan peringatan
@@ -403,124 +271,76 @@
                 // Hapus opsi nomor_job yang sudah dipilih dari dropdown
                 $('#nomor_job option[value="' + nomor_job + '"]').remove();
 
-                let id_box_grading_kasar = $('#id_box_grading_kasar').val();
-                let nomor_bstb = $('#nomor_bstb').val();
-                let id_box_raw_material = $('#id_box_raw_material').val();
                 let nomor_batch = $('#nomor_batch').val();
-                let nomor_nota_internal = $('#nomor_nota_internal').val();
-                let nama_supplier = $('#nama_supplier').val();
-                let jenis_raw_material = $('#jenis_raw_material').val();
-                let kadar_air = $('#kadar_air').val();
-                let jenis_kirim = $('#jenis_kirim').val();
-                let berat_kirim = $('#berat_kirim').val();
-                let pcs_kirim = $('#pcs_kirim').val();
+                let jenis_job = $('#jenis_job').val();
+                let berat_job = $('#berat_job').val();
+                let pcs_job = $('#pcs_job').val();
                 let tujuan_kirim = $('#tujuan_kirim').val();
+                let keterangan = $('#keterangan').val();
                 let modal = $('#modal').val();
                 let total_modal = $('#total_modal').val();
-                let operator_sikat_n_kompresor = $('#operator_sikat_dan_kompresor').val();
-                let operator_flek_n_poles = $('#operator_flex_dan_poles').val();
-                let operator_cutter = $('#operator_cutter').val();
-                let kuningan = $('#kuningan').val();
-                let sterofoam = $('#Sterofoam').val();
-                let karat = $('#karat').val();
-                let rontokan_flek = $('#rontokan_flex').val();
-                let rontokan_bahan = $('#rontokan_bahan').val();
-                let rontokan_serabut = $('#rontokan_serabut').val();
-                let ws_0_0_0 = $('#ws').val();
-                let berat_pre_cleaning = $('#berat_precleaning').val();
-                let pcs_pre_cleaning = $('#pcs').val();
-                let susut = $('#susut').val();
+                let nip_operator = $('#nip_operator').val();
+                let nama_operator = $('#nama_operator').val();
+                let grade_operator = $('#grade_operator').val();
+                let nama_team_leader = $('#nama_team_leader').val();
+                let keterangan_2 = $('#keterangan_2').val();
                 let user_created = $('#user_created').val();
-                let keterangan = $('#keterangan').val();
-                let susutTabel = parseFloat(susut).toFixed(2);
-                susutTabel = susutTabel.replace('.', '');
-                susutTabel = susutTabel.padStart(4, '0');
-
-                $('#plant').prop('disabled', true);
-                $('#nomor_bstb').prop('readonly', true);
 
                 let newRow = `<tr>` +
                     `<td class="text-center">${nomor_job}</td>` +
-                    `<td class="text-center">${id_box_grading_kasar}</td>` +
-                    `<td class="text-center">${nomor_bstb}</td>` +
-                    `<td class="text-center">${id_box_raw_material}</td>` +
                     `<td class="text-center">${nomor_batch}</td>` +
-                    `<td class="text-center">${nomor_nota_internal}</td>` +
-                    `<td class="text-center">${nama_supplier}</td>` +
-                    `<td class="text-center">${jenis_raw_material}</td>` +
-                    `<td class="text-center">${kadar_air}</td>` +
-                    `<td class="text-center">${jenis_kirim}</td>` +
-                    `<td class="text-center">${berat_kirim}</td>` +
-                    `<td class="text-center">${pcs_kirim}</td>` +
+                    `<td class="text-center">${jenis_job}</td>` +
+                    `<td class="text-center">${berat_job}</td>` +
+                    `<td class="text-center">${pcs_job}</td>` +
                     `<td class="text-center">${tujuan_kirim}</td>` +
+                    `<td class="text-center">${keterangan}</td>` +
                     `<td class="text-center">${modal}</td>` +
                     `<td class="text-center">${total_modal}</td>` +
-                    `<td class="text-center">${operator_sikat_n_kompresor}</td>` +
-                    `<td class="text-center">${operator_flek_n_poles}</td>` +
-                    `<td class="text-center">${operator_cutter}</td>` +
-                    `<td class="text-center">${kuningan}</td>` +
-                    `<td class="text-center">${sterofoam}</td>` +
-                    `<td class="text-center">${karat}</td>` +
-                    `<td class="text-center">${rontokan_flek}</td>` +
-                    `<td class="text-center">${rontokan_bahan}</td>` +
-                    `<td class="text-center">${rontokan_serabut}</td>` +
-                    `<td class="text-center">${ws_0_0_0}</td>` +
-                    `<td class="text-center">${berat_pre_cleaning}</td>` +
-                    `<td class="text-center">${pcs_pre_cleaning}</td>` +
-                    `<td class="text-center">${susutTabel}</td>` +
+                    `<td class="text-center">${nip_operator}</td>` +
+                    `<td class="text-center">${nama_operator}</td>` +
+                    `<td class="text-center">${grade_operator}</td>` +
+                    `<td class="text-center">${nama_team_leader}</td>` +
+                    `<td class="text-center">${keterangan_2}</td>` +
                     `<td class="text-center">${user_created}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
                     `</tr>`;
                 // Tambahkan Kedalam Tabel
                 $('#dataTable tbody').append(newRow);
 
-                calculateTotalBerat();
-                calculateTotalPcs();
-                calculateTotalBox();
-
                 dataArray.push({
                     nomor_job: nomor_job,
-                    id_box_grading_kasar: id_box_grading_kasar,
-                    nomor_bstb: nomor_bstb,
-                    id_box_raw_material: id_box_raw_material,
                     nomor_batch: nomor_batch,
-                    nomor_nota_internal: nomor_nota_internal,
-                    nama_supplier: nama_supplier,
-                    jenis_raw_material: jenis_raw_material,
-                    kadar_air: kadar_air,
-                    jenis_kirim: jenis_kirim,
-                    berat_kirim: berat_kirim,
-                    pcs_kirim: pcs_kirim,
+                    jenis_job: jenis_job,
+                    berat_job: berat_job,
+                    pcs_job: pcs_job,
                     tujuan_kirim: tujuan_kirim,
+                    keterangan: keterangan,
                     modal: modal,
                     total_modal: total_modal,
-                    operator_sikat_n_kompresor: operator_sikat_n_kompresor,
-                    operator_flek_n_poles: operator_flek_n_poles,
-                    operator_cutter: operator_cutter,
-                    kuningan: kuningan,
-                    sterofoam: sterofoam,
-                    karat: karat,
-                    rontokan_flek: rontokan_flek,
-                    rontokan_bahan: rontokan_bahan,
-                    rontokan_serabut: rontokan_serabut,
-                    ws_0_0_0: ws_0_0_0,
-                    berat_pre_cleaning: berat_pre_cleaning,
-                    pcs_pre_cleaning: pcs_pre_cleaning,
-                    susutTabel: susutTabel,
-                    keterangan: keterangan,
+                    nip_operator: nip_operator,
+                    nama_operator: nama_operator,
+                    grade_operator: grade_operator,
+                    nama_team_leader: nama_team_leader,
+                    keterangan_2: keterangan_2,
                     user_created: user_created,
                 });
+                console.log(dataArray);
 
                 // Mengosongkan nilai dropdown nomor_job
-                $('#id_box_grading_kasar, #id_box_raw_material, #nomor_batch, #nomor_nota_internal, #nama_supplier, #jenis_raw_material, #jenis_kirim, #tujuan_kirim, #modal, #total_modal, #kadar_air, #pcs_kirim, #berat_kirim, #operator_sikat_dan_kompresor, #operator_flex_dan_poles, #operator_cutter, #kuningan, #Sterofoam, #karat, #rontokan_flex, #rontokan_bahan,#rontokan_serabut, #ws, #berat_precleaning, #pcs')
-                    .val('');
-                $('#berat_kirim').val('');
-                $('#pcs_kirim').val('');
-                $('#susut').val('');
                 $('#nomor_job').val(null).trigger('change');
-                $('#operator_sikat_dan_kompresor').val(null).trigger('change');
-                $('#operator_flex_dan_poles').val(null).trigger('change');
-                $('#operator_cutter').val(null).trigger('change');
+                $('#nomor_batch').val('');
+                $('#jenis_job').val('');
+                $('#berat_job').val('');
+                $('#pcs_job').val('');
+                $('#tujuan_kirim').val('');
+                $('#keterangan').val('');
+                $('#modal').val('');
+                $('#total_modal').val('');
+                $('#nip_operator').val(null).trigger('change');
+                $('#nama_operator').val('');
+                $('#grade_operator').val('');
+                $('#nama_team_leader').val('');
+                $('#keterangan_2').val('');
 
             }
 
@@ -551,122 +371,131 @@
 
             // Hapus baris dari tabel
             row.remove();
-
-            let jumlahBaris = $('#dataTable tbody tr').length;
-            if (jumlahBaris === 0) {
-                // Jika tidak ada baris lagi, kosongkan nilai dari #plant dan #nomor_bstb
-                // $('#plant').val('');
-                $('#plant').val($('#plant option:first').val()).trigger('change').prop('disabled', false);
-                $('#nomor_bstb').val('').prop('readonly', false);
-                $('#nomor_bstb').val('');
-
-                let totalBeratKirim = 0;
-                $('#dataTable tbody tr').each(function() {
-                    let beratKirim = parseFloat($(this).find('td:eq(10)')
-                        .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
-                    if (!isNaN(beratKirim)) {
-                        totalBeratKirim += beratKirim;
-                    }
-                });
-                $('#total_berat').val(totalBeratKirim);
-                // Total Pcs
-                let totalPcsKirim = 0;
-                $('#dataTable tbody tr').each(function() {
-                    let pcsKirim = parseFloat($(this).find('td:eq(11)')
-                        .text()); // Ganti angka 11 dengan indeks kolom pcs_kirim dalam tabel
-                    if (!isNaN(pcsKirim)) {
-                        totalPcsKirim += pcsKirim;
-                    }
-                });
-                $('#total_pcs').val(totalPcsKirim);
-
-                $('#total_box').val(jumlahBaris);
-            } else {
-                // Total Berat
-                let totalBeratKirim = 0;
-                $('#dataTable tbody tr').each(function() {
-                    let beratKirim = parseFloat($(this).find('td:eq(10)')
-                        .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
-                    if (!isNaN(beratKirim)) {
-                        totalBeratKirim += beratKirim;
-                    }
-                });
-                $('#total_berat').val(totalBeratKirim);
-                // Total Pcs
-                let totalPcsKirim = 0;
-                $('#dataTable tbody tr').each(function() {
-                    let pcsKirim = parseFloat($(this).find('td:eq(11)')
-                        .text()); // Ganti angka 11 dengan indeks kolom pcs_kirim dalam tabel
-                    if (!isNaN(pcsKirim)) {
-                        totalPcsKirim += pcsKirim;
-                    }
-                });
-                $('#total_pcs').val(totalPcsKirim);
-
-                $('#total_box').val(jumlahBaris);
-            }
         }
 
-        function simpanData() {
-            console.log(dataArray);
-            // Cek apakah data kosong
-            if (dataArray.length === 0) {
-                // Menampilkan SweetAlert untuk pesan error
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Astagfirullah',
-                    text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
-                });
-                return; // Menghentikan eksekusi fungsi jika data kosong
-            }
-            // Mengirim data ke server menggunakan AJAX
+        function CeksendData() {
+            let i = 0;
+            let idBoxes = []; // Array untuk menyimpan id box yang akan dicek
+
+            // Mengumpulkan id box dari dataArray
+            dataArray.forEach(function(item) {
+                idBoxes.push(item.nomor_job);
+            });
+
+            // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
             $.ajax({
-                url: `{{ route('PreCleaningOutput.simpanData') }}`,
+                url: `{{ route('CabutBuluPenyebaran.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
                 method: 'POST',
                 data: {
-                    data: JSON.stringify(dataArray),
+                    idBoxes: JSON.stringify(idBoxes),
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json',
-                beforeSend: function() {
-                    // Menampilkan SweetAlert sebagai indikator loading sebelum permintaan dikirimkan
-                    Swal.fire({
-                        title: 'Loading...',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        onBeforeOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                },
                 success: function(response) {
-                    console.log('Data sent successfully:', response);
+                    let unavailableBoxes = response.unavailableBoxes;
 
-                    // Menampilkan SweetAlert untuk pesan sukses
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Alhamdulillah',
-                        text: 'Data berhasil dikirim.'
-                    });
+                    if (unavailableBoxes.length > 0) {
+                        // Ada id box yang tidak tersedia, tampilkan pesan kesalahan
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Beberapa nomor bstb sudah tidak tersedia.',
+                            icon: 'error',
+                            showCancelButton: false, // Sembunyikan tombol cancel
+                            confirmButtonText: 'OK' // Ganti teks tombol konfirmasi
+                        }).then((result) => {
+                            // Jika pengguna menekan tombol "OK", refresh halaman
+                            if (result.isConfirmed) {
+                                location.reload(); // Refresh halaman
+                            }
+                        });
+                    } else {
+                        // Semua id box tersedia, kirim data ke server
+                        // let waktu_penyebaran = new Date().getTime(); // Ambil waktu saat ini
 
-                    // Redirect atau lakukan tindakan lain setelah berhasil
-                    window.location.href = `{{ route('PreCleaningOutput.index') }}`;
+                        const now = new Date();
+                        const tahun = now.getFullYear().toString().substr(-2);
+                        const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+                        const tanggal = ('0' + now.getDate()).slice(-2);
+                        const jam = ('0' + now.getHours()).slice(-2);
+                        const menit = ('0' + now.getMinutes()).slice(-2);
+                        const detik = ('0' + now.getSeconds()).slice(-2);
+
+                        const waktu_penyebaran = `${tanggal}/${bulan}/${tahun} ${jam}:${menit}:${detik}`;
+
+                        console.log("Waktu =" + waktu_penyebaran);
+
+                        sendData(waktu_penyebaran);
+                    }
                 },
                 error: function(error) {
-                    console.error('Error sending data:', error);
-
-                    // Menampilkan SweetAlert untuk pesan error
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'
+                        title: 'Failed!',
+                        text: 'Terjadi kesalahan saat memeriksa ketersediaan nomor bstb. Silakan coba lagi.',
+                        icon: 'error'
                     });
-                },
-                complete: function() {
-                    // Menutup SweetAlert setelah permintaan selesai, terlepas dari berhasil atau gagal
-                    Swal.close();
+                    console.log('Error:', error);
                 }
             });
+
+            function sendData(waktu_penyebaran) {
+                // Mengirim data ke server menggunakan AJAX
+                $.ajax({
+                    url: '{{ route('CabutBuluPenyebaran.store') }}',
+                    method: 'POST',
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Loading...',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            onBeforeOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    data: function() {
+                        let postData = {
+                            dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
+                            user_created: $('#user_created').val() || '',
+                            user_updated: $('#user_createds').val() || '',
+                            waktu_penyebaran: waktu_penyebaran, // Mengirim waktu_penyebaran
+                            _token: '{{ csrf_token() }}'
+                        };
+
+                        return postData;
+                    }(),
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Data berhasil disimpan.',
+                            icon: 'success'
+                        }).then((result) => {
+                            // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
+                            if (result.isConfirmed) {
+                                window.location.href = response.redirectTo;
+                                // Ganti dengan URL tujuan redirect Anda
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        Swal.fire({
+                            title: 'Failed!',
+                            text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
+                            icon: 'error'
+                        });
+                        console.log('Error:', error);
+                    }
+                });
+            }
         }
+
+
+        // Variabel global untuk menyimpan indeks baris terakhir
+        // var currentRowIndex = 0;
+        // var dataStock = [];
+
+        // // Mendefinisikan array jika belum
+        // if (typeof dataArray === 'undefined') {
+        //     var dataArray = [];
+        // }
     </script>
 @endsection
