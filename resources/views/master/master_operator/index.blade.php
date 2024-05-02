@@ -152,6 +152,9 @@
                                                     <option value="Sikat + Kompresor">Sikat + Kompresor</option>
                                                     <option value="Flek + Poles">Flek + Poles</option>
                                                     <option value="Cutter">Cutter</option>
+                                                    <option value="Perendaman">Perendaman</option>
+                                                    <option value="Bilas">Bilas</option>
+                                                    <option value="Box">Box</option>
                                                 </select>
                                             </div>
                                         </div>
