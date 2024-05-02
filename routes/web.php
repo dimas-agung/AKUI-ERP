@@ -374,6 +374,32 @@ Route::middleware('auth')->group(function (){
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluStockController::class)->group(function () {
                 Route::get('/cabut_bulu_stock', 'index')->name('CabutBuluStock.index');
             });
+
+            Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenyebaranContoller::class)->group(function () {
+                Route::get('/cabut_bulu_penyebaran', 'index')->name('CabutBuluPenyebaran.index');
+                Route::get('/cabut_bulu_penyebaran/create', 'create')->name('CabutBuluPenyebaran.create');
+                Route::post('/cabut_bulu_penyebaran/store', 'store')->name('CabutBuluPenyebaran.store');
+                Route::post('/cabut_bulu_penyebaran/cek_data', 'CeksendData')->name('CabutBuluPenyebaran.CeksendData');
+                Route::post('/cabut_bulu_penyebaran/simpanData', 'simpanData')->name('CabutBuluPenyebaran.simpanData');
+                Route::get('/cabut_bulu_penyebaran/set', 'set')->name('CabutBuluPenyebaran.set');
+                Route::get('/cabut_bulu_penyebaran/setnip', 'setNip')->name('CabutBuluPenyebaran.setNip');
+                Route::delete('/cabut_bulu_penyebaran/destroy/{nomor_bstb}', 'destroy')->name('CabutBuluPenyebaran.destroy');
+            });
+
+            Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPengembalianController::class)->group(function () {
+                Route::get('/cabut_bulu_pengembalian', 'index')->name('CabutBuluPengembalian.index');
+                Route::get('/cabut_bulu_pengembalian/create', 'create')->name('CabutBuluPengembalian.create');
+                Route::post('/cabut_bulu_pengembalian/store', 'store')->name('CabutBuluPengembalian.store');
+                Route::post('/cabut_bulu_pengembalian/cek_data', 'CeksendData')->name('CabutBuluPengembalian.CeksendData');
+                Route::post('/cabut_bulu_pengembalian/simpanData', 'simpanData')->name('CabutBuluPengembalian.simpanData');
+                Route::get('/cabut_bulu_pengembalian/set', 'set')->name('CabutBuluPengembalian.set');
+                Route::get('/cabut_bulu_pengembalian/setnip', 'setNip')->name('CabutBuluPengembalian.setNip');
+                Route::delete('/cabut_bulu_pengembalian/destroy/{nomor_bstb}', 'destroy')->name('CabutBuluPengembalian.destroy');
+            });
+
+            Route::controller(App\Http\Controllers\CabutBulu\TransitCabutBuluController::class)->group(function () {
+                Route::get('/transit_cabut_bulu', 'index')->name('TransitCabutBulu.index');
+            });
         });
     });
     // Route::prefix('user3')->group(function (){

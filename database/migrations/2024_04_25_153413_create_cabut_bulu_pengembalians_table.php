@@ -22,14 +22,15 @@ return new class extends Migration
             $table->string('keterangan')->nullable();
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->string('waktu_pengembalian');
+            $table->timestamp('waktu_pengembalian');
             $table->string('nama_operator');
             $table->string('nip_operator');
             $table->string('grade_operator');
             $table->string('nama_team_leader');
             $table->string('keterangan_2')->nullable();
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
+            $table->integer('status')->default(3);
             $table->timestamps();
         });
     }

@@ -23,4 +23,8 @@ class CabutBuluStock extends Model
         'total_modal',
         'status',
     ];
+    public function CabutBuluPenyebaran()
+    {
+        return $this->hasMany(CabutBuluPenyebaran::class, 'nomor_job', 'nomor_job');
+    }
 }

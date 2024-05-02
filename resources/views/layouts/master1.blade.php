@@ -204,7 +204,7 @@
                         @role('bahan_baku|admin')
                             <li class="sidebar-title">Production</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock*', 'GradingHalusOutput*', 'TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*', 'CabutBuluPenerimaan*', 'CabutBuluStock*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock*', 'GradingHalusOutput*', 'TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*', 'CabutBuluPenerimaan*', 'CabutBuluStock*', 'CabutBuluPenyebaran*', 'CabutBuluPengembalian*', 'TransitCabutBulu*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Bahan Baku</span>
@@ -361,7 +361,7 @@
                                         </ul>
                                     </li>
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('TransitPreWash*', 'CabutBuluPenerimaan*', 'CabutBuluStock*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('TransitPreWash*', 'CabutBuluPenerimaan*', 'CabutBuluStock*', 'CabutBuluPenyebaran*', 'CabutBuluPengembalian*', 'TransitCabutBulu*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Cabut Bulu</span>
                                         </a>
@@ -380,7 +380,25 @@
                                                 <a href="{{ route('CabutBuluStock.index') }}" class="submenu-link">Cabut
                                                     Bulu Stock</a>
                                             </li>
-
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutBuluPenyebaran*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutBuluPenyebaran.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Bulu
+                                                    <br>Penyebaran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutBuluPengembalian*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutBuluPengembalian.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Bulu <br> Pengembalian</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitCabutBulu*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitCabutBulu.index') }}"
+                                                    class="submenu-link">Transit Cabut
+                                                    Bulu</a>
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>

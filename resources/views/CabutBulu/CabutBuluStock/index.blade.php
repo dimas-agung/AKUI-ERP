@@ -56,7 +56,7 @@
                                         @elseif ($item->status == 2)
                                             On Process
                                         @elseif ($item->status == 3)
-                                            Finish
+                                            Finished
                                         @else
                                             Unknown Status
                                         @endif
