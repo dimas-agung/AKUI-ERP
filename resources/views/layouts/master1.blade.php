@@ -764,7 +764,7 @@
     </script>
     <script>
         function generateQrCode(value) {
-
+            $("#qrcode").html('')
             var qr = new QRCode(document.getElementById("qrcode"), {
                text: value,
                width: 60,

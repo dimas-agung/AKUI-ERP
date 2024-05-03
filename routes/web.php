@@ -176,9 +176,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/prm_raw_material_input/nextDocNo', 'getNextDocumentNumber')->name('PrmRawMaterialInput.getNextDocumentNumber');
         });
 
-        Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->group(function () {
-            Route::get('/stock_transit_raw_material', 'index')->name('StockTransitRawMaterial.index');
-        });
+       
 
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
             Route::get('/prm_raw_material_stock', 'index')->name('PrmRawMaterialStock.index');
@@ -201,8 +199,11 @@ Route::middleware('auth')->group(function () {
             Route::get('/prm_raw_material_output/getBerat/{id}', 'getBerat')->name('PrmRawMaterialOutput.getBerat');
         });
     });
+    Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->middleware(['role:purchasing|grading_kasar|admin'])->group(function () {
+        Route::get('/stock_transit_raw_material', 'index')->name('StockTransitRawMaterial.index');
+    });
     Route::prefix('bahan_baku')->group(function () {
-        Route::prefix('grading_kasar')->group(function () {
+        Route::prefix('grading_kasar')->middleware(['role:grading_kasar|admin'])->group(function () {
             Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputController::class)->group(function () {
                 Route::get('/grading_kasar_input', 'index')->name('GradingKasarInput.index');
                 Route::get('/grading_kasar_input/create', 'create')->name('GradingKasarInput.create');
@@ -252,17 +253,17 @@ Route::middleware('auth')->group(function () {
                 Route::post('/grading_kasar_output/cek_data', 'CeksendData')->name('GradingKasarOutput.CeksendData');
             });
 
-            Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
-                Route::get('/stock_transit_grading_kasar', 'index')->name('StockTransitGradingKasar.index');
-                Route::get('/stock_transit_grading_kasar/create', 'create')->name('StockTransitGradingKasar.create');
-                Route::post('/stock_transit_grading_kasar/store', 'store')->name('StockTransitGradingKasar.store');
-                Route::get('/stock_transit_grading_kasar/show/{id}', 'show')->name('StockTransitGradingKasar.show');
-                Route::get('/stock_transit_grading_kasar/edit/{id}', 'edit')->name('StockTransitGradingKasar.edit');
-                Route::put('/stock_transit_grading_kasar/update/{id}', 'update')->name('StockTransitGradingKasar.update');
-                Route::delete('/stock_transit_grading_kasar/destroy/{id}', 'destroy')->name('StockTransitGradingKasar.destroy');
-            });
         });
-        Route::prefix('pre_cleaning')->middleware('role:pre_cleaning|admin')->group(function () {
+        Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
+            Route::get('/stock_transit_grading_kasar', 'index')->name('StockTransitGradingKasar.index');
+            Route::get('/stock_transit_grading_kasar/create', 'create')->name('StockTransitGradingKasar.create');
+            Route::post('/stock_transit_grading_kasar/store', 'store')->name('StockTransitGradingKasar.store');
+            Route::get('/stock_transit_grading_kasar/show/{id}', 'show')->name('StockTransitGradingKasar.show');
+            Route::get('/stock_transit_grading_kasar/edit/{id}', 'edit')->name('StockTransitGradingKasar.edit');
+            Route::put('/stock_transit_grading_kasar/update/{id}', 'update')->name('StockTransitGradingKasar.update');
+            Route::delete('/stock_transit_grading_kasar/destroy/{id}', 'destroy')->name('StockTransitGradingKasar.destroy');
+        })->middleware(['role:grading_kasar|pre_cleaning|admin']);
+        Route::prefix('pre_cleaning')->middleware(['role:pre_cleaning|admin'])->group(function () {
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
                 Route::get('/pre_cleaning_input', 'index')->name('PreCleaningInput.index');
                 Route::get('/pre_cleaning_input/create', 'create')->name('PreCleaningInput.create');
@@ -300,7 +301,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/transit_pre_cleaning_stock/destroy/{id}', 'destroy')->name('TransitPreCleaningStock.destroy');
             });
         });
-        Route::prefix('grading_halus')->middleware('role:grading_halus|admin')->group(function () {
+        Route::prefix('grading_halus')->middleware(['role:grading_halus|admin'])->group(function () {
             Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusInputController::class)->group(function () {
                 Route::get('/pre_grading_halus_input', 'index')->name('PreGradingHalusInput.index');
                 Route::get('/pre_grading_halus_input/create', 'create')->name('PreGradingHalusInput.create');
@@ -404,7 +405,7 @@ Route::middleware('auth')->group(function () {
             });
 
         });
-        Route::prefix('pre_wash')->group(function (){
+        Route::prefix('pre_wash')->middleware(['role:pre_wash|admin'])->group(function (){
             Route::controller(App\Http\Controllers\PreWash\PreWashInputController::class)->group(function () {
                 Route::get('/pre_wash_input', 'index')->name('PreWashInput.index');
                 Route::get('/pre_wash_input/create', 'create')->name('PreWashInput.create');
@@ -438,11 +439,11 @@ Route::middleware('auth')->group(function () {
                 Route::get('/cabut_bulu_penyebaran/set', 'set')->name('CabutBuluPenyebaran.set');
                 Route::delete('/cabut_bulu_penyebaran/destroy/{nomor_bstb}', 'destroy')->name('CabutBuluPenyebaran.destroy');
             });
-        });
-
             Route::controller(App\Http\Controllers\PreWash\TransitPreWashController::class)->group(function () {
                 Route::get('/transit_pre_wash', 'index')->name('TransitPreWash.index');
             });
+        });
+
 
         Route::prefix('cabut_bulu')->middleware('role:cabut_bulu|admin')->group(function (){
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenerimaanController::class)->group(function () {
