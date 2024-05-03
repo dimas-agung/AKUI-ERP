@@ -37,8 +37,10 @@
                                 <th class="text-center" scope="col">Berat Grading</th>
                                 <th class="text-center" scope="col">Pcs Grading</th>
                                 <th class="text-center" scope="col">Keterangan</th>
-                                <th class="text-center" scope="col">Modal</th>
-                                <th class="text-center" scope="col">Total Modal</th>
+                                @role('admin')
+                                    <th class="text-center" scope="col">Modal</th>
+                                    <th class="text-center" scope="col">Total Modal</th>
+                                @endrole
                                 <th class="text-center" scope="col">Kategori Susut</th>
                                 <th class="text-center" scope="col">Id Box Grading Halus</th>
                                 <th class="text-center" scope="col">Susut Depan</th>
@@ -85,8 +87,10 @@
                                     <td class="text-center">{{ $item->berat_grading }}</td>
                                     <td class="text-center">{{ $item->pcs_grading }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
-                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    @role('admin')
+                                        <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    @endrole
                                     <td class="text-center">{{ $item->kategori_susut }}</td>
                                     <td class="text-center">{{ $item->id_box_grading_halus }}</td>
                                     <td class="text-center">{{ $item->susut_depan }}</td>

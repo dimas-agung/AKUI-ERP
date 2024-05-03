@@ -180,7 +180,7 @@ Route::middleware('auth')->group(function (){
         });
     });
     Route::prefix('bahan_baku')->middleware(['role:bahan_baku|admin'])->group(function (){
-        Route::prefix('grading_kasar')->middleware('role:purchasing|admin')->group(function (){
+        Route::prefix('bahan_baku')->middleware('role:bahan_baku|admin')->group(function (){
             // Untuk menangani beberapa role menggunakan cara dibawah
             // Route::middleware(['role:pur_input','role:output'])->group(function () {
             // });
@@ -234,7 +234,7 @@ Route::middleware('auth')->group(function (){
             });
         });
 
-        Route::prefix('pre_cleaning')->middleware('role:pre_cleaning|admin')->group(function (){
+        Route::prefix('bahan_baku')->middleware('role:bahan_baku|admin')->group(function (){
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
                 Route::get('/pre_cleaning_input', 'index')->name('PreCleaningInput.index');
                 Route::get('/pre_cleaning_input/create', 'create')->name('PreCleaningInput.create');
@@ -267,7 +267,7 @@ Route::middleware('auth')->group(function (){
             });
         });
 
-        Route::prefix('grading_halus')->middleware('role:grading_halus|admin')->group(function (){
+        Route::prefix('bahan_baku')->middleware('role:bahan_baku|admin')->group(function (){
             Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusInputController::class)->group(function () {
                 Route::get('/pre_grading_halus_input', 'index')->name('PreGradingHalusInput.index');
                 Route::get('/pre_grading_halus_input/create', 'create')->name('PreGradingHalusInput.create');
@@ -335,7 +335,7 @@ Route::middleware('auth')->group(function (){
                 Route::get('/transit_grading_halus', 'index')->name('TransitGradingHalus.index');
             });
         });
-        Route::prefix('pre_wash')->middleware('role:pre_wash|admin')->group(function (){
+        Route::prefix('bahan_baku')->middleware('role:bahan_baku|admin')->group(function (){
             Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
                 Route::get('/pre_wash_output', 'index')->name('PreWashOutput.index');
                 Route::get('/pre_wash_output/create', 'create')->name('PreWashOutput.create');
@@ -357,7 +357,7 @@ Route::middleware('auth')->group(function (){
                 Route::get('/transit_pre_wash', 'index')->name('TransitPreWash.index');
             });
         });
-        Route::prefix('cabut_bulu')->middleware('role:cabut_bulu|admin')->group(function (){
+        Route::prefix('bahan_baku')->middleware('role:bahan_baku|admin')->group(function (){
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenerimaanController::class)->group(function () {
                 Route::get('/cabut_bulu_penerimaan', 'index')->name('CabutBuluPenerimaan.index');
                 Route::get('/cabut_bulu_penerimaan/create', 'create')->name('CabutBuluPenerimaan.create');

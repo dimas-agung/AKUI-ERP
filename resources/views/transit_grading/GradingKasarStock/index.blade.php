@@ -35,8 +35,10 @@
                                 <th class="text-center">Sisa Pcs</th>
                                 <th class="text-center">Avg Kadar Air</th>
                                 <th class="text-center">Nomor Grading</th>
-                                <th class="text-center">Modal</th>
-                                <th class="text-center">Total Modal</th>
+                                @role('admin')
+                                    <th class="text-center">Modal</th>
+                                    <th class="text-center">Total Modal</th>
+                                @endrole
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">User Created</th>
                                 <th class="text-center" scope="col">User Updated</th>
@@ -66,10 +68,11 @@
                                     <td class="text-center">{{ $GradingKS->avg_kadar_air }}
                                     </td>
                                     <td class="text-center">{{ $GradingKS->nomor_grading }}</td>
-                                    {{-- <td class="text-center">{{ $GradingKS->modal }}</td> --}}
-                                    <td class="text-center">{{ number_format($GradingKS->modal, 2, ',', '.') }}</td>
-                                    {{-- <td class="text-center">{{ $GradingKS->total_modal }}</td> --}}
-                                    <td class="text-center">{{ number_format($GradingKS->total_modal, 2, ',', '.') }}</td>
+                                    @role('admin')
+                                        <td class="text-center">{{ number_format($GradingKS->modal, 2, ',', '.') }}</td>
+                                        {{-- <td class="text-center">{{ $GradingKS->total_modal }}</td> --}}
+                                        <td class="text-center">{{ number_format($GradingKS->total_modal, 2, ',', '.') }}</td>
+                                    @endrole
                                     <td class="text-center">{{ $GradingKS->keterangan }}</td>
                                     <td class="text-center">{{ $GradingKS->user_created }}</td>
                                     <td class="text-center">{{ $GradingKS->user_updated }}</td>

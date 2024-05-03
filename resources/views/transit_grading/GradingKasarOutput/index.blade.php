@@ -36,8 +36,10 @@
                                 <th class="text-center" scope="col">AVG Kadar Air</th>
                                 <th class="text-center" scope="col">Tujuan Kirim</th>
                                 <th class="text-center" scope="col">Nomor Grading</th>
-                                <th class="text-center" scope="col">Modal</th>
-                                <th class="text-center" scope="col">Total Modal</th>
+                                @role('admin')
+                                    <th class="text-center" scope="col">Modal</th>
+                                    <th class="text-center" scope="col">Total Modal</th>
+                                @endrole
                                 <th class="text-center" scope="col">Biaya Produksi</th>
                                 <th class="text-center" scope="col">Fix Total Modal</th>
                                 <th class="text-center" scope="col">Keterangan</th>
@@ -63,8 +65,10 @@
                                     <td class="text-center">{!! $item->avg_kadar_air !!}</td>
                                     <td class="text-center">{!! $item->tujuan_kirim !!}</td>
                                     <td class="text-center">{!! $item->nomor_grading !!}</td>
-                                    <td class="text-center">{!! number_format($item->modal, 2, ',', '.') !!}</td>
-                                    <td class="text-center">{!! number_format($item->total_modal, 2, ',', '.') !!}</td>
+                                    @role('admin')
+                                        <td class="text-center">{!! number_format($item->modal, 2, ',', '.') !!}</td>
+                                        <td class="text-center">{!! number_format($item->total_modal, 2, ',', '.') !!}</td>
+                                    @endrole
                                     <td class="text-center">{!! number_format($item->biaya_produksi, 2, ',', '.') !!}</td>
                                     <td class="text-center">{!! number_format($item->fix_total_modal, 2, ',', '.') !!}</td>
                                     <td class="text-center">{!! $item->keterangan !!}</td>

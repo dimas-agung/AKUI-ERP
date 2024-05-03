@@ -38,8 +38,10 @@
                                         <th scope="col" class="text-center">Pcs Job</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
                                         <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center">Modal</th>
-                                        <th scope="col" class="text-center">Total Modal</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">NIP Admin</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
@@ -59,9 +61,11 @@
                                             <td class="text-center">{{ $PCO->pcs_job }}</td>
                                             <td class="text-center">{{ $PCO->tujuan_kirim }}</td>
                                             <td class="text-center">{{ $PCO->keterangan }}</td>
-                                            <td class="text-center">{{ number_format($PCO->modal, 0, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($PCO->total_modal, 0, ',', '.') }}
-                                            </td>
+                                            @role('admin')
+                                                <td class="text-center">{{ number_format($PCO->modal, 0, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($PCO->total_modal, 0, ',', '.') }}
+                                                </td>
+                                            @endrole
                                             <td class="text-center">{{ $PCO->user_created }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">

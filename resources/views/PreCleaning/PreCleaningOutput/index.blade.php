@@ -40,8 +40,10 @@
                                         <th scope="col" class="text-center">Jenis Kirim</th>
                                         <th scope="col" class="text-center">Berat Kirim</th>
                                         <th scope="col" class="text-center">Pcs Kirim</th>
-                                        <th scope="col" class="text-center">Modal</th>
-                                        <th scope="col" class="text-center">Total Modal</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Operator Flek & Kompresor</th>
                                         <th scope="col" class="text-center">Operator Flek & Poles</th>
                                         <th scope="col" class="text-center">Operator Cutter</th>
@@ -80,9 +82,11 @@
                                             <td class="text-center">{{ $PCO->berat_kirim }}
                                             </td>
                                             <td class="text-center">{{ $PCO->pcs_kirim }}</td>
-                                            <td class="text-center">{{ number_format($PCO->modal, 0, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($PCO->total_modal, 0, ',', '.') }}
-                                            </td>
+                                            @role('admin')
+                                                <td class="text-center">{{ number_format($PCO->modal, 0, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($PCO->total_modal, 0, ',', '.') }}
+                                                </td>
+                                            @endrole
                                             <td class="text-center">{{ $PCO->operator_sikat_kompresor }}</td>
                                             <td class="text-center">{{ $PCO->operator_flek_poles }}</td>
                                             <td class="text-center">{{ $PCO->operator_flek_cutter }}</td>

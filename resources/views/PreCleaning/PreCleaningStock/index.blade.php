@@ -37,8 +37,10 @@
                                 <th class="text-center">Avg Kadar Air</th>
                                 <th class="text-center">Nomor Grading</th>
                                 <th class="text-center">Tujuan Kirim</th>
-                                <th class="text-center">Modal</th>
-                                <th class="text-center">Total Modal</th>
+                                @role('admin')
+                                    <th class="text-center">Modal</th>
+                                    <th class="text-center">Total Modal</th>
+                                @endrole
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">User Updated</th>

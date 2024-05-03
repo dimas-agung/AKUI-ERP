@@ -33,8 +33,10 @@
                                         <th scope="col" class="text-center">Kadar Air</th>
                                         <th scope="col" class="text-center">Berat Adding</th>
                                         <th scope="col" class="text-center">Pcs Adding</th>
-                                        <th scope="col" class="text-center">Modal</th>
-                                        <th scope="col" class="text-center">Total Modal</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Status Stock</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
@@ -62,11 +64,12 @@
                                             {{-- <td class="text-center">{{ $PGHAS->pcs_adding }}</td> --}}
                                             <td class="text-center">{{ number_format($PGHAS->pcs_adding, 0, ',', '.') }}
                                             </td>
-                                            {{-- <td class="text-center">{{ $PGHAS->modal }}</td> --}}
-                                            <td class="text-center">{{ number_format($PGHAS->modal, 2, ',', '.') }}</td>
-                                            {{-- <td class="text-center">{{ $PGHAS->total_modal }}</td> --}}
-                                            <td class="text-center">{{ number_format($PGHAS->total_modal, 2, ',', '.') }}
-                                            </td>
+                                            @role('admin')
+                                                <td class="text-center">{{ number_format($PGHAS->modal, 2, ',', '.') }}</td>
+                                                {{-- <td class="text-center">{{ $PGHAS->total_modal }}</td> --}}
+                                                <td class="text-center">{{ number_format($PGHAS->total_modal, 2, ',', '.') }}
+                                                </td>
+                                            @endrole
                                             <td class="text-center">{{ $PGHAS->status_stock }}</td>
                                             <td class="text-center">{{ $PGHAS->user_created }}</td>
                                             <td class="text-center">{{ $PGHAS->user_updated }}</td>
