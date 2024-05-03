@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 
 class CabutBuluStockController extends Controller
 {
+<<<<<<< HEAD
     public function index()
     {
         $i = 1;
+=======
+    public function index(){
+        $i =1;
+>>>>>>> dev-al
         $CBPenerimaan = CabutBuluStock::get();
 
 

@@ -30,7 +30,7 @@ class PreWashOutputController extends Controller
         $PreWashStk = PreWashStock::with('PreWashOutput')->get();
         // $TransitPreW = TransitPreWash::with('PreWashOutput')->get();
         $MasterO = MasterOperator::with('PreWashOutput')->get();
-        // return $TujuanKirimGHI;
+        // return $MasterO;
         return view('PreWash.PreWashOutput.create', compact('PreWashO', 'PreWashStk', 'MasterO'));
     }
 

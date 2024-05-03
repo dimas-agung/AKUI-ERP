@@ -36,7 +36,7 @@
                         <tbody>
                             <?php $i = 1; ?>
                             <?php foreach ($transitprewash as $item): ?>
-                            <?php if($item->status != 0): ?>
+                            <?php if($item->berat_job != 0): ?>
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td class="text-center">{{ $item->unit }}</td>

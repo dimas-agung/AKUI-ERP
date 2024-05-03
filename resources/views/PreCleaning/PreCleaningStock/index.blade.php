@@ -1,16 +1,16 @@
 @extends('layouts.master1')
 @section('menu')
-    Pre Cleaning
+    Pre-Cleaning
 @endsection
 @section('title')
-    Pre Cleaning Stock
+    Pre-Cleaning Stock
 @endsection
 @section('content')
     <div class="section">
         <div class="card border border-primary border-3">
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
-                    <h4 class="card-title">Data Pre Cleaning Stock</h4>
+                    <h4 class="card-title">Data Pre-Cleaning Stock</h4>
                 </div>
             </div>
             <div class="card-body" style="overflow: auto;">

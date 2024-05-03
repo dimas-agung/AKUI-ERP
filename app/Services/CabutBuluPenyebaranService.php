@@ -22,6 +22,10 @@ class CabutBuluPenyebaranService
         // Validate other form fields
         $validatedData = $request->validate([
             'user_created' => 'required',
+<<<<<<< HEAD
+=======
+            'waktu_penyebaran' => 'required', // Menambahkan validasi waktu penyebaran
+>>>>>>> dev-al
         ]);
 
         // Check if $dataArray is empty
@@ -54,7 +58,12 @@ class CabutBuluPenyebaranService
                     DB::beginTransaction();
 
                     // Buat instansi PreCleaningInput
+<<<<<<< HEAD
                     CabutBuluPenyebaran::create($mergedData);
+=======
+                    CabutBuluPenyebaran::create(array_merge($mergedData, ['waktu_penyebaran' => $validatedData['waktu_penyebaran']]));
+
+>>>>>>> dev-al
 
                     $itemObject = (object) $mergedData;
 
@@ -101,6 +110,7 @@ class CabutBuluPenyebaranService
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
+<<<<<<< HEAD
             // Ambil data PreCleaningInput berdasarkan nomor_job
             $CabutBuluPenyebaran = CabutBuluPenyebaran::where('nomor_job', '=', $nomor_job)->get();
 
@@ -119,6 +129,65 @@ class CabutBuluPenyebaranService
                 foreach ($CabutBuluStock as $cabutStock) {
                     // Update status menjadi 1 pada CabutBuluStock
                     $cabutStock->update(['status' => 1]);
+=======
+            // Ambil data PreCleaningInput berdasarkan nomor_bstb
+            $PreGradingHalusInputs = CabutBuluPenyebaran::where('nomor_job', '=', $nomor_job)->get();
+            // $PreGradingHalusInputs = PreGradingHalusInput::findOrFail($id);
+
+            if ($PreGradingHalusInputs->isEmpty()) {
+                // Redirect ke index dengan pesan error jika data tidak ditemukan
+                // return redirect()->route('CabutBuluPenyebaran.index')->with(['error' => 'Data tidak ditemukan!']);
+            }
+
+            foreach ($PreGradingHalusInputs as $PreCleaningI) {
+                // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
+                $PreCleaningS = CabutBuluStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
+                    // ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
+                    ->first();
+
+                // if ($PreCleaningS) {
+                //     // Ambil data TransitPreCleaningStock berdasarkan nomor job dan nomor bstb
+                //     $stockPrmRawMaterial = TransitPreWash::where('nomor_job', '=', $PreCleaningI->nomor_job)
+                //         ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
+                //         ->first();
+
+                //     if ($stockPrmRawMaterial) {
+                //         // Simpan nilai sebelum dihapus
+                //         $beratSebelumnya = $stockPrmRawMaterial->berat_job;
+                //         $pcsSebelumnya = $stockPrmRawMaterial->pcs_job;
+
+                //         // Hitung total modal baru berdasarkan perbedaan berats
+                //         $perbedaanBerat = $beratSebelumnya + $PreCleaningI->berat_job;
+                //         $perbedaanPcs = $pcsSebelumnya + $PreCleaningI->pcs_job;
+                //         // $totalModalBaru = $perbedaanBerat * $PreCleaningI->modal;
+
+                //         // Update data TransitPreCleaningStock dengan berat, pcs, dan total modal yang baru
+                //         $stockPrmRawMaterial->update([
+                //             'berat_job' => max($perbedaanBerat, 0),
+                //             'pcs_job' => max($perbedaanPcs, 0),
+                //             // 'total_modal' => max($totalModalBaru, 0),
+                //         ]);
+                //     }
+                // }
+
+                // Hapus data PreGradingHalusInput dan PreCleaningStock
+                $PreCleaningI->delete();
+                if ($PreCleaningS) {
+                    $PreCleaningS->delete();
+                }
+
+                // Perbarui status PreCleaningOutput jika ada
+                $existingItems = CabutBuluStock::where('nomor_job', $PreCleaningI->nomor_job)
+                    // ->where('nomor_bstb', $PreCleaningI->nomor_bstb)
+                    ->get();
+
+                // Logika Update Status
+                if ($existingItems->isNotEmpty()) {
+                    foreach ($existingItems as $existingItem) {
+                        // Perbarui data untuk setiap item yang ada
+                        $existingItem->update(['status' => 1]);
+                    }
+>>>>>>> dev-al
                 }
             }
 

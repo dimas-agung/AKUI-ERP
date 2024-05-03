@@ -29,4 +29,8 @@ class CabutBuluPengembalian extends Model
         'user_updated',
         'status',
     ];
+    public function CabutBuluStock()
+    {
+        return $this->hasMany(CabutBuluStock::class, 'nomor_job', 'nomor_job');
+    }
 }
