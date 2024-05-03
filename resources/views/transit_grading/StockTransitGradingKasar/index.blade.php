@@ -32,10 +32,12 @@
                                 <th class="text-center">AVG Kadar Air</th>
                                 <th class="text-center">Tujuan Kirim</th>
                                 <th class="text-center">Nomor Grading</th>
-                                <th class="text-center">Modal</th>
-                                <th class="text-center">Total Modal</th>
-                                <th class="text-center">Biaya Produksi</th>
-                                <th class="text-center">Fix Total Modal</th>
+                                @role('admin')
+                                    <th class="text-center">Modal</th>
+                                    <th class="text-center">Total Modal</th>
+                                    <th class="text-center">Biaya Produksi</th>
+                                    <th class="text-center">Fix Total Modal</th>
+                                @endrole
                                 <th class="text-center">Keterangan</th>
                                 <th class="text-center">NIP Admin</th>
                                 <th class="text-center">User Updated</th>
@@ -62,10 +64,12 @@
                                 <td class="text-center">{!! $post->avg_kadar_air !!}</td>
                                 <td class="text-center">{!! $post->tujuan_kirim !!}</td>
                                 <td class="text-center">{!! $post->nomor_grading !!}</td>
-                                <td class="text-center">{!! number_format($post->modal, 2, ',', '.') !!}</td>
-                                <td class="text-center">{!! number_format($post->total_modal, 2, ',', '.') !!}</td>
-                                <td class="text-center">{!! number_format($post->biaya_produksi, 2, ',', '.') !!}</td>
-                                <td class="text-center">{!! number_format($post->fix_total_modal, 2, ',', '.') !!}</td>
+                                @role('admin')
+                                    <td class="text-center">{!! number_format($post->modal, 2, ',', '.') !!}</td>
+                                    <td class="text-center">{!! number_format($post->total_modal, 2, ',', '.') !!}</td>
+                                    <td class="text-center">{!! number_format($post->biaya_produksi, 2, ',', '.') !!}</td>
+                                    <td class="text-center">{!! number_format($post->fix_total_modal, 2, ',', '.') !!}</td>
+                                @endrole
                                 <td class="text-center">{!! $post->keterangan !!}</td>
                                 <td class="text-center">{!! $post->user_created !!}</td>
                                 <td class="text-center">{!! $post->user_updated !!}</td>

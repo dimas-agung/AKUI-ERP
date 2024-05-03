@@ -32,8 +32,10 @@
                                 <th class="text-center" scope="col">Pcs Job</th>
                                 <th class="text-center" scope="col">Tujuan Kirim</th>
                                 <th class="text-center" scope="col">Keterangan</th>
-                                <th class="text-center" scope="col">Modal</th>
-                                <th class="text-center" scope="col">Total Modal</th>
+                                @role('admin')
+                                    <th class="text-center" scope="col">Modal</th>
+                                    <th class="text-center" scope="col">Total Modal</th>
+                                @endrole
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
@@ -51,8 +53,10 @@
                                     <td class="text-center">{{ $item->pcs_job }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
-                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    @role('admin')
+                                        <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    @endrole
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">

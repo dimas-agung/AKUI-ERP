@@ -34,8 +34,10 @@
                                         <th scope="col" class="text-center">Berat Adding</th>
                                         <th scope="col" class="text-center">Pcs Adding</th>
                                         <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center">Modal</th>
-                                        <th scope="col" class="text-center">Total Modal</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
@@ -54,8 +56,10 @@
                                             <td class="text-center">{{ $ADJ->berat_adding }}</td>
                                             <td class="text-center">{{ $ADJ->pcs_adding }}</td>
                                             <td class="text-center">{{ $ADJ->keterangan }}</td>
-                                            <td class="text-center">{{ number_format($ADJ->modal, 2, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($ADJ->total_modal, 2, ',', '.') }}</td>
+                                            @role('admin')
+                                                <td class="text-center">{{ number_format($ADJ->modal, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($ADJ->total_modal, 2, ',', '.') }}</td>
+                                            @endrole
                                             <td class="text-center">{{ $ADJ->user_created }}</td>
                                             <td class="text-center">{{ $ADJ->user_updated }}</td>
                                             <td class="text-center">{{ $ADJ->created_at }}</td>

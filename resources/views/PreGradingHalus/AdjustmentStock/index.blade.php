@@ -32,14 +32,15 @@
                                         <th scope="col" class="text-center">Nomor Batch</th>
                                         <th scope="col" class="text-center">Berat Adding</th>
                                         <th scope="col" class="text-center">Pcs Adding</th>
-                                        <th scope="col" class="text-center">Modal</th>
-                                        <th scope="col" class="text-center">Total Modal</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
-                                        {{-- <th scope="col" class="text-center">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -51,9 +52,10 @@
                                             <td class="text-center">{{ $ADJS->nomor_batch }}</td>
                                             <td class="text-center">{{ $ADJS->berat_adding }}</td>
                                             <td class="text-center">{{ $ADJS->pcs_adding }}</td>
-                                            <td class="text-center">{{ $ADJS->modal }}</td>
-                                            <td class="text-center">{{ $ADJS->total_modal }}</td>
-                                            {{-- <td class="text-center">{{ $ADJS->status }}</td> --}}
+                                            @role('admin')
+                                                <td class="text-center">{{ $ADJS->modal }}</td>
+                                                <td class="text-center">{{ $ADJS->total_modal }}</td>
+                                            @endrole
                                             <td class="text-center">
                                                 @if ($ADJS->status == 1)
                                                     Aktif

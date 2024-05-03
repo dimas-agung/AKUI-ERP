@@ -37,8 +37,10 @@
                                         <th scope="col" class="text-center">Kadar Air</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
                                         <th scope="col" class="text-center">Nomor Grading</th>
-                                        <th scope="col" class="text-center">Modal</th>
-                                        <th scope="col" class="text-center">Total Modal</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
@@ -66,8 +68,10 @@
                                         <td class="text-center">{{ number_format($TPCS->kadar_air, 2, ',', '.') }}</td>
                                         <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
                                         <td class="text-center">{{ $TPCS->nomor_grading }}</td>
-                                        <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
-                                        <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}</td>
+                                        @role('admin')
+                                            <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}</td>
+                                        @endrole
                                         <td class="text-center">{{ $TPCS->keterangan }}</td>
                                         <td class="text-center">{{ $TPCS->user_created }}</td>
                                         <td class="text-center">{{ $TPCS->user_updated }}</td>

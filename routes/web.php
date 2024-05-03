@@ -394,7 +394,8 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\PreGradingHalus\TransitGradingHalusController::class)->group(function () {
                 Route::get('/transit_grading_halus', 'index')->name('TransitGradingHalus.index');
             });
-
+        });
+        Route::prefix('pre_wash')->middleware('role:pre_wash|admin')->group(function () {
             Route::controller(App\Http\Controllers\PreWash\PreWashInputController::class)->group(function () {
                 Route::get('/pre_wash_input', 'index')->name('PreWashInput.index');
                 Route::get('/pre_wash_input/create', 'create')->name('PreWashInput.create');
@@ -407,7 +408,8 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\PreWash\PreWashStockController::class)->group(function () {
                 Route::get('/pre_wash_stock', 'index')->name('PreWashStock.index');
             });
-
+        });
+        Route::prefix('cabut_bulu')->middleware('role:cabut_bulu|admin')->group(function () {
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenyebaranContoller::class)->group(function () {
                 Route::get('/cabut_bulu_penyebaran', 'index')->name('CabutBuluPenyebaran.index');
                 Route::get('/cabut_bulu_penyebaran/create', 'create')->name('CabutBuluPenyebaran.create');
