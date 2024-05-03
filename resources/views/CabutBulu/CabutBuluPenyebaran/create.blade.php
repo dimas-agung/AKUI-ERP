@@ -420,7 +420,7 @@
                         const menit = ('0' + now.getMinutes()).slice(-2);
                         const detik = ('0' + now.getSeconds()).slice(-2);
 
-                        const waktu_penyebaran = `${tanggal}/${bulan}/${tahun} ${jam}:${menit}:${detik}`;
+                        const waktu_penyebaran = `${tahun}/${bulan}/${tanggal} ${jam}:${menit}:${detik}`;
 
                         console.log("Waktu =" + waktu_penyebaran);
 
@@ -487,15 +487,5 @@
                 });
             }
         }
-
-
-        // Variabel global untuk menyimpan indeks baris terakhir
-        // var currentRowIndex = 0;
-        // var dataStock = [];
-
-        // // Mendefinisikan array jika belum
-        // if (typeof dataArray === 'undefined') {
-        //     var dataArray = [];
-        // }
     </script>
 @endsection
