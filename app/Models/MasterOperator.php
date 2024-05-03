@@ -19,16 +19,14 @@ class MasterOperator extends Model
         'bagian',
         'workstation',
         'unit',
+        'grade',
+        'atasan',
         'job',
         'status',
     ];
     public function PreCleaningOutput()
     {
         return $this->hasMany(PreCleaningOutput::class, 'operator_sikat_n_kompresor', 'nip');
-    }
-    public function PreWashOutput()
-    {
-        return $this->hasMany(PreWashOutput::class, 'operator_perendaman', 'nama');
     }
     public function PreWashOutput()
     {

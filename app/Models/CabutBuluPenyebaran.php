@@ -5,16 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TransitPreWash extends Model
+class CabutBuluPenyebaran extends Model
 {
     use HasFactory;
-    protected $table = 'transit_pre_washes';
+    protected $table = 'cabut_bulu_penyebarans';
     protected $fillable = [
-        'unit',
         'nomor_job',
         'nomor_batch',
-        'nomor_bstb',
-        'status',
         'jenis_job',
         'berat_job',
         'pcs_job',
@@ -22,11 +19,13 @@ class TransitPreWash extends Model
         'keterangan',
         'modal',
         'total_modal',
+        'waktu_penyebaran',
+        'nama_operator',
+        'nip_operator',
+        'grade_operator',
+        'nama_team_leader',
+        'keterangan_2',
         'user_created',
         'user_updated',
     ];
-    public function CabutBuluPenerimaan()
-    {
-        return $this->hasMany(CabutBuluPenerimaan::class, 'nomor_bstb', 'nomor_bstb');
-    }
 }

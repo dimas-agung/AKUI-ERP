@@ -462,7 +462,7 @@
 
             // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
             $.ajax({
-                url: `{{ route('GradingHalusOutput.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
+                url: `{{ route('GradingHalusOutput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
                 method: 'POST',
                 data: {
                     idBoxes: JSON.stringify(idBoxes),

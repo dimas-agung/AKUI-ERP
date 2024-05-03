@@ -32,6 +32,8 @@ class MasterOperatorController extends Controller
             'bagian'            => 'required',
             'workstation'       => 'required',
             'unit'              => 'required',
+            'grade'             => 'required',
+            'atasan'            => 'required',
             'job'               => 'required',
 
         ]);
@@ -46,6 +48,8 @@ class MasterOperatorController extends Controller
             'bagian'            => $request->departemen,
             'workstation'       => $request->departemen,
             'unit'              => $request->unit,
+            'grade'             => $request->grade,
+            'atasan'            => $request->atasan,
             'job'               => $request->job,
         ]);
 
@@ -75,6 +79,8 @@ class MasterOperatorController extends Controller
             'bagian'            => 'required',
             'workstation'       => 'required',
             'unit'              => 'required',
+            'grade'             => 'required',
+            'atasan'            => 'required',
             'job'               => 'required',
         ]);
 
@@ -87,6 +93,8 @@ class MasterOperatorController extends Controller
             'bagian'            => $request->bagian,
             'workstation'       => $request->workstation,
             'unit'              => $request->unit,
+            'grade'             => $request->grade,
+            'atasan'            => $request->atasan,
             'job'               => $request->job,
             'status'            => $request->status
         ]);

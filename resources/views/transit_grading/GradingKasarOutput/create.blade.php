@@ -330,6 +330,7 @@
                     let sisaPcs = pcsMasuk - pcsKeluar;
                     $('#berat_masuk').val(sisaBerat);
                     $('#sisa_pcs').val(sisaPcs);
+                    calculateSisaBeratSisaPcs(beratMasuk,pcsMasuk)
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -548,6 +549,14 @@
                 });
                 return;
             }
+            //cetak barcode
+            generateQrCode(nomor_job)
+            $('#cetak_nomor_batch').html(nomor_batch)
+            $('#cetak_nomor_job').html(nomor_job)
+            $('#cetak_jenis').html(jenis_grading)
+            $('#cetak_gramasi').html(berat_keluar)
+            $('#cetak_pcs').html(pcs_keluar)
+            window.print();
 
             // Memanggil fungsi generateNomorBSTB untuk mendapatkan nomor_bstb
             // var nomor_bstb = generateNomorBSTB(inisial_tujuan);
@@ -602,8 +611,10 @@
                 user_created: user_created
             });
             // Membersihkan nilai input setelah ditambahkan
-            $('#id_box_grading_kasar').val('').trigger('change');
-            $('#tujuan_kirim').val('').trigger('change');
+            $('#id_box_grading_kasar').trigger('change');
+            $('#tujuan_kirim').trigger('change');
+            $("#tujuan_kirim").attr('disabled','disabled');
+            // $('#tujuan_kirim').attr('disabled')
             $('#id_box_raw_material').val('');
             $('#nomor_batch').val('');
             $('#nama_supplier').val('');
@@ -626,6 +637,7 @@
             $('#user_created').prop('readonly', true);
             // Update indeks baris terakhir
             currentRowIndex++;
+            
         }
 
         // Ambil indeks terakhir sebelum menghapus baris
@@ -736,6 +748,58 @@
                     }
                 });
             }
+            
         }
+        function calculateSisaBeratSisaPcs(berat_masuk,pcs_masuk) {
+                    // Perhitungan sisa berat
+                    let beratKeluar = 0;
+                    let pcsKeluar = 0;
+                    if (typeof dataArray != "undefined" && dataArray != null && dataArray.length != null && dataArray.length > 0) {
+                        // array exists and is not empty
+                        dataArray.forEach(function(item) {
+                            beratKeluar += parseInt(item.berat_keluar);
+                            pcsKeluar += parseInt(item.pcs_keluar)
+                           
+                        });
+                        console.log(beratKeluar);
+                        let sisaBerat = berat_masuk - beratKeluar;
+                        let sisaPcs = pcs_masuk - pcsKeluar;
+                        $('#berat_masuk').val(sisaBerat);
+                        $('#sisa_pcs').val(sisaPcs);
+                    }
+            }
     </script>
+@endsection
+@section('printArea')
+    <style>
+        @media print {
+            body {
+            visibility: hidden;
+            /* display: none; */
+            /* position: relative; */
+            }
+            #printableArea1 {
+            visibility: visible;
+            /* display: inline; */
+            position: absolute;
+            left: 0;
+            top: 0;
+            /* bottom: 0; */
+            /* right: 0; */
+            }
+            .no-print {
+                display: none; /* Menyembunyikan elemen dengan class "no-print" saat mencetak */
+            }
+        }
+    </style>
+    <div class="row" id="printableArea1" style="max-width: 200px;margin: 10px;">
+
+        <div id="qrcode" class="col" style="max-width: 70px;padding-right:0;padding-left:0;"></div>
+        <div class="col" style="font-size: 9px;width: 220px;padding-right:0;padding-left:0;" >
+            <span style="text-align: center;" id="cetak_nomor_batch">1234567890</span><br>
+            <span  id="cetak_jenis">PT12</span><br>
+            <span  id="cetak_nomor_job">010324-083609_AKI_ugk</span><br>
+            <span  id="cetak_gramasi">100</span>gr / <span  id="cetak_pcs">20</span>pcs
+        </div>
+    </div>
 @endsection

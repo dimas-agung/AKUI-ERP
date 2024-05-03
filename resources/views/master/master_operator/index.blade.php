@@ -121,14 +121,29 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12">
-                                                {{-- <label><strong>Job</strong></label>
+                                            <div class="col-md-6">
+                                                <label><strong>Grade</strong></label>
+                                                <select class="form-control @error('grade') is-invalid @enderror" required
+                                                    name="grade" data-placeholder="Mohon Pilih Grade">
+                                                    <option></option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label><strong>Atasan</strong></label>
                                                 <div class="form-group">
-                                                    <input type="text" name="job" placeholder="Masukan Job"
-                                                        class="form-control @error('job') is-invalid @enderror" required
-                                                        oninvalid="this.setCustomValidity('Mohon isi Job')"
+                                                    <input type="text" name="atasan" placeholder="Masukan Atasan"
+                                                        class="form-control @error('atasan') is-invalid @enderror" required
+                                                        oninvalid="this.setCustomValidity('Mohon isi Atasan')"
                                                         oninput="this.setCustomValidity('')">
-                                                </div> --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
                                                 <label class="font-weight-bold">Job</label>
                                                 <select class="form-control @error('job') is-invalid @enderror" required
                                                     name="job" oninvalid="this.setCustomValidity('Mohon Pilih Job')"
@@ -170,6 +185,8 @@
                                         <th scope="col" class="text-center">Workstation</th>
                                         <th scope="col" class="text-center">Unit</th>
                                         <th scope="col" class="text-center">Job</th>
+                                        <th scope="col" class="text-center">Grade</th>
+                                        <th scope="col" class="text-center">Atasan</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">Tanggal Buat</th>
                                         <th scope="col" class="text-center">Tanggal Update</th>
@@ -189,6 +206,8 @@
                                             <td class="text-center">{{ $MasterOP->workstation }}</td>
                                             <td class="text-center">{{ $MasterOP->unit }}</td>
                                             <td class="text-center">{{ $MasterOP->job }}</td>
+                                            <td class="text-center">{{ $MasterOP->grade }}</td>
+                                            <td class="text-center">{{ $MasterOP->atasan }}</td>
                                             <td class="text-center">
                                                 @if ($MasterOP->status == 1)
                                                     Aktif
