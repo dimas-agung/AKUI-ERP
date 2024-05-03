@@ -100,7 +100,8 @@
                     </div>
                     <div class="col-md-3">
                         <label for="user_created" class="form-label">NIP Admin</label>
-                        <input type="text" class="form-control" id="user_created">
+                        <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}"
+                        readonly>
                     </div>
                     <div class="card-body">
                         <div class="form-group mb-3">
@@ -407,6 +408,7 @@
 
         function addRow() {
             if (validateForm()) {
+                let id_box_grading_kasar = generateIdBoxGradingKasar();
                 let nomor_grading = $('#nomor_grading').val();
 
                 // Periksa apakah nomor job sudah ada dalam tabel
@@ -449,7 +451,7 @@
 
                 // $('#nomor_grading').prop('disabled', true);
 
-                let id_box_grading_kasar = generateIdBoxGradingKasar();
+             
                 let biaya_produksi = 0;
                 console.log("Harga Estimasi = " + harga_estimasi);
 

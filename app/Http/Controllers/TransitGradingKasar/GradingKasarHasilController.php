@@ -115,6 +115,7 @@ class GradingKasarHasilController extends Controller
 
             ]);
         }
+        // return $data;
         if ($result['success']) {
             return response()->json($result);
         } else {
