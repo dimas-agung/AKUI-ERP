@@ -412,19 +412,19 @@
                 let nomor_grading = $('#nomor_grading').val();
 
                 // Periksa apakah nomor job sudah ada dalam tabel
-                if ($('#dataTable tbody tr td:nth-child(1)').filter(function() {
-                        return $(this).text() === nomor_grading;
-                    }).length > 0) {
-                    // Nomor job sudah ada dalam tabel, tampilkan pesan dan hentikan proses
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Nomor Grading sudah ada dalam tabel.',
-                    });
-                    return;
-                }
+                // if ($('#dataTable tbody tr td:nth-child(1)').filter(function() {
+                //         return $(this).text() === nomor_grading;
+                //     }).length > 0) {
+                //     // Nomor job sudah ada dalam tabel, tampilkan pesan dan hentikan proses
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Oops...',
+                //         text: 'Nomor Grading sudah ada dalam tabel.',
+                //     });
+                //     return;
+                // }
                 // Hapus opsi nomor_job yang sudah dipilih dari dropdown
-                $('#nomor_grading option[value="' + nomor_grading + '"]').remove();
+                // $('#nomor_grading option[value="' + nomor_grading + '"]').remove();
                 // Mengambil nilai dari input
                 // let nomor_grading = $('#nomor_grading').val();
                 let nomor_batch = $('#nomor_batch').val();
@@ -580,7 +580,7 @@
                 $('#berat_grading').val('');
                 $('#pcs_grading').val('');
                 $('#keterangan').val('');
-                $('#user_created').val('');
+                // $('#user_created').val('');
             }
         }
 
