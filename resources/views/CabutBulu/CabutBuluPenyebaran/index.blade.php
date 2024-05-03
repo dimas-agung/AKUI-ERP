@@ -63,6 +63,7 @@
                                             <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
                                             <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
                                             </td>
+                                            <td class="text-center">{{ $item->waktu_penyebaran }}</td>
                                             <td class="text-center">{{ $item->nama_operator }}</td>
                                             <td class="text-center">{{ $item->nip_operator }}</td>
                                             <td class="text-center">{{ $item->grade_operator }}</td>
@@ -76,18 +77,18 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                        action="{{ route('CabutBuluPenyebaran.destroy', $item->id) }}"
+                                                    <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
+                                                        action="{{ route('CabutBuluPenyebaran.destroy', $item->nomor_job) }}"
                                                         method="POST">
-                                                        <a href="{{ route('CabutBuluPenyebaran.show', $item->id) }}"
+                                                        {{-- <a href="{{ route('CabutBuluPenyebaran.show', $item->nomor_job) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $item->id }})">
+                                                            onclick="confirmDelete('{{ $item->nomor_job }}')">
                                                             <i class="bi bi-trash3 text-danger"></i>
                                                         </button>
                                                     </form>

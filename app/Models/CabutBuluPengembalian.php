@@ -27,5 +27,6 @@ class CabutBuluPengembalian extends Model
         'keterangan_2',
         'user_created',
         'user_updated',
+        'status',
     ];
 }

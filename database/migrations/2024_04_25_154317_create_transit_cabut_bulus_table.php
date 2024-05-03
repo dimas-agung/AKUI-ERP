@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('nama_team_leader');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->string('status');
+            $table->integer('status')->default(3);
             $table->timestamps();
         });
     }
