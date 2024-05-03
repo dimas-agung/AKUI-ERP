@@ -16,9 +16,12 @@
                 <form method="POST" class="row g-3" id="myForm">
                     @csrf
                     <div class="col-md-4">
-                        <label for="no_doc" class="form-label">Nomor DOC</label>
-                        <input type="text" class="form-control" id="no_doc" value="1" readonly>
+                        <label for="no_doc" class="form-label">Nomor Dokumen</label>
+                        <input type="text" class="form-control" id="doc_no" name="doc_no"
+                            value="{{ $next_document_number }}" readonly>
+
                     </div>
+
                     <div class="col-md-4">
                         <label for="nomor_po" class="form-label">Nomor PO</label>
                         <input type="text" class="form-control" id="nomor_po">
@@ -47,7 +50,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="nomor_nota_internal" class="form-label">Nomor Nota Internal</label>
-                        <input type="text" class="form-control" id="nomor_nota_internal" >
+                        <input type="text" class="form-control" id="nomor_nota_internal">
                     </div>
                     <div class="col-md-flex">
                         <hr>
@@ -134,7 +137,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 
@@ -147,7 +149,7 @@
                     <table class="table" id="dataTable">
                         <thead>
                             <tr>
-                                {{-- <th scope="col">Doc No</th> --}}
+                                <th scope="col" class="text-center">Doc No</th>
                                 <th scope="col" class="text-center">Jenis</th>
                                 <th scope="col" class="text-center">Berat Nota</th>
                                 <th scope="col" class="text-center">Berat Kotor</th>
@@ -177,6 +179,13 @@
 @endsection
 @section('script')
     <script>
+        // $(document).ready(function() {
+        //     let input = $("#no_doc");
+        //     let date = new Date();
+        //     let formattedDate = date.getFullYear() + "" + (date.getMonth() + 1).toString().padStart(2, '0') + "" +
+        //         date.getDate().toString().padStart(2, '0');
+        //     input.val(formattedDate);
+        // });
         // // Menambahkan event listener untuk perubahan nilai pada input nomor nota supplier dan select nama supplier
         $('#nomor_nota_supplier').on('input', generateNomorNotaInternal);
         $('#nama_supplier').on('change', generateNomorNotaInternal);
@@ -415,6 +424,7 @@
             } else {
                 // Menambahkan data ke dalam tabel
                 var newRow = `<tr>` +
+                    `<td class="text-center">${doc_no}</td>` +
                     `<td class="text-center">${jenis}</td>` +
                     `<td class="text-center">${berat_nota}</td>` +
                     `<td class="text-center">${berat_kotor}</td>` +
@@ -441,6 +451,7 @@
 
             // Menambahkan data ke dalam array
             dataArray.push({
+                // id_box: id_box,
                 id_box: id_box,
                 nomor_nota_internal: nomor_nota_internal,
                 nomor_batch: nomor_batch,

@@ -55,12 +55,12 @@
                                             <td class="text-center">{{ $PGHAS->nama_supplier }}</td>
                                             <td class="text-center">{{ $PGHAS->jenis_raw_material }}</td>
                                             {{-- <td class="text-center">{{ $PGHAS->kadar_air }}</td> --}}
-                                            <td class="text-center">{{ number_format($PGHAS->kadar_air, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ $PGHAS->kadar_air }}</td>
                                             {{-- <td class="text-center">{{ $PGHAS->berat_adding }}</td> --}}
-                                            <td class="text-center">{{ number_format($PGHAS->berat_adding, 1, ',', '.') }}
+                                            <td class="text-center">{{ $PGHAS->berat_adding }}
                                             </td>
                                             {{-- <td class="text-center">{{ $PGHAS->pcs_adding }}</td> --}}
-                                            <td class="text-center">{{ number_format($PGHAS->pcs_adding, 1, ',', '.') }}
+                                            <td class="text-center">{{ $PGHAS->pcs_adding }}
                                             </td>
                                             {{-- <td class="text-center">{{ $PGHAS->modal }}</td> --}}
                                             <td class="text-center">{{ number_format($PGHAS->modal, 2, ',', '.') }}</td>

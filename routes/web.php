@@ -173,6 +173,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/prm_raw_material_input/simpanData', 'simpanData')->name('PrmRawMaterialInput.simpanData');
             Route::post('/prm_raw_material_input/simpanDataItem', 'simpanDataItem')->name('PrmRawMaterialInput.simpanDataItem');
             Route::post('/prm_raw_material_input/importExcel', 'importExcel')->name('PrmRawMaterialInput.importExcel');
+            Route::get('/prm_raw_material_input/nextDocNo', 'getNextDocumentNumber')->name('PrmRawMaterialInput.getNextDocumentNumber');
         });
 
         Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->group(function () {
@@ -200,8 +201,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/prm_raw_material_output/getBerat/{id}', 'getBerat')->name('PrmRawMaterialOutput.getBerat');
         });
     });
-    Route::prefix('bahan_baku')->middleware(['role:bahan_baku|admin'])->group(function () {
-        Route::prefix('grading_kasar')->middleware('role:grading_kasar|admin')->group(function () {
+    Route::prefix('bahan_baku')->group(function () {
+        Route::prefix('grading_kasar')->group(function () {
             Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputController::class)->group(function () {
                 Route::get('/grading_kasar_input', 'index')->name('GradingKasarInput.index');
                 Route::get('/grading_kasar_input/create', 'create')->name('GradingKasarInput.create');
@@ -402,18 +403,20 @@ Route::middleware('auth')->group(function () {
                 Route::get('/transit_grading_halus', 'index')->name('TransitGradingHalus.index');
             });
 
+        });
+        Route::prefix('pre_wash')->group(function (){
             Route::controller(App\Http\Controllers\PreWash\PreWashInputController::class)->group(function () {
                 Route::get('/pre_wash_input', 'index')->name('PreWashInput.index');
                 Route::get('/pre_wash_input/create', 'create')->name('PreWashInput.create');
                 Route::post('/pre_wash_input/store', 'store')->name('PreWashInput.store');
+                Route::post('/pre_wash_input/cek_data', 'CeksendData')->name('PreWashInput.CeksendData');
                 Route::get('/pre_wash_input/set', 'set')->name('PreWashInput.set');
+                Route::delete('/pre_wash_input/destroy/{nomor_bstb}', 'destroy')->name('PreWashInput.destroy');
             });
-
+    
             Route::controller(App\Http\Controllers\PreWash\PreWashStockController::class)->group(function () {
                 Route::get('/pre_wash_stock', 'index')->name('PreWashStock.index');
             });
-        });
-        Route::prefix('pre_wash')->middleware('role:pre_wash|admin')->group(function (){
             Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
                 Route::get('/pre_wash_output', 'index')->name('PreWashOutput.index');
                 Route::get('/pre_wash_output/create', 'create')->name('PreWashOutput.create');
@@ -421,10 +424,14 @@ Route::middleware('auth')->group(function () {
                 Route::get('/pre_wash_output/show/{id}', 'show')->name('PreWashOutput.show');
                 Route::get('/pre_wash_output/edit/{id}', 'edit')->name('PreWashOutput.edit');
                 Route::put('/pre_wash_output/update/{id}', 'update')->name('PreWashOutput.update');
-                Route::delete('/pre_wash_output/destroy/{nomor_bstb}', 'destroy')->name('PreWashOutput.destroy');
+                Route::delete('/pre_wash_output/destroy/{nomor_job}', 'destroy')->name('PreWashOutput.destroy');
                 Route::get('/pre_wash_output/get_data_nomor_job', 'set')->name('preWashOutput.set');
                 Route::post('/pre_wash_output/simpanData', 'simpanData')->name('PreWashOutput.simpanData');
                 Route::post('/pre_wash_output/cek_data', 'CeksendData')->name('PreWashOutput.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\PreWash\TransitPreWashController::class)->group(function () {
+                Route::get('/transit_pre_wash', 'index')->name('TransitPreWash.index');
             });
         });
     });

@@ -27,6 +27,7 @@ class UsersSeeder extends Seeder
         $user->syncRoles(['master','admin']);
         $user = User::create([
             'email' => 'Purchasing@akuibirdnest.com',
+            'unit_id' => '1',
             'password' => Hash::make('purchasing123'),
             'fullname' => 'NUR FADHILLAH',
             'nip' => '222040347',

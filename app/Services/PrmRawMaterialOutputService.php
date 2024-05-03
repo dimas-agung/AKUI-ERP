@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\PrmRawMaterialStock;
@@ -56,10 +55,10 @@ class PrmRawMaterialOutputService
             'kadar_air'     => $item->kadar_air,
             'tujuan_kirim'  => $item->tujuan_kirim,
             'letak_tujuan'  => $item->letak_tujuan,
-            'inisial_tujuan' => $item->inisial_tujuan,
+            'inisial_tujuan'=> $item->inisial_tujuan,
             'modal'         => $item->modal,
             'total_modal'   => $item->total_modal,
-            'keterangan_item' => $item->keterangan_item,
+            'keterangan_item'=> $item->keterangan_item,
             'user_created'  => $item->user_created,
             'user_updated'  => $item->user_updated ?? "There isn't any",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
@@ -110,13 +109,13 @@ class PrmRawMaterialOutputService
             $banyakData = $jumlahData;
 
             // Menghitung rata-rata kadar air baru
-            if (isset($jumlahKadarAir[$itemObject->id_box])) {
-                $banyakKadarAir = $jumlahKadarAir[$itemObject->id_box];
-                $avgKadarAirBaru = $banyakKadarAir / $banyakData;
+            if (isset($jumlahKadarAir[$existingItem->id_box])) {
+                $banyakKadarAir = $jumlahKadarAir[$existingItem->id_box];
+                $avgKadarAirBaru = ($banyakKadarAir + $itemObject->kadar_air) / ($banyakData + 1);
             } else {
                 // Jika id_box tidak ditemukan dalam array jumlahKadarAir,
                 // hitung rata-rata kadar air baru berdasarkan data sebelumnya dan data baru
-                $avgKadarAirBaru = ($avgairSebelumnya * ($banyakData - 1) + $itemObject->kadar_air) / $banyakData;
+                $avgKadarAirBaru = ($avgairSebelumnya * $banyakData + $itemObject->kadar_air) / ($banyakData + 1);
             }
 
             // Hitung total modal baru berdasarkan perbedaan berat
@@ -124,34 +123,45 @@ class PrmRawMaterialOutputService
             $totalModalBaru = $perbedaanBerat * $itemObject->modal;
 
             // Update data dengan berat dan total modal yang baru
-            $dataToUpdate['berat'] = $perbedaanBerat;
-            $dataToUpdate['total_modal'] = $totalModalBaru;
-            $dataToUpdate['kadar_air'] = $avgKadarAirBaru;
+            $dataToUpdates = [
+                'berat' => $perbedaanBerat,
+                'total_modal' => $totalModalBaru,
+                'kadar_air' => $avgKadarAirBaru
+            ];
 
-            $existingItem->update($dataToUpdate);
+            $existingItem->update($dataToUpdates);
         } else {
+            // Update data dengan berat dan total modal yang baru
+            $dataToUpdates = [
+                'id_box'        => $itemObject->id_box,
+                'total_modal' => $itemObject->total_modal,
+                'berat'         => $itemObject->berat,
+                'kadar_air'     => $itemObject->kadar_air,
+                'keterangan'    => $itemObject->keterangan_item,
+            ];
             // Jika item tidak ada, buat item baru
-            StockTransitRawMaterial::create(array_merge($dataToUpdate, [
-                'nomor_bstb'    => $itemObject->nomor_bstb,
-                'nomor_batch'   => $item->nomor_batch,
+            StockTransitRawMaterial::create(array_merge($dataToUpdates, [
+                'nomor_bstb' => $itemObject->nomor_bstb,
+                'nomor_batch' => $itemObject->nomor_batch,
                 'nama_supplier' => $itemObject->nama_supplier,
-                'jenis'         => $itemObject->jenis,
-                'tujuan_kirim'  => $itemObject->tujuan_kirim,
-                'letak_tujuan'  => $itemObject->letak_tujuan,
-                'inisial_tujuan'=> $itemObject->inisial_tujuan,
-                'modal'         => $itemObject->modal,
-                'user_created'  => $itemObject->user_created,
-                'user_updated'  => $itemObject->user_updated ?? "There isn't any",
-                'nomor_nota_internal'   => $itemObject->nomor_nota_internal
+                'jenis' => $itemObject->jenis,
+                'tujuan_kirim' => $itemObject->tujuan_kirim,
+                'letak_tujuan' => $itemObject->letak_tujuan,
+                'inisial_tujuan' => $itemObject->inisial_tujuan,
+                'modal' => $itemObject->modal,
+                'user_created' => $itemObject->user_created,
+                'user_updated' => $itemObject->user_updated ?? "There isn't any",
+                'nomor_nota_internal' => $itemObject->nomor_nota_internal
             ]));
         }
+
 
         // Creat Prm Raw Material Stock
         $itemObject = (object)$item;
         $existingItem = PrmRawMaterialStock::where('id_box', $itemObject->id_box)
             ->where('nomor_batch', $itemObject->nomor_batch)
             ->first();
-        // return $existingItem
+            // return $existingItem
 
         $dataToUpdate = [
             'berat_masuk'   => $itemObject->berat_masuk,
@@ -250,13 +260,13 @@ class PrmRawMaterialOutputService
             'nomor_bstb'   => 'required',
             'nomor_batch'  => 'required',
             'id_box'       => 'required',
-            'nama_supplier' => 'required',
+            'nama_supplier'=> 'required',
             'jenis'        => 'required',
             'berat'        => 'required',
             'kadar_air'    => 'required',
             'tujuan_kirim' => 'required',
             'letak_tujuan' => 'required',
-            'inisial_tujuan' => 'required',
+            'inisial_tujuan'=> 'required',
             'modal'        => 'required',
             'total_modal'  => 'required',
             'keterangan_item'    => '',

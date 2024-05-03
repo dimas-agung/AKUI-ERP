@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\GradingKasarHasil;
 use App\Models\GradingKasarStock;
-use App\Services\HppService;
 use App\Models\MasterJenisGradingKasar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +37,6 @@ class GradingKasarHasilService
             ];
         }
     }
-
 
     private function createItem($item, $total_susut)
     {

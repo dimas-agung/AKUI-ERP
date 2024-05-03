@@ -4,7 +4,6 @@ namespace App\Http\Controllers\TransitGradingKasar;
 
 use App\Http\Controllers\Controller;
 use App\Models\GradingKasarHasil;
-use App\Models\GradingKasarStock;
 use App\Models\GradingKasarInput;
 use App\Models\MasterJenisGradingKasar;
 use App\Services\GradingKasarHasilService;
@@ -41,8 +40,11 @@ class GradingKasarHasilController extends Controller
     {
         $GradingKasarInput = GradingKasarInput::with('GradingKasarHasil')->get();
         $MasterJenisGradingKasar = MasterJenisGradingKasar::with('GradingKasarHasil')->get();
+        $getUnusedNomorGrading = GradingKasarInput::withCount('GradingKasarHasil')->get();
 
-        return view('transit_grading.GradingKasarHasil.create', compact('GradingKasarInput', 'MasterJenisGradingKasar'));
+        // return $getUnusedNomorGrading;
+
+        return view('transit_grading.GradingKasarHasil.create', compact('GradingKasarInput', 'MasterJenisGradingKasar', 'getUnusedNomorGrading'));
     }
 
     // set
@@ -54,6 +56,7 @@ class GradingKasarHasilController extends Controller
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
     }
+
     // simpanData
     public function simpanData(
         GradingKasarHasilRequest $request,
@@ -71,6 +74,7 @@ class GradingKasarHasilController extends Controller
             $harga_estimasi[] = $value->harga_estimasi;
             $totalModal[] = $value->total_modal;
         };
+
         // $dataHpp = 'dataHPPService';
         //panggil service
 

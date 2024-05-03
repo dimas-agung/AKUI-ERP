@@ -18,6 +18,7 @@ use App\Http\Requests\PrmRawMaterialRequest;
 use App\Services\PrmRawMaterialInputService;
 use App\Http\Requests\PrmRawMaterialItemRequest;
 use App\Services\PrmRawMaterialInputItemService;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 
 class PrmRawMaterialInputController extends Controller
@@ -40,9 +41,6 @@ class PrmRawMaterialInputController extends Controller
     //index
     public function index()
     {
-        // $user = Auth::user();
-        // var_dump( $user->hasRole('purchasing'));
-        // return;
         $i = 1;
         $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
@@ -60,27 +58,61 @@ class PrmRawMaterialInputController extends Controller
         ]);
     }
     // create
+    // public function create()
+    // {
+    //     $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
+    //     $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
+    //     return view('purchasing_exim/prm_raw_material_input.create', [
+    //         'master_supplier_raw_materials' => $MasterSupplierRawMaterial,
+    //         'master_jenis_raw_materials'    => $MasterJenisRawMaterial,
+    //     ]);
+    // }
     public function create()
     {
+        // Mendapatkan nomor dokumen terbaru
+        $latestDocumentNumber = PrmRawMaterialInput::latest('doc_no')->value('doc_no');
+
+        // Mendapatkan tanggal hari ini dalam format YYYYMMDD
+        $currentDate = date('Ymd');
+
+        // Mendapatkan angka berikutnya yang belum digunakan
+        $nextDocumentNumber = $this->getNextDocumentNumber($latestDocumentNumber, $currentDate);
+
         $MasterSupplierRawMaterial = MasterSupplierRawMaterial::with('PrmRawMaterialInput')->get();
         $MasterJenisRawMaterial = MasterJenisRawMaterial::with('PrmRawMaterialInputItem')->get();
         return view('purchasing_exim/prm_raw_material_input.create', [
             'master_supplier_raw_materials' => $MasterSupplierRawMaterial,
             'master_jenis_raw_materials'    => $MasterJenisRawMaterial,
+            'next_document_number'          => $nextDocumentNumber,
         ]);
     }
+
+    // Fungsi untuk mendapatkan angka berikutnya yang belum digunakan
+    private function getNextDocumentNumber($latestDocumentNumber, $currentDate)
+    {
+        // Jika tidak ada nomor dokumen sebelumnya, gunakan tanggal hari ini dengan angka 01
+        if (!$latestDocumentNumber || strpos($latestDocumentNumber, $currentDate) === false) {
+            return $currentDate . '01';
+        }
+
+        // Jika sudah ada nomor dokumen sebelumnya, tambahkan 1 ke nomor sebelumnya
+        $lastNumber = intval(substr($latestDocumentNumber, -2));
+        $nextNumber = $lastNumber + 1;
+        return $currentDate . sprintf('%02d', $nextNumber);
+    }
+
+
+
     public function detail()
     {
         $i = 1;
-
-        // $PrmRawMaterialInputItem = PrmRawMaterialInputItem::with('PrmRawMaterialInput')->get();
-        $PrmRawMaterialInputItem = PrmRawMaterialInputItem::all();
-        // return $PrmRawMaterialInputItem;
-        return response()->view('purchasing_exim.prm_raw_material_input.detail', [
-            'prm_raw_material_input_items'  => $PrmRawMaterialInputItem,
+        $prmRawMaterialInputs = PrmRawMaterialInput::with('prmRawMaterialInputItem')->get();
+        return view('purchasing_exim.prm_raw_material_input.detail', [
+            'prm_raw_material_inputs' => $prmRawMaterialInputs,
             'i' => $i,
         ]);
     }
+
 
     // get Data Supplier
     public function getDataSupplier(Request $request)
