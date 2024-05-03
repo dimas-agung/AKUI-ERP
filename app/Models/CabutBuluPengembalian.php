@@ -33,4 +33,12 @@ class CabutBuluPengembalian extends Model
     {
         return $this->hasMany(CabutBuluStock::class, 'nomor_job', 'nomor_job');
     }
+    public function CabutBuluPenyebaran()
+    {
+        return $this->belongsTo(CabutBuluPenyebaran::class, 'nomor_job', 'nomor_job');
+    }
+    public function TransitCabutBulu()
+    {
+        return $this->hasMany(TransitCabutBulu::class, 'nomor_job', 'nomor_job');
+    }
 }
