@@ -142,7 +142,8 @@ class GradingKasarOutputService
 
             $tambahBeratKeluar = $lastBeratKeluar + $itemObject->berat_keluar;
             $perbedaanBerat = $lastPcsKeluar + $itemObject->pcs_keluar;
-            $totalModalBaru = $tambahBeratKeluar * $itemObject->modal;
+            $sisaBerat = $existingItem->berat_masuk - $tambahBeratKeluar;
+            $totalModalBaru = $sisaBerat * $itemObject->modal;
 
             $dataToUpdate['berat_keluar'] = $tambahBeratKeluar;
             $dataToUpdate['pcs_keluar'] = $perbedaanBerat;

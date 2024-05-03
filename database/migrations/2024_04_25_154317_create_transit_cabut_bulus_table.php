@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('transit_cabut_bulus', function (Blueprint $table) {
             $table->id();
+            $table->string('workstation');
+            $table->string('unit');
             $table->string('nomor_job');
             $table->string('nomor_batch');
             $table->string('jenis_job');

@@ -29,41 +29,50 @@
                                 <th class="text-center">Id Box Raw Material</th>
                                 <th class="text-center">Berat Masuk</th>
                                 <th class="text-center">Berat Keluar</th>
+                                <th class="text-center">Sisa Berat</th>
                                 <th class="text-center">Pcs Masuk</th>
                                 <th class="text-center">Pcs Keluar</th>
+                                <th class="text-center">Sisa Pcs</th>
                                 <th class="text-center">Avg Kadar Air</th>
                                 <th class="text-center">Nomor Grading</th>
                                 <th class="text-center">Modal</th>
                                 <th class="text-center">Total Modal</th>
                                 <th class="text-center" scope="col">Keterangan</th>
-                                <th class="text-center" scope="col">NIP Admin</th>
+                                <th class="text-center" scope="col">User Created</th>
                                 <th class="text-center" scope="col">User Updated</th>
                                 {{-- <th class="text-center">Action</th> --}}
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($grading_kasar_stocks as $item)
+                            @forelse ($grading_kasar_stocks as $GradingKS)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{{ $item->doc_no }}</td>
-                                    <td class="text-center">{{ $item->id_box_grading_kasar }}</td>
-                                    <td class="text-center">{{ $item->nomor_batch }}</td>
-                                    <td class="text-center">{{ $item->nama_supplier }}</td>
-                                    <td class="text-center">{{ $item->nomor_nota_internal }}</td>
-                                    <td class="text-center">{{ $item->jenis_raw_material }}</td>
-                                    <td class="text-center">{{ $item->jenis_grading }}</td>
-                                    <td class="text-center">{{ $item->id_box_raw_material }}</td>
-                                    <td class="text-center">{{ $item->berat_masuk }}</td>
-                                    <td class="text-center">{{ $item->berat_keluar }}</td>
-                                    <td class="text-center">{{ $item->pcs_masuk }}</td>
-                                    <td class="text-center">{{ $item->pcs_keluar }}</td>
-                                    <td class="text-center">{{ $item->avg_kadar_air }}</td>
-                                    <td class="text-center">{{ $item->nomor_grading }}</td>
-                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
-                                    <td class="text-center">{{ $item->keterangan }}</td>
-                                    <td class="text-center">{{ $item->user_created }}</td>
-                                    <td class="text-center">{{ $item->user_updated }}</td>
+                                    <td class="text-center">{{ $GradingKS->doc_no }}</td>
+                                    <td class="text-center">{{ $GradingKS->id_box_grading_kasar }}</td>
+                                    <td class="text-center">{{ $GradingKS->nomor_batch }}</td>
+                                    <td class="text-center">{{ $GradingKS->nama_supplier }}</td>
+                                    <td class="text-center">{{ $GradingKS->nomor_nota_internal }}</td>
+                                    <td class="text-center">{{ $GradingKS->jenis_raw_material }}</td>
+                                    <td class="text-center">{{ $GradingKS->jenis_grading }}</td>
+                                    <td class="text-center">{{ $GradingKS->id_box_raw_material }}</td>
+                                    {{-- <td class="text-center">{{ $GradingKS->berat_masuk }}</td> --}}
+                                    <td class="text-center">{{ $GradingKS->berat_masuk }}</td>
+                                    {{-- <td class="text-center">{{ $GradingKS->berat_keluar }}</td> --}}
+                                    <td class="text-center">{{ $GradingKS->berat_keluar }}</td>
+                                    <td class="text-center">{{ $GradingKS->berat_masuk - $GradingKS->berat_keluar }}</td>
+                                    <td class="text-center">{{ $GradingKS->pcs_masuk }}</td>
+                                    <td class="text-center">{{ $GradingKS->pcs_keluar }}</td>
+                                    <td class="text-center">{{ $GradingKS->pcs_masuk - $GradingKS->pcs_keluar }}</td>
+                                    <td class="text-center">{{ $GradingKS->avg_kadar_air }}
+                                    </td>
+                                    <td class="text-center">{{ $GradingKS->nomor_grading }}</td>
+                                    {{-- <td class="text-center">{{ $GradingKS->modal }}</td> --}}
+                                    <td class="text-center">{{ number_format($GradingKS->modal, 2, ',', '.') }}</td>
+                                    {{-- <td class="text-center">{{ $GradingKS->total_modal }}</td> --}}
+                                    <td class="text-center">{{ number_format($GradingKS->total_modal, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ $GradingKS->keterangan }}</td>
+                                    <td class="text-center">{{ $GradingKS->user_created }}</td>
+                                    <td class="text-center">{{ $GradingKS->user_updated }}</td>
                                     {{-- <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" id="deleteForm{{ $item->id }}"

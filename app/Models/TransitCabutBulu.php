@@ -10,6 +10,8 @@ class TransitCabutBulu extends Model
     use HasFactory;
     protected $table = 'transit_cabut_bulus';
     protected $fillable = [
+        'workstation',
+        'unit',
         'nomor_job',
         'nomor_batch',
         'jenis_job',
@@ -25,4 +27,8 @@ class TransitCabutBulu extends Model
         'total_modal',
         'status',
     ];
+    public function CabutBuluPengembalian()
+    {
+        return $this->belongsTo(CabutBuluPengembalian::class, 'nomor_job', 'nomor_job');
+    }
 }
