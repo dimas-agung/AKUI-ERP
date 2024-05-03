@@ -18,11 +18,13 @@
                     <div class="col-md-6">
                         <label for="basic-usage" class="form-label">Nomor Grading</label>
                         <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
-                            name="nomor_grading" id="nomor_grading" placeholder="Pilih Nomor Grading">
+                            name="nomor_grading" id="nomor_grading" data-placeholder="Pilih Nomor Grading">
                             <option value="">Pilih Nomor Grading</option>
-                            @foreach ($GradingKasarInput as $GradingKI)
-                                <option value="{{ $GradingKI->nomor_grading }}">
-                                    {{ $GradingKI->nomor_grading }}</option>
+                            @foreach ($getUnusedNomorGrading as $GradingKI)
+                                @if ($GradingKI->grading_kasar_hasil_count == 0)
+                                    <option value="{{ $GradingKI->nomor_grading }}">
+                                        {{ $GradingKI->nomor_grading }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -72,7 +74,7 @@
                     <div class="col-md-3">
                         <label for="basic-usage" class="form-label">Pilih Jenis Grading :</label>
                         <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
-                            name="jenis_grading" id="jenis_grading" placeholder="Pilih jenis grading">
+                            name="jenis_grading" id="jenis_grading" data-placeholder="Pilih jenis grading">
                             <option value="">Pilih Jenis Grading</option>
                             @foreach ($MasterJenisGradingKasar as $MasterJGK)
                                 <option
@@ -296,31 +298,11 @@
                 // console.log("Prosentase Pengurangan Harga: " + presentasePenguranganHarga);
             });
         });
+
         // hitung nilai berat
         function hitungNilaiBerat() {
             let totalBerat
         }
-
-        // function hitungNilaiSusut() {
-        //     let totalBeratGradingtest = parseFloat($('#total_berat').val());
-
-        //     if (isNaN(totalBeratGradingtest)) {
-        //         totalBeratGradingtest = parseFloat($('#berat_grading').val()) || 0;
-        //     }
-
-        //     let beratAdding = parseFloat($('#berat_adding').val());
-
-        //     if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding) && beratAdding !== 0) {
-        //         let nilaiSusut = (1 - totalBeratGradingtest / beratAdding);
-        //         console.log("totalTest = " + totalBeratGradingtest);
-        //         console.log("Berat Adding = " + beratAdding);
-        //         console.log("Susut = " + nilaiSusut);
-        //         return nilaiSusut;
-        //     } else {
-        //         console.error('Input tidak valid untuk berat_grading atau berat');
-        //         return null;
-        //     }
-        // }
 
         function hitungNilaiSusut() {
             let totalBeratGradingtest = parseFloat($('#total_berat').val());
@@ -425,8 +407,24 @@
 
         function addRow() {
             if (validateForm()) {
-                // Mengambil nilai dari input
                 let nomor_grading = $('#nomor_grading').val();
+
+                // Periksa apakah nomor job sudah ada dalam tabel
+                if ($('#dataTable tbody tr td:nth-child(1)').filter(function() {
+                        return $(this).text() === nomor_grading;
+                    }).length > 0) {
+                    // Nomor job sudah ada dalam tabel, tampilkan pesan dan hentikan proses
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Nomor Grading sudah ada dalam tabel.',
+                    });
+                    return;
+                }
+                // Hapus opsi nomor_job yang sudah dipilih dari dropdown
+                $('#nomor_grading option[value="' + nomor_grading + '"]').remove();
+                // Mengambil nilai dari input
+                // let nomor_grading = $('#nomor_grading').val();
                 let nomor_batch = $('#nomor_batch').val();
                 let id_box_raw_material = $('#id_box_raw_material').val();
                 let nomor_nota_internal = $('#nomor_nota_internal').val();
@@ -449,7 +447,7 @@
                 let sisa_berat_adding = $('#sisa_berat_adding').val();
                 sisaBeratAddding = sisa_berat_adding
 
-                $('#nomor_grading').prop('disabled', true);
+                // $('#nomor_grading').prop('disabled', true);
 
                 let id_box_grading_kasar = generateIdBoxGradingKasar();
                 let biaya_produksi = 0;
@@ -564,15 +562,15 @@
                 });
                 // Membersihkan nilai input setelah ditambahkan
                 // $('#nomor_grading').val();
-                // $('#nomor_batch').val();
-                // $('#id_box_raw_material').val();
-                // $('#nomor_nota_internal').val();
-                // $('#nama_supplier').val();
-                // $('#jenis_adding').val();
-                // $('#berat_adding').val();
-                // $('#kadar_air').val();
-                // $('#modal').val();
-                // $('#total_modal').val();
+                $('#nomor_batch').val();
+                $('#id_box_raw_material').val();
+                $('#nomor_nota_internal').val();
+                $('#nama_supplier').val();
+                $('#jenis_adding').val();
+                $('#berat_adding').val();
+                $('#kadar_air').val();
+                $('#modal').val();
+                $('#total_modal').val();
                 $('#jenis_grading').val($('#jenis_grading option:first').val()).trigger('change');
                 // $('#jenis').val('');
                 // $('#harga_estimasi').val('');
@@ -590,6 +588,21 @@
         function hapusBaris(button) {
             // Dapatkan elemen baris terkait dengan tombol delete yang diklik
             let row = $(button).closest('tr');
+
+            // Dapatkan nomor_job dari baris yang dihapus
+            let nomorGradingDihapus = row.find('td:eq(0)').text();
+
+            // Buat kembali opsi nomor_job yang dihapus dan tambahkan ke dalam dropdown
+            $('#nomor_grading').append('<option value="' + nomorGradingDihapus + '">' + nomorGradingDihapus + '</option>');
+
+            // Urutkan opsi nomor_job dalam dropdown
+            let options = $('#nomor_grading option');
+            options.detach().sort(function(a, b) {
+                let at = $(a).text();
+                let bt = $(b).text();
+                return (at > bt) ? 1 : ((at < bt) ? -1 : 0);
+            });
+            $('#nomor_grading').append(options);
 
             // Hapus baris dari dataArray berdasarkan indeks baris di tabel
             let rowIndex = row.index();

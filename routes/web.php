@@ -399,11 +399,28 @@ Route::middleware('auth')->group(function () {
                 Route::get('/pre_wash_input', 'index')->name('PreWashInput.index');
                 Route::get('/pre_wash_input/create', 'create')->name('PreWashInput.create');
                 Route::post('/pre_wash_input/store', 'store')->name('PreWashInput.store');
+                Route::post('/pre_wash_input/cek_data', 'CeksendData')->name('PreWashInput.CeksendData');
                 Route::get('/pre_wash_input/set', 'set')->name('PreWashInput.set');
+                Route::delete('/pre_wash_input/destroy/{nomor_bstb}', 'destroy')->name('PreWashInput.destroy');
             });
 
             Route::controller(App\Http\Controllers\PreWash\PreWashStockController::class)->group(function () {
                 Route::get('/pre_wash_stock', 'index')->name('PreWashStock.index');
+            });
+
+            Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenyebaranContoller::class)->group(function () {
+                Route::get('/cabut_bulu_penyebaran', 'index')->name('CabutBuluPenyebaran.index');
+                Route::get('/cabut_bulu_penyebaran/create', 'create')->name('CabutBuluPenyebaran.create');
+                Route::post('/cabut_bulu_penyebaran/store', 'store')->name('CabutBuluPenyebaran.store');
+                Route::post('/cabut_bulu_penyebaran/cek_data', 'CeksendData')->name('CabutBuluPenyebaran.CeksendData');
+                Route::post('/cabut_bulu_penyebaran/simpanData', 'simpanData')->name('CabutBuluPenyebaran.simpanData');
+                Route::get('/cabut_bulu_penyebaran/set', 'set')->name('CabutBuluPenyebaran.set');
+                Route::get('/cabut_bulu_penyebaran/setnip', 'setNip')->name('CabutBuluPenyebaran.setNip');
+                Route::delete('/cabut_bulu_penyebaran/destroy/{nomor_bstb}', 'destroy')->name('CabutBuluPenyebaran.destroy');
+            });
+
+            Route::controller(App\Http\Controllers\CabutBulu\CabutBuluStockController::class)->group(function () {
+                Route::get('/cabut_bulu_stock', 'index')->name('CabutBuluStock.index');
             });
         });
 

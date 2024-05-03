@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pre_wash_inputs', function (Blueprint $table) {
+        Schema::create('cabut_bulu_penyebarans', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_job');
             $table->string('nomor_batch');
@@ -20,11 +20,17 @@ return new class extends Migration
             $table->float('pcs_job');
             $table->string('tujuan_kirim');
             $table->string('keterangan')->nullable();
-            $table->string('nomor_bstb');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
+            $table->timestamp('waktu_penyebaran');
+            $table->string('nama_operator');
+            $table->string('nip_operator');
+            $table->string('grade_operator');
+            $table->string('nama_team_leader');
+            $table->string('keterangan_2')->nullable();
             $table->string('user_created');
             $table->string('user_updated')->nullable();
+            $table->integer('status')->default(2);
             $table->timestamps();
         });
     }
@@ -34,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pre_wash_inputs');
+        Schema::dropIfExists('cabut_bulu_penyebarans');
     }
 };
