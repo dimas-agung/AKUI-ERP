@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\GradingHalusOutput;
@@ -75,7 +76,7 @@ class GradingHalusOutputService
 
                     // Ambil semua item yang sesuai dengan kriteria
                     $existingItems = GradingHalusStock::where('id_box_grading_halus', $itemObject->id_box_grading_halus)
-                    ->get();
+                        ->get();
 
                     foreach ($existingItems as $existingItem) {
                         // Hitung sisa berat dan sisa pcs
@@ -96,7 +97,7 @@ class GradingHalusOutputService
                     }
 
                     $existingItems = GradingHalusInput::where('id_box_grading_halus', $itemObject->id_box_grading_halus)
-                    ->get();
+                        ->get();
 
                     $dataToUpdate = [
                         'status'                => $itemObject->status ?? 0,
@@ -148,33 +149,33 @@ class GradingHalusOutputService
                 $PreCleaningS = TransitGradingHalus::where('nomor_job', '=', $PreCleaningI->nomor_job)
                     ->first();
 
-                    if ($PreCleaningS) {
-                        // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                        $stockPrmRawMaterial = GradingHalusStock::where('id_box_grading_halus', '=', $PreCleaningI->id_box_grading_halus)
-                            ->first();
+                if ($PreCleaningS) {
+                    // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
+                    $stockPrmRawMaterial = GradingHalusStock::where('id_box_grading_halus', '=', $PreCleaningI->id_box_grading_halus)
+                        ->first();
 
-                        if ($stockPrmRawMaterial) {
-                            // Simpan nilai sebelum dihapus
-                            $beratSebelumnya = $stockPrmRawMaterial->berat_masuk;
-                            $pcsSebelumnya = $stockPrmRawMaterial->pcs_masuk;
+                    if ($stockPrmRawMaterial) {
+                        // Simpan nilai sebelum dihapus
+                        $beratSebelumnya = $stockPrmRawMaterial->berat_masuk;
+                        $pcsSebelumnya = $stockPrmRawMaterial->pcs_masuk;
 
-                            // Hitung perbedaan berat dan pcs
-                            $perbedaanBerat = $PreCleaningI->berat_adding;
-                            $perbedaanPcs = $PreCleaningI->pcs_adding;
+                        // Hitung perbedaan berat dan pcs
+                        $perbedaanBerat = $PreCleaningI->berat_adding;
+                        $perbedaanPcs = $PreCleaningI->pcs_adding;
 
-                            // Hitung total modal baru
-                            $totalModalBaru = $perbedaanBerat * $PreCleaningI->modal;
+                        // Hitung total modal baru
+                        $totalModalBaru = $beratSebelumnya * $PreCleaningI->modal;
 
-                            // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
-                            $stockPrmRawMaterial->update([
-                                'berat_keluar' => max(0, $stockPrmRawMaterial->berat_keluars),
-                                'pcs_keluar' => max(0, $stockPrmRawMaterial->pcs_keluars),
-                                'sisa_berat' => max($beratSebelumnya, 0),
-                                'sisa_pcs' => max($pcsSebelumnya, 0),
-                                'total_modal' => max($pcsSebelumnya, 0),
-                            ]);
-                        }
+                        // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
+                        $stockPrmRawMaterial->update([
+                            'berat_keluar' => max(0, $stockPrmRawMaterial->berat_keluars),
+                            'pcs_keluar' => max(0, $stockPrmRawMaterial->pcs_keluars),
+                            'sisa_berat' => max($beratSebelumnya, 0),
+                            'sisa_pcs' => max($pcsSebelumnya, 0),
+                            'total_modal' => max($totalModalBaru, 0),
+                        ]);
                     }
+                }
 
                 if ($PreCleaningS) {
                     // Hapus data PreCleaningStock
@@ -183,6 +184,14 @@ class GradingHalusOutputService
 
                 // Hapus data GradingHalusInput
                 $PreCleaningI->delete();
+
+                // Perbarui status PreCleaningOutput jika ada
+                $GradingHalusInput = GradingHalusInput::where('id_box_grading_halus', '=', $id_box_grading_halus)->get();
+
+                foreach ($GradingHalusInput as $gradingHI) {
+                    // Update status menjadi 1 pada CabutBuluStock
+                    $gradingHI->update(['status' => 1]);
+                }
             }
 
             // Commit transaksi

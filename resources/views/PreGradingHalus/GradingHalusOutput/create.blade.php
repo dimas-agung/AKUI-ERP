@@ -3,7 +3,7 @@
     Grading Halus
 @endsection
 @section('title')
-    Input Grading Halus
+    Grading Halus Output
 @endsection
 @section('content')
     {{-- <div class="container"> --}}
@@ -14,7 +14,7 @@
                 <div class="col-md-12">
                     <div class="card border-0 shadow-sm rounded">
                         <div class="card-header">
-                            <h4>Input Data Prm Raw Material Output</h4>
+                            <h4>Input Data Grading Halus Output</h4>
                         </div>
                         <div class="card-body">
                             {{-- Create Data --}}
@@ -39,7 +39,7 @@
                                     <div class="form-group">
                                         <label>ID Box Grading Halus</label>
                                         <select id="id_box_grading_halus" class="select2 form-select"
-                                            name="id_box_grading_halus">
+                                            name="id_box_grading_halus" data-placeholder="Pilih ID Box Grading Halus">
                                             <option value="">Pilih ID Box Grading Halus</option>
                                             @foreach ($TransitPre->sortBy('id_box_grading_halus') as $post)
                                                 <option value="{{ $post->id_box_grading_halus }}">
@@ -51,7 +51,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Tujuan Kirim</label>
-                                        <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim">
+                                        <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim"
+                                            data-placeholder="Pilih Tujuan Kirim">
                                             <option value="">Pilih Tujuan Kirim</option>
                                             @foreach ($TujuanKirimGHI->sortBy('tujuan_kirim') as $post)
                                                 <option value="{{ $post->tujuan_kirim }}">
@@ -165,7 +166,7 @@
                 </div>
                 <!-- Elemen dengan ID 'nomor_grading' -->
                 <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
-                    <table class="table table-striped mt-3">
+                    <table class="table table-striped mt-3" id="tableBody">
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">Id Box Grading Halus</th>
@@ -183,7 +184,7 @@
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="tableBody">
+                        <tbody>
                         </tbody>
                     </table>
                     <a href="#" class="btn btn-primary" onclick="sendData()">Submit</a>
@@ -337,8 +338,24 @@
         var dataArray = [];
 
         function addRow() {
+            let id_box_grading_halus = $('#id_box_grading_halus').val();
+
+            // Periksa apakah nomor job sudah ada dalam tabel
+            if ($('#tableBody tbody tr td:nth-child(1)').filter(function() {
+                    return $(this).text() === id_box_grading_halus;
+                }).length > 0) {
+                // Nomor job sudah ada dalam tabel, tampilkan pesan dan hentikan proses
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Nomor job sudah ada dalam tabel.',
+                });
+                return;
+            }
+            // Hapus opsi id_box_grading_halus yang sudah dipilih dari dropdown
+            $('#id_box_grading_halus option[value="' + id_box_grading_halus + '"]').remove();
             // Mengambil nilai dari inputgrading_halus = $('#id_box_grading_halus').val();
-            var id_box_grading_halus = $('#id_box_grading_halus').val();
+            // var id_box_grading_halus = $('#id_box_grading_halus').val();
             var nomor_batch = $('#nomor_batch').val();
             var nomor_bstb = $('#nomor_bstb').val();
             var nomor_job = $('#nomor_job').val();
@@ -438,6 +455,22 @@
         function hapusBaris(button) {
             // Dapatkan elemen baris terkait dengan tombol delete yang diklik
             let row = $(button).closest('tr');
+
+            // Dapatkan id_box_grading_halus dari baris yang dihapus
+            let idBoxGradingHalusHapus = row.find('td:eq(0)').text();
+
+            // Buat kembali opsi id_box_grading_halus yang dihapus dan tambahkan ke dalam dropdown
+            $('#id_box_grading_halus').append('<option value="' + idBoxGradingHalusHapus + '">' + idBoxGradingHalusHapus +
+                '</option>');
+
+            // Urutkan opsi id_box_grading_halus dalam dropdown
+            let options = $('#id_box_grading_halus option');
+            options.detach().sort(function(a, b) {
+                let at = $(a).text();
+                let bt = $(b).text();
+                return (at > bt) ? 1 : ((at < bt) ? -1 : 0);
+            });
+            $('#id_box_grading_halus').append(options);
 
             // Hapus baris dari dataArray berdasarkan indeks baris di tabel
             let rowIndex = row.index();
