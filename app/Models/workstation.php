@@ -24,4 +24,8 @@ class Workstation extends Model
     {
         return $this->belongsTo(Perusahaan::class);
     }
+    public function MasterOperator()
+    {
+        return $this->belongsTo(MasterOperator::class);
+    }
 }

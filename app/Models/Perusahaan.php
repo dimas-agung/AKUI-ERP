@@ -18,12 +18,16 @@ class Perusahaan extends Model
     {
         return $this->hasMany(PreGradingHalusAdding::class, 'nama', 'nomor_job');
     }
-    public function unit()
+    // public function unit()
+    // {
+    //     return $this->hasMany(Unit::class);
+    // }
+    // public function workstation()
+    // {
+    //     return $this->hasMany(Workstation::class);
+    // }
+    public function MasterOperator()
     {
-        return $this->hasMany(Unit::class);
-    }
-    public function workstation()
-    {
-        return $this->hasMany(Workstation::class);
+        return $this->belongsTo(MasterOperator::class, 'plant', 'plant');
     }
 }

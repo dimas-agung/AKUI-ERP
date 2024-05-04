@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MasterOperator;
+use App\Models\unit;
+use App\Models\Perusahaan;
+use App\Models\Workstation;
 use Illuminate\Http\Request;
+use App\Models\MasterOperator;
 use Illuminate\Http\RedirectResponse;
 
 class MasterOperatorController extends Controller
@@ -12,15 +15,23 @@ class MasterOperatorController extends Controller
     public function index()
     {
         $i = 1;
-        $MasterOperator = MasterOperator::all();
+        $MasterOperator = MasterOperator::with('Perusahaan')->get();
+        // $perusahaan = Perusahaan::with('MasterOperator')->get();
+        $perusahaan = Perusahaan::all();
+        $workstation = Workstation::all();
+        $unit = unit::all();
         // return $MasterOperator;
+        // return $perusahaan;
         return response()->view('master.master_operator.index', [
             'master_operators' => $MasterOperator,
+            'perusahaans' => $perusahaan,
+            'workstations' => $workstation,
+            'units' => $unit,
             'i' => $i
         ]);
     }
     //store
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         // Validate form
         $this->validate($request, [
@@ -32,8 +43,8 @@ class MasterOperatorController extends Controller
             'bagian'            => 'required',
             'workstation'       => 'required',
             'unit'              => 'required',
-            'grade'             => 'required',
-            'atasan'            => 'required',
+            'grade_operator'    => 'required',
+            'nama_team_leader'  => 'required',
             'job'               => 'required',
 
         ]);
@@ -45,12 +56,13 @@ class MasterOperatorController extends Controller
             'plant'             => $request->plant,
             'divisi'            => $request->divisi,
             'departemen'        => $request->departemen,
-            'bagian'            => $request->departemen,
-            'workstation'       => $request->departemen,
+            'bagian'            => $request->bagian,
+            'workstation'       => $request->workstation,
             'unit'              => $request->unit,
-            'grade'             => $request->grade,
-            'atasan'            => $request->atasan,
+            'grade_operator'    => $request->grade_operator,
+            'nama_team_leader'  => $request->nama_team_leader,
             'job'               => $request->job,
+            'status',
         ]);
 
         // Redirect to index
@@ -60,8 +72,12 @@ class MasterOperatorController extends Controller
     public function edit(string $id)
     {
         $MasterOP = MasterOperator::findOrFail($id);
+        $perusahaan = Perusahaan::with('MasterOperator')->get();
+        $workstation = Workstation::with('MasterOperator')->get();
+        $unit = unit::with('MasterOperator')->get();
 
-        return view('master.master_operator.update', compact('MasterOP'));
+
+        return view('master.master_operator.update', compact('MasterOP', 'perusahaan', 'workstation', 'unit'));
     }
     // update
     public function update(Request $request, $id): RedirectResponse
@@ -79,8 +95,8 @@ class MasterOperatorController extends Controller
             'bagian'            => 'required',
             'workstation'       => 'required',
             'unit'              => 'required',
-            'grade'             => 'required',
-            'atasan'            => 'required',
+            'grade_operator'    => 'required',
+            'nama_team_leader'  => 'required',
             'job'               => 'required',
         ]);
 
@@ -93,8 +109,8 @@ class MasterOperatorController extends Controller
             'bagian'            => $request->bagian,
             'workstation'       => $request->workstation,
             'unit'              => $request->unit,
-            'grade'             => $request->grade,
-            'atasan'            => $request->atasan,
+            'grade_operator'    => $request->grade_operator,
+            'nama_team_leader'  => $request->nama_team_leader,
             'job'               => $request->job,
             'status'            => $request->status
         ]);
