@@ -106,7 +106,7 @@
                             id="operator_flex_dan_poles" data-placeholder="Pilih Operator Flex & Poles">
                             <option value="">Pilih Operator Flex & Poles</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Flek + Poles' && $MasterSPRM->status == 1)
+                                @if ($MasterSPRM->job == 'Flex + Poles' && $MasterSPRM->status == 1)
                                     <option value="{{ $MasterSPRM->nama }}">
                                         {{ $MasterSPRM->nama }}
                                     </option>
