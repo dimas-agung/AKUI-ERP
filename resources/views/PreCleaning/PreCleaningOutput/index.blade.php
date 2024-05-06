@@ -112,11 +112,6 @@
                                                     <form style="display: flex" id="deleteForm{{ $PCO->id }}"
                                                         action="{{ route('PreCleaningOutput.destroy', $PCO->id) }}"
                                                         method="POST">
-                                                        <a href="{{ route('PreCleaningOutput.show', $PCO->id) }}"
-                                                            class="btn btn-link" title="View"
-                                                            data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a>
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
