@@ -17,8 +17,9 @@ use Illuminate\View\View;
 class PreCleaningInputController extends Controller
 {
     //Index
-    public function index(){
-        $i =1;
+    public function index()
+    {
+        $i = 1;
         $PreCleaningI = PreCleaningInput::with('StockTransitGradingKasar')->get();
         // $existingItem = StockTransitGradingKasar::with('PreCleaningInput')
         // ->get();
@@ -31,7 +32,7 @@ class PreCleaningInputController extends Controller
         ]);
     }
 
-        /**
+    /**
      * Create
      */
     public function create(): View
@@ -45,11 +46,26 @@ class PreCleaningInputController extends Controller
     public function set(Request $request)
     {
         $nomor_bstb = $request->nomor_bstb;
-        $data = StockTransitGradingKasar::where('nomor_bstb',$nomor_bstb)->first();
-        $data = StockTransitGradingKasar::where('nomor_bstb',$nomor_bstb)->get();
+        $data = StockTransitGradingKasar::where('nomor_bstb', $nomor_bstb)->first();
+        $data = StockTransitGradingKasar::where('nomor_bstb', $nomor_bstb)->get();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
+    }
+
+    public function CeksendData(Request $request)
+    {
+        // Ambil id box dari request dan konversi ke dalam array
+        $idBoxes = json_decode($request->idBoxes);
+
+        // Cek ketersediaan id box dalam database
+        $unavailableBoxes = StockTransitGradingKasar::whereIn('nomor_bstb', $idBoxes)->pluck('nomor_bstb')->toArray();
+
+        // Filter id box yang tidak tersedia
+        $availableBoxes = array_diff($idBoxes, $unavailableBoxes);
+
+        // Kembalikan daftar id box yang tidak tersedia sebagai respons
+        return response()->json(['unavailableBoxes' => $availableBoxes]);
     }
 
     // Contoh controller
@@ -99,6 +115,7 @@ class PreCleaningInputController extends Controller
                     PreCleaningInput::create($mergedData);
 
                     PreCleaningStock::create([
+                        'unit'      => 'Pre Cleaning',
                         'nomor_job'             => $mergedData['nomor_job'],
                         'id_box_grading_kasar'  => $mergedData['id_box_grading_kasar'],
                         'nomor_bstb'    => $mergedData['nomor_bstb'],
@@ -106,13 +123,15 @@ class PreCleaningInputController extends Controller
                         'nama_supplier' => $mergedData['nama_supplier'],
                         'id_box_raw_material'        => $mergedData['id_box_raw_material'],
                         'jenis_raw_material'         => $mergedData['jenis_raw_material'],
-                        'avg_kadar_air'     => $mergedData['kadar_air'],
+                        'kadar_air'         => $mergedData['kadar_air'],
                         'tujuan_kirim'      => $mergedData['tujuan_kirim'],
                         'jenis_kirim'       => $mergedData['jenis_kirim'],
                         'berat_keluar'      => $mergedData['berat_keluar'] ?? 0,
                         'berat_masuk'       => $mergedData['berat_kirim'] ?? 0,
+                        'sisa_berat'       => $mergedData['berat_kirim'] ?? 0,
                         'pcs_keluar'        => $mergedData['pcs_keluar'] ?? 0,
                         'pcs_masuk'         => $mergedData['pcs_kirim'] ?? 0,
+                        'sisa_pcs'         => $mergedData['pcs_kirim'] ?? 0,
                         'nomor_grading'     => $mergedData['nomor_grading'],
                         'modal'             => $mergedData['modal'],
                         'total_modal'       => $mergedData['total_modal'],
@@ -150,10 +169,10 @@ class PreCleaningInputController extends Controller
                     ];
 
                     if ($existingItem) {
-                            foreach ($existingItem as $existingItems) {
-                                // Perbarui data untuk setiap item yang ada
-                                $existingItems->update($dataToUpdate);
-                            }
+                        foreach ($existingItem as $existingItems) {
+                            // Perbarui data untuk setiap item yang ada
+                            $existingItems->update($dataToUpdate);
+                        }
                     }
 
                     DB::commit();
@@ -164,7 +183,7 @@ class PreCleaningInputController extends Controller
                         'success' => false,
                         'error' => 'Gagal menyimpan data. ' . $e->getMessage(),
                         'redirectTo' => route('PreCleaningInput.create')
-                    ],504);
+                    ], 504);
                 }
             }
         }
@@ -247,8 +266,8 @@ class PreCleaningInputController extends Controller
                 }
 
                 $existingItems = GradingKasarOutput::where('nama_supplier', $PreCleaningI->nama_supplier)
-                ->where('nomor_bstb', $PreCleaningI->nomor_bstb)
-                ->get();
+                    ->where('nomor_bstb', $PreCleaningI->nomor_bstb)
+                    ->get();
 
                 // Logika Update Status
                 if ($existingItems) {
@@ -279,5 +298,4 @@ class PreCleaningInputController extends Controller
             return redirect()->route('PreCleaningInput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
-
 }

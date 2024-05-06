@@ -266,6 +266,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/pre_cleaning_input/destroy/{nomor_bstb}', 'destroy')->name('PreCleaningInput.destroy');
                 Route::get('/pre_cleaning_input/get_data_id_box', 'set')->name('PreCleaningInput.set');
                 Route::get('/pre_cleaning_input/get_pcc', 'setpcc')->name('PreCleaningInput.setpcc');
+                Route::post('/pre_cleaning_input/cek_data', 'CeksendData')->name('PreCleaningInput.CeksendData');
             });
 
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::class)->group(function () {
