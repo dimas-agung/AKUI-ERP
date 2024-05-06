@@ -142,6 +142,19 @@ class PreCleaningOutputController extends Controller
                 }
             }
 
+            $existingItem = PreCleaningInput::where('nomor_job', $PreCleaningOutput->nomor_job)
+                ->where('id_box_raw_material', $PreCleaningOutput->id_box_raw_material)
+                ->first();
+
+            $dataToUpdate = [
+                'status'                => $PreCleaningOutput->status ?? 0,
+            ];
+
+            if ($existingItem) {
+                // Perbarui data
+                $existingItem->update($dataToUpdate);
+            }
+
             // Hapus record utama
             $PreCleaningOutput->delete();
 

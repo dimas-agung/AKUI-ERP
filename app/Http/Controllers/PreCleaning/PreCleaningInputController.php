@@ -17,8 +17,9 @@ use Illuminate\View\View;
 class PreCleaningInputController extends Controller
 {
     //Index
-    public function index(){
-        $i =1;
+    public function index()
+    {
+        $i = 1;
         $PreCleaningI = PreCleaningInput::with('StockTransitGradingKasar')->get();
         // $existingItem = StockTransitGradingKasar::with('PreCleaningInput')
         // ->get();
@@ -31,7 +32,7 @@ class PreCleaningInputController extends Controller
         ]);
     }
 
-        /**
+    /**
      * Create
      */
     public function create(): View
@@ -45,8 +46,8 @@ class PreCleaningInputController extends Controller
     public function set(Request $request)
     {
         $nomor_bstb = $request->nomor_bstb;
-        $data = StockTransitGradingKasar::where('nomor_bstb',$nomor_bstb)->first();
-        $data = StockTransitGradingKasar::where('nomor_bstb',$nomor_bstb)->get();
+        $data = StockTransitGradingKasar::where('nomor_bstb', $nomor_bstb)->first();
+        $data = StockTransitGradingKasar::where('nomor_bstb', $nomor_bstb)->get();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -168,10 +169,10 @@ class PreCleaningInputController extends Controller
                     ];
 
                     if ($existingItem) {
-                            foreach ($existingItem as $existingItems) {
-                                // Perbarui data untuk setiap item yang ada
-                                $existingItems->update($dataToUpdate);
-                            }
+                        foreach ($existingItem as $existingItems) {
+                            // Perbarui data untuk setiap item yang ada
+                            $existingItems->update($dataToUpdate);
+                        }
                     }
 
                     DB::commit();
@@ -182,7 +183,7 @@ class PreCleaningInputController extends Controller
                         'success' => false,
                         'error' => 'Gagal menyimpan data. ' . $e->getMessage(),
                         'redirectTo' => route('PreCleaningInput.create')
-                    ],504);
+                    ], 504);
                 }
             }
         }
@@ -265,8 +266,8 @@ class PreCleaningInputController extends Controller
                 }
 
                 $existingItems = GradingKasarOutput::where('nama_supplier', $PreCleaningI->nama_supplier)
-                ->where('nomor_bstb', $PreCleaningI->nomor_bstb)
-                ->get();
+                    ->where('nomor_bstb', $PreCleaningI->nomor_bstb)
+                    ->get();
 
                 // Logika Update Status
                 if ($existingItems) {
@@ -297,5 +298,4 @@ class PreCleaningInputController extends Controller
             return redirect()->route('PreCleaningInput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
-
 }
