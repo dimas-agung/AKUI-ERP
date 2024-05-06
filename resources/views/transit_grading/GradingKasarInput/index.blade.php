@@ -31,8 +31,10 @@
                                 <th class="text-center">Berat</th>
                                 <th class="text-center">Kadar Air</th>
                                 <th class="text-center">Nomor Grading</th>
-                                <th class="text-center">Modal</th>
-                                <th class="text-center">Total Modal</th>
+                                @role('admin')
+                                    <th class="text-center">Modal</th>
+                                    <th class="text-center">Total Modal</th>
+                                @endrole
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center">Action</th>
@@ -50,8 +52,10 @@
                                     <td class="text-center">{{ $item->berat }}</td>
                                     <td class="text-center">{{ $item->kadar_air }}</td>
                                     <td class="text-center">{{ $item->nomor_grading }}</td>
-                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    @role('admin')
+                                        <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    @endrole
                                     <td class="text-center">{{ $item->keterangan }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">

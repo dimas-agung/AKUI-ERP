@@ -22,7 +22,7 @@ class Unit extends Model
     }
     public function perusahaan()
     {
-    	return $this->belongsTo(Perusahaan::class);
+        return $this->belongsTo(Perusahaan::class);
     }
     public function biayahpp()
     {
@@ -31,5 +31,9 @@ class Unit extends Model
     public function PreGradingHalusInput()
     {
         return $this->hasMany(PreGradingHalusInput::class, 'nomor_bstb', 'nama');
+    }
+    public function MasterOperator()
+    {
+        return $this->belongsTo(MasterOperator::class);
     }
 }

@@ -36,25 +36,29 @@
                                         <th scope="col" class="text-center">Berat Adjustment</th>
                                         <th scope="col" class="text-center">Pcs Adjustment</th>
                                         <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center">Modal</th>
-                                        <th scope="col" class="text-center">Total Modal</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Ketegori Susut</th>
-                                        <th scope="col" class="text-center">Susut Depan</th>
-                                        <th scope="col" class="text-center">Susut Belakang</th>
-                                        <th scope="col" class="text-center">Biaya Produksi</th>
-                                        <th scope="col" class="text-center">Kontribusi</th>
-                                        <th scope="col" class="text-center">Harga Estimasi</th>
-                                        <th scope="col" class="text-center">Total Harga</th>
-                                        <th scope="col" class="text-center">Nilai Laba Rugi</th>
-                                        <th scope="col" class="text-center">Nilai Prosentase Total Keuntungan</th>
-                                        <th scope="col" class="text-center">Nilai Dikurangi Keuntungan</th>
-                                        <th scope="col" class="text-center">Prosentase Harga Gramasi</th>
-                                        <th scope="col" class="text-center">Selisih Labah Rugi Kg</th>
-                                        <th scope="col" class="text-center">Selisih Labah Rugi Per Gram</th>
-                                        <th scope="col" class="text-center">Hpp</th>
-                                        <th scope="col" class="text-center">Total Hpp</th>
-                                        <th scope="col" class="text-center">Fix Hpp</th>
-                                        <th scope="col" class="text-center">Fix Total Hpp</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Susut Depan</th>
+                                            <th scope="col" class="text-center">Susut Belakang</th>
+                                            <th scope="col" class="text-center">Biaya Produksi</th>
+                                            <th scope="col" class="text-center">Kontribusi</th>
+                                            <th scope="col" class="text-center">Harga Estimasi</th>
+                                            <th scope="col" class="text-center">Total Harga</th>
+                                            <th scope="col" class="text-center">Nilai Laba Rugi</th>
+                                            <th scope="col" class="text-center">Nilai Prosentase Total Keuntungan</th>
+                                            <th scope="col" class="text-center">Nilai Dikurangi Keuntungan</th>
+                                            <th scope="col" class="text-center">Prosentase Harga Gramasi</th>
+                                            <th scope="col" class="text-center">Selisih Labah Rugi Kg</th>
+                                            <th scope="col" class="text-center">Selisih Labah Rugi Per Gram</th>
+                                            <th scope="col" class="text-center">Hpp</th>
+                                            <th scope="col" class="text-center">Total Hpp</th>
+                                            <th scope="col" class="text-center">Fix Hpp</th>
+                                            <th scope="col" class="text-center">Fix Total Hpp</th>
+                                        @endrole
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
@@ -78,44 +82,48 @@
                                             <td class="text-center">{{ $ADJI->pcs_adjustment }}
                                             </td>
                                             <td class="text-center">{{ $ADJI->keterangan }}</td>
-                                            <td class="text-center">{{ number_format($ADJI->modal, 2, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($ADJI->total_modal, 2, ',', '.') }}
-                                            </td>
+                                            @role('admin')
+                                                <td class="text-center">{{ number_format($ADJI->modal, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($ADJI->total_modal, 2, ',', '.') }}
+                                                </td>
+                                            @endrole
                                             <td class="text-center">{{ $ADJI->kategori_susut }}</td>
-                                            <td class="text-center">{{ number_format($ADJI->susut_depan, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($ADJI->susut_belakang, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($ADJI->biaya_produksi, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">{{ number_format($ADJI->kontribusi, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($ADJI->harga_estimasi, 2, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($ADJI->total_harga, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($ADJI->nilai_laba_rugi, 2, ',', '.') }}</td>
-                                            <td class="text-center">
-                                                {{ number_format($ADJI->nilai_prosentase_total_keuntungan, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($ADJI->nilai_dikurangi_keuntungan, 2, ',', '.') }}</td>
-                                            <td class="text-center">
-                                                {{ number_format($ADJI->prosentase_harga_gramasi, 2, ',', '.') }}</td>
-                                            <td class="text-center">
-                                                {{ number_format($ADJI->selisih_laba_rugi_kg, 2, ',', '.') }}</td>
-                                            <td class="text-center">
-                                                {{ number_format($ADJI->selisih_laba_rugi_per_gram, 2, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($ADJI->hpp, 2, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($ADJI->total_hpp, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">{{ number_format($ADJI->fix_hpp, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">{{ number_format($ADJI->fix_total_hpp, 2, ',', '.') }}
-                                            </td>
+                                            @role('admin')
+                                                <td class="text-center">{{ number_format($ADJI->susut_depan, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($ADJI->susut_belakang, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($ADJI->biaya_produksi, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">{{ number_format($ADJI->kontribusi, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($ADJI->harga_estimasi, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($ADJI->total_harga, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($ADJI->nilai_laba_rugi, 2, ',', '.') }}</td>
+                                                <td class="text-center">
+                                                    {{ number_format($ADJI->nilai_prosentase_total_keuntungan, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($ADJI->nilai_dikurangi_keuntungan, 2, ',', '.') }}</td>
+                                                <td class="text-center">
+                                                    {{ number_format($ADJI->prosentase_harga_gramasi, 2, ',', '.') }}</td>
+                                                <td class="text-center">
+                                                    {{ number_format($ADJI->selisih_laba_rugi_kg, 2, ',', '.') }}</td>
+                                                <td class="text-center">
+                                                    {{ number_format($ADJI->selisih_laba_rugi_per_gram, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($ADJI->hpp, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($ADJI->total_hpp, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">{{ number_format($ADJI->fix_hpp, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">{{ number_format($ADJI->fix_total_hpp, 2, ',', '.') }}
+                                                </td>
+                                            @endrole
                                             <td class="text-center">{{ $ADJI->user_created }}</td>
                                             <td class="text-center">{{ $ADJI->user_updated }}</td>
                                             <td class="text-center">{{ $ADJI->created_at }}</td>

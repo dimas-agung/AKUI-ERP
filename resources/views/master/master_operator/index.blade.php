@@ -26,8 +26,8 @@
                         </h5>
                     </div>
                     {{-- Modal Tambah --}}
-                    <div class="modal fade text-left modal-borderless modal-lg" id="inlineForm" tabindex="-1"
-                        role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+                    <div class="modal fade text-left modal-borderless modal-lg modal-dialog-scrollable" id="inlineForm"
+                        tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                             <div class="modal-content">
                                 <div class="modal-header bg-primary">
@@ -43,7 +43,8 @@
                                             <div class="col-md-6">
                                                 <label><strong>Nama</strong></label>
                                                 <div class="form-group">
-                                                    <input type="text" name="nama" placeholder="Masukkan nama"
+                                                    <input type="text" name="nama" id="nama"
+                                                        placeholder="Masukkan nama"
                                                         class="form-control @error('nama') is-invalid @enderror" required
                                                         oninvalid="this.setCustomValidity('Mohon isi nama')"
                                                         oninput="this.setCustomValidity('')">
@@ -52,7 +53,8 @@
                                             <div class="col-md-6">
                                                 <label><strong>NIP</strong></label>
                                                 <div class="form-group">
-                                                    <input type="text" name="nip" placeholder="Masukan NIP"
+                                                    <input type="text" name="nip" id="nip"
+                                                        placeholder="Masukan NIP"
                                                         class="form-control @error('nip') is-invalid @enderror" required
                                                         oninvalid="this.setCustomValidity('Mohon isi NIP')"
                                                         oninput="this.setCustomValidity('')">
@@ -63,16 +65,20 @@
                                             <div class="col-md-6">
                                                 <label><strong>Plant</strong></label>
                                                 <div class="form-group">
-                                                    <input type="text" name="plant" placeholder="Masukan Plant"
-                                                        class="form-control @error('plant') is-invalid @enderror" required
-                                                        oninvalid="this.setCustomValidity('Mohon isi Plant')"
-                                                        oninput="this.setCustomValidity('')">
+                                                    <select class="choices form-select" name="plant" id="plant">
+                                                        <option></option>
+                                                        @foreach ($perusahaans as $peru)
+                                                            <option value="{{ $peru->id }}">
+                                                                {{ $peru->nama }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <label><strong>Divisi</strong></label>
                                                 <div class="form-group">
-                                                    <input type="text" name="divisi" placeholder="Masukan Divisi"
+                                                    <input type="text" name="divisi" id="divisi"
+                                                        placeholder="Masukan Divisi"
                                                         class="form-control @error('divisi') is-invalid @enderror" required
                                                         oninvalid="this.setCustomValidity('Mohon isi Divisi')"
                                                         oninput="this.setCustomValidity('')">
@@ -83,7 +89,8 @@
                                             <div class="col-md-6">
                                                 <label><strong>Departemen</strong></label>
                                                 <div class="form-group">
-                                                    <input type="text" name="departemen" placeholder="Masukan Departemen"
+                                                    <input type="text" name="departemen" id="departemen"
+                                                        placeholder="Masukan Departemen"
                                                         class="form-control @error('departemen') is-invalid @enderror"
                                                         required oninvalid="this.setCustomValidity('Mohon isi Departemen')"
                                                         oninput="this.setCustomValidity('')">
@@ -92,7 +99,8 @@
                                             <div class="col-md-6">
                                                 <label><strong>Bagian</strong></label>
                                                 <div class="form-group">
-                                                    <input type="text" name="bagian" placeholder="Masukan Bagian"
+                                                    <input type="text" name="bagian" id="bagian"
+                                                        placeholder="Masukan Bagian"
                                                         class="form-control @error('bagian') is-invalid @enderror" required
                                                         oninvalid="this.setCustomValidity('Mohon isi Bagian')"
                                                         oninput="this.setCustomValidity('')">
@@ -103,41 +111,45 @@
                                             <div class="col-md-6">
                                                 <label><strong>Workstation</strong></label>
                                                 <div class="form-group">
-                                                    <input type="text" name="workstation"
-                                                        placeholder="Masukan Workstation"
-                                                        class="form-control @error('workstation') is-invalid @enderror"
-                                                        required oninvalid="this.setCustomValidity('Mohon isi Workstation')"
-                                                        oninput="this.setCustomValidity('')">
+                                                    <select class="choices form-select" name="workstation" id="workstation">
+                                                        <option></option>
+                                                        @foreach ($workstations as $work)
+                                                            <option value="{{ $work->id }}">
+                                                                {{ $work->nama }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <label><strong>Unit</strong></label>
                                                 <div class="form-group">
-                                                    <input type="text" name="unit" placeholder="Masukan Unit"
-                                                        class="form-control @error('unit') is-invalid @enderror" required
-                                                        oninvalid="this.setCustomValidity('Mohon isi Unit')"
-                                                        oninput="this.setCustomValidity('')">
+                                                    <select class="choices form-select" name="unit" id="unit">
+                                                        <option></option>
+                                                        @foreach ($units as $unit)
+                                                            <option value="{{ $unit->id }}">
+                                                                {{ $unit->nama }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label><strong>Grade</strong></label>
-                                                <select class="form-control @error('grade') is-invalid @enderror" required
-                                                    name="grade" data-placeholder="Mohon Pilih Grade">
-                                                    <option></option>
-                                                    <option value="A">A</option>
-                                                    <option value="B">B</option>
-                                                    <option value="C">C</option>
-                                                    <option value="D">D</option>
-                                                </select>
+                                                <input type="text" name="grade_operator" id="grade_operator"
+                                                    placeholder="Masukan grade"
+                                                    class="form-control @error('grade') is-invalid @enderror" required
+                                                    oninvalid="this.setCustomValidity('Mohon isi grade')"
+                                                    oninput="this.setCustomValidity('')">
                                             </div>
                                             <div class="col-md-6">
                                                 <label><strong>Atasan</strong></label>
                                                 <div class="form-group">
-                                                    <input type="text" name="atasan" placeholder="Masukan Atasan"
-                                                        class="form-control @error('atasan') is-invalid @enderror" required
-                                                        oninvalid="this.setCustomValidity('Mohon isi Atasan')"
+                                                    <input type="text" name="nama_team_leader" id="nama_team_leader"
+                                                        placeholder="Masukan Nama Team Leader"
+                                                        class="form-control @error('nama_team_leader') is-invalid @enderror"
+                                                        required
+                                                        oninvalid="this.setCustomValidity('Mohon isi Nama Team Leader')"
                                                         oninput="this.setCustomValidity('')">
                                                 </div>
                                             </div>
@@ -145,17 +157,11 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label class="font-weight-bold">Job</label>
-                                                <select class="form-control @error('job') is-invalid @enderror" required
-                                                    name="job" oninvalid="this.setCustomValidity('Mohon Pilih Job')"
+                                                <input type="text" name="job" id="job"
+                                                    placeholder="Masukan job"
+                                                    class="form-control @error('job') is-invalid @enderror" required
+                                                    oninvalid="this.setCustomValidity('Mohon isi job')"
                                                     oninput="this.setCustomValidity('')">
-                                                    <option></option>
-                                                    <option value="Sikat + Kompresor">Sikat + Kompresor</option>
-                                                    <option value="Flek + Poles">Flek + Poles</option>
-                                                    <option value="Cutter">Cutter</option>
-                                                    <option value="Perendaman">Perendaman</option>
-                                                    <option value="Bilas">Bilas</option>
-                                                    <option value="Box">Box</option>
-                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -188,8 +194,8 @@
                                         <th scope="col" class="text-center">Workstation</th>
                                         <th scope="col" class="text-center">Unit</th>
                                         <th scope="col" class="text-center">Job</th>
-                                        <th scope="col" class="text-center">Grade</th>
-                                        <th scope="col" class="text-center">Atasan</th>
+                                        <th scope="col" class="text-center">Grade Operator</th>
+                                        <th scope="col" class="text-center">Nama Team Leader</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">Tanggal Buat</th>
                                         <th scope="col" class="text-center">Tanggal Update</th>
@@ -202,6 +208,7 @@
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $MasterOP->nama }}</td>
                                             <td class="text-center">{{ $MasterOP->nip }}</td>
+                                            {{-- <td class="text-center">{{ $MasterOP-> }}</td> --}}
                                             <td class="text-center">{{ $MasterOP->plant }}</td>
                                             <td class="text-center">{{ $MasterOP->divisi }}</td>
                                             <td class="text-center">{{ $MasterOP->departemen }}</td>
@@ -209,8 +216,8 @@
                                             <td class="text-center">{{ $MasterOP->workstation }}</td>
                                             <td class="text-center">{{ $MasterOP->unit }}</td>
                                             <td class="text-center">{{ $MasterOP->job }}</td>
-                                            <td class="text-center">{{ $MasterOP->grade }}</td>
-                                            <td class="text-center">{{ $MasterOP->atasan }}</td>
+                                            <td class="text-center">{{ $MasterOP->grade_operator }}</td>
+                                            <td class="text-center">{{ $MasterOP->nama_team_leader }}</td>
                                             <td class="text-center">
                                                 @if ($MasterOP->status == 1)
                                                     Aktif

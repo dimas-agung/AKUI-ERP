@@ -29,9 +29,10 @@
                                 <th class="text-center">Pcs Masuk</th>
                                 <th class="text-center">Pcs Keluar</th>
                                 <th class="text-center">Sisa Pcs</th>
-                                <th class="text-center">Modal</th>
-                                <th class="text-center">Total Modal</th>
-                                {{-- <th class="text-center">Action</th> --}}
+                                @role('admin')
+                                    <th class="text-center">Modal</th>
+                                    <th class="text-center">Total Modal</th>
+                                @endrole
                             </tr>
                         </thead>
                         <tbody>
@@ -48,8 +49,10 @@
                                     <td class="text-center">{{ $item->pcs_masuk }}</td>
                                     <td class="text-center">{{ $item->pcs_keluar }}</td>
                                     <td class="text-center">{{ $item->sisa_pcs }}</td>
-                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    @role('admin')
+                                        <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    @endrole
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">

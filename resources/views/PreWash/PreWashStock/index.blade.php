@@ -28,8 +28,10 @@
                                 <th class="text-center" scope="col">Pcs Job</th>
                                 <th class="text-center" scope="col">Tujuan Kirim</th>
                                 <th class="text-center" scope="col">Keterangan</th>
-                                <th class="text-center" scope="col">Modal</th>
-                                <th class="text-center" scope="col">Total Modal</th>
+                                @role('admin')
+                                    <th class="text-center" scope="col">Modal</th>
+                                    <th class="text-center" scope="col">Total Modal</th>
+                                @endrole
                                 <th class="text-center" scope="col">Nip Admin</th>
                                 <th class="text-center" scope="col">Tanggal Buat</th>
                                 <th class="text-center" scope="col">Tanggal Update</th>
@@ -48,8 +50,10 @@
                                     <td class="text-center">{{ number_format($item->pcs_job, 0, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
-                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    @role('admin')
+                                        <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    @endrole
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">{{ $item->created_at }}</td>
                                     <td class="text-center">

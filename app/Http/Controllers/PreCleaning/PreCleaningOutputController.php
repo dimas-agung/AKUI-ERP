@@ -68,13 +68,14 @@ class PreCleaningOutputController extends Controller
         }
     }
 
-    public function destroy($id): RedirectResponse
+
+    public function destroy($nomor_job)
     {
         try {
             // Begin transaction
             DB::beginTransaction();
             // Temukan record berdasarkan ID
-            $PreCleaningOutput = PreCleaningOutput::findOrFail($id);
+            $PreCleaningOutput = PreCleaningOutput::findOrFail($nomor_job);
             // Hapus semua item terkait
             $stockPRM = TransitPreCleaningStock::where('id_box_raw_material', '=', $PreCleaningOutput->id_box_raw_material)
                 ->where('nomor_job', $PreCleaningOutput->nomor_job)
@@ -111,25 +112,34 @@ class PreCleaningOutputController extends Controller
                 }
             }
 
-            $existingItems = PreCleaningInput::where('nomor_job', $PreCleaningOutput->nomor_job)
-            ->where('id_box_grading_kasar', $PreCleaningOutput->id_box_grading_kasar)
-            ->get();
+            $existingItems = PreCleaningStock::where('nomor_job', $PreCleaningOutput->nomor_job)
+                ->where('id_box_grading_kasar', $PreCleaningOutput->id_box_grading_kasar)
+                ->get();
 
             // Logika Update Status
             foreach ($existingItems as $existingItem) {
+
                 // Perbarui data untuk setiap item yang ada
-                if ($existingItem->berat_kirim === $PreCleaningOutput->berat_keluar) {
+                if ($existingItem) {
+                    $beratSebelumnya = $existingItem->berat_keluar;
+                    $pcsSebelumnya = $existingItem->pcs_keluar;
+                    // $sisaBerat = $existingItem->berat_keluar - $PreCleaningOutput->berat_kirim;
+
+                    // Hitung total modal baru berdasarkan perbedaan berat
+                    $perbedaanBerat = $beratSebelumnya - $PreCleaningOutput->berat_kirim;
+                    $perbedaanPcs = $pcsSebelumnya - $PreCleaningOutput->pcs_kirim;
+                    $sisaBerat = $existingItem->berat_keluar - $perbedaanBerat;
+                    $sisaPcs = $existingItem->pcs_keluar - $perbedaanPcs;
+                    $sisaBerat = $existingItem->berat_keluar - $perbedaanBerat;
+                    $totalModalBaru = $sisaBerat * $PreCleaningOutput->modal;
+
+                    $existingItem->update(['berat_keluar'   => $perbedaanBerat]);
+                    $existingItem->update(['sisa_berat'     => $sisaBerat]);
+                    $existingItem->update(['pcs_keluar'     => $perbedaanPcs]);
+                    $existingItem->update(['sisa_pcs'       => $sisaPcs]);
+                    $existingItem->update(['total_modal'    => $totalModalBaru]);
                     $existingItem->update(['status' => 1]);
                 }
-            }
-
-            // Jika tidak ada item PreCleaningInput yang sesuai, buat baru dengan status 1
-            if ($existingItems->isEmpty()) {
-                PreCleaningInput::create([
-                    'nomor_bstb' => $PreCleaningOutput->nomor_bstb,
-                    'status' => 1,
-                    // Tambahkan kolom-kolom lain sesuai kebutuhan
-                ]);
             }
 
             // Hapus record utama
@@ -146,4 +156,42 @@ class PreCleaningOutputController extends Controller
             return redirect()->route('PreCleaningOutput.index')->with('error', 'Gagal menghapus data');
         }
     }
+
+    // public function destroy($nomor_job)
+    // {
+    //     // Hapus data dari PreCleaningOutput
+    //     PreCleaningOutput::where('nomor_job', $nomor_job->nomor_job)
+    //         ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
+    //         ->delete();
+
+    //     // Hitung ulang PreCleaningStock
+    //     $preCleaningStockItems = PreCleaningStock::where('nomor_job', $nomor_job->nomor_job)
+    //         ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
+    //         ->get();
+
+    //     foreach ($preCleaningStockItems as $preCleaningStockItem) {
+    //         $totalBeratKeluar = PreCleaningOutput::where('nomor_job', $nomor_job->nomor_job)
+    //             ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
+    //             ->sum('berat_kirim');
+
+    //         $totalPcsKeluar = PreCleaningOutput::where('nomor_job', $nomor_job->nomor_job)
+    //             ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
+    //             ->sum('pcs_kirim');
+
+    //         $sisaBerat = $preCleaningStockItem->berat_masuk - $totalBeratKeluar;
+    //         $sisaPcs = $preCleaningStockItem->pcs_masuk - $totalPcsKeluar;
+
+    //         $preCleaningStockItem->update([
+    //             'berat_keluar' => $totalBeratKeluar,
+    //             'pcs_keluar' => $totalPcsKeluar,
+    //             'sisa_berat' => $sisaBerat,
+    //             'sisa_pcs' => $sisaPcs,
+    //         ]);
+    //     }
+
+    //     // Hapus data dari TransitPreCleaningStock
+    //     TransitPreCleaningStock::where('nomor_job', $nomor_job->nomor_job)
+    //         ->where('nomor_bstb', $nomor_job->nomor_bstb)
+    //         ->delete();
+    // }
 }

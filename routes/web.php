@@ -176,7 +176,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/prm_raw_material_input/nextDocNo', 'getNextDocumentNumber')->name('PrmRawMaterialInput.getNextDocumentNumber');
         });
 
-       
+
 
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
             Route::get('/prm_raw_material_stock', 'index')->name('PrmRawMaterialStock.index');
@@ -443,7 +443,7 @@ Route::middleware('auth')->group(function () {
             // });
             Route::controller(App\Http\Controllers\PreWash\TransitPreWashController::class)->group(function () {
                 Route::get('/transit_pre_wash', 'index')->name('TransitPreWash.index');
-            });    
+            });
             // Route::controller(App\Http\Controllers\CabutBulu\CabutBuluStockController::class)->group(function () {
             //     Route::get('/cabut_bulu_stock', 'index')->name('CabutBuluStock.index');
             // });

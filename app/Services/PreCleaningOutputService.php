@@ -136,13 +136,14 @@ class PreCleaningOutputService
         if ($existingItem) {
             $tambahBeratKeluar = $existingItem->berat_keluar + $itemObject->berat_kirim;
             $tambahPcsKeluar = $existingItem->pcs_keluar + $itemObject->pcs_kirim;
-
-            $totalModalBaru = $tambahBeratKeluar * $itemObject->modal;
+            $sisaBerat = $existingItem->berat_masuk - $tambahBeratKeluar;
+            $sisaPcs = $existingItem->pcs_masuk - $tambahPcsKeluar;
+            $totalModalBaru = $sisaBerat * $itemObject->modal;
 
             $dataToUpdate['berat_keluar'] = $tambahBeratKeluar;
             $dataToUpdate['pcs_keluar'] = $tambahPcsKeluar;
-            $dataToUpdate['sisa_berat'] = $existingItem->berat_masuk - $tambahBeratKeluar;
-            $dataToUpdate['sisa_pcs'] = $existingItem->pcs_masuk - $tambahPcsKeluar;
+            $dataToUpdate['sisa_berat'] = $sisaBerat;
+            $dataToUpdate['sisa_pcs'] = $sisaPcs;
             $dataToUpdate['total_modal'] = $totalModalBaru;
             $existingItem->update($dataToUpdate);
         } else {

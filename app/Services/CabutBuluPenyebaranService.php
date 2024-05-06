@@ -22,10 +22,7 @@ class CabutBuluPenyebaranService
         // Validate other form fields
         $validatedData = $request->validate([
             'user_created' => 'required',
-<<<<<<< HEAD
-=======
-            'waktu_penyebaran' => 'required', // Menambahkan validasi waktu penyebaran
->>>>>>> dev-al
+            'waktu_penyebaran' => 'required'
         ]);
 
         // Check if $dataArray is empty
@@ -58,12 +55,8 @@ class CabutBuluPenyebaranService
                     DB::beginTransaction();
 
                     // Buat instansi PreCleaningInput
-<<<<<<< HEAD
-                    CabutBuluPenyebaran::create($mergedData);
-=======
+                    // CabutBuluPenyebaran::create($mergedData);
                     CabutBuluPenyebaran::create(array_merge($mergedData, ['waktu_penyebaran' => $validatedData['waktu_penyebaran']]));
-
->>>>>>> dev-al
 
                     $itemObject = (object) $mergedData;
 

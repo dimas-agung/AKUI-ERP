@@ -20,66 +20,90 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Nama</label>
-                                <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                    name="nama" value="{{ old('nama', $MasterOP->nama) }}" placeholder="Masukkan jenis">
+                                <input id="nama" type="text"
+                                    class="form-control @error('nama') is-invalid @enderror" name="nama"
+                                    value="{{ old('nama', $MasterOP->nama) }}" placeholder="Masukkan jenis">
                             </div>
 
                             <div class="form-group">
                                 <label class="font-weight-bold">NIP</label>
-                                <input type="text" class="form-control @error('nip') is-invalid @enderror" name="nip"
-                                    value="{{ old('nip', $MasterOP->nip) }}" placeholder="Masukan Kategori Susut">
+                                <input id="nip" type="text" class="form-control @error('nip') is-invalid @enderror"
+                                    name="nip" value="{{ old('nip', $MasterOP->nip) }}"
+                                    placeholder="Masukan Kategori Susut">
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Plant</label>
-                                <input type="text" class="form-control @error('plant') is-invalid @enderror"
-                                    name="plant" value="{{ old('plant', $MasterOP->plant) }}"
-                                    placeholder="Masukan Kategori Susut">
+                                <select class="select2 form-select" name="plant" id="plant">
+                                    @foreach ($perusahaan as $post)
+                                        <option value="{{ $post->id }}"
+                                            {{ $MasterOP->nama == $post->id ? 'selected' : '' }}>
+                                            {{ old('plant', $post->nama) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Divisi</label>
-                                <input type="text" class="form-control @error('divisi') is-invalid @enderror"
-                                    name="divisi" value="{{ old('divisi', $MasterOP->divisi) }}"
-                                    placeholder="Masukan Kategori Susut">
+                                <input id="divisi" type="text"
+                                    class="form-control @error('divisi') is-invalid @enderror" name="divisi"
+                                    value="{{ old('divisi', $MasterOP->divisi) }}" placeholder="Masukan Kategori Susut">
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Departemen</label>
-                                <input type="text" class="form-control @error('departemen') is-invalid @enderror"
-                                    name="departemen" value="{{ old('departemen', $MasterOP->departemen) }}"
+                                <input id="departemen" type="text"
+                                    class="form-control @error('departemen') is-invalid @enderror" name="departemen"
+                                    value="{{ old('departemen', $MasterOP->departemen) }}"
                                     placeholder="Masukan Kategori Susut">
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Bagian</label>
-                                <input type="text" class="form-control @error('bagian') is-invalid @enderror"
-                                    name="bagian" value="{{ old('bagian', $MasterOP->bagian) }}"
-                                    placeholder="Masukan Kategori Susut">
+                                <input id="bagian" type="text"
+                                    class="form-control @error('bagian') is-invalid @enderror" name="bagian"
+                                    value="{{ old('bagian', $MasterOP->bagian) }}" placeholder="Masukan Kategori Susut">
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Workstation</label>
-                                <input type="text" class="form-control @error('workstation') is-invalid @enderror"
+                                <select class="select2 form-select" name="workstation" id="workstation">
+                                    @foreach ($workstation as $post)
+                                        <option value="{{ $post->id }}"
+                                            {{ $MasterOP->nama == $post->id ? 'selected' : '' }}>
+                                            {{ old('workstation', $post->nama) }}</option>
+                                    @endforeach
+                                </select>
+                                {{-- <input type="text" class="form-control @error('workstation') is-invalid @enderror"
                                     name="workstation" value="{{ old('workstation', $MasterOP->workstation) }}"
-                                    placeholder="Masukan Kategori Susut">
+                                    placeholder="Masukan Kategori Susut"> --}}
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Unit</label>
-                                <input type="text" class="form-control @error('unit') is-invalid @enderror"
+                                <select class="select2 form-select" name="unit" id="unit">
+                                    @foreach ($unit as $post)
+                                        <option value="{{ $post->id }}"
+                                            {{ $MasterOP->nama == $post->id ? 'selected' : '' }}>
+                                            {{ old('unit', $post->nama) }}</option>
+                                    @endforeach
+                                </select>
+                                {{-- <input type="text" class="form-control @error('unit') is-invalid @enderror"
                                     name="unit" value="{{ old('unit', $MasterOP->unit) }}"
-                                    placeholder="Masukan Kategori Susut">
+                                    placeholder="Masukan Kategori Susut"> --}}
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Grade</label>
-                                <input type="text" class="form-control @error('grade') is-invalid @enderror"
-                                    name="grade" value="{{ old('grade', $MasterOP->grade) }}"
-                                    placeholder="Masukan Kategori Susut">
+                                <label class="font-weight-bold">Grade Operator</label>
+                                <input id="grade_operator" type="text"
+                                    class="form-control @error('grade_operator') is-invalid @enderror" name="grade_operator"
+                                    value="{{ old('grade_operator', $MasterOP->grade_operator) }}"
+                                    placeholder="Masukan Grade Operator">
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Atasan</label>
-                                <input type="text" class="form-control @error('atasan') is-invalid @enderror"
-                                    name="atasan" value="{{ old('atasan', $MasterOP->atasan) }}"
-                                    placeholder="Masukan Kategori Susut">
+                                <label class="font-weight-bold">Nama Team Leader</label>
+                                <input id="nama_team_leader" type="text"
+                                    class="form-control @error('nama_team_leader') is-invalid @enderror"
+                                    name="nama_team_leader"
+                                    value="{{ old('nama_team_leader', $MasterOP->nama_team_leader) }}"
+                                    placeholder="Masukkan Nama Team Leader">
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Job</label>
-                                <input type="text" class="form-control @error('job') is-invalid @enderror"
+                                <input id="job" type="text" class="form-control @error('job') is-invalid @enderror"
                                     name="job" value="{{ old('job', $MasterOP->job) }}"
                                     placeholder="Masukan Kategori Susut">
                             </div>

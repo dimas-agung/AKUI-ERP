@@ -44,19 +44,21 @@
                                         <th scope="col" class="text-center">Berat Grading</th>
                                         <th scope="col" class="text-center">Pcs Grading</th>
                                         <th scope="col" class="text-center">Susut</th>
-                                        <th scope="col" class="text-center">Modal</th>
-                                        <th scope="col" class="text-center">Total Modal</th>
-                                        <th scope="col" class="text-center">Biaya Produksi</th>
-                                        <th scope="col" class="text-center">Harga Estimasi</th>
-                                        <th scope="col" class="text-center">Total Harga</th>
-                                        <th scope="col" class="text-center">Nilai Laba Rugi</th>
-                                        <th scope="col" class="text-center">Nilai Prosentase Total Keuntungan</th>
-                                        <th scope="col" class="text-center">Nilai Dikurangi Keuntungan</th>
-                                        <th scope="col" class="text-center">Prosentase Harga Gramasi</th>
-                                        <th scope="col" class="text-center">Selisih Laba Rugi Kg</th>
-                                        <th scope="col" class="text-center">Selisih Laba Rugi Gram</th>
-                                        <th scope="col" class="text-center">Hpp</th>
-                                        <th scope="col" class="text-center">Total Hpp</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                            <th scope="col" class="text-center">Biaya Produksi</th>
+                                            <th scope="col" class="text-center">Harga Estimasi</th>
+                                            <th scope="col" class="text-center">Total Harga</th>
+                                            <th scope="col" class="text-center">Nilai Laba Rugi</th>
+                                            <th scope="col" class="text-center">Nilai Prosentase Total Keuntungan</th>
+                                            <th scope="col" class="text-center">Nilai Dikurangi Keuntungan</th>
+                                            <th scope="col" class="text-center">Prosentase Harga Gramasi</th>
+                                            <th scope="col" class="text-center">Selisih Laba Rugi Kg</th>
+                                            <th scope="col" class="text-center">Selisih Laba Rugi Gram</th>
+                                            <th scope="col" class="text-center">Hpp</th>
+                                            <th scope="col" class="text-center">Total Hpp</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
@@ -88,43 +90,45 @@
                                                 {{ $GradingKH->pcs_grading }}</td>
                                             <td class="text-center">{{ $GradingKH->susut }}
                                             </td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->modal, 2, ',', '.') }}</td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->total_modal, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->biaya_produksi, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->harga_estimasi, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->total_harga, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->nilai_laba_rugi, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->nilai_prosentase_total_keuntungan, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->nilai_dikurangi_keuntungan, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->prosentase_harga_gramasi, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->selisih_laba_rugi_kg, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->selisih_laba_rugi_gram, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">{{ number_format($GradingKH->hpp, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ number_format($GradingKH->total_hpp, 2, ',', '.') }}
-                                            </td>
+                                            @role('admin')
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->modal, 2, ',', '.') }}</td>
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->total_modal, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->biaya_produksi, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->harga_estimasi, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->total_harga, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->nilai_laba_rugi, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->nilai_prosentase_total_keuntungan, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->nilai_dikurangi_keuntungan, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->prosentase_harga_gramasi, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->selisih_laba_rugi_kg, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->selisih_laba_rugi_gram, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">{{ number_format($GradingKH->hpp, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($GradingKH->total_hpp, 2, ',', '.') }}
+                                                </td>
+                                            @endrole
                                             <td class="text-center">{{ $GradingKH->keterangan }}</td>
                                             <td class="text-center">{{ $GradingKH->user_created }}</td>
                                             <td class="text-center">{{ $GradingKH->user_updated }}</td>

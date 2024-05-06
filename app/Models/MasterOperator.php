@@ -32,4 +32,18 @@ class MasterOperator extends Model
     {
         return $this->hasMany(PreWashOutput::class, 'operator_perendaman', 'nama');
     }
+    public function Perusahaan()
+    {
+        return $this->hasMany(Perusahaan::class, 'plant', 'plant');
+    }
+
+    public function workstation()
+    {
+        return $this->belongsTo(Workstation::class, 'workstation', 'workstation');
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'unit', 'unit');
+    }
 }

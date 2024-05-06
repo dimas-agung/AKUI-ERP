@@ -487,15 +487,5 @@
                 });
             }
         }
-
-
-        // Variabel global untuk menyimpan indeks baris terakhir
-        // var currentRowIndex = 0;
-        // var dataStock = [];
-
-        // // Mendefinisikan array jika belum
-        // if (typeof dataArray === 'undefined') {
-        //     var dataArray = [];
-        // }
     </script>
 @endsection

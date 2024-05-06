@@ -34,8 +34,10 @@
                                         <th scope="col" class="text-center">Pcs Job</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
                                         <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center">Modal</th>
-                                        <th scope="col" class="text-center">Total Modal</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Waktu Penyebaran</th>
                                         <th scope="col" class="text-center">Nama Operator</th>
                                         <th scope="col" class="text-center">Nip Operator</th>
@@ -60,9 +62,11 @@
                                             <td class="text-center">{{ $item->pcs_job }}</td>
                                             <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                             <td class="text-center">{{ $item->keterangan }}</td>
-                                            <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
-                                            </td>
+                                            @role('admin')
+                                                <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
+                                                </td>
+                                            @endrole
                                             <td class="text-center">{{ $item->waktu_penyebaran }}</td>
                                             <td class="text-center">{{ $item->nama_operator }}</td>
                                             <td class="text-center">{{ $item->nip_operator }}</td>

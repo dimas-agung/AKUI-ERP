@@ -40,8 +40,10 @@
                                         <th scope="col" class="text-center">Sisa Pcs</th>
                                         <th scope="col" class="text-center">Kadar Air</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
-                                        <th scope="col" class="text-center">Modal</th>
-                                        <th scope="col" class="text-center">Total Modal</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -69,9 +71,11 @@
                                             <td class="text-center">{{ $TPCS->sisa_pcs }}</td>
                                             <td class="text-center">{{ $TPCS->kadar_air }}</td>
                                             <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
-                                            <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
-                                            <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}
-                                            </td>
+                                            @role('admin')
+                                                <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}
+                                                </td>
+                                            @endrole
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">

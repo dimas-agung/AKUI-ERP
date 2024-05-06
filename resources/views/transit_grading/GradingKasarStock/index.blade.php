@@ -35,8 +35,10 @@
                                 <th class="text-center">Sisa Pcs</th>
                                 <th class="text-center">Avg Kadar Air</th>
                                 <th class="text-center">Nomor Grading</th>
-                                <th class="text-center">Modal</th>
-                                <th class="text-center">Total Modal</th>
+                                @role('admin')
+                                    <th class="text-center">Modal</th>
+                                    <th class="text-center">Total Modal</th>
+                                @endrole
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">User Created</th>
                                 <th class="text-center" scope="col">User Updated</th>
@@ -55,9 +57,7 @@
                                     <td class="text-center">{{ $GradingKS->jenis_raw_material }}</td>
                                     <td class="text-center">{{ $GradingKS->jenis_grading }}</td>
                                     <td class="text-center">{{ $GradingKS->id_box_raw_material }}</td>
-                                    {{-- <td class="text-center">{{ $GradingKS->berat_masuk }}</td> --}}
                                     <td class="text-center">{{ $GradingKS->berat_masuk }}</td>
-                                    {{-- <td class="text-center">{{ $GradingKS->berat_keluar }}</td> --}}
                                     <td class="text-center">{{ $GradingKS->berat_keluar }}</td>
                                     <td class="text-center">{{ $GradingKS->berat_masuk - $GradingKS->berat_keluar }}</td>
                                     <td class="text-center">{{ $GradingKS->pcs_masuk }}</td>
@@ -66,31 +66,13 @@
                                     <td class="text-center">{{ $GradingKS->avg_kadar_air }}
                                     </td>
                                     <td class="text-center">{{ $GradingKS->nomor_grading }}</td>
-                                    {{-- <td class="text-center">{{ $GradingKS->modal }}</td> --}}
-                                    <td class="text-center">{{ number_format($GradingKS->modal, 2, ',', '.') }}</td>
-                                    {{-- <td class="text-center">{{ $GradingKS->total_modal }}</td> --}}
-                                    <td class="text-center">{{ number_format($GradingKS->total_modal, 2, ',', '.') }}</td>
+                                    @role('admin')
+                                        <td class="text-center">{{ number_format($GradingKS->modal, 2, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($GradingKS->total_modal, 2, ',', '.') }}</td>
+                                    @endrole
                                     <td class="text-center">{{ $GradingKS->keterangan }}</td>
                                     <td class="text-center">{{ $GradingKS->user_created }}</td>
                                     <td class="text-center">{{ $GradingKS->user_updated }}</td>
-                                    {{-- <td class="text-center">
-                                        <div class="form-button-action">
-                                            <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                action="{{ route('GradingKasarInput.destroy', $item->id) }}"
-                                                method="POST">
-                                                <a href="{{ route('GradingKasarInput.edit', $item->id) }}"
-                                                    class="btn btn-link btn-primary" title="Edit Task"
-                                                    data-original-title="Edit Task"><i class="bi bi-pencil-square"></i></a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-link btn-danger"
-                                                    data-original-title="Remove"
-                                                    onclick="confirmDelete({{ $item->id }})">
-                                                    <i class="bi bi-trash3 text-danger"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td> --}}
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
