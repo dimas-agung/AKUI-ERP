@@ -63,12 +63,13 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label><strong>Plant</strong></label>
+                                                <label><strong>Perusahaan</strong></label>
                                                 <div class="form-group">
-                                                    <select class="choices form-select" name="plant" id="plant">
+                                                    <select class="choices form-select" name="perusahaan_id"
+                                                        id="perusahaan_id">
                                                         <option></option>
                                                         @foreach ($perusahaans as $peru)
-                                                            <option value="{{ $peru->id }}">
+                                                            <option value="{{ $peru->plant }}">
                                                                 {{ $peru->nama }}</option>
                                                         @endforeach
                                                     </select>
@@ -111,10 +112,11 @@
                                             <div class="col-md-6">
                                                 <label><strong>Workstation</strong></label>
                                                 <div class="form-group">
-                                                    <select class="choices form-select" name="workstation" id="workstation">
+                                                    <select class="choices form-select" name="workstation_id"
+                                                        id="workstation_id">
                                                         <option></option>
                                                         @foreach ($workstations as $work)
-                                                            <option value="{{ $work->id }}">
+                                                            <option value="{{ $work->nama }}">
                                                                 {{ $work->nama }}</option>
                                                         @endforeach
                                                     </select>
@@ -123,10 +125,10 @@
                                             <div class="col-md-6">
                                                 <label><strong>Unit</strong></label>
                                                 <div class="form-group">
-                                                    <select class="choices form-select" name="unit" id="unit">
+                                                    <select class="choices form-select" name="unit_id" id="unit_id">
                                                         <option></option>
                                                         @foreach ($units as $unit)
-                                                            <option value="{{ $unit->id }}">
+                                                            <option value="{{ $unit->nama }}">
                                                                 {{ $unit->nama }}</option>
                                                         @endforeach
                                                     </select>
@@ -208,13 +210,12 @@
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $MasterOP->nama }}</td>
                                             <td class="text-center">{{ $MasterOP->nip }}</td>
-                                            {{-- <td class="text-center">{{ $MasterOP-> }}</td> --}}
-                                            <td class="text-center">{{ $MasterOP->plant }}</td>
+                                            <td class="text-center">{{ $MasterOP->perusahaan_id }}</td>
                                             <td class="text-center">{{ $MasterOP->divisi }}</td>
                                             <td class="text-center">{{ $MasterOP->departemen }}</td>
                                             <td class="text-center">{{ $MasterOP->bagian }}</td>
-                                            <td class="text-center">{{ $MasterOP->workstation }}</td>
-                                            <td class="text-center">{{ $MasterOP->unit }}</td>
+                                            <td class="text-center">{{ $MasterOP->workstation_id }}</td>
+                                            <td class="text-center">{{ $MasterOP->unit_id }}</td>
                                             <td class="text-center">{{ $MasterOP->job }}</td>
                                             <td class="text-center">{{ $MasterOP->grade_operator }}</td>
                                             <td class="text-center">{{ $MasterOP->nama_team_leader }}</td>

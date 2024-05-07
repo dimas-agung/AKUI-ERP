@@ -16,8 +16,8 @@ class MasterOperatorController extends Controller
     {
         $i = 1;
         $MasterOperator = MasterOperator::with('Perusahaan')->get();
-        // $perusahaan = Perusahaan::with('MasterOperator')->get();
-        $perusahaan = Perusahaan::all();
+        $perusahaan = Perusahaan::with('MasterOperator')->get();
+        // $perusahaan = Perusahaan::all();
         $workstation = Workstation::all();
         $unit = unit::all();
         // return $MasterOperator;
@@ -37,12 +37,12 @@ class MasterOperatorController extends Controller
         $this->validate($request, [
             'nama'              => 'required',
             'nip'               => 'required',
-            'plant'             => 'required',
+            'perusahaan_id'     => 'required',
             'divisi'            => 'required',
             'departemen'        => 'required',
             'bagian'            => 'required',
-            'workstation'       => 'required',
-            'unit'              => 'required',
+            'workstation_id'       => 'required',
+            'unit_id'              => 'required',
             'grade_operator'    => 'required',
             'nama_team_leader'  => 'required',
             'job'               => 'required',
@@ -53,16 +53,16 @@ class MasterOperatorController extends Controller
         MasterOperator::create([
             'nama'              => $request->nama,
             'nip'               => $request->nip,
-            'plant'             => $request->plant,
+            'perusahaan_id'     => $request->perusahaan_id,
             'divisi'            => $request->divisi,
             'departemen'        => $request->departemen,
             'bagian'            => $request->bagian,
-            'workstation'       => $request->workstation,
-            'unit'              => $request->unit,
+            'workstation_id'       => $request->workstation_id,
+            'unit_id'              => $request->unit_id,
             'grade_operator'    => $request->grade_operator,
             'nama_team_leader'  => $request->nama_team_leader,
             'job'               => $request->job,
-            'status',
+            // 'status',
         ]);
 
         // Redirect to index
@@ -89,12 +89,12 @@ class MasterOperatorController extends Controller
         $this->validate($request, [
             'nama'              => 'required',
             'nip'               => 'required',
-            'plant'             => 'required',
+            'perusahaan_id'             => 'required',
             'divisi'            => 'required',
             'departemen'        => 'required',
             'bagian'            => 'required',
-            'workstation'       => 'required',
-            'unit'              => 'required',
+            'workstation_id'       => 'required',
+            'unit_id'              => 'required',
             'grade_operator'    => 'required',
             'nama_team_leader'  => 'required',
             'job'               => 'required',
@@ -103,12 +103,12 @@ class MasterOperatorController extends Controller
         $MasterOP->update([
             'nama'              => $request->nama,
             'nip'               => $request->nip,
-            'plant'             => $request->plant,
+            'perusahaan_id'             => $request->perusahaan_id,
             'divisi'            => $request->divisi,
             'departemen'        => $request->departemen,
             'bagian'            => $request->bagian,
-            'workstation'       => $request->workstation,
-            'unit'              => $request->unit,
+            'workstation_id'       => $request->workstation_id,
+            'unit_id'              => $request->unit_id,
             'grade_operator'    => $request->grade_operator,
             'nama_team_leader'  => $request->nama_team_leader,
             'job'               => $request->job,

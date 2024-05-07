@@ -13,12 +13,12 @@ class MasterOperator extends Model
     protected $fillable = [
         'nama',
         'nip',
-        'plant',
+        'perusahaan_id',
         'divisi',
         'departemen',
         'bagian',
-        'workstation',
-        'unit',
+        'workstation_id',
+        'unit_id',
         'grade_operator',
         'nama_team_leader',
         'job',
@@ -34,16 +34,16 @@ class MasterOperator extends Model
     }
     public function Perusahaan()
     {
-        return $this->hasMany(Perusahaan::class, 'plant', 'plant');
+        return $this->belongsTo(Perusahaan::class);
     }
 
     public function workstation()
     {
-        return $this->belongsTo(Workstation::class, 'workstation', 'workstation');
+        return $this->belongsTo(Workstation::class);
     }
 
     public function unit()
     {
-        return $this->belongsTo(Unit::class, 'unit', 'unit');
+        return $this->belongsTo(Unit::class);
     }
 }
