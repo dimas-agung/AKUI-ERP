@@ -17,7 +17,7 @@ class WorkstationController extends Controller
         $i =1;
         $perusahaan = Perusahaan::with('workstation')->get();
         $workstation = Workstation::with('perusahaan')->get();
-        // return($workstation);
+        // return($perusahaan);
         return response()->view('Workstation.index', [
             'workstation' => $workstation,
             'perusahaan' => $perusahaan,

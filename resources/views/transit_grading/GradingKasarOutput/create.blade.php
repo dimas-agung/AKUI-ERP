@@ -167,16 +167,19 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Sisa Berat</label>
-                                            <input type="text" id="berat_masuk" class="form-control"
-                                                name="berat_masuk" value="{{ old('berat_masuk') }}"
+                                            <input type="text" id="sisa_berat" class="form-control" name="sisa_berat"
                                                 onchange="handleChange(this)" readonly>
+                                            <input type="hidden" id="berat_masuk" class="form-control"
+                                                name="berat_masuk" value="{{ old('berat_masuk') }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Sisa Pcs</label>
                                             <input type="text" id="sisa_pcs" class="form-control" name="sisa_pcs"
-                                                value="{{ old('sisa_pcs') }}" onchange="handleChange(this)" readonly>
+                                                onchange="handleChange(this)" readonly>
+                                            <input type="hidden" id="pcs_masuk" class="form-control" name="pcs_masuk"
+                                                value="{{ old('pcs_masuk') }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -269,11 +272,14 @@
                                     <th class="text-center">ID Box Raw Material</th>
                                     <th class="text-center">Jenis Raw Material</th>
                                     <th class="text-center">Jenis Grading</th>
+                                    <th class="text-center">Berat Masuk</th>
                                     <th class="text-center">Berat Keluar</th>
+                                    <th class="text-center">PCS Masuk</th>
                                     <th class="text-center">PCS Keluar</th>
                                     <th class="text-center">AVG Kadar Air</th>
                                     <th class="text-center">Tujuan Kirim</th>
                                     <th class="text-center">Nomor Grading</th>
+                                    <th class="text-center">Nomor Nota Internal</th>
                                     <th class="text-center">Modal</th>
                                     <th class="text-center">Total Modal</th>
                                     <th class="text-center">Biaya Produksi</th>
@@ -297,44 +303,173 @@
 @endsection
 @section('script')
     <script>
-        $('#id_box_grading_kasar').on('change', function() {
-            // Mengambil nilai id_box_grading_kasar yang dipilih
-            let selectedIdBox = $(this).val();
-            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
-            $.ajax({
-                url: `{{ route('GradingKasarOutput.set') }}`,
-                method: 'GET',
-                data: {
-                    id_box_grading_kasar: selectedIdBox
-                },
-                success: function(response) {
-                    console.log(response);
-                    // Mengatur nilai Nomor Batch sesuai dengan respons dari server
-                    $('#nomor_batch').val(response.nomor_batch);
-                    $('#nama_supplier').val(response.nama_supplier);
-                    $('#id_box_raw_material').val(response.id_box_raw_material);
-                    $('#jenis_raw_material').val(response.jenis_raw_material);
-                    $('#jenis_grading').val(response.jenis_grading);
-                    $('#avg_kadar_air').val(response.avg_kadar_air);
-                    $('#nomor_grading').val(response.nomor_grading);
-                    $('#modal, #fix_total_modal').val(response.modal);
-                    $('#nomor_nota_internal').val(response.nomor_nota_internal);
-
-                    // Perhitungan sisa berat
-                    let beratMasuk = parseFloat(response.berat_masuk);
-                    let beratKeluar = parseFloat(response.berat_keluar);
-                    let pcsMasuk = parseFloat(response.pcs_masuk);
-                    let pcsKeluar = parseFloat(response.pcs_keluar);
-                    let sisaBerat = beratMasuk - beratKeluar;
-                    let sisaPcs = pcsMasuk - pcsKeluar;
-                    $('#berat_masuk').val(sisaBerat);
-                    $('#sisa_pcs').val(sisaPcs);
-                },
-                error: function(error) {
-                    console.error('Error:', error);
+        // Fungsi untuk memeriksa apakah id_box_grading_kasar sudah ada di dalam tabel
+        function isIdBoxInTable(idBox) {
+            let isExist = false;
+            $('#tableBody tr').each(function() {
+                let idBoxInTable = $(this).find('td:nth-child(2)')
+                    .text(); // Mengambil nilai id_box_grading_kasar di dalam tabel
+                if (idBoxInTable == idBox) {
+                    isExist = true;
+                    return false; // Keluar dari loop karena sudah ditemukan
                 }
             });
+            return isExist;
+        }
+
+        // Event handler untuk saat nilai id_box_grading_kasar berubah
+        $('#id_box_grading_kasar').on('change', function() {
+            let selectedIdBox = $(this).val();
+
+            // Memeriksa apakah id_box_grading_kasar sudah ada di dalam tabel
+            if (isIdBoxInTable(selectedIdBox)) {
+                // Jika sudah ada, ambil nilai berat masuk dan pcs masuk dari data di tabel
+                let row = $('#tableBody tr').filter(function() {
+                    return $(this).find('td:nth-child(2)').text() ==
+                        selectedIdBox; // Cari baris dengan id_box_grading_kasar yang sama
+                });
+                let nomor_batch = parseFloat(row.find('td:nth-child(4)').text());
+                let nama_supplier = row.find('td:nth-child(5)').text();
+                let id_box_raw_material = row.find('td:nth-child(6)').text();
+                let jenis_raw_material = row.find('td:nth-child(7)').text();
+                let jenis_grading = row.find('td:nth-child(8)').text();
+                let avg_kadar_air = parseFloat(row.find('td:nth-child(13)').text());
+                let nomor_grading = parseFloat(row.find('td:nth-child(15)').text());
+                let modal = parseFloat(row.find('td:nth-child(17)').text());
+                let nomor_nota_internal = parseFloat(row.find('td:nth-child(16)').text());
+                let beratMasuk = parseFloat(row.find('td:nth-child(9)').text());
+                let beratMasukTabel = parseFloat(row.find('td:nth-child(10)').text());
+                let pcsMasuk = parseFloat(row.find('td:nth-child(11)').text());
+                let pcsMasukTabel = parseFloat(row.find('td:nth-child(12)').text());
+
+                let sisaBerat = beratMasuk - beratMasukTabel;
+                let sisaPcs = pcsMasuk - pcsMasukTabel;
+
+                // Set nilai berat masuk dan pcs masuk dari data di tabel
+                $('#nomor_batch').val(nomor_batch);
+                $('#nama_supplier').val(nama_supplier);
+                $('#id_box_raw_material').val(id_box_raw_material);
+                $('#jenis_raw_material').val(jenis_raw_material);
+                $('#jenis_grading').val(jenis_grading);
+                $('#avg_kadar_air').val(avg_kadar_air);
+                $('#nomor_grading').val(nomor_grading);
+                $('#modal, #fix_total_modal').val(modal);
+                $('#nomor_nota_internal').val(nomor_nota_internal);
+
+                $('#berat_masuk').val(sisaBerat);
+                $('#pcs_masuk').val(sisaPcs);
+                $('#sisa_berat').val(sisaBerat);
+                $('#sisa_pcs').val(sisaPcs);
+            } else {
+                // Jika belum ada, lakukan permintaan AJAX untuk mendapatkan data
+                $.ajax({
+                    url: `{{ route('GradingKasarOutput.set') }}`,
+                    method: 'GET',
+                    data: {
+                        id_box_grading_kasar: selectedIdBox
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                        $('#nomor_batch').val(response.nomor_batch);
+                        $('#nama_supplier').val(response.nama_supplier);
+                        $('#id_box_raw_material').val(response.id_box_raw_material);
+                        $('#jenis_raw_material').val(response.jenis_raw_material);
+                        $('#jenis_grading').val(response.jenis_grading);
+                        $('#avg_kadar_air').val(response.avg_kadar_air);
+                        $('#nomor_grading').val(response.nomor_grading);
+                        $('#modal, #fix_total_modal').val(response.modal);
+                        $('#nomor_nota_internal').val(response.nomor_nota_internal);
+                        $('#berat_masuk').val(response.berat_masuk);
+                        $('#pcs_masuk').val(response.pcs_masuk);
+                        $('#sisa_berat').val(response.berat_masuk);
+                        $('#sisa_pcs').val(response.pcs_masuk);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
         });
+
+        // Event handler untuk saat nilai berat keluar berubah
+        $('#berat_keluar').on('input', function() {
+            updateSisaBerat();
+        });
+
+        // Event handler untuk saat nilai pcs keluar berubah
+        $('#pcs_keluar').on('input', function() {
+            updateSisaPcs();
+        });
+
+        // Fungsi untuk mengupdate nilai sisa berat
+        function updateSisaBerat() {
+            let beratMasuk = parseFloat($('#berat_masuk').val());
+            let beratKeluar = parseFloat($('#berat_keluar').val());
+
+            // Memeriksa apakah nilai berat keluar valid
+            if (isNaN(beratKeluar)) {
+                beratKeluar = 0; // Jika tidak valid, set nilai berat keluar ke 0
+                $('#berat_keluar').val(0); // Set nilai input berat keluar menjadi 0
+            }
+
+            let sisaBerat = beratMasuk - beratKeluar;
+            $('#sisa_berat').val(sisaBerat);
+        }
+
+        // Fungsi untuk mengupdate nilai sisa pcs
+        function updateSisaPcs() {
+            let pcsMasuk = parseFloat($('#pcs_masuk').val());
+            let pcsKeluar = parseFloat($('#pcs_keluar').val());
+
+            // Memeriksa apakah nilai pcs keluar valid
+            if (isNaN(pcsKeluar)) {
+                pcsKeluar = 0; // Jika tidak valid, set nilai pcs keluar ke 0
+                $('#pcs_keluar').val(0); // Set nilai input pcs keluar menjadi 0
+            }
+
+            let sisaPcs = pcsMasuk - pcsKeluar;
+            $('#sisa_pcs').val(sisaPcs);
+        }
+
+        // $('#id_box_grading_kasar').on('change', function() {
+        //     // Mengambil nilai id_box_grading_kasar yang dipilih
+        //     let selectedIdBox = $(this).val();
+        //     // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
+        //     $.ajax({
+        //         url: `{{ route('GradingKasarOutput.set') }}`,
+        //         method: 'GET',
+        //         data: {
+        //             id_box_grading_kasar: selectedIdBox
+        //         },
+        //         success: function(response) {
+        //             console.log(response);
+        //             // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+        //             $('#nomor_batch').val(response.nomor_batch);
+        //             $('#nama_supplier').val(response.nama_supplier);
+        //             $('#id_box_raw_material').val(response.id_box_raw_material);
+        //             $('#jenis_raw_material').val(response.jenis_raw_material);
+        //             $('#jenis_grading').val(response.jenis_grading);
+        //             $('#avg_kadar_air').val(response.avg_kadar_air);
+        //             $('#nomor_grading').val(response.nomor_grading);
+        //             $('#modal, #fix_total_modal').val(response.modal);
+        //             $('#nomor_nota_internal').val(response.nomor_nota_internal);
+
+        //             // Perhitungan sisa berat
+        //             let beratMasuk = parseFloat(response.berat_masuk);
+        //             let beratKeluar = parseFloat(response.berat_keluar);
+        //             let pcsMasuk = parseFloat(response.pcs_masuk);
+        //             let pcsKeluar = parseFloat(response.pcs_keluar);
+        //             let sisaBerat = beratMasuk - beratKeluar;
+        //             let sisaPcs = pcsMasuk - pcsKeluar;
+        //             $('#berat_masuk').val(sisaBerat);
+        //             $('#sisa_pcs').val(sisaPcs);
+        //         },
+        //         error: function(error) {
+        //             console.error('Error:', error);
+        //         }
+        //     });
+        // });
 
         // Variabel penanda untuk menandai apakah tombol "add" sudah diklik atau belum
         let tombolAddDiklik = false;
@@ -455,7 +590,7 @@
         function validateBeratKeluar() {
             var beratMasuk = parseFloat(document.getElementById('berat_masuk').value);
             var beratKeluarInput = parseFloat(document.getElementById('berat_keluar').value);
-            var pcsMasuk = parseFloat(document.getElementById('sisa_pcs').value);
+            var pcsMasuk = parseFloat(document.getElementById('pcs_masuk').value);
             var pcsKeluarInput = parseFloat(document.getElementById('pcs_keluar').value);
 
             if (beratKeluarInput > beratMasuk || pcsKeluarInput > pcsMasuk) {
@@ -500,7 +635,9 @@
             var id_box_raw_material = $('#id_box_raw_material').val();
             var jenis_raw_material = $('#jenis_raw_material').val();
             var jenis_grading = $('#jenis_grading').val();
+            var berat_masuk = $('#berat_masuk').val();
             var berat_keluar = $('#berat_keluar').val();
+            var pcs_masuk = $('#pcs_masuk').val();
             var pcs_keluar = $('#pcs_keluar').val();
             var selisih_berat = $('#selisih_berat').val();
             var avg_kadar_air = $('#avg_kadar_air').val();
@@ -561,11 +698,14 @@
                 '</td><td>' + id_box_raw_material +
                 '</td><td>' + jenis_raw_material +
                 '</td><td>' + jenis_grading +
+                '</td><td>' + berat_masuk +
                 '</td><td>' + berat_keluar +
+                '</td><td>' + pcs_masuk +
                 '</td><td>' + pcs_keluar +
                 '</td><td>' + avg_kadar_air +
                 '</td><td>' + tujuan_kirim +
                 '</td><td>' + nomor_grading +
+                '</td><td>' + nomor_nota_internal +
                 '</td><td>' + modal +
                 '</td><td>' + total_modal +
                 '</td><td>' + biaya_produksi +
@@ -609,7 +749,8 @@
             $('#nomor_nota_internal').val('');
             $('#jenis_raw_material').val('');
             $('#jenis_grading').val('');
-            $('#berat_masuk').val('');
+            $('#sisa_berat').val('');
+            $('#sisa_pcs').val('');
             $('#berat_keluar').val('');
             $('#pcs_keluar').val('');
             $('#avg_kadar_air').val('');
