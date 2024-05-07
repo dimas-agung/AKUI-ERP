@@ -68,7 +68,7 @@
                                                     <select class="choices form-select" name="plant" id="plant">
                                                         <option></option>
                                                         @foreach ($perusahaans as $peru)
-                                                            <option value="{{ $peru->id }}">
+                                                            <option value="{{ $peru->plant }}">
                                                                 {{ $peru->nama }}</option>
                                                         @endforeach
                                                     </select>
@@ -114,7 +114,7 @@
                                                     <select class="choices form-select" name="workstation" id="workstation">
                                                         <option></option>
                                                         @foreach ($workstations as $work)
-                                                            <option value="{{ $work->id }}">
+                                                            <option value="{{ $work->nama }}">
                                                                 {{ $work->nama }}</option>
                                                         @endforeach
                                                     </select>
@@ -126,7 +126,7 @@
                                                     <select class="choices form-select" name="unit" id="unit">
                                                         <option></option>
                                                         @foreach ($units as $unit)
-                                                            <option value="{{ $unit->id }}">
+                                                            <option value="{{ $unit->nama }}">
                                                                 {{ $unit->nama }}</option>
                                                         @endforeach
                                                     </select>

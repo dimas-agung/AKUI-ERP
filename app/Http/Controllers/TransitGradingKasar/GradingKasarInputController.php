@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GradingKasarInputRequest;
 use App\Models\GradingKasarHasil;
 use App\Models\GradingKasarInput;
+use App\Models\Perusahaan;
 use App\Models\StockTransitRawMaterial;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Services\GradingKasarInputService;
@@ -40,8 +41,9 @@ class GradingKasarInputController extends Controller
     {
         $stockTGK = StockTransitRawMaterial::with('PramRawMaterialOutputItems')->get();
         $GradingKI = GradingKasarInput::with('StockTransitRawMaterial')->get();
+        $Plant = Perusahaan::get();
         // return $PrmRawMOIC;
-        return view('transit_grading.GradingKasarInput.create', compact('stockTGK', 'GradingKI'));
+        return view('transit_grading.GradingKasarInput.create', compact('stockTGK', 'GradingKI','Plant'));
     }
 
     public function set(Request $request)

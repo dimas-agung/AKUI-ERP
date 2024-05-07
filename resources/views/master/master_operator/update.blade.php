@@ -35,8 +35,8 @@
                                 <label class="font-weight-bold">Plant</label>
                                 <select class="select2 form-select" name="plant" id="plant">
                                     @foreach ($perusahaan as $post)
-                                        <option value="{{ $post->id }}"
-                                            {{ $MasterOP->nama == $post->id ? 'selected' : '' }}>
+                                        <option value="{{ $post->plant }}"
+                                            {{ $MasterOP->plant == $post->plant ? 'selected' : '' }}>
                                             {{ old('plant', $post->nama) }}</option>
                                     @endforeach
                                 </select>
@@ -64,8 +64,8 @@
                                 <label class="font-weight-bold">Workstation</label>
                                 <select class="select2 form-select" name="workstation" id="workstation">
                                     @foreach ($workstation as $post)
-                                        <option value="{{ $post->id }}"
-                                            {{ $MasterOP->nama == $post->id ? 'selected' : '' }}>
+                                        <option value="{{ $post->nama }}"
+                                            {{ $MasterOP->workstation == $post->id ? 'selected' : '' }}>
                                             {{ old('workstation', $post->nama) }}</option>
                                     @endforeach
                                 </select>
@@ -77,8 +77,8 @@
                                 <label class="font-weight-bold">Unit</label>
                                 <select class="select2 form-select" name="unit" id="unit">
                                     @foreach ($unit as $post)
-                                        <option value="{{ $post->id }}"
-                                            {{ $MasterOP->nama == $post->id ? 'selected' : '' }}>
+                                        <option value="{{ $post->nama }}"
+                                            {{ $MasterOP->unit == $post->nama ? 'selected' : '' }}>
                                             {{ old('unit', $post->nama) }}</option>
                                     @endforeach
                                 </select>

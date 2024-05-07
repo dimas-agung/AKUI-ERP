@@ -48,8 +48,11 @@
                                         <label>Plant</label>
                                         <select id="plant" class="select2 form-select" name="plant">
                                             <option value="">Pilih Plant</option>
-                                            <option>A</option>
-                                            <option>B</option>
+                                            @foreach ($Plant as $item)
+                                            <option value="{{$item->plant}}">{{$item->nama}}</option>
+                                                
+                                            @endforeach
+                                            {{-- <option>B</option> --}}
                                         </select>
                                     </div>
                                 </div>
@@ -64,7 +67,7 @@
                                     <div class="form-group">
                                         <label>Nomor Grading</label>
                                         <input type="text" id="nomor_grading" class="form-control" name="nomor_grading"
-                                            value="{{ old('nomor_grading') }}" readonly>
+                                            value="{{ old('nomor_grading') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">

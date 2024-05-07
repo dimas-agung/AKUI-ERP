@@ -298,6 +298,7 @@
 @endsection
 @section('script')
     <script>
+        var idBoxGradingKasarSelected = '';
         $('#id_box_grading_kasar').on('change', function() {
             // Mengambil nilai id_box_grading_kasar yang dipilih
             let selectedIdBox = $(this).val();
@@ -330,7 +331,10 @@
                     let sisaPcs = pcsMasuk - pcsKeluar;
                     $('#berat_masuk').val(sisaBerat);
                     $('#sisa_pcs').val(sisaPcs);
-                    calculateSisaBeratSisaPcs(beratMasuk,pcsMasuk)
+                    if (idBoxGradingKasarSelected == selectedIdBox) {
+                        
+                        calculateSisaBeratSisaPcs(beratMasuk,pcsMasuk)
+                    }
                 },
                 error: function(error) {
                     console.error('Error:', error);
