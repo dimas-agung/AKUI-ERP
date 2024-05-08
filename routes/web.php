@@ -154,6 +154,30 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_jenis_grading_halus/update/{id}', 'update')->name('MasterJenisGradingHalus.update');
             Route::delete('/master_jenis_grading_halus/destroy/{id}', 'destroy')->name('MasterJenisGradingHalus.destroy');
         });
+
+        Route::controller(App\Http\Controllers\MasterJenisHcrKotorController::class)->group(function () {
+            Route::get('/master_jenis_hancuran_kotor', 'index')->name('MasterJenisHcrKotor.index');
+            Route::post('/master_jenis_hancuran_kotor/store', 'store')->name('MasterJenisHcrKotor.store');
+            Route::get('/master_jenis_hancuran_kotor/edit/{id}', 'edit')->name('MasterJenisHcrKotor.edit');
+            Route::put('/master_jenis_hancuran_kotor/update/{id}', 'update')->name('MasterJenisHcrKotor.update');
+            Route::delete('/master_jenis_hancuran_kotor/destroy/{id}', 'destroy')->name('MasterJenisHcrKotor.destroy');
+        });
+
+        Route::controller(App\Http\Controllers\MasterJenisRambangController::class)->group(function () {
+            Route::get('/master_jenis_rambang', 'index')->name('MasterJenisRambang.index');
+            Route::post('/master_jenis_rambang/store', 'store')->name('MasterJenisRambang.store');
+            Route::get('/master_jenis_rambang/edit/{id}', 'edit')->name('MasterJenisRambang.edit');
+            Route::put('/master_jenis_rambang/update/{id}', 'update')->name('MasterJenisRambang.update');
+            Route::delete('/master_jenis_rambang/destroy/{id}', 'destroy')->name('MasterJenisRambang.destroy');
+        });
+
+        Route::controller(App\Http\Controllers\MasterTujuanKirimWasteController::class)->group(function () {
+            Route::get('/master_tujuan_kirim_waste', 'index')->name('MasterTujuanKirimWaste.index');
+            Route::post('/master_tujuan_kirim_waste/store', 'store')->name('MasterTujuanKirimWaste.store');
+            Route::get('/master_tujuan_kirim_waste/edit/{id}', 'edit')->name('MasterTujuanKirimWaste.edit');
+            Route::put('/master_tujuan_kirim_waste/update/{id}', 'update')->name('MasterTujuanKirimWaste.update');
+            Route::delete('/master_tujuan_kirim_waste/destroy/{id}', 'destroy')->name('MasterTujuanKirimWaste.destroy');
+        });
     });
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {

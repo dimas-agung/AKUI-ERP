@@ -111,7 +111,7 @@
                         @role('master|admin')
                             <li class="sidebar-title">Menu</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-stack"></i>
                                     <span>Master</span>
@@ -138,22 +138,22 @@
                                     </li>
                                     <li class="submenu-item {{ Route::is('MasterJenisRawMaterial*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterJenisRawMaterial.index') }}" class="submenu-link">Master
-                                            Jenis
+                                            Jenis <br>
                                             Raw Material</a>
                                     </li>
                                     <li
                                         class="submenu-item {{ Route::is('MasterTujuanKirimRawMaterial*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterTujuanKirimRawMaterial.index') }}"
-                                            class="submenu-link">Master Tujuan Kirim Raw Material</a>
+                                            class="submenu-link">Master Tujuan <br> Kirim Raw Material</a>
                                     </li>
                                     <li
                                         class="submenu-item {{ Route::is('MasterTujuanKirimGradingHalus*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterTujuanKirimGradingHalus.index') }}"
-                                            class="submenu-link">Master Tujuan Kirim Grading Halus</a>
+                                            class="submenu-link">Master Tujuan <br> Kirim Grading <br> Halus</a>
                                     </li>
                                     <li class="submenu-item {{ Route::is('MasterOngkosCuci*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterOngkosCuci.index') }}" class="submenu-link">Master
-                                            Ongkos Cuci</a>
+                                            Ongkos <br> Cuci</a>
                                     </li>
                                     <li class="submenu-item {{ Route::is('MasterJenisGradingKasar*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterJenisGradingKasar.index') }}"
@@ -166,6 +166,18 @@
                                     <li class="submenu-item {{ Route::is('MasterOperator*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterOperator.index') }}" class="submenu-link">Master
                                             Operator</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterJenisHcrKotor*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterJenisHcrKotor.index') }}" class="submenu-link">Master
+                                            Jenis<br>Hancuran Kotor</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterJenisRambang*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterJenisRambang.index') }}" class="submenu-link">Master
+                                            Jenis<br>Rambang</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterTujuanKirimWaste*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterTujuanKirimWaste.index') }}" class="submenu-link">Master
+                                            Tujuan<br>Kirim Waste</a>
                                     </li>
                                 </ul>
                             </li>
@@ -346,11 +358,13 @@
                                                     class="submenu-link">Transit Grading Halus</a>
                                             </li>
                                             <li class="submenu-item {{ Route::is('PreWashInput*') ? 'active' : '' }}">
-                                                <a href="{{ route('PreWashInput.index') }}" class="submenu-link">Pre Wash
+                                                <a href="{{ route('PreWashInput.index') }}" class="submenu-link">Pre
+                                                    Wash
                                                     <br>Input</a>
                                             </li>
                                             <li class="submenu-item {{ Route::is('PreWashStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('PreWashStock.index') }}" class="submenu-link">Pre Wash
+                                                <a href="{{ route('PreWashStock.index') }}" class="submenu-link">Pre
+                                                    Wash
                                                     <br>Stock</a>
                                             </li>
 
