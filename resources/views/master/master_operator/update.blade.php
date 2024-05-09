@@ -32,8 +32,8 @@
                                     placeholder="Masukan Kategori Susut">
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Plant</label>
-                                <select class="select2 form-select" name="plant" id="plant">
+                                <label class="font-weight-bold">Perusahaan</label>
+                                <select class="select2 form-select" name="perusahaan_id" id="perusahaan_id">
                                     @foreach ($perusahaan as $post)
                                         <option value="{{ $post->plant }}"
                                             {{ $MasterOP->plant == $post->plant ? 'selected' : '' }}>
@@ -62,29 +62,23 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Workstation</label>
-                                <select class="select2 form-select" name="workstation" id="workstation">
+                                <select class="select2 form-select" name="workstation_id" id="workstation_id">
                                     @foreach ($workstation as $post)
                                         <option value="{{ $post->nama }}"
                                             {{ $MasterOP->workstation == $post->id ? 'selected' : '' }}>
                                             {{ old('workstation', $post->nama) }}</option>
                                     @endforeach
                                 </select>
-                                {{-- <input type="text" class="form-control @error('workstation') is-invalid @enderror"
-                                    name="workstation" value="{{ old('workstation', $MasterOP->workstation) }}"
-                                    placeholder="Masukan Kategori Susut"> --}}
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Unit</label>
-                                <select class="select2 form-select" name="unit" id="unit">
+                                <select class="select2 form-select" name="unit_id" id="unit_id">
                                     @foreach ($unit as $post)
                                         <option value="{{ $post->nama }}"
                                             {{ $MasterOP->unit == $post->nama ? 'selected' : '' }}>
                                             {{ old('unit', $post->nama) }}</option>
                                     @endforeach
                                 </select>
-                                {{-- <input type="text" class="form-control @error('unit') is-invalid @enderror"
-                                    name="unit" value="{{ old('unit', $MasterOP->unit) }}"
-                                    placeholder="Masukan Kategori Susut"> --}}
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Grade Operator</label>

@@ -155,6 +155,30 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_jenis_grading_halus/update/{id}', 'update')->name('MasterJenisGradingHalus.update');
             Route::delete('/master_jenis_grading_halus/destroy/{id}', 'destroy')->name('MasterJenisGradingHalus.destroy');
         });
+
+        Route::controller(App\Http\Controllers\MasterJenisHcrKotorController::class)->group(function () {
+            Route::get('/master_jenis_hancuran_kotor', 'index')->name('MasterJenisHcrKotor.index');
+            Route::post('/master_jenis_hancuran_kotor/store', 'store')->name('MasterJenisHcrKotor.store');
+            Route::get('/master_jenis_hancuran_kotor/edit/{id}', 'edit')->name('MasterJenisHcrKotor.edit');
+            Route::put('/master_jenis_hancuran_kotor/update/{id}', 'update')->name('MasterJenisHcrKotor.update');
+            Route::delete('/master_jenis_hancuran_kotor/destroy/{id}', 'destroy')->name('MasterJenisHcrKotor.destroy');
+        });
+
+        Route::controller(App\Http\Controllers\MasterJenisRambangController::class)->group(function () {
+            Route::get('/master_jenis_rambang', 'index')->name('MasterJenisRambang.index');
+            Route::post('/master_jenis_rambang/store', 'store')->name('MasterJenisRambang.store');
+            Route::get('/master_jenis_rambang/edit/{id}', 'edit')->name('MasterJenisRambang.edit');
+            Route::put('/master_jenis_rambang/update/{id}', 'update')->name('MasterJenisRambang.update');
+            Route::delete('/master_jenis_rambang/destroy/{id}', 'destroy')->name('MasterJenisRambang.destroy');
+        });
+
+        Route::controller(App\Http\Controllers\MasterTujuanKirimWasteController::class)->group(function () {
+            Route::get('/master_tujuan_kirim_waste', 'index')->name('MasterTujuanKirimWaste.index');
+            Route::post('/master_tujuan_kirim_waste/store', 'store')->name('MasterTujuanKirimWaste.store');
+            Route::get('/master_tujuan_kirim_waste/edit/{id}', 'edit')->name('MasterTujuanKirimWaste.edit');
+            Route::put('/master_tujuan_kirim_waste/update/{id}', 'update')->name('MasterTujuanKirimWaste.update');
+            Route::delete('/master_tujuan_kirim_waste/destroy/{id}', 'destroy')->name('MasterTujuanKirimWaste.destroy');
+        });
     });
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
@@ -494,6 +518,34 @@ Route::middleware('auth')->group(function () {
                 Route::get('/transit_cabut_bulu', 'index')->name('TransitCabutBulu.index');
             });
         });
+        Route::prefix('rambang')->middleware('role:rambang|admin')->group(function () {
+            Route::controller(App\Http\Controllers\Rambang\RambangKeringInputController::class)->group(function () {
+                Route::get('/rambang_kering_input', 'index')->name('RambangKeringInput.index');
+                Route::get('/rambang_kering_input/create', 'create')->name('RambangKeringInput.create');
+                Route::post('/rambang_kering_input/store', 'store')->name('RambangKeringInput.store');
+                Route::post('/rambang_kering_input/cek_data', 'CeksendData')->name('RambangKeringInput.CeksendData');
+                Route::post('/rambang_kering_input/simpanData', 'simpanData')->name('RambangKeringInput.simpanData');
+                Route::get('/rambang_kering_input/set', 'set')->name('RambangKeringInput.set');
+                Route::get('/rambang_kering_input/setnip', 'setNip')->name('RambangKeringInput.setNip');
+                Route::delete('/rambang_kering_input/destroy/{nomor_bstb}', 'destroy')->name('RambangKeringInput.destroy');
+            });
+
+            Route::controller(App\Http\Controllers\Rambang\RambangKeringStockController::class)->group(function () {
+                Route::get('/rambang_kering_stock', 'index')->name('RambangKeringStock.index');
+            });
+        });
+
+        // Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
+        //     Route::get('/pre_wash_output', 'index')->name('PreWashOutput.index');
+        //     Route::get('/pre_wash_output/create', 'create')->name('PreWashOutput.create');
+        //     Route::post('/pre_wash_output/store', 'store')->name('PreWashOutput.store');
+        //     Route::get('/pre_wash_output/show/{id}', 'show')->name('PreWashOutput.show');
+        //     Route::get('/pre_wash_output/edit/{id}', 'edit')->name('PreWashOutput.edit');
+        //     Route::put('/pre_wash_output/update/{id}', 'update')->name('PreWashOutput.update');
+        //     Route::delete('/pre_wash_output/destroy/{nomor_bstb}', 'destroy')->name('PreWashOutput.destroy');
+        //     Route::get('/pre_wash_output/get_data_nomor_job', 'set')->name('preWashOutput.set');
+        //     Route::post('/pre_wash_output/simpanData', 'simpanData')->name('PreWashOutput.simpanData');
+        // });
     });
 });
 
