@@ -180,7 +180,7 @@ Route::middleware('auth')->group(function (){
         });
     });
     Route::prefix('bahan_baku')->middleware(['role:bahan_baku|admin'])->group(function (){
-        Route::prefix('bahan_baku')->middleware('role:bahan_baku|admin')->group(function (){
+        Route::prefix('Grading_Kasar')->middleware('role:bahan_baku|admin')->group(function (){
             // Untuk menangani beberapa role menggunakan cara dibawah
             // Route::middleware(['role:pur_input','role:output'])->group(function () {
             // });
@@ -234,7 +234,7 @@ Route::middleware('auth')->group(function (){
             });
         });
 
-        Route::prefix('bahan_baku')->middleware('role:bahan_baku|admin')->group(function (){
+        Route::prefix('Pre-Cleaning')->middleware('role:bahan_baku|admin')->group(function (){
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
                 Route::get('/pre_cleaning_input', 'index')->name('PreCleaningInput.index');
                 Route::get('/pre_cleaning_input/create', 'create')->name('PreCleaningInput.create');
@@ -267,7 +267,7 @@ Route::middleware('auth')->group(function (){
             });
         });
 
-        Route::prefix('bahan_baku')->middleware('role:bahan_baku|admin')->group(function (){
+        Route::prefix('Grading_Halus')->middleware('role:bahan_baku|admin')->group(function (){
             Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusInputController::class)->group(function () {
                 Route::get('/pre_grading_halus_input', 'index')->name('PreGradingHalusInput.index');
                 Route::get('/pre_grading_halus_input/create', 'create')->name('PreGradingHalusInput.create');
@@ -335,7 +335,8 @@ Route::middleware('auth')->group(function (){
                 Route::get('/transit_grading_halus', 'index')->name('TransitGradingHalus.index');
             });
         });
-        Route::prefix('bahan_baku')->middleware('role:bahan_baku|admin')->group(function (){
+
+        Route::prefix('Pre-Wash')->middleware('role:bahan_baku|admin')->group(function (){
             Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
                 Route::get('/pre_wash_output', 'index')->name('PreWashOutput.index');
                 Route::get('/pre_wash_output/create', 'create')->name('PreWashOutput.create');
@@ -357,7 +358,9 @@ Route::middleware('auth')->group(function (){
                 Route::get('/transit_pre_wash', 'index')->name('TransitPreWash.index');
             });
         });
-        Route::prefix('bahan_baku')->middleware('role:bahan_baku|admin')->group(function (){
+    });
+    Route::prefix('cleaning')->middleware(['role:cleaning|admin'])->group(function (){
+        Route::prefix('Cabut_Bulu')->middleware('role:cleaning|admin')->group(function (){
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenerimaanController::class)->group(function () {
                 Route::get('/cabut_bulu_penerimaan', 'index')->name('CabutBuluPenerimaan.index');
                 Route::get('/cabut_bulu_penerimaan/create', 'create')->name('CabutBuluPenerimaan.create');
@@ -399,6 +402,25 @@ Route::middleware('auth')->group(function (){
 
             Route::controller(App\Http\Controllers\CabutBulu\TransitCabutBuluController::class)->group(function () {
                 Route::get('/transit_cabut_bulu', 'index')->name('TransitCabutBulu.index');
+            });
+        });
+
+        Route::prefix('Rambang')->middleware('role:cleaning|admin')->group(function (){
+            Route::controller(App\Http\Controllers\Rambang\InputHcrKotorController::class)->group(function () {
+                Route::get('/input_hcr_kotor', 'index')->name('InputHcrKotor.index');
+                Route::get('/input_hcr_kotor/create', 'create')->name('InputHcrKotor.create');
+                Route::post('/input_hcr_kotor/store', 'store')->name('InputHcrKotor.store');
+                Route::get('/input_hcr_kotor/show/{id}', 'show')->name('InputHcrKotor.show');
+                Route::get('/input_hcr_kotor/edit/{id}', 'edit')->name('InputHcrKotor.edit');
+                Route::put('/input_hcr_kotor/update/{id}', 'update')->name('InputHcrKotor.update');
+                Route::delete('/input_hcr_kotor/destroy/{nomor_bstb}', 'destroy')->name('InputHcrKotor.destroy');
+                Route::get('/input_hcr_kotor/get_data_nomor_job', 'set')->name('InputHcrKotor.set');
+                Route::post('/input_hcr_kotor/simpanData', 'simpanData')->name('InputHcrKotor.simpanData');
+                Route::post('/input_hcr_kotor/cek_data', 'CeksendData')->name('InputHcrKotor.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\Rambang\StockHcrKotorController::class)->group(function () {
+                Route::get('/stock_hcr_stock', 'index')->name('StockHcrKotor.index');
             });
         });
     });

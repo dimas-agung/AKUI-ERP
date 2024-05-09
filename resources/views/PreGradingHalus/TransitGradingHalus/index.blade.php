@@ -28,9 +28,10 @@
                                 <th class="text-center">Pcs Job</th>
                                 <th class="text-center">Tujuan Kirim</th>
                                 <th class="text-center">Keterangan</th>
-                                @rolr
-                                <th class="text-center">Modal</th>
-                                <th class="text-center">Total Modal</th>
+                                @role('admin')
+                                    <th class="text-center">Modal</th>
+                                    <th class="text-center">Total Modal</th>
+                                @endrole
                                 {{-- <th class="text-center">Action</th> --}}
                             </tr>
                         </thead>
