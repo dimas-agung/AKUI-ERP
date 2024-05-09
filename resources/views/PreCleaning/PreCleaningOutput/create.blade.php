@@ -92,24 +92,30 @@
                             data-placeholder="Pilih Operator Sikat & Kompresor">
                             <option value="">Pilih Operator Sikat & Kompresor</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Sikat + Kompresor' && $MasterSPRM->status == 1)
-                                    <option value="{{ $MasterSPRM->nama }}">
-                                        {{ $MasterSPRM->nama }}
-                                    </option>
+                                @if ($MasterSPRM->status == 1)
+                                    @if (strpos(strtolower($MasterSPRM->job), 'sikat') !== false &&
+                                            strpos(strtolower($MasterSPRM->job), 'kompresor') !== false)
+                                        <option value="{{ $MasterSPRM->nama }}">
+                                            {{ $MasterSPRM->nama }}
+                                        </option>
+                                    @endif
                                 @endif
                             @endforeach
                         </select>
                     </div>
+
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Flex & Poles</label>
                         <select class="select2 form-select" style="width: 100%;" name="operator_flex_dan_poles"
                             id="operator_flex_dan_poles" data-placeholder="Pilih Operator Flex & Poles">
                             <option value="">Pilih Operator Flex & Poles</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Flek + Poles' && $MasterSPRM->status == 1)
-                                    <option value="{{ $MasterSPRM->nama }}">
-                                        {{ $MasterSPRM->nama }}
-                                    </option>
+                                @if ($MasterSPRM->status == 1)
+                                    @if (strpos(strtolower($MasterSPRM->job), 'flek') !== false && strpos(strtolower($MasterSPRM->job), 'poles') !== false)
+                                        <option value="{{ $MasterSPRM->nama }}">
+                                            {{ $MasterSPRM->nama }}
+                                        </option>
+                                    @endif
                                 @endif
                             @endforeach
                         </select>
@@ -121,10 +127,12 @@
                             id="operator_cutter" data-placeholder="Pilih Operator Cutter">
                             <option value="">Pilih Operator Cutter</option>
                             @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Cutter' && $MasterSPRM->status == 1)
-                                    <option value="{{ $MasterSPRM->nama }}">
-                                        {{ $MasterSPRM->nama }}
-                                    </option>
+                                @if ($MasterSPRM->status == 1)
+                                    @if (strpos(strtolower($MasterSPRM->job), 'cutter') !== false)
+                                        <option value="{{ $MasterSPRM->nama }}">
+                                            {{ $MasterSPRM->nama }}
+                                        </option>
+                                    @endif
                                 @endif
                             @endforeach
                         </select>
