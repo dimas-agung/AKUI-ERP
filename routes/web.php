@@ -450,6 +450,22 @@ Route::middleware('auth')->group(function () {
                 Route::get('/cabut_bulu_stock', 'index')->name('CabutBuluStock.index');
             });
         });
+        Route::prefix('rambang')->middleware('role:rambang|admin')->group(function () {
+            Route::controller(App\Http\Controllers\Rambang\RambangKeringInputController::class)->group(function () {
+                Route::get('/rambang_kering_input', 'index')->name('RambangKeringInput.index');
+                Route::get('/rambang_kering_input/create', 'create')->name('RambangKeringInput.create');
+                Route::post('/rambang_kering_input/store', 'store')->name('RambangKeringInput.store');
+                Route::post('/rambang_kering_input/cek_data', 'CeksendData')->name('RambangKeringInput.CeksendData');
+                Route::post('/rambang_kering_input/simpanData', 'simpanData')->name('RambangKeringInput.simpanData');
+                Route::get('/rambang_kering_input/set', 'set')->name('RambangKeringInput.set');
+                Route::get('/rambang_kering_input/setnip', 'setNip')->name('RambangKeringInput.setNip');
+                Route::delete('/rambang_kering_input/destroy/{nomor_bstb}', 'destroy')->name('RambangKeringInput.destroy');
+            });
+
+            Route::controller(App\Http\Controllers\Rambang\RambangKeringStockController::class)->group(function () {
+                Route::get('/rambang_kering_stock', 'index')->name('RambangKeringStock.index');
+            });
+        });
 
         // Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
         //     Route::get('/pre_wash_output', 'index')->name('PreWashOutput.index');
