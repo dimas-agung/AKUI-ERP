@@ -320,12 +320,12 @@
                                                     class="submenu-link">Pre-Grading Halus Stock</a>
                                             </li>
                                             <li
-                                                class="submenu-item {{ Route::is('PreGradingHalusAdding') ? 'active' : '' }}">
+                                                class="submenu-item {{ Route::is('PreGradingHalusAdding*') ? 'active' : '' }}">
                                                 <a href="{{ route('PreGradingHalusAdding.index') }}"
                                                     class="submenu-link">Pre Grading Halus Adding</a>
                                             </li>
                                             <li
-                                                class="submenu-item {{ Route::is('PreGradingHalusAddingStock') ? 'active' : '' }}">
+                                                class="submenu-item {{ Route::is('PreGradingHalusAddingStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('PreGradingHalusAddingStock.index') }}"
                                                     class="submenu-link">Pre Grading Halus Adding Stock</a>
                                             </li>

@@ -114,12 +114,11 @@ class PreGradingHalusAddingService
                     'modal'                 => $item->modal,
                     'total_modal'           => $group->total_modal,
                     'status_stock'          => $item->status_stock ?? 1,
+                    'id_box_raw_material'   => $item->id_box_raw_material,
                     // Tambahkan properti lain yang sesuai dengan struktur tabel Anda
                 ]);
             }
         }
-
-
 
         // test Pre Grading Halus Stock
         $itemObject = (object)$item;
@@ -166,37 +165,6 @@ class PreGradingHalusAddingService
                 'modal'                             => $item->modal,
                 'user_created'                      => $item->user_created ?? "There isn't any",
             ]));
-        }
-    }
-
-
-    public function deleteData($id)
-    {
-        try {
-            DB::beginTransaction();
-
-            // Dapatkan nomor grading yang akan dihapus
-            $nomorGrading = PreGradingHalusAdding::where('id', $id)->value('nomor_grading');
-
-            // Lakukan penghapusan data dari PreGradingHalusAdding
-            PreGradingHalusAdding::where('id', $id)->delete();
-
-            // Hapus data dari PreGradingHalusAddingStock yang memiliki nomor grading yang sama
-            PreGradingHalusAddingStock::where('nomor_grading', $nomorGrading)->delete();
-
-            DB::commit();
-
-            return [
-                'success' => true,
-                'message' => 'Data berhasil dihapus!',
-            ];
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return [
-                'success' => false,
-                'error' => 'Gagal menghapus data. ' . $e->getMessage(),
-            ];
         }
     }
 }
