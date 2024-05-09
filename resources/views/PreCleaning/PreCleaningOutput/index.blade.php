@@ -42,7 +42,7 @@
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
                                         @endrole
-                                        <th scope="col" class="text-center">Operator Flek & Kompresor</th>
+                                        <th scope="col" class="text-center">Operator Sikat & Kompresor</th>
                                         <th scope="col" class="text-center">Operator Flek & Poles</th>
                                         <th scope="col" class="text-center">Operator Cutter</th>
                                         <th scope="col" class="text-center">Kuningan</th>

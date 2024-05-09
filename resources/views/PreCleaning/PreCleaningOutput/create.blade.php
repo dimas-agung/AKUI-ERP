@@ -626,6 +626,7 @@
                 $('#berat_kirim').val('');
                 $('#pcs_kirim').val('');
                 $('#susut').val('');
+                $('#keterangan').val('');
                 $('#nomor_job').val(null).trigger('change');
                 $('#operator_sikat_dan_kompresor').val(null).trigger('change');
                 $('#operator_flex_dan_poles').val(null).trigger('change');

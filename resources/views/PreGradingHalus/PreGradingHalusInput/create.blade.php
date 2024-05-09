@@ -48,7 +48,7 @@
                                                 @foreach ($Unit as $innerPost)
                                                     @if ($innerPost->nama == $post->nama && $innerPost->status > 0)
                                                         @if (!$beratMasukShown)
-                                                            <option value="{{ $innerPost->nama }}">
+                                                            <option value="{{ $innerPost->nama }}" {{$innerPost->nama == 'Grading Halus' ? 'selected' : ''}}>
                                                                 {{ old('nama', $innerPost->nama) }}
                                                             </option>
                                                             @php

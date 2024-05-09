@@ -331,10 +331,13 @@
                     let sisaPcs = pcsMasuk - pcsKeluar;
                     $('#berat_masuk').val(sisaBerat);
                     $('#sisa_pcs').val(sisaPcs);
+                    console.log(selectedIdBox);
+                    console.log(idBoxGradingKasarSelected);
                     if (idBoxGradingKasarSelected == selectedIdBox) {
                         
                         calculateSisaBeratSisaPcs(beratMasuk,pcsMasuk)
                     }
+                    idBoxGradingKasarSelected = selectedIdBox;
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -800,10 +803,10 @@
 
         <div id="qrcode" class="col" style="max-width: 70px;padding-right:0;padding-left:0;"></div>
         <div class="col" style="font-size: 9px;width: 220px;padding-right:0;padding-left:0;" >
-            <span style="text-align: center;" id="cetak_nomor_batch">1234567890</span><br>
-            <span  id="cetak_jenis">PT12</span><br>
-            <span  id="cetak_nomor_job">010324-083609_AKI_ugk</span><br>
-            <span  id="cetak_gramasi">100</span>gr / <span  id="cetak_pcs">20</span>pcs
+            <span style="text-align: center;font-weight: bold;;font-size:10px;" id="cetak_nomor_batch">1234567890</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_jenis">PT12</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;"  id="cetak_nomor_job">010324-083609_AKI_ugk</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_gramasi">100</span><span style="font-family:Calibri;font-weight: bold;font-size:10px;" >gr / </span><span style="font-family:Calibri;font-weight: bold;font-size:10px;"   id="cetak_pcs">20</span><span style="font-family:Calibri;font-weight: bold;font-size:10px;" >pcs</span>
         </div>
     </div>
 @endsection

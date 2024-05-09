@@ -66,7 +66,7 @@ class MasterOperatorController extends Controller
         ]);
 
         // Redirect to index
-        return redirect()->route('master.master_operator.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('MasterOperator.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
     // edit
     public function edit(string $id)

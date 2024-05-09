@@ -14,29 +14,53 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
+        // $user = User::create([
+        //     'email' => 'admin@gmail.com',
+        //     'password' => Hash::make('admin123'),
+        //     'fullname' => 'admin',
+        //     'nip' => '12345678',
+        //     'unit_id' => '1',
+        //     'username' => 'admin',
+        //     'phone_number' => '0111111111',
+        //     'birth_date' => '2000-04-09',
+        // ]);
+        // $user->syncRoles(['master','admin']);
         $user = User::create([
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin123'),
-            'fullname' => 'admin',
-            'nip' => '12345678',
+            'email' => 'Pre-cleaning@akuibirdnest.com',
             'unit_id' => '1',
-            'username' => 'admin',
-            'phone_number' => '0111111111',
-            'birth_date' => '2000-04-09',
-        ]);
-        $user->syncRoles(['master','admin']);
-        $user = User::create([
-            'email' => 'Purchasing@akuibirdnest.com',
-            'unit_id' => '1',
-            'password' => Hash::make('purchasing123'),
-            'fullname' => 'NUR FADHILLAH',
-            'nip' => '222040347',
-            'username' => 'NUR FADHILLAH',
-            'phone_number' => '12348191',
+            'password' => Hash::make('nyken1018'),
+            'fullname' => 'Nyken Dwi Ashari',
+            'nip' => '223030557',
+            'username' => 'Nyken Dwi Ashari',
+            'phone_number' => '123481912211',
             'birth_date' => '2000-04-09',
 
         ]);
-        $user->assignRole(['purchasing']);
+        $user->assignRole(['pre_cleaning']);
+        $user = User::create([
+            'email' => 'Pre-cleaningSupport1@akuibirdnest.com',
+            'unit_id' => '1',
+            'password' => Hash::make('01032004'),
+            'fullname' => 'Raehan Hadi Al Ghifary',
+            'nip' => '222080413',
+            'username' => 'Raehan Hadi Al Ghifary',
+            'phone_number' => '1234819122121211',
+            'birth_date' => '2000-04-09',
+
+        ]);
+        $user->assignRole(['pre_cleaning']);
+        $user = User::create([
+            'email' => 'Pre-cleaningSupport2@akuibirdnest.com',
+            'unit_id' => '1',
+            'password' => Hash::make('010799'),
+            'fullname' => 'Lilik Kurniawan',
+            'nip' => '222110461',
+            'username' => 'Lilik Kurniawan',
+            'phone_number' => '12348191221211211',
+            'birth_date' => '2000-04-09',
+
+        ]);
+        $user->assignRole(['pre_cleaning']);
         // foreach ($request->input('role') as $key => $value) {
         //     # code...
         //     $user->assignRole([$value]);
