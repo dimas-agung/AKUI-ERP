@@ -134,6 +134,27 @@ Route::middleware('auth')->group(function (){
             Route::put('/master_ongkos_cuci/update/{id}', 'update')->name('MasterOngkosCuci.update');
             Route::delete('/master_ongkos_cuci/destroy/{id}', 'destroy')->name('MasterOngkosCuci.destroy');
         });
+        Route::controller(App\Http\Controllers\MasterJenisHcrKotorController::class)->group(function () {
+            Route::get('/master_jenis_hancuran_kotor', 'index')->name('MasterJenisHcrKotor.index');
+            Route::post('/master_jenis_hancuran_kotor/store', 'store')->name('MasterJenisHcrKotor.store');
+            Route::get('/master_jenis_hancuran_kotor/edit/{id}', 'edit')->name('MasterJenisHcrKotor.edit');
+            Route::put('/master_jenis_hancuran_kotor/update/{id}', 'update')->name('MasterJenisHcrKotor.update');
+            Route::delete('/master_jenis_hancuran_kotor/destroy/{id}', 'destroy')->name('MasterJenisHcrKotor.destroy');
+        });
+        Route::controller(App\Http\Controllers\MasterJenisRambangController::class)->group(function () {
+            Route::get('/master_jenis_rambang', 'index')->name('MasterJenisRambang.index');
+            Route::post('/master_jenis_rambang/store', 'store')->name('MasterJenisRambang.store');
+            Route::get('/master_jenis_rambang/edit/{id}', 'edit')->name('MasterJenisRambang.edit');
+            Route::put('/master_jenis_rambang/update/{id}', 'update')->name('MasterJenisRambang.update');
+            Route::delete('/master_jenis_rambang/destroy/{id}', 'destroy')->name('MasterJenisRambang.destroy');
+        });
+        Route::controller(App\Http\Controllers\MasterTujuanKirimWasteController::class)->group(function () {
+            Route::get('/master_tujuan_kirim_waste', 'index')->name('MasterTujuanKirimWaste.index');
+            Route::post('/master_tujuan_kirim_waste/store', 'store')->name('MasterTujuanKirimWaste.store');
+            Route::get('/master_tujuan_kirim_waste/edit/{id}', 'edit')->name('MasterTujuanKirimWaste.edit');
+            Route::put('/master_tujuan_kirim_waste/update/{id}', 'update')->name('MasterTujuanKirimWaste.update');
+            Route::delete('/master_tujuan_kirim_waste/destroy/{id}', 'destroy')->name('MasterTujuanKirimWaste.destroy');
+        });
     });
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function (){
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
@@ -413,7 +434,7 @@ Route::middleware('auth')->group(function (){
                 Route::get('/input_hcr_kotor/show/{id}', 'show')->name('InputHcrKotor.show');
                 Route::get('/input_hcr_kotor/edit/{id}', 'edit')->name('InputHcrKotor.edit');
                 Route::put('/input_hcr_kotor/update/{id}', 'update')->name('InputHcrKotor.update');
-                Route::delete('/input_hcr_kotor/destroy/{nomor_bstb}', 'destroy')->name('InputHcrKotor.destroy');
+                Route::delete('/input_hcr_kotor/destroy/{id}', 'destroy')->name('InputHcrKotor.destroy');
                 Route::get('/input_hcr_kotor/get_data_nomor_job', 'set')->name('InputHcrKotor.set');
                 Route::post('/input_hcr_kotor/simpanData', 'simpanData')->name('InputHcrKotor.simpanData');
                 Route::post('/input_hcr_kotor/cek_data', 'CeksendData')->name('InputHcrKotor.CeksendData');
@@ -421,6 +442,23 @@ Route::middleware('auth')->group(function (){
 
             Route::controller(App\Http\Controllers\Rambang\StockHcrKotorController::class)->group(function () {
                 Route::get('/stock_hcr_stock', 'index')->name('StockHcrKotor.index');
+            });
+
+            Route::controller(App\Http\Controllers\Rambang\InputRambangBasahController::class)->group(function () {
+                Route::get('/input_rambang_basah', 'index')->name('InputRambangBasah.index');
+                Route::get('/input_rambang_basah/create', 'create')->name('InputRambangBasah.create');
+                Route::post('/input_rambang_basah/store', 'store')->name('InputRambangBasah.store');
+                Route::get('/input_rambang_basah/show/{id}', 'show')->name('InputRambangBasah.show');
+                Route::get('/input_rambang_basah/edit/{id}', 'edit')->name('InputRambangBasah.edit');
+                Route::put('/input_rambang_basah/update/{id}', 'update')->name('InputRambangBasah.update');
+                Route::delete('/input_rambang_basah/destroy/{id}', 'destroy')->name('InputRambangBasah.destroy');
+                Route::get('/input_rambang_basah/get_data_nomor_job', 'set')->name('InputRambangBasah.set');
+                Route::post('/input_rambang_basah/simpanData', 'simpanData')->name('InputRambangBasah.simpanData');
+                Route::post('/input_rambang_basah/cek_data', 'CeksendData')->name('InputRambangBasah.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\Rambang\StockRambangBasahController::class)->group(function () {
+                Route::get('/stock_rambang_basah', 'index')->name('StockRambangBasah.index');
             });
         });
     });

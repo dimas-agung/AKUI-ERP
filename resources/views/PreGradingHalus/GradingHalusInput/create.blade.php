@@ -14,7 +14,7 @@
                 <div class="col-md-12">
                     <div class="card border-0 shadow-sm rounded">
                         <div class="card-header">
-                            <h4>Input Data Prm Raw Material Output</h4>
+                            <h4>Input Data Grading Halus</h4>
                         </div>
                         <div class="card-body">
                             {{-- Create Data --}}

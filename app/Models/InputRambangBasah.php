@@ -21,4 +21,16 @@ class InputRambangBasah extends Model
         'user_created',
         'user_updated',
     ];
+    public function StockHcrKotor()
+    {
+        return $this->belongsTo(StockHcrKotor::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
+    }
+    public function MasterJenisRambang()
+    {
+        return $this->belongsTo(MasterJenisGradingHalus::class, 'jenis', 'jenis_rambang');
+    }
+    public function StockRambangBasah()
+    {
+        return $this->hasMany(StockRambangBasah::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
+    }
 }

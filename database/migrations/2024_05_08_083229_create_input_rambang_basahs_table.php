@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('input_rambang_basahs', function (Blueprint $table) {
             $table->id();
             $table->string('id_box_hcr_kotor');
-            $table->timestamp('tanggal_cabut');
+            $table->date('tanggal_cabut');
             $table->string('jenis_hcr_kotor');
             $table->float('berat_hcr_kotor');
             $table->string('jenis_rambang');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('keterangan')->nullable();
             $table->string('status');
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

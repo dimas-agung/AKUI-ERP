@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('keterangan')->nullable();
             $table->string('status');
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

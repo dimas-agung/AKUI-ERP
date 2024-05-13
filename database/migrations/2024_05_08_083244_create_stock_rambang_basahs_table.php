@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('stock_rambang_basahs', function (Blueprint $table) {
             $table->id();
+            $table->string('unit');
             $table->string('id_box_hcr_kotor');
             $table->string('jenis_rambang');
             $table->float('berat_masuk');

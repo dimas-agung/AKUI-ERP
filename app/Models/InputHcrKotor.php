@@ -19,4 +19,8 @@ class InputHcrKotor extends Model
         'user_created',
         'user_updated',
     ];
+    public function MasterJenisHcrKotor()
+    {
+        return $this->belongsTo(MasterJenisHcrKotor::class, 'jenis', 'jenis_hcr_kotor');
+    }
 }

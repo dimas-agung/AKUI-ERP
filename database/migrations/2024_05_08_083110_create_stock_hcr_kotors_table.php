@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('stock_hcr_kotors', function (Blueprint $table) {
             $table->id();
+            $table->string('unit');
             $table->string('id_box_hcr_kotor');
-            $table->timestamp('tanggal_cabut');
+            $table->date('tanggal_cabut');
             $table->string('jenis_hcr_kotor');
             $table->float('berat_masuk');
             $table->float('berat_keluar');

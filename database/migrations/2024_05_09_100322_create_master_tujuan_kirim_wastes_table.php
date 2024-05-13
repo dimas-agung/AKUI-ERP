@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengiriman_wastes', function (Blueprint $table) {
+        Schema::create('master_tujuan_kirim_wastes', function (Blueprint $table) {
             $table->id();
-            $table->string('id_box_hcr_kotor');
-            $table->string('jenis_rambang');
-            $table->float('berat');
-            $table->string('keterangan')->nullable();
-            $table->string('nomor_bstb');
-            $table->string('status');
-            $table->string('user_created');
+            $table->string('tujuan_kirim');
+            $table->string('letak_tujuan');
+            $table->string('inisial_tujuan');
+            $table->string('status')->default('1');
+            $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
             $table->timestamps();
         });
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengiriman_wastes');
+        Schema::dropIfExists('master_tujuan_kirim_wastes');
     }
 };
