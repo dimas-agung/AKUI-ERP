@@ -27,19 +27,19 @@ class RambangBasahStockSeeder extends Seeder
             'workstation'           => 'Cleaning',
             'unit'                  => 'Rambang',
             'id_box_hcr_kotor'      => '230424_HCR Kotor PB',
-            'jenis_rambang'         => 'Bulu',
-            'berat_masuk'           => 200,
-            'berat_keluar'          => 0,
-            'sisa_berat'            => 200,
+            'jenis_rambang'         => 'Hcr Halus',
+            'berat_masuk'           => 43,
+            'berat_keluar'          => 43,
+            'sisa_berat'            => 0,
         ]);
         RambangBasahStock::create([
             'workstation'           => 'Cleaning',
             'unit'                  => 'Rambang',
-            'id_box_hcr_kotor'      => '230424_HCR Kotor PB',
+            'id_box_hcr_kotor'      => '030524_HCR Kotor PK',
             'jenis_rambang'         => 'Bulu',
-            'berat_masuk'           => 200,
+            'berat_masuk'           => 500,
             'berat_keluar'          => 0,
-            'sisa_berat'            => 200,
+            'sisa_berat'            => 500,
         ]);
     }
 }

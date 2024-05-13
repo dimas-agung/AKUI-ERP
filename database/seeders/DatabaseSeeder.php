@@ -11,6 +11,7 @@ use App\Models\MasterJenisGradingHalus;
 use App\Models\MasterJenisGradingKasar;
 use App\Models\MasterOperator;
 use App\Models\PrmRawMaterialStock;
+use App\Models\RambangBasahStock;
 use App\Models\TransitGradingKasar;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -54,7 +55,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GradingHalusStockSeeder::class);
         $this->call(MasterOngkosCuciSeeder::class);
         $this->call(TransitGradingHalusSeeder::class);
-        // $this->call(PerusahaanSeeder::class);
+        $this->call(RambangBasahStockSeeder::class);
         // $this->call(MasterJenisGradingHalusSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UsersSeeder::class);
