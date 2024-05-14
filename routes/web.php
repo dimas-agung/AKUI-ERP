@@ -524,9 +524,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/rambang_kering_input/create', 'create')->name('RambangKeringInput.create');
                 Route::post('/rambang_kering_input/store', 'store')->name('RambangKeringInput.store');
                 Route::post('/rambang_kering_input/cek_data', 'CeksendData')->name('RambangKeringInput.CeksendData');
-                Route::post('/rambang_kering_input/simpanData', 'simpanData')->name('RambangKeringInput.simpanData');
                 Route::get('/rambang_kering_input/set', 'set')->name('RambangKeringInput.set');
-                Route::get('/rambang_kering_input/setnip', 'setNip')->name('RambangKeringInput.setNip');
                 Route::delete('/rambang_kering_input/destroy/{nomor_bstb}', 'destroy')->name('RambangKeringInput.destroy');
             });
 

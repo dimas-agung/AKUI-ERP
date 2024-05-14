@@ -16,8 +16,48 @@ class PreGradingHalusAddingService
         try {
             DB::beginTransaction();
 
+            // Buat array sementara untuk menyimpan data yang digabungkan
+            $groupedData = [];
+
             foreach ($dataArray as $item) {
+                // Periksa apakah nomor_grading sudah ada dalam array sementara
+                if (array_key_exists($item->nomor_grading, $groupedData)) {
+                    // Jika ya, tambahkan nilai berat_kirim, pcs_kirim, dan total_modal
+                    $groupedData[$item->nomor_grading]['total_berat_kirim'] += $item->berat_kirim;
+                    $groupedData[$item->nomor_grading]['total_pcs_kirim'] += $item->pcs_kirim;
+                    $groupedData[$item->nomor_grading]['total_modal'] += $item->total_modal;
+                } else {
+                    // Jika tidak, tambahkan data baru ke array sementara
+                    $groupedData[$item->nomor_grading] = [
+                        'total_berat_kirim' => $item->berat_kirim,
+                        'total_pcs_kirim' => $item->pcs_kirim,
+                        'total_modal' => $item->total_modal,
+                    ];
+                }
+
+                // Tambahkan item baru ke tabel PreGradingHalusAdding
                 $this->createItem($item);
+            }
+
+            // Simpan data yang telah digabungkan ke dalam tabel PreGradingHalusAddingStock
+            foreach ($groupedData as $nomorGrading => $data) {
+                PreGradingHalusAddingStock::create([
+                    'unit'                  => $item->unit ?? "Grading Halus",
+                    'nomor_grading'         => $item->nomor_grading,
+                    'id_box_grading_kasar'  => $item->id_box_grading_kasar,
+                    'nomor_batch'           => $item->nomor_batch,
+                    'nomor_nota_internal'   => $item->nomor_nota_internal,
+                    'nama_supplier'         => $item->nama_supplier,
+                    'jenis_raw_material'    => $item->jenis_raw_material,
+                    'kadar_air'             => $item->kadar_air,
+                    'nomor_grading'         => $nomorGrading,
+                    'berat_adding'          => $data['total_berat_kirim'],
+                    'pcs_adding'            => $data['total_pcs_kirim'],
+                    'modal'                 => $data['total_modal'] / $data['total_berat_kirim'],
+                    'total_modal'           => $data['total_berat_kirim'] * ($data['total_modal'] / $data['total_berat_kirim']),
+                    'status_stock'          => $item->status_stock ?? 1,
+                    'id_box_raw_material'   => $item->id_box_raw_material,
+                ]);
             }
 
             DB::commit();
@@ -41,86 +81,24 @@ class PreGradingHalusAddingService
     {
         // Tambahkan item baru ke tabel PreGradingHalusAdding
         PreGradingHalusAdding::create([
-            'nomor_grading'         => $item->nomor_grading,
-            'nomor_job'             => $item->nomor_job,
-            'id_box_grading_kasar'  => $item->id_box_grading_kasar,
-            'id_box_raw_material'   => $item->id_box_raw_material,
-            'nomor_batch'           => $item->nomor_batch,
-            'nomor_nota_internal'   => $item->nomor_nota_internal,
-            'nama_supplier'         => $item->nama_supplier,
-            'jenis_raw_material'    => $item->jenis_raw_material,
-            'kadar_air'             => $item->kadar_air,
-            'jenis_kirim'           => $item->jenis_kirim,
-            'berat_kirim'           => $item->berat_kirim,
-            'pcs_kirim'             => $item->pcs_kirim,
-            'tujuan_kirim'          => $item->tujuan_kirim,
-            'modal'                 => $item->modal,
-            'total_modal'           => $item->total_modal,
-            
-            'user_created'          => $item->user_created ?? "There isn't any",
+            'nomor_grading' => $item->nomor_grading,
+            'nomor_job' => $item->nomor_job,
+            'id_box_grading_kasar' => $item->id_box_grading_kasar,
+            'id_box_raw_material' => $item->id_box_raw_material,
+            'nomor_batch' => $item->nomor_batch,
+            'nomor_nota_internal' => $item->nomor_nota_internal,
+            'nama_supplier' => $item->nama_supplier,
+            'jenis_raw_material' => $item->jenis_raw_material,
+            'kadar_air' => $item->kadar_air,
+            'jenis_kirim' => $item->jenis_kirim,
+            'berat_kirim' => $item->berat_kirim,
+            'pcs_kirim' => $item->pcs_kirim,
+            'tujuan_kirim' => $item->tujuan_kirim,
+            'modal' => $item->modal,
+            'total_modal' => $item->total_modal,
+            'user_created' => $item->user_created ?? "There isn't any",
             // 'user_updated'          => $item->user_updated ?? "Admin123",
         ]);
-        // Cari item stok berdasarkan nomor grading
-
-        // $existingItem = PreGradingHalusAddingStock::where('nomor_grading', $item->nomor_grading)->first();
-
-        // if ($existingItem) {
-        //     // Jika item stok sudah ada, update data stok
-        //     $existingItem->berat_kirim += $item->berat_kirim;
-        //     $existingItem->pcs_kirim += $item->pcs_kirim;
-        //     $existingItem->$item->total_modal / $item->berat_kirim;
-        //     $existingItem->total_modal += $item->total_modal;
-        //     $existingItem->save();
-        // } else {
-        //     // Jika item stok belum ada, buat item stok baru
-        //     PreGradingHalusAddingStock::create([
-        //         'unit'                  => $item->unit ?? "Grading Halus",
-        //         'nomor_grading'         => $item->nomor_grading,
-        //         'id_box_grading_kasar'  => $item->id_box_grading_kasar,
-        //         'nomor_batch'           => $item->nomor_batch,
-        //         'nomor_nota_internal'   => $item->nomor_nota_internal,
-        //         'nama_supplier'         => $item->nama_supplier,
-        //         'jenis_raw_material'    => $item->jenis_raw_material,
-        //         'kadar_air'             => $item->kadar_air,
-        //         'berat_adding'          => $item->berat_kirim,
-        //         'pcs_adding'            => $item->pcs_kirim,
-        //         'modal'                 => $item->modal,
-        //         'total_modal'           => $item->total_modal,
-        //         'status_stock'          => $item->status_stock ?? 1,
-        //     ]);
-        // }
-
-        // Ambil semua entri dari PreGradingHalusAdding yang sesuai dan kelompokkan berdasarkan nomor_grading
-        $itemsGrouped = PreGradingHalusAdding::groupBy('nomor_grading')
-            ->selectRaw('nomor_grading, SUM(total_modal) as total_modal, SUM(berat_kirim) as total_berat_kirim, SUM(pcs_kirim) as total_pcs_kirim')
-            ->get();
-
-        foreach ($itemsGrouped as $group) {
-            // Ambil semua item dengan nomor grading yang sama
-            $items = PreGradingHalusAdding::where('nomor_grading', $group->nomor_grading)->get();
-
-            // Lakukan iterasi untuk setiap item dalam grup dan simpan hasil perhitungan ke dalam PreGradingHalusAddingStock
-            foreach ($items as $item) {
-                PreGradingHalusAddingStock::create([
-                    'unit'                  => $item->unit ?? "Grading Halus",
-                    'nomor_grading'         => $item->nomor_grading,
-                    'id_box_grading_kasar'  => $item->id_box_grading_kasar,
-                    'id_box_raw_material'           => $item->id_box_raw_material,
-                    'nomor_batch'           => $item->nomor_batch,
-                    'nomor_nota_internal'   => $item->nomor_nota_internal,
-                    'nama_supplier'         => $item->nama_supplier,
-                    'jenis_raw_material'    => $item->jenis_raw_material,
-                    'kadar_air'             => $item->kadar_air,
-                    'berat_adding'          => $group->total_berat_kirim,
-                    'pcs_adding'            => $group->total_pcs_kirim,
-                    'modal'                 => $item->modal,
-                    'total_modal'           => $group->total_modal,
-                    'status_stock'          => $item->status_stock ?? 1,
-                    'id_box_raw_material'   => $item->id_box_raw_material,
-                    // Tambahkan properti lain yang sesuai dengan struktur tabel Anda
-                ]);
-            }
-        }
 
         // test Pre Grading Halus Stock
         $itemObject = (object)$item;

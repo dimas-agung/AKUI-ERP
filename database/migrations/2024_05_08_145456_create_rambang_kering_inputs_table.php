@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('id_box_hcr_kotor');
             $table->string('jenis_rambang');
-            $table->float('berat_basah', 16, 4);
-            $table->float('berat_kering', 16, 4);
-            $table->float('susut', 16, 4);
+            $table->float('berat_basah');
+            $table->float('berat_kering');
+            $table->float('susut');
             $table->string('keterangan')->nullable();
             $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
