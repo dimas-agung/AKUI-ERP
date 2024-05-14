@@ -25,7 +25,6 @@
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Unit</th>
                                         <th scope="col" class="text-center">Nomor Grading</th>
-                                        <th scope="col" class="text-center">ID Box Grading Kasar</th>
                                         <th scope="col" class="text-center">Nomor Batch</th>
                                         <th scope="col" class="text-center">Nomor Nota Internal</th>
                                         <th scope="col" class="text-center">Nama Supplier</th>
@@ -40,7 +39,6 @@
                                         <th scope="col" class="text-center">Status Stock</th>
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
-                                        <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -49,7 +47,6 @@
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $PGHAS->unit }}</td>
                                             <td class="text-center">{{ $PGHAS->nomor_grading }}</td>
-                                            <td class="text-center">{{ $PGHAS->id_box_grading_kasar }}</td>
                                             <td class="text-center">{{ $PGHAS->nomor_batch }}</td>
                                             <td class="text-center">{{ $PGHAS->nomor_nota_internal }}</td>
                                             <td class="text-center">{{ $PGHAS->nama_supplier }}</td>
@@ -69,25 +66,7 @@
                                             <td class="text-center">
                                                 {{ $PGHAS->created_at != $PGHAS->updated_at ? $PGHAS->updated_at : '' }}
                                             </td>
-                                            <td class="text-center">
-                                                <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $PGHAS->id }}"
-                                                        action="{{ route('PreGradingHalusAddingStock.destroy', $PGHAS->id) }}"
-                                                        method="POST">
-                                                        {{-- <a href="{{ route('PreGradingHalusAddingStock.show', $PGHAS->id) }}"
-                                                            class="btn btn-link" title="View" data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a> --}}
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $PGHAS->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
+
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">

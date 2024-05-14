@@ -74,14 +74,10 @@ class PreGradingHalusAddingController extends Controller
             // Begin transaction
             DB::beginTransaction();
             // Temukan record berdasarkan nomor_$id
-            // $PreCleaningOutput = PreCleaningOutput::findOrFail($id);
-            $PreCleaningOutput = PreGradingHalusAdding::findOrFail($id);
+            $PreGradingHalusAdding = PreGradingHalusAdding::findOrFail($id);
             // Hapus semua item terkait
-            // $stockPRM = TransitPreCleaningStock::where('id_box_raw_material', '=', $PreCleaningOutput->id_box_raw_material)
-            //     ->where('nomor_job', $PreCleaningOutput->nomor_job)
-            //     ->first();
-            $stockPRM = PreGradingHalusAddingStock::where('id_box_raw_material', '=', $PreCleaningOutput->id_box_raw_material)
-                ->where('nomor_grading', $PreCleaningOutput->nomor_grading)
+            $stockPRM = PreGradingHalusAddingStock::where('id_box_raw_material', '=', $PreGradingHalusAdding->id_box_raw_material)
+                ->where('nomor_grading', $PreGradingHalusAdding->nomor_grading)
                 ->first();
 
             if ($stockPRM) {
@@ -90,22 +86,25 @@ class PreGradingHalusAddingController extends Controller
                     $stockPRM->delete();
                 } else {
                     // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
-                    if ($PreCleaningOutput->berat_kirim >= $stockPRM->berat_adding) {
+                    if ($PreGradingHalusAdding->berat_kirim >= $stockPRM->berat_adding) {
                         $stockPRM->delete();
                     } else {
                         // Ambil berat sebelumnya
                         $beratSebelumnya = $stockPRM->berat_adding;
                         $pcsSebelumnya = $stockPRM->pcs_adding;
+                        $totalModalSebelumnya = $stockPRM->total_modal;
 
                         // Hitung total modal baru berdasarkan perbedaan berat
-                        $perbedaanBerat = $beratSebelumnya - $PreCleaningOutput->berat_kirim;
-                        $perbedaanPcs = $pcsSebelumnya - $PreCleaningOutput->pcs_kirim;
-                        $totalModalBaru = $perbedaanBerat * $PreCleaningOutput->modal;
+                        $perbedaanBerat = $beratSebelumnya - $PreGradingHalusAdding->berat_kirim;
+                        $perbedaanPcs = $pcsSebelumnya - $PreGradingHalusAdding->pcs_kirim;
+                        $totalModalBaru = $totalModalSebelumnya - $PreGradingHalusAdding->total_modal;
+                        $modalBaru = $totalModalBaru / $perbedaanBerat;
 
                         // Update data dengan berat dan total modal yang baru
                         $dataToUpdate = [
                             'berat_adding' => abs($perbedaanBerat),
                             'pcs_adding' => abs($perbedaanPcs),
+                            'modal' => abs($modalBaru),
                             'total_modal' => abs($totalModalBaru),
                         ];
 
@@ -115,8 +114,8 @@ class PreGradingHalusAddingController extends Controller
                 }
             }
 
-            $existingItems = PreGradingHalusStock::where('nomor_job', $PreCleaningOutput->nomor_job)
-                ->where('id_box_grading_kasar', $PreCleaningOutput->id_box_grading_kasar)
+            $existingItems = PreGradingHalusStock::where('nomor_job', $PreGradingHalusAdding->nomor_job)
+                ->where('id_box_grading_kasar', $PreGradingHalusAdding->id_box_grading_kasar)
                 ->get();
 
             // Logika Update Status
@@ -126,15 +125,15 @@ class PreGradingHalusAddingController extends Controller
                 if ($existingItem) {
                     $beratSebelumnya = $existingItem->berat_keluar;
                     $pcsSebelumnya = $existingItem->pcs_keluar;
-                    // $sisaBerat = $existingItem->berat_keluar - $PreCleaningOutput->berat_kirim;
+                    // $sisaBerat = $existingItem->berat_keluar - $PreGradingHalusAdding->berat_kirim;
 
                     // Hitung total modal baru berdasarkan perbedaan berat
-                    $perbedaanBerat = $beratSebelumnya - $PreCleaningOutput->berat_kirim;
-                    $perbedaanPcs = $pcsSebelumnya - $PreCleaningOutput->pcs_kirim;
+                    $perbedaanBerat = $beratSebelumnya - $PreGradingHalusAdding->berat_kirim;
+                    $perbedaanPcs = $pcsSebelumnya - $PreGradingHalusAdding->pcs_kirim;
                     $sisaBerat = $existingItem->berat_keluar - $perbedaanBerat;
                     $sisaPcs = $existingItem->pcs_keluar - $perbedaanPcs;
                     $sisaBerat = $existingItem->berat_keluar - $perbedaanBerat;
-                    $totalModalBaru = $sisaBerat * $PreCleaningOutput->modal;
+                    $totalModalBaru = $sisaBerat * $PreGradingHalusAdding->modal;
 
                     $existingItem->update(['berat_keluar'   => $perbedaanBerat]);
                     $existingItem->update(['sisa_berat'     => $sisaBerat]);
@@ -145,12 +144,12 @@ class PreGradingHalusAddingController extends Controller
                 }
             }
 
-            $existingItem = PreGradingHalusAdding::where('nomor_job', $PreCleaningOutput->nomor_job)
-                ->where('id_box_raw_material', $PreCleaningOutput->id_box_raw_material)
+            $existingItem = PreGradingHalusAdding::where('nomor_job', $PreGradingHalusAdding->nomor_job)
+                ->where('id_box_raw_material', $PreGradingHalusAdding->id_box_raw_material)
                 ->first();
 
             $dataToUpdate = [
-                'status'                => $PreCleaningOutput->status ?? 0,
+                'status'                => $PreGradingHalusAdding->status ?? 0,
             ];
 
             if ($existingItem) {
@@ -159,7 +158,7 @@ class PreGradingHalusAddingController extends Controller
             }
 
             // Hapus record utama
-            $PreCleaningOutput->delete();
+            $PreGradingHalusAdding->delete();
 
             // Jika tidak ada kesalahan, komit transaksi
             DB::commit();

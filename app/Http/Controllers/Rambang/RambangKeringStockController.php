@@ -11,11 +11,9 @@ class RambangKeringStockController extends Controller
     // index
     public function index()
     {
-        $i = 1;
         $RambangKeringStock = RambangKeringStock::all();
         return response()->view('Rambang.RambangKeringStock.index', [
             'rambang_kering_stock' => $RambangKeringStock,
-            'i' => $i,
         ]);
     }
 }
