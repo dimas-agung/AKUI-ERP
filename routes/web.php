@@ -347,6 +347,7 @@ Route::middleware('auth')->group(function (){
                 Route::get('/grading_halus_output/create', 'create')->name('GradingHalusOutput.create');
                 Route::get('/grading_halus_output/get_data_id_box', 'set')->name('GradingHalusOutput.set');
                 Route::get('/grading_halus_output/get_data_id_box/jenis_grading', 'setUnit')->name('GradingHalusOutput.setUnit');
+                Route::get('/grading_halus_output/get_data_id_box/jenis', 'setUpah')->name('GradingHalusOutput.setUpah');
                 Route::post('/grading_halus_output/sendData', 'sendData')->name('GradingHalusOutput.sendData');
                 Route::post('/grading_halus_output/store', 'store')->name('GradingHalusOutput.store');
                 Route::delete('/grading_halus_output/destroy/{id_box_grading_halus}', 'destroy')->name('GradingHalusOutput.destroy');

@@ -30,6 +30,7 @@
                                 <th class="text-center" scope="col">Jenis Job</th>
                                 <th class="text-center" scope="col">Berat Job</th>
                                 <th class="text-center" scope="col">Pcs Job</th>
+                                <th class="text-center" scope="col">Upah Operator</th>
                                 <th class="text-center" scope="col">Tujuan Kirim</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 @role('admin')
@@ -51,6 +52,7 @@
                                     <td class="text-center">{{ $item->jenis_job }}</td>
                                     <td class="text-center">{{ $item->berat_job }}</td>
                                     <td class="text-center">{{ $item->pcs_job }}</td>
+                                    <td class="text-center">{{ $item->upah_operator }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
                                     @role('admin')
