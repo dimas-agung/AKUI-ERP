@@ -38,10 +38,10 @@
                                         <th scope="col" class="text-center">Jenis Kirim</th>
                                         <th scope="col" class="text-center">Berat Kirim</th>
                                         <th scope="col" class="text-center">Pcs Kirim</th>
-                                        @role('admin')
+                                        {{-- @role('admin') --}}
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
-                                        @endrole
+                                        {{-- @endrole --}}
                                         <th scope="col" class="text-center">Operator Sikat & Kompresor</th>
                                         <th scope="col" class="text-center">Operator Flek & Poles</th>
                                         <th scope="col" class="text-center">Operator Cutter</th>
@@ -78,11 +78,11 @@
                                             <td class="text-center">{{ $PCO->berat_kirim }}
                                             </td>
                                             <td class="text-center">{{ $PCO->pcs_kirim }}</td>
-                                            @role('admin')
+                                            {{-- @role('admin') --}}
                                                 <td class="text-center">{{ number_format($PCO->modal, 2, ',', '.') }}</td>
                                                 <td class="text-center">{{ number_format($PCO->total_modal, 2, ',', '.') }}
                                                 </td>
-                                            @endrole
+                                            {{-- @endrole --}}
                                             <td class="text-center">{{ $PCO->operator_sikat_n_kompresor }}</td>
                                             <td class="text-center">{{ $PCO->operator_flek_n_poles }}</td>
                                             <td class="text-center">{{ $PCO->operator_cutter }}</td>
