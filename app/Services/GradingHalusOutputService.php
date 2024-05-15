@@ -61,6 +61,7 @@ class GradingHalusOutputService
                         'nomor_job'             => $mergedData['nomor_job'],
                         'nomor_bstb'            => $mergedData['nomor_bstb'],
                         'jenis_job'             => $mergedData['jenis_job'],
+                        'upah_operator'         => $mergedData['upah_operator'],
                         'berat_job'           => $mergedData['berat_job'] ?? 0,
                         'pcs_job'             => $mergedData['pcs_job'] ?? 0,
                         'tujuan_kirim'          => $mergedData['tujuan_kirim'],

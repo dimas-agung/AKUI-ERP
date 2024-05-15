@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('jenis_job');
             $table->integer('status')->default('1');
             $table->float('berat_job');
-            $table->float('pcs_job');
+            $table->float('pcs_job')->nullable();
             $table->string('tujuan_kirim');
             $table->string('keterangan')->nullable();
             $table->float('modal', 16, 4);

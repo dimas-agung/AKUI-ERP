@@ -94,17 +94,33 @@
                         <label for="total_modal" class="form-label">Total Modal</label>
                         <input type="text" class="form-control" id="total_modal" readonly>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="berat_job" class="form-label">Berat Job</label>
                         <input type="text" class="form-control" id="berat_job" placeholder="Masukkan berat job">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="pcs_job" class="form-label">Pcs Job</label>
                         <input type="text" class="form-control" id="pcs_job" placeholder="Masukkan pcs job">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label for="upah_operator" class="form-label">Upah Operator</label>
+                        <input type="text" class="form-control" id="upah_operator" readonly>
+                    </div>
+                    <div class="col-md-12">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <input type="text" class="form-control" id="keterangan" placeholder="Masukkan Keterangan">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="berat_bersih" class="form-label">Berat Bersih</label>
+                        <input type="text" class="form-control" id="berat_bersih" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="pcs_bersih" class="form-label">Pcs Bersih</label>
+                        <input type="text" class="form-control" id="pcs_bersih" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="upah_operator_bersih" class="form-label">Upah Operator Bersih</label>
+                        <input type="text" class="form-control" id="upah_operator_bersih" readonly>
                     </div>
                     <div class="col-md-6">
                         <label for="user_created" class="form-label">Nip Admin</label>
@@ -133,7 +149,11 @@
                                 <th scope="col" class="text-center">Operator Box</th>
                                 <th scope="col" class="text-center">Jenis Job</th>
                                 <th scope="col" class="text-center">Berat Job</th>
+                                <th scope="col" class="text-center">Berat Bersih</th>
                                 <th scope="col" class="text-center">Pcs Job</th>
+                                <th scope="col" class="text-center">Pcs Bersih</th>
+                                <th scope="col" class="text-center">Upah Operator</th>
+                                <th scope="col" class="text-center">Upah Operator Bersih</th>
                                 <th scope="col" class="text-center">Tujuan Kirim</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
@@ -162,6 +182,7 @@
             $.ajax({
                 url: `{{ route('preWashOutput.set') }}`,
                 method: 'GET',
+                async: false,
                 data: {
                     nomor_job: selectedNomorJob
                 },
@@ -180,6 +201,7 @@
                         // Mengatur nilai Nomor Batch sesuai dengan respons dari server
                         $('#nomor_batch').val(response.nomor_batch);
                         $('#jenis_job').val(response.jenis_job);
+                        $('#upah_operator').val(response.upah_operator);
                         $('#tujuan_kirim').val(response.tujuan_kirim);
                         $('#modal').val(response.modal);
                         $('#total_modal').val(response.total_modal);
@@ -199,7 +221,55 @@
                     console.error('Error:', error);
                 }
             });
+            calculateUpah()
         });
+
+        function calculateUpah() {
+            let upah_operator = parseFloat($('#upah_operator').val());
+
+            if (!isNaN(upah_operator)) {
+                let potongan = upah_operator * 0.15; // Menghitung 15% dari upah_operator
+                let hasil_upah = upah_operator - potongan; // Mengurangi potongan dari upah_operator
+                $('#upah_operator_bersih').val(hasil_upah.toFixed(2)); // Menampilkan hasil dengan 2 desimal
+            } else {
+                $('#upah_operator').val(''); // Mengosongkan input jika nilai bukan angka
+            }
+        }
+
+        $(document).ready(function() {
+            $('#berat_job').on('input', function() {
+                calculateBeratBersih();
+            });
+
+            function calculateBeratBersih() {
+                let berat_job = parseFloat($('#berat_job').val());
+
+                if (!isNaN(berat_job)) {
+                    let potongan = berat_job * 0.15; // Menghitung 15% dari berat_job
+                    let berat_bersih = berat_job - potongan; // Mengurangi potongan dari berat_job
+                    $('#berat_bersih').val(berat_bersih.toFixed(2)); // Menampilkan hasil dengan 2 desimal
+                } else {
+                    $('#berat_bersih').val(''); // Mengosongkan input jika nilai bukan angka
+                }
+            }
+        });
+
+        $(document).ready(function() {
+            $('#pcs_job').on('input', function() {
+                updatePcsBersih();
+            });
+
+            function updatePcsBersih() {
+                let pcs_job = $('#pcs_job').val();
+
+                if (pcs_job !== '') {
+                    $('#pcs_bersih').val(pcs_job); // Menampilkan nilai yang sama di pcs_bersih
+                } else {
+                    $('#pcs_bersih').val(''); // Mengosongkan input jika nilai kosong
+                }
+            }
+        });
+
 
 
         $(document).ready(function() {
@@ -238,9 +308,13 @@
             let operator_perendaman = $('#operator_perendaman').val();
             let operator_bilas = $('#operator_bilas').val();
             let operator_box = $('#operator_box').val();
+            let upah_operator = $('#upah_operator').val();
+            let upah_operator_bersih = $('#upah_operator_bersih').val();
             let jenis_job = $('#jenis_job').val();
             let berat_job = $('#berat_job').val();
             let pcs_job = $('#pcs_job').val();
+            let berat_bersih = $('#berat_bersih').val();
+            let pcs_bersih = $('#pcs_bersih').val();
             let tujuan_kirim = $('#tujuan_kirim').val();
             let keterangan = $('#keterangan').val();
             let modal = $('#modal').val();
@@ -262,7 +336,11 @@
                 '<td class="text-center">' + operator_box + '</td>' +
                 '<td class="text-center">' + jenis_job + '</td>' +
                 '<td class="text-center">' + berat_job + '</td>' +
+                '<td class="text-center">' + berat_bersih + '</td>' +
                 '<td class="text-center">' + pcs_job + '</td>' +
+                '<td class="text-center">' + pcs_bersih + '</td>' +
+                '<td class="text-center">' + upah_operator + '</td>' +
+                '<td class="text-center">' + upah_operator_bersih + '</td>' +
                 '<td class="text-center">' + tujuan_kirim + '</td>' +
                 '<td class="text-center">' + modal + '</td>' +
                 '<td class="text-center">' + total_modal + '</td>' +
@@ -285,8 +363,12 @@
                 operator_bilas: operator_bilas,
                 operator_box: operator_box,
                 jenis_job: jenis_job,
+                berat_bersih: berat_bersih,
+                pcs_bersih: pcs_bersih,
                 berat_job: berat_job,
                 pcs_job: pcs_job,
+                upah_operator_bersih: upah_operator_bersih,
+                upah_operator: upah_operator,
                 tujuan_kirim: tujuan_kirim,
                 modal: modal,
                 total_modal: total_modal,
