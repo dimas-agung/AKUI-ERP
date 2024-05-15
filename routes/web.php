@@ -463,6 +463,19 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\Rambang\RambangKeringStockController::class)->group(function () {
                 Route::get('/rambang_kering_stock', 'index')->name('RambangKeringStock.index');
             });
+
+            Route::controller(App\Http\Controllers\Rambang\RambangPengirimanWasteController::class)->group(function () {
+                Route::get('/rambang_pengiriman_waste', 'index')->name('RambangPengirimanWaste.index');
+                Route::get('/rambang_pengiriman_waste/create', 'create')->name('RambangPengirimanWaste.create');
+                Route::post('/rambang_pengiriman_waste/store', 'store')->name('RambangPengirimanWaste.store');
+                Route::post('/rambang_pengiriman_waste/cek_data', 'CeksendData')->name('RambangPengirimanWaste.CeksendData');
+                Route::get('/rambang_pengiriman_waste/set', 'set')->name('RambangPengirimanWaste.set');
+                Route::delete('/rambang_pengiriman_waste/destroy/{nomor_bstb}', 'destroy')->name('RambangPengirimanWaste.destroy');
+            });
+
+            Route::controller(App\Http\Controllers\Rambang\TransitRambangWasteController::class)->group(function () {
+                Route::get('/transit_rambang_waste', 'index')->name('TransitRambangWaste.index');
+            });
         });
 
         // Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
