@@ -32,7 +32,7 @@ public function store(Request $request): RedirectResponse
     $this->validate($request, [
         'tujuan_kirim'              => 'required',
         'letak_tujuan'              => 'required',
-        'inisial_tujuan'            => 'required|unique:master_tujuan_kirim_raw_materials'
+        'inisial_tujuan'            => 'required|unique:master_tujuan_kirim_grading_haluses'
     ], [
         'tujuan_kirim.required'     => 'Kolom Tujuan Kirim Wajib diisi.',
         'letak_tujuan.required'     => 'Kolom Letak Tujuan Wajib diisi.',
