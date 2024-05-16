@@ -307,31 +307,6 @@
             });
         });
 
-        $(document).ready(function() {
-            $('#jenis_grading').on('change', function() {
-                let selectedJenis = $(this).val();
-                let fixHpp = parseFloat($('#fix_hpp').val()) ||
-                0; // Ambil nilai Fix hpp saat ini atau 0 jika belum diatur
-
-                // Tambahkan nilai berdasarkan jenis grading
-                if (selectedJenis.includes("VIP")) {
-                    fixHpp += 1000;
-                } else if (selectedJenis.includes("BSA")) {
-                    fixHpp += 1800;
-                } else if (selectedJenis.includes("BSB")) {
-                    fixHpp += 2200;
-                } else if (selectedJenis.includes("BSC")) {
-                    fixHpp += 3300;
-                }
-
-                $('#fix_hpp').val(fixHpp.toFixed(2)); // Set nilai Fix hpp baru, format ke 2 desimal
-
-                // Lakukan tindakan lain sesuai kebutuhan
-                // Misalnya, memperbarui nilai lain atau memicu perhitungan lain
-            });
-        });
-
-
         function hargaEstimasi() {
             // Pastikan nilai modal adalah angka
             const modal_number = parseFloat($('#modal').val());
