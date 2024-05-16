@@ -54,10 +54,12 @@
                                             <td class="text-center">{{ $PGHAS->kadar_air }}</td>
                                             <td class="text-center">{{ $PGHAS->berat_adding }}
                                             </td>
-                                            <td class="text-center">{{ $PGHAS->pcs_adding }}
+                                            {{-- <td class="text-center">{{ $PGHAS->pcs_adding }}</td> --}}
+                                            <td class="text-center">{{ number_format($PGHAS->pcs_adding, 0, ',', '.') }}
                                             </td>
                                             @role('admin')
                                                 <td class="text-center">{{ number_format($PGHAS->modal, 2, ',', '.') }}</td>
+                                                {{-- <td class="text-center">{{ $PGHAS->total_modal }}</td> --}}
                                                 <td class="text-center">{{ number_format($PGHAS->total_modal, 2, ',', '.') }}
                                                 </td>
                                             @endrole

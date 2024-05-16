@@ -115,7 +115,7 @@ class GradingHalusInputService
                             'nomor_batch'           => $mergedData['nomor_batch'],
                             'nomor_nota_internal'   => $mergedData['nomor_nota_internal'],
                             'nama_supplier'         => $mergedData['nama_supplier'],
-                            'jenis'                 => $mergedData['jenis_raw_material'],
+                            'jenis'                 => $mergedData['jenis_grading'],
                             'berat_masuk'           => $mergedData['berat_grading'] ?? 0,
                             'pcs_masuk'             => $mergedData['pcs_grading'] ?? 0,
                             'berat_keluar'          => $mergedData['berat_keluars'] ?? 0,

@@ -16,6 +16,7 @@ class GradingHalusOutput extends Model
         'jenis_job',
         'berat_job',
         'pcs_job',
+        'upah_operator',
         'tujuan_kirim',
         'keterangan',
         'nomor_job',

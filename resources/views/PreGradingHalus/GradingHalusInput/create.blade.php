@@ -14,7 +14,7 @@
                 <div class="col-md-12">
                     <div class="card border-0 shadow-sm rounded">
                         <div class="card-header">
-                            <h4>Input Data Prm Raw Material Output</h4>
+                            <h4>Input Data Grading Halus</h4>
                         </div>
                         <div class="card-body">
                             {{-- Create Data --}}
@@ -41,8 +41,11 @@
                                         <select id="nomor_grading" class="select2 form-select" name="nomor_grading">
                                             <option value="">Pilih Nomor Grading</option>
                                             @foreach ($TransitPre->sortBy('nomor_grading') as $post)
-                                                <option value="{{ $post->nomor_grading }}">
-                                                    {{ old('nomor_grading', $post->nomor_grading) }}</option>
+                                                @if ($post->berat_adding > 0)
+                                                    <option value="{{ $post->nomor_grading }}">
+                                                        {{ old('nomor_grading', $post->nomor_grading) }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -227,19 +230,8 @@
                                 <th class="text-center" scope="col">Id Box Grading Halus</th>
                                 <th class="text-center" scope="col">Susut Depan</th>
                                 <th class="text-center" scope="col">Susut Belakang</th>
-                                {{-- <th class="text-center" scope="col">Biaya Produksi</th> --}}
                                 <th class="text-center" scope="col">harga_estimasi</th>
                                 <th class="text-center" scope="col">kontribusi</th>
-                                {{-- <th class="text-center" scope="col">total_harga</th>
-                                <th class="text-center" scope="col">nilai_laba_rugi</th>
-                                <th class="text-center" scope="col">nilai_prosentase_total_keuntungan</th>
-                                <th class="text-center" scope="col">prosentase_harga_gramasi</th>
-                                <th class="text-center" scope="col">selisih_laba_rugi_kg</th>
-                                <th class="text-center" scope="col">selisih_laba_rugi_per_gram</th>
-                                <th class="text-center" scope="col">hpp</th>
-                                <th class="text-center" scope="col">total_hpp</th>
-                                <th class="text-center" scope="col">fix_hpp</th>
-                                <th class="text-center" scope="col">fix_total_hpp</th> --}}
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>

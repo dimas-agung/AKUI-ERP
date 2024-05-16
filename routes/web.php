@@ -163,7 +163,6 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_jenis_hancuran_kotor/update/{id}', 'update')->name('MasterJenisHcrKotor.update');
             Route::delete('/master_jenis_hancuran_kotor/destroy/{id}', 'destroy')->name('MasterJenisHcrKotor.destroy');
         });
-
         Route::controller(App\Http\Controllers\MasterJenisRambangController::class)->group(function () {
             Route::get('/master_jenis_rambang', 'index')->name('MasterJenisRambang.index');
             Route::post('/master_jenis_rambang/store', 'store')->name('MasterJenisRambang.store');
@@ -171,7 +170,6 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_jenis_rambang/update/{id}', 'update')->name('MasterJenisRambang.update');
             Route::delete('/master_jenis_rambang/destroy/{id}', 'destroy')->name('MasterJenisRambang.destroy');
         });
-
         Route::controller(App\Http\Controllers\MasterTujuanKirimWasteController::class)->group(function () {
             Route::get('/master_tujuan_kirim_waste', 'index')->name('MasterTujuanKirimWaste.index');
             Route::post('/master_tujuan_kirim_waste/store', 'store')->name('MasterTujuanKirimWaste.store');
@@ -419,6 +417,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/grading_halus_output/create', 'create')->name('GradingHalusOutput.create');
                 Route::get('/grading_halus_output/get_data_id_box', 'set')->name('GradingHalusOutput.set');
                 Route::get('/grading_halus_output/get_data_id_box/jenis_grading', 'setUnit')->name('GradingHalusOutput.setUnit');
+                Route::get('/grading_halus_output/get_data_id_box/jenis', 'setUpah')->name('GradingHalusOutput.setUpah');
                 Route::post('/grading_halus_output/sendData', 'sendData')->name('GradingHalusOutput.sendData');
                 Route::post('/grading_halus_output/store', 'store')->name('GradingHalusOutput.store');
                 Route::delete('/grading_halus_output/destroy/{id_box_grading_halus}', 'destroy')->name('GradingHalusOutput.destroy');

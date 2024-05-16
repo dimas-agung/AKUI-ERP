@@ -18,6 +18,7 @@ class TransitPreWash extends Model
         'jenis_job',
         'berat_job',
         'pcs_job',
+        'upah_operator_bersih',
         'tujuan_kirim',
         'keterangan',
         'modal',

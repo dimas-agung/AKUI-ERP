@@ -34,8 +34,10 @@
                                         <th scope="col" class="text-center">NIP Operator</th>
                                         <th scope="col" class="text-center">Grade Operator</th>
                                         <th scope="col" class="text-center">Nama Team Leader</th>
-                                        <th scope="col" class="text-center">Modal</th>
-                                        <th scope="col" class="text-center">Total Modal</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Status</th>
                                     </tr>
                                 </thead>
@@ -56,8 +58,10 @@
                                         <td class="text-center">{{ $TPCS->nip_operator }}</td>
                                         <td class="text-center">{{ $TPCS->grade_operator }}</td>
                                         <td class="text-center">{{ $TPCS->nama_team_leader }}</td>
-                                        <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
-                                        <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}</td>
+                                        @role('admin')
+                                            <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}</td>
+                                        @endrole
                                         <td class="text-center">{{ $TPCS->status }}</td>
                                     </tr>
                                     <?php endif; ?>

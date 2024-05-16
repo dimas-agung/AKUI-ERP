@@ -113,7 +113,7 @@
                                             readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Berat Job</label>
                                         <input type="text" id="berat_job" pattern="[0-9]*" inputmode="numeric"
@@ -122,13 +122,22 @@
                                             placeholder="Masukkan berat job" data-parsley-required="true">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Pcs Job</label>
                                         <input type="text" id="pcs_job" pattern="[0-9]*" inputmode="numeric"
                                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                             class="form-control" name="pcs_job" value="{{ old('pcs_job') }}"
                                             placeholder="Masukkan pcs job" data-parsley-required="true">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Upah Oprator</label>
+                                        <input type="hidden" id="upah" class="form-control" name="upah"
+                                            readonly>
+                                        <input type="text" id="upah_oprator" class="form-control" name="upah_oprator"
+                                            readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -177,6 +186,7 @@
                                 <th class="text-center" scope="col">Jenis Job</th>
                                 <th class="text-center" scope="col">Berat Job</th>
                                 <th class="text-center" scope="col">Pcs Job</th>
+                                <th class="text-center" scope="col">Upah Oprator</th>
                                 <th class="text-center" scope="col">Tujuan Kirim</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">Modal</th>
@@ -208,6 +218,7 @@
                 $.ajax({
                     url: "{{ route('GradingHalusOutput.set') }}",
                     method: 'GET',
+                    async: false,
                     data: {
                         id_box_grading_halus: selectedIdBox
                     },
@@ -254,7 +265,65 @@
                     }
                 });
             }
+            generateUpah()
         });
+
+        // function generateUpah() {
+        //     let jenis_job = $('#jenis_job').val();
+        //     $.ajax({
+        //         url: `{{ route('GradingHalusOutput.setUpah') }}`,
+        //         method: 'GET',
+        //         data: {
+        //             jenis: jenis_job
+        //         },
+        //         success: function(response) {
+        //             // console.log('pengurangan harga=' + response.upah_operator);
+        //             $('#upah_oprator').val(response.upah_operator);
+        //         },
+        //         error: function(error) {
+        //             console.error('Error:', error);
+        //         }
+        //     });
+        // }
+        // $(document).ready(function() {
+        //     $('#jenis_job').change(function() {
+        //         generateUpah();
+        //     });
+
+        $('#berat_job').on('input', function() {
+            calculateUpah();
+        });
+
+        function generateUpah() {
+            let jenis_job = $('#jenis_job').val();
+            $.ajax({
+                url: `{{ route('GradingHalusOutput.setUpah') }}`,
+                method: 'GET',
+                data: {
+                    jenis: jenis_job
+                },
+                success: function(response) {
+                    $('#upah').val(response.upah_operator);
+                    // calculateUpah(); // Hitung upah setelah mendapatkan upah operator
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+        function calculateUpah() {
+            let upah_operator = parseFloat($('#upah').val());
+            let berat_job = parseFloat($('#berat_job').val());
+
+            if (!isNaN(upah_operator) && !isNaN(berat_job)) {
+                let hasil_upah = upah_operator * berat_job;
+                $('#upah_oprator').val(hasil_upah.toFixed(2)); // Menampilkan hasil dengan 2 desimal
+            } else {
+                $('#upah_oprator').val('');
+            }
+        }
+        // });
 
         // Fungsi untuk menghitung total berat masuk dan pcs masuk
         function hitungTotal() {
@@ -295,23 +364,6 @@
         $('#pcs_masuk').on('input', function() {
             hitungTotal();
         });
-
-
-
-        // $('#tujuan_kirim').on('change', function() {
-        //     let selectedUnit = $(this).val();
-        //     $.ajax({
-        //         url: `{{ route('GradingHalusOutput.setUnit') }}`,
-        //         method: 'GET',
-        //         data: {
-        //             tujuan_kirim: selectedUnit
-        //         },
-        //         success: function(response) {},
-        //         error: function(error) {
-        //             console.error('Error:', error);
-        //         }
-        //     });
-        // });
 
         function generateNomorBSTB(prefix) {
             let nomor;
@@ -365,6 +417,7 @@
             var berat_masuk = $('#berat_masuk').val();
             var pcs_job = $('#pcs_job').val();
             var pcs_masuk = $('#pcs_masuk').val();
+            var upah_oprator = $('#upah_oprator').val();
             var tujuan_kirim = $('#tujuan_kirim').val();
             var keterangan = $('#keterangan').val();
             var modal = $('#modal').val();
@@ -401,6 +454,7 @@
                 '<td>' + jenis_job + '</td>' +
                 '<td>' + berat_job + '</td>' +
                 '<td>' + pcs_job + '</td>' +
+                '<td>' + upah_oprator + '</td>' +
                 '<td>' + tujuan_kirim + '</td>' +
                 '<td>' + keterangan + '</td>' +
                 '<td>' + modal + '</td>' +
@@ -421,6 +475,7 @@
                 berat_masuk: berat_masuk,
                 pcs_masuk: pcs_masuk,
                 pcs_job: pcs_job,
+                upah_operator: upah_oprator,
                 tujuan_kirim: tujuan_kirim,
                 keterangan: keterangan,
                 modal: modal,
@@ -433,6 +488,7 @@
             $('#nomor_job').val('');
             $('#berat_job').val('');
             $('#pcs_job').val('');
+            $('#upah_oprator').val('');
             $('#keterangan').val('');
             $('#modal').val('');
             $('#total_modal').val('');
@@ -444,7 +500,7 @@
             currentRowIndex++;
 
             // Kosongkan input setelah menambahkan baris
-            $('#nomor_batch, #nomor_bstb, #nomor_job, #berat_job, #pcs_job, #keterangan, #modal, #total_modal, #jenis_job, #berat_masuk, #pcs_masuk')
+            $('#nomor_batch, #nomor_bstb, #nomor_job, #berat_job, #pcs_job, #upah_oprator, #keterangan, #modal, #total_modal, #jenis_job, #berat_masuk, #pcs_masuk')
                 .val('');
             $('#tujuan_kirim').prop('selectedIndex', 0);
         }

@@ -62,6 +62,7 @@ class PreWashOutputService
                         'jenis_job'             => $mergedData['jenis_job'],
                         'berat_job'             => $mergedData['berat_job'] ?? 0,
                         'pcs_job'               => $mergedData['pcs_job'] ?? 0,
+                        'upah_operator_bersih'  => $mergedData['upah_operator_bersih'],
                         'tujuan_kirim'          => $mergedData['tujuan_kirim'],
                         'keterangan'            => $mergedData['keterangan'],
                         'modal'                 => $mergedData['modal'],

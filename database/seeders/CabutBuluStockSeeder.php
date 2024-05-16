@@ -26,7 +26,7 @@ class CabutBuluStockSeeder extends Seeder
             'keterangan' => "SP-K",
             'modal' => 1375,
             'total_modal' => 2749119,
-            'status' => "On Stock",
+            'status' => "1",
         ]);
 
         CabutBuluStock::create([
@@ -41,7 +41,7 @@ class CabutBuluStockSeeder extends Seeder
             'keterangan' => "SP-K",
             'modal' => 12671,
             'total_modal' => 760300,
-            'status' => "On Stock",
+            'status' => "2",
         ]);
 
         CabutBuluStock::create([
@@ -56,7 +56,7 @@ class CabutBuluStockSeeder extends Seeder
             'keterangan' => "K",
             'modal' => 10655,
             'total_modal' => 1438513,
-            'status' => "Finished",
+            'status' => "2",
         ]);
     }
 }
