@@ -23,31 +23,16 @@
                                         <select class="select2 form-select" style="width: 100%;" name="nomor_bstb"
                                             id="nomor_bstb" data-placeholder="Pilih Nomor BSTB">
                                             <option value="">Pilih Nomor BSTB</option>
-                                            {{-- @foreach ($transit_grading_haluses as $item)
-                                                <option value="{{ $item->nomor_bstb }}">
-                                                    {{ $item->nomor_bstb }}
-                                                </option>
-                                            @endforeach --}}
-
-                                            {{-- @if (isset($transit_grading_haluses) && is_array($transit_grading_haluses) && count($transit_grading_haluses) > 0)
-                                                @foreach ($transit_grading_haluses as $item)
-                                                    <option value="{{ $item->nomor_bstb }}">
-                                                        {{ $item->nomor_bstb }}
-                                                    </option>
-                                                @endforeach
-                                            @endif --}}
-
-                                            {{-- test --}}
                                             @php
                                                 $selectedNomorBSTB = ''; // Inisialisasi variabel untuk menyimpan nomor_bstb yang sudah ditampilkan
                                             @endphp
                                             @foreach ($transit_grading_haluses as $post)
-                                                @if ($selectedNomorBSTB != $post->nomor_bstb)
+                                                @if ($selectedNomorBSTB != $post->nomor_bstb && $post->status != 0)
                                                     @php
                                                         $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
                                                     @endphp
                                                     @foreach ($transit_grading_haluses as $innerPost)
-                                                        @if ($innerPost->nomor_bstb == $post->nomor_bstb)
+                                                        @if ($innerPost->nomor_bstb == $post->nomor_bstb && $innerPost->status != 0)
                                                             <option value="{{ $innerPost->nomor_bstb }}">
                                                                 {{ old('nomor_bstb', $innerPost->nomor_bstb) }}
                                                             </option>
@@ -91,6 +76,7 @@
                                                             <th class="text-center">Jenis Job</th>
                                                             <th class="text-center">Berat Job</th>
                                                             <th class="text-center">Pcs Job</th>
+                                                            <th class="text-center">Upah Operator</th>
                                                             <th class="text-center">Tujuan Kirim</th>
                                                             <th class="text-center">Nomor BSTB</th>
                                                             <th class="text-center">Modal</th>
@@ -135,6 +121,7 @@
                 newRow.append('<td>' + rowData.jenis_job + '</td>');
                 newRow.append('<td>' + rowData.berat_job + '</td>');
                 newRow.append('<td>' + rowData.pcs_job + '</td>');
+                newRow.append('<td>' + rowData.upah_operator + '</td>');
                 newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
                 newRow.append('<td>' + rowData.nomor_bstb + '</td>');
                 newRow.append('<td>' + rowData.modal + '</td>');
@@ -152,6 +139,7 @@
                     jenis_job: rowData.jenis_job,
                     berat_job: rowData.berat_job,
                     pcs_job: rowData.pcs_job,
+                    upah_operator: rowData.upah_operator,
                     tujuan_kirim: rowData.tujuan_kirim,
                     nomor_bstb: rowData.nomor_bstb,
                     modal: rowData.modal,
@@ -238,7 +226,8 @@
         //                 }).then((result) => {
         //                     // Jika pengguna menekan tombol "OK", refresh halaman
         //                     if (result.isConfirmed) {
-        //                         location.reload(); // Refresh halaman
+        //                         location.reload();
+        //                         // Refresh halaman
         //                     }
         //                 });
         //             } else {
