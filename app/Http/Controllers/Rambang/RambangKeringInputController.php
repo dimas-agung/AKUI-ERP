@@ -75,8 +75,8 @@ class RambangKeringInputController extends Controller
         return $this->RambangKeringInputService->store($request);
     }
 
-    // public function destroy($nomor_job)
-    // {
-    //     return $this->RambangKeringInputService->destroy($nomor_job);
-    // }
+    public function destroy($id_box_hcr_kotor)
+    {
+        return $this->RambangKeringInputService->destroy($id_box_hcr_kotor);
+    }
 }
