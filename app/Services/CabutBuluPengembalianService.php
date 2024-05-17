@@ -10,6 +10,9 @@ use App\Models\CabutBuluPenerimaan;
 use App\Models\CabutBuluPenyebaran;
 use App\Models\CabutBuluStock;
 use App\Models\TransitPreWash;
+use Carbon\Carbon;
+use DateTime;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\RedirectResponse;
@@ -54,10 +57,46 @@ class CabutBuluPengembalianService
                 ], 400);
             } else {
                 try {
+                    // Ubah format tanggal waktu_pengembalian menjadi Y-m-d H:i:s
+                    $waktuPengembalianFormatted = date("Y-m-d H:i:s", strtotime($mergedData['waktu_pengembalian']));
+
+                    // Pastikan timestamp dalam format yang benar
+                    $waktuPenyebaran = new DateTime($mergedData['waktu_penyebaran']);// Buat objek DateTime dari tanggal yang diformat
+                    $waktuPengembalian = DateTime::createFromFormat('Y-m-d H:i:s', $waktuPengembalianFormatted);
+
+                    // Jika salah satu waktu tidak valid, lempar pengecualian
+                    if (!$waktuPenyebaran || !$waktuPengembalian) {
+                        throw new Exception("Format waktu tidak valid.");
+                    }
+
+                    // Debugging: Pastikan bahwa nilai timestamp benar
+                    // if ($waktuPenyebaran >= $waktuPengembalian) {
+                    //     throw new Exception("Timestamp penyebaran harus lebih kecil dari timestamp pengembalian.");
+                    // }
+                    // Buat objek DateTime dari timestamp
+                    // $waktuPenyebaran = (new DateTime())->setTimestamp($waktuPenyebaranTimestamp);
+                    // $waktuPengembalian = (new DateTime())->setTimestamp($waktuPengembalianTimestamp);
+
+                    // Menghitung selisih waktu dalam detik
+                    $t1 = Carbon::parse($mergedData['waktu_penyebaran']);
+                    $t2 = Carbon::parse(date('Y-m-d H:i:s'));
+                    $interval = $t1->diff($t2);
+                    // $interval = $waktuPenyebaran->diff($waktuPengembalian);
+                    $selisihDetik = $interval->days * 24 * 60 * 60 + $interval->h * 60 * 60 + $interval->i * 60 + $interval->s;
+                    // $selisihDetik = $waktuPengembalianTimestamp - $waktuPenyebaranTimestamp;
+                    // Debugging: Pastikan bahwa selisih detik dihitung dengan benar
+                                // Menghitung selisih waktu dalam detik
+            // $selisihDetik = $waktuPengembalian->getTimestamp() - $waktuPenyebaran->getTimestamp();
+
+
+                    // Tambahkan selisih detik ke data yang akan disimpan
+                    $mergedData['lama_pengerjaan'] = $selisihDetik;
+
                     DB::beginTransaction();
 
                     // Buat instansi PreCleaningInput
-                    CabutBuluPengembalian::create(array_merge($mergedData, ['waktu_pengembalian' => $validatedData['waktu_pengembalian']]));
+                    // CabutBuluPengembalian::create(array_merge($mergedData, ['waktu_pengembalian' => $validatedData['waktu_pengembalian']]));
+                    CabutBuluPengembalian::create($mergedData);
 
                     TransitCabutBulu::create([
                         'workstation'           => $mergedData['workstation'] ?? 'Cleaning',
@@ -67,6 +106,7 @@ class CabutBuluPengembalianService
                         'jenis_job'             => $mergedData['jenis_job'],
                         'berat_job'             => $mergedData['berat_job'] ?? 0,
                         'pcs_job'               => $mergedData['pcs_job'] ?? 0,
+                        'upah_operator'          => $mergedData['upah_operator'] ?? 0,
                         'tujuan_kirim'          => $mergedData['tujuan_kirim'] ?? 0,
                         'keterangan'            => $mergedData['keterangan_2'] ?? 0,
                         'nama_operator'         => $mergedData['nama_operator'] ?? 0,

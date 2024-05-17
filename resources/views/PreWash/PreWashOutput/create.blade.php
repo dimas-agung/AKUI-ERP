@@ -33,10 +33,12 @@
                             data-placeholder="Pilih Operator Perendaman">
                             <option value="">Pilih Operator Perendaman</option>
                             @foreach ($MasterO->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Perendaman' && $MasterSPRM->status == 1)
-                                    <option value="{{ $MasterSPRM->nama }}">
-                                        {{ $MasterSPRM->nama }}
-                                    </option>
+                                @if ($MasterSPRM->status == 1)
+                                    @if (strpos(strtolower($MasterSPRM->job), 'perendaman') !== false)
+                                        <option value="{{ $MasterSPRM->nama }}">
+                                            {{ $MasterSPRM->nama }}
+                                        </option>
+                                    @endif
                                 @endif
                             @endforeach
                         </select>
@@ -47,10 +49,12 @@
                             data-placeholder="Pilih Operator Bilas">
                             <option value="">Pilih Operator Bilas</option>
                             @foreach ($MasterO->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Bilas' && $MasterSPRM->status == 1)
-                                    <option value="{{ $MasterSPRM->nama }}">
-                                        {{ $MasterSPRM->nama }}
-                                    </option>
+                                @if ($MasterSPRM->status == 1)
+                                    @if (strpos(strtolower($MasterSPRM->job), 'bilas') !== false)
+                                        <option value="{{ $MasterSPRM->nama }}">
+                                            {{ $MasterSPRM->nama }}
+                                        </option>
+                                    @endif
                                 @endif
                             @endforeach
                         </select>
@@ -62,10 +66,12 @@
                             data-placeholder="Pilih Operator Box">
                             <option value="">Pilih Operator Box</option>
                             @foreach ($MasterO->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Box' && $MasterSPRM->status == 1)
-                                    <option value="{{ $MasterSPRM->nama }}">
-                                        {{ $MasterSPRM->nama }}
-                                    </option>
+                                @if ($MasterSPRM->status == 1)
+                                    @if (strpos(strtolower($MasterSPRM->job), 'box') !== false)
+                                        <option value="{{ $MasterSPRM->nama }}">
+                                            {{ $MasterSPRM->nama }}
+                                        </option>
+                                    @endif
                                 @endif
                             @endforeach
                         </select>

@@ -14,7 +14,7 @@
                 </div>
                 <hr>
                 <form method="POST" class="row g-3" id="myForm">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <label for="basic-usage" class="form-label">Nomor Job</label>
                         <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             data-placeholder="Pilih Nomor Job">
@@ -35,56 +35,66 @@
                     </div>
 
                     <div class="col-md-6">
+                        <label for="user_created" class="form-label">NIP Admin</label>
+                        <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}">
+                    </div>
+
+                    <div class="col-md-4">
                         <label class="form-label">Nomor Batch</label>
                         <input type="text" class="form-control" id="nomor_batch">
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="jenis_job" class="form-label">Jenis Job</label>
                         <input type="text" class="form-control" id="jenis_job" readonly>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="berat_job" class="form-label">Berat Job</label>
                         <input type="text" class="form-control" id="berat_job" readonly>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="pcs_job" class="form-label">Pcs job</label>
                         <input type="text" class="form-control" id="pcs_job" readonly>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label for="upah_operator" class="form-label">Upah Operator</label>
+                        <input type="text" class="form-control" id="upah_operator" readonly>
+                    </div>
+
+                    <div class="col-md-4">
                         <label for="tujuan_kirim" class="form-label">Tujuan Kirim</label>
                         <input type="text" class="form-control" id="tujuan_kirim" readonly>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <input type="text" class="form-control" id="keterangan" readonly>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="modal" class="form-label">Modal</label>
                         <input type="text" class="form-control" id="modal" readonly>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="total_modal" class="form-label">Total Modal</label>
                         <input type="text" class="form-control" id="total_modal" readonly>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="total_modal" class="form-label">NIP Operator</label>
                         <input type="text" class="form-control" id="nip_operator" readonly>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="nama_operator" class="form-label">Nama Operator</label>
                         <input type="text" class="form-control" id="nama_operator" readonly>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="grade_operator" class="form-label">Grade Operator</label>
                         <input type="text" class="form-control" id="grade_operator" readonly>
                     </div>
@@ -95,12 +105,12 @@
                     </div>
 
                     <div class="col-md-6">
+                        <label for="waktu_penyebaran" class="form-label">Waktu Penyebaran</label>
+                        <input type="text" class="form-control" id="waktu_penyebaran" readonly>
+                    </div>
+                    <div class="col-md-12">
                         <label for="keterangan_2" class="form-label">Keterangan 2</label>
                         <input type="text" class="form-control" id="keterangan_2">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="user_created" class="form-label">NIP Admin</label>
-                        <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}">
                     </div>
 
 
@@ -129,6 +139,8 @@
                                 <th scope="col" class="text-center">Berat Job</th>
                                 <th scope="col" class="text-center">Pcs Job</th>
                                 <th scope="col" class="text-center">Tujuan Kirim</th>
+                                <th scope="col" class="text-center">Waktu Penyebaran</th>
+                                <th scope="col" class="text-center">Upah Operator</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
@@ -173,6 +185,8 @@
                         $('#jenis_job').val(response.jenis_job);
                         $('#berat_job').val(response.berat_job);
                         $('#pcs_job').val(response.pcs_job);
+                        $('#upah_operator').val(response.upah_operator);
+                        $('#waktu_penyebaran').val(response.waktu_penyebaran);
                         $('#tujuan_kirim').val(response.tujuan_kirim);
                         $('#modal').val(response.modal);
                         $('#keterangan').val(response.keterangan);
@@ -188,35 +202,6 @@
                 });
             });
         });
-
-        // DropDown NIP
-        // $(document).ready(function() {
-        //     let selectedNip = '';
-
-        //     $('#nip_operator').on('change', function() {
-        //         selectedNip = $(this).val();
-
-        //         $.ajax({
-        //             url: '{{ route('CabutBuluPenyebaran.setNip') }}',
-        //             method: 'GET',
-        //             data: {
-        //                 nip: selectedNip
-        //             },
-        //             success: function(response) {
-        //                 console.log(response);
-
-        //                 // Mengatur nilai Nomor Batch sesuai dengan respons dari server
-        //                 $('#nama_operator').val(response.nama);
-        //                 $('#grade_operator').val(response.grade_operator);
-        //                 $('#nama_team_leader').val(response.nama_team_leader);
-
-        //             },
-        //             error: function(error) {
-        //                 console.error('Error:', error);
-        //             }
-        //         });
-        //     });
-        // });
 
         function validateForm() {
             // Mendefinisikan variabel untuk menyimpan kolom yang belum diisi
@@ -270,6 +255,8 @@
                 let jenis_job = $('#jenis_job').val();
                 let berat_job = $('#berat_job').val();
                 let pcs_job = $('#pcs_job').val();
+                let upah_operator = $('#upah_operator').val();
+                let waktu_penyebaran = $('#waktu_penyebaran').val();
                 let tujuan_kirim = $('#tujuan_kirim').val();
                 let keterangan = $('#keterangan').val();
                 let modal = $('#modal').val();
@@ -288,6 +275,8 @@
                     `<td class="text-center">${berat_job}</td>` +
                     `<td class="text-center">${pcs_job}</td>` +
                     `<td class="text-center">${tujuan_kirim}</td>` +
+                    `<td class="text-center">${waktu_penyebaran}</td>` +
+                    `<td class="text-center">${upah_operator}</td>` +
                     `<td class="text-center">${keterangan}</td>` +
                     `<td class="text-center">${modal}</td>` +
                     `<td class="text-center">${total_modal}</td>` +
@@ -308,6 +297,8 @@
                     jenis_job: jenis_job,
                     berat_job: berat_job,
                     pcs_job: pcs_job,
+                    upah_operator: upah_operator,
+                    waktu_penyebaran: waktu_penyebaran,
                     tujuan_kirim: tujuan_kirim,
                     keterangan: keterangan,
                     modal: modal,

@@ -18,6 +18,7 @@ class TransitCabutBulu extends Model
         'berat_job',
         'pcs_job',
         'tujuan_kirim',
+        'upah_operator',
         'keterangan',
         'nama_operator',
         'nip_operator',

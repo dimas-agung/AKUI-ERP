@@ -14,16 +14,11 @@
                 </div>
                 <hr>
                 <form method="POST" class="row g-3" id="myForm">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <label for="basic-usage" class="form-label">Nomor Job</label>
                         <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
-                            {{-- @foreach ($cabut_bulu_stocks as $item)
-                                <option value="{{ $item->nomor_job }}">
-                                    {{ $item->nomor_job }}
-                                </option>
-                            @endforeach --}}
                             @foreach ($get_unused_nomor_job as $item)
                                 @if ($item->cabut_bulu_penyebaran_count == 0)
                                     <option value="{{ $item->nomor_job }}">
@@ -72,6 +67,11 @@
                     <div class="col-md-6">
                         <label for="total_modal" class="form-label">Total Modal</label>
                         <input type="text" class="form-control" id="total_modal" readonly>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="upah_operator" class="form-label">Upah Operator</label>
+                        <input type="text" class="form-control" id="upah_operator" readonly>
                     </div>
 
                     <div class="col-md-6">
@@ -186,6 +186,7 @@
                         $('#modal').val(response.modal);
                         $('#keterangan').val(response.keterangan);
                         $('#total_modal').val(response.total_modal);
+                        $('#upah_operator').val(response.upah_operator);
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -279,6 +280,7 @@
                 let keterangan = $('#keterangan').val();
                 let modal = $('#modal').val();
                 let total_modal = $('#total_modal').val();
+                let upah_operator = $('#upah_operator').val();
                 let nip_operator = $('#nip_operator').val();
                 let nama_operator = $('#nama_operator').val();
                 let grade_operator = $('#grade_operator').val();
@@ -317,6 +319,7 @@
                     keterangan: keterangan,
                     modal: modal,
                     total_modal: total_modal,
+                    upah_operator: upah_operator,
                     nip_operator: nip_operator,
                     nama_operator: nama_operator,
                     grade_operator: grade_operator,
@@ -487,15 +490,5 @@
                 });
             }
         }
-
-
-        // Variabel global untuk menyimpan indeks baris terakhir
-        // var currentRowIndex = 0;
-        // var dataStock = [];
-
-        // // Mendefinisikan array jika belum
-        // if (typeof dataArray === 'undefined') {
-        //     var dataArray = [];
-        // }
     </script>
 @endsection

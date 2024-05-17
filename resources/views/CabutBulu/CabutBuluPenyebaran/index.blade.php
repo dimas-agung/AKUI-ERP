@@ -37,6 +37,7 @@
                                         @role('admin')
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
+                                            <th scope="col" class="text-center">Upah Operator</th>
                                         @endrole
                                         <th scope="col" class="text-center">Waktu Penyebaran</th>
                                         <th scope="col" class="text-center">Nama Operator</th>
@@ -65,6 +66,8 @@
                                             @role('admin')
                                                 <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
                                                 <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">{{ number_format($item->upah_operator, 2, ',', '.') }}
                                                 </td>
                                             @endrole
                                             <td class="text-center">{{ $item->waktu_penyebaran }}</td>
