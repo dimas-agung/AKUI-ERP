@@ -26,9 +26,9 @@
                         </h5>
                     </div>
                     {{-- Modal Tambah --}}
-                    <div class="modal fade text-left modal-borderless modal-lg modal-dialog-scrollable" id="inlineForm"
-                        tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal fade text-left modal-borderless modal-lg" id="inlineForm" tabindex="-1"
+                        role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header bg-primary">
                                     <h4 class="modal-title white" id="myModalLabel33">Input Data Master Operator</h4>
