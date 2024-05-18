@@ -209,6 +209,59 @@
         let selectedNomorBSTB = '';
         var beratMasukAwal = 0;
         var pcsMasukAwal = 0;
+
+        function generateNomorBSTB(prefix, tujuan_kirim) {
+            let nomor;
+
+            const now = new Date();
+            const tahun = now.getFullYear().toString().substr(-2);
+            const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+            const tanggal = ('0' + now.getDate()).slice(-2);
+            const jam = ('0' + now.getHours()).slice(-2);
+            const menit = ('0' + now.getMinutes()).slice(-2);
+            const detik = ('0' + now.getSeconds()).slice(-2);
+
+            // Menentukan postfix berdasarkan tujuan kirim
+            let postfix = '';
+            if (tujuan_kirim === 'AKUI') {
+                postfix = '_A_UGH';
+            } else if (tujuan_kirim === 'OBI') {
+                postfix = '_O_UGH';
+            }
+
+            // Menambahkan prefix yang sesuai
+            if (prefix === 'BSTB') {
+                nomor = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}${postfix}`;
+            } else {
+                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}${postfix}`;
+            }
+
+            return nomor;
+        }
+
+        // Contoh penggunaan:
+        console.log(generateNomorBSTB('BSTB',
+            'AKUI')); // Output: BSTB_180524-134530_A_UGH (tanggal dan waktu tergantung saat dijalankan)
+        console.log(generateNomorBSTB('BSTB',
+            'OBI')); // Output: BSTB_180524-134530_B_UGH (tanggal dan waktu tergantung saat dijalankan)
+        console.log(generateNomorBSTB('',
+            'AKUI')); // Output: 180524-134530_A_UGH (tanggal dan waktu tergantung saat dijalankan)
+        console.log(generateNomorBSTB('',
+            'OBI')); // Output: 180524-134530_B_UGH (tanggal dan waktu tergantung saat dijalankan)
+
+        function checkAndGenerateNomorBSTB() {
+            const tujuanKirim = $('#tujuan_kirim').val();
+            const idBoxGradingHalus = $('#id_box_grading_halus').val();
+
+            if (tujuanKirim && idBoxGradingHalus) {
+                const generatedNomorBSTB = generateNomorBSTB('BSTB', tujuanKirim);
+                $('#nomor_bstb').val(generatedNomorBSTB);
+
+                const generatedNomorJob = generateNomorBSTB('JOB', tujuanKirim);
+                $('#nomor_job').val(generatedNomorJob);
+            }
+        }
+
         $('#id_box_grading_halus').on('change', function() {
             let selectedIdBox = $(this).val();
             if (selectedNomorBSTB !== selectedIdBox) {
@@ -250,13 +303,15 @@
                         $('#pcs_masuk').val(totalPcsMasuk);
                         pcsMasukAwal += totalPcsMasuk
 
-                        // Memanggil generateNomorBSTB dan mengatur nilai sesuai dengan respons dari server
-                        let generatedNomorBSTB = generateNomorBSTB(
-                            'BSTB'); // Memanggil generateNomorBSTB dengan prefix 'BSTB'
-                        let generatedNomorJob = generateNomorBSTB(
-                            'JOB'); // Memanggil generateNomorBSTB dengan prefix 'JOB'
-                        $('#nomor_bstb').val(generatedNomorBSTB);
-                        $('#nomor_job').val(generatedNomorJob);
+                        // // Memanggil generateNomorBSTB dan mengatur nilai sesuai dengan respons dari server
+                        // let generatedNomorBSTB = generateNomorBSTB(
+                        //     'BSTB'); // Memanggil generateNomorBSTB dengan prefix 'BSTB'
+                        // let generatedNomorJob = generateNomorBSTB(
+                        //     'JOB'); // Memanggil generateNomorBSTB dengan prefix 'JOB'
+                        // $('#nomor_bstb').val(generatedNomorBSTB);
+                        // $('#nomor_job').val(generatedNomorJob);
+
+                        checkAndGenerateNomorBSTB();
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -265,28 +320,6 @@
             }
             generateUpah()
         });
-
-        // function generateUpah() {
-        //     let jenis_job = $('#jenis_job').val();
-        //     $.ajax({
-        //         url: `{{ route('GradingHalusOutput.setUpah') }}`,
-        //         method: 'GET',
-        //         data: {
-        //             jenis: jenis_job
-        //         },
-        //         success: function(response) {
-        //             // console.log('pengurangan harga=' + response.upah_operator);
-        //             $('#upah_oprator').val(response.upah_operator);
-        //         },
-        //         error: function(error) {
-        //             console.error('Error:', error);
-        //         }
-        //     });
-        // }
-        // $(document).ready(function() {
-        //     $('#jenis_job').change(function() {
-        //         generateUpah();
-        //     });
 
         $('#berat_job').on('input', function() {
             calculateUpah();
@@ -363,26 +396,9 @@
             hitungTotal();
         });
 
-        function generateNomorBSTB(prefix) {
-            let nomor;
-
-            const now = new Date();
-            const tahun = now.getFullYear().toString().substr(-2);
-            const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
-            const tanggal = ('0' + now.getDate()).slice(-2);
-            const jam = ('0' + now.getHours()).slice(-2);
-            const menit = ('0' + now.getMinutes()).slice(-2);
-            const detik = ('0' + now.getSeconds()).slice(-2);
-
-            // Menambahkan prefix yang sesuai
-            if (prefix === 'BSTB') {
-                nomor = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_A_UGH`;
-            } else {
-                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_A_UGH`;
-            }
-
-            return nomor;
-        }
+        $('#tujuan_kirim').on('change', function() {
+            checkAndGenerateNomorBSTB();
+        });
 
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;
