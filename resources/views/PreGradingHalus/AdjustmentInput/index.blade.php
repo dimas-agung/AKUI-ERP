@@ -30,7 +30,7 @@
                                         <th scope="col" class="text-center">ID Box Grading Halus</th>
                                         <th scope="col" class="text-center">Nomor Adjustment</th>
                                         <th scope="col" class="text-center">Nomor Batch</th>
-                                        <th scope="col" class="text-center">Nomor Adding</th>
+                                        <th scope="col" class="text-center">Berat Adding</th>
                                         <th scope="col" class="text-center">Pcs Adding</th>
                                         <th scope="col" class="text-center">Jenis Adjustment</th>
                                         <th scope="col" class="text-center">Berat Adjustment</th>
@@ -67,89 +67,79 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($adjustment_inputs as $ADJI)
+                                    @forelse ($adjustment_inputs as $item)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $ADJI->id_box_grading_halus }}</td>
-                                            <td class="text-center">{{ $ADJI->nomor_adjustment }}</td>
-                                            <td class="text-center">{{ $ADJI->nomor_batch }}</td>
-                                            <td class="text-center">{{ $ADJI->berat_adding }}
+                                            <td class="text-center">{{ $item->id_box_grading_halus }}</td>
+                                            <td class="text-center">{{ $item->nomor_adjustment }}</td>
+                                            <td class="text-center">{{ $item->nomor_batch }}</td>
+                                            <td class="text-center">{{ $item->berat_adding }}
                                             </td>
-                                            <td class="text-center">{{ $ADJI->pcs_adding }}</td>
-                                            <td class="text-center">{{ $ADJI->jenis_adjustment }}</td>
+                                            <td class="text-center">{{ $item->pcs_adding }}</td>
+                                            <td class="text-center">{{ $item->jenis_adjustment }}</td>
                                             <td class="text-center">
-                                                {{ $ADJI->berat_adjustment }}</td>
-                                            <td class="text-center">{{ $ADJI->pcs_adjustment }}
+                                                {{ $item->berat_adjustment }}</td>
+                                            <td class="text-center">{{ $item->pcs_adjustment }}
                                             </td>
-                                            <td class="text-center">{{ $ADJI->keterangan }}</td>
+                                            <td class="text-center">{{ $item->keterangan }}</td>
                                             @role('admin')
-                                                <td class="text-center">{{ number_format($ADJI->modal, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($ADJI->total_modal, 2, ',', '.') }}
+                                                <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
                                                 </td>
                                             @endrole
-                                            <td class="text-center">{{ $ADJI->kategori_susut }}</td>
+                                            <td class="text-center">{{ $item->kategori_susut }}</td>
                                             @role('admin')
-                                                <td class="text-center">{{ number_format($ADJI->susut_depan, 2, ',', '.') }}
+                                                <td class="text-center">{{ number_format($item->susut_depan, 2, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($ADJI->susut_belakang, 2, ',', '.') }}
+                                                    {{ number_format($item->susut_belakang, 2, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($ADJI->biaya_produksi, 2, ',', '.') }}
+                                                    {{ number_format($item->biaya_produksi, 2, ',', '.') }}
                                                 </td>
-                                                <td class="text-center">{{ number_format($ADJI->kontribusi, 2, ',', '.') }}
-                                                </td>
-                                                <td class="text-center">
-                                                    {{ number_format($ADJI->harga_estimasi, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($ADJI->total_harga, 2, ',', '.') }}
+                                                <td class="text-center">{{ number_format($item->kontribusi, 2, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($ADJI->nilai_laba_rugi, 2, ',', '.') }}</td>
-                                                <td class="text-center">
-                                                    {{ number_format($ADJI->nilai_prosentase_total_keuntungan, 2, ',', '.') }}
+                                                    {{ number_format($item->harga_estimasi, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($item->total_harga, 2, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($ADJI->nilai_dikurangi_keuntungan, 2, ',', '.') }}</td>
+                                                    {{ number_format($item->nilai_laba_rugi, 2, ',', '.') }}</td>
                                                 <td class="text-center">
-                                                    {{ number_format($ADJI->prosentase_harga_gramasi, 2, ',', '.') }}</td>
-                                                <td class="text-center">
-                                                    {{ number_format($ADJI->selisih_laba_rugi_kg, 2, ',', '.') }}</td>
-                                                <td class="text-center">
-                                                    {{ number_format($ADJI->selisih_laba_rugi_per_gram, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($ADJI->hpp, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($ADJI->total_hpp, 2, ',', '.') }}
+                                                    {{ number_format($item->nilai_prosentase_total_keuntungan, 2, ',', '.') }}
                                                 </td>
-                                                <td class="text-center">{{ number_format($ADJI->fix_hpp, 2, ',', '.') }}
+                                                <td class="text-center">
+                                                    {{ number_format($item->nilai_dikurangi_keuntungan, 2, ',', '.') }}</td>
+                                                <td class="text-center">
+                                                    {{ number_format($item->prosentase_harga_gramasi, 2, ',', '.') }}</td>
+                                                <td class="text-center">
+                                                    {{ number_format($item->selisih_laba_rugi_kg, 2, ',', '.') }}</td>
+                                                <td class="text-center">
+                                                    {{ number_format($item->selisih_laba_rugi_per_gram, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($item->hpp, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($item->total_hpp, 2, ',', '.') }}
                                                 </td>
-                                                <td class="text-center">{{ number_format($ADJI->fix_total_hpp, 2, ',', '.') }}
+                                                <td class="text-center">{{ number_format($item->fix_hpp, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">{{ number_format($item->fix_total_hpp, 2, ',', '.') }}
                                                 </td>
                                             @endrole
-                                            <td class="text-center">{{ $ADJI->user_created }}</td>
-                                            <td class="text-center">{{ $ADJI->user_updated }}</td>
-                                            <td class="text-center">{{ $ADJI->created_at }}</td>
+                                            <td class="text-center">{{ $item->user_created }}</td>
+                                            <td class="text-center">{{ $item->user_updated }}</td>
+                                            <td class="text-center">{{ $item->created_at }}</td>
                                             <td class="text-center">
-                                                {{ $ADJI->created_at != $ADJI->updated_at ? $ADJI->updated_at : '' }}
+                                                {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $ADJI->id }}"
-                                                        action="{{ route('GradingHalusAdjustmentInput.destroy', $ADJI->id) }}"
+                                                    <form style="display: flex" id="deleteForm{{ $item->id }}"
+                                                        action="{{ route('GradingHalusAdjustmentInput.destroy', $item->id) }}"
                                                         method="POST">
-                                                        {{-- <a href="{{ route('AdjustmentInput.show', $ADJI->id) }}"
-                                                            class="btn btn-link" title="View"
-                                                            data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a> --}}
                                                         @csrf
                                                         @method('DELETE')
-                                                        {{-- <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $ADJI->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button> --}}
                                                         <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $ADJI->id }})">
+                                                            onclick="confirmDelete({{ $item->id }})">
                                                             <i class="bi bi-trash3 text-danger"></i>
                                                         </button>
                                                     </form>

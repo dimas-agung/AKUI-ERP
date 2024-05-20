@@ -93,7 +93,7 @@ class GradingHalusAdjustmentAddingService
             'pcs_adding'                => $item->pcs_adding,
             'modal'                     => $item->modal,
             'total_modal'               => $item->total_modal,
-            'user_created'              => $item->user_created,
+            'user_created'              => $item->user_created ?? "There isn't any",
         ]);
     }
 
