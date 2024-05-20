@@ -23,24 +23,23 @@
                                 <th class="text-center" scope="col">Unit</th>
                                 <th class="text-center" scope="col">Nomor Job</th>
                                 <th class="text-center" scope="col">Nomor Batch</th>
-                                <th class="text-center">Jenis Job</th>
-                                <th class="text-center">Berat Job</th>
-                                <th class="text-center">Pcs Job</th>
-                                <th class="text-center">Tujuan Kirim</th>
+                                <th class="text-center" scope="col">Jenis Job</th>
+                                <th class="text-center" scope="col">Berat Job</th>
+                                <th class="text-center" scope="col">Pcs Job</th>
+                                <th class="text-center" scope="col">Tujuan Kirim</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 @role('admin')
-                                    <th class="text-center">Modal</th>
-                                    <th class="text-center">Total Modal</th>
+                                    <th class="text-center" scope="col">Modal</th>
+                                    <th class="text-center" scope="col">Total Modal</th>
+                                    <th class="text-center" scope="col">Upah Operator</th>
                                 @endrole
                                 <th class="text-center" scope="col">Status</th>
-                                <th class="text-center" scope="col">NIP Admin</th>
-                                {{-- <th class="text-center">Action</th> --}}
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($CBPenerimaan as $item)
+                            @forelse ($cabut_bulu_stock as $item)
                                 <tr>
-                                    <td class="text-center">{{ $i++ }}</td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
                                     <td class="text-center">{{ $item->workstation }}</td>
                                     <td class="text-center">{{ $item->unit }}</td>
                                     <td class="text-center">{{ $item->nomor_job }}</td>
@@ -50,8 +49,11 @@
                                     <td class="text-center">{{ $item->pcs_job }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
-                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                    @role('admin')
+                                        <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($item->upah_operator, 2, ',', '.') }}</td>
+                                    @endrole
                                     <td>
                                         @if ($item->status == 1)
                                             On Stock
@@ -63,7 +65,6 @@
                                             Unknown Status
                                         @endif
                                     </td>
-                                    <td class="text-center">{{ $item->user_created }}</td>
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">

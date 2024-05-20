@@ -58,19 +58,14 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex"
-                                                        id="deleteForm{{ $item->id_box_hcr_kotor }}"
-                                                        action="{{ route('RambangKeringInput.destroy', $item->id_box_hcr_kotor) }}"
+                                                    <form style="display: flex" id="deleteForm{{ $item->id }}"
+                                                        action="{{ route('RambangKeringInput.destroy', $item->id) }}"
                                                         method="POST">
-                                                        {{-- <a href="{{ route('RambangKeringInput.show', $item->id_box_hcr_kotor) }}"
-                                                            class="btn btn-link" title="View" data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a> --}}
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
-                                                            onclick="confirmDelete('{{ $item->id_box_hcr_kotor }}')">
+                                                            onclick="confirmDelete('{{ $item->id }}')">
                                                             <i class="bi bi-trash3 text-danger"></i>
                                                         </button>
                                                     </form>

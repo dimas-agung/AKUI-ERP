@@ -8,20 +8,13 @@ use Illuminate\Http\Request;
 
 class CabutBuluStockController extends Controller
 {
-<<<<<<< HEAD
-    public function index()
-    {
-        $i = 1;
-=======
+
     public function index(){
         $i =1;
->>>>>>> dev-al
-        $CBPenerimaan = CabutBuluStock::get();
-
+        $cabut_bulu_stock = CabutBuluStock::get();
 
         return response()->view('CabutBulu.CabutBuluStock.index', [
-            'CBPenerimaan' => $CBPenerimaan,
-            'i' => $i,
+            'cabut_bulu_stock' => $cabut_bulu_stock,
         ]);
     }
 }

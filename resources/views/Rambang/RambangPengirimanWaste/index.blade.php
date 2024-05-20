@@ -1,9 +1,9 @@
 @extends('layouts.master1')
 @section('menu')
-    Cabut Bulu
+    Rambang
 @endsection
 @section('title')
-    Cabut Bulu Penyebaran
+    Rambang Pengiriman Waste
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Cabut Bulu Penyebaran
+                                Data Rambang Pengiriman Waste
                                 <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
                                             class="bi bi-plus-circle"></i></strong>
@@ -27,24 +27,11 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Nomor Job</th>
-                                        <th scope="col" class="text-center">Nomor Batch</th>
-                                        <th scope="col" class="text-center">Jenis Job</th>
-                                        <th scope="col" class="text-center">Berat Job</th>
-                                        <th scope="col" class="text-center">Pcs Job</th>
-                                        <th scope="col" class="text-center">Tujuan Kirim</th>
+                                        <th scope="col" class="text-center">Id Box Hancuran Kotor</th>
+                                        <th scope="col" class="text-center">Jenis Rambang</th>
+                                        <th scope="col" class="text-center">Berat</th>
+                                        <th scope="col" class="text-center">Nomor BSTB</th>
                                         <th scope="col" class="text-center">Keterangan</th>
-                                        @role('admin')
-                                            <th scope="col" class="text-center">Modal</th>
-                                            <th scope="col" class="text-center">Total Modal</th>
-                                            <th scope="col" class="text-center">Upah Operator</th>
-                                        @endrole
-                                        <th scope="col" class="text-center">Waktu Penyebaran</th>
-                                        <th scope="col" class="text-center">Nama Operator</th>
-                                        <th scope="col" class="text-center">Nip Operator</th>
-                                        <th scope="col" class="text-center">Grade Operator</th>
-                                        <th scope="col" class="text-center">Nama Team Leader</th>
-                                        <th scope="col" class="text-center">Keterangan 2</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
@@ -53,29 +40,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($cabut_bulu_penyebarans as $item)
+                                    @forelse ($rambang_pengiriman_waste as $item)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $item->nomor_job }}</td>
-                                            <td class="text-center">{{ $item->nomor_batch }}</td>
-                                            <td class="text-center">{{ $item->jenis_job }}</td>
-                                            <td class="text-center">{{ $item->berat_job }}</td>
-                                            <td class="text-center">{{ $item->pcs_job }}</td>
-                                            <td class="text-center">{{ $item->tujuan_kirim }}</td>
+                                            <td class="text-center">{{ $item->id_box_hcr_kotor }}</td>
+                                            <td class="text-center">{{ $item->jenis_rambang }}</td>
+                                            <td class="text-center">{{ $item->berat }}</td>
+                                            <td class="text-center">{{ $item->nomor_bstb }}</td>
                                             <td class="text-center">{{ $item->keterangan }}</td>
-                                            @role('admin')
-                                                <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
-                                                </td>
-                                                <td class="text-center">{{ number_format($item->upah_operator, 2, ',', '.') }}
-                                                </td>
-                                            @endrole
-                                            <td class="text-center">{{ $item->waktu_penyebaran }}</td>
-                                            <td class="text-center">{{ $item->nama_operator }}</td>
-                                            <td class="text-center">{{ $item->nip_operator }}</td>
-                                            <td class="text-center">{{ $item->grade_operator }}</td>
-                                            <td class="text-center">{{ $item->nama_team_leader }}</td>
-                                            <td class="text-center">{{ $item->keterangan_2 }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>
                                             <td class="text-center">{{ $item->created_at }}</td>
@@ -84,18 +56,14 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
-                                                        action="{{ route('CabutBuluPenyebaran.destroy', $item->nomor_job) }}"
+                                                    <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
+                                                        action="{{ route('RambangPengirimanWaste.destroy', $item->nomor_bstb) }}"
                                                         method="POST">
-                                                        {{-- <a href="{{ route('CabutBuluPenyebaran.show', $item->nomor_job) }}"
-                                                            class="btn btn-link" title="View" data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a> --}}
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
-                                                            onclick="confirmDelete('{{ $item->nomor_job }}')">
+                                                            onclick="confirmDelete('{{ $item->nomor_bstb }}')">
                                                             <i class="bi bi-trash3 text-danger"></i>
                                                         </button>
                                                     </form>
@@ -104,7 +72,7 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Cabut Bulu Penyebaran belum Tersedia.
+                                            Data Rambang Pengiriman Waste belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -119,7 +87,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ route('CabutBuluPenyebaran.create') }}";
+            window.location.href = "{{ route('RambangPengirimanWaste.create') }}";
         }
 
         function confirmDelete(id) {

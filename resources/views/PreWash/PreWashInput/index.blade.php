@@ -29,6 +29,7 @@
                                 <th class="text-center" scope="col">Jenis Job</th>
                                 <th class="text-center" scope="col">Berat Job</th>
                                 <th class="text-center" scope="col">Pcs Job</th>
+                                <th class="text-center" scope="col">Upah Operator</th>
                                 <th class="text-center" scope="col">Tujuan Kirim</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">Nomor BSTB</th>
@@ -52,6 +53,7 @@
                                     <td class="text-center">{{ $item->jenis_job }}</td>
                                     <td class="text-center">{{ number_format($item->berat_job, 0, ',', '.') }}</td>
                                     <td class="text-center">{{ number_format($item->pcs_job, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->upah_operator, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
                                     <td class="text-center">{{ $item->nomor_bstb }}</td>
@@ -66,16 +68,13 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                action="{{ route('PreWashInput.destroy', $item->id) }}" method="POST">
-                                                {{-- <a href="{{ route('PreWashInput.show', $item->id) }}" class="btn btn-link"
-                                                    title="View" data-original-title="View">
-                                                    <i class="bi bi-eye"></i>
-                                                </a> --}}
+                                            <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
+                                                action="{{ route('PreWashInput.destroy', $item->nomor_bstb) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn btn-link" data-original-title="Remove"
-                                                    onclick="confirmDelete({{ $item->id }})">
+                                                    onclick="confirmDelete('{{ $item->nomor_bstb }}')">
                                                     <i class="bi bi-trash3 text-danger"></i>
                                                 </button>
                                             </form>

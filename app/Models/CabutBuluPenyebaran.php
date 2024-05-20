@@ -19,6 +19,7 @@ class CabutBuluPenyebaran extends Model
         'keterangan',
         'modal',
         'total_modal',
+        'upah_operator',
         'waktu_penyebaran',
         'nama_operator',
         'nip_operator',

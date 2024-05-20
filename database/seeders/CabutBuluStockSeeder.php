@@ -22,11 +22,12 @@ class CabutBuluStockSeeder extends Seeder
             'jenis_job' => "PT-1-VIP-PK",
             'berat_job' => 200,
             'pcs_job' => 31,
+            'upah_operator' => 5000,
             'tujuan_kirim' => "Akui",
             'keterangan' => "SP-K",
             'modal' => 1375,
             'total_modal' => 2749119,
-            'status' => "1",
+            'status' => 1,
         ]);
 
         CabutBuluStock::create([
@@ -37,11 +38,12 @@ class CabutBuluStockSeeder extends Seeder
             'jenis_job' => "PT-1-BSC-PK",
             'berat_job' => 60,
             'pcs_job' => 7,
+            'upah_operator' => 6000,
             'tujuan_kirim' => "Akui",
             'keterangan' => "SP-K",
             'modal' => 12671,
             'total_modal' => 760300,
-            'status' => "2",
+            'status' => 1,
         ]);
 
         CabutBuluStock::create([
@@ -52,11 +54,12 @@ class CabutBuluStockSeeder extends Seeder
             'jenis_job' => "PT-3-BSA-PK",
             'berat_job' => 135,
             'pcs_job' => 1,
+            'upah_operator' => 7000,
             'tujuan_kirim' => "Akui",
             'keterangan' => "K",
             'modal' => 10655,
             'total_modal' => 1438513,
-            'status' => "2",
+            'status' => 1,
         ]);
     }
 }

@@ -78,7 +78,7 @@ class RambangKeringInputService
                         // Update data dengan nilai baru
                         $existingItem->update([
                             'berat_keluar'      => $itemObject->berat_basah,
-                            'sisa_berat'        => $existingItem->berat_masuk - $existingItem->berat_keluar,
+                            'sisa_berat'        => 0,
                             // 'user_updated' => $itemObject->user_created ?? " ",
                         ]);
                     }
@@ -104,44 +104,114 @@ class RambangKeringInputService
         ], 201);
     }
 
-    // public function destroy($nomor_job)
+    public function destroy($id_box_hcr_kotor)
+    {
+        try {
+            // Begin transaction
+            DB::beginTransaction();
+            // Temukan record berdasarkan ID
+            $PreCleaningOutput = RambangKeringInput::findOrFail($id_box_hcr_kotor);
+            // Hapus semua item terkait
+            $stockPRM = RambangKeringStock::where('id_box_hcr_kotor', '=', $PreCleaningOutput->id_box_hcr_kotor)
+                // ->where('jenis_rambang', $PreCleaningOutput->jenis_rambang)
+                ->first();
+
+            if ($stockPRM) {
+                // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
+                if ($stockPRM->berat_keluar === 0) {
+                    $stockPRM->delete();
+                } else {
+                    // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
+                    if ($PreCleaningOutput->berat_kering >= $stockPRM->berat_keluar) {
+                        $stockPRM->delete();
+                    } else {
+                    }
+                }
+            }
+
+            $existingItems = RambangBasahStock::where('id_box_hcr_kotor', $PreCleaningOutput->id_box_hcr_kotor)
+                ->where('jenis_rambang', $PreCleaningOutput->jenis_rambang)
+                ->get();
+
+            // Logika Update Status
+            foreach ($existingItems as $existingItem) {
+
+                // Perbarui data untuk setiap item yang ada
+                if ($existingItem) {
+                    $beratSebelumnya = $existingItem->berat_keluar;
+                    // $sisaBerat = $existingItem->berat_keluar - $PreCleaningOutput->berat_kirim;
+
+                    // Hitung total modal baru berdasarkan perbedaan berat
+                    $perbedaanBerat = $beratSebelumnya - $PreCleaningOutput->berat_basah;
+                    $sisaBerat = $existingItem->berat_keluar - $perbedaanBerat;
+
+                    $existingItem->update(['berat_keluar'   => $perbedaanBerat]);
+                    $existingItem->update(['sisa_berat'     => $sisaBerat]);
+                }
+
+                // Hapus record utama
+                $PreCleaningOutput->delete();
+
+                // Jika tidak ada kesalahan, komit transaksi
+                DB::commit();
+
+                return redirect()->route('RambangKeringInput.index')->with('success', 'Data berhasil dihapus');
+            }
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, rollback transaksi
+            DB::rollback();
+
+            return redirect()->route('RambangKeringInput.index')->with('error', 'Gagal menghapus data');
+        }
+    }
+
+    // public function destroy($id_box_hcr_kotor)
     // {
     //     try {
-    //         // Gunakan transaksi database untuk memastikan konsistensi
+    //         // Mulai transaksi
     //         DB::beginTransaction();
 
-    //         // Ambil data PreCleaningInput berdasarkan nomor_job
-    //         $CabutBuluPenyebaran = RambangKeringInput::where('nomor_job', '=', $nomor_job)->get();
+    //         // Temukan record berdasarkan ID
+    //         $PreCleaningOutput = RambangKeringInput::findOrFail($id_box_hcr_kotor);
 
-    //         if ($CabutBuluPenyebaran->isEmpty()) {
-    //             // Redirect ke index dengan pesan error jika data tidak ditemukan
-    //             return redirect()->route('CabutBuluPenyebaran.index')->with(['error' => 'Data tidak ditemukan!']);
-    //         }
+    //         // Hapus semua item terkait di tabel RambangKeringStock
+    //         $stockPRM = RambangKeringStock::where('id_box_hcr_kotor', $PreCleaningOutput->id_box_hcr_kotor)
+    //             ->where('jenis_rambang', $PreCleaningOutput->jenis_rambang)
+    //             ->first();
 
-    //         foreach ($CabutBuluPenyebaran as $cabutPenyebaran) {
-    //             // Hapus data PreGradingHalusInput
-    //             $cabutPenyebaran->delete();
-
-    //             // Perbarui status PreCleaningOutput jika ada
-    //             $CabutBuluStock = CabutBuluStock::where('nomor_job', '=', $nomor_job)->get();
-
-    //             foreach ($CabutBuluStock as $cabutStock) {
-    //                 // Update status menjadi 1 pada CabutBuluStock
-    //                 $cabutStock->update(['status' => 1]);
+    //         if ($stockPRM) {
+    //             if ($stockPRM->berat_keluar === 0 || $PreCleaningOutput->berat_kering >= $stockPRM->berat_keluar) {
+    //                 $stockPRM->delete();
     //             }
     //         }
 
-    //         // Commit transaksi
+    //         // Ambil dan perbarui data terkait di tabel RambangBasahStock
+    //         $existingItems = RambangBasahStock::where('id_box_hcr_kotor', $PreCleaningOutput->id_box_hcr_kotor)
+    //             ->where('jenis_rambang', $PreCleaningOutput->jenis_rambang)
+    //             ->get();
+
+    //         foreach ($existingItems as $existingItem) {
+    //             if ($existingItem) {
+    //                 $beratSebelumnya = $existingItem->berat_keluar;
+    //                 $perbedaanBerat = $beratSebelumnya - $PreCleaningOutput->berat_basah;
+    //                 $sisaBerat = $existingItem->berat_keluar - $perbedaanBerat;
+
+    //                 $existingItem->update(['berat_keluar' => $perbedaanBerat, 'sisa_berat' => $sisaBerat]);
+    //             }
+    //         }
+
+    //         // Hapus record utama
+    //         $PreCleaningOutput->delete();
+
+    //         // Komit transaksi jika tidak ada kesalahan
     //         DB::commit();
 
-    //         // Redirect ke index dengan pesan sukses
-    //         return redirect()->route('CabutBuluPenyebaran.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    //         return redirect()->route('RambangKeringInput.index')->with('success', 'Data berhasil dihapus');
     //     } catch (\Exception $e) {
     //         // Rollback transaksi jika terjadi kesalahan
     //         DB::rollback();
 
-    //         // Redirect ke index dengan pesan error
-    //         return redirect()->route('CabutBuluPenyebaran.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+    //         return redirect()->route('RambangKeringInput.index')->with('error', 'Gagal menghapus data');
     //     }
     // }
 }

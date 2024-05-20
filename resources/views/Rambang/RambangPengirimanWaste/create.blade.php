@@ -1,62 +1,69 @@
 @extends('layouts.master1')
 @section('menu')
-    Pre-Wash
+    Rambang
 @endsection
 @section('title')
-    Data Pre-Wash Input
+    Data Rambang Pengiriman Waste
 @endsection
 @section('content')
     <div class="container">
         <div class="card border border-primary border-3 mt-2">
-            <form action="{{ route('PreCleaningInput.store') }}" method="POST">
+            <form action="{{ route('RambangPengirimanWaste.store') }}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card border-0 shadow-sm rounded">
                             <div class="card-header">
-                                <h4>Input Data Pre Wash Input</h4>
+                                <h4>Input Data Rambang Pengiriman Waste</h4>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="basic-usage" class="form-label">Nomor BSTB</label>
-                                        <select class="select2 form-select" style="width: 100%;" name="nomor_bstb"
-                                            id="nomor_bstb" data-placeholder="Pilih Nomor BSTB">
-                                            <option value="">Pilih Nomor BSTB</option>
+                                    <div class="col-md-6">
+                                        <label for="basic-usage" class="form-label">Id Box Hancuran Kotor</label>
+                                        <select class="select2 form-select" style="width: 100%;" name="id_box_hcr_kotor"
+                                            id="id_box_hcr_kotor" data-placeholder="Pilih Id Box Hancuran Kotor">
+                                            <option value="">Pilih Id Box Hancuran Kotor</option>
                                             @php
-                                                $selectedNomorBSTB = ''; // Inisialisasi variabel untuk menyimpan nomor_bstb yang sudah ditampilkan
+                                                $selectedIdBoxHcrKotor = ''; // Inisialisasi variabel untuk menyimpan id_box_hcr_kotor yang sudah ditampilkan
                                             @endphp
-                                            @foreach ($transit_grading_haluses as $post)
-                                                @if ($selectedNomorBSTB != $post->nomor_bstb && $post->status != 0)
+                                            @foreach ($rambang_kering_stock as $post)
+                                                @if ($selectedIdBoxHcrKotor != $post->id_box_hcr_kotor)
                                                     @php
                                                         $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
                                                     @endphp
-                                                    @foreach ($transit_grading_haluses as $innerPost)
-                                                        @if ($innerPost->nomor_bstb == $post->nomor_bstb && $innerPost->status != 0)
-                                                            <option value="{{ $innerPost->nomor_bstb }}">
-                                                                {{ old('nomor_bstb', $innerPost->nomor_bstb) }}
+                                                    @foreach ($rambang_kering_stock as $innerPost)
+                                                        @if ($innerPost->id_box_hcr_kotor == $post->id_box_hcr_kotor && $innerPost->sisa_berat != 0)
+                                                            <option value="{{ $innerPost->id_box_hcr_kotor }}">
+                                                                {{ old('id_box_hcr_kotor', $innerPost->id_box_hcr_kotor) }}
                                                             </option>
                                                         @endif
                                                     @endforeach
                                                     @php
-                                                        $selectedNomorBSTB = $post->nomor_bstb; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
+                                                        $selectedIdBoxHcrKotor = $post->id_box_hcr_kotor; // Set nilai variabel dengan id_box_hcr_kotor yang baru ditampilkan
                                                     @endphp
                                                 @endif
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>NIP Admin</label>
-                                            <input type="text" id="user_created" class="form-control" name="user_created"
-                                                value="{{ auth()->user()->nip }}" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Keterangan</label>
                                             <input type="text" id="keterangan" class="form-control" name="keterangan"
                                                 placeholder="Masukkan keterangan">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nomor BSTB</label>
+                                            <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
+                                                placeholder="Masukkan nomor_bstb">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>NIP Admin</label>
+                                            <input type="text" id="user_created" class="form-control" name="user_created"
+                                                value="{{ auth()->user()->nip }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -70,17 +77,10 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center">No</th>
-                                                            <th class="text-center">Nomor Job</th>
-                                                            <th class="text-center">Nomor Batch</th>
-                                                            {{-- <th class="text-center">Status</th> --}}
-                                                            <th class="text-center">Jenis Job</th>
-                                                            <th class="text-center">Berat Job</th>
-                                                            <th class="text-center">Pcs Job</th>
-                                                            <th class="text-center">Upah Operator</th>
-                                                            <th class="text-center">Tujuan Kirim</th>
-                                                            <th class="text-center">Nomor BSTB</th>
-                                                            <th class="text-center">Modal</th>
-                                                            <th class="text-center">Total Modal</th>
+                                                            <th class="text-center">Id Box Hancuran Kotor</th>
+                                                            <th class="text-center">Jenis Rambang</th>
+                                                            <th class="text-center">Berat</th>
+                                                            {{-- <th class="text-center">Nomor BSTB</th> --}}
                                                         </tr>
                                                     </thead>
                                                     <tbody id="tableBody">
@@ -91,7 +91,7 @@
                                         <div class="col-md-12 text-end">
                                             {{-- <a href="#" class="btn btn-primary" onclick="CeksendData()">Simpan</a> --}}
                                             <a href="#" class="btn btn-primary" onclick="sendData()">Simpan</a>
-                                            <a href="{{ Route('PreWashInput.index') }}" type="button"
+                                            <a href="{{ Route('RambangPengirimanWaste.index') }}" type="button"
                                                 class="btn btn-danger" data-dismiss="modal">Close</a>
                                         </div>
                                     </div>
@@ -107,7 +107,7 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            dataArray = []; // letiabel untuk menampung semua data
+            dataArray = []; // variabel untuk menampung semua data
 
             function addDataToTable(rowData, rowCount) {
                 let newRow = $('<tr>');
@@ -115,56 +115,58 @@
                 // Tambahkan nomor urut sebagai kolom pertama
                 newRow.append('<td>' + rowCount + '</td>');
                 // Tambahkan kolom-kolom sesuai kebutuhan
-                newRow.append('<td>' + rowData.nomor_job + '</td>');
-                newRow.append('<td>' + rowData.nomor_batch + '</td>');
-                // newRow.append('<td>' + rowData.status + '</td>');
-                newRow.append('<td>' + rowData.jenis_job + '</td>');
-                newRow.append('<td>' + rowData.berat_job + '</td>');
-                newRow.append('<td>' + rowData.pcs_job + '</td>');
-                newRow.append('<td>' + rowData.upah_operator + '</td>');
-                newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
-                newRow.append('<td>' + rowData.nomor_bstb + '</td>');
-                newRow.append('<td>' + rowData.modal + '</td>');
-                newRow.append('<td>' + rowData.total_modal + '</td>');
+                newRow.append('<td>' + rowData.id_box_hcr_kotor + '</td>');
+                newRow.append('<td>' + rowData.jenis_rambang + '</td>');
+                newRow.append('<td>' + rowData.sisa_berat + '</td>');
 
                 // Tambahkan baris ke dalam tabel
                 $('#tableBody').append(newRow);
 
-                // Tambahkan rowData ke dalam letiabel allData
-                // allData.push(data);
+                // Tambahkan rowData ke dalam variabel allData
                 dataArray.push({
-                    nomor_job: rowData.nomor_job,
-                    nomor_batch: rowData.nomor_batch,
-                    status: rowData.status,
-                    jenis_job: rowData.jenis_job,
-                    berat_job: rowData.berat_job,
-                    pcs_job: rowData.pcs_job,
-                    upah_operator: rowData.upah_operator,
-                    tujuan_kirim: rowData.tujuan_kirim,
-                    nomor_bstb: rowData.nomor_bstb,
-                    modal: rowData.modal,
-                    total_modal: rowData.total_modal,
+                    id_box_hcr_kotor: rowData.id_box_hcr_kotor,
+                    jenis_rambang: rowData.jenis_rambang,
+                    berat: rowData.sisa_berat,
                 });
 
                 // Tampilkan data yang disimpan ke dalam konsol
-                // console.log("Data yang disimpan:", allData);
+                console.log("Data yang disimpan: ", dataArray);
             }
-            console.log("Data yang disimpan: ", dataArray);
 
-            $('#nomor_bstb').on('change', function() {
-                let selectedNomorBSTB = $(this).val();
-                if (selectedNomorBSTB) {
+            function generateNomorBSTB() {
+                const now = new Date();
+                const tahun = now.getFullYear().toString().substr(-2);
+                const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+                const tanggal = ('0' + now.getDate()).slice(-2);
+                const jam = ('0' + now.getHours()).slice(-2);
+                const menit = ('0' + now.getMinutes()).slice(-2);
+                const detik = ('0' + now.getSeconds()).slice(-2);
+
+                const nomorBSTB = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_AKI_URB`;
+
+                return nomorBSTB;
+            }
+
+            $('#id_box_hcr_kotor').on('change', function() {
+                let selectedIdBoxHcr = $(this).val();
+                if (selectedIdBoxHcr) {
+                    // Generate nomor BSTB
+                    const nomorBstb = generateNomorBSTB();
+
+                    // Display nomor BSTB
+                    $('#nomor_bstb').val(nomorBstb);
+
                     $.ajax({
-                        url: `{{ route('PreWashInput.set') }}`,
+                        url: `{{ route('RambangPengirimanWaste.set') }}`,
                         method: 'GET',
                         data: {
-                            nomor_bstb: selectedNomorBSTB
+                            id_box_hcr_kotor: selectedIdBoxHcr
                         },
                         success: function(response) {
                             console.log(response);
                             // Bersihkan tabel sebelum menambahkan data baru
                             $('#tableBody').empty();
-                            // Reset letiabel allData
+                            // Reset variabel allData
                             dataArray = [];
                             let rowCount = 1;
                             response.forEach(function(data) {
@@ -179,20 +181,23 @@
                 }
             });
 
-            // Mendapatkan semua nomor_bstb yang unik
-            let uniqueNomorBSTB = [];
-            $('#nomor_bstb option').each(function() {
-                if ($.inArray(this.value, uniqueNomorBSTB) === -1) {
-                    uniqueNomorBSTB.push(this.value);
+            // Mendapatkan semua id_box yang unik
+            let uniqueIdBox = [];
+            $('#id_box_hcr_kotor option').each(function() {
+                if ($.inArray(this.value, uniqueIdBox) === -1) {
+                    uniqueIdBox.push(this.value);
                 }
             });
 
             // Menghapus opsi yang ada dan menambahkan opsi yang unik ke dalam select dropdown
-            $('#nomor_bstb').empty();
-            uniqueNomorBSTB.forEach(function(nomor_bstb) {
-                $('#nomor_bstb').append('<option value="' + nomor_bstb + '">' + nomor_bstb + '</option>');
+            $('#id_box_hcr_kotor').empty();
+            uniqueIdBox.forEach(function(id_box_hcr_kotor) {
+                $('#id_box_hcr_kotor').append('<option value="' + id_box_hcr_kotor + '">' +
+                    id_box_hcr_kotor + '</option>');
             });
         });
+
+
 
         // function CeksendData() {
         //     let i = 0;
@@ -205,7 +210,7 @@
 
         //     // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
         //     $.ajax({
-        //         url: `{{ route('PreWashInput.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
+        //         url: `{{ route('RambangPengirimanWaste.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
         //         method: 'POST',
         //         data: {
         //             nomorBSTB: JSON.stringify(nomorBSTB),
@@ -226,8 +231,7 @@
         //                 }).then((result) => {
         //                     // Jika pengguna menekan tombol "OK", refresh halaman
         //                     if (result.isConfirmed) {
-        //                         location.reload();
-        //                         // Refresh halaman
+        //                         location.reload(); // Refresh halaman
         //                     }
         //                 });
         //             } else {
@@ -248,10 +252,11 @@
         function sendData() {
             // let doc_no = $('#doc_no').val() || '';
             let keterangan = $('#keterangan').val() || '';
+            let nomor_bstb = $('#nomor_bstb').val() || '';
 
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: '{{ route('PreWashInput.store') }}',
+                url: '{{ route('RambangPengirimanWaste.store') }}',
                 method: 'POST',
                 beforeSend: function() {
                     Swal.fire({
@@ -267,6 +272,7 @@
                     let postData = {
                         dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
                         // doc_no: doc_no,
+                        nomor_bstb: $('#nomor_bstb').val() || '',
                         user_created: $('#user_created').val() || '',
                         user_updated: $('#user_createds').val() || '',
                         _token: '{{ csrf_token() }}'
@@ -275,6 +281,7 @@
                     // Hanya mengirim keterangan jika memiliki nilai
                     if (keterangan.trim() !== '') {
                         postData.keterangan = keterangan;
+                        postData.nomor_bstb = nomor_bstb;
                     }
 
                     return postData;
