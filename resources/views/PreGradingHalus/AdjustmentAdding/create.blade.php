@@ -15,23 +15,22 @@
                 <hr>
                 <form method="POST" class="row g-3" id="myForm">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="basic-usage" class="form-label">ID Box Grading Halus</label>
-                            <select class="select2 form-select" style="width: 100%;" name="id_box_grading_halus"
-                                id="id_box_grading_halus" placeholder="Pilih ID Box Grading Halus">
-                                <option value="">Pilih ID Box Grading Halus</option>
-                                @foreach ($grading_halus_stocks as $GradingHS)
-                                    <option value="{{ $GradingHS->id_box_grading_halus }}">
-                                        {{ $GradingHS->id_box_grading_halus }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <label for="basic-usage" class="form-label">ID Box Grading Halus</label>
+                        <select class="select2 form-select" style="width: 100%;" name="id_box_grading_halus"
+                            id="id_box_grading_halus" data-placeholder="Pilih ID Box Grading Halus">
+                            <option value="">Pilih ID Box Grading Halus</option>
+                            @foreach ($grading_halus_stocks as $item)
+                                @if ($item->sisa_berat != 0)
+                                    <option value="{{ $item->id_box_grading_halus }}">
+                                        {{ $item->id_box_grading_halus }}</option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Plant</label>
                         <select class="select2 form-select" style="width: 100%;" name="plant" id="plant"
-                            placeholder="Pilih ID Box Grading Halus">
+                            data-placeholder="Pilih Plant">
                             <option value="">Pilih Plant</option>
                             @foreach ($perusahaan as $Perusahaans)
                                 <option value="{{ $Perusahaans->plant }}">
@@ -82,7 +81,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="user_created" class="form-label">NIP Admin</label>
-                        <input type="text" class="form-control" id="user_created">
+                        <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}">
                     </div>
                     <div class="col-md-3">
                         <label for="modal" class="form-label">Modal</label>

@@ -59,15 +59,15 @@ class GradingHalusAdjustmentAddingController extends Controller
         }
     }
 
-    //Hapus Data
+    // Hapus Data
     public function destroy($id, GradingHalusAdjustmentAddingService $GradingHalusAdjustmentAddingService)
     {
-        $result = $GradingHalusAdjustmentAddingService->hapus($id);
+        $result = $GradingHalusAdjustmentAddingService->destroy($id);
 
         if ($result['success']) {
             return redirect()->route('GradingHalusAdjustmentAdding.index')->with('success', 'Data berhasil dihapus');
         } else {
-            return redirect()->route('GradingHalusAdjustmentAdding.index')->with('error', 'Gagal menghapus data');
+            return redirect()->route('GradingHalusAdjustmentAdding.index')->with('error', 'Gagal menghapus data: ' . $result['error']);
         }
     }
 }

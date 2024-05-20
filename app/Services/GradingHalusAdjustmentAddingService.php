@@ -65,14 +65,19 @@ class GradingHalusAdjustmentAddingService
         $gradingHalusStock = GradingHalusStock::where('id_box_grading_halus', $item->id_box_grading_halus)
             ->where('nomor_batch', $item->nomor_batch)
             ->first();
-
         if ($gradingHalusStock) {
-            $gradingHalusStock->berat_keluar += $item->berat_adding;
-            $gradingHalusStock->pcs_keluar += $item->pcs_adding;
-            $gradingHalusStock->sisa_berat -= $item->berat_adding;
-            $gradingHalusStock->sisa_pcs -= $item->pcs_adding;
-            $gradingHalusStock->modal;
-            $gradingHalusStock->total_modal;
+            $berat_keluar_baru = $gradingHalusStock->berat_keluar + $item->berat_adding;
+            $pcs_keluar_baru = $gradingHalusStock->pcs_keluar + $item->pcs_adding;
+            $sisa_berat_baru = $gradingHalusStock->sisa_berat - $item->berat_adding;
+            $sisa_pcs_baru = $gradingHalusStock->sisa_pcs - $item->pcs_adding;
+            $total_modal_baru = $gradingHalusStock->modal * $sisa_berat_baru;
+
+            $gradingHalusStock->berat_keluar = $berat_keluar_baru;
+            $gradingHalusStock->pcs_keluar = $pcs_keluar_baru;
+            $gradingHalusStock->sisa_berat = $sisa_berat_baru;
+            $gradingHalusStock->sisa_pcs = $sisa_pcs_baru;
+            $gradingHalusStock->total_modal = $total_modal_baru;
+
             $gradingHalusStock->save();
         } else {
             // Jika tidak ada data, Anda bisa menambahkan logika untuk menangani kasus ini
@@ -92,35 +97,71 @@ class GradingHalusAdjustmentAddingService
         ]);
     }
 
-    public function hapus($id)
+    public function destroy($id)
     {
         try {
+            // Mulai transaksi
             DB::beginTransaction();
 
-            // Ambil data yang akan dihapus
-            $adjustment = GradingHalusAdjustmentAdding::findOrFail($id);
+            // Temukan record berdasarkan id
+            $GradingHalusAdjustmentAdding = GradingHalusAdjustmentAdding::findOrFail($id);
 
-            // Hapus data dari GradingHalusAdjustmentAdding
-            $adjustment->delete();
+            // Hapus semua item terkait
+            $stockPRM = GradingHalusAdjustmentStock::where('nomor_adjustment', '=', $GradingHalusAdjustmentAdding->nomor_adjustment)
+                ->where('nomor_batch', $GradingHalusAdjustmentAdding->nomor_batch)
+                ->first();
 
-            // Hapus data terkait dari GradingHalusAdjustmentStock
-            GradingHalusAdjustmentStock::where('nomor_adjustment', $adjustment->nomor_adjustment)
-                ->where('nomor_batch', $adjustment->nomor_batch)
-                ->delete();
+            if ($stockPRM) {
+                // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
+                if ($stockPRM->status === 1) {
+                    $stockPRM->delete();
+                } else {
+                    // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
+                    if ($GradingHalusAdjustmentAdding->berat_adding >= $stockPRM->berat_masuk) {
+                        $stockPRM->delete();
+                    }
+                }
+            }
 
+            $existingItems = GradingHalusStock::where('id_box_grading_halus', $GradingHalusAdjustmentAdding->id_box_grading_halus)
+                ->where('nomor_batch', $GradingHalusAdjustmentAdding->nomor_batch)
+                ->get();
+
+            // Logika Update Status
+            foreach ($existingItems as $existingItem) {
+                if ($existingItem) {
+                    $beratSebelumnya = $existingItem->berat_keluar;
+                    $pcsSebelumnya = $existingItem->pcs_keluar;
+
+                    $perbedaanBerat = $beratSebelumnya - $GradingHalusAdjustmentAdding->berat_adding;
+                    $perbedaanPcs = $pcsSebelumnya - $GradingHalusAdjustmentAdding->pcs_adding;
+                    $sisaBerat = $existingItem->berat_masuk - $perbedaanBerat;
+                    $sisaPcs = $existingItem->pcs_masuk - $perbedaanPcs;
+                    $totalModalBaru = $sisaBerat * $GradingHalusAdjustmentAdding->modal;
+
+                    $existingItem->update([
+                        'berat_keluar' => $perbedaanBerat,
+                        'sisa_berat' => $sisaBerat,
+                        'pcs_keluar' => $perbedaanPcs,
+                        'sisa_pcs' => $sisaPcs,
+                        'total_modal' => $totalModalBaru,
+                        'status' => 1,
+                    ]);
+                }
+            }
+
+            // Hapus record utama
+            $GradingHalusAdjustmentAdding->delete();
+
+            // Jika tidak ada kesalahan, komit transaksi
             DB::commit();
 
-            return [
-                'success' => true,
-                'message' => 'Data berhasil dihapus!',
-            ];
+            return ['success' => true];
         } catch (\Exception $e) {
-            DB::rollBack();
+            // Jika terjadi kesalahan, rollback transaksi
+            DB::rollback();
 
-            return [
-                'success' => false,
-                'error' => 'Gagal menghapus data. ' . $e->getMessage(),
-            ];
+            return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 }
