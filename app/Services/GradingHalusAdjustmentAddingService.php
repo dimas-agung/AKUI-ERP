@@ -72,7 +72,7 @@ class GradingHalusAdjustmentAddingService
             $gradingHalusStock->sisa_berat -= $item->berat_adding;
             $gradingHalusStock->sisa_pcs -= $item->pcs_adding;
             $gradingHalusStock->modal;
-            $gradingHalusStock->total_modal;
+            $gradingHalusStock->total_modal = $gradingHalusStock->sisa_berat* $gradingHalusStock->modal;
             $gradingHalusStock->save();
         } else {
             // Jika tidak ada data, Anda bisa menambahkan logika untuk menangani kasus ini
@@ -107,7 +107,22 @@ class GradingHalusAdjustmentAddingService
             GradingHalusAdjustmentStock::where('nomor_adjustment', $adjustment->nomor_adjustment)
                 ->where('nomor_batch', $adjustment->nomor_batch)
                 ->delete();
-
+            $gradingHalusStock = GradingHalusStock::where('id_box_grading_halus', $adjustment->id_box_grading_halus)
+                ->where('nomor_batch', $adjustment->nomor_batch)
+                ->first();
+    
+            if ($gradingHalusStock) {
+                $gradingHalusStock->berat_keluar -= $adjustment->berat_adding;
+                $gradingHalusStock->pcs_keluar -= $adjustment->pcs_adding;
+                $gradingHalusStock->sisa_berat += $adjustment->berat_adding;
+                $gradingHalusStock->sisa_pcs += $adjustment->pcs_adding;
+                $gradingHalusStock->modal;
+                $gradingHalusStock->total_modal = $gradingHalusStock->sisa_berat* $gradingHalusStock->modal;
+                $gradingHalusStock->save();
+            } else {
+                // Jika tidak ada data, Anda bisa menambahkan logika untuk menangani kasus ini
+                // Misalnya, memunculkan pesan kesalahan atau menambahkan data baru jika dibutuhkan.
+            }
             DB::commit();
 
             return [

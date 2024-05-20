@@ -65,13 +65,13 @@
                                     <div class="form-group">
                                         <label>Nomor BSTB</label>
                                         <input type="text" class="form-control" id="nomor_bstb" name="nomor_bstb"
-                                            readonly>
+                                            >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nomor Job</label>
-                                        <input type="text" class="form-control" id="nomor_job" name="nomor_job" readonly>
+                                        <input type="text" class="form-control" id="nomor_job" name="nomor_job" >
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -445,7 +445,14 @@
                 });
                 return;
             }
-
+            generateQrCode(nomor_job)
+            let cetak_keterangan = keterangan == ''? '' :'('+keterangan+')';
+            $('#cetak_nomor_batch').html(nomor_batch)
+            $('#cetak_nomor_job').html(nomor_job)
+            $('#cetak_jenis').html(jenis_job+cetak_keterangan)
+            $('#cetak_gramasi').html(Math.floor(berat_job-(berat_job*0.15)))
+            $('#cetak_pcs').html(pcs_job)
+            window.print();
             var newRow = '<tr>' +
                 '<td>' + id_box_grading_halus + '</td>' +
                 '<td>' + nomor_batch + '</td>' +
@@ -484,7 +491,8 @@
             });
             // Membersihkan nilai input setelah ditambahkan
             $('#nomor_batch').val('');
-            $('#nomor_bstb').val('');
+            // $('#nomor_bstb').val('');
+            $('#nomor_bstb').prop('readonly', true);
             $('#nomor_job').val('');
             $('#berat_job').val('');
             $('#pcs_job').val('');
@@ -494,15 +502,16 @@
             $('#total_modal').val('');
             $('#id_box_grading_halus').val($('#id_box_grading_halus').val()).trigger('change');
             $('#user_created').prop('readonly', true);
-            $('#tujuan_kirim').val($('#tujuan_kirim option:first').val());
+            // $('#tujuan_kirim').val($('#tujuan_kirim option:first').val());
+            $('#tujuan_kirim').attr("disabled", true);
 
             // Update indeks baris terakhir
             currentRowIndex++;
 
             // Kosongkan input setelah menambahkan baris
-            $('#nomor_batch, #nomor_bstb, #nomor_job, #berat_job, #pcs_job, #upah_oprator, #keterangan, #modal, #total_modal, #jenis_job, #berat_masuk, #pcs_masuk')
-                .val('');
-            $('#tujuan_kirim').prop('selectedIndex', 0);
+            // $('#nomor_batch, #nomor_bstb, #nomor_job, #berat_job, #pcs_job, #upah_oprator, #keterangan, #modal, #total_modal, #jenis_job, #berat_masuk, #pcs_masuk')
+            //     .val('');
+            // $('#tujuan_kirim').prop('selectedIndex', 0);
         }
 
 
@@ -637,4 +646,37 @@
             }
         }
     </script>
+@endsection
+@section('printArea')
+    <style>
+        @media print {
+            body {
+            visibility: hidden;
+            /* display: none; */
+            /* position: relative; */
+            }
+            #printableArea1 {
+            visibility: visible;
+            /* display: inline; */
+            position: absolute;
+            left: 0;
+            top: 0;
+            /* bottom: 0; */
+            /* right: 0; */
+            }
+            .no-print {
+                display: none; /* Menyembunyikan elemen dengan class "no-print" saat mencetak */
+            }
+        }
+    </style>
+    <div class="row" id="printableArea1" style="max-width: 200px;margin: 10px;">
+
+        <div id="qrcode" class="col" style="max-width: 70px;padding-right:0;padding-left:0;"></div>
+        <div class="col" style="font-size: 9px;width: 220px;padding-right:0;padding-left:0;" >
+            <span style="text-align: center;font-weight: bold;;font-size:10px;" id="cetak_nomor_batch">1234567890</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;"  id="cetak_nomor_job">010324-083609_AKI_ugk</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_jenis">PT12</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_gramasi">100</span><span style="font-family:Calibri;font-weight: bold;font-size:10px;" >gr / </span><span style="font-family:Calibri;font-weight: bold;font-size:10px;"   id="cetak_pcs">20</span><span style="font-family:Calibri;font-weight: bold;font-size:10px;" >pcs</span>
+        </div>
+    </div>
 @endsection

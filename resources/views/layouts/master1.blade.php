@@ -476,24 +476,24 @@
                                         </a>
                                         <ul class="submenu submenu-level-2">
                                             <li class="submenu-item {{ Route::is('InputHcrKotor*') ? 'active' : '' }}">
-                                                <a href="{{ route('InputHcrKotor.index') }}" class="submenu-link">Input
-                                                    Hcr <br>Kotor</a>
+                                                {{-- <a href="{{ route('InputHcrKotor.index') }}" class="submenu-link">Input
+                                                    Hcr <br>Kotor</a> --}}
                                             </li>
                                             <li class="submenu-item {{ Route::is('StockHcrKotor*') ? 'active' : '' }}">
-                                                <a href="{{ route('StockHcrKotor.index') }}" class="submenu-link">Stock
-                                                    Hcr <br>Kotor</a>
+                                                {{-- <a href="{{ route('StockHcrKotor.index') }}" class="submenu-link">Stock
+                                                    Hcr <br>Kotor</a> --}}
                                             </li>
                                             <li
                                                 class="submenu-item {{ Route::is('InputRambangBasah*') ? 'active' : '' }}">
-                                                <a href="{{ route('InputRambangBasah.index') }}"
+                                                {{-- <a href="{{ route('InputRambangBasah.index') }}"
                                                     class="submenu-link">Input
-                                                    Rembang <br>Basah</a>
+                                                    Rembang <br>Basah</a> --}}
                                             </li>
                                             <li
                                                 class="submenu-item {{ Route::is('StockRambangBasah*') ? 'active' : '' }}">
-                                                <a href="{{ route('StockRambangBasah.index') }}"
+                                                {{-- <a href="{{ route('StockRambangBasah.index') }}"
                                                     class="submenu-link">Stock
-                                                    Rembang <br>Basah</a>
+                                                    Rembang <br>Basah</a> --}}
                                             </li>
                                         </ul>
                                     </li>

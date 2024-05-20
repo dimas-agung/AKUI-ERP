@@ -513,7 +513,13 @@
                 });
                 return;
             }
-
+            generateQrCode(id_box_grading_halus)
+            $('#cetak_nomor_batch').html(nomor_batch)
+            // $('#cetak_nomor_job').html(nomor_job)
+            $('#cetak_jenis').html(jenis_grading)
+            // $('#cetak_gramasi').html(berat_keluar)
+            // $('#cetak_pcs').html(pcs_keluar)
+            window.print();
             var newRow = '<tr>' +
                 '<td>' + nomor_grading + '</td>' +
                 '<td>' + id_box_raw_material + '</td>' +
@@ -767,4 +773,37 @@
             }
         }
     </script>
+@endsection
+@section('printArea')
+    <style>
+        @media print {
+            body {
+            visibility: hidden;
+            /* display: none; */
+            /* position: relative; */
+            }
+            #printableArea1 {
+            visibility: visible;
+            /* display: inline; */
+            position: absolute;
+            left: 0;
+            top: 0;
+            /* bottom: 0; */
+            /* right: 0; */
+            }
+            .no-print {
+                display: none; /* Menyembunyikan elemen dengan class "no-print" saat mencetak */
+            }
+        }
+    </style>
+    <div class="row" id="printableArea1" style="max-width: 200px;margin: 10px;">
+
+        <div id="qrcode" class="col" style="max-width: 70px;padding-right:0;padding-left:0;"></div>
+        <div class="col" style="font-size: 9px;width: 220px;padding-right:0;padding-left:0;" >
+            <span style="text-align: center;font-weight: bold;;font-size:10px;" id="cetak_nomor_batch">1234567890</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_jenis">PT12</span><br>
+            {{-- <span style="font-family:Calibri;font-weight: bold;font-size:10px;"  id="cetak_nomor_job">010324-083609_AKI_ugk</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_gramasi">100</span><span style="font-family:Calibri;font-weight: bold;font-size:10px;" >gr / </span><span style="font-family:Calibri;font-weight: bold;font-size:10px;"   id="cetak_pcs">20</span><span style="font-family:Calibri;font-weight: bold;font-size:10px;" >pcs</span> --}}
+        </div>
+    </div>
 @endsection
