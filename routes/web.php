@@ -471,10 +471,10 @@ Route::middleware('auth')->group(function (){
                 Route::get('/cabut_hancuran_persiapan/show/{id}', 'show')->name('CabutHancuranPersiapan.show');
                 Route::get('/cabut_hancuran_persiapan/edit/{id}', 'edit')->name('CabutHancuranPersiapan.edit');
                 Route::put('/cabut_hancuran_persiapan/update/{id}', 'update')->name('CabutHancuranPersiapan.update');
-                Route::delete('/cabut_hancuran_persiapan/destroy/{nomor_bstb}', 'destroy')->name('CabutHancuranPersiapan.destroy');
-                Route::get('/cabut_hancuran_persiapan/get_data_nomor_job', 'set')->name('CabutHancuranPersiapan.set');
+                Route::delete('/cabut_hancuran_persiapan/destroy/{id_stock_hcr_kotor}', 'destroy')->name('CabutHancuranPersiapan.destroy');
+                Route::get('/cabut_hancuran_persiapan/get_data_id_box_hcr_kotor', 'set')->name('CabutHancuranPersiapan.set');
                 Route::post('/cabut_hancuran_persiapan/simpanData', 'simpanData')->name('CabutHancuranPersiapan.simpanData');
-                Route::post('/cabut_hancuran_persiapan/cek_data', 'CeksendData')->name('CabutHancuranPersiapan.CeksendData');
+                Route::post('/cabut_hancuran_persiapan/sendData', 'sendData')->name('CabutHancuranPersiapan.sendData');
             });
 
             Route::controller(App\Http\Controllers\CabutHancuran\CabutHancuranPersiapanStockController::class)->group(function () {

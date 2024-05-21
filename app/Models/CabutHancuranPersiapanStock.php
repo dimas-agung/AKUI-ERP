@@ -13,7 +13,6 @@ class CabutHancuranPersiapanStock extends Model
         'nomor_job',
         'jenis_rambang',
         'upah_operator',
-        'id_stock_hcr_kotor',
         'berat_masuk',
         'berat_keluar',
         'sisa_berat',

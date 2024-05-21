@@ -377,7 +377,7 @@
                                 </ul>
                             </li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*', 'CabutBuluPenerimaan*', 'CabutBuluStock*', 'CabutBuluPenyebaran*', 'CabutBuluPengembalian*', 'TransitCabutBulu*', 'InputHcrKotor*', 'StockHcrKotor*', 'InputRambangBasah*', 'StockRambangBasah*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*', 'CabutBuluPenerimaan*', 'CabutBuluStock*', 'CabutBuluPenyebaran*', 'CabutBuluPengembalian*', 'TransitCabutBulu*', 'InputHcrKotor*', 'StockHcrKotor*', 'InputRambangBasah*', 'StockRambangBasah*', 'CabutHancuranPersiapan*', 'CabutHancuranPersiapanStock*', 'CabutHancuranPenyebaran*', 'CabutHancuranPengembalian*', 'TransitCabutHancuran*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Cleaning</span>
@@ -449,6 +449,51 @@
                                                 <a href="{{ route('StockRambangBasah.index') }}"
                                                     class="submenu-link">Stock
                                                     Rembang <br>Basah</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('StockRambangBasah*', 'CabutHancuranPersiapan*', 'CabutHancuranPersiapanStock*', 'CabutHancuranPenyebaran*', 'CabutHancuranPengembalian*', 'TransitCabutHancuran*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Cabut Hancuran</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('StockRambangBasah*') ? 'active' : '' }}">
+                                                <a href="{{ route('StockRambangBasah.index') }}"
+                                                    class="submenu-link">Stock
+                                                    Rembang <br>Basah</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutHancuranPersiapan*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutHancuranPersiapan.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Hancuran Persiapan</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutHancuranPersiapanStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutHancuranPersiapanStock.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Hancuran Persiapan Stock</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutHancuranPenyebaran*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutHancuranPenyebaran.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Hancuran
+                                                    <br>Penyebaran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutHancuranPengembalian*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutHancuranPengembalian.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Hancuran <br> Pengembalian</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitCabutHancuran*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitCabutHancuran.index') }}"
+                                                    class="submenu-link">Transit Cabut
+                                                    Hancuran</a>
                                             </li>
                                         </ul>
                                     </li>

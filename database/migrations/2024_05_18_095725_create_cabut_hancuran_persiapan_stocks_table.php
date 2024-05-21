@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nomor_job');
             $table->string('jenis_rambang');
             $table->string('upah_operator');
-            $table->string('id_stock_hcr_kotor');
             $table->float('berat_masuk');
             $table->float('berat_keluar');
             $table->float('sisa_berat');
