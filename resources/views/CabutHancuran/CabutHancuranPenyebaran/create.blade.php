@@ -154,7 +154,7 @@
                 selectedNip = $(this).val();
 
                 $.ajax({
-                    url: '{{ route('CabutBuluPenyebaran.setNip') }}',
+                    url: '{{ route('CabutHancuranPenyebaran.setNip') }}',
                     method: 'GET',
                     data: {
                         nip: selectedNip
