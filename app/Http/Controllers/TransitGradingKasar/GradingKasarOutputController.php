@@ -12,6 +12,7 @@ use App\Http\Requests\GradingKasarOutputRequest;
 use App\Models\GradingKasarHasil;
 use App\Models\GradingKasarStock;
 use App\Models\MasterTujuanKirimRawMaterial;
+use App\Models\MasterTujuanKirimGradingKasar;
 //return type redirectResponse
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -35,13 +36,14 @@ class GradingKasarOutputController extends Controller
     public function create()
     {
         $GradingKO = GradingKasarOutput::with('GradingKasarStock')->get();
-        $MasTujKir = MasterTujuanKirimRawMaterial::with('PrmRawMaterialOutputItem')->get();
+        $MasTujKir = MasterTujuanKirimGradingKasar::all();
         $GradingKS = GradingKasarStock::with('GradingKasarOutput')->get();
         // return $data;
 
         return view('transit_grading.GradingKasarOutput.create', compact('GradingKO', 'GradingKS', 'MasTujKir'));
     }
 
+    
     public function set(Request $request)
     {
         $id_box_grading_kasar = $request->id_box_grading_kasar;

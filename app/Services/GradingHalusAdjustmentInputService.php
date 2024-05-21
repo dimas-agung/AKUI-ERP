@@ -6,6 +6,7 @@ use App\Models\MasterJenisGradingHalus;
 use App\Models\PreGradingHalusAddingStock;
 use Illuminate\Http\Request;
 use App\Models\GradingHalusAdjustmentInput;
+use App\Models\GradingHalusAdjustmentStock;
 use App\Models\GradingHalusStock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -127,8 +128,19 @@ class GradingHalusAdjustmentInputService
                             'user_updated'          => $mergedData['user_updated'] ?? "There isn't any",
                         ]);
                     }
+                    $adjustemnt_stock = GradingHalusAdjustmentStock::where('nomor_adjustment', $mergedData['nomor_adjustment'])
+                    ->first();
+                    if ($adjustemnt_stock) {
+                        // Update existing grading data
 
+                      
+                        $adjustemnt_stock->update([
+
+                            'status'=> 0,
+                        ]);
+                    }
                     DB::commit();
+                   
                 } catch (\Exception $e) {
                     DB::rollBack();
 
@@ -229,6 +241,17 @@ class GradingHalusAdjustmentInputService
                     $gradingHalusStock->sisa_berat -= $data->berat_adjustment ?? 0;
                     $gradingHalusStock->sisa_pcs -= $data->pcs_adjustment ?? 0;
                     $gradingHalusStock->save();
+                }
+                $adjustemnt_stock = GradingHalusAdjustmentStock::where('nomor_adjustment', $data->nomor_adjustment)
+                ->first();
+                if ($adjustemnt_stock) {
+                    // Update existing grading data
+
+                  
+                    $adjustemnt_stock->update([
+
+                        'status'=> 1,
+                    ]);
                 }
             } else {
                 // Jika data tidak ditemukan, langsung hapus dari GradingHalusAdjustmentInput
