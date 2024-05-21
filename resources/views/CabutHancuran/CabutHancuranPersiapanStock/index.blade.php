@@ -1,16 +1,16 @@
 @extends('layouts.master1')
 @section('menu')
-    Cabut Bulu
+    Cabut Bulu Hancuran
 @endsection
 @section('title')
-    Cabut Bulu Stock
+    Cabut Bulu Hancuran Persiapan Stock
 @endsection
 @section('content')
     <div class="section">
         <div class="card border border-primary border-3">
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
-                    <h4 class="card-title">Data Cabut Bulu Stock</h4>
+                    <h4 class="card-title">Data Cabut Bulu Hancuran Persiapan Stock</h4>
                 </div>
             </div>
             <div class="card-body" style="overflow: auto;">
@@ -19,41 +19,29 @@
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
-                                <th class="text-center" scope="col">Workstation</th>
-                                <th class="text-center" scope="col">Unit</th>
                                 <th class="text-center" scope="col">Nomor Job</th>
-                                <th class="text-center" scope="col">Nomor Batch</th>
-                                <th class="text-center" scope="col">Jenis Job</th>
-                                <th class="text-center" scope="col">Berat Job</th>
-                                <th class="text-center" scope="col">Pcs Job</th>
-                                <th class="text-center" scope="col">Tujuan Kirim</th>
-                                <th class="text-center" scope="col">Keterangan</th>
+                                <th class="text-center" scope="col">Jenis Rambang</th>
                                 @role('admin')
-                                    <th class="text-center" scope="col">Modal</th>
-                                    <th class="text-center" scope="col">Total Modal</th>
                                     <th class="text-center" scope="col">Upah Operator</th>
                                 @endrole
+                                <th class="text-center" scope="col">Berat Masuk</th>
+                                <th class="text-center" scope="col">Berat keluar</th>
+                                <th class="text-center" scope="col">Sisa Berat</th>
                                 <th class="text-center" scope="col">Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($cabut_bulu_stock as $item)
+                            @forelse ($cabut_hancuran_persiapan_stocks as $item)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td class="text-center">{{ $item->workstation }}</td>
-                                    <td class="text-center">{{ $item->unit }}</td>
                                     <td class="text-center">{{ $item->nomor_job }}</td>
-                                    <td class="text-center">{{ $item->nomor_batch }}</td>
-                                    <td class="text-center">{{ $item->jenis_job }}</td>
-                                    <td class="text-center">{{ $item->berat_job }}</td>
-                                    <td class="text-center">{{ $item->pcs_job }}</td>
-                                    <td class="text-center">{{ $item->tujuan_kirim }}</td>
-                                    <td class="text-center">{{ $item->keterangan }}</td>
+                                    <td class="text-center">{{ $item->jenis_rambang }}</td>
                                     @role('admin')
-                                        <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                        <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
                                         <td class="text-center">{{ number_format($item->upah_operator, 2, ',', '.') }}</td>
                                     @endrole
+                                    <td class="text-center">{{ $item->berat_masuk }}</td>
+                                    <td class="text-center">{{ $item->berat_keluar }}</td>
+                                    <td class="text-center">{{ $item->sisa_berat }}</td>
                                     <td>
                                         @if ($item->status == 1)
                                             On Stock
@@ -68,7 +56,7 @@
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Data Cabut Bulu Stock belum Tersedia.
+                                    Data Cabut Bulu Hancuran Persiapan Stock belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>
