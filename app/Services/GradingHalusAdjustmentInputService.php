@@ -133,14 +133,18 @@ class GradingHalusAdjustmentInputService
                     if ($adjustemnt_stock) {
                         // Update existing grading data
 
-                      
-                        $adjustemnt_stock->update([
+                    $GradingHalusAdjustmentStock = GradingHalusAdjustmentStock::where('nomor_adjustment', $mergedData['nomor_adjustment'])
+                        ->first();
 
-                            'status'=> 0,
+                    if ($GradingHalusAdjustmentStock) {
+                        $GradingHalusAdjustmentStock->update([
+                            'user_updated' => $mergedData['user_created'] ?? "There isn't any",
+                            'status'       => 0,
                         ]);
                     }
+
                     DB::commit();
-                   
+
                 } catch (\Exception $e) {
                     DB::rollBack();
 
@@ -160,117 +164,77 @@ class GradingHalusAdjustmentInputService
             'redirectTo' => route('GradingHalusAdjustmentInput.index')
         ], 201);
     }
-    // public function destroy($id)
-    // {
-    //     try {
-    //         // Mulai transaksi database
-    //         DB::beginTransaction();
 
-    //         // Temukan data GradingHalusAdjustmentInput berdasarkan ID
-    //         $gradingHalusAdjustmentInput = GradingHalusAdjustmentInput::find($id);
-
-    //         if (!$gradingHalusAdjustmentInput) {
-    //             // Jika data tidak ditemukan, kembalikan pesan error
-    //             return [
-    //                 'success' => false,
-    //                 'error' => 'Data tidak ditemukan.',
-    //             ];
-    //         }
-
-    //         // Temukan data GradingHalusStock berdasarkan id_box_grading_halus
-    //         $gradingHalusStock = GradingHalusStock::where('id_box_grading_halus', $gradingHalusAdjustmentInput->id_box_grading_halus)
-    //             ->first();
-
-    //         if ($gradingHalusStock) {
-    //             // Kurangi berat_masuk, pcs_masuk, berat_keluar, dan pcs_keluar di GradingHalusStock
-    //             $gradingHalusStock->berat_masuk -= $gradingHalusAdjustmentInput->berat_adjustment;
-    //             $gradingHalusStock->pcs_masuk -= $gradingHalusAdjustmentInput->pcs_adjustment;
-    //             $gradingHalusStock->berat_keluar -= $gradingHalusAdjustmentInput->berat_keluars;
-    //             $gradingHalusStock->pcs_keluar -= $gradingHalusAdjustmentInput->pcs_keluars;
-    //             $gradingHalusStock->sisa_berat -= $gradingHalusAdjustmentInput->berat_adjustment;
-    //             $gradingHalusStock->sisa_pcs -= $gradingHalusAdjustmentInput->pcs_adjustment;
-    //             $gradingHalusStock->user_updated = auth()->user()->name;
-    //             $gradingHalusStock->save();
-    //         }
-
-    //         // Hapus data GradingHalusAdjustmentInput
-    //         $gradingHalusAdjustmentInput->delete();
-
-    //         // Commit transaksi
-    //         DB::commit();
-
-    //         // Kembalikan respons sukses
-    //         return [
-    //             'success' => true,
-    //             'message' => 'Data berhasil dihapus!',
-    //         ];
-    //     } catch (\Exception $e) {
-    //         // Rollback transaksi jika terjadi kesalahan
-    //         DB::rollback();
-
-    //         // Kembalikan pesan error
-    //         return [
-    //             'success' => false,
-    //             'error' => 'Gagal menghapus data. ' . $e->getMessage(),
-    //         ];
-    //     }
-    // }
-
-    public function hapusData($id)
+    public function destroy($id)
     {
         try {
+            // Mulai transaksi
             DB::beginTransaction();
 
-            // Dapatkan id_box_grading_halus dan nomor_batch berdasarkan ID
-            $data = GradingHalusAdjustmentInput::select('id_box_grading_halus', 'nomor_batch')->find($id);
+            // Temukan record berdasarkan id
+            $GradingHalusAdjustmentInput = GradingHalusAdjustmentInput::findOrFail($id);
+            $nomorAdjustment = $GradingHalusAdjustmentInput->nomor_adjustment;
 
-            if ($data) {
-                // Hapus data dari GradingHalusAdjustmentInput berdasarkan id_box_grading_halus dan nomor_batch
-                GradingHalusAdjustmentInput::where('id_box_grading_halus', $data->id_box_grading_halus)
-                    ->where('nomor_batch', $data->nomor_batch)
-                    ->delete();
+            // Temukan semua item dengan nomor_adjustment yang sama
+            $findNomorAdjustment = GradingHalusAdjustmentInput::where('nomor_adjustment', $nomorAdjustment)->get();
 
-                // Perbarui data di GradingHalusStock
-                $gradingHalusStock = GradingHalusStock::where('id_box_grading_halus', $data->id_box_grading_halus)
-                    ->where('nomor_batch', $data->nomor_batch)
+            foreach ($findNomorAdjustment as $item) {
+                // Temukan stok terkait
+                $gradingHalusStock = GradingHalusStock::where('id_box_grading_halus', $item->id_box_grading_halus)
                     ->first();
 
                 if ($gradingHalusStock) {
-                    $gradingHalusStock->berat_masuk -= $data->berat_adjustment ?? 0;
-                    $gradingHalusStock->pcs_masuk -= $data->pcs_adjustment ?? 0;
-                    $gradingHalusStock->sisa_berat -= $data->berat_adjustment ?? 0;
-                    $gradingHalusStock->sisa_pcs -= $data->pcs_adjustment ?? 0;
-                    $gradingHalusStock->save();
-                }
-                $adjustemnt_stock = GradingHalusAdjustmentStock::where('nomor_adjustment', $data->nomor_adjustment)
-                ->first();
-                if ($adjustemnt_stock) {
-                    // Update existing grading data
+                    $beratSebelumnya = $gradingHalusStock->berat_masuk;
+                    $pcsSebelumnya = $gradingHalusStock->pcs_masuk;
 
-                  
-                    $adjustemnt_stock->update([
+                    $perbedaanBerat = $beratSebelumnya - $item->berat_adjustment;
+                    $perbedaanPcs = $pcsSebelumnya - $item->pcs_adjustment;
+                    $sisaBerat = $perbedaanBerat - $gradingHalusStock->berat_keluar;
+                    $sisaPcs = $perbedaanPcs - $gradingHalusStock->pcs_keluar;
 
-                        'status'=> 1,
-                    ]);
+                    if ($sisaBerat <= 0) {
+                        $gradingHalusStock->delete();
+                    } else {
+                        $totalModalBaru = $sisaBerat * $gradingHalusStock->modal;
+
+                        $gradingHalusStock->update([
+                            'berat_masuk' => $perbedaanBerat,
+                            'sisa_berat' => $sisaBerat,
+                            'pcs_masuk' => $perbedaanPcs,
+                            'sisa_pcs' => $sisaPcs,
+                            'total_modal' => $totalModalBaru,
+                            'status' => 1,
+                        ]);
+                    }
                 }
-            } else {
-                // Jika data tidak ditemukan, langsung hapus dari GradingHalusAdjustmentInput
-                GradingHalusAdjustmentInput::where('id', $id)->delete();
+
+                // Hapus item terkait
+                $item->delete();
             }
 
+            $existingItems = GradingHalusAdjustmentStock::where('nomor_adjustment', $GradingHalusAdjustmentInput->nomor_adjustment)
+                ->where('nomor_batch', $GradingHalusAdjustmentInput->nomor_batch)
+                ->get();
+
+            // Logika Update Status
+            foreach ($existingItems as $existingItem) {
+                if ($existingItem) {
+
+                    $existingItem->update([
+                        'status' => 1,
+                    ]);
+                }
+            }
+
+            // Jika tidak ada kesalahan, komit transaksi
             DB::commit();
 
-            return [
-                'success' => true,
-                'message' => 'Data berhasil dihapus!',
-            ];
+            return ['success' => true];
         } catch (\Exception $e) {
-            DB::rollBack();
+            // Jika terjadi kesalahan, rollback transaksi
+            DB::rollback();
 
-            return [
-                'success' => false,
-                'error' => 'Gagal menghapus data. ' . $e->getMessage(),
-            ];
+            return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 }

@@ -14,10 +14,6 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Grading Halus Adjustment Stock
-                                {{-- <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong><i class="bi bi-plus-circle"></i> Add Data <i
-                                            class="bi bi-plus-circle"></i></strong>
-                                </button> --}}
                             </div>
                         </h5>
                     </div>
@@ -37,8 +33,6 @@
                                             <th scope="col" class="text-center">Total Modal</th>
                                         @endrole
                                         <th scope="col" class="text-center">Status</th>
-                                        <th scope="col" class="text-center">User Created</th>
-                                        <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
                                     </tr>
@@ -63,36 +57,10 @@
                                                     Tidak Aktif
                                                 @endif
                                             </td>
-                                            <td class="text-center">{{ $ADJS->user_created }}</td>
-                                            <td class="text-center">{{ $ADJS->user_updated }}</td>
                                             <td class="text-center">{{ $ADJS->created_at }}</td>
                                             <td class="text-center">
                                                 {{ $ADJS->created_at != $ADJS->updated_at ? $ADJS->updated_at : '' }}
                                             </td>
-                                            {{-- <td class="text-center">
-                                                <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $ADJS->id }}"
-                                                        action="{{ route('GradingHalusAdjustmentStock.destroy', $ADJS->id) }}"
-                                                        method="POST">
-                                                        <a href="{{ route('GradingHalusAdjustmentStock.show', $ADJS->id) }}"
-                                                            class="btn btn-link" title="View" data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $ADJ->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $ADJS->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td> --}}
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">

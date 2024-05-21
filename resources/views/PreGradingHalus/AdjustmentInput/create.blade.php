@@ -20,9 +20,9 @@
                             <select class="select2 form-select" style="width: 100%;" name="nomor_adjustment"
                                 id="nomor_adjustment" data-placeholder="Pilih Nomor Adjustment">
                                 <option value="">Pilih Nomor Adjustment</option>
-                                @foreach ($grading_halus_adjustment_inputs as $ADJI)
-                                    <option value="{{ $ADJI->nomor_adjustment }}">
-                                        {{ $ADJI->nomor_adjustment }}
+                                @foreach ($grading_halus_adjustment_inputs->where('status', 1) as $item)
+                                    <option value="{{ $item->nomor_adjustment }}">
+                                        {{ $item->nomor_adjustment }}
                                     </option>
                                 @endforeach
                             </select>
