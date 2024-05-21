@@ -3,7 +3,7 @@
     Cabut Bulu Hancuran
 @endsection
 @section('title')
-    Cabut Bulu Hancuran Penyebaran
+    Cabut Bulu Hancuran Pengembalian
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,10 +13,9 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Cabut Bulu Hancuran Penyebaran
+                                Data Cabut Bulu Hancuran Pengembalian
                                 <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong><i class="bi bi-plus-circle"></i> Add Data <i
-                                            class="bi bi-plus-circle"></i></strong>
+                                    <strong> Add Data </strong>
                                 </button>
                             </div>
                         </h5>
@@ -38,6 +37,9 @@
                                         <th scope="col" class="text-center">Grade Operator</th>
                                         <th scope="col" class="text-center">Nama Team Leader</th>
                                         <th scope="col" class="text-center">Waktu Penyebaran</th>
+                                        <th scope="col" class="text-center">Waktu Pengembalian</th>
+                                        <th scope="col" class="text-center">Lama Pengerjaan</th>
+                                        <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
@@ -46,7 +48,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($cabut_hancuran_penyebarans as $item)
+                                    @forelse ($cabut_hancuran_pengembalian as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->nomor_job }}</td>
@@ -61,6 +63,11 @@
                                             <td class="text-center">{{ $item->grade_operator }}</td>
                                             <td class="text-center">{{ $item->nama_team_leader }}</td>
                                             <td class="text-center">{{ $item->waktu_penyebaran }}</td>
+                                            <td class="text-center">{{ $item->waktu_pengembalian }}</td>
+                                            <td class="text-center">
+                                                {{ sprintf('%02d:%02d:%02d', floor($item->lama_pengerjaan / 3600), floor(($item->lama_pengerjaan % 3600) / 60), $item->lama_pengerjaan % 60) }}
+                                            </td>
+                                            <td class="text-center">{{ $item->keterangan }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>
                                             <td class="text-center">{{ $item->created_at }}</td>
@@ -71,7 +78,7 @@
                                                 <div class="form-button-action">
                                                     @if ($item->status == 1)
                                                         <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
-                                                            action="{{ route('CabutHancuranPenyebaran.destroy', $item->nomor_job) }}"
+                                                            action="{{ route('CabutHancuranPengembalian.destroy', $item->nomor_job) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -87,7 +94,7 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Cabut Bulu Hancuran Penyebaran belum Tersedia.
+                                            Data Cabut Bulu Hancuran Pengembalian belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -102,7 +109,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ route('CabutHancuranPenyebaran.create') }}";
+            window.location.href = "{{ route('CabutHancuranPengembalian.create') }}";
         }
 
         function confirmDelete(id) {

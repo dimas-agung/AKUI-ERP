@@ -491,6 +491,19 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\CabutHancuran\CabutHancuranPersiapanStockController::class)->group(function () {
                 Route::get('/cabut_hancuran_stock', 'index')->name('CabutHancuranStock.index');
             });
+
+            Route::controller(App\Http\Controllers\CabutHancuran\CabutHancuranPengembalianController::class)->group(function () {
+                Route::get('/cabut_hancuran_pengembalian', 'index')->name('CabutHancuranPengembalian.index');
+                Route::get('/cabut_hancuran_pengembalian/create', 'create')->name('CabutHancuranPengembalian.create');
+                Route::post('/cabut_hancuran_pengembalian/store', 'store')->name('CabutHancuranPengembalian.store');
+                Route::post('/cabut_hancuran_pengembalian/cek_data', 'CeksendData')->name('CabutHancuranPengembalian.CeksendData');
+                Route::get('/cabut_hancuran_pengembalian/set', 'set')->name('CabutHancuranPengembalian.set');
+                Route::delete('/cabut_hancuran_pengembalian/destroy/{nomor_bstb}', 'destroy')->name('CabutHancuranPengembalian.destroy');
+            });
+
+            Route::controller(App\Http\Controllers\CabutHancuran\TransitCabutBuluHancuranController::class)->group(function () {
+                Route::get('/transit_cabut_bulu_hancuran', 'index')->name('TransitCabutHancuran.index');
+            });
         });
 
         // Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {

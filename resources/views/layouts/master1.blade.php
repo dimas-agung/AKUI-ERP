@@ -398,7 +398,7 @@
                         @role('cleaning|admin')
                             {{-- <li class="sidebar-title">Cleaning</li> --}}
                             <li
-                                class="sidebar-item has-sub {{ Route::is('CabutBuluPenyebaran*', 'CabutBuluStock*', 'RambangKeringInput*', 'RambangKeringStock*', 'RambangPengirimanWaste*', 'TransitRambangWaste*', 'CabutHancuranPenyebaran*', 'CabutHancuranStock*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('CabutBuluPenyebaran*', 'CabutBuluStock*', 'RambangKeringInput*', 'RambangKeringStock*', 'RambangPengirimanWaste*', 'TransitRambangWaste*', 'CabutHancuranPenyebaran*', 'CabutHancuranPengembalian*', 'CabutHancuranStock*', 'TransitCabutHancuran*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Cleaning</span>
@@ -461,7 +461,7 @@
                                         </ul>
                                     </li>
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('CabutHancuranPenyebaran*', 'CabutHancuranStock*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('CabutHancuranPenyebaran*', 'CabutHancuranPengembalian*', 'CabutHancuranStock*', 'TransitCabutHancuran*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Cabut Hancuran</span>
                                         </a>
@@ -479,6 +479,20 @@
                                                     class="submenu-link">Cabut
                                                     Hancuran
                                                     <br>Penyebaran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutHancuranPengembalian*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutHancuranPengembalian.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Hancuran
+                                                    <br>Pengembalian</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitCabutHancuran*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitCabutHancuran.index') }}"
+                                                    class="submenu-link">Transit
+                                                    Cabut
+                                                    <br>Hancuran</a>
                                             </li>
                                         </ul>
                                     </li>

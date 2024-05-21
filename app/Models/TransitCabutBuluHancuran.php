@@ -23,4 +23,8 @@ class TransitCabutBuluHancuran extends Model
         'waktu_pengembalian',
         'status',
     ];
+    public function CabutHancuranPengembalian()
+    {
+        return $this->belongsTo(CabutHancuranPengembalian::class, 'nomor_job', 'nomor_job');
+    }
 }

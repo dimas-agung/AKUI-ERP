@@ -3,14 +3,14 @@
     Cabut Bulu Hancuran
 @endsection
 @section('title')
-    Cabut Bulu Hancuran Persiapan Stock
+    Transit Cabut Bulu Hancuran
 @endsection
 @section('content')
     <div class="section">
         <div class="card border border-primary border-3">
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
-                    <h4 class="card-title">Data Cabut Bulu Hancuran Persiapan Stock</h4>
+                    <h4 class="card-title">Data Transit Cabut Bulu Hancuran</h4>
                 </div>
             </div>
             <div class="card-body" style="overflow: auto;">
@@ -24,14 +24,18 @@
                                 @role('admin')
                                     <th class="text-center" scope="col">Upah Operator</th>
                                 @endrole
-                                <th class="text-center" scope="col">Berat Masuk</th>
-                                <th class="text-center" scope="col">Berat keluar</th>
-                                <th class="text-center" scope="col">Sisa Berat</th>
+                                <th class="text-center" scope="col">Berat</th>
+                                <th class="text-center" scope="col">Nama Operator</th>
+                                <th class="text-center" scope="col">Nip Operator</th>
+                                <th class="text-center" scope="col">Grade Operator</th>
+                                <th class="text-center" scope="col">Nama Team Leader</th>
+                                <th class="text-center" scope="col">Waktu Penyebaran</th>
+                                <th class="text-center" scope="col">Waktu Pengembalian</th>
                                 <th class="text-center" scope="col">Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($cabut_hancuran_persiapan_stocks as $item)
+                            @forelse ($transit_cabut_bulu_hancuran as $item)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td class="text-center">{{ $item->nomor_job }}</td>
@@ -39,16 +43,20 @@
                                     @role('admin')
                                         <td class="text-center">{{ number_format($item->upah_operator, 2, ',', '.') }}</td>
                                     @endrole
-                                    <td class="text-center">{{ $item->berat_masuk }}</td>
-                                    <td class="text-center">{{ $item->berat_keluar }}</td>
-                                    <td class="text-center">{{ $item->sisa_berat }}</td>
+                                    <td class="text-center">{{ $item->berat }}</td>
+                                    <td class="text-center">{{ $item->nama_operator }}</td>
+                                    <td class="text-center">{{ $item->nip_operator }}</td>
+                                    <td class="text-center">{{ $item->grade_operator }}</td>
+                                    <td class="text-center">{{ $item->nama_team_leader }}</td>
+                                    <td class="text-center">{{ $item->waktu_penyebaran }}</td>
+                                    <td class="text-center">{{ $item->waktu_pengembalian }}</td>
                                     <td>
                                         @if ($item->status == 1)
-                                            On Stock
-                                        @elseif ($item->status == 2)
+                                            On Transit
+                                            {{-- @elseif ($item->status == 2)
                                             On Process
                                         @elseif ($item->status == 3)
-                                            Finished
+                                            Finished --}}
                                         @else
                                             Unknown Status
                                         @endif
@@ -56,7 +64,7 @@
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Data Cabut Bulu Hancuran Persiapan Stock belum Tersedia.
+                                    Data Transit Cabut Bulu Hancuran belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>

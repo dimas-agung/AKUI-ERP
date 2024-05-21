@@ -26,4 +26,12 @@ class CabutHancuranPengembalian extends Model
         'user_created',
         'user_updated',
     ];
+    public function CabutHancuranPenyebaran()
+    {
+        return $this->belongsTo(CabutHancuranPenyebaran::class, 'nomor_job', 'nomor_job');
+    }
+    public function TransitCabutBuluHancuran()
+    {
+        return $this->hasMany(TransitCabutBuluHancuran::class, 'nomor_job', 'nomor_job');
+    }
 }
