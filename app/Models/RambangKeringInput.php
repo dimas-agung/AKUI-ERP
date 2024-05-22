@@ -17,6 +17,7 @@ class RambangKeringInput extends Model
         'berat_kering',
         'susut',
         'keterangan',
+        'status',
         'user_created',
         'user_updated',
     ];

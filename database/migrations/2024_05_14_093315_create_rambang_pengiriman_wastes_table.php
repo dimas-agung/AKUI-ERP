@@ -18,6 +18,7 @@ return new class extends Migration
             $table->float('berat');
             $table->string('keterangan')->nullable();
             $table->string('nomor_bstb');
+            $table->integer('status')->default(1);
             $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
             $table->timestamps();

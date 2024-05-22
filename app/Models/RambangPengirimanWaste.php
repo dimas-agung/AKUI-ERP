@@ -15,6 +15,7 @@ class RambangPengirimanWaste extends Model
         'berat',
         'keterangan',
         'nomor_bstb',
+        'status',
         'user_created',
         'user_updated',
     ];
