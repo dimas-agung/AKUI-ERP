@@ -39,7 +39,7 @@
                                     <div class="form-group">
                                         <label>ID Box Grading Halus</label>
                                         <select id="id_box_grading_halus" class="select2 form-select"
-                                            name="id_box_grading_halus">
+                                            data-placeholder="Pilih ID Box Grading Halus" name="id_box_grading_halus">
                                             <option value="">Pilih ID Box Grading Halus</option>
                                             @foreach ($TransitPre->sortBy('id_box_grading_halus') as $post)
                                                 <option value="{{ $post->id_box_grading_halus }}">
@@ -51,7 +51,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Tujuan Kirim</label>
-                                        <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim">
+                                        <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim"
+                                            data-placeholder="Pilih Tujuan Kirim">
                                             <option value="">Pilih Tujuan Kirim</option>
                                             @foreach ($TujuanKirimGHI->sortBy('tujuan_kirim') as $post)
                                                 <option value="{{ $post->tujuan_kirim }}">

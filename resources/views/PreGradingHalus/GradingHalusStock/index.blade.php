@@ -37,29 +37,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($grading_halus_stocks as $item)
-                                <tr>
-                                    <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{{ $item->unit }}</td>
-                                    <td class="text-center">{{ $item->id_box_grading_halus }}</td>
-                                    <td class="text-center">{{ $item->nomor_batch }}</td>
-                                    <td class="text-center">{{ $item->jenis }}</td>
-                                    <td class="text-center">{{ $item->berat_masuk }}</td>
-                                    <td class="text-center">{{ $item->berat_keluar }}</td>
-                                    <td class="text-center">{{ $item->sisa_berat }}</td>
-                                    <td class="text-center">{{ $item->pcs_masuk }}</td>
-                                    <td class="text-center">{{ $item->pcs_keluar }}</td>
-                                    <td class="text-center">{{ $item->sisa_pcs }}</td>
-                                    @role('admin')
-                                        <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                        <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
-                                    @endrole
-                                </tr>
-                            @empty
-                                <div class="alert alert-danger">
-                                    Data Grading Halus Stock belum Tersedia.
-                                </div>
-                            @endforelse
+                            <?php $i = 1; ?>
+                            <?php foreach ($grading_halus_stocks as $item): ?>
+                            <?php if($item->sisa_berat != 0): ?>
+                            <tr>
+                                <td class="text-center">{{ $i++ }}</td>
+                                <td class="text-center">{{ $item->unit }}</td>
+                                <td class="text-center">{{ $item->id_box_grading_halus }}</td>
+                                <td class="text-center">{{ $item->nomor_batch }}</td>
+                                <td class="text-center">{{ $item->jenis }}</td>
+                                <td class="text-center">{{ $item->berat_masuk }}</td>
+                                <td class="text-center">{{ $item->berat_keluar }}</td>
+                                <td class="text-center">{{ $item->sisa_berat }}</td>
+                                <td class="text-center">{{ $item->pcs_masuk }}</td>
+                                <td class="text-center">{{ $item->pcs_keluar }}</td>
+                                <td class="text-center">{{ $item->sisa_pcs }}</td>
+                                @role('admin')
+                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                @endrole
+                            </tr>
+                            <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php if ($item->sisa_berat != 0): ?>
+                            <div class="alert alert-danger">
+                                Data Grading Halus Stock belum Tersedia.
+                            </div>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

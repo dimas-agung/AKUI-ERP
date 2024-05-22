@@ -48,38 +48,42 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($PCStock as $item)
-                                <tr>
-                                    <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{{ $item->nomor_job }}</td>
-                                    <td class="text-center">{{ $item->nomor_bstb }}</td>
-                                    <td class="text-center">{{ $item->id_box_grading_kasar }}</td>
-                                    <td class="text-center">{{ $item->nomor_batch }}</td>
-                                    <td class="text-center">{{ $item->nama_supplier }}</td>
-                                    <td class="text-center">{{ $item->nomor_nota_internal }}</td>
-                                    <td class="text-center">{{ $item->id_box_raw_material }}</td>
-                                    <td class="text-center">{{ $item->jenis_raw_material }}</td>
-                                    <td class="text-center">{{ $item->jenis_kirim }}</td>
-                                    <td class="text-center">{{ $item->berat_masuk }}</td>
-                                    <td class="text-center">{{ $item->berat_keluar }}</td>
-                                    <td class="text-center">{{ $item->sisa_berat }}</td>
-                                    <td class="text-center">{{ $item->pcs_masuk }}</td>
-                                    <td class="text-center">{{ $item->pcs_keluar }}</td>
-                                    <td class="text-center">{{ $item->sisa_pcs }}</td>
-                                    <td class="text-center">{{ $item->kadar_air }}</td>
-                                    <td class="text-center">{{ $item->nomor_grading }}</td>
-                                    <td class="text-center">{{ $item->tujuan_kirim }}</td>
-                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
-                                    <td class="text-center">{{ $item->keterangan }}</td>
-                                    <td class="text-center">{{ $item->user_created }}</td>
-                                    <td class="text-center">{{ $item->user_updated }}</td>
-                                </tr>
-                            @empty
-                                <div class="alert alert-danger">
-                                    Data Pre-Cleaning Stock belum Tersedia.
-                                </div>
-                            @endforelse
+                            <?php $i = 1; ?>
+                            <?php foreach ($PCStock as $item): ?>
+                            <?php if($item->sisa_berat != 0): ?>
+                            <tr>
+                                <td class="text-center">{{ $i++ }}</td>
+                                <td class="text-center">{{ $item->nomor_job }}</td>
+                                <td class="text-center">{{ $item->nomor_bstb }}</td>
+                                <td class="text-center">{{ $item->id_box_grading_kasar }}</td>
+                                <td class="text-center">{{ $item->nomor_batch }}</td>
+                                <td class="text-center">{{ $item->nama_supplier }}</td>
+                                <td class="text-center">{{ $item->nomor_nota_internal }}</td>
+                                <td class="text-center">{{ $item->id_box_raw_material }}</td>
+                                <td class="text-center">{{ $item->jenis_raw_material }}</td>
+                                <td class="text-center">{{ $item->jenis_kirim }}</td>
+                                <td class="text-center">{{ $item->berat_masuk }}</td>
+                                <td class="text-center">{{ $item->berat_keluar }}</td>
+                                <td class="text-center">{{ $item->sisa_berat }}</td>
+                                <td class="text-center">{{ $item->pcs_masuk }}</td>
+                                <td class="text-center">{{ $item->pcs_keluar }}</td>
+                                <td class="text-center">{{ $item->sisa_pcs }}</td>
+                                <td class="text-center">{{ $item->kadar_air }}</td>
+                                <td class="text-center">{{ $item->nomor_grading }}</td>
+                                <td class="text-center">{{ $item->tujuan_kirim }}</td>
+                                <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ $item->keterangan }}</td>
+                                <td class="text-center">{{ $item->user_created }}</td>
+                                <td class="text-center">{{ $item->user_updated }}</td>
+                            </tr>
+                            <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php if (empty($item)): ?>
+                            <div class="alert alert-danger">
+                                Data Pre-Cleaning Stock belum Tersedia.
+                            </div>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

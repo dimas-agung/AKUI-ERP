@@ -46,37 +46,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($grading_kasar_stocks as $GradingKS)
-                                <tr>
-                                    <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{{ $GradingKS->doc_no }}</td>
-                                    <td class="text-center">{{ $GradingKS->id_box_grading_kasar }}</td>
-                                    <td class="text-center">{{ $GradingKS->nomor_batch }}</td>
-                                    <td class="text-center">{{ $GradingKS->nama_supplier }}</td>
-                                    <td class="text-center">{{ $GradingKS->nomor_nota_internal }}</td>
-                                    <td class="text-center">{{ $GradingKS->jenis_raw_material }}</td>
-                                    <td class="text-center">{{ $GradingKS->jenis_grading }}</td>
-                                    <td class="text-center">{{ $GradingKS->id_box_raw_material }}</td>
-                                    {{-- <td class="text-center">{{ $GradingKS->berat_masuk }}</td> --}}
-                                    <td class="text-center">{{ $GradingKS->berat_masuk }}</td>
-                                    {{-- <td class="text-center">{{ $GradingKS->berat_keluar }}</td> --}}
-                                    <td class="text-center">{{ $GradingKS->berat_keluar }}</td>
-                                    <td class="text-center">{{ $GradingKS->berat_masuk - $GradingKS->berat_keluar }}</td>
-                                    <td class="text-center">{{ $GradingKS->pcs_masuk }}</td>
-                                    <td class="text-center">{{ $GradingKS->pcs_keluar }}</td>
-                                    <td class="text-center">{{ $GradingKS->pcs_masuk - $GradingKS->pcs_keluar }}</td>
-                                    <td class="text-center">{{ $GradingKS->avg_kadar_air }}
-                                    </td>
-                                    <td class="text-center">{{ $GradingKS->nomor_grading }}</td>
-                                    @role('admin')
-                                        <td class="text-center">{{ number_format($GradingKS->modal, 2, ',', '.') }}</td>
-                                        {{-- <td class="text-center">{{ $GradingKS->total_modal }}</td> --}}
-                                        <td class="text-center">{{ number_format($GradingKS->total_modal, 2, ',', '.') }}</td>
-                                    @endrole
-                                    <td class="text-center">{{ $GradingKS->keterangan }}</td>
-                                    <td class="text-center">{{ $GradingKS->user_created }}</td>
-                                    <td class="text-center">{{ $GradingKS->user_updated }}</td>
-                                    {{-- <td class="text-center">
+                            <?php $i = 1; ?>
+                            <?php foreach ($grading_kasar_stocks as $GradingKS): ?>
+                            <?php if($GradingKS->berat_masuk - $GradingKS->berat_keluar != 0): ?>
+                            <tr>
+                                <td class="text-center">{{ $i++ }}</td>
+                                <td class="text-center">{{ $GradingKS->doc_no }}</td>
+                                <td class="text-center">{{ $GradingKS->id_box_grading_kasar }}</td>
+                                <td class="text-center">{{ $GradingKS->nomor_batch }}</td>
+                                <td class="text-center">{{ $GradingKS->nama_supplier }}</td>
+                                <td class="text-center">{{ $GradingKS->nomor_nota_internal }}</td>
+                                <td class="text-center">{{ $GradingKS->jenis_raw_material }}</td>
+                                <td class="text-center">{{ $GradingKS->jenis_grading }}</td>
+                                <td class="text-center">{{ $GradingKS->id_box_raw_material }}</td>
+                                {{-- <td class="text-center">{{ $GradingKS->berat_masuk }}</td> --}}
+                                <td class="text-center">{{ $GradingKS->berat_masuk }}</td>
+                                {{-- <td class="text-center">{{ $GradingKS->berat_keluar }}</td> --}}
+                                <td class="text-center">{{ $GradingKS->berat_keluar }}</td>
+                                <td class="text-center">{{ $GradingKS->berat_masuk - $GradingKS->berat_keluar }}</td>
+                                <td class="text-center">{{ $GradingKS->pcs_masuk }}</td>
+                                <td class="text-center">{{ $GradingKS->pcs_keluar }}</td>
+                                <td class="text-center">{{ $GradingKS->pcs_masuk - $GradingKS->pcs_keluar }}</td>
+                                <td class="text-center">{{ $GradingKS->avg_kadar_air }}
+                                </td>
+                                <td class="text-center">{{ $GradingKS->nomor_grading }}</td>
+                                @role('admin')
+                                    <td class="text-center">{{ number_format($GradingKS->modal, 2, ',', '.') }}</td>
+                                    {{-- <td class="text-center">{{ $GradingKS->total_modal }}</td> --}}
+                                    <td class="text-center">{{ number_format($GradingKS->total_modal, 2, ',', '.') }}</td>
+                                @endrole
+                                <td class="text-center">{{ $GradingKS->keterangan }}</td>
+                                <td class="text-center">{{ $GradingKS->user_created }}</td>
+                                <td class="text-center">{{ $GradingKS->user_updated }}</td>
+                                {{-- <td class="text-center">
                                         <div class="form-button-action">
                                             <form style="display: flex" id="deleteForm{{ $item->id }}"
                                                 action="{{ route('GradingKasarInput.destroy', $item->id) }}"
@@ -94,12 +96,14 @@
                                             </form>
                                         </div>
                                     </td> --}}
-                                </tr>
-                            @empty
-                                <div class="alert alert-danger">
-                                    Data Grading Kasar Stock belum Tersedia.
-                                </div>
-                            @endforelse
+                            </tr>
+                            <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php if (empty($GradingKS)): ?>
+                            <div class="alert alert-danger">
+                                Data Grading Kasar Stock belum Tersedia.
+                            </div>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

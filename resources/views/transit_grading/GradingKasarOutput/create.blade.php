@@ -432,45 +432,6 @@
             $('#sisa_pcs').val(sisaPcs);
         }
 
-        // $('#id_box_grading_kasar').on('change', function() {
-        //     // Mengambil nilai id_box_grading_kasar yang dipilih
-        //     let selectedIdBox = $(this).val();
-        //     // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
-        //     $.ajax({
-        //         url: `{{ route('GradingKasarOutput.set') }}`,
-        //         method: 'GET',
-        //         data: {
-        //             id_box_grading_kasar: selectedIdBox
-        //         },
-        //         success: function(response) {
-        //             console.log(response);
-        //             // Mengatur nilai Nomor Batch sesuai dengan respons dari server
-        //             $('#nomor_batch').val(response.nomor_batch);
-        //             $('#nama_supplier').val(response.nama_supplier);
-        //             $('#id_box_raw_material').val(response.id_box_raw_material);
-        //             $('#jenis_raw_material').val(response.jenis_raw_material);
-        //             $('#jenis_grading').val(response.jenis_grading);
-        //             $('#avg_kadar_air').val(response.avg_kadar_air);
-        //             $('#nomor_grading').val(response.nomor_grading);
-        //             $('#modal, #fix_total_modal').val(response.modal);
-        //             $('#nomor_nota_internal').val(response.nomor_nota_internal);
-
-        //             // Perhitungan sisa berat
-        //             let beratMasuk = parseFloat(response.berat_masuk);
-        //             let beratKeluar = parseFloat(response.berat_keluar);
-        //             let pcsMasuk = parseFloat(response.pcs_masuk);
-        //             let pcsKeluar = parseFloat(response.pcs_keluar);
-        //             let sisaBerat = beratMasuk - beratKeluar;
-        //             let sisaPcs = pcsMasuk - pcsKeluar;
-        //             $('#berat_masuk').val(sisaBerat);
-        //             $('#sisa_pcs').val(sisaPcs);
-        //         },
-        //         error: function(error) {
-        //             console.error('Error:', error);
-        //         }
-        //     });
-        // });
-
         // Variabel penanda untuk menandai apakah tombol "add" sudah diklik atau belum
         let tombolAddDiklik = false;
 
@@ -671,6 +632,16 @@
                     title: 'Warning!',
                     text: message,
                     icon: 'warning'
+                });
+                return;
+            }
+
+            // Cek apakah berat_keluar lebih besar dari berat_masuk
+            if (berat_keluar > berat_masuk) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Berat keluar tidak boleh lebih besar dari berat masuk. Silakan periksa kembali nilai yang diinput.',
+                    icon: 'error'
                 });
                 return;
             }
