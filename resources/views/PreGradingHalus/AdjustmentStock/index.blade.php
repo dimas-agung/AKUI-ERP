@@ -38,30 +38,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($grading_halus_adjustment_stocks as $ADJS)
-                                        <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $ADJS->unit }}</td>
-                                            <td class="text-center">{{ $ADJS->nomor_adjustment }}</td>
-                                            <td class="text-center">{{ $ADJS->nomor_batch }}</td>
-                                            <td class="text-center">{{ $ADJS->berat_adding }}</td>
-                                            <td class="text-center">{{ $ADJS->pcs_adding }}</td>
-                                            @role('admin')
-                                                <td class="text-center">{{ $ADJS->modal }}</td>
-                                                <td class="text-center">{{ $ADJS->total_modal }}</td>
-                                            @endrole
-                                            <td class="text-center">
-                                                @if ($ADJS->status == 1)
-                                                    Aktif
-                                                @else
-                                                    Tidak Aktif
-                                                @endif
-                                            </td>
-                                            <td class="text-center">{{ $ADJS->created_at }}</td>
-                                            <td class="text-center">
-                                                {{ $ADJS->created_at != $ADJS->updated_at ? $ADJS->updated_at : '' }}
-                                            </td>
-                                        </tr>
+                                    @php $iteration = 1; @endphp
+                                    @forelse ($grading_halus_adjustment_stocks as $item)
+                                        @if ($item->status != 0)
+                                            <tr>
+                                                <td class="text-center">{{ $iteration }}</td>
+                                                <td class="text-center">{{ $item->unit }}</td>
+                                                <td class="text-center">{{ $item->nomor_adjustment }}</td>
+                                                <td class="text-center">{{ $item->nomor_batch }}</td>
+                                                <td class="text-center">{{ $item->berat_adding }}</td>
+                                                <td class="text-center">{{ $item->pcs_adding }}</td>
+                                                @role('admin')
+                                                    <td class="text-center">{{ $item->modal }}</td>
+                                                    <td class="text-center">{{ $item->total_modal }}</td>
+                                                @endrole
+                                                <td class="text-center">
+                                                    @if ($item->status == 1)
+                                                        Aktif
+                                                    @else
+                                                        Tidak Aktif
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">{{ $item->created_at }}</td>
+                                                <td class="text-center">
+                                                    {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
+                                                </td>
+                                            </tr>
+                                            @php $iteration++; @endphp
+                                        @endif
                                     @empty
                                         <div class="alert alert-danger">
                                             Data Grading Halus Adjustment Stock belum Tersedia.

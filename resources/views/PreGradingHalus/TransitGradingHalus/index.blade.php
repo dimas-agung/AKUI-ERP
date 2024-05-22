@@ -35,23 +35,27 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php $iteration = 1; @endphp
                             @forelse ($grading_halus_stocks as $item)
-                                <tr>
-                                    <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{{ $item->unit }}</td>
-                                    <td class="text-center">{{ $item->nomor_job }}</td>
-                                    <td class="text-center">{{ $item->nomor_batch }}</td>
-                                    <td class="text-center">{{ $item->nomor_bstb }}</td>
-                                    <td class="text-center">{{ $item->jenis_job }}</td>
-                                    <td class="text-center">{{ $item->berat_job }}</td>
-                                    <td class="text-center">{{ $item->pcs_job }}</td>
-                                    <td class="text-center">{{ $item->tujuan_kirim }}</td>
-                                    <td class="text-center">{{ $item->keterangan }}</td>
-                                    @role('admin')
-                                        <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                        <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
-                                    @endrole
-                                </tr>
+                                @if ($item->status != 0)
+                                    <tr>
+                                        <td class="text-center">{{ $iteration }}</td>
+                                        <td class="text-center">{{ $item->unit }}</td>
+                                        <td class="text-center">{{ $item->nomor_job }}</td>
+                                        <td class="text-center">{{ $item->nomor_batch }}</td>
+                                        <td class="text-center">{{ $item->nomor_bstb }}</td>
+                                        <td class="text-center">{{ $item->jenis_job }}</td>
+                                        <td class="text-center">{{ $item->berat_job }}</td>
+                                        <td class="text-center">{{ $item->pcs_job }}</td>
+                                        <td class="text-center">{{ $item->tujuan_kirim }}</td>
+                                        <td class="text-center">{{ $item->keterangan }}</td>
+                                        @role('admin')
+                                            <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                        @endrole
+                                    </tr>
+                                    @php $iteration++; @endphp
+                                @endif
                             @empty
                                 <div class="alert alert-danger">
                                     Data Transit Grading Halus belum Tersedia.

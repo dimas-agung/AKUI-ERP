@@ -42,32 +42,37 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($pre_grading_halus_adding_stocks as $PGHAS)
-                                        <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $PGHAS->unit }}</td>
-                                            <td class="text-center">{{ $PGHAS->nomor_grading }}</td>
-                                            <td class="text-center">{{ $PGHAS->nomor_batch }}</td>
-                                            <td class="text-center">{{ $PGHAS->nomor_nota_internal }}</td>
-                                            <td class="text-center">{{ $PGHAS->nama_supplier }}</td>
-                                            <td class="text-center">{{ $PGHAS->jenis_raw_material }}</td>
-                                            <td class="text-center">{{ $PGHAS->kadar_air }}</td>
-                                            <td class="text-center">{{ $PGHAS->berat_adding }}
-                                            </td>
-                                            <td class="text-center">{{ $PGHAS->pcs_adding }}
-                                            </td>
-                                            @role('admin')
-                                                <td class="text-center">{{ number_format($PGHAS->modal, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($PGHAS->total_modal, 2, ',', '.') }}
+                                    @php $iteration = 1; @endphp
+                                    @forelse ($pre_grading_halus_adding_stocks as $item)
+                                        @if ($item->status_stock != 0)
+                                            <tr>
+                                                <td class="text-center">{{ $iteration }}</td>
+                                                <td class="text-center">{{ $item->unit }}</td>
+                                                <td class="text-center">{{ $item->nomor_grading }}</td>
+                                                <td class="text-center">{{ $item->nomor_batch }}</td>
+                                                <td class="text-center">{{ $item->nomor_nota_internal }}</td>
+                                                <td class="text-center">{{ $item->nama_supplier }}</td>
+                                                <td class="text-center">{{ $item->jenis_raw_material }}</td>
+                                                <td class="text-center">{{ $item->kadar_air }}</td>
+                                                <td class="text-center">{{ $item->berat_adding }}
                                                 </td>
-                                            @endrole
-                                            <td class="text-center">{{ $PGHAS->status_stock }}</td>
-                                            <td class="text-center">{{ $PGHAS->created_at }}</td>
-                                            <td class="text-center">
-                                                {{ $PGHAS->created_at != $PGHAS->updated_at ? $PGHAS->updated_at : '' }}
-                                            </td>
+                                                <td class="text-center">{{ $item->pcs_adding }}
+                                                </td>
+                                                @role('admin')
+                                                    <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                                    <td class="text-center">
+                                                        {{ number_format($item->total_modal, 2, ',', '.') }}
+                                                    </td>
+                                                @endrole
+                                                <td class="text-center">{{ $item->status_stock }}</td>
+                                                <td class="text-center">{{ $item->created_at }}</td>
+                                                <td class="text-center">
+                                                    {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
+                                                </td>
 
-                                        </tr>
+                                            </tr>
+                                            @php $iteration++; @endphp
+                                        @endif
                                     @empty
                                         <div class="alert alert-danger">
                                             Data Pre Grading Halus Adding Stock belum Tersedia.

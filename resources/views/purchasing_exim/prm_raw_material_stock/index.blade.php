@@ -45,52 +45,51 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($PrmRawMaterialStock as $MasterStock)
-                                        <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $MasterStock->id_box }}</td>
-                                            <td class="text-center">{{ $MasterStock->nomor_nota_internal }}</td>
-                                            <td class="text-center">{{ $MasterStock->nomor_batch }}</td>
-                                            <td class="text-center">{{ $MasterStock->nama_supplier }}</td>
-                                            <td class="text-center">{{ $MasterStock->jenis }}</td>
-                                            <td class="text-center berat_masuk">
-                                                {{ $MasterStock->berat_masuk }}</td>
-                                            <td class="text-center berat_keluar">
-                                                {{ $MasterStock->berat_keluar }}</td>
-                                            <td class="text-center sisa_berat">
-                                                {{ $MasterStock->sisa_berat }}</td>
-                                            <td class="text-center avg_kadar_air">
-                                                {{ $MasterStock->avg_kadar_air }}</td>
-                                            <td class="text-center modal1">
-                                                {{ number_format($MasterStock->modal, 2, ',', '.') }}
-                                            </td>
-                                            <td class="text-center total_modal">
-                                                {{ number_format($MasterStock->total_modal, 2, ',', '.') }}</td>
-                                            <td class="text-center">{{ $MasterStock->keterangan }}</td>
-                                            <td class="text-center">{{ $MasterStock->user_created }}</td>
-                                            <td class="text-center">{{ $MasterStock->user_updated }}</td>
-                                            <td class="text-center">{{ $MasterStock->created_at }}</td>
-                                            <td class="text-center">
-                                                {{ $MasterStock->created_at != $MasterStock->updated_at ? $MasterStock->updated_at : '' }}
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="form-button-action">
-                                                    <form>
-                                                        <a href="{{ route('PrmRawMaterialStock.show', $MasterStock->id_box) }}"
-                                                            class="btn btn-link" title="View" data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a>
-                                                        @csrf
-                                                        {{-- @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $MasterStock->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button> --}}
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                    @php $iteration = 1; @endphp
+                                    @forelse ($PrmRawMaterialStock as $item)
+                                        @if ($item->sisa_berat != 0)
+                                            <tr>
+                                                <td class="text-center">{{ $iteration }}</td>
+                                                <td class="text-center">{{ $item->id_box }}</td>
+                                                <td class="text-center">{{ $item->nomor_nota_internal }}</td>
+                                                <td class="text-center">{{ $item->nomor_batch }}</td>
+                                                <td class="text-center">{{ $item->nama_supplier }}</td>
+                                                <td class="text-center">{{ $item->jenis }}</td>
+                                                <td class="text-center berat_masuk">
+                                                    {{ $item->berat_masuk }}</td>
+                                                <td class="text-center berat_keluar">
+                                                    {{ $item->berat_keluar }}</td>
+                                                <td class="text-center sisa_berat">
+                                                    {{ $item->sisa_berat }}</td>
+                                                <td class="text-center avg_kadar_air">
+                                                    {{ $item->avg_kadar_air }}</td>
+                                                <td class="text-center modal1">
+                                                    {{ number_format($item->modal, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center total_modal">
+                                                    {{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ $item->keterangan }}</td>
+                                                <td class="text-center">{{ $item->user_created }}</td>
+                                                <td class="text-center">{{ $item->user_updated }}</td>
+                                                <td class="text-center">{{ $item->created_at }}</td>
+                                                <td class="text-center">
+                                                    {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-button-action">
+                                                        <form>
+                                                            <a href="{{ route('PrmRawMaterialStock.show', $item->id_box) }}"
+                                                                class="btn btn-link" title="View"
+                                                                data-original-title="View">
+                                                                <i class="bi bi-eye"></i>
+                                                            </a>
+                                                            @csrf
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @php $iteration++; @endphp
+                                        @endif
                                     @empty
                                         <div class="alert alert-danger">
                                             Data Purchasing Raw Material Stock belum Tersedia.

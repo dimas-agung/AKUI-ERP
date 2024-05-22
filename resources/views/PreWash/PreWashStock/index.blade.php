@@ -38,28 +38,32 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php $iteration = 1; @endphp
                             @forelse ($pre_wash_stocks as $item)
-                                <tr>
-                                    <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{{ $item->unit }}</td>
-                                    <td class="text-center">{{ $item->nomor_job }}</td>
-                                    <td class="text-center">{{ $item->nomor_batch }}</td>
-                                    <td class="text-center">{{ $item->status }}</td>
-                                    <td class="text-center">{{ $item->jenis_job }}</td>
-                                    <td class="text-center">{{ number_format($item->berat_job, 0, ',', '.') }}</td>
-                                    <td class="text-center">{{ number_format($item->pcs_job, 0, ',', '.') }}</td>
-                                    <td class="text-center">{{ $item->tujuan_kirim }}</td>
-                                    <td class="text-center">{{ $item->keterangan }}</td>
-                                    @role('admin')
-                                        <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                        <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
-                                    @endrole
-                                    <td class="text-center">{{ $item->user_created }}</td>
-                                    <td class="text-center">{{ $item->created_at }}</td>
-                                    <td class="text-center">
-                                        {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
-                                    </td>
-                                </tr>
+                                @if ($item->berat_job != 0)
+                                    <tr>
+                                        <td class="text-center">{{ $iteration }}</td>
+                                        <td class="text-center">{{ $item->unit }}</td>
+                                        <td class="text-center">{{ $item->nomor_job }}</td>
+                                        <td class="text-center">{{ $item->nomor_batch }}</td>
+                                        <td class="text-center">{{ $item->status }}</td>
+                                        <td class="text-center">{{ $item->jenis_job }}</td>
+                                        <td class="text-center">{{ number_format($item->berat_job, 0, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($item->pcs_job, 0, ',', '.') }}</td>
+                                        <td class="text-center">{{ $item->tujuan_kirim }}</td>
+                                        <td class="text-center">{{ $item->keterangan }}</td>
+                                        @role('admin')
+                                            <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
+                                        @endrole
+                                        <td class="text-center">{{ $item->user_created }}</td>
+                                        <td class="text-center">{{ $item->created_at }}</td>
+                                        <td class="text-center">
+                                            {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
+                                        </td>
+                                    </tr>
+                                    @php $iteration++; @endphp
+                                @endif
                             @empty
                                 <div class="alert alert-danger">
                                     Data Pre Wash Stock belum Tersedia.
