@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
-use App\Models\MasterJenisGradingHalus;
-use App\Models\PreGradingHalusAddingStock;
 use Illuminate\Http\Request;
-use App\Models\GradingHalusAdjustmentInput;
-use App\Models\GradingHalusAdjustmentStock;
 use App\Models\GradingHalusStock;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\RedirectResponse;
+use App\Models\MasterJenisGradingHalus;
+use Illuminate\Support\Facades\Validator;
+use App\Models\PreGradingHalusAddingStock;
+use App\Models\GradingHalusAdjustmentInput;
+use App\Models\GradingHalusAdjustmentStock;
+use App\Models\GradingHalusAdjustmentAdding;
 
 class GradingHalusAdjustmentInputService
 {
@@ -139,6 +140,15 @@ class GradingHalusAdjustmentInputService
                         ]);
                     }
 
+                    $GradingHalusAdjustmentAdding = GradingHalusAdjustmentAdding::where('nomor_adjustment', $mergedData['nomor_adjustment'])
+                        ->first();
+
+                    if ($GradingHalusAdjustmentAdding) {
+                        $GradingHalusAdjustmentAdding->update([
+                            'status'       => 0,
+                        ]);
+                    }
+
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollBack();
@@ -216,6 +226,20 @@ class GradingHalusAdjustmentInputService
                 if ($existingItem) {
 
                     $existingItem->update([
+                        'status' => 1,
+                    ]);
+                }
+            }
+
+            $GradingHalusAdjustmentAdding = GradingHalusAdjustmentAdding::where('nomor_adjustment', $GradingHalusAdjustmentInput->nomor_adjustment)
+                ->where('nomor_batch', $GradingHalusAdjustmentInput->nomor_batch)
+                ->get();
+
+            // Logika Update Status
+            foreach ($GradingHalusAdjustmentAdding as $item) {
+                if ($item) {
+
+                    $item->update([
                         'status' => 1,
                     ]);
                 }

@@ -46,48 +46,42 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($grading_halus_adjustment_addings as $ADJ)
+                                    @forelse ($grading_halus_adjustment_addings as $item)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $ADJ->id_box_grading_halus }}</td>
-                                            <td class="text-center">{{ $ADJ->nomor_adjustment }}</td>
-                                            <td class="text-center">{{ $ADJ->nomor_batch }}</td>
-                                            <td class="text-center">{{ $ADJ->jenis_adding }}</td>
-                                            <td class="text-center">{{ $ADJ->berat_adding }}</td>
-                                            <td class="text-center">{{ $ADJ->pcs_adding }}</td>
-                                            <td class="text-center">{{ $ADJ->keterangan }}</td>
+                                            <td class="text-center">{{ $item->id_box_grading_halus }}</td>
+                                            <td class="text-center">{{ $item->nomor_adjustment }}</td>
+                                            <td class="text-center">{{ $item->nomor_batch }}</td>
+                                            <td class="text-center">{{ $item->jenis_adding }}</td>
+                                            <td class="text-center">{{ $item->berat_adding }}</td>
+                                            <td class="text-center">{{ $item->pcs_adding }}</td>
+                                            <td class="text-center">{{ $item->keterangan }}</td>
                                             @role('admin')
-                                                <td class="text-center">{{ number_format($ADJ->modal, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($ADJ->total_modal, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
+                                                </td>
                                             @endrole
-                                            <td class="text-center">{{ $ADJ->user_created }}</td>
-                                            <td class="text-center">{{ $ADJ->user_updated }}</td>
-                                            <td class="text-center">{{ $ADJ->created_at }}</td>
+                                            <td class="text-center">{{ $item->user_created }}</td>
+                                            <td class="text-center">{{ $item->user_updated }}</td>
+                                            <td class="text-center">{{ $item->created_at }}</td>
                                             <td class="text-center">
-                                                {{ $ADJ->created_at != $ADJ->updated_at ? $ADJ->updated_at : '' }}
+                                                {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $ADJ->id }}"
-                                                        action="{{ route('GradingHalusAdjustmentAdding.destroy', $ADJ->id) }}"
-                                                        method="POST">
-                                                        {{-- <a href="{{ route('GradingHalusAdjustmentAdding.show', $ADJ->id) }}"
-                                                            class="btn btn-link" title="View" data-original-title="View">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a> --}}
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        {{-- <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $ADJ->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button> --}}
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $ADJ->id }})">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
+                                                    @if ($item->status == 1)
+                                                        <form style="display: flex" id="deleteForm{{ $item->id }}"
+                                                            action="{{ route('GradingHalusAdjustmentAdding.destroy', $item->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-link"
+                                                                data-original-title="Remove"
+                                                                onclick="confirmDelete({{ $item->id }})">
+                                                                <i class="bi bi-trash3 text-danger"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

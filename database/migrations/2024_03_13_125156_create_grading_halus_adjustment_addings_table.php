@@ -22,6 +22,7 @@ return new class extends Migration
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
             $table->string('nomor_adjustment');
+            $table->integer('status')->default(1);
             $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
             $table->timestamps();

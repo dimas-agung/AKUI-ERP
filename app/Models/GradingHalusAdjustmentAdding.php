@@ -19,6 +19,7 @@ class GradingHalusAdjustmentAdding extends Model
         'modal',
         'total_modal',
         'nomor_adjustment',
+        'status',
         'user_created',
         'user_updated',
     ];
