@@ -11,6 +11,7 @@ use App\Models\PreGradingHalusAdding;
 use App\Services\PreGradingHalusAddingService;
 use App\Http\Requests\PreGradingHalusAddingRequest;
 use App\Models\PreGradingHalusAddingStock;
+use App\Models\PreGradingHalusInput;
 
 class PreGradingHalusAddingController extends Controller
 {
@@ -155,6 +156,20 @@ class PreGradingHalusAddingController extends Controller
             if ($existingItem) {
                 // Perbarui data
                 $existingItem->update($dataToUpdate);
+            }
+
+            $PreGradingHalusInput = PreGradingHalusInput::where('nomor_job', $PreGradingHalusAdding->nomor_job)
+                ->where('id_box_grading_kasar', $PreGradingHalusAdding->id_box_grading_kasar)
+                ->get();
+
+            // Logika Update Status
+            foreach ($PreGradingHalusInput as $item) {
+                if ($item) {
+
+                    $item->update([
+                        'status' => 1,
+                    ]);
+                }
             }
 
             // Hapus record utama

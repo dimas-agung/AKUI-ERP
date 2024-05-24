@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\PreGradingHalusAdding;
 use App\Models\PreGradingHalusAddingStock;
+use App\Models\PreGradingHalusInput;
 use App\Models\PreGradingHalusStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -57,6 +58,22 @@ class PreGradingHalusAddingService
                     'total_modal'           => $data['total_berat_kirim'] * ($data['total_modal'] / $data['total_berat_kirim']),
                     'status_stock'          => $item->status_stock ?? 1,
                     'id_box_raw_material'   => $item->id_box_raw_material,
+                ]);
+            }
+
+            // Ambil PreGradingHalusAdding berdasarkan nomor_job dan id_box_grading_kasar
+            $PreGradingHalusAdding = PreGradingHalusAdding::where('nomor_job', $dataArray[0]->nomor_job)
+                ->where('id_box_grading_kasar', $dataArray[0]->id_box_grading_kasar)
+                ->first();
+
+            // Ambil PreGradingHalusInput berdasarkan nomor_job dan id_box_grading_kasar dari PreGradingHalusAdding
+            $PreGradingHalusInput = PreGradingHalusInput::where('nomor_job', $PreGradingHalusAdding->nomor_job)
+                ->where('id_box_grading_kasar', $PreGradingHalusAdding->id_box_grading_kasar)
+                ->first();
+
+            if ($PreGradingHalusInput) {
+                $PreGradingHalusInput->update([
+                    'status' => 0,
                 ]);
             }
 
