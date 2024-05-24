@@ -64,6 +64,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nomor BSTB</label>
+                                        <input type="hidden" class="form-control" id="inisial_tujuan">
                                         <input type="text" class="form-control" id="nomor_bstb" name="nomor_bstb"
                                             readonly>
                                     </div>
@@ -109,8 +110,9 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Total Modal</label>
-                                        <input type="text" id="total_modal" class="form-control" name="total_modal"
-                                            readonly>
+                                        <input type="text" id="total_modal_lama" class="form-control"
+                                            name="total_modal_lama" readonly>
+                                        <input type="hidden" id="total_modal" class="form-control" name="total_modal">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -211,7 +213,48 @@
         var beratMasukAwal = 0;
         var pcsMasukAwal = 0;
 
-        function generateNomorBSTB(prefix, tujuan_kirim) {
+        let inisialTujuanGlobal = ''; // Variabel global untuk menyimpan inisial_tujuan
+        let nomorBSTBGlobal = ''; // Variabel global untuk menyimpan nomor BSTB
+
+        $('#tujuan_kirim').on('change', function() {
+            let selectedPcc = $(this).val();
+
+            $.ajax({
+                url: '{{ route('GradingHalusOutput.setpcc') }}',
+                method: 'GET',
+                data: {
+                    tujuan_kirim: selectedPcc
+                },
+                success: function(response) {
+                    if (response.status > 0) {
+                        inisialTujuanGlobal = response
+                        .inisial_tujuan; // Simpan inisial_tujuan ke variabel global
+                        checkAndGenerateNomorBSTB(
+                        inisialTujuanGlobal); // Panggil fungsi dengan inisial_tujuan
+                    }
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        function checkAndGenerateNomorBSTB(inisialTujuan) {
+            const idBoxGradingHalus = $('#id_box_grading_halus').val();
+
+            if (inisialTujuan && idBoxGradingHalus) {
+                // Hanya generate nomor BSTB jika nomor BSTB global belum diatur
+                if (!nomorBSTBGlobal) {
+                    nomorBSTBGlobal = generateNomorBSTB('BSTB', inisialTujuan);
+                    $('#nomor_bstb').val(nomorBSTBGlobal);
+                }
+
+                const generatedNomorJob = generateNomorBSTB('JOB', inisialTujuan);
+                $('#nomor_job').val(generatedNomorJob);
+            }
+        }
+
+        function generateNomorBSTB(prefix, inisial_tujuan) {
             let nomor;
 
             const now = new Date();
@@ -222,45 +265,13 @@
             const menit = ('0' + now.getMinutes()).slice(-2);
             const detik = ('0' + now.getSeconds()).slice(-2);
 
-            // Menentukan postfix berdasarkan tujuan kirim
-            let postfix = '';
-            if (tujuan_kirim === 'AKUI') {
-                postfix = '_A_UGH';
-            } else if (tujuan_kirim === 'OBI') {
-                postfix = '_O_UGH';
-            }
-
-            // Menambahkan prefix yang sesuai
             if (prefix === 'BSTB') {
-                nomor = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}${postfix}`;
+                nomor = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_UGH`;
             } else {
-                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}${postfix}`;
+                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_UGH`;
             }
 
             return nomor;
-        }
-
-        // Contoh penggunaan:
-        console.log(generateNomorBSTB('BSTB',
-            'AKUI')); // Output: BSTB_180524-134530_A_UGH (tanggal dan waktu tergantung saat dijalankan)
-        console.log(generateNomorBSTB('BSTB',
-            'OBI')); // Output: BSTB_180524-134530_B_UGH (tanggal dan waktu tergantung saat dijalankan)
-        console.log(generateNomorBSTB('',
-            'AKUI')); // Output: 180524-134530_A_UGH (tanggal dan waktu tergantung saat dijalankan)
-        console.log(generateNomorBSTB('',
-            'OBI')); // Output: 180524-134530_B_UGH (tanggal dan waktu tergantung saat dijalankan)
-
-        function checkAndGenerateNomorBSTB() {
-            const tujuanKirim = $('#tujuan_kirim').val();
-            const idBoxGradingHalus = $('#id_box_grading_halus').val();
-
-            if (tujuanKirim && idBoxGradingHalus) {
-                const generatedNomorBSTB = generateNomorBSTB('BSTB', tujuanKirim);
-                $('#nomor_bstb').val(generatedNomorBSTB);
-
-                const generatedNomorJob = generateNomorBSTB('JOB', tujuanKirim);
-                $('#nomor_job').val(generatedNomorJob);
-            }
         }
 
         $('#id_box_grading_halus').on('change', function() {
@@ -275,7 +286,6 @@
                         id_box_grading_halus: selectedIdBox
                     },
                     success: function(response) {
-                        // Ambil nilai pertama dari respons jika ada
                         let data = response.length > 0 ? response[0] : null;
 
                         if (data) {
@@ -283,46 +293,41 @@
                             $('#nomor_batch').val(data.nomor_batch);
                             $('#jenis_job').val(data.jenis);
                             $('#modal').val(data.modal);
-                            $('#total_modal').val(data.total_modal);
-
+                            $('#total_modal_lama').val(data.total_modal);
                         } else {
                             console.error('No data found for the selected id_box_grading_halus');
                         }
 
-                        // Inisialisasi variabel untuk menampung total berat masuk dan pcs masuk
                         let totalBeratMasuk = 0;
                         let totalPcsMasuk = 0;
 
-                        // Loop melalui setiap item dalam respons
                         response.forEach(function(item) {
                             totalBeratMasuk += parseFloat(item.berat_masuk);
                             totalPcsMasuk += parseInt(item.pcs_masuk);
                         });
 
                         $('#berat_masuk').val(totalBeratMasuk);
-                        beratMasukAwal += totalBeratMasuk
+                        beratMasukAwal += totalBeratMasuk;
                         $('#pcs_masuk').val(totalPcsMasuk);
-                        pcsMasukAwal += totalPcsMasuk
+                        pcsMasukAwal += totalPcsMasuk;
 
-                        // // Memanggil generateNomorBSTB dan mengatur nilai sesuai dengan respons dari server
-                        // let generatedNomorBSTB = generateNomorBSTB(
-                        //     'BSTB'); // Memanggil generateNomorBSTB dengan prefix 'BSTB'
-                        // let generatedNomorJob = generateNomorBSTB(
-                        //     'JOB'); // Memanggil generateNomorBSTB dengan prefix 'JOB'
-                        // $('#nomor_bstb').val(generatedNomorBSTB);
-                        // $('#nomor_job').val(generatedNomorJob);
-
-                        checkAndGenerateNomorBSTB();
+                        // Panggil fungsi checkAndGenerateNomorBSTB untuk mengatur nomor_job
+                        const inisialTujuan = inisialTujuanGlobal || $('#inisial_tujuan').val();
+                        checkAndGenerateNomorBSTB(inisialTujuan);
                     },
                     error: function(error) {
                         console.error('Error:', error);
                     }
                 });
             }
-            generateUpah()
+            generateUpah();
         });
 
         $('#berat_job').on('input', function() {
+            calculateUpah();
+        });
+
+        $('#modal').on('input', function() {
             calculateUpah();
         });
 
@@ -347,12 +352,22 @@
         function calculateUpah() {
             let upah_operator = parseFloat($('#upah').val());
             let berat_job = parseFloat($('#berat_job').val());
+            let modal = parseFloat($('#modal').val());
 
             if (!isNaN(upah_operator) && !isNaN(berat_job)) {
                 let hasil_upah = upah_operator * berat_job;
                 $('#upah_oprator').val(hasil_upah.toFixed(2)); // Menampilkan hasil dengan 2 desimal
             } else {
                 $('#upah_oprator').val('');
+            }
+
+
+            // Menghitung total modal
+            if (!isNaN(berat_job) && !isNaN(modal)) {
+                let total_modal = berat_job * modal;
+                $('#total_modal').val(total_modal.toFixed(2)); // Menampilkan total modal dengan 2 desimal
+            } else {
+                $('#total_modal').val('');
             }
         }
         // });
@@ -483,7 +498,6 @@
             });
             // Membersihkan nilai input setelah ditambahkan
             $('#nomor_batch').val('');
-            $('#nomor_bstb').val('');
             $('#nomor_job').val('');
             $('#berat_job').val('');
             $('#pcs_job').val('');
@@ -493,15 +507,16 @@
             $('#total_modal').val('');
             $('#id_box_grading_halus').val($('#id_box_grading_halus').val()).trigger('change');
             $('#user_created').prop('readonly', true);
-            $('#tujuan_kirim').val($('#tujuan_kirim option:first').val());
+            // Set tujuan_kirim sebagai read-only setelah dipilih
+            $('#tujuan_kirim').prop('disabled', true);
+
 
             // Update indeks baris terakhir
             currentRowIndex++;
 
             // Kosongkan input setelah menambahkan baris
-            $('#nomor_batch, #nomor_bstb, #nomor_job, #berat_job, #pcs_job, #upah_oprator, #keterangan, #modal, #total_modal, #jenis_job, #berat_masuk, #pcs_masuk')
+            $('#nomor_batch, #nomor_job, #berat_job, #pcs_job, #upah_oprator, #keterangan, #modal, #total_modal, #jenis_job, #berat_masuk, #pcs_masuk')
                 .val('');
-            $('#tujuan_kirim').prop('selectedIndex', 0);
         }
 
 
