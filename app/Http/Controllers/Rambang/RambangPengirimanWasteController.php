@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Rambang;
 
+use App\Models\Perusahaan;
 use Illuminate\Http\Request;
+use App\Models\RambangKeringInput;
 use App\Models\RambangKeringStock;
 use Illuminate\Support\Facades\DB;
 use App\Models\TransitRambangWaste;
 use App\Models\TransitWasteRambang;
 use App\Http\Controllers\Controller;
-use App\Models\RambangKeringInput;
 use Illuminate\Http\RedirectResponse;
 use App\Models\RambangPengirimanWaste;
 use Illuminate\Support\Facades\Validator;
@@ -31,8 +32,10 @@ class RambangPengirimanWasteController extends Controller
     {
         $i = 1;
         $RambangKeringStock = RambangKeringStock::all();
+        $Perusahaan = Perusahaan::all();
         return response()->view('Rambang.RambangPengirimanWaste.create', [
             'rambang_kering_stock' => $RambangKeringStock,
+            'perusahaan' => $Perusahaan,
             'i' => $i,
         ]);
     }

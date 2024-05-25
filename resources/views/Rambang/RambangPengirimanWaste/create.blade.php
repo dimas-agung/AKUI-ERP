@@ -18,7 +18,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 mb-3">
                                         <label for="basic-usage" class="form-label">Id Box Hancuran Kotor</label>
                                         <select class="select2 form-select" style="width: 100%;" name="id_box_hcr_kotor"
                                             id="id_box_hcr_kotor" data-placeholder="Pilih Id Box Hancuran Kotor">
@@ -45,21 +45,33 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Plant</label>
+                                        <select class="select2 form-select" style="width: 100%;" name="plant"
+                                            id="plant" data-placeholder="Pilih Plant">
+                                            <option value="">Pilih Plant</option>
+                                            @foreach ($perusahaan as $Perusahaans)
+                                                <option value="{{ $Perusahaans->plant }}">
+                                                    {{ $Perusahaans->plant }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
                                         <div class="form-group">
                                             <label>Keterangan</label>
                                             <input type="text" id="keterangan" class="form-control" name="keterangan"
                                                 placeholder="Masukkan keterangan">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4 mb-3">
                                         <div class="form-group">
                                             <label>Nomor BSTB</label>
                                             <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
                                                 placeholder="Masukkan nomor_bstb">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4 mb-3">
                                         <div class="form-group">
                                             <label>NIP Admin</label>
                                             <input type="text" id="user_created" class="form-control" name="user_created"
@@ -67,8 +79,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- </div> --}}
-                                <hr>
+                                <hr style="border-width: 3px;">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card">
@@ -150,11 +161,6 @@
             $('#id_box_hcr_kotor').on('change', function() {
                 let selectedIdBoxHcr = $(this).val();
                 if (selectedIdBoxHcr) {
-                    // Generate nomor BSTB
-                    const nomorBstb = generateNomorBSTB();
-
-                    // Display nomor BSTB
-                    $('#nomor_bstb').val(nomorBstb);
 
                     $.ajax({
                         url: `{{ route('RambangPengirimanWaste.set') }}`,
@@ -195,8 +201,61 @@
                 $('#id_box_hcr_kotor').append('<option value="' + id_box_hcr_kotor + '">' +
                     id_box_hcr_kotor + '</option>');
             });
+
+            // Menangani perubahan pada dropdown nomor_job
+            $('#plant').on('change', function() {
+                const selectedPlant = $(this).val();
+                if (selectedPlant) { // Check if selectedPlant is not empty
+                    const nomorGrading = generateNomorGrading(selectedPlant);
+                    $('#nomor_bstb').val(nomorGrading);
+                } else {
+                    $('#nomor_bstb').val(''); // Clear nomor_grading if plant is empty
+                }
+            });
+
+            function generateNomorGrading(selectedPlant) {
+                const now = new Date();
+                const tahun = now.getFullYear().toString().substr(-2);
+                const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+                const tanggal = ('0' + now.getDate()).slice(-2);
+                const jam = ('0' + now.getHours()).slice(-2);
+                const menit = ('0' + now.getMinutes()).slice(-2);
+                const detik = ('0' + now.getSeconds()).slice(-2);
+
+                const nomorGrading = `BSTB_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_${selectedPlant}_UPC`;
+
+                return nomorGrading;
+            }
         });
 
+        function validateForm() {
+            // Mendefinisikan variabel untuk menyimpan kolom yang belum diisi
+            let emptyFields = [];
+
+            // Mendapatkan nilai dari semua input
+            let id_box_hcr_kotor = $('#id_box_hcr_kotor').val();
+            let plant = $('#plant').val();
+            let nomor_bstb = $('#nomor_bstb').val();
+            let user_created = $('#user_created').val();
+
+            // Memeriksa setiap input, dan jika kosong, tambahkan ke daftar kolom yang belum diisi
+            if (!id_box_hcr_kotor) emptyFields.push('Id Box Hancuran Kotor');
+            if (!plant) emptyFields.push('Plant');
+            if (!nomor_bstb) emptyFields.push('Nomor BSTB');
+            if (!user_created) emptyFields.push('NIP Admin');
+
+            // Jika daftar kolom yang belum diisi tidak kosong, tampilkan pesan peringatan
+            if (emptyFields.length > 0) {
+                Swal.fire({
+                    title: 'Warning!',
+                    html: "Harap isi kolom berikut: <br>" + emptyFields.join('<br>'),
+                    icon: 'warning'
+                });
+                return false;
+            } else {
+                return true; // Form valid
+            }
+        }
 
 
         // function CeksendData() {
@@ -250,74 +309,76 @@
         //     });
 
         function sendData() {
-            // let doc_no = $('#doc_no').val() || '';
-            let keterangan = $('#keterangan').val() || '';
-            let nomor_bstb = $('#nomor_bstb').val() || '';
+            if (validateForm()) {
+                // let doc_no = $('#doc_no').val() || '';
+                let keterangan = $('#keterangan').val() || '';
+                let nomor_bstb = $('#nomor_bstb').val() || '';
 
-            // Mengirim data ke server menggunakan AJAX
-            $.ajax({
-                url: '{{ route('RambangPengirimanWaste.store') }}',
-                method: 'POST',
-                beforeSend: function() {
-                    Swal.fire({
-                        title: 'Loading...',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        onBeforeOpen: () => {
-                            Swal.showLoading();
+                // Mengirim data ke server menggunakan AJAX
+                $.ajax({
+                    url: '{{ route('RambangPengirimanWaste.store') }}',
+                    method: 'POST',
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Loading...',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            onBeforeOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    data: function() {
+                        let postData = {
+                            dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
+                            // doc_no: doc_no,
+                            nomor_bstb: $('#nomor_bstb').val() || '',
+                            user_created: $('#user_created').val() || '',
+                            user_updated: $('#user_createds').val() || '',
+                            _token: '{{ csrf_token() }}'
+                        };
+
+                        // Hanya mengirim keterangan jika memiliki nilai
+                        if (keterangan.trim() !== '') {
+                            postData.keterangan = keterangan;
+                            postData.nomor_bstb = nomor_bstb;
                         }
-                    });
-                },
-                data: function() {
-                    let postData = {
-                        dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
-                        // doc_no: doc_no,
-                        nomor_bstb: $('#nomor_bstb').val() || '',
-                        user_created: $('#user_created').val() || '',
-                        user_updated: $('#user_createds').val() || '',
-                        _token: '{{ csrf_token() }}'
-                    };
 
-                    // Hanya mengirim keterangan jika memiliki nilai
-                    if (keterangan.trim() !== '') {
-                        postData.keterangan = keterangan;
-                        postData.nomor_bstb = nomor_bstb;
+                        return postData;
+                    }(),
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Data berhasil disimpan.',
+                            icon: 'success'
+                        }).then((result) => {
+                            // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
+                            if (result.isConfirmed) {
+                                window.location.href = response.redirectTo;
+                                // Ganti dengan URL tujuan redirect Anda
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        Swal.fire({
+                            title: 'Failed!',
+                            text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
+                            icon: 'error'
+                        });
+                        console.log('Error:', error);
                     }
+                });
+            }
+            // }
 
-                    return postData;
-                }(),
-                success: function(response) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Data berhasil disimpan.',
-                        icon: 'success'
-                    }).then((result) => {
-                        // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
-                        if (result.isConfirmed) {
-                            window.location.href = response.redirectTo;
-                            // Ganti dengan URL tujuan redirect Anda
-                        }
-                    });
-                },
-                error: function(error) {
-                    Swal.fire({
-                        title: 'Failed!',
-                        text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
-                        icon: 'error'
-                    });
-                    console.log('Error:', error);
-                }
-            });
-        }
-        // }
+            // letiabel global untuk menyimpan indeks baris terakhir
+            let currentRowIndex = 0;
+            let dataStock = [];
 
-        // letiabel global untuk menyimpan indeks baris terakhir
-        let currentRowIndex = 0;
-        let dataStock = [];
-
-        // Mendefinisikan array jika belum
-        if (typeof dataArray === 'undefined') {
-            let dataArray = [];
+            // Mendefinisikan array jika belum
+            if (typeof dataArray === 'undefined') {
+                let dataArray = [];
+            }
         }
     </script>
 @endsection
