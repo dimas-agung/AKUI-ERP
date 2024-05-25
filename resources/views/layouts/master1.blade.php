@@ -422,7 +422,7 @@
                         @endrole
                         @role('cleaning|admin')
                             <li
-                                class="sidebar-item has-sub {{ Route::is('CabutBuluPenyebaran*', 'CabutBuluStock*', 'RambangKeringInput*', 'RambangKeringStock*', 'RambangPengirimanWaste*', 'TransitRambangWaste*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('CabutBuluPenyebaran*', 'CabutBuluStock*', 'RambangKeringInput*', 'RambangKeringStock*', 'RambangPengirimanWaste*', 'TransitRambangWaste*', 'CabutHancuranPenyebaran*', 'CabutHancuranPengembalian*', 'CabutHancuranStock*', 'TransitCabutHancuran*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Cleaning</span>
@@ -509,6 +509,42 @@
                                                     class="submenu-link">Transit
                                                     Rambang
                                                     <br>Waste</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('CabutHancuranPenyebaran*', 'CabutHancuranPengembalian*', 'CabutHancuranStock*', 'TransitCabutHancuran*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Cabut Hancuran</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutHancuranStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutHancuranStock.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Hancuran
+                                                    <br>Stock</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutHancuranPenyebaran*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutHancuranPenyebaran.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Hancuran
+                                                    <br>Penyebaran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutHancuranPengembalian*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutHancuranPengembalian.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Hancuran
+                                                    <br>Pengembalian</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitCabutHancuran*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitCabutHancuran.index') }}"
+                                                    class="submenu-link">Transit
+                                                    Cabut
+                                                    <br>Hancuran</a>
                                             </li>
                                         </ul>
                                     </li>

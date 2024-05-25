@@ -62,14 +62,10 @@
                                                 {{-- <td class="text-center">{{ $PGHAS->total_modal }}</td> --}}
                                                 <td class="text-center">{{ number_format($PGHAS->total_modal, 2, ',', '.') }}
                                                 </td>
-                                            @endrole
-                                            <td class="text-center">{{ $PGHAS->status_stock }}</td>
-                                            <td class="text-center">{{ $PGHAS->created_at }}</td>
-                                            <td class="text-center">
-                                                {{ $PGHAS->created_at != $PGHAS->updated_at ? $PGHAS->updated_at : '' }}
-                                            </td>
 
-                                        </tr>
+                                            </tr>
+                                            @php $iteration++; @endphp
+                                        @endif
                                     @empty
                                         <div class="alert alert-danger">
                                             Data Pre Grading Halus Adding Stock belum Tersedia.

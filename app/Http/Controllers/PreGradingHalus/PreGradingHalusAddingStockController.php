@@ -15,7 +15,6 @@ class PreGradingHalusAddingStockController extends Controller
         $PreGradingHalusAddingStock = PreGradingHalusAddingStock::where('status_stock',1)->get();
         return response()->view('PreGradingHalus.PreGradingHalusAddingStock.index', [
             'pre_grading_halus_adding_stocks' => $PreGradingHalusAddingStock,
-            'i' => $i,
         ]);
     }
 }

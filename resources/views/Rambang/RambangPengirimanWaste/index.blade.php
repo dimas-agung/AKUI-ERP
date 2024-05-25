@@ -56,17 +56,19 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
-                                                        action="{{ route('RambangPengirimanWaste.destroy', $item->nomor_bstb) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete('{{ $item->nomor_bstb }}')">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
+                                                    @if ($item->status == 1)
+                                                        <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
+                                                            action="{{ route('RambangPengirimanWaste.destroy', $item->nomor_bstb) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-link"
+                                                                data-original-title="Remove"
+                                                                onclick="confirmDelete('{{ $item->nomor_bstb }}')">
+                                                                <i class="bi bi-trash3 text-danger"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

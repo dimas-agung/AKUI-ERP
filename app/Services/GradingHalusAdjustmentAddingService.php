@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
-use App\Models\GradingHalusAdjustmentAdding;
-use App\Models\GradingHalusAdjustmentStock;
-use App\Models\GradingHalusStock;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Models\GradingHalusInput;
+use App\Models\GradingHalusStock;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 use PHPUnit\Framework\Constraint\Operator;
+use App\Models\GradingHalusAdjustmentStock;
+use App\Models\GradingHalusAdjustmentAdding;
 
 class GradingHalusAdjustmentAddingService
 {
@@ -25,6 +26,22 @@ class GradingHalusAdjustmentAddingService
 
             foreach ($dataArray as $item) {
                 $this->createItem($item);
+            }
+
+            // Ambil PreGradingHalusAdding berdasarkan nomor_job dan id_box_grading_kasar
+            $GradingHalusAdjustmentAdding = GradingHalusAdjustmentAdding::where('id_box_grading_halus', $dataArray[0]->id_box_grading_halus)
+                ->where('nomor_batch', $dataArray[0]->nomor_batch)
+                ->first();
+
+            // Ambil PreGradingHalusInput berdasarkan nomor_job dan id_box_grading_kasar dari PreGradingHalusAdding
+            $GradingHalusInput = GradingHalusInput::where('id_box_grading_halus', $GradingHalusAdjustmentAdding->id_box_grading_halus)
+                ->where('nomor_batch', $GradingHalusAdjustmentAdding->nomor_batch)
+                ->first();
+
+            if ($GradingHalusInput) {
+                $GradingHalusInput->update([
+                    'status' => 0,
+                ]);
             }
 
             DB::commit();
@@ -139,6 +156,20 @@ class GradingHalusAdjustmentAddingService
                         'pcs_keluar' => $perbedaanPcs,
                         'sisa_pcs' => $sisaPcs,
                         'total_modal' => $totalModalBaru,
+                        'status' => 1,
+                    ]);
+                }
+            }
+
+            $GradingHalusInput = GradingHalusInput::where('id_box_grading_halus', $GradingHalusAdjustmentAdding->id_box_grading_halus)
+                ->where('nomor_batch', $GradingHalusAdjustmentAdding->nomor_batch)
+                ->get();
+
+            // Logika Update Status
+            foreach ($GradingHalusInput as $item) {
+                if ($item) {
+
+                    $item->update([
                         'status' => 1,
                     ]);
                 }

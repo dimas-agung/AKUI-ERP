@@ -25,6 +25,7 @@ class PreGradingHalusAdding extends Model
         'tujuan_kirim',
         'modal',
         'total_modal',
+        'status',
         'user_created',
         'user_updated',
     ];

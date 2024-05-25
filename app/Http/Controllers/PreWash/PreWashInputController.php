@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\TransitGradingHalus;
 use App\Http\Controllers\Controller;
+use App\Models\GradingHalusOutput;
 use App\Models\PreWashStock;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
@@ -144,6 +145,20 @@ class PreWashInputController extends Controller
                         ]);
                     }
 
+                    // Ambil semua item yang sesuai dengan kriteria
+                    $GradingHalusOutput = GradingHalusOutput::where('nomor_job', $itemObject->nomor_job)
+                        ->where('nomor_bstb', $itemObject->nomor_bstb)
+                        ->get();
+
+                    foreach ($GradingHalusOutput as $item) {
+
+                        // Update data dengan nilai baru
+                        $item->update([
+                            'status'      => 0,
+                            // 'user_updated' => $itemObject->user_created ?? " ",
+                        ]);
+                    }
+
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollBack();
@@ -201,6 +216,18 @@ class PreWashInputController extends Controller
                     if ($existingItem) {
 
                         $existingItem->update(['status' => 1]);
+                    }
+                }
+
+                $GradingHalusOutput = GradingHalusOutput::where('nomor_job', $RambangPengirimanWaste->nomor_job)
+                    ->where('nomor_bstb', $RambangPengirimanWaste->nomor_bstb)
+                    ->get();
+
+                // Logika Update Status
+                foreach ($GradingHalusOutput as $item) {
+                    if ($item) {
+
+                        $item->update(['status' => 1]);
                     }
                 }
 

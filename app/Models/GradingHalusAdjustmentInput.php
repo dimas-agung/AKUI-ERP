@@ -38,6 +38,7 @@ class GradingHalusAdjustmentInput extends Model
         'total_hpp',
         'fix_hpp',
         'fix_total_hpp',
+        'status',
         'user_created',
         'user_updated',
     ];

@@ -79,7 +79,6 @@ class RambangKeringInputService
                         $existingItem->update([
                             'berat_keluar'      => $itemObject->berat_basah,
                             'sisa_berat'        => 0,
-                            // 'user_updated' => $itemObject->user_created ?? " ",
                         ]);
                     }
 

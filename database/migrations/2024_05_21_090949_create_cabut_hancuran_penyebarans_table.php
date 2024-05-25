@@ -11,15 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rambang_pengiriman_wastes', function (Blueprint $table) {
+        Schema::create('cabut_hancuran_penyebarans', function (Blueprint $table) {
             $table->id();
-            $table->string('id_box_hcr_kotor');
+            $table->string('nomor_job');
             $table->string('jenis_rambang');
+            $table->string('upah_operator');
             $table->float('berat');
-            $table->string('keterangan')->nullable();
-            $table->string('nomor_bstb');
-            $table->integer('status')->default(1);
-            $table->string('user_created')->nullable();
+            $table->string('nama_operator');
+            $table->string('nip_operator');
+            $table->string('grade_operator');
+            $table->string('nama_team_leader');
+            $table->timestamp('waktu_penyebaran');
+            $table->string('status')->default('1');
+            $table->string('user_created');
             $table->string('user_updated')->nullable();
             $table->timestamps();
         });
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rambang_pengiriman_wastes');
+        Schema::dropIfExists('cabut_hancuran_penyebarans');
     }
 };

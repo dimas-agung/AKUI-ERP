@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\TransitRambangWaste;
 use App\Models\TransitWasteRambang;
 use App\Http\Controllers\Controller;
+use App\Models\RambangKeringInput;
 use Illuminate\Http\RedirectResponse;
 use App\Models\RambangPengirimanWaste;
 use Illuminate\Support\Facades\Validator;
@@ -132,6 +133,16 @@ class RambangPengirimanWasteController extends Controller
                         ]);
                     }
 
+                    $RambangKeringInput = RambangKeringInput::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
+                        ->where('jenis_rambang', $itemObject->jenis_rambang)
+                        ->get();
+
+                    foreach ($RambangKeringInput as $item) {
+                        $item->update([
+                            'status'   => 0,
+                        ]);
+                    }
+
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollBack();
@@ -152,66 +163,6 @@ class RambangPengirimanWasteController extends Controller
             'redirectTo' => route('RambangPengirimanWaste.index')
         ], 201);
     }
-
-    // public function destroy($nomor_bstb)
-    // {
-    //     try {
-    //         // Begin transaction
-    //         DB::beginTransaction();
-    //         // Temukan record berdasarkan nomor_$nomor_bstb
-    //         $RambangPengirimanWaste = RambangPengirimanWaste::findOrFail($nomor_bstb);
-    //         // Hapus semua item terkait
-    //         $stockTrans = TransitRambangWaste::where('nomor_bstb', '=', $RambangPengirimanWaste->nomor_bstb)
-    //             // ->where('jenis_rambang', $RambangPengirimanWaste->jenis_rambang)
-    //             ->first();
-
-    //         if ($stockTrans) {
-    //             // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
-    //             if ($stockTrans->berat === 0) {
-    //                 $stockTrans->delete();
-    //             } else {
-    //                 // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
-    //                 if ($RambangPengirimanWaste->berat >= $stockTrans->berat) {
-    //                     $stockTrans->delete();
-    //                 } else {
-    //                 }
-    //             }
-    //         }
-
-    //         $existingItems = RambangKeringStock::where('id_box_hcr_kotor', $RambangPengirimanWaste->id_box_hcr_kotor)
-    //             ->where('jenis_rambang', $RambangPengirimanWaste->jenis_rambang)
-    //             ->get();
-
-    //         // Logika Update Status
-    //         foreach ($existingItems as $existingItem) {
-
-    //             // Perbarui data untuk setiap item yang ada
-    //             if ($existingItem) {
-    //                 $beratSebelumnya = $existingItem->berat_keluar;
-
-    //                 // Hitung total modal baru berdasarkan perbedaan berat
-    //                 $perbedaanBerat = $beratSebelumnya - $RambangPengirimanWaste->berat;
-    //                 $sisaBerat = $existingItem->berat_keluar - $perbedaanBerat;
-
-    //                 $existingItem->update(['berat_keluar'   => $perbedaanBerat]);
-    //                 $existingItem->update(['sisa_berat'     => $sisaBerat]);
-    //             }
-    //         }
-
-    //         // Hapus record utama
-    //         $RambangPengirimanWaste->delete();
-
-    //         // Jika tidak ada kesalahan, komit transaksi
-    //         DB::commit();
-
-    //         return redirect()->route('RambangPengirimanWaste.index')->with('success', 'Data berhasil dihapus');
-    //     } catch (\Exception $e) {
-    //         // Jika terjadi kesalahan, rollback transaksi
-    //         DB::rollback();
-
-    //         return redirect()->route('RambangPengirimanWaste.index')->with('error', 'Gagal menghapus data');
-    //     }
-    // }
 
     public function destroy($nomor_bstb)
     {
@@ -264,6 +215,17 @@ class RambangPengirimanWasteController extends Controller
                         $existingItem->update(['sisa_berat' => $sisaBerat]);
                     }
                 }
+
+                // Temukan semua item terkait di RambangKeringStock
+                $RambangKeringInput = RambangKeringInput::where('id_box_hcr_kotor', $RambangPengirimanWaste->id_box_hcr_kotor)
+                    ->where('jenis_rambang', $RambangPengirimanWaste->jenis_rambang)
+                    ->get();
+                foreach ($RambangKeringInput as $item) {
+                    if ($item) {
+                        $item->update(['status' => 1]);
+                    }
+                }
+
 
                 // Hapus record utama
                 $RambangPengirimanWaste->delete();

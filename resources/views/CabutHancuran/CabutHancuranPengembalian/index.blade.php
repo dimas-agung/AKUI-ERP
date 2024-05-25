@@ -1,9 +1,9 @@
 @extends('layouts.master1')
 @section('menu')
-    Pre Grading Halus
+    Cabut Bulu Hancuran
 @endsection
 @section('title')
-    Grading Halus Adjustment Adding
+    Cabut Bulu Hancuran Pengembalian
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,10 +13,9 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Grading Halus Adjustment Adding
+                                Data Cabut Bulu Hancuran Pengembalian
                                 <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong><i class="bi bi-plus-circle"></i> Add Data <i
-                                            class="bi bi-plus-circle"></i></strong>
+                                    <strong> Add Data </strong>
                                 </button>
                             </div>
                         </h5>
@@ -27,17 +26,20 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">ID Box Grading Halus</th>
-                                        <th scope="col" class="text-center">Nomor Adjustment</th>
-                                        <th scope="col" class="text-center">Nomor Batch</th>
-                                        <th scope="col" class="text-center">Jenis Adding</th>
-                                        <th scope="col" class="text-center">Berat Adding</th>
-                                        <th scope="col" class="text-center">Pcs Adding</th>
-                                        <th scope="col" class="text-center">Keterangan</th>
+                                        <th scope="col" class="text-center">Nomor Job</th>
+                                        <th scope="col" class="text-center">Jenis Rambang</th>
                                         @role('admin')
-                                            <th scope="col" class="text-center">Modal</th>
-                                            <th scope="col" class="text-center">Total Modal</th>
+                                            <th scope="col" class="text-center">Upah Operator</th>
                                         @endrole
+                                        <th scope="col" class="text-center">Berat</th>
+                                        <th scope="col" class="text-center">Nama Operator</th>
+                                        <th scope="col" class="text-center">Nip Operator</th>
+                                        <th scope="col" class="text-center">Grade Operator</th>
+                                        <th scope="col" class="text-center">Nama Team Leader</th>
+                                        <th scope="col" class="text-center">Waktu Penyebaran</th>
+                                        <th scope="col" class="text-center">Waktu Pengembalian</th>
+                                        <th scope="col" class="text-center">Lama Pengerjaan</th>
+                                        <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
@@ -46,21 +48,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($grading_halus_adjustment_addings as $item)
+                                    @forelse ($cabut_hancuran_pengembalian as $item)
                                         <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $item->id_box_grading_halus }}</td>
-                                            <td class="text-center">{{ $item->nomor_adjustment }}</td>
-                                            <td class="text-center">{{ $item->nomor_batch }}</td>
-                                            <td class="text-center">{{ $item->jenis_adding }}</td>
-                                            <td class="text-center">{{ $item->berat_adding }}</td>
-                                            <td class="text-center">{{ $item->pcs_adding }}</td>
-                                            <td class="text-center">{{ $item->keterangan }}</td>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td class="text-center">{{ $item->nomor_job }}</td>
+                                            <td class="text-center">{{ $item->jenis_rambang }}</td>
                                             @role('admin')
-                                                <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
+                                                <td class="text-center">{{ number_format($item->upah_operator, 2, ',', '.') }}
                                                 </td>
                                             @endrole
+                                            <td class="text-center">{{ $item->berat }}</td>
+                                            <td class="text-center">{{ $item->nama_operator }}</td>
+                                            <td class="text-center">{{ $item->nip_operator }}</td>
+                                            <td class="text-center">{{ $item->grade_operator }}</td>
+                                            <td class="text-center">{{ $item->nama_team_leader }}</td>
+                                            <td class="text-center">{{ $item->waktu_penyebaran }}</td>
+                                            <td class="text-center">{{ $item->waktu_pengembalian }}</td>
+                                            <td class="text-center">
+                                                {{ sprintf('%02d:%02d:%02d', floor($item->lama_pengerjaan / 3600), floor(($item->lama_pengerjaan % 3600) / 60), $item->lama_pengerjaan % 60) }}
+                                            </td>
+                                            <td class="text-center">{{ $item->keterangan }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>
                                             <td class="text-center">{{ $item->created_at }}</td>
@@ -70,14 +77,14 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     @if ($item->status == 1)
-                                                        <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                            action="{{ route('GradingHalusAdjustmentAdding.destroy', $item->id) }}"
+                                                        <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
+                                                            action="{{ route('CabutHancuranPengembalian.destroy', $item->nomor_job) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="button" class="btn btn-link"
                                                                 data-original-title="Remove"
-                                                                onclick="confirmDelete({{ $item->id }})">
+                                                                onclick="confirmDelete('{{ $item->nomor_job }}')">
                                                                 <i class="bi bi-trash3 text-danger"></i>
                                                             </button>
                                                         </form>
@@ -87,7 +94,7 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Grading Halus Adjustment Adding belum Tersedia.
+                                            Data Cabut Bulu Hancuran Pengembalian belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -102,7 +109,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ route('GradingHalusAdjustmentAdding.create') }}";
+            window.location.href = "{{ route('CabutHancuranPengembalian.create') }}";
         }
 
         function confirmDelete(id) {
