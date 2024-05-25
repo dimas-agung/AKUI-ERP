@@ -62,10 +62,10 @@
                                             <td class="text-center avg_kadar_air">
                                                 {{ $MasterStock->avg_kadar_air }}</td>
                                             <td class="text-center modal1">
-                                                {{ number_format($MasterStock->modal, 2, ',', '.') }}
+                                                {{ number_format($MasterStock->modal, 1, ',', '.') }}
                                             </td>
                                             <td class="text-center total_modal">
-                                                {{ number_format($MasterStock->total_modal, 2, ',', '.') }}</td>
+                                                {{ number_format($MasterStock->total_modal, 1, ',', '.') }}</td>
                                             <td class="text-center">{{ $MasterStock->keterangan }}</td>
                                             <td class="text-center">{{ $MasterStock->user_created }}</td>
                                             <td class="text-center">{{ $MasterStock->user_updated }}</td>

@@ -369,21 +369,7 @@
                                                 <a href="{{ route('GradingHalusStock.index') }}"
                                                     class="submenu-link">Grading Halus Stock</a>
                                             </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('GradingHalusAdjustmentAdding*') ? 'active' : '' }}">
-                                                <a href="{{ route('GradingHalusAdjustmentAdding.index') }}"
-                                                    class="submenu-link">Grading Halus <br>Adjustment Adding</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('GradingHalusAdjustmentStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('GradingHalusAdjustmentStock.index') }}"
-                                                    class="submenu-link">Grading Halus <br>Adjustment Stock</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('GradingHalusAdjustmentInput*') ? 'active' : '' }}">
-                                                <a href="{{ route('GradingHalusAdjustmentInput.index') }}"
-                                                    class="submenu-link">Grading Halus <br>Adjustment Input</a>
-                                            </li>
+
                                             <li
                                                 class="submenu-item {{ Route::is('GradingHalusOutput*') ? 'active' : '' }}">
                                                 <a href="{{ route('GradingHalusOutput.index') }}"

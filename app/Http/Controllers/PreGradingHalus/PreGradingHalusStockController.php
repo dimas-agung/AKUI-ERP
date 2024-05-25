@@ -12,7 +12,7 @@ class PreGradingHalusStockController extends Controller
     //
     public function index(){
         $i =1;
-        $TransitPre = PreGradingHalusStock::all();
+        $TransitPre = PreGradingHalusStock::where('status',1)->get();
         // return $TransitPre;
 
         return response()->view('PreGradingHalus.PreGradingHalusStock.index', [

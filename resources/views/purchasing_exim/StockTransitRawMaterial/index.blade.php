@@ -55,8 +55,8 @@
                                 <td class="text-center">{!! $post->tujuan_kirim !!}</td>
                                 <td class="text-center">{!! $post->letak_tujuan !!}</td>
                                 <td class="text-center">{!! $post->inisial_tujuan !!}</td>
-                                <td class="text-center">{!! number_format($post->modal, 2, ',', '.') !!}</td>
-                                <td class="text-center">{!! number_format($post->total_modal, 2, ',', '.') !!}</td>
+                                <td class="text-center">{!! number_format($post->modal, 1, ',', '.') !!}</td>
+                                <td class="text-center">{!! number_format($post->total_modal, 1, ',', '.') !!}</td>
                                 <td class="text-center">{!! $post->keterangan !!}</td>
                                 <td class="text-center">{!! $post->user_created !!}</td>
                                 <td class="text-center">{!! $post->user_updated !!}</td>

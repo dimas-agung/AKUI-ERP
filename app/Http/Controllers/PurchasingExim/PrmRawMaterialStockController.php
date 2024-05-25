@@ -14,7 +14,7 @@ class PrmRawMaterialStockController extends Controller
     public function index()
     {
         $i = 1;
-        $PrmRawMaterialInput = PrmRawMaterialInputItem::with('PrmRawMaterialStock')->get();
+        $PrmRawMaterialInput = PrmRawMaterialInputItem::with('PrmRawMaterialStock')->where('sisa_berat','>',0)->get();
         $PrmRawMaterialStock = PrmRawMaterialStock::with('PrmRawMaterialOutputItem')->get();
 
         // return $PrmRawMaterialInput;

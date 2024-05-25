@@ -17,7 +17,7 @@ class StockTransitRawMaterialController extends Controller
     //Index
     public function index(){
         $i =1;
-        $stockTGK = StockTransitRawMaterial::with('PramRawMaterialOutputItems')->get();
+        $stockTGK = StockTransitRawMaterial::with('PramRawMaterialOutputItems')->where('berat','>',0)->get();
         // $PrmRawMOH = PrmRawMaterialOutputHeader::with('StockTransitRawMaterial')->get();
         $PrmRawMOI = PrmRawMaterialOutputItem::with('StockTransitRawMaterial')->get();
         // return $PrmRawMOI;

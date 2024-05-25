@@ -182,11 +182,12 @@
 @endsection
 @section('script')
     <script>
+        let dataArray = [];
         // Nomor JOB
         $(document).ready(function() {
             $('#nomor_job').on('change', function() {
                 let selectedNomorJob = $(this).val();
-
+                
                 $.ajax({
                     url: `{{ route('PreGradingHalusAdding.set') }}`,
                     method: 'GET',
@@ -194,8 +195,21 @@
                         nomor_job: selectedNomorJob
                     },
                     success: function(response) {
-                        console.log(response);
-
+                        // console.log(response);
+                        if (dataArray.length > 0) {
+                            
+                            let lastNomorNotaInternal = dataArray[0].nomor_nota_internal;
+                            if (response.nomor_nota_internal != lastNomorNotaInternal) {
+                                Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Harap Pilih job dengan nomor nota yang sama.',
+                                    });
+                                    $('#nomor_job').find('option:selected').remove();
+                                // $('#nomor_job').prop('selectedIndex', 0)
+                                    return;
+                            }
+                        }
                         // Menghitung berat_masuk - berat_keluar
                         let sisaBerat = response.berat_masuk - response.berat_keluar;
 
@@ -361,7 +375,7 @@
                 return true; // Form valid
             }
         }
-        let dataArray = [];
+
         // ADD ROW
         function addRow() {
             if (validateForm()) {

@@ -12,7 +12,7 @@ class TransitGradingHalusController extends Controller
     public function index()
     {
         $i = 1;
-        $GradigHalusStock = TransitGradingHalus::all();
+        $GradigHalusStock = TransitGradingHalus::where('status',1)->get();
         return response()->view('PreGradingHalus.TransitGradingHalus.index', [
             'grading_halus_stocks'          => $GradigHalusStock,
             'i'                             => $i

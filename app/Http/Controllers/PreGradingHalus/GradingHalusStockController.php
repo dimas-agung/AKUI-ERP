@@ -12,7 +12,7 @@ class GradingHalusStockController extends Controller
     public function index()
     {
         $i = 1;
-        $GradigHalusStock = GradingHalusStock::all();
+        $GradigHalusStock = GradingHalusStock::where('sisa_berat','>',0)->get();
         return response()->view('PreGradingHalus.GradingHalusStock.index', [
             'grading_halus_stocks'          => $GradigHalusStock,
             'i'                             => $i

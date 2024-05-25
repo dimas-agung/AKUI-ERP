@@ -81,15 +81,18 @@ class GradingHalusOutputService
 
                     foreach ($existingItems as $existingItem) {
                         // Hitung sisa berat dan sisa pcs
-                        $sisaBerat = $existingItem->berat_masuk - ($itemObject->berat_job ?? 0);
-                        $sisaPcs = $existingItem->pcs_masuk - ($itemObject->pcs_job ?? 0);
+                        // $sisaBerat = $existingItem->berat_masuk - ($itemObject->berat_job ?? 0);
+                        // $sisaPcs = $existingItem->pcs_masuk - ($itemObject->pcs_job ?? 0);
+                        // $totalModal = $sisaBerat * ($existingItem->modal ?? 0);
+                        $sisaBerat = $existingItem->berat_masuk - ( $existingItem->berat_keluar  + ($itemObject->berat_job ?? 0));
+                        $sisaPcs = $existingItem->pcs_masuk - ( $existingItem->pcs_keluar  + ($itemObject->pcs_job ?? 0));
                         $totalModal = $sisaBerat * ($existingItem->modal ?? 0);
 
                         // Update data dengan nilai baru
                         $existingItem->update([
                             // Update data PreGradingHalusAddingStock
-                            'berat_keluar' => $itemObject->berat_job ?? 0,
-                            'pcs_keluar'   => $itemObject->pcs_job ?? 0,
+                            'berat_keluar' =>  $existingItem->berat_keluar  + ($itemObject->berat_job ?? 0),
+                            'pcs_keluar'   =>  $existingItem->pcs_keluar  + ($itemObject->pcs_job ?? 0),
                             'sisa_berat'   => $sisaBerat,
                             'sisa_pcs'     => $sisaPcs,
                             'total_modal'  => $totalModal,
@@ -137,7 +140,7 @@ class GradingHalusOutputService
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
-            // Ambil data PreCleaningInput berdasarkan id_box_grading$id_box_grading_halus
+            // Ambil data gradinhHalusInputnput berdasarkan id_box_grading$id_box_grading_halus
             $GradingHalusInputs = GradingHalusOutput::where('id_box_grading_halus', '=', $id_box_grading_halus)->get();
 
             if ($GradingHalusInputs->isEmpty()) {
@@ -145,35 +148,37 @@ class GradingHalusOutputService
                 return redirect()->route('GradingHalusOutput.index')->with(['error' => 'Data tidak ditemukan!']);
             }
 
-            foreach ($GradingHalusInputs as $PreCleaningI) {
+            foreach ($GradingHalusInputs as $gradinhHalusInput) {
                 // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
-                $PreCleaningS = TransitGradingHalus::where('nomor_job', '=', $PreCleaningI->nomor_job)
+                $PreCleaningS = TransitGradingHalus::where('nomor_job', '=', $gradinhHalusInput->nomor_job)
                     ->first();
 
                 if ($PreCleaningS) {
                     // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                    $stockPrmRawMaterial = GradingHalusStock::where('id_box_grading_halus', '=', $PreCleaningI->id_box_grading_halus)
+                    $StockGradingHalus = GradingHalusStock::where('id_box_grading_halus', '=', $gradinhHalusInput->id_box_grading_halus)
                         ->first();
 
-                    if ($stockPrmRawMaterial) {
+                    if ($StockGradingHalus) {
                         // Simpan nilai sebelum dihapus
-                        $beratSebelumnya = $stockPrmRawMaterial->berat_masuk;
-                        $pcsSebelumnya = $stockPrmRawMaterial->pcs_masuk;
+                        $beratSebelumnya = $StockGradingHalus->berat_masuk;
+                        $pcsSebelumnya = $StockGradingHalus->pcs_masuk;
 
                         // Hitung perbedaan berat dan pcs
-                        $perbedaanBerat = $PreCleaningI->berat_adding;
-                        $perbedaanPcs = $PreCleaningI->pcs_adding;
-
+                        $perbedaanBerat = $gradinhHalusInput->berat_adding;
+                        $perbedaanPcs = $gradinhHalusInput->pcs_adding;
+                        $sisaBerat = $StockGradingHalus->berat_masuk - ( $StockGradingHalus->berat_keluar  - ($gradinhHalusInput->berat_job ?? 0));
+                        $sisaPcs = $StockGradingHalus->pcs_masuk - ( $StockGradingHalus->pcs_keluar  - ($gradinhHalusInput->pcs_job ?? 0));
+                        $totalModal = $sisaBerat * ($StockGradingHalus->modal ?? 0);
                         // Hitung total modal baru
-                        $totalModalBaru = $beratSebelumnya * $PreCleaningI->modal;
+                        $totalModalBaru = $beratSebelumnya * $gradinhHalusInput->modal;
 
                         // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
-                        $stockPrmRawMaterial->update([
-                            'berat_keluar' => max(0, $stockPrmRawMaterial->berat_keluars),
-                            'pcs_keluar' => max(0, $stockPrmRawMaterial->pcs_keluars),
-                            'sisa_berat' => max($beratSebelumnya, 0),
-                            'sisa_pcs' => max($pcsSebelumnya, 0),
-                            'total_modal' => max($totalModalBaru, 0),
+                        $StockGradingHalus->update([
+                            'berat_keluar' => max(0, ( $StockGradingHalus->berat_keluar  - ($gradinhHalusInput->berat_job ?? 0))),
+                            'pcs_keluar' => max(0, ( $StockGradingHalus->pcs_keluar  - ($gradinhHalusInput->pcs_job ?? 0))),
+                            'sisa_berat' => max($sisaBerat, 0),
+                            'sisa_pcs' => max($sisaPcs, 0),
+                            'total_modal' => max($totalModal, 0),
                         ]);
                     }
                 }
@@ -184,7 +189,7 @@ class GradingHalusOutputService
                 }
 
                 // Hapus data GradingHalusInput
-                $PreCleaningI->delete();
+                $gradinhHalusInput->delete();
 
                 // Perbarui status PreCleaningOutput jika ada
                 $GradingHalusInput = GradingHalusInput::where('id_box_grading_halus', '=', $id_box_grading_halus)->get();

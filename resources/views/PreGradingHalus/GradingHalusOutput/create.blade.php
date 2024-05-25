@@ -55,7 +55,7 @@
                                             data-placeholder="Pilih Tujuan Kirim">
                                             <option value="">Pilih Tujuan Kirim</option>
                                             @foreach ($TujuanKirimGHI->sortBy('tujuan_kirim') as $post)
-                                                <option value="{{ $post->tujuan_kirim }}">
+                                                <option value="{{ $post->inisial_tujuan }}">
                                                     {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
                                             @endforeach
                                         </select>
@@ -213,6 +213,9 @@
         var pcsMasukAwal = 0;
         $('#id_box_grading_halus').on('change', function() {
             let selectedIdBox = $(this).val();
+            generateAfterIdboxChange(selectedIdBox)
+        });
+        function generateAfterIdboxChange(selectedIdBox) {
             if (selectedNomorBSTB !== selectedIdBox) {
                 selectedNomorBSTB = selectedIdBox;
                 $.ajax({
@@ -243,8 +246,8 @@
 
                         // Loop melalui setiap item dalam respons
                         response.forEach(function(item) {
-                            totalBeratMasuk += parseFloat(item.berat_masuk);
-                            totalPcsMasuk += parseInt(item.pcs_masuk);
+                            totalBeratMasuk += (parseFloat(item.berat_masuk) - parseFloat(item.berat_keluar));
+                            totalPcsMasuk += (parseInt(item.pcs_masuk) - parseInt(item.pcs_keluar));
                         });
 
                         $('#berat_masuk').val(totalBeratMasuk);
@@ -253,12 +256,12 @@
                         pcsMasukAwal += totalPcsMasuk
 
                         // Memanggil generateNomorBSTB dan mengatur nilai sesuai dengan respons dari server
-                        let generatedNomorBSTB = generateNomorBSTB(
-                            'BSTB'); // Memanggil generateNomorBSTB dengan prefix 'BSTB'
-                        let generatedNomorJob = generateNomorBSTB(
-                            'JOB'); // Memanggil generateNomorBSTB dengan prefix 'JOB'
-                        $('#nomor_bstb').val(generatedNomorBSTB);
-                        $('#nomor_job').val(generatedNomorJob);
+                        // let generatedNomorBSTB = generateNomorBSTB(
+                        //     'BSTB'); // Memanggil generateNomorBSTB dengan prefix 'BSTB'
+                        // let generatedNomorJob = generateNomorBSTB(
+                        //     'JOB'); // Memanggil generateNomorBSTB dengan prefix 'JOB'
+                        // $('#nomor_bstb').val(generatedNomorBSTB);
+                        // $('#nomor_job').val(generatedNomorJob);
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -266,6 +269,14 @@
                 });
             }
             generateUpah()
+            
+        }
+        $('#tujuan_kirim').on('change', function() {
+            // let selectedIdBox = $(this).val();
+            let generatedNomorBSTB = generateNomorBSTB( 'BSTB'); // Memanggil generateNomorBSTB dengan prefix 'BSTB'
+            let generatedNomorJob = generateNomorBSTB('JOB'); // Memanggil generateNomorBSTB dengan prefix 'JOB'
+            $('#nomor_bstb').val(generatedNomorBSTB);
+            $('#nomor_job').val(generatedNomorJob);
         });
 
         // function generateUpah() {
@@ -339,7 +350,7 @@
             // Mengurangkan pcs job dari total pcs masuk
             let pcsJob = parseInt($('#pcs_job').val() || 0);
             totalPcsMasuk -= pcsJob;
-
+            console.log(totalPcsMasuk);
             // Memperbarui nilai total berat masuk dan pcs masuk
             $('#berat_masuk').val(totalBeratMasuk);
             $('#pcs_masuk').val(totalPcsMasuk);
@@ -348,6 +359,7 @@
         // Mendengarkan perubahan pada inputan berat job
         $('#berat_job').on('input', function() {
             hitungTotal();
+            console.log('job');
         });
 
         // Mendengarkan perubahan pada inputan pcs job
@@ -358,6 +370,7 @@
         // Mendengarkan perubahan pada inputan berat masuk
         $('#berat_masuk').on('input', function() {
             hitungTotal();
+            console.log('masuk');
         });
 
         // Mendengarkan perubahan pada inputan pcs masuk
@@ -367,7 +380,7 @@
 
         function generateNomorBSTB(prefix) {
             let nomor;
-
+            let tujuan_kirim = $('#tujuan_kirim').val()
             const now = new Date();
             const tahun = now.getFullYear().toString().substr(-2);
             const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
@@ -378,9 +391,9 @@
 
             // Menambahkan prefix yang sesuai
             if (prefix === 'BSTB') {
-                nomor = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_A_UGH`;
+                nomor = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${tujuan_kirim}_UGH`;
             } else {
-                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_A_UGH`;
+                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${tujuan_kirim}_UGH`;
             }
 
             return nomor;
@@ -391,11 +404,11 @@
         var dataArray = [];
 
         function addRow() {
-            let id_box_grading_halus = $('#id_box_grading_halus').val();
+            let nomor_job = $('#nomor_job').val();
 
             // Periksa apakah nomor job sudah ada dalam tabel
             if ($('#tableBody tbody tr td:nth-child(1)').filter(function() {
-                    return $(this).text() === id_box_grading_halus;
+                    return $(this).text() === nomor_job;
                 }).length > 0) {
                 // Nomor job sudah ada dalam tabel, tampilkan pesan dan hentikan proses
                 Swal.fire({
@@ -406,12 +419,12 @@
                 return;
             }
             // Hapus opsi id_box_grading_halus yang sudah dipilih dari dropdown
-            $('#id_box_grading_halus option[value="' + id_box_grading_halus + '"]').remove();
+            // $('#id_box_grading_halus option[value="' + id_box_grading_halus + '"]').remove();
             // Mengambil nilai dari inputgrading_halus = $('#id_box_grading_halus').val();
-            // var id_box_grading_halus = $('#id_box_grading_halus').val();
+            var id_box_grading_halus = $('#id_box_grading_halus').val();
             var nomor_batch = $('#nomor_batch').val();
             var nomor_bstb = $('#nomor_bstb').val();
-            var nomor_job = $('#nomor_job').val();
+            // var nomor_job = $('#nomor_job').val();
             var jenis_job = $('#jenis_job').val();
             var berat_job = $('#berat_job').val();
             var berat_masuk = $('#berat_masuk').val();
@@ -421,9 +434,10 @@
             var tujuan_kirim = $('#tujuan_kirim').val();
             var keterangan = $('#keterangan').val();
             var modal = $('#modal').val();
-            var total_modal = $('#total_modal').val();
+            var total_modal = berat_job*modal;
             var user_created = $('#user_created').val();
             beratMasukAwal -= berat_job
+            pcsMasukAwal -= pcs_job
             // Inisialisasi array untuk menyimpan field yang belum terisi
             let fieldsNotFilled = [];
             // Periksa setiap field
@@ -431,7 +445,7 @@
             if (!tujuan_kirim) fieldsNotFilled.push('Tujuan Kirim');
             if (!user_created) fieldsNotFilled.push('NIP Admin');
             if (!berat_job || berat_job <= 0) fieldsNotFilled.push('Berat Job');
-            if (!pcs_job || pcs_job <= 0) fieldsNotFilled.push('PCS Job');
+            if (!pcs_job ) fieldsNotFilled.push('PCS Job');
 
             // Cek apakah ada field yang belum terisi
             if (fieldsNotFilled.length > 0) {
@@ -490,17 +504,20 @@
                 user_created: user_created,
             });
             // Membersihkan nilai input setelah ditambahkan
-            $('#nomor_batch').val('');
+            // $('#nomor_batch').val('');
             // $('#nomor_bstb').val('');
             $('#nomor_bstb').prop('readonly', true);
-            $('#nomor_job').val('');
+            let generatedNomorJob = generateNomorBSTB('JOB'); // Memanggil generateNomorBSTB dengan prefix 'JOB
+            $('#nomor_job').val(generatedNomorJob);
+            // $('#nomor_job').prop('readonly', true);
             $('#berat_job').val('');
             $('#pcs_job').val('');
             $('#upah_oprator').val('');
             $('#keterangan').val('');
-            $('#modal').val('');
-            $('#total_modal').val('');
-            $('#id_box_grading_halus').val($('#id_box_grading_halus').val()).trigger('change');
+            generateAfterIdboxChange(id_box_grading_halus)
+            // $('#modal').val('');
+            // $('#total_modal').val('');
+            // $('#id_box_grading_halus').val($('#id_box_grading_halus').val()).trigger('change');
             $('#user_created').prop('readonly', true);
             // $('#tujuan_kirim').val($('#tujuan_kirim option:first').val());
             $('#tujuan_kirim').attr("disabled", true);

@@ -12,7 +12,7 @@ class GradingHalusAdjustmentStockController extends Controller
     public function index()
     {
         $i = 1;
-        $GradingHalusAdjustmentStock = GradingHalusAdjustmentStock::all();
+        $GradingHalusAdjustmentStock = GradingHalusAdjustmentStock::where('status',1)->get();
         return response()->view('PreGradingHalus.AdjustmentStock.index', [
             'grading_halus_adjustment_stocks' => $GradingHalusAdjustmentStock,
             'i' => $i,

@@ -25,9 +25,9 @@
                                 <th class="text-center">Jenis</th>
                                 <th class="text-center">Berat Masuk</th>
                                 <th class="text-center">Berat Keluar</th>
-                                <th class="text-center">Sisa Berat</th>
                                 <th class="text-center">Pcs Masuk</th>
                                 <th class="text-center">Pcs Keluar</th>
+                                <th class="text-center">Sisa Berat</th>
                                 <th class="text-center">Sisa Pcs</th>
                                 @role('admin')
                                     <th class="text-center">Modal</th>
@@ -45,9 +45,9 @@
                                     <td class="text-center">{{ $item->jenis }}</td>
                                     <td class="text-center">{{ $item->berat_masuk }}</td>
                                     <td class="text-center">{{ $item->berat_keluar }}</td>
-                                    <td class="text-center">{{ $item->sisa_berat }}</td>
                                     <td class="text-center">{{ $item->pcs_masuk }}</td>
                                     <td class="text-center">{{ $item->pcs_keluar }}</td>
+                                    <td class="text-center">{{ $item->sisa_berat }}</td>
                                     <td class="text-center">{{ $item->sisa_pcs }}</td>
                                     @role('admin')
                                         <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>

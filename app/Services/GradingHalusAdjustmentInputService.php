@@ -133,9 +133,9 @@ class GradingHalusAdjustmentInputService
                     if ($adjustemnt_stock) {
                         // Update existing grading data
 
+                    }
                     $GradingHalusAdjustmentStock = GradingHalusAdjustmentStock::where('nomor_adjustment', $mergedData['nomor_adjustment'])
                         ->first();
-
                     if ($GradingHalusAdjustmentStock) {
                         $GradingHalusAdjustmentStock->update([
                             'user_updated' => $mergedData['user_created'] ?? "There isn't any",
