@@ -19,8 +19,8 @@
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
+                                <th class="text-center" scope="col">Unit</th>
                                 <th class="text-center" scope="col">ID Box Hcr Kotor</th>
-                                <th class="text-center" scope="col">Tanggal Cabut</th>
                                 <th class="text-center" scope="col">Jenis Hcr Kotor</th>
                                 <th class="text-center" scope="col">Berat Masuk</th>
                                 <th class="text-center" scope="col">Berat Keluar</th>

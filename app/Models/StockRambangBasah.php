@@ -19,6 +19,10 @@ class StockRambangBasah extends Model
     ];
     public function InputRambangBasah()
     {
-        return $this->belongsTo(InputRambangBasah::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
+        return $this->hasMany(InputRambangBasah::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
+    }
+    public function CabutHancuranPersiapan()
+    {
+        return $this->hasMany(CabutHancuranPersiapan::class, 'id_stock_hcr_kotor', 'id_box_hcr_kotor');
     }
 }

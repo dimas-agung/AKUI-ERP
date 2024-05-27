@@ -64,6 +64,7 @@ class CabutBuluPenerimaanService
                         'jenis_job'         => $mergedData['jenis_job'],
                         'berat_job'         => $mergedData['berat_job'] ?? 0,
                         'pcs_job'           => $mergedData['pcs_job'] ?? 0,
+                        'upah_operator'     => $mergedData['upah_operator'] ?? 0,
                         'tujuan_kirim'      => $mergedData['tujuan_kirim'],
                         'keterangan'        => $mergedData['keterangan'],
                         'modal'             => $mergedData['modal'],

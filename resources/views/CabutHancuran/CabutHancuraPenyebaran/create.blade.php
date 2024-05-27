@@ -3,14 +3,14 @@
     Cabut Bulu
 @endsection
 @section('title')
-    Cabut Bulu Pengembalian
+    Cabut Bulu Penyebaran
 @endsection
 @section('content')
     <div class="col-md-12">
         <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center mb-3">
-                    <h4 class="card-title">Cabut Bulu Pengembalian</h4>
+                    <h4 class="card-title">Cabut Bulu Penyebaran</h4>
                 </div>
                 <hr>
                 <form method="POST" class="row g-3" id="myForm">
@@ -19,11 +19,6 @@
                         <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
-                            {{-- @foreach ($cabut_bulu_stocks as $item)
-                                <option value="{{ $item->nomor_job }}">
-                                    {{ $item->nomor_job }}
-                                </option>
-                            @endforeach --}}
                             @foreach ($get_unused_nomor_job as $item)
                                 @if ($item->cabut_bulu_penyebaran_count == 0)
                                     <option value="{{ $item->nomor_job }}">
@@ -35,66 +30,69 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="user_created" class="form-label">NIP Admin</label>
-                        <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}">
-                    </div>
-
-                    <div class="col-md-4">
                         <label class="form-label">Nomor Batch</label>
                         <input type="text" class="form-control" id="nomor_batch">
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="jenis_job" class="form-label">Jenis Job</label>
                         <input type="text" class="form-control" id="jenis_job" readonly>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="berat_job" class="form-label">Berat Job</label>
                         <input type="text" class="form-control" id="berat_job" readonly>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="pcs_job" class="form-label">Pcs job</label>
                         <input type="text" class="form-control" id="pcs_job" readonly>
                     </div>
 
-                    <div class="col-md-4">
-                        <label for="upah_operator" class="form-label">Upah Operator</label>
-                        <input type="text" class="form-control" id="upah_operator" readonly>
-                    </div>
-
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="tujuan_kirim" class="form-label">Tujuan Kirim</label>
                         <input type="text" class="form-control" id="tujuan_kirim" readonly>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <input type="text" class="form-control" id="keterangan" readonly>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="modal" class="form-label">Modal</label>
                         <input type="text" class="form-control" id="modal" readonly>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="total_modal" class="form-label">Total Modal</label>
                         <input type="text" class="form-control" id="total_modal" readonly>
                     </div>
 
-                    <div class="col-md-4">
-                        <label for="total_modal" class="form-label">NIP Operator</label>
-                        <input type="text" class="form-control" id="nip_operator" readonly>
+                    <div class="col-md-6">
+                        <label for="upah_operator" class="form-label">Upah Operator</label>
+                        <input type="text" class="form-control" id="upah_operator" readonly>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
+                        <label for="basic-usage" class="form-label">NIP Operator</label>
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                            name="nip_operator" id="nip_operator" data-placeholder="Pilih NIP Operator">
+                            <option value="">NIP Operator</option>
+                            @foreach ($master_operators->sortBy('nip') as $MasterSPRM)
+                                <option value="{{ $MasterSPRM->nip }}">
+                                    {{ $MasterSPRM->nip }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
                         <label for="nama_operator" class="form-label">Nama Operator</label>
                         <input type="text" class="form-control" id="nama_operator" readonly>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="grade_operator" class="form-label">Grade Operator</label>
                         <input type="text" class="form-control" id="grade_operator" readonly>
                     </div>
@@ -105,19 +103,19 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="waktu_penyebaran" class="form-label">Waktu Penyebaran</label>
-                        <input type="text" class="form-control" id="waktu_penyebaran" readonly>
-                    </div>
-                    <div class="col-md-12">
                         <label for="keterangan_2" class="form-label">Keterangan 2</label>
                         <input type="text" class="form-control" id="keterangan_2">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="user_created" class="form-label">NIP Admin</label>
+                        <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}">
                     </div>
 
 
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" id="tambah_data"
                             onclick="addRow()">Tambah</button>
-                        <a href="{{ Route('CabutBuluPengembalian.index') }}" type="button"
+                        <a href="{{ Route('CabutBuluPenyebaran.index') }}" type="button"
                             class="btn btn-danger">Close</a>
 
                     </div>
@@ -139,8 +137,6 @@
                                 <th scope="col" class="text-center">Berat Job</th>
                                 <th scope="col" class="text-center">Pcs Job</th>
                                 <th scope="col" class="text-center">Tujuan Kirim</th>
-                                <th scope="col" class="text-center">Waktu Penyebaran</th>
-                                <th scope="col" class="text-center">Upah Operator</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
@@ -168,11 +164,12 @@
     <script>
         $(document).ready(function() {
             let selectedNomorJob = '';
+
             $('#nomor_job').on('change', function() {
                 selectedNomorJob = $(this).val();
 
                 $.ajax({
-                    url: '{{ route('CabutBuluPengembalian.set') }}',
+                    url: '{{ route('CabutBuluPenyebaran.set') }}',
                     method: 'GET',
                     data: {
                         nomor_job: selectedNomorJob
@@ -185,16 +182,40 @@
                         $('#jenis_job').val(response.jenis_job);
                         $('#berat_job').val(response.berat_job);
                         $('#pcs_job').val(response.pcs_job);
-                        $('#upah_operator').val(response.upah_operator);
-                        $('#waktu_penyebaran').val(response.waktu_penyebaran);
                         $('#tujuan_kirim').val(response.tujuan_kirim);
                         $('#modal').val(response.modal);
                         $('#keterangan').val(response.keterangan);
                         $('#total_modal').val(response.total_modal);
-                        $('#nip_operator').val(response.nip_operator);
-                        $('#nama_operator').val(response.nama_operator);
+                        $('#upah_operator').val(response.upah_operator);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+
+        // DropDown NIP
+        $(document).ready(function() {
+            let selectedNip = '';
+
+            $('#nip_operator').on('change', function() {
+                selectedNip = $(this).val();
+
+                $.ajax({
+                    url: '{{ route('CabutBuluPenyebaran.setNip') }}',
+                    method: 'GET',
+                    data: {
+                        nip: selectedNip
+                    },
+                    success: function(response) {
+                        console.log(response);
+
+                        // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                        $('#nama_operator').val(response.nama);
                         $('#grade_operator').val(response.grade_operator);
                         $('#nama_team_leader').val(response.nama_team_leader);
+
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -255,12 +276,11 @@
                 let jenis_job = $('#jenis_job').val();
                 let berat_job = $('#berat_job').val();
                 let pcs_job = $('#pcs_job').val();
-                let upah_operator = $('#upah_operator').val();
-                let waktu_penyebaran = $('#waktu_penyebaran').val();
                 let tujuan_kirim = $('#tujuan_kirim').val();
                 let keterangan = $('#keterangan').val();
                 let modal = $('#modal').val();
                 let total_modal = $('#total_modal').val();
+                let upah_operator = $('#upah_operator').val();
                 let nip_operator = $('#nip_operator').val();
                 let nama_operator = $('#nama_operator').val();
                 let grade_operator = $('#grade_operator').val();
@@ -275,8 +295,6 @@
                     `<td class="text-center">${berat_job}</td>` +
                     `<td class="text-center">${pcs_job}</td>` +
                     `<td class="text-center">${tujuan_kirim}</td>` +
-                    `<td class="text-center">${waktu_penyebaran}</td>` +
-                    `<td class="text-center">${upah_operator}</td>` +
                     `<td class="text-center">${keterangan}</td>` +
                     `<td class="text-center">${modal}</td>` +
                     `<td class="text-center">${total_modal}</td>` +
@@ -297,12 +315,11 @@
                     jenis_job: jenis_job,
                     berat_job: berat_job,
                     pcs_job: pcs_job,
-                    upah_operator: upah_operator,
-                    waktu_penyebaran: waktu_penyebaran,
                     tujuan_kirim: tujuan_kirim,
                     keterangan: keterangan,
                     modal: modal,
                     total_modal: total_modal,
+                    upah_operator: upah_operator,
                     nip_operator: nip_operator,
                     nama_operator: nama_operator,
                     grade_operator: grade_operator,
@@ -322,12 +339,14 @@
                 $('#keterangan').val('');
                 $('#modal').val('');
                 $('#total_modal').val('');
-                $('#nip_operator').val('');
+                $('#nip_operator').val(null).trigger('change');
                 $('#nama_operator').val('');
                 $('#grade_operator').val('');
                 $('#nama_team_leader').val('');
                 $('#keterangan_2').val('');
+
             }
+
         }
 
         function hapusBaris(button) {
@@ -368,7 +387,7 @@
 
             // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
             $.ajax({
-                url: `{{ route('CabutBuluPengembalian.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
+                url: `{{ route('CabutBuluPenyebaran.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
                 method: 'POST',
                 data: {
                     idBoxes: JSON.stringify(idBoxes),
@@ -394,7 +413,7 @@
                         });
                     } else {
                         // Semua id box tersedia, kirim data ke server
-                        // let waktu_pengembalian = new Date().getTime(); // Ambil waktu saat ini
+                        // let waktu_penyebaran = new Date().getTime(); // Ambil waktu saat ini
 
                         const now = new Date();
                         const tahun = now.getFullYear().toString().substr(-2);
@@ -404,27 +423,27 @@
                         const menit = ('0' + now.getMinutes()).slice(-2);
                         const detik = ('0' + now.getSeconds()).slice(-2);
 
-                        const waktu_pengembalian = `${tahun}/${bulan}/${tanggal} ${jam}:${menit}:${detik}`;
+                        const waktu_penyebaran = `${tahun}/${bulan}/${tanggal} ${jam}:${menit}:${detik}`;
 
-                        console.log("Waktu =" + waktu_pengembalian);
+                        console.log("Waktu =" + waktu_penyebaran);
 
-                        sendData(waktu_pengembalian);
+                        sendData(waktu_penyebaran);
                     }
                 },
                 error: function(error) {
                     Swal.fire({
                         title: 'Failed!',
-                        text: 'Terjadi kesalahan saat memeriksa ketersediaan nomor job. Silakan coba lagi.',
+                        text: 'Terjadi kesalahan saat memeriksa ketersediaan nomor bstb. Silakan coba lagi.',
                         icon: 'error'
                     });
                     console.log('Error:', error);
                 }
             });
 
-            function sendData(waktu_pengembalian) {
+            function sendData(waktu_penyebaran) {
                 // Mengirim data ke server menggunakan AJAX
                 $.ajax({
-                    url: '{{ route('CabutBuluPengembalian.store') }}',
+                    url: '{{ route('CabutBuluPenyebaran.store') }}',
                     method: 'POST',
                     beforeSend: function() {
                         Swal.fire({
@@ -441,7 +460,7 @@
                             dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
                             user_created: $('#user_created').val() || '',
                             user_updated: $('#user_createds').val() || '',
-                            waktu_pengembalian: waktu_pengembalian, // Mengirim waktu_penyebaran
+                            waktu_penyebaran: waktu_penyebaran, // Mengirim waktu_penyebaran
                             _token: '{{ csrf_token() }}'
                         };
 
@@ -471,14 +490,5 @@
                 });
             }
         }
-
-        // Variabel global untuk menyimpan indeks baris terakhir
-        // var currentRowIndex = 0;
-        // var dataStock = [];
-
-        // // Mendefinisikan array jika belum
-        // if (typeof dataArray === 'undefined') {
-        //     var dataArray = [];
-        // }
     </script>
 @endsection

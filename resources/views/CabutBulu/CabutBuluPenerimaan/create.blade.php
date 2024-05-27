@@ -90,6 +90,7 @@
                                                             <th class="text-center" scope="col">Jenis Job</th>
                                                             <th class="text-center" scope="col">Berat Job</th>
                                                             <th class="text-center" scope="col">PCS Job</th>
+                                                            <th class="text-center" scope="col">Upah Operator</th>
                                                             <th class="text-center" scope="col">Tujuan Kirim</th>
                                                             <th class="text-center" scope="col">Keterangan</th>
                                                             <th class="text-center" scope="col">Modal</th>
@@ -155,6 +156,7 @@
                                 newRow.append('<td>' + rowData.jenis_job + '</td>');
                                 newRow.append('<td>' + rowData.berat_job + '</td>');
                                 newRow.append('<td>' + rowData.pcs_job + '</td>');
+                                newRow.append('<td>' + rowData.upah_operator_bersih + '</td>');
                                 newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
                                 newRow.append('<td>' + rowData.keterangan + '</td>');
                                 newRow.append('<td>' + rowData.modal + '</td>');
@@ -171,6 +173,7 @@
                                     jenis_job: rowData.jenis_job,
                                     berat_job: rowData.berat_job,
                                     pcs_job: rowData.pcs_job,
+                                    upah_operator: rowData.upah_operator_bersih,
                                     tujuan_kirim: rowData.tujuan_kirim,
                                     keterangan: rowData.keterangan,
                                     modal: rowData.modal,

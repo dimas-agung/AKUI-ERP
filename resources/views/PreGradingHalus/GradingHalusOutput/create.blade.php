@@ -64,6 +64,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nomor BSTB</label>
+                                        <input type="hidden" class="form-control" id="inisial_tujuan">
                                         <input type="text" class="form-control" id="nomor_bstb" name="nomor_bstb"
                                             >
                                     </div>
@@ -109,8 +110,9 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Total Modal</label>
-                                        <input type="text" id="total_modal" class="form-control" name="total_modal"
-                                            readonly>
+                                        <input type="text" id="total_modal_lama" class="form-control"
+                                            name="total_modal_lama" readonly>
+                                        <input type="hidden" id="total_modal" class="form-control" name="total_modal">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -211,6 +213,68 @@
         let selectedNomorBSTB = '';
         var beratMasukAwal = 0;
         var pcsMasukAwal = 0;
+
+        let inisialTujuanGlobal = ''; // Variabel global untuk menyimpan inisial_tujuan
+        let nomorBSTBGlobal = ''; // Variabel global untuk menyimpan nomor BSTB
+
+        $('#tujuan_kirim').on('change', function() {
+            let selectedPcc = $(this).val();
+
+            $.ajax({
+                url: '{{ route('GradingHalusOutput.setpcc') }}',
+                method: 'GET',
+                data: {
+                    tujuan_kirim: selectedPcc
+                },
+                success: function(response) {
+                    if (response.status > 0) {
+                        inisialTujuanGlobal = response
+                        .inisial_tujuan; // Simpan inisial_tujuan ke variabel global
+                        checkAndGenerateNomorBSTB(
+                        inisialTujuanGlobal); // Panggil fungsi dengan inisial_tujuan
+                    }
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        function checkAndGenerateNomorBSTB(inisialTujuan) {
+            const idBoxGradingHalus = $('#id_box_grading_halus').val();
+
+            if (inisialTujuan && idBoxGradingHalus) {
+                // Hanya generate nomor BSTB jika nomor BSTB global belum diatur
+                if (!nomorBSTBGlobal) {
+                    nomorBSTBGlobal = generateNomorBSTB('BSTB', inisialTujuan);
+                    $('#nomor_bstb').val(nomorBSTBGlobal);
+                }
+
+                const generatedNomorJob = generateNomorBSTB('JOB', inisialTujuan);
+                $('#nomor_job').val(generatedNomorJob);
+            }
+        }
+
+        function generateNomorBSTB(prefix, inisial_tujuan) {
+            let nomor;
+
+            const now = new Date();
+            const tahun = now.getFullYear().toString().substr(-2);
+            const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
+            const tanggal = ('0' + now.getDate()).slice(-2);
+            const jam = ('0' + now.getHours()).slice(-2);
+            const menit = ('0' + now.getMinutes()).slice(-2);
+            const detik = ('0' + now.getSeconds()).slice(-2);
+
+            if (prefix === 'BSTB') {
+                nomor = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_UGH`;
+            } else {
+                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_UGH`;
+            }
+
+            return nomor;
+        }
+
         $('#id_box_grading_halus').on('change', function() {
             let selectedIdBox = $(this).val();
             generateAfterIdboxChange(selectedIdBox)
@@ -226,7 +290,6 @@
                         id_box_grading_halus: selectedIdBox
                     },
                     success: function(response) {
-                        // Ambil nilai pertama dari respons jika ada
                         let data = response.length > 0 ? response[0] : null;
 
                         if (data) {
@@ -234,26 +297,23 @@
                             $('#nomor_batch').val(data.nomor_batch);
                             $('#jenis_job').val(data.jenis);
                             $('#modal').val(data.modal);
-                            $('#total_modal').val(data.total_modal);
-
+                            $('#total_modal_lama').val(data.total_modal);
                         } else {
                             console.error('No data found for the selected id_box_grading_halus');
                         }
 
-                        // Inisialisasi variabel untuk menampung total berat masuk dan pcs masuk
                         let totalBeratMasuk = 0;
                         let totalPcsMasuk = 0;
 
-                        // Loop melalui setiap item dalam respons
                         response.forEach(function(item) {
                             totalBeratMasuk += (parseFloat(item.berat_masuk) - parseFloat(item.berat_keluar));
                             totalPcsMasuk += (parseInt(item.pcs_masuk) - parseInt(item.pcs_keluar));
                         });
 
                         $('#berat_masuk').val(totalBeratMasuk);
-                        beratMasukAwal += totalBeratMasuk
+                        beratMasukAwal += totalBeratMasuk;
                         $('#pcs_masuk').val(totalPcsMasuk);
-                        pcsMasukAwal += totalPcsMasuk
+                        pcsMasukAwal += totalPcsMasuk;
 
                         // Memanggil generateNomorBSTB dan mengatur nilai sesuai dengan respons dari server
                         // let generatedNomorBSTB = generateNomorBSTB(
@@ -269,7 +329,7 @@
                 });
             }
             generateUpah()
-            
+
         }
         $('#tujuan_kirim').on('change', function() {
             // let selectedIdBox = $(this).val();
@@ -279,29 +339,11 @@
             $('#nomor_job').val(generatedNomorJob);
         });
 
-        // function generateUpah() {
-        //     let jenis_job = $('#jenis_job').val();
-        //     $.ajax({
-        //         url: `{{ route('GradingHalusOutput.setUpah') }}`,
-        //         method: 'GET',
-        //         data: {
-        //             jenis: jenis_job
-        //         },
-        //         success: function(response) {
-        //             // console.log('pengurangan harga=' + response.upah_operator);
-        //             $('#upah_oprator').val(response.upah_operator);
-        //         },
-        //         error: function(error) {
-        //             console.error('Error:', error);
-        //         }
-        //     });
-        // }
-        // $(document).ready(function() {
-        //     $('#jenis_job').change(function() {
-        //         generateUpah();
-        //     });
-
         $('#berat_job').on('input', function() {
+            calculateUpah();
+        });
+
+        $('#modal').on('input', function() {
             calculateUpah();
         });
 
@@ -326,12 +368,22 @@
         function calculateUpah() {
             let upah_operator = parseFloat($('#upah').val());
             let berat_job = parseFloat($('#berat_job').val());
+            let modal = parseFloat($('#modal').val());
 
             if (!isNaN(upah_operator) && !isNaN(berat_job)) {
                 let hasil_upah = upah_operator * berat_job;
                 $('#upah_oprator').val(hasil_upah.toFixed(2)); // Menampilkan hasil dengan 2 desimal
             } else {
                 $('#upah_oprator').val('');
+            }
+
+
+            // Menghitung total modal
+            if (!isNaN(berat_job) && !isNaN(modal)) {
+                let total_modal = berat_job * modal;
+                $('#total_modal').val(total_modal.toFixed(2)); // Menampilkan total modal dengan 2 desimal
+            } else {
+                $('#total_modal').val('');
             }
         }
         // });

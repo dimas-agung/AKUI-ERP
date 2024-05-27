@@ -1,16 +1,16 @@
 @extends('layouts.master1')
 @section('menu')
-    Cabut Bulu Hancuran
+    Cabut Hancuran
 @endsection
 @section('title')
-    Cabut Bulu Hancuran Persiapan Stock
+    Cabut Hancuran Persiapan Stock
 @endsection
 @section('content')
     <div class="section">
         <div class="card border border-primary border-3">
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
-                    <h4 class="card-title">Data Cabut Bulu Hancuran Persiapan Stock</h4>
+                    <h4 class="card-title">Data Cabut Bulu Persiapan Stock</h4>
                 </div>
             </div>
             <div class="card-body" style="overflow: auto;">
@@ -56,7 +56,7 @@
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Data Cabut Bulu Hancuran Persiapan Stock belum Tersedia.
+                                    Data Cabut Hancuran Persiapan Stock belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>

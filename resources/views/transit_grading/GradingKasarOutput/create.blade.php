@@ -334,7 +334,7 @@
                     console.log(selectedIdBox);
                     console.log(idBoxGradingKasarSelected);
                     if (idBoxGradingKasarSelected == selectedIdBox) {
-                        
+
                         calculateSisaBeratSisaPcs(beratMasuk,pcsMasuk)
                     }
                     idBoxGradingKasarSelected = selectedIdBox;
@@ -547,6 +547,16 @@
                 return;
             }
 
+            // Cek apakah berat_keluar lebih besar dari berat_masuk
+            if (berat_keluar > berat_masuk) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Berat keluar tidak boleh lebih besar dari berat masuk. Silakan periksa kembali nilai yang diinput.',
+                    icon: 'error'
+                });
+                return;
+            }
+
             // Memeriksa apakah nomor job sudah ada dalam dataArray
             if (dataArray.some(data => data.nomor_job === nomor_job)) {
                 Swal.fire({
@@ -644,7 +654,7 @@
             $('#user_created').prop('readonly', true);
             // Update indeks baris terakhir
             currentRowIndex++;
-            
+
         }
 
         // Ambil indeks terakhir sebelum menghapus baris
@@ -755,7 +765,7 @@
                     }
                 });
             }
-            
+
         }
         function calculateSisaBeratSisaPcs(berat_masuk,pcs_masuk) {
                     // Perhitungan sisa berat
@@ -766,7 +776,7 @@
                         dataArray.forEach(function(item) {
                             beratKeluar += parseInt(item.berat_keluar);
                             pcsKeluar += parseInt(item.pcs_keluar)
-                           
+
                         });
                         console.log(beratKeluar);
                         let sisaBerat = berat_masuk - beratKeluar;

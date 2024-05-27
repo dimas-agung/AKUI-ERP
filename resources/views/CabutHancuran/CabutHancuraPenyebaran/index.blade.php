@@ -3,7 +3,7 @@
     Cabut Bulu
 @endsection
 @section('title')
-    Cabut Bulu Pengembalian
+    Cabut Bulu Penyebaran
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,9 +13,10 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Cabut Bulu Pengembalian
+                                Data Cabut Bulu Penyebaran
                                 <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong> Add Data </strong>
+                                    <strong><i class="bi bi-plus-circle"></i> Add Data <i
+                                            class="bi bi-plus-circle"></i></strong>
                                 </button>
                             </div>
                         </h5>
@@ -31,16 +32,14 @@
                                         <th scope="col" class="text-center">Jenis Job</th>
                                         <th scope="col" class="text-center">Berat Job</th>
                                         <th scope="col" class="text-center">Pcs Job</th>
-                                        <th scope="col" class="text-center">Upah Operator</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
                                         <th scope="col" class="text-center">Keterangan</th>
                                         @role('admin')
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
+                                            <th scope="col" class="text-center">Upah Operator</th>
                                         @endrole
                                         <th scope="col" class="text-center">Waktu Penyebaran</th>
-                                        <th scope="col" class="text-center">Waktu Pengembalian</th>
-                                        <th scope="col" class="text-center">Lama Pengerjaan</th>
                                         <th scope="col" class="text-center">Nama Operator</th>
                                         <th scope="col" class="text-center">Nip Operator</th>
                                         <th scope="col" class="text-center">Grade Operator</th>
@@ -62,19 +61,16 @@
                                             <td class="text-center">{{ $item->jenis_job }}</td>
                                             <td class="text-center">{{ $item->berat_job }}</td>
                                             <td class="text-center">{{ $item->pcs_job }}</td>
-                                            <td class="text-center">{{ $item->upah_operator }}</td>
                                             <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                             <td class="text-center">{{ $item->keterangan }}</td>
                                             @role('admin')
                                                 <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
                                                 <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
                                                 </td>
+                                                <td class="text-center">{{ number_format($item->upah_operator, 2, ',', '.') }}
+                                                </td>
                                             @endrole
                                             <td class="text-center">{{ $item->waktu_penyebaran }}</td>
-                                            <td class="text-center">{{ $item->waktu_pengembalian }}</td>
-                                            <td class="text-center">
-                                                {{ sprintf('%02d:%02d:%02d', floor($item->lama_pengerjaan / 3600), floor(($item->lama_pengerjaan % 3600) / 60), $item->lama_pengerjaan % 60) }}
-                                            </td>
                                             <td class="text-center">{{ $item->nama_operator }}</td>
                                             <td class="text-center">{{ $item->nip_operator }}</td>
                                             <td class="text-center">{{ $item->grade_operator }}</td>
@@ -89,9 +85,9 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
-                                                        action="{{ route('CabutBuluPengembalian.destroy', $item->nomor_job) }}"
+                                                        action="{{ route('CabutBuluPenyebaran.destroy', $item->nomor_job) }}"
                                                         method="POST">
-                                                        {{-- <a href="{{ route('CabutBuluPengembalian.show', $item->nomor_job) }}"
+                                                        {{-- <a href="{{ route('CabutBuluPenyebaran.show', $item->nomor_job) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
                                                         </a> --}}
@@ -108,7 +104,7 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Cabut Bulu Pengembalian belum Tersedia.
+                                            Data Cabut Bulu Penyebaran belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -123,7 +119,7 @@
 @section('script')
     <script>
         function redirectToPage() {
-            window.location.href = "{{ route('CabutBuluPengembalian.create') }}";
+            window.location.href = "{{ route('CabutBuluPenyebaran.create') }}";
         }
 
         function confirmDelete(id) {

@@ -33,10 +33,12 @@
                             data-placeholder="Pilih Operator Perendaman">
                             <option value="">Pilih Operator Perendaman</option>
                             @foreach ($MasterO->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Perendaman' && $MasterSPRM->status == 1)
-                                    <option value="{{ $MasterSPRM->nama }}">
-                                        {{ $MasterSPRM->nama }}
-                                    </option>
+                                @if ($MasterSPRM->status == 1)
+                                    @if (strpos(strtolower($MasterSPRM->job), 'perendaman') !== false)
+                                        <option value="{{ $MasterSPRM->nama }}">
+                                            {{ $MasterSPRM->nama }}
+                                        </option>
+                                    @endif
                                 @endif
                             @endforeach
                         </select>
@@ -47,10 +49,12 @@
                             data-placeholder="Pilih Operator Bilas">
                             <option value="">Pilih Operator Bilas</option>
                             @foreach ($MasterO->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Bilas' && $MasterSPRM->status == 1)
-                                    <option value="{{ $MasterSPRM->nama }}">
-                                        {{ $MasterSPRM->nama }}
-                                    </option>
+                                @if ($MasterSPRM->status == 1)
+                                    @if (strpos(strtolower($MasterSPRM->job), 'bilas') !== false)
+                                        <option value="{{ $MasterSPRM->nama }}">
+                                            {{ $MasterSPRM->nama }}
+                                        </option>
+                                    @endif
                                 @endif
                             @endforeach
                         </select>
@@ -62,10 +66,12 @@
                             data-placeholder="Pilih Operator Box">
                             <option value="">Pilih Operator Box</option>
                             @foreach ($MasterO->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Box' && $MasterSPRM->status == 1)
-                                    <option value="{{ $MasterSPRM->nama }}">
-                                        {{ $MasterSPRM->nama }}
-                                    </option>
+                                @if ($MasterSPRM->status == 1)
+                                    @if (strpos(strtolower($MasterSPRM->job), 'box') !== false)
+                                        <option value="{{ $MasterSPRM->nama }}">
+                                            {{ $MasterSPRM->nama }}
+                                        </option>
+                                    @endif
                                 @endif
                             @endforeach
                         </select>
@@ -96,11 +102,11 @@
                     </div>
                     <div class="col-md-4">
                         <label for="berat_job" class="form-label">Berat Job</label>
-                        <input type="text" class="form-control" id="berat_job" placeholder="Masukkan berat job">
+                        <input type="text" class="form-control" id="berat_job">
                     </div>
                     <div class="col-md-4">
                         <label for="pcs_job" class="form-label">Pcs Job</label>
-                        <input type="text" class="form-control" id="pcs_job" placeholder="Masukkan pcs job">
+                        <input type="text" class="form-control" id="pcs_job">
                     </div>
                     <div class="col-md-4">
                         <label for="upah_operator" class="form-label">Upah Operator</label>
@@ -189,30 +195,34 @@
                 success: function(response) {
                     console.log(response);
 
-                    // Menghitung berat_masuk - berat_keluar
-                    let sisaBerat = response.beratjob;
+                    // Menghitung berat_job_sisa
+                    let beratJob = parseFloat(response.berat_job);
+                    let beratJobSisa = beratJob - (0.15 * beratJob);
 
-                    // Pemeriksaan jika sisaBerat tidak sama dengan 0
-                    if (sisaBerat !== 0) {
-                        // Menyimpan sisaBerat dalam variabel baru
-                        let sisaBeratFormatted = parseFloat(sisaBerat).toFixed(2);
-                        // let sisaBeratFormatted = sisaBerat;
+                    // Membulatkan beratJobSisa ke bawah
+                    let beratJobSisaRoundedDown = Math.floor(beratJobSisa);
 
-                        // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                    // Pemeriksaan jika beratJob tidak sama dengan 0
+                    if (beratJob !== 0) {
+                        // Mengatur nilai input sesuai dengan respons dari server
                         $('#nomor_batch').val(response.nomor_batch);
                         $('#jenis_job').val(response.jenis_job);
+                        $('#berat_job').val(beratJob);
+                        $('#berat_bersih').val(
+                            beratJobSisaRoundedDown
+                        ); // Nilai setelah pengurangan 15% dan dibulatkan ke bawah
+                        $('#pcs_job').val(response.pcs_job);
+                        $('#pcs_bersih').val(response.pcs_job);
                         $('#upah_operator').val(response.upah_operator);
                         $('#tujuan_kirim').val(response.tujuan_kirim);
                         $('#modal').val(response.modal);
                         $('#total_modal').val(response.total_modal);
                     } else {
-                        // Jika sisaBerat === 0, hapus opsi dan reset nilai input
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
                             text: 'Berat Job sama dengan 0. Pilih nomor job lain.',
                         }).then(() => {
-                            // Reset nilai input
                             $('#nomor_job').val('').trigger('change');
                         });
                     }
@@ -253,24 +263,6 @@
                 }
             }
         });
-
-        $(document).ready(function() {
-            $('#pcs_job').on('input', function() {
-                updatePcsBersih();
-            });
-
-            function updatePcsBersih() {
-                let pcs_job = $('#pcs_job').val();
-
-                if (pcs_job !== '') {
-                    $('#pcs_bersih').val(pcs_job); // Menampilkan nilai yang sama di pcs_bersih
-                } else {
-                    $('#pcs_bersih').val(''); // Mengosongkan input jika nilai kosong
-                }
-            }
-        });
-
-
 
         $(document).ready(function() {
             // Menangani perubahan pada dropdown nomor_job
@@ -321,9 +313,24 @@
             let total_modal = $('#total_modal').val();
             let user_created = $('#user_created').val();
 
-            // Validasi input (sesuai kebutuhan)
-            if (!nomor_job || !user_created) {
-                alert('Nomor Job Dan NIP Admin Required.');
+            // Inisialisasi array untuk menyimpan field yang belum terisi
+            let fieldsNotFilled = [];
+            // Periksa setiap field
+            if (!nomor_job) fieldsNotFilled.push('Nomor Job');
+            if (!operator_perendaman) fieldsNotFilled.push('Operator Perendaman');
+            if (!operator_bilas) fieldsNotFilled.push('Operator Bilas');
+            if (!operator_box) fieldsNotFilled.push('Operator Box');
+
+            // Cek apakah ada field yang belum terisi
+            if (fieldsNotFilled.length > 0) {
+                // Membuat pesan teks yang mencantumkan field yang belum terisi
+                let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
+
+                Swal.fire({
+                    title: 'Warning!',
+                    text: message,
+                    icon: 'warning'
+                });
                 return;
             }
 
@@ -377,8 +384,9 @@
             });
 
             // Mengosongkan nilai dropdown nomor_job
-            $('#operator_perendaman, #operator_bilas, #operator_box, #keterangan')
-                .val('');
+            // $('#operator_perendaman, #operator_bilas, #operator_box, #keterangan')
+            //     .val('');
+            $('#operator_perendaman, #nomor_job, #operator_bilas, #operator_box, #keterangan').val(null).trigger('change');
 
         }
 
