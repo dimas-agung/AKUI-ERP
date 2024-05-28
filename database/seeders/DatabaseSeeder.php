@@ -76,6 +76,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CabutHancuranPersiapanStockSeeder::class);
         $this->call(TransitCabutBuluSeeder::class);
         $this->call(StockRambangBasahSeeder::class);
+        $this->call(PreWashInputSeeder::class);
         $this->call(roleSeeders::class);
         $this->call(userSeeders::class);
 

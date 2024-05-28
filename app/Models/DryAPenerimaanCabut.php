@@ -5,28 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PreWashInput extends Model
+class DryAPenerimaanCabut extends Model
 {
     use HasFactory;
-    protected $table = 'pre_wash_inputs';
+    protected $table = 'dry_a_penerimaan_cabuts';
     protected $fillable = [
         'nomor_job',
         'nomor_batch',
         'jenis_job',
         'berat_job',
         'pcs_job',
-        'upah_operator',
         'tujuan_kirim',
-        'keterangan',
-        'nomor_bstb',
-        'status',
+        'nama_operator',
+        'nip_operator',
+        'grade_operator',
+        'nama_team_leader',
         'modal',
         'total_modal',
+        'upah_operator',
         'user_created',
         'user_updated',
+        'status',
     ];
-    public function TransitGradingHalus()
-    {
-        return $this->hasMany(TransitGradingHalus::class, 'nomor_job', 'nomor_job');
-    }
 }
