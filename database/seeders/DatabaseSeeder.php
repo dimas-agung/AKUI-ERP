@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CabutBuluStockSeeder::class);
         $this->call(TransitCabutBuluSeeder::class);
         $this->call(StockRambangBasahSeeder::class);
+        $this->call(PreWashInputSeeder::class);
         $this->call(roleSeeders::class);
         $this->call(userSeeders::class);
 

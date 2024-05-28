@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DryAPenerimaanCabutStock extends Model
 {
     use HasFactory;
-    protected $table = 'dry_a_grading_cabut_stocks';
+    protected $table = 'dry_a_penerimaan_cabut_stocks';
     protected $fillable = [
         'unit',
         'nomor_job',

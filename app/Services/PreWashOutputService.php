@@ -87,6 +87,20 @@ class PreWashOutputService
                             'pcs_job'   => $sisaPcs ?? 0,
                             'total_modal'  => $itemObject->total_modal,
                             'user_updated' => $itemObject->user_created ?? "There isn't any",
+                            'status' => $itemObject->status ?? 0,
+                        ]);
+                    }
+
+                    // Ambil semua item yang sesuai dengan kriteria
+                    $Items = PreWashInput::where('nomor_job', $itemObject->nomor_job)
+                        // ->where('nomor_bstb', $itemObject->nomor_bstb)
+                        ->get();
+
+                    foreach ($Items as $existingItem) {
+
+                        // Update data dengan nilai baru
+                        $existingItem->update([
+                            'status'       => $itemObject->status ?? 0,
                         ]);
                     }
 
@@ -151,6 +165,7 @@ class PreWashOutputService
                             $stockPrmRawMaterial->update([
                                 'berat_job' => max($perbedaanBerat, 0),
                                 'pcs_job' => max($perbedaanPcs, 0),
+                                'status' => (1),
                                 // 'total_modal' => max($perbedaanBerat * $PreCleaningI->modal, 0),
                             ]);
                         }
@@ -163,6 +178,19 @@ class PreWashOutputService
 
                 // Hapus data GradingHalusInput
                 $PreCleaningI->delete();
+
+                // Perbarui status PreCleaningOutput jika ada
+                $existingItems = PreWashInput::where('nomor_job', $PreCleaningI->nomor_job)
+                    // ->where('nomor_bstb', $PreCleaningI->nomor_bstb)
+                    ->get();
+
+                // Logika Update Status
+                if ($existingItems->isNotEmpty()) {
+                    foreach ($existingItems as $existingItem) {
+                        // Perbarui data untuk setiap item yang ada
+                        $existingItem->update(['status' => 1]);
+                    }
+                }
             }
 
             // Commit transaksi
