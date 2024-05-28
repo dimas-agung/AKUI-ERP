@@ -19,6 +19,7 @@ class PreWashInput extends Model
         'tujuan_kirim',
         'keterangan',
         'nomor_bstb',
+        'status',
         'modal',
         'total_modal',
         'user_created',

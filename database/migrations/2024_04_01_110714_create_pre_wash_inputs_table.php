@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('tujuan_kirim');
             $table->string('keterangan')->nullable();
             $table->string('nomor_bstb');
+            $table->integer('status')->default(1);
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
             $table->string('user_created');

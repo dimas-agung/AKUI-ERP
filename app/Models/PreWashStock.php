@@ -22,6 +22,7 @@ class PreWashStock extends Model
         'keterangan',
         'modal',
         'total_modal',
+        'upah_operator',
         'user_created',
         'user_updated',
     ];
