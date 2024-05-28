@@ -544,6 +544,22 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\Rambang\TransitRambangWasteController::class)->group(function () {
                 Route::get('/transit_rambang_waste', 'index')->name('TransitRambangWaste.index');
             });
+            Route::controller(App\Http\Controllers\Rambang\InputRambangBasahController::class)->group(function () {
+                Route::get('/input_rambang_basah', 'index')->name('InputRambangBasah.index');
+                Route::get('/input_rambang_basah/create', 'create')->name('InputRambangBasah.create');
+                Route::post('/input_rambang_basah/store', 'store')->name('InputRambangBasah.store');
+                Route::get('/input_rambang_basah/show/{id}', 'show')->name('InputRambangBasah.show');
+                Route::get('/input_rambang_basah/edit/{id}', 'edit')->name('InputRambangBasah.edit');
+                Route::put('/input_rambang_basah/update/{id}', 'update')->name('InputRambangBasah.update');
+                Route::delete('/input_rambang_basah/destroy/{id}', 'destroy')->name('InputRambangBasah.destroy');
+                Route::get('/input_rambang_basah/get_data_nomor_job', 'set')->name('InputRambangBasah.set');
+                Route::post('/input_rambang_basah/simpanData', 'simpanData')->name('InputRambangBasah.simpanData');
+                Route::post('/input_rambang_basah/cek_data', 'CeksendData')->name('InputRambangBasah.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\Rambang\StockRambangBasahController::class)->group(function () {
+                Route::get('/stock_rambang_basah', 'index')->name('StockRambangBasah.index');
+            });
         });
         Route::prefix('cabut_hancuran')->middleware('role:cabut_hancuran|admin')->group(function () {
             Route::controller(App\Http\Controllers\CabutHancuran\CabutHancuranPersiapanController::class)->group(function () {
@@ -558,7 +574,9 @@ Route::middleware('auth')->group(function () {
                 Route::post('/cabut_hancuran_persiapan/simpanData', 'simpanData')->name('CabutHancuranPersiapan.simpanData');
                 Route::post('/cabut_hancuran_persiapan/sendData', 'sendData')->name('CabutHancuranPersiapan.sendData');
             });
-
+            Route::controller(App\Http\Controllers\CabutHancuran\CabutHancuranPersiapanStockController::class)->group(function () {
+                Route::get('/cabut_hancuran_stock', 'index')->name('CabutHancuranStock.index');
+            });
             Route::controller(App\Http\Controllers\CabutHancuran\CabutHancuranPersiapanStockController::class)->group(function () {
                 Route::get('/cabut_hancuran_persiapan_stock', 'index')->name('CabutHancuranPersiapanStock.index');
             });

@@ -24,7 +24,7 @@
                                     {{ $PreCS->nomor_job }}
                                 </option>
                             @endforeach
-                        </select>
+                    </select>
                     </div>
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Perendaman</label>
@@ -181,10 +181,26 @@
 @endsection
 @section('script')
     <script>
+        let selectedNomorBSTB = '';
         // Nomor JOB
         $('#nomor_job').on('change', function() {
             let selectedNomorJob = $(this).val();
-
+            if (dataArray.length > 0) {
+                dataArray.forEach(item => {
+                    
+                    let lastNomorJob= item.nomor_job;
+                    if (selectedNomorJob == lastNomorJob) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Harap Pilih job dengan nomor yang beda.',
+                        });
+                        $('#nomor_job').find('option:selected').remove();
+                                    // $('#nomor_job').prop('selectedIndex', 0)
+                        return;
+                    }
+                });
+            }
             $.ajax({
                 url: `{{ route('preWashOutput.set') }}`,
                 method: 'GET',
@@ -248,6 +264,7 @@
 
         $(document).ready(function() {
             $('#berat_job').on('input', function() {
+                
                 calculateBeratBersih();
             });
 
@@ -268,7 +285,10 @@
             // Menangani perubahan pada dropdown nomor_job
             $('#nomor_job').on('change', function() {
                 // Memanggil fungsi generateNomorBSTB ketika nomor_job berubah
-                generateNomorBSTB();
+                if (selectedNomorBSTB== '') {
+                    
+                    generateNomorBSTB();
+                }
             });
 
             // Fungsi untuk generate nomor_bstb
@@ -282,7 +302,7 @@
                 const detik = ('0' + now.getSeconds()).slice(-2);
 
                 // Menghasilkan nomor_bstb berdasarkan rumus yang diinginkan
-                const nomor_bstb = `BSTB_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}`;
+                const nomor_bstb = `BSTB_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_upw`;
 
                 // Memasukkan nilai yang dihasilkan ke dalam input nomor_bstb
                 $('#nomor_bstb').val(nomor_bstb);
@@ -384,6 +404,10 @@
             });
 
             // Mengosongkan nilai dropdown nomor_job
+            $('#nomor_bstb').prop('readonly', true);
+            selectedNomorBSTB += nomor_bstb;
+            // $('#nomor_bstb').prop('readonly', true);
+         
             // $('#operator_perendaman, #operator_bilas, #operator_box, #keterangan')
             //     .val('');
             $('#operator_perendaman, #nomor_job, #operator_bilas, #operator_box, #keterangan').val(null).trigger('change');

@@ -65,8 +65,8 @@
                                             <div class="col-md-6">
                                                 <label><strong>Perusahaan</strong></label>
                                                 <div class="form-group">
-                                                    <select class="choices form-select" name="perusahaan_id"
-                                                        id="perusahaan_id">
+                                                    <select class="choices form-select" name="plant"
+                                                        id="plant">
                                                         <option></option>
                                                         @foreach ($perusahaans as $peru)
                                                             <option value="{{ $peru->plant }}">
@@ -112,8 +112,8 @@
                                             <div class="col-md-6">
                                                 <label><strong>Workstation</strong></label>
                                                 <div class="form-group">
-                                                    <select class="choices form-select" name="workstation_id"
-                                                        id="workstation_id">
+                                                    <select class="choices form-select" name="workstation"
+                                                        id="workstation">
                                                         <option></option>
                                                         @foreach ($workstations as $work)
                                                             <option value="{{ $work->nama }}">
@@ -125,7 +125,7 @@
                                             <div class="col-md-6">
                                                 <label><strong>Unit</strong></label>
                                                 <div class="form-group">
-                                                    <select class="choices form-select" name="unit_id" id="unit_id">
+                                                    <select class="choices form-select" name="unit" id="unit">
                                                         <option></option>
                                                         @foreach ($units as $unit)
                                                             <option value="{{ $unit->nama }}">

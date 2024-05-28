@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Perusahaan</label>
-                                <select class="select2 form-select" name="perusahaan_id" id="perusahaan_id">
+                                <select class="select2 form-select" name="plant" id="plant">
                                     @foreach ($perusahaan as $post)
                                         <option value="{{ $post->plant }}"
                                             {{ $MasterOP->plant == $post->plant ? 'selected' : '' }}>
@@ -62,17 +62,17 @@
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Workstation</label>
-                                <select class="select2 form-select" name="workstation_id" id="workstation_id">
+                                <select class="select2 form-select" name="workstation" id="workstation">
                                     @foreach ($workstation as $post)
                                         <option value="{{ $post->nama }}"
-                                            {{ $MasterOP->workstation == $post->id ? 'selected' : '' }}>
+                                            {{ $MasterOP->workstation == $post->nama ? 'selected' : '' }}>
                                             {{ old('workstation', $post->nama) }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold">Unit</label>
-                                <select class="select2 form-select" name="unit_id" id="unit_id">
+                                <select class="select2 form-select" name="unit" id="unit">
                                     @foreach ($unit as $post)
                                         <option value="{{ $post->nama }}"
                                             {{ $MasterOP->unit == $post->nama ? 'selected' : '' }}>
