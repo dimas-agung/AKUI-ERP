@@ -20,6 +20,7 @@ class DryAPenerimaanCabut extends Model
         'nip_operator',
         'grade_operator',
         'nama_team_leader',
+        'keterangan',
         'modal',
         'total_modal',
         'upah_operator',
@@ -27,4 +28,12 @@ class DryAPenerimaanCabut extends Model
         'user_updated',
         'status',
     ];
+    public function TransitCabutBulu()
+    {
+        return $this->belongsTo(TransitCabutBulu::class, 'nomor_job', 'nomor_job');
+    }
+    public function DryAPenerimaanCabutStock()
+    {
+        return $this->hasMany(DryAPenerimaanCabutStock::class, 'nomor_job', 'nomor_job');
+    }
 }

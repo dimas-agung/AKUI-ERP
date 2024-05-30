@@ -376,6 +376,8 @@
                                     </li>
                                 </ul>
                             </li>
+                        @endrole
+                        @role('cleaning|admin')
                             <li
                                 class="sidebar-item has-sub {{ Route::is('TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*', 'CabutBuluPenerimaan*', 'CabutBuluStock*', 'CabutBuluPenyebaran*', 'CabutBuluPengembalian*', 'TransitCabutBulu*', 'InputHcrKotor*', 'StockHcrKotor*', 'InputRambangBasah*', 'StockRambangBasah*', 'CabutHancuranPersiapan*', 'CabutHancuranPersiapanStock*', 'CabutHancuranPenyebaran*', 'CabutHancuranPengembalian*', 'TransitCabutHancuran*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
@@ -494,6 +496,42 @@
                                                 <a href="{{ route('TransitCabutHancuran.index') }}"
                                                     class="submenu-link">Transit Cabut
                                                     Hancuran</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endrole
+                        @role('dry_a|admin')
+                            <li
+                                class="sidebar-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*') ? 'active' : '' }}">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-three-dots"></i>
+                                    <span>Dry A</span>
+                                </a>
+                                <ul class="submenu">
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Dry A</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitCabutBulu*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitCabutBulu.index') }}"
+                                                    class="submenu-link">Transit Cabut
+                                                    Bulu</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAPenerimaan*') && !Route::is('DryAPenerimaanStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAPenerimaan.index') }}" class="submenu-link">Dry A
+                                                    Penerimaan</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAPenerimaanStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAPenerimaanStock.index') }}"
+                                                    class="submenu-link">Dry A
+                                                    Penerimaan Stock</a>
                                             </li>
                                         </ul>
                                     </li>

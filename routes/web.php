@@ -509,8 +509,26 @@ Route::middleware('auth')->group(function (){
             });
         });
     });
-    // Route::prefix('user3')->group(function (){
-    // })->middleware('role:master');
+    Route::prefix('dry_a')->middleware(['role:dry_a|admin'])->group(function (){
+        Route::prefix('dry_a')->middleware('role:dry_a|admin')->group(function (){
+            Route::controller(App\Http\Controllers\DryA\DryAPenerimaanController::class)->group(function () {
+                Route::get('/dry_a_penerimaan', 'index')->name('DryAPenerimaan.index');
+                Route::get('/dry_a_penerimaan/create', 'create')->name('DryAPenerimaan.create');
+                Route::post('/dry_a_penerimaan/store', 'store')->name('DryAPenerimaan.store');
+                Route::get('/dry_a_penerimaan/show/{id}', 'show')->name('DryAPenerimaan.show');
+                Route::get('/dry_a_penerimaan/edit/{id}', 'edit')->name('DryAPenerimaan.edit');
+                Route::put('/dry_a_penerimaan/update/{id}', 'update')->name('DryAPenerimaan.update');
+                Route::delete('/dry_a_penerimaan/destroy/{nomor_job}', 'destroy')->name('DryAPenerimaan.destroy');
+                Route::get('/dry_a_penerimaan/get_data_nomor_job', 'set')->name('DryAPenerimaan.set');
+                Route::post('/dry_a_penerimaan/simpanData', 'simpanData')->name('DryAPenerimaan.simpanData');
+                Route::post('/dry_a_penerimaan/cek_data', 'CeksendData')->name('DryAPenerimaan.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\DryA\DryAPenerimaanStockController::class)->group(function () {
+                Route::get('/dry_a_penerimaan_stock', 'index')->name('DryAPenerimaanStock.index');
+            });
+        });
+    });
 });
 
 Auth::routes();

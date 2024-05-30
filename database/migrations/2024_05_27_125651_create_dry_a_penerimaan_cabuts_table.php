@@ -26,6 +26,7 @@ return new class extends Migration
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
             $table->float('upah_operator', 16, 4);
+            $table->string('keterangan')->nullable();
             $table->string('user_created');
             $table->string('user_updated')->nullable();
             $table->integer('status')->default(1);

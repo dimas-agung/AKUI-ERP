@@ -228,9 +228,9 @@
                 success: function(response) {
                     if (response.status > 0) {
                         inisialTujuanGlobal = response
-                        .inisial_tujuan; // Simpan inisial_tujuan ke variabel global
+                            .inisial_tujuan; // Simpan inisial_tujuan ke variabel global
                         checkAndGenerateNomorBSTB(
-                        inisialTujuanGlobal); // Panggil fungsi dengan inisial_tujuan
+                            inisialTujuanGlobal); // Panggil fungsi dengan inisial_tujuan
                     }
                 },
                 error: function(error) {
@@ -505,7 +505,7 @@
             $('#keterangan').val('');
             $('#modal').val('');
             $('#total_modal').val('');
-            $('#id_box_grading_halus').val($('#id_box_grading_halus').val()).trigger('change');
+            $('#id_box_grading_halus').val(null).trigger('change');
             $('#user_created').prop('readonly', true);
             // Set tujuan_kirim sebagai read-only setelah dipilih
             $('#tujuan_kirim').prop('disabled', true);
