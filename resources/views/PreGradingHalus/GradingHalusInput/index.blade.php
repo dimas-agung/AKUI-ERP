@@ -141,6 +141,35 @@
 @endsection
 @section('script')
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('warning'))
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Peringatan',
+                    text: '{{ session('warning') }}',
+                    confirmButtonText: 'OK'
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '{{ session('error') }}',
+                    confirmButtonText: 'OK'
+                });
+            @endif
+
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: '{{ session('success') }}',
+                    confirmButtonText: 'OK'
+                });
+            @endif
+        });
+
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Konfirmasi',
