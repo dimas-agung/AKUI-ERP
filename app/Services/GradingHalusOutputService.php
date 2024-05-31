@@ -175,6 +175,19 @@ class GradingHalusOutputService
                                 'total_modal' => max($pcsSebelumnya, 0),
                             ]);
                         }
+
+                        $existingItems = GradingHalusInput::where('id_box_grading_halus', $PreCleaningI->id_box_grading_halus)
+                        ->get();
+
+                        $dataToUpdate = [
+                            'status'                => $PreCleaningI->status ?? 0,
+                        ];
+
+                        if ($existingItems) {
+                            foreach ($existingItems as $existingItem) {
+                                $existingItem->update($dataToUpdate);
+                            }
+                        }
                     }
 
                 if ($PreCleaningS) {

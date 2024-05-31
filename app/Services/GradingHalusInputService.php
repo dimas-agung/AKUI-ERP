@@ -200,18 +200,17 @@ class GradingHalusInputService
             // Cek apakah salah satu dari GradingHalusInputs memiliki status 0 dengan waktu created_at yang sama
             foreach ($GradingHalusInputs as $GradingInput) {
                 $createdAt = $GradingInput->created_at;
-                $now = now();
 
                 // Cari data lain dengan waktu created_at yang sama dan status 0
                 $sameTimeStatusZero = GradingHalusInput::where('created_at', '=', $createdAt)
                     ->where('status', '=', 0)
                     ->exists();
 
-                if ($sameTimeStatusZero && $createdAt->diffInMinutes($now) > 10) {
-                    // Rollback transaksi jika ada data dengan status 0 dan waktu created_at lebih dari 10 menit
+                if ($sameTimeStatusZero) {
+                    // Rollback transaksi jika ada data dengan status 0 dan waktu created_at yang sama
                     DB::rollBack();
                     // Simpan pesan peringatan dalam session
-                    session()->flash('warning', 'Data tidak bisa dihapus karena sudah lebih dari 10 menit sejak dibuat dan ada data lain dengan status 0.');
+                    session()->flash('warning', 'Data tidak bisa dihapus karena ada data lain dengan status 0 yang dibuat pada waktu yang sama.');
                     // Kembali ke halaman sebelumnya
                     return back();
                 }
