@@ -614,7 +614,7 @@
             $('#fix_hpp').val('');
             $('#fix_total_hpp').val('');
             $('#jenis_grading').val(null).trigger('change');
-            $('#nomor_grading').prop('disabled', true);
+            $('#nomor_grading').val(null).trigger('change');
             $('#user_created').prop('readonly', true);
             $('#tujuan_kirim').val($('#tujuan_kirim option:first').val());
 
