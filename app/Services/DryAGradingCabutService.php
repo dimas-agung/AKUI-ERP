@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\DryAGradingCabut;
 use App\Models\DryAGradingCabutStock;
+use App\Models\DryAPenerimaanCabut;
 use App\Models\DryAPenerimaanCabutStock;
 use App\Models\MasterJenisGradingHalus;
 use App\Models\PreCleaningOutput;
@@ -93,46 +94,62 @@ class DryAGradingCabutService
                     // GradingHalusInput::create($mergedData);
                     DryAGradingCabut::create($mergedData);
 
+                    DryAGradingCabutStock::create([
+                        'unit'                  => $mergedData['unit'] ?? 'Dry A',
+                        'nomor_job'             => $mergedData['nomor_job'],
+                        'nomor_batch'           => $mergedData['nomor_batch'],
+                        'tujuan_kirim'          => $mergedData['tujuan_kirim'],
+                        'keterangan'            => $mergedData['keterangan'],
+                        'berat_kotor'           => $mergedData['berat_kotor'],
+                        'jenis_grading'         => $mergedData['jenis_grading'],
+                        'berat_1_grading'       => $mergedData['berat_1_grading'],
+                        'pcs_1_grading'         => $mergedData['pcs_1_grading'],
+                        'berat_2_grading'       => $mergedData['berat_2_grading'],
+                        'modal'                 => $mergedData['fix_hpp'],
+                        'total_modal'           => $mergedData['fix_total_hpp'],
+
+                    ]);
+
                     // $grading = GradingHalusStock::where('id_box_grading_halus', $mergedData['id_box_grading_halus'])
                     //     ->first();
-                    $grading = DryAGradingCabutStock::where('nomor_job', $mergedData['nomor_job'])
-                        ->first();
+                    // $grading = DryAGradingCabutStock::where('nomor_job', $mergedData['nomor_job'])
+                    //     ->first();
 
-                    if ($grading) {
-                        // $total_berat = $grading->berat_masuk + ($mergedData['berat_grading'] ?? 0);
-                        $hpp = $this->HppService->recalculateHpp($grading->berat_grading, $grading->modal, $mergedData['fix_total_hpp'], $mergedData['berat_grading']);
+                    // if ($grading) {
+                    //     // $total_berat = $grading->berat_masuk + ($mergedData['berat_grading'] ?? 0);
+                    //     $hpp = $this->HppService->recalculateHpp($grading->berat_grading, $grading->modal, $mergedData['fix_total_hpp'], $mergedData['berat_grading']);
 
-                        // Update existing grading data
-                        $grading->update([
-                            'berat_1_grading'       => $grading->berat_grading + ($mergedData['berat_grading'] ?? 0),
-                            'pcs_1_grading'         => $grading->pcs_1_grading + ($mergedData['pcs_grading'] ?? 0),
-                            'berat_keluar'          => $grading->berat_keluar + ($mergedData['berat_keluars'] ?? 0),
-                            'pcs_keluar'            => $grading->pcs_keluar + ($mergedData['pcs_keluars'] ?? 0),
-                            'sisa_berat'            => $grading->sisa_berat + ($mergedData['berat_grading'] ?? 0),
-                            'sisa_pcs'              => $grading->sisa_pcs + ($mergedData['pcs_grading'] ?? 0),
-                            'modal'                 => $hpp,
-                            'total_modal'           => $hpp * ($grading->sisa_berat + $mergedData['berat_grading']),
-                            'user_update'           => $mergedData['user_updated'] ?? "There isn't any",
-                        ]);
-                    } else {
-                        // Create new grading data
-                        // GradingHalusStock::create([
-                        DryAGradingCabutStock::create([
-                            'unit'                  => $mergedData['unit'] ?? 'Dry A',
-                            'nomor_job'             => $mergedData['nomor_job'],
-                            'nomor_batch'           => $mergedData['nomor_batch'],
-                            'tujuan_kirim'          => $mergedData['tujuan_kirim'],
-                            'keterangan'            => $mergedData['keterangan'],
-                            'berat_kotor'           => $mergedData['berat_kotor'],
-                            'jenis_grading'         => $mergedData['jenis_grading'],
-                            'berat_1_grading'       => $mergedData['berat_1_grading'],
-                            'pcs_1_grading'         => $mergedData['pcs_1_grading'],
-                            'berat_2_grading'       => $mergedData['berat_2_grading'],
-                            'modal'                 => $mergedData['fix_hpp'],
-                            'total_modal'           => $mergedData['fix_total_hpp'],
+                    //     // Update existing grading data
+                    //     $grading->update([
+                    //         'berat_1_grading'       => $grading->berat_grading + ($mergedData['berat_grading'] ?? 0),
+                    //         'pcs_1_grading'         => $grading->pcs_1_grading + ($mergedData['pcs_grading'] ?? 0),
+                    //         'berat_keluar'          => $grading->berat_keluar + ($mergedData['berat_keluars'] ?? 0),
+                    //         'pcs_keluar'            => $grading->pcs_keluar + ($mergedData['pcs_keluars'] ?? 0),
+                    //         'sisa_berat'            => $grading->sisa_berat + ($mergedData['berat_grading'] ?? 0),
+                    //         'sisa_pcs'              => $grading->sisa_pcs + ($mergedData['pcs_grading'] ?? 0),
+                    //         'modal'                 => $hpp,
+                    //         'total_modal'           => $hpp * ($grading->sisa_berat + $mergedData['berat_grading']),
+                    //         'user_update'           => $mergedData['user_updated'] ?? "There isn't any",
+                    //     ]);
+                    // } else {
+                    // Create new grading data
+                    // GradingHalusStock::create([
+                    // DryAGradingCabutStock::create([
+                    //     'unit'                  => $mergedData['unit'] ?? 'Dry A',
+                    //     'nomor_job'             => $mergedData['nomor_job'],
+                    //     'nomor_batch'           => $mergedData['nomor_batch'],
+                    //     'tujuan_kirim'          => $mergedData['tujuan_kirim'],
+                    //     'keterangan'            => $mergedData['keterangan'],
+                    //     'berat_kotor'           => $mergedData['berat_kotor'],
+                    //     'jenis_grading'         => $mergedData['jenis_grading'],
+                    //     'berat_1_grading'       => $mergedData['berat_1_grading'],
+                    //     'pcs_1_grading'         => $mergedData['pcs_1_grading'],
+                    //     'berat_2_grading'       => $mergedData['berat_2_grading'],
+                    //     'modal'                 => $mergedData['fix_hpp'],
+                    //     'total_modal'           => $mergedData['fix_total_hpp'],
 
-                        ]);
-                    }
+                    // ]);
+                    // }
 
                     $itemObject = (object) $mergedData;
 
@@ -186,107 +203,83 @@ class DryAGradingCabutService
         ], 201);
     }
 
-    public function destroy($nomor_job): RedirectResponse
+    public function destroy($nomor_job)
     {
         try {
-            // Gunakan transaksi database untuk memastikan konsistensi
+            // Begin transaction
             DB::beginTransaction();
 
-            // Ambil data PreCleaningInput berdasarkan nomor_job
-            // $GradingHalusInputs = GradingHalusInput::where('nomor_job', '=', $nomor_job)->get();
-            $DryAGradingCabut = DryAGradingCabut::where('nomor_job', '=', $nomor_job)->get();
+            // Temukan semua record berdasarkan nomor_job
+            $DryAGradingCabut = DryAGradingCabut::where('nomor_job', $nomor_job)->get();
 
-            // if ($DryAGradingCabut->isEmpty()) {
-            //     // Redirect ke index dengan pesan error jika data tidak ditemukan
-            //     return redirect()->route('DryAGradingCabut.index')->with(['error' => 'Data tidak ditemukan!']);
-            // }
+            if ($DryAGradingCabut->isEmpty()) {
+                throw new \Exception('Data tidak ditemukan');
+            }
 
-            // Cek apakah salah satu dari GradingHalusInputs memiliki status 0 dengan waktu created_at yang sama
-            // foreach ($GradingHalusInputs as $GradingInput) {
-            //     $createdAt = $GradingInput->created_at;
-            //     $now = now();
+            foreach ($DryAGradingCabut as $DryAGradingCabutInput) {
+                // Hapus semua item terkait di TransitRambangWaste
+                $stockTrans = DryAGradingCabutStock::where('nomor_job', '=', $DryAGradingCabutInput->nomor_job)->first();
 
-            //     // Cari data lain dengan waktu created_at yang sama dan status 0
-            //     $sameTimeStatusZero = GradingHalusInput::where('created_at', '=', $createdAt)
-            //         ->where('status', '=', 0)
-            //         ->exists();
-
-            //     if ($sameTimeStatusZero && $createdAt->diffInMinutes($now) > 10) {
-            //         // Rollback transaksi jika ada data dengan status 0 dan waktu created_at lebih dari 10 menit
-            //         DB::rollBack();
-            //         // Simpan pesan peringatan dalam session
-            //         session()->flash('warning', 'Data tidak bisa dihapus karena sudah lebih dari 10 menit sejak dibuat dan ada data lain dengan status 0.');
-            //         // Kembali ke halaman sebelumnya
-            //         return back();
-            //     }
-            // }
-
-            foreach ($DryAGradingCabut as $DryGradingCabut) {
-                // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
-                // $PreCleaningS = GradingHalusStock::where('id_box_grading_halus', '=', $DryGradingCabut->id_box_grading_halus)
-                //     ->first();
-                $DryAGradingCabutStock = DryAGradingCabutStock::where('nomor_job', '=', $DryGradingCabut->nomor_job)
-                    ->first();
-
-
-                $DryAGradingCabutStock->delete();
-
-                if ($DryAGradingCabutStock) {
-                    // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                    // $stockPrmRawMaterial = PreGradingHalusAddingStock::where('nomor_grading', '=', $DryGradingCabut->nomor_grading)
-                    //     ->first();
-                    $stockPrmRawMaterial = DryAPenerimaanCabutStock::where('nomor_job', '=', $DryGradingCabut->nomor_job)
-                        ->first();
-
-                    if ($stockPrmRawMaterial) {
-                        // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
-                        $stockPrmRawMaterial->update([
-                            // 'berat_adding' => max($DryGradingCabut->berat_adding, 0),
-                            // 'pcs_adding' => max($DryGradingCabut->pcs_adding, 0),
-                            // 'total_modal' => max($DryGradingCabut->total_modal, 0),
-                            'status' => 1,
-                        ]);
+                if ($stockTrans) {
+                    // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
+                    if ($stockTrans->status === 1) {
+                        $stockTrans->delete();
+                    } else {
+                        // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
+                        if ($DryAGradingCabutInput->berat_kotor >= $stockTrans->berat_kotor) {
+                            $stockTrans->delete();
+                        } else {
+                            // Jika berat yang dimasukkan kurang dari berat stock, lakukan update sesuai kebutuhan
+                            // $stockTrans->berat -= $DryAGradingCabutInput->berat;
+                            // $stockTrans->save();
+                        }
                     }
                 }
 
-                // if ($PreCleaningI->berat_grading >= $PreCleaningS->berat_masuk) {
-                //     $PreCleaningS->delete();
-                // } else {
-                //     $hpp = $this->HppService->recalculateHppAfterDelete($PreCleaningS->berat_masuk, $PreCleaningS->modal, $PreCleaningI['fix_total_hpp'], $PreCleaningI['berat_grading']);
-                //     // Simpan nilai sebelum dihapus
-                //     $beratSebelumnya = $PreCleaningS->berat_masuk;
-                //     $pcsSebelumnya = $PreCleaningS->pcs_masuk;
+                // Temukan semua item terkait di RambangKeringStock
+                $existingItems = DryAPenerimaanCabutStock::where('nomor_job', $DryAGradingCabutInput->nomor_job)
+                    ->where('jenis_job', $DryAGradingCabutInput->jenis_job)
+                    ->get();
 
-                //     // Hitung total modal baru
-                //     $totalBeratBaru = $beratSebelumnya - $PreCleaningI->berat_grading;
-                //     $totalPcsBaru = $pcsSebelumnya - $PreCleaningI->pcs_grading;
+                // Logika Update Status
+                foreach ($existingItems as $existingItem) {
+                    if ($existingItem) {
+                        // $beratSebelumnya = $existingItem->berat_keluar;
 
-                //     // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
-                //     $PreCleaningS->update([
-                //         'berat_masuk' => $totalBeratBaru,
-                //         'sisa_berat' => $totalBeratBaru,
-                //         'pcs_masuk' => $totalPcsBaru,
-                //         'sisa_pcs' => $totalPcsBaru,
-                //         'modal' => $hpp,
-                //         'total_modal' => $hpp * ($PreCleaningS->sisa_berat + $PreCleaningI['berat_grading']),
-                //     ]);
-                // }
+                        // // Hitung total modal baru berdasarkan perbedaan berat
+                        // $perbedaanBerat = $beratSebelumnya - $DryAGradingCabutInput->berat;
+                        // $sisaBerat = $existingItem->berat_keluar - $perbedaanBerat;
 
-                // Hapus data GradingHalusInput
-                $DryGradingCabut->delete();
+                        // $existingItem->update(['berat_keluar' => $perbedaanBerat]);
+                        // $existingItem->update(['sisa_berat' => $sisaBerat]);
+                        $existingItem->update(['status' => 1]);
+                    }
+                }
+
+                // Temukan semua item terkait di RambangKeringStock
+                $RambangKeringInput = DryAPenerimaanCabut::where('nomor_job', $DryAGradingCabutInput->nomor_job)
+                    ->where('jenis_job', $DryAGradingCabutInput->jenis_job)
+                    ->get();
+                foreach ($RambangKeringInput as $item) {
+                    if ($item) {
+                        $item->update(['status' => 1]);
+                    }
+                }
+
+
+                // Hapus record utama
+                $DryAGradingCabutInput->delete();
             }
 
-            // Commit transaksi
+            // Jika tidak ada kesalahan, komit transaksi
             DB::commit();
 
-            // Redirect ke index dengan pesan sukses
-            return redirect()->route('DryAGradingCabut.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            return redirect()->route('DryAGradingCabut.index')->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
-            // Rollback transaksi jika terjadi kesalahan
+            // Jika terjadi kesalahan, rollback transaksi
             DB::rollback();
 
-            // Redirect ke index dengan pesan error
-            return redirect()->route('DryAGradingCabut.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return redirect()->route('DryAGradingCabut.index')->with('error', 'Gagal menghapus data');
         }
     }
 }

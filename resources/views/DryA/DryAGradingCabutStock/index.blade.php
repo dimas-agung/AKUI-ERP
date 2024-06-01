@@ -14,9 +14,6 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Dry A Grading Cabut Stock
-                                <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong> Add Data </strong>
-                                </button>
                             </div>
                         </h5>
                     </div>
