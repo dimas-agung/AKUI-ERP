@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dry_a_grading_cabut_stocks', function (Blueprint $table) {
+        Schema::create('dry_a_grading_output_cabuts', function (Blueprint $table) {
             $table->id();
-            $table->string('unit');
             $table->string('nomor_job');
+            $table->string('nomor_bstb');
             $table->string('nomor_batch');
             $table->string('tujuan_kirim');
             $table->string('keterangan')->nullable();
@@ -25,7 +25,9 @@ return new class extends Migration
             $table->float('berat_2_grading');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->integer('status')->default(1);
+            $table->string('status')->default(1);
+            $table->string('user_created');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dry_a_grading_cabut_stocks');
+        Schema::dropIfExists('dry_a_grading_output_cabuts');
     }
 };

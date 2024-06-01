@@ -178,6 +178,14 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_tujuan_kirim_waste/update/{id}', 'update')->name('MasterTujuanKirimWaste.update');
             Route::delete('/master_tujuan_kirim_waste/destroy/{id}', 'destroy')->name('MasterTujuanKirimWaste.destroy');
         });
+
+        Route::controller(App\Http\Controllers\MasterJenisDryAController::class)->group(function () {
+            Route::get('/master_jenis_dry_a', 'index')->name('MasterJenisDryA.index');
+            Route::post('/master_jenis_dry_a/store', 'store')->name('MasterJenisDryA.store');
+            Route::get('/master_jenis_dry_a/edit/{id}', 'edit')->name('MasterJenisDryA.edit');
+            Route::put('/master_jenis_dry_a/update/{id}', 'update')->name('MasterJenisDryA.update');
+            Route::delete('/master_jenis_dry_a/destroy/{id}', 'destroy')->name('MasterJenisDryA.destroy');
+        });
     });
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
@@ -434,6 +442,8 @@ Route::middleware('auth')->group(function () {
                 Route::get('/pre_wash_stock', 'index')->name('PreWashStock.index');
             });
         });
+    });
+    Route::prefix('cleaning')->middleware(['role:cleaning|admin'])->group(function () {
         Route::prefix('cabut_bulu')->middleware('role:cabut_bulu|admin')->group(function () {
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenyebaranContoller::class)->group(function () {
                 Route::get('/cabut_bulu_penyebaran', 'index')->name('CabutBuluPenyebaran.index');
@@ -505,18 +515,22 @@ Route::middleware('auth')->group(function () {
                 Route::get('/transit_cabut_bulu_hancuran', 'index')->name('TransitCabutHancuran.index');
             });
         });
-
-        // Route::controller(App\Http\Controllers\PreWash\PreWashOutputController::class)->group(function () {
-        //     Route::get('/pre_wash_output', 'index')->name('PreWashOutput.index');
-        //     Route::get('/pre_wash_output/create', 'create')->name('PreWashOutput.create');
-        //     Route::post('/pre_wash_output/store', 'store')->name('PreWashOutput.store');
-        //     Route::get('/pre_wash_output/show/{id}', 'show')->name('PreWashOutput.show');
-        //     Route::get('/pre_wash_output/edit/{id}', 'edit')->name('PreWashOutput.edit');
-        //     Route::put('/pre_wash_output/update/{id}', 'update')->name('PreWashOutput.update');
-        //     Route::delete('/pre_wash_output/destroy/{nomor_bstb}', 'destroy')->name('PreWashOutput.destroy');
-        //     Route::get('/pre_wash_output/get_data_nomor_job', 'set')->name('preWashOutput.set');
-        //     Route::post('/pre_wash_output/simpanData', 'simpanData')->name('PreWashOutput.simpanData');
-        // });
+    });
+    Route::prefix('dry_a')->middleware(['role:dry_a|admin'])->group(function () {
+        Route::prefix('dry_a')->middleware('role:dry_a|admin')->group(function () {
+            Route::controller(App\Http\Controllers\DryA\DryAGradingCabutController::class)->group(function () {
+                Route::get('/dry_a_grading_cabut', 'index')->name('DryAGradingCabut.index');
+                Route::get('/dry_a_grading_cabut/create', 'create')->name('DryAGradingCabut.create');
+                Route::post('/dry_a_grading_cabut/store', 'store')->name('DryAGradingCabut.store');
+                Route::post('/dry_a_grading_cabut/cek_data', 'CeksendData')->name('DryAGradingCabut.CeksendData');
+                Route::get('/dry_a_grading_cabut/set', 'set')->name('DryAGradingCabut.set');
+                Route::get('/dry_a_grading_cabut/setjenis', 'setJenis')->name('DryAGradingCabut.setJenis');
+                Route::delete('/dry_a_grading_cabut/destroy/{nomor_bstb}', 'destroy')->name('DryAGradingCabut.destroy');
+            });
+            Route::controller(App\Http\Controllers\DryA\DryAGradingCabutStockController::class)->group(function () {
+                Route::get('/dry_a_grading_cabut_stock', 'index')->name('DryAGradingCabutStock.index');
+            });
+        });
     });
 });
 

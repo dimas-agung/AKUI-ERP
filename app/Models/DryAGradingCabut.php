@@ -38,12 +38,20 @@ class DryAGradingCabut extends Model
         'nilai_prosentase_total_keuntungan',
         'nilai_dikurangi_keuntungan',
         'prosentase_harga_gramasi',
-        'selisi_laba_rugi_kg',
-        'selisi_laba_rugi_per_gram',
+        'selisih_laba_rugi_kg',
+        'selisih_laba_rugi_per_gram',
         'hpp',
         'total_hpp',
+        'status',
         'user_created',
         'user_updated',
-        'status',
     ];
+    public function DryAPenerimaanCabutStock()
+    {
+        return $this->hasMany(DryAPenerimaanCabutStock::class, 'nomor_job', 'nomor_job');
+    }
+    public function MasterJenisDryA()
+    {
+        return $this->hasMany(MasterJenisDryA::class, 'jenis', 'jenis_grading');
+    }
 }

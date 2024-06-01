@@ -111,7 +111,7 @@
                         @role('master|admin')
                             <li class="sidebar-title">Menu</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-stack"></i>
                                     <span>Master</span>
@@ -183,6 +183,10 @@
                                     <li class="submenu-item {{ Route::is('MasterTujuanKirimWaste*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterTujuanKirimWaste.index') }}" class="submenu-link">Master
                                             Tujuan<br>Kirim Waste</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterJenisDryA*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterJenisDryA.index') }}" class="submenu-link">Master
+                                            Jenis<br>Dry A</a>
                                     </li>
                                 </ul>
                             </li>
@@ -320,7 +324,7 @@
                                                     class="submenu-link">Pre-Grading Halus Stock</a>
                                             </li>
                                             <li
-                                                class="submenu-item {{ Route::is('PreGradingHalusAdding*') ? 'active' : '' }}">
+                                                class="submenu-item {{ Route::is('PreGradingHalusAdding*') && !Route::is('PreGradingHalusAddingStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('PreGradingHalusAdding.index') }}"
                                                     class="submenu-link">Pre Grading Halus Adding</a>
                                             </li>
@@ -493,6 +497,41 @@
                                                     class="submenu-link">Transit
                                                     Cabut
                                                     <br>Hancuran</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endrole
+
+                        @role('dry_a|admin')
+                            {{-- <li class="sidebar-title">Dry A</li> --}}
+                            <li
+                                class="sidebar-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*') ? 'active' : '' }}">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-three-dots"></i>
+                                    <span>Dry A</span>
+                                </a>
+                                <ul class="submenu">
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Dry A</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAGradingCabut*') && !Route::is('DryAGradingCabutStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAGradingCabut.index') }}" class="submenu-link">Dry
+                                                    A
+                                                    Grading
+                                                    <br>Cabut</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAGradingCabutStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAGradingCabutStock.index') }}"
+                                                    class="submenu-link">Dry A
+                                                    Grading
+                                                    <br>Cabut Stock</a>
                                             </li>
                                         </ul>
                                     </li>
