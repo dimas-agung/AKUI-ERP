@@ -620,8 +620,8 @@
             $('#total_hpp').val('');
             $('#fix_hpp').val('');
             $('#fix_total_hpp').val('');
-            $('#jenis_grading').val($('#jenis_grading').val()).trigger('change');
-            $('#nomor_grading').prop('disabled', true);
+            $('#jenis_grading').val(null).trigger('change');
+            $('#nomor_grading').val(null).trigger('change');
             $('#user_created').prop('readonly', true);
             $('#tujuan_kirim').val($('#tujuan_kirim option:first').val());
 

@@ -1,0 +1,228 @@
+<?php
+namespace App\Services;
+
+use App\Models\CabutBuluPengembalian;
+use App\Models\DryAPenerimaanCabut;
+use App\Models\DryAPenerimaanCabutStock;
+use App\Models\MasterJenisGradingHalus;
+use App\Models\PreGradingHalusAddingStock;
+use App\Models\TransitCabutBulu;
+use Illuminate\Http\Request;
+use App\Models\GradingHalusInput;
+use App\Models\GradingHalusStock;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\RedirectResponse;
+
+class DryAPenerimaanService
+{
+    public function store(Request $request)
+    {
+        // Decode JSON string to associative array
+        $dataArray = json_decode($request->input('dataArray'), true);
+
+        // Check if $dataArray or $tableDataArray is empty
+        if (empty($dataArray)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data array atau data susut atau kontribusi kosong. Tidak ada data untuk disimpan.',
+            ], 400);
+        }
+
+
+        // Loop through each item in dataArray
+        foreach ($dataArray as $key => $data) {
+            // Merge data from $dataArray and $tableDataArray
+            $mergedData = array_merge($data);
+
+            // Validate each item in dataArray
+            $validator = Validator::make($mergedData, [
+                'nomor_job' => 'required', // Change with appropriate field name
+                // ... add other validations as needed
+            ]);
+
+            // If validation fails, return error message
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed: ' . $validator->errors()->first(),
+                ], 400);
+            } else {
+                try {
+                    DB::beginTransaction();
+
+                    // Create instance of GradingHalusInput
+                    DryAPenerimaanCabut::create($mergedData);
+
+                    $grading = DryAPenerimaanCabutStock::where('nomor_job', $mergedData['nomor_job'])
+                        ->first();
+
+                    if ($grading) {
+
+                        // Update existing grading data
+                        $grading->update([
+                            'berat_job'       => $grading->berat_job + ($mergedData['berat_job'] ?? 0),
+                            'pcs_job'         => $grading->pcs_job + ($mergedData['pcs_job'] ?? 0),
+                        ]);
+                    } else {
+                        // Create new grading data
+                        DryAPenerimaanCabutStock::create([
+                            'unit'                  => $mergedData['unit'] ?? 'Dry A',
+                            'nomor_job'             => $mergedData['nomor_job'],
+                            'nomor_batch'           => $mergedData['nomor_batch'],
+                            'jenis_job'             => $mergedData['jenis_job'],
+                            'berat_job'             => $mergedData['berat_job'],
+                            'pcs_job'               => $mergedData['pcs_job'],
+                            'nama_operator'         => $mergedData['nama_operator'] ?? 0,
+                            'nip_operator'          => $mergedData['nip_operator'] ?? 0,
+                            'grade_operator'        => $mergedData['grade_operator'] ?? 0,
+                            'nama_team_leader'      => $mergedData['nama_team_leader'] ?? 0,
+                            'tujuan_kirim'          => $mergedData['tujuan_kirim'] ?? 0,
+                            'keterangan'            => $mergedData['keterangan'] ?? 0,
+                            'modal'                 => $mergedData['modal'],
+                            'total_modal'           => $mergedData['total_modal'],
+                            'upah_operator'         => $mergedData['upah_operator']
+                        ]);
+                    }
+
+                    $itemObject = (object) $mergedData;
+
+                    // Ambil semua item yang sesuai dengan kriteria
+                    $existingItems = TransitCabutBulu::where('nomor_job', $itemObject->nomor_job)
+                        ->where('jenis_job', $itemObject->jenis_job)
+                        ->get();
+
+                    foreach ($existingItems as $existingItem) {
+
+                        // Update data dengan nilai baru
+                        $existingItem->update([
+                            // Update data PreGradingHalusAddingStock
+                            'status'    => $itemObject->statuss ?? 0,
+                            'berat_job' => $itemObject->berat_jobs ?? 0,
+                            'pcs_job'   => $itemObject->pcs_addings ?? 0,
+                        ]);
+                    }
+
+                    $existingItems = CabutBuluPengembalian::where('nomor_job', $itemObject->nomor_job)
+                    ->get();
+
+                    $dataToUpdate = [
+                        'status'                => $itemObject->status ?? 0,
+                    ];
+
+                    if ($existingItems) {
+                        foreach ($existingItems as $existingItem) {
+                            $existingItem->update($dataToUpdate);
+                        }
+                    }
+
+                    DB::commit();
+                } catch (\Exception $e) {
+                    DB::rollBack();
+
+                    return response()->json([
+                        'success' => false,
+                        'error' => 'Failed to save data. ' . $e->getMessage(),
+                        'redirectTo' => route('DryAPenerimaan.create')
+                    ], 504);
+                }
+            }
+        }
+
+        // Return newly created data as response
+        return response()->json([
+            'success' => true,
+            'message' => 'Data successfully saved!',
+            'redirectTo' => route('DryAPenerimaan.index')
+        ], 201);
+    }
+
+    public function destroy($nomor_job): RedirectResponse
+    {
+        try {
+            // Gunakan transaksi database untuk memastikan konsistensi
+            DB::beginTransaction();
+
+            // Ambil data PreCleaningInput berdasarkan nomor_job
+            $GradingHalusInputs = DryAPenerimaanCabut::where('nomor_job', '=', $nomor_job)->get();
+
+            if ($GradingHalusInputs->isEmpty()) {
+                // Redirect ke index dengan pesan error jika data tidak ditemukan
+                return redirect()->route('DryAPenerimaan.index')->with(['error' => 'Data tidak ditemukan!']);
+            }
+
+            foreach ($GradingHalusInputs as $PreCleaningI) {
+                // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
+                $PreCleaningS = DryAPenerimaanCabutStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
+                    ->first();
+
+                    if ($PreCleaningS) {
+                        // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
+                        $stockPrmRawMaterial = TransitCabutBulu::where('nomor_job', '=', $PreCleaningI->nomor_job)
+                            ->first();
+
+                        if ($stockPrmRawMaterial) {
+                            // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
+                            $stockPrmRawMaterial->update([
+                                'berat_job' => max($PreCleaningI->berat_job, 0),
+                                'pcs_job' => max($PreCleaningI->pcs_job, 0),
+                                'status' => 1,
+                            ]);
+                        }
+
+                        $existingItems = CabutBuluPengembalian::where('nomor_job', $PreCleaningI->nomor_job)
+                        ->get();
+
+                        $dataToUpdate = [
+                            'status'                => $PreCleaningI->status ?? 0,
+                        ];
+
+                        if ($existingItems) {
+                            foreach ($existingItems as $existingItem) {
+                                $existingItem->update($dataToUpdate);
+                            }
+                        }
+                    }
+
+                    // if ($PreCleaningI->berat_grading >= $PreCleaningS->berat_masuk) {
+                    //     $PreCleaningS->delete();
+                    // } else {
+                    //     // Simpan nilai sebelum dihapus
+                    //     $beratSebelumnya = $PreCleaningS->berat_masuk;
+                    //     $pcsSebelumnya = $PreCleaningS->pcs_masuk;
+
+                    //     // Hitung total modal baru
+                    //     $totalBeratBaru = $beratSebelumnya - $PreCleaningI->berat_grading;
+                    //     $totalPcsBaru = $pcsSebelumnya - $PreCleaningI->pcs_grading;
+
+                    //     // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
+                    //     $PreCleaningS->update([
+                    //         'berat_masuk' => $totalBeratBaru,
+                    //         'sisa_berat' => $totalBeratBaru,
+                    //         'pcs_masuk' => $totalPcsBaru,
+                    //         'sisa_pcs' => $totalPcsBaru,
+                    //         'modal' => $totalPcsBaru,
+                    //         'total_modal' => $totalPcsBaru * ($PreCleaningS->sisa_berat + $PreCleaningI['berat_grading']),
+                    //     ]);
+                    // }
+
+                    // Hapus data GradingHalusInput
+                    $PreCleaningS->delete();
+                $PreCleaningI->delete();
+
+            }
+
+            // Commit transaksi
+            DB::commit();
+
+            // Redirect ke index dengan pesan sukses
+            return redirect()->route('DryAPenerimaan.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::rollback();
+
+            // Redirect ke index dengan pesan error
+            return redirect()->route('DryAPenerimaan.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+    }
+}

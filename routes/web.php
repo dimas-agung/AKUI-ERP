@@ -608,6 +608,41 @@ Route::middleware('auth')->group(function () {
             });
         });
     });
+    Route::prefix('dry_a')->middleware(['role:dry_a|admin'])->group(function (){
+        Route::prefix('dry_a')->middleware('role:dry_a|admin')->group(function (){
+            Route::controller(App\Http\Controllers\DryA\DryAPenerimaanController::class)->group(function () {
+                Route::get('/dry_a_penerimaan', 'index')->name('DryAPenerimaan.index');
+                Route::get('/dry_a_penerimaan/create', 'create')->name('DryAPenerimaan.create');
+                Route::post('/dry_a_penerimaan/store', 'store')->name('DryAPenerimaan.store');
+                Route::get('/dry_a_penerimaan/show/{id}', 'show')->name('DryAPenerimaan.show');
+                Route::get('/dry_a_penerimaan/edit/{id}', 'edit')->name('DryAPenerimaan.edit');
+                Route::put('/dry_a_penerimaan/update/{id}', 'update')->name('DryAPenerimaan.update');
+                Route::delete('/dry_a_penerimaan/destroy/{nomor_job}', 'destroy')->name('DryAPenerimaan.destroy');
+                Route::get('/dry_a_penerimaan/get_data_nomor_job', 'set')->name('DryAPenerimaan.set');
+                Route::post('/dry_a_penerimaan/simpanData', 'simpanData')->name('DryAPenerimaan.simpanData');
+                Route::post('/dry_a_penerimaan/cek_data', 'CeksendData')->name('DryAPenerimaan.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\DryA\DryAPenerimaanStockController::class)->group(function () {
+                Route::get('/dry_a_penerimaan_stock', 'index')->name('DryAPenerimaanStock.index');
+            });
+
+            Route::controller(App\Http\Controllers\DryA\DryAOutputController::class)->group(function () {
+                Route::get('/dry_a_output', 'index')->name('DryAOutput.index');
+                Route::get('/dry_a_output/create', 'create')->name('DryAOutput.create');
+                Route::post('/dry_a_output/store', 'store')->name('DryAOutput.store');
+                Route::post('/dry_a_output/sendData', 'sendData')->name('DryAOutput.sendData');
+                Route::delete('/dry_a_output/destroy/{nomor_job}', 'destroy')->name('DryAOutput.destroy');
+                Route::get('/dry_a_output/get_data_id_box', 'set')->name('DryAOutput.set');
+                Route::get('/dry_a_output/get_pcc', 'setpcc')->name('DryAOutput.setpcc');
+                Route::post('/dry_a_output/cek_data', 'CeksendData')->name('DryAOutput.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\DryA\TransitDryAController::class)->group(function () {
+                Route::get('/transit_dry_a', 'index')->name('TransitDryA.index');
+            });
+        });
+    });
 });
 
 Auth::routes();

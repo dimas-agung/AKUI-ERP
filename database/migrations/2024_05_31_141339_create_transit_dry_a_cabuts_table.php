@@ -11,24 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dry_a_penerimaan_cabut_stocks', function (Blueprint $table) {
+        Schema::create('transit_dry_a_cabuts', function (Blueprint $table) {
             $table->id();
             $table->string('unit');
             $table->string('nomor_job');
+            $table->string('nomor_bstb');
             $table->string('nomor_batch');
-            $table->string('jenis_job');
-            $table->float('berat_job');
-            $table->float('pcs_job');
-            $table->string('nama_operator');
-            $table->string('nip_operator');
-            $table->string('grade_operator');
-            $table->string('nama_team_leader');
             $table->string('tujuan_kirim');
-            $table->float('upah_operator', 16, 4);
+            $table->string('keterangan');
+            $table->float('berat_kotor');
+            $table->string('jenis_grading');
+            $table->float('berat_1_grading');
+            $table->float('pcs_1_grading');
+            $table->float('berat_2_grading');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->string('keterangan')->nullable();
-            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
@@ -38,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dry_a_penerimaan_cabut_stocks');
+        Schema::dropIfExists('transit_dry_a_cabuts');
     }
 };

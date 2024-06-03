@@ -6,6 +6,7 @@ use App\Models\PreCleaningOutput;
 use App\Models\PreGradingHalusAddingStock;
 use Illuminate\Http\Request;
 use App\Models\GradingHalusInput;
+use App\Models\GradingHalusOutput;
 use App\Models\GradingHalusStock;
 use App\Models\TransitPreCleaningStock;
 use Illuminate\Support\Facades\DB;
@@ -198,6 +199,17 @@ class GradingHalusInputService
             }
 
             foreach ($GradingHalusInputs as $GradingHalusI) {
+                // cek apakah ada data yg sudah dioutput sebelumnya
+                $existGradingHalusOutput = GradingHalusOutput::where('created_at', '>=', $GradingHalusI->created_at)
+                ->first();
+                if($existGradingHalusOutput){
+                    DB::rollBack();
+                    // Simpan pesan peringatan dalam session
+                    session()->flash('warning', 'Data tidak bisa dihapus karena ada data output yang sudah dibuat .');
+                    // Kembali ke halaman sebelumnya
+                    return back();
+                }
+
                 // Ambil data GradingHalusStock berdasarkan nomor job dan nomor bstb
                 $GradingHalusS = GradingHalusStock::where('id_box_grading_halus', '=', $GradingHalusI->id_box_grading_halus)
                     ->first();
@@ -217,6 +229,7 @@ class GradingHalusInputService
                             ]);
                         }
                     }
+
 
                     if ($GradingHalusI->berat_grading >= $GradingHalusS->berat_masuk) {
                         $GradingHalusS->delete();

@@ -300,7 +300,7 @@
                 user_created: user_created,
             });
             // Membersihkan nilai input setelah ditambahkan
-            $('#id_box_hcr_kotor').val($('#id_box_hcr_kotor').val()).trigger('change');
+            $('#id_box_hcr_kotor').val(null).trigger('change');
             // $('#id_box_hcr_kotor').prop('selectedIndex', 0);
             $('#jenis_rambang, #berat_masuk, #berat_keluar, #upah_operator, #nomor_job, #sisa_berat')
                 .val('');

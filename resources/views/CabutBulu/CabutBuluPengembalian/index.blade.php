@@ -88,21 +88,23 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
-                                                        action="{{ route('CabutBuluPengembalian.destroy', $item->nomor_job) }}"
-                                                        method="POST">
-                                                        {{-- <a href="{{ route('CabutBuluPengembalian.show', $item->nomor_job) }}"
+                                                    @if ($item->status == 3)
+                                                        <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
+                                                            action="{{ route('CabutBuluPengembalian.destroy', $item->nomor_job) }}"
+                                                            method="POST">
+                                                            {{-- <a href="{{ route('CabutBuluPengembalian.show', $item->nomor_job) }}"
                                                             class="btn btn-link" title="View" data-original-title="View">
                                                             <i class="bi bi-eye"></i>
                                                         </a> --}}
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-link"
-                                                            data-original-title="Remove"
-                                                            onclick="confirmDelete('{{ $item->nomor_job }}')">
-                                                            <i class="bi bi-trash3 text-danger"></i>
-                                                        </button>
-                                                    </form>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-link"
+                                                                data-original-title="Remove"
+                                                                onclick="confirmDelete('{{ $item->nomor_job }}')">
+                                                                <i class="bi bi-trash3 text-danger"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

@@ -12,6 +12,7 @@ use App\Models\PreGradingHalusAddingStock;
 use App\Models\GradingHalusAdjustmentInput;
 use App\Models\GradingHalusAdjustmentStock;
 use App\Models\GradingHalusAdjustmentAdding;
+use App\Models\GradingHalusOutput;
 
 class GradingHalusAdjustmentInputService
 {
@@ -189,6 +190,15 @@ class GradingHalusAdjustmentInputService
             $findNomorAdjustment = GradingHalusAdjustmentInput::where('nomor_adjustment', $nomorAdjustment)->get();
 
             foreach ($findNomorAdjustment as $item) {
+                $existGradingHalusOutput = GradingHalusOutput::where('created_at', '>=', $item->created_at)
+                ->first();
+                if($existGradingHalusOutput){
+                    DB::rollBack();
+                    // Simpan pesan peringatan dalam session
+                    session()->flash('warning', 'Data tidak bisa dihapus karena ada data output yang sudah dibuat .');
+                    // Kembali ke halaman sebelumnya
+                    return back();
+                }
                 // Temukan stok terkait
                 $gradingHalusStock = GradingHalusStock::where('id_box_grading_halus', $item->id_box_grading_halus)
                     ->first();

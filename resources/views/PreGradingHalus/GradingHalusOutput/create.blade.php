@@ -229,9 +229,9 @@
                 success: function(response) {
                     if (response.status > 0) {
                         inisialTujuanGlobal = response
-                        .inisial_tujuan; // Simpan inisial_tujuan ke variabel global
+                            .inisial_tujuan; // Simpan inisial_tujuan ke variabel global
                         checkAndGenerateNomorBSTB(
-                        inisialTujuanGlobal); // Panggil fungsi dengan inisial_tujuan
+                            inisialTujuanGlobal); // Panggil fungsi dengan inisial_tujuan
                     }
                 },
                 error: function(error) {

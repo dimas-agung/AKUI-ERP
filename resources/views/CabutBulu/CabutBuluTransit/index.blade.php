@@ -44,7 +44,7 @@
                                 <tbody>
                                     <?php $i = 1; ?>
                                     <?php foreach ($transit_pre_cleaning_stocks as $TPCS): ?>
-                                    <?php if($TPCS->berat_kirim != 0 || $TPCS->total_modal != 0): ?>
+                                    <?php if($TPCS->berat_job != 0 || $TPCS->status != 0): ?>
                                     <tr>
                                         <td class="text-center">{{ $i++ }}</td>
                                         <td class="text-center">{{ $TPCS->nomor_job }}</td>
@@ -62,7 +62,12 @@
                                             <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
                                             <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}</td>
                                         @endrole
-                                        <td class="text-center">{{ $TPCS->status }}</td>
+                                        {{-- <td class="text-center">{{ $TPCS->status }}</td> --}}
+                                        <td class="text-center">
+                                            @if ($TPCS->status == 1)
+                                                Aktif
+                                            @endif
+                                        </td>
                                     </tr>
                                     <?php endif; ?>
                                     <?php endforeach; ?>

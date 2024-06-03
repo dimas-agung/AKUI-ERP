@@ -32,4 +32,8 @@ class TransitCabutBulu extends Model
     {
         return $this->belongsTo(CabutBuluPengembalian::class, 'nomor_job', 'nomor_job');
     }
+    public function DryAPenerimaanCabut()
+    {
+        return $this->hasMany(DryAPenerimaanCabut::class, 'nomor_job', 'nomor_job');
+    }
 }

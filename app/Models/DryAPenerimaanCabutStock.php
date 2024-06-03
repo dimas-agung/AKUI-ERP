@@ -20,9 +20,15 @@ class DryAPenerimaanCabutStock extends Model
         'nip_operator',
         'grade_operator',
         'nama_team_leader',
+        'tujuan_kirim',
+        'keterangan',
         'modal',
         'total_modal',
         'upah_operator',
         'status',
     ];
+    public function DryAPenerimaanCabut()
+    {
+        return $this->belongsTo(DryAPenerimaanCabut::class, 'nomor_job', 'nomor_job');
+    }
 }

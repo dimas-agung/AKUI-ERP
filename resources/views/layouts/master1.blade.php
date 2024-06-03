@@ -596,7 +596,6 @@
                                 </ul>
                             </li>
                         @endrole
-
                     </ul>
                 </div>
             </div>

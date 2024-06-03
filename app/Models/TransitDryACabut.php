@@ -5,27 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DryAGradingCabutStock extends Model
+class TransitDryACabut extends Model
 {
     use HasFactory;
-    protected $table = 'dry_a_grading_cabut_stocks';
+    protected $table = 'transit_dry_a_cabuts';
     protected $fillable = [
         'unit',
         'nomor_job',
+        'nomor_bstb',
         'nomor_batch',
-        'berat_kotor',
         'tujuan_kirim',
+        'keterangan',
+        'berat_kotor',
         'jenis_grading',
         'berat_1_grading',
         'pcs_1_grading',
         'berat_2_grading',
-        'keterangan',
         'modal',
         'total_modal',
-        'status',
     ];
     public function DryAOutputCabut()
     {
-        return $this->hasMany(DryAOutputCabut::class, 'nomor_job', 'nomor_job');
+        return $this->belongsTo(DryAOutputCabut::class, 'nomor_job', 'nomor_job');
     }
 }
