@@ -31,4 +31,8 @@ class DryAPenerimaanCabutStock extends Model
     {
         return $this->belongsTo(DryAPenerimaanCabut::class, 'nomor_job', 'nomor_job');
     }
+    public function DryAGradingCabut()
+    {
+        return $this->hasMany(DryAGradingCabut::class, 'nomor_job', 'nomor_job');
+    }
 }

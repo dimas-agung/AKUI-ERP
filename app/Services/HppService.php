@@ -15,6 +15,60 @@ use Illuminate\Support\Facades\DB;
 class HppService
 {
 
+    // function calculate(array $berat_gradings, array $harga_estimasi, array $totalModal, array $jenisGradings = null): array
+    // {
+    //     $sum_total_harga = 0;
+    //     $sum_total_modal = 0;
+    //     $sum_nilai_setelah_dikurangi_keuntungan = 0;
+
+    //     $dataHpp = [];
+    //     foreach ($berat_gradings as $key => $berat_grading) {
+    //         $total_harga = $berat_grading * $harga_estimasi[$key];
+    //         $total_modal = $totalModal[$key];
+    //         $sum_total_harga += $total_harga;
+    //         $sum_total_modal += $total_modal;
+    //         $dataHpp[] = [
+    //             'berat_grading' => $berat_grading,
+    //             'harga_estimasi' => $harga_estimasi[$key],
+    //             'total_harga' => $total_harga,
+    //             'total_modal' => $total_modal,
+    //         ];
+    //     }
+    //     foreach ($dataHpp as $key => $value) {
+    //         $total_modal = $value['total_modal'];
+    //         $total_harga = $value['total_harga'];
+    //         $nilai_laba_rugi = ($sum_total_harga - $total_modal) / $total_modal;
+    //         $nilai_prosentase_total_keuntungan =  $total_harga * $nilai_laba_rugi;
+    //         $nilai_setelah_dikurangi_keuntungan =  $total_harga - $nilai_prosentase_total_keuntungan;
+
+    //         $sum_nilai_setelah_dikurangi_keuntungan += $nilai_setelah_dikurangi_keuntungan;
+    //         $dataHpp[$key]['nilai_laba_rugi'] = $nilai_laba_rugi;
+    //         $dataHpp[$key]['nilai_prosentase_total_keuntungan'] = $nilai_prosentase_total_keuntungan;
+    //         $dataHpp[$key]['nilai_setelah_dikurangi_keuntungan'] = $nilai_setelah_dikurangi_keuntungan;
+    //     }
+    //     foreach ($dataHpp as $key => $value) {
+    //         $berat_grading = $value['berat_grading'];
+    //         $harga_estimasi = $value['harga_estimasi'];
+    //         $nilai_setelah_dikurangi_keuntungan = $value['nilai_setelah_dikurangi_keuntungan'];
+    //         $prosentase_harga_gramasi = $nilai_setelah_dikurangi_keuntungan / $sum_nilai_setelah_dikurangi_keuntungan;
+    //         $selisih_laba_rugi_kg = $prosentase_harga_gramasi * ($sum_total_harga - $total_modal);
+    //         $selisih_laba_rugi_gram = $selisih_laba_rugi_kg / $berat_grading;
+    //         $hpp = $harga_estimasi - $selisih_laba_rugi_gram;
+    //         $total_hpp = $hpp * $berat_grading;
+    //         $dataHpp[$key]['prosentase_harga_gramasi'] = $prosentase_harga_gramasi;
+    //         $dataHpp[$key]['selisih_laba_rugi_kg'] = round($selisih_laba_rugi_kg, 2);
+    //         $dataHpp[$key]['selisih_laba_rugi_gram'] = round($selisih_laba_rugi_gram, 2);
+    //         $dataHpp[$key]['hpp'] = round($hpp, 2);
+    //         $dataHpp[$key]['total_hpp'] = round($total_hpp, 2);
+    //         if ($jenisGradings != null) {
+    //             $fix_hpp = self::calculateFixHpp(round($hpp, 2), $jenisGradings[$key]);
+    //             $dataHpp[$key]['fix_hpp'] = round($fix_hpp, 2);
+    //             $dataHpp[$key]['fix_total_hpp'] = round($fix_hpp, 2) * $berat_grading;
+    //         }
+    //     }
+    //     return $dataHpp;
+    // }
+
     function calculate(array $berat_gradings, array $harga_estimasi, array $totalModal, array $jenisGradings = null): array
     {
         $sum_total_harga = 0;
@@ -34,25 +88,47 @@ class HppService
                 'total_modal' => $total_modal,
             ];
         }
+
+        // Perhitungan nilai laba rugi dan nilai setelah dikurangi keuntungan
         foreach ($dataHpp as $key => $value) {
             $total_modal = $value['total_modal'];
             $total_harga = $value['total_harga'];
-            $nilai_laba_rugi = ($sum_total_harga - $total_modal) / $total_modal;
-            $nilai_prosentase_total_keuntungan =  $total_harga * $nilai_laba_rugi;
-            $nilai_setelah_dikurangi_keuntungan =  $total_harga - $nilai_prosentase_total_keuntungan;
+
+            if ($total_modal != 0) {
+                $nilai_laba_rugi = ($sum_total_harga - $total_modal) / $total_modal;
+            } else {
+                $nilai_laba_rugi = 0;
+            }
+
+            $nilai_prosentase_total_keuntungan = $total_harga * $nilai_laba_rugi;
+            $nilai_setelah_dikurangi_keuntungan = $total_harga - $nilai_prosentase_total_keuntungan;
 
             $sum_nilai_setelah_dikurangi_keuntungan += $nilai_setelah_dikurangi_keuntungan;
             $dataHpp[$key]['nilai_laba_rugi'] = $nilai_laba_rugi;
             $dataHpp[$key]['nilai_prosentase_total_keuntungan'] = $nilai_prosentase_total_keuntungan;
             $dataHpp[$key]['nilai_setelah_dikurangi_keuntungan'] = $nilai_setelah_dikurangi_keuntungan;
         }
+
+        // Perhitungan HPP dan selisih laba rugi
         foreach ($dataHpp as $key => $value) {
             $berat_grading = $value['berat_grading'];
             $harga_estimasi = $value['harga_estimasi'];
             $nilai_setelah_dikurangi_keuntungan = $value['nilai_setelah_dikurangi_keuntungan'];
-            $prosentase_harga_gramasi = $nilai_setelah_dikurangi_keuntungan / $sum_nilai_setelah_dikurangi_keuntungan;
+
+            if ($sum_nilai_setelah_dikurangi_keuntungan != 0) {
+                $prosentase_harga_gramasi = $nilai_setelah_dikurangi_keuntungan / $sum_nilai_setelah_dikurangi_keuntungan;
+            } else {
+                $prosentase_harga_gramasi = 0;
+            }
+
             $selisih_laba_rugi_kg = $prosentase_harga_gramasi * ($sum_total_harga - $total_modal);
-            $selisih_laba_rugi_gram = $selisih_laba_rugi_kg / $berat_grading;
+
+            if ($berat_grading != 0) {
+                $selisih_laba_rugi_gram = $selisih_laba_rugi_kg / $berat_grading;
+            } else {
+                $selisih_laba_rugi_gram = 0;
+            }
+
             $hpp = $harga_estimasi - $selisih_laba_rugi_gram;
             $total_hpp = $hpp * $berat_grading;
             $dataHpp[$key]['prosentase_harga_gramasi'] = $prosentase_harga_gramasi;
@@ -60,6 +136,7 @@ class HppService
             $dataHpp[$key]['selisih_laba_rugi_gram'] = round($selisih_laba_rugi_gram, 2);
             $dataHpp[$key]['hpp'] = round($hpp, 2);
             $dataHpp[$key]['total_hpp'] = round($total_hpp, 2);
+
             if ($jenisGradings != null) {
                 $fix_hpp = self::calculateFixHpp(round($hpp, 2), $jenisGradings[$key]);
                 $dataHpp[$key]['fix_hpp'] = round($fix_hpp, 2);
@@ -68,6 +145,7 @@ class HppService
         }
         return $dataHpp;
     }
+
     function calculateFixHpp($hpp, $jenis_grading)
     {
         $fix_hpp = $hpp;

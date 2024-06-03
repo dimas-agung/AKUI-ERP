@@ -23,6 +23,7 @@ class TransitDryACabut extends Model
         'berat_2_grading',
         'modal',
         'total_modal',
+        'status'
     ];
     public function DryAOutputCabut()
     {

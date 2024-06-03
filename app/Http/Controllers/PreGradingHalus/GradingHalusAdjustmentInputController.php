@@ -68,12 +68,6 @@ class GradingHalusAdjustmentInputController extends Controller
     }
     public function destroy($id, GradingHalusAdjustmentInputService $GradingHalusAdjustmentInputService)
     {
-        $result = $GradingHalusAdjustmentInputService->destroy($id);
-
-        if ($result['success']) {
-            return redirect()->route('GradingHalusAdjustmentInput.index')->with('success', 'Data berhasil dihapus');
-        } else {
-            return redirect()->route('GradingHalusAdjustmentInput.index')->with('error', 'Gagal menghapus data: ' . $result['error']);
-        }
+        return $GradingHalusAdjustmentInputService->destroy($id);
     }
 }

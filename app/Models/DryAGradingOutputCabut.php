@@ -5,29 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PreWashStock extends Model
+class DryAGradingOutputCabut extends Model
 {
     use HasFactory;
-    protected $table = 'pre_wash_stocks';
+    protected $table = 'dry_a_grading_output_cabuts';
     protected $fillable = [
-        'unit',
         'nomor_job',
+        'nomor_bstb',
         'nomor_batch',
-        'status',
-        'jenis_job',
-        'berat_job',
-        'pcs_job',
-        'upah_operator',
         'tujuan_kirim',
         'keterangan',
+        'berat_kotor',
+        'jenis_grading',
+        'berat_1_grading',
+        'pcs_1_grading',
+        'berat_2_grading',
         'modal',
         'total_modal',
-        'upah_operator',
+        'status',
         'user_created',
         'user_updated',
     ];
-    public function PreWashOutput()
-    {
-        return $this->hasMany(PreWashOutput::class, 'nomor_job', 'nomor_job');
-    }
 }

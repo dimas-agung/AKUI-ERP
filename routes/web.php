@@ -177,6 +177,14 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_tujuan_kirim_waste/update/{id}', 'update')->name('MasterTujuanKirimWaste.update');
             Route::delete('/master_tujuan_kirim_waste/destroy/{id}', 'destroy')->name('MasterTujuanKirimWaste.destroy');
         });
+
+        Route::controller(App\Http\Controllers\MasterJenisDryAController::class)->group(function () {
+            Route::get('/master_jenis_dry_a', 'index')->name('MasterJenisDryA.index');
+            Route::post('/master_jenis_dry_a/store', 'store')->name('MasterJenisDryA.store');
+            Route::get('/master_jenis_dry_a/edit/{id}', 'edit')->name('MasterJenisDryA.edit');
+            Route::put('/master_jenis_dry_a/update/{id}', 'update')->name('MasterJenisDryA.update');
+            Route::delete('/master_jenis_dry_a/destroy/{id}', 'destroy')->name('MasterJenisDryA.destroy');
+        });
     });
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
@@ -472,9 +480,9 @@ Route::middleware('auth')->group(function () {
             //     Route::get('/cabut_bulu_stock', 'index')->name('CabutBuluStock.index');
             // });
         });
-
-
-        Route::prefix('cabut_bulu')->middleware('role:cabut_bulu|admin')->group(function (){
+    });
+    Route::prefix('cleaning')->middleware(['role:cleaning|admin'])->group(function () {
+        Route::prefix('cabut_bulu')->middleware('role:cabut_bulu|admin')->group(function () {
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenerimaanController::class)->group(function () {
                 Route::get('/cabut_bulu_penerimaan', 'index')->name('CabutBuluPenerimaan.index');
                 Route::get('/cabut_bulu_penerimaan/create', 'create')->name('CabutBuluPenerimaan.create');
@@ -491,7 +499,6 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluStockController::class)->group(function () {
                 Route::get('/cabut_bulu_stock', 'index')->name('CabutBuluStock.index');
             });
-
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenyebaranContoller::class)->group(function () {
                 Route::get('/cabut_bulu_penyebaran', 'index')->name('CabutBuluPenyebaran.index');
                 Route::get('/cabut_bulu_penyebaran/create', 'create')->name('CabutBuluPenyebaran.create');
@@ -610,6 +617,17 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('dry_a')->middleware(['role:dry_a|admin'])->group(function (){
         Route::prefix('dry_a')->middleware('role:dry_a|admin')->group(function (){
+            Route::controller(App\Http\Controllers\DryA\DryAGradingCabutController::class)->group(function () {
+                Route::get('/dry_a_grading_cabut', 'index')->name('DryAGradingCabut.index');
+                Route::get('/dry_a_grading_cabut/create', 'create')->name('DryAGradingCabut.create');
+                Route::post('/dry_a_grading_cabut/store', 'store')->name('DryAGradingCabut.store');
+                Route::post('/dry_a_grading_cabut/cek_data', 'CeksendData')->name('DryAGradingCabut.CeksendData');
+                Route::get('/dry_a_grading_cabut/set', 'set')->name('DryAGradingCabut.set');
+                Route::get('/dry_a_grading_cabut/setjenis', 'setJenis')->name('DryAGradingCabut.setJenis');
+                Route::delete('/dry_a_grading_cabut/destroy/{nomor_bstb}', 'destroy')->name('DryAGradingCabut.destroy');
+            });
+            Route::controller(App\Http\Controllers\DryA\DryAGradingCabutStockController::class)->group(function () {
+                Route::get('/dry_a_grading_cabut_stock', 'index')->name('DryAGradingCabutStock.index');
             Route::controller(App\Http\Controllers\DryA\DryAPenerimaanController::class)->group(function () {
                 Route::get('/dry_a_penerimaan', 'index')->name('DryAPenerimaan.index');
                 Route::get('/dry_a_penerimaan/create', 'create')->name('DryAPenerimaan.create');

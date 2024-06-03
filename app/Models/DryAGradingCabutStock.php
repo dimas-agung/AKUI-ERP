@@ -28,4 +28,8 @@ class DryAGradingCabutStock extends Model
     {
         return $this->hasMany(DryAOutputCabut::class, 'nomor_job', 'nomor_job');
     }
+    public function DryAGradingCabut()
+    {
+        return $this->hasMany(DryAGradingCabut::class, 'nomor_job', 'nomor_job');
+    }
 }

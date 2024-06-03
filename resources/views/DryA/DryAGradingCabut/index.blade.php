@@ -1,9 +1,9 @@
 @extends('layouts.master1')
 @section('menu')
-    Pre Grading Halus
+    Dry A
 @endsection
 @section('title')
-    Grading Halus Adjustment Input
+    Dry A Grading Cabut
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Grading Halus Adjustment Input
+                                Data Dry A Grading Cabut
                                 <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
                                             class="bi bi-plus-circle"></i></strong>
@@ -27,20 +27,26 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">ID Box Grading Halus</th>
-                                        <th scope="col" class="text-center">Nomor Adjustment</th>
+                                        <th scope="col" class="text-center">Nomor Job</th>
                                         <th scope="col" class="text-center">Nomor Batch</th>
-                                        <th scope="col" class="text-center">Berat Adding</th>
-                                        <th scope="col" class="text-center">Pcs Adding</th>
-                                        <th scope="col" class="text-center">Jenis Adjustment</th>
-                                        <th scope="col" class="text-center">Berat Adjustment</th>
-                                        <th scope="col" class="text-center">Pcs Adjustment</th>
-                                        <th scope="col" class="text-center">Keterangan</th>
+                                        <th scope="col" class="text-center">Jenis Job</th>
+                                        <th scope="col" class="text-center">Berat Job</th>
+                                        <th scope="col" class="text-center">Pcs Job</th>
+                                        <th scope="col" class="text-center">Tujuan Kirim</th>
+                                        <th scope="col" class="text-center">Nama Operator</th>
+                                        <th scope="col" class="text-center">Nip Operator</th>
+                                        <th scope="col" class="text-center">Grade Operator</th>
+                                        <th scope="col" class="text-center">Nama Team Leader</th>
                                         @role('admin')
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
+                                            <th scope="col" class="text-center">Upah Operator</th>
                                         @endrole
-                                        <th scope="col" class="text-center">Ketegori Susut</th>
+                                        <th scope="col" class="text-center">Jenis Grading</th>
+                                        <th scope="col" class="text-center">Berat 1 Grading</th>
+                                        <th scope="col" class="text-center">Pcs 1 Grading</th>
+                                        <th scope="col" class="text-center">Berat 2 Grading</th>
+                                        <th scope="col" class="text-center">Kategori Susut</th>
                                         @role('admin')
                                             <th scope="col" class="text-center">Susut Depan</th>
                                             <th scope="col" class="text-center">Susut Belakang</th>
@@ -52,12 +58,10 @@
                                             <th scope="col" class="text-center">Nilai Prosentase Total Keuntungan</th>
                                             <th scope="col" class="text-center">Nilai Dikurangi Keuntungan</th>
                                             <th scope="col" class="text-center">Prosentase Harga Gramasi</th>
-                                            <th scope="col" class="text-center">Selisih Labah Rugi Kg</th>
-                                            <th scope="col" class="text-center">Selisih Labah Rugi Per Gram</th>
+                                            <th scope="col" class="text-center">Selisi Laba Rugi Kg</th>
+                                            <th scope="col" class="text-center">selisi aba Rugi Per Gram</th>
                                             <th scope="col" class="text-center">Hpp</th>
                                             <th scope="col" class="text-center">Total Hpp</th>
-                                            <th scope="col" class="text-center">Fix Hpp</th>
-                                            <th scope="col" class="text-center">Fix Total Hpp</th>
                                         @endrole
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
@@ -67,61 +71,74 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($adjustment_inputs as $item)
+                                    @forelse ($dry_a_grading_cabut as $item)
                                         <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $item->id_box_grading_halus }}</td>
-                                            <td class="text-center">{{ $item->nomor_adjustment }}</td>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td class="text-center">{{ $item->nomor_job }}</td>
                                             <td class="text-center">{{ $item->nomor_batch }}</td>
-                                            <td class="text-center">{{ $item->berat_adding }}
-                                            </td>
-                                            <td class="text-center">{{ $item->pcs_adding }}</td>
-                                            <td class="text-center">{{ $item->jenis_adjustment }}</td>
-                                            <td class="text-center">
-                                                {{ $item->berat_adjustment }}</td>
-                                            <td class="text-center">{{ $item->pcs_adjustment }}
-                                            </td>
-                                            <td class="text-center">{{ $item->keterangan }}</td>
+                                            <td class="text-center">{{ $item->jenis_job }}</td>
+                                            <td class="text-center">{{ $item->berat_job }}</td>
+                                            <td class="text-center">{{ $item->pcs_job }}</td>
+                                            <td class="text-center">{{ $item->tujuan_kirim }}</td>
+                                            <td class="text-center">{{ $item->nama_operator }}</td>
+                                            <td class="text-center">{{ $item->nip_operator }}</td>
+                                            <td class="text-center">{{ $item->grade_operator }}</td>
+                                            <td class="text-center">{{ $item->nama_team_leader }}</td>
                                             @role('admin')
-                                                <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
-                                                </td>
-                                            @endrole
-                                            <td class="text-center">{{ $item->kategori_susut }}</td>
-                                            @role('admin')
-                                                <td class="text-center">{{ number_format($item->susut_depan, 2, ',', '.') }}
+                                                <td class="text-center">
+                                                    {{ number_format($item->modal, 2, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->susut_belakang, 2, ',', '.') }}
+                                                    {{ number_format($item->total_modal, 2, ',', '.') }}
                                                 </td>
+                                                <td class="text-center">
+                                                    {{ number_format($item->upah_operator, 2, ',', '.') }}
+                                                </td>
+                                            @endrole
+                                            <td class="text-center">{{ $item->jenis_grading }}</td>
+                                            <td class="text-center">{{ $item->berat_1_grading }}</td>
+                                            <td class="text-center">{{ $item->pcs_1_grading }}</td>
+                                            <td class="text-center">{{ $item->berat_2_grading }}</td>
+                                            <td class="text-center">{{ $item->kategori_susut }}</td>
+                                            <td class="text-center">{{ $item->susut_depan }}</td>
+                                            <td class="text-center">{{ $item->susut_belakang }}</td>
+                                            {{-- <td class="text-center">{{ $item->susut_belakang }}</td> --}}
+                                            @role('admin')
                                                 <td class="text-center">
                                                     {{ number_format($item->biaya_produksi, 2, ',', '.') }}
                                                 </td>
-                                                <td class="text-center">{{ number_format($item->kontribusi, 2, ',', '.') }}
+                                                <td class="text-center">
+                                                    {{ number_format($item->kontribusi, 2, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->harga_estimasi, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($item->total_harga, 2, ',', '.') }}
+                                                    {{ number_format($item->harga_estimasi, 2, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->nilai_laba_rugi, 2, ',', '.') }}</td>
+                                                    {{ number_format($item->total_harga, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($item->nilai_laba_rugi, 2, ',', '.') }}
+                                                </td>
                                                 <td class="text-center">
                                                     {{ number_format($item->nilai_prosentase_total_keuntungan, 2, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->nilai_dikurangi_keuntungan, 2, ',', '.') }}</td>
-                                                <td class="text-center">
-                                                    {{ number_format($item->prosentase_harga_gramasi, 2, ',', '.') }}</td>
-                                                <td class="text-center">
-                                                    {{ number_format($item->selisih_laba_rugi_kg, 2, ',', '.') }}</td>
-                                                <td class="text-center">
-                                                    {{ number_format($item->selisih_laba_rugi_per_gram, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($item->hpp, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($item->total_hpp, 2, ',', '.') }}
+                                                    {{ number_format($item->nilai_dikurangi_keuntungan, 2, ',', '.') }}
                                                 </td>
-                                                <td class="text-center">{{ number_format($item->fix_hpp, 2, ',', '.') }}
+                                                <td class="text-center">
+                                                    {{ number_format($item->prosentase_harga_gramasi, 2, ',', '.') }}
                                                 </td>
-                                                <td class="text-center">{{ number_format($item->fix_total_hpp, 2, ',', '.') }}
+                                                <td class="text-center">
+                                                    {{ number_format($item->selisih_laba_rugi_kg, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($item->selisih_laba_rugi_per_gram, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($item->hpp, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ number_format($item->total_hpp, 2, ',', '.') }}
                                                 </td>
                                             @endrole
                                             <td class="text-center">{{ $item->user_created }}</td>
@@ -133,14 +150,14 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     @if ($item->status == 1)
-                                                        <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                            action="{{ route('GradingHalusAdjustmentInput.destroy', $item->id) }}"
+                                                        <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
+                                                            action="{{ route('DryAGradingCabut.destroy', $item->nomor_job) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="button" class="btn btn-link"
                                                                 data-original-title="Remove"
-                                                                onclick="confirmDelete({{ $item->id }})">
+                                                                onclick="confirmDelete('{{ $item->nomor_job }}')">
                                                                 <i class="bi bi-trash3 text-danger"></i>
                                                             </button>
                                                         </form>
@@ -150,7 +167,7 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Grading Halus Adjustment Input belum Tersedia.
+                                            Data Dry A Grading Cabut belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -164,67 +181,9 @@
 @endsection
 @section('script')
     <script>
-         document.addEventListener('DOMContentLoaded', function() {
-            @if (session('warning'))
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Peringatan',
-                    text: '{{ session('warning') }}',
-                    confirmButtonText: 'OK'
-                });
-            @endif
-
-            @if (session('error'))
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: '{{ session('error') }}',
-                    confirmButtonText: 'OK'
-                });
-            @endif
-
-            @if (session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil',
-                    text: '{{ session('success') }}',
-                    confirmButtonText: 'OK'
-                });
-            @endif
-        });
         function redirectToPage() {
-            window.location.href = "{{ route('GradingHalusAdjustmentInput.create') }}";
+            window.location.href = "{{ route('DryAGradingCabut.create') }}";
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            @if (session('warning'))
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Peringatan',
-                    text: '{{ session('warning') }}',
-                    confirmButtonText: 'OK'
-                });
-            @endif
-
-            @if (session('error'))
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: '{{ session('error') }}',
-                    confirmButtonText: 'OK'
-                });
-            @endif
-
-            @if (session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil',
-                    text: '{{ session('success') }}',
-                    confirmButtonText: 'OK'
-                });
-            @endif
-        });
-
 
         function confirmDelete(id) {
             Swal.fire({
