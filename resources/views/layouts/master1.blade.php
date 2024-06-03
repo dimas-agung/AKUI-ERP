@@ -504,14 +504,14 @@
                         @endrole
                         @role('dry_a|admin')
                             <li
-                                class="sidebar-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*', 'DryAOutput*', 'TransitDryA*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Dry A</span>
                                 </a>
                                 <ul class="submenu">
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*', 'DryAOutput*', 'TransitDryA*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Dry A</span>
                                         </a>
@@ -525,13 +525,22 @@
                                             <li
                                                 class="submenu-item {{ Route::is('DryAPenerimaan*') && !Route::is('DryAPenerimaanStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAPenerimaan.index') }}" class="submenu-link">Dry A
-                                                    Penerimaan</a>
+                                                    Penerimaan Cabut</a>
                                             </li>
                                             <li
                                                 class="submenu-item {{ Route::is('DryAPenerimaanStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAPenerimaanStock.index') }}"
                                                     class="submenu-link">Dry A
-                                                    Penerimaan Stock</a>
+                                                    Penerimaan Stock Cabut</a>
+                                            </li>
+                                            <li class="submenu-item {{ Route::is('DryAOutput*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAOutput.index') }}" class="submenu-link">Dry A
+                                                    Output Cabut</a>
+                                            </li>
+                                            <li class="submenu-item {{ Route::is('TransitDryA*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitDryA.index') }}" class="submenu-link">Transit
+                                                    Dry A
+                                                    Cabut</a>
                                             </li>
                                         </ul>
                                     </li>

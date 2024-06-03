@@ -527,6 +527,21 @@ Route::middleware('auth')->group(function (){
             Route::controller(App\Http\Controllers\DryA\DryAPenerimaanStockController::class)->group(function () {
                 Route::get('/dry_a_penerimaan_stock', 'index')->name('DryAPenerimaanStock.index');
             });
+
+            Route::controller(App\Http\Controllers\DryA\DryAOutputController::class)->group(function () {
+                Route::get('/dry_a_output', 'index')->name('DryAOutput.index');
+                Route::get('/dry_a_output/create', 'create')->name('DryAOutput.create');
+                Route::post('/dry_a_output/store', 'store')->name('DryAOutput.store');
+                Route::post('/dry_a_output/sendData', 'sendData')->name('DryAOutput.sendData');
+                Route::delete('/dry_a_output/destroy/{nomor_job}', 'destroy')->name('DryAOutput.destroy');
+                Route::get('/dry_a_output/get_data_id_box', 'set')->name('DryAOutput.set');
+                Route::get('/dry_a_output/get_pcc', 'setpcc')->name('DryAOutput.setpcc');
+                Route::post('/dry_a_output/cek_data', 'CeksendData')->name('DryAOutput.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\DryA\TransitDryAController::class)->group(function () {
+                Route::get('/transit_dry_a', 'index')->name('TransitDryA.index');
+            });
         });
     });
 });
