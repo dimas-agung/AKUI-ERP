@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\GradingHalusStock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use App\Models\MasterJenisGradingHalus;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PreGradingHalusAddingStock;
 use App\Models\GradingHalusAdjustmentInput;
@@ -170,21 +172,149 @@ class GradingHalusAdjustmentInputService
         ], 201);
     }
 
-    public function destroy($id)
+    // public function destroy($id): RedirectResponse
+    // {
+    //     try {
+    //         // Mulai transaksi
+    //         DB::beginTransaction();
+
+    //         // Temukan record berdasarkan id
+    //         $GradingHalusAdjustmentInput = GradingHalusAdjustmentInput::findOrFail($id);
+    //         // $GradingHalusAdjustmentInput = GradingHalusAdjustmentInput::where('nomor_adjustment', '=', $nomor_adjustment)->get();
+
+    //         $nomorAdjustment = $GradingHalusAdjustmentInput->nomor_adjustment;
+
+    //         // Temukan semua item dengan nomor_adjustment yang sama
+    //         $findNomorAdjustment = GradingHalusAdjustmentInput::where('nomor_adjustment', $nomorAdjustment)->get();
+
+    //         // Cek apakah salah satu dari GradingHalusInputs memiliki status 0 dengan waktu created_at yang sama
+    //         foreach ($findNomorAdjustment as $GradingInput) {
+    //             $createdAt = $GradingInput->created_at;
+
+    //             // Cari data lain dengan waktu created_at yang sama dan status 0
+    //             $sameTimeStatusZero = GradingHalusAdjustmentInput::where('created_at', '=', $createdAt)
+    //                 ->where('status', '=', 0)
+    //                 ->exists();
+
+    //             if ($sameTimeStatusZero) {
+    //                 // Rollback transaksi jika ada data dengan status 0 dan waktu created_at yang sama
+    //                 DB::rollBack();
+    //                 // Simpan pesan peringatan dalam session
+    //                 session()->flash('warning', 'Data tidak bisa dihapus karena ada data lain dengan status 0 yang dibuat pada waktu yang sama.');
+    //                 // Kembali ke halaman sebelumnya
+    //                 return back();
+    //             }
+    //         }
+
+    //         foreach ($findNomorAdjustment as $item) {
+    //             // Temukan stok terkait
+    //             $gradingHalusStock = GradingHalusStock::where('id_box_grading_halus', $item->id_box_grading_halus)
+    //                 ->first();
+
+    //             if ($gradingHalusStock) {
+    //                 $beratSebelumnya = $gradingHalusStock->berat_masuk;
+    //                 $pcsSebelumnya = $gradingHalusStock->pcs_masuk;
+
+    //                 $perbedaanBerat = $beratSebelumnya - $item->berat_adjustment;
+    //                 $perbedaanPcs = $pcsSebelumnya - $item->pcs_adjustment;
+    //                 $sisaBerat = $perbedaanBerat - $gradingHalusStock->berat_keluar;
+    //                 $sisaPcs = $perbedaanPcs - $gradingHalusStock->pcs_keluar;
+
+    //                 if ($sisaBerat <= 0) {
+    //                     $gradingHalusStock->delete();
+    //                 } else {
+    //                     $totalModalBaru = $sisaBerat * $gradingHalusStock->modal;
+
+    //                     $gradingHalusStock->update([
+    //                         'berat_masuk' => $perbedaanBerat,
+    //                         'sisa_berat' => $sisaBerat,
+    //                         'pcs_masuk' => $perbedaanPcs,
+    //                         'sisa_pcs' => $sisaPcs,
+    //                         'total_modal' => $totalModalBaru,
+    //                         'status' => 1,
+    //                     ]);
+    //                 }
+    //             }
+
+    //             // Hapus item terkait
+    //             $item->delete();
+    //         }
+
+    //         $existingItems = GradingHalusAdjustmentStock::where('nomor_adjustment', $GradingHalusAdjustmentInput->nomor_adjustment)
+    //             ->where('nomor_batch', $GradingHalusAdjustmentInput->nomor_batch)
+    //             ->get();
+
+    //         // Logika Update Status
+    //         foreach ($existingItems as $existingItem) {
+    //             if ($existingItem) {
+
+    //                 $existingItem->update([
+    //                     'status' => 1,
+    //                 ]);
+    //             }
+    //         }
+
+    //         $GradingHalusAdjustmentAdding = GradingHalusAdjustmentAdding::where('nomor_adjustment', $GradingHalusAdjustmentInput->nomor_adjustment)
+    //             ->where('nomor_batch', $GradingHalusAdjustmentInput->nomor_batch)
+    //             ->get();
+
+    //         // Logika Update Status
+    //         foreach ($GradingHalusAdjustmentAdding as $item) {
+    //             if ($item) {
+
+    //                 $item->update([
+    //                     'status' => 1,
+    //                 ]);
+    //             }
+    //         }
+
+    //         // Jika tidak ada kesalahan, komit transaksi
+    //         DB::commit();
+
+    //         return ['success' => true];
+    //     } catch (\Exception $e) {
+    //         // Jika terjadi kesalahan, rollback transaksi
+    //         DB::rollback();
+
+    //         return ['success' => false, 'error' => $e->getMessage()];
+    //     }
+    // }
+
+    public function destroy($id): RedirectResponse
     {
         try {
-            // Mulai transaksi
+            // Start transaction
             DB::beginTransaction();
 
-            // Temukan record berdasarkan id
+            // Find the record by id
             $GradingHalusAdjustmentInput = GradingHalusAdjustmentInput::findOrFail($id);
+
             $nomorAdjustment = $GradingHalusAdjustmentInput->nomor_adjustment;
 
-            // Temukan semua item dengan nomor_adjustment yang sama
+            // Find all items with the same nomor_adjustment
             $findNomorAdjustment = GradingHalusAdjustmentInput::where('nomor_adjustment', $nomorAdjustment)->get();
 
+            // Check if any GradingHalusInputs have status 0 with the same created_at time
+            foreach ($findNomorAdjustment as $GradingInput) {
+                $createdAt = $GradingInput->created_at;
+
+                // Find other data with the same created_at time and status 0
+                $sameTimeStatusZero = GradingHalusAdjustmentInput::where('created_at', '=', $createdAt)
+                    ->where('status', '=', 0)
+                    ->exists();
+
+                if ($sameTimeStatusZero) {
+                    // Rollback transaction if there is data with status 0 and the same created_at time
+                    DB::rollBack();
+                    // Save warning message in session
+                    session()->flash('warning', 'Data tidak bisa dihapus karena ada data lain dengan status 0 yang dibuat pada waktu yang sama.');
+                    // Redirect back to the previous page
+                    return back();
+                }
+            }
+
             foreach ($findNomorAdjustment as $item) {
-                // Temukan stok terkait
+                // Find related stock
                 $gradingHalusStock = GradingHalusStock::where('id_box_grading_halus', $item->id_box_grading_halus)
                     ->first();
 
@@ -213,7 +343,7 @@ class GradingHalusAdjustmentInputService
                     }
                 }
 
-                // Hapus item terkait
+                // Delete related item
                 $item->delete();
             }
 
@@ -221,13 +351,10 @@ class GradingHalusAdjustmentInputService
                 ->where('nomor_batch', $GradingHalusAdjustmentInput->nomor_batch)
                 ->get();
 
-            // Logika Update Status
+            // Update Status Logic
             foreach ($existingItems as $existingItem) {
                 if ($existingItem) {
-
-                    $existingItem->update([
-                        'status' => 1,
-                    ]);
+                    $existingItem->update(['status' => 1]);
                 }
             }
 
@@ -235,25 +362,22 @@ class GradingHalusAdjustmentInputService
                 ->where('nomor_batch', $GradingHalusAdjustmentInput->nomor_batch)
                 ->get();
 
-            // Logika Update Status
+            // Update Status Logic
             foreach ($GradingHalusAdjustmentAdding as $item) {
                 if ($item) {
-
-                    $item->update([
-                        'status' => 1,
-                    ]);
+                    $item->update(['status' => 1]);
                 }
             }
 
-            // Jika tidak ada kesalahan, komit transaksi
+            // Commit transaction if no errors
             DB::commit();
 
-            return ['success' => true];
-        } catch (\Exception $e) {
-            // Jika terjadi kesalahan, rollback transaksi
+            return redirect()->route('GradingHalusAdjustmentInput.index')->with('success', 'Data berhasil dihapus');
+        } catch (Exception $e) {
+            // Rollback transaction if any errors
             DB::rollback();
 
-            return ['success' => false, 'error' => $e->getMessage()];
+            return redirect()->route('GradingHalusAdjustmentInput.index')->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
     }
 }

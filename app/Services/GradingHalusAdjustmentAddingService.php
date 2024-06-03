@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use PHPUnit\Framework\Constraint\Operator;
 use App\Models\GradingHalusAdjustmentStock;
 use App\Models\GradingHalusAdjustmentAdding;
+use App\Models\GradingHalusAdjustmentInput;
 
 class GradingHalusAdjustmentAddingService
 {
@@ -40,6 +41,16 @@ class GradingHalusAdjustmentAddingService
 
             if ($GradingHalusInput) {
                 $GradingHalusInput->update([
+                    'status' => 0,
+                ]);
+            }
+
+            $GradingHalusAdjustmentInput = GradingHalusAdjustmentInput::where('id_box_grading_halus', $GradingHalusAdjustmentAdding->id_box_grading_halus)
+                ->where('nomor_batch', $GradingHalusAdjustmentAdding->nomor_batch)
+                ->first();
+
+            if ($GradingHalusAdjustmentInput) {
+                $GradingHalusAdjustmentInput->update([
                     'status' => 0,
                 ]);
             }
@@ -173,6 +184,20 @@ class GradingHalusAdjustmentAddingService
 
             // Logika Update Status
             foreach ($GradingHalusInput as $item) {
+                if ($item) {
+
+                    $item->update([
+                        'status' => 1,
+                    ]);
+                }
+            }
+
+            $GradingHalusAdjustmentInput = GradingHalusAdjustmentInput::where('id_box_grading_halus', $GradingHalusAdjustmentAdding->id_box_grading_halus)
+                ->where('nomor_batch', $GradingHalusAdjustmentAdding->nomor_batch)
+                ->get();
+
+            // Logika Update Status
+            foreach ($GradingHalusAdjustmentInput as $item) {
                 if ($item) {
 
                     $item->update([
