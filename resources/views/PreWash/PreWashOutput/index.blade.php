@@ -36,6 +36,11 @@
                                         <th scope="col" class="text-center">Jenis Job</th>
                                         <th scope="col" class="text-center">Berat Job</th>
                                         <th scope="col" class="text-center">Pcs Job</th>
+                                        
+                                        <th scope="col" class="text-center">Berat Bersih</th>
+                                        <th scope="col" class="text-center">Pcs Bersih</th>
+                                        <th scope="col" class="text-center">Upah Operator Kotor</th>
+                                        <th scope="col" class="text-center">Upah Operator Bersih</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
                                         <th scope="col" class="text-center">Keterangan</th>
                                         @role('admin')
@@ -59,6 +64,11 @@
                                             <td class="text-center">{{ $PCO->jenis_job }}</td>
                                             <td class="text-center">{{ $PCO->berat_job }}</td>
                                             <td class="text-center">{{ $PCO->pcs_job }}</td>
+                                            <td class="text-center">{{ $PCO->berat_bersih }}</td>
+                                            <td class="text-center">{{ $PCO->pcs_bersih }}</td>
+                                            <td class="text-center">{{ number_format($PCO->upah_operator, 0, ',', '.') }}</td>
+                                            <td class="text-center">{{ number_format($PCO->upah_operator_bersih, 0, ',', '.') }}
+                                            </td>
                                             <td class="text-center">{{ $PCO->tujuan_kirim }}</td>
                                             <td class="text-center">{{ $PCO->keterangan }}</td>
                                             @role('admin')

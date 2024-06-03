@@ -64,9 +64,11 @@
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">{{ $item->created_at }}</td>
                                     <td class="text-center">
-                                        {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
+                                             {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
                                     </td>
                                     <td class="text-center">
+                                        @if ($item->status==1)
+                                            
                                         <div class="form-button-action">
                                             <form style="display: flex" id="deleteForm{{ $item->nomor_bstb }}"
                                                 action="{{ route('PreWashInput.destroy', $item->nomor_bstb) }}"
@@ -79,6 +81,7 @@
                                                 </button>
                                             </form>
                                         </div>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

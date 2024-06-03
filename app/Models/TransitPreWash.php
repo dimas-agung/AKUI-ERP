@@ -30,4 +30,9 @@ class TransitPreWash extends Model
     {
         return $this->hasMany(CabutBuluPenerimaan::class, 'nomor_bstb', 'nomor_bstb');
     }
+    public function PreWashOutput()
+    {
+        return $this->hasOne(PreWashOutput::class, 'nomor_job', 'nomor_job');
+    }
+
 }
