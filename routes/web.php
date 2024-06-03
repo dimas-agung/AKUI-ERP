@@ -482,7 +482,7 @@ Route::middleware('auth')->group(function () {
         });
     });
     Route::prefix('cleaning')->middleware(['role:cleaning|admin'])->group(function () {
-        Route::prefix('cabut_bulu')->middleware('role:cabut_bulu|admin')->group(function () {
+        Route::prefix('cabut_bulu')->middleware(['role:cabut_bulu|admin'])->group(function () {
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenerimaanController::class)->group(function () {
                 Route::get('/cabut_bulu_penerimaan', 'index')->name('CabutBuluPenerimaan.index');
                 Route::get('/cabut_bulu_penerimaan/create', 'create')->name('CabutBuluPenerimaan.create');
@@ -525,7 +525,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/transit_cabut_bulu', 'index')->name('TransitCabutBulu.index');
             });
         });
-        Route::prefix('rambang')->middleware('role:rambang|admin')->group(function () {
+        Route::prefix('rambang')->middleware(['role:rambang|admin'])->group(function () {
             Route::controller(App\Http\Controllers\Rambang\RambangKeringInputController::class)->group(function () {
                 Route::get('/rambang_kering_input', 'index')->name('RambangKeringInput.index');
                 Route::get('/rambang_kering_input/create', 'create')->name('RambangKeringInput.create');
@@ -568,7 +568,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/stock_rambang_basah', 'index')->name('StockRambangBasah.index');
             });
         });
-        Route::prefix('cabut_hancuran')->middleware('role:cabut_hancuran|admin')->group(function () {
+        Route::prefix('cabut_hancuran')->middleware(['role:cabut_hancuran|admin'])->group(function () {
             Route::controller(App\Http\Controllers\CabutHancuran\CabutHancuranPersiapanController::class)->group(function () {
                 Route::get('/cabut_hancuran_persiapan', 'index')->name('CabutHancuranPersiapan.index');
                 Route::get('/cabut_hancuran_persiapan/create', 'create')->name('CabutHancuranPersiapan.create');
@@ -615,50 +615,51 @@ Route::middleware('auth')->group(function () {
             });
         });
     });
+    // Route::prefix('dry_a')->middleware(['role:dry_a|admin'])->group(function (){
+    // });
     Route::prefix('dry_a')->middleware(['role:dry_a|admin'])->group(function (){
-        Route::prefix('dry_a')->middleware('role:dry_a|admin')->group(function (){
-            Route::controller(App\Http\Controllers\DryA\DryAGradingCabutController::class)->group(function () {
-                Route::get('/dry_a_grading_cabut', 'index')->name('DryAGradingCabut.index');
-                Route::get('/dry_a_grading_cabut/create', 'create')->name('DryAGradingCabut.create');
-                Route::post('/dry_a_grading_cabut/store', 'store')->name('DryAGradingCabut.store');
-                Route::post('/dry_a_grading_cabut/cek_data', 'CeksendData')->name('DryAGradingCabut.CeksendData');
-                Route::get('/dry_a_grading_cabut/set', 'set')->name('DryAGradingCabut.set');
-                Route::get('/dry_a_grading_cabut/setjenis', 'setJenis')->name('DryAGradingCabut.setJenis');
-                Route::delete('/dry_a_grading_cabut/destroy/{nomor_bstb}', 'destroy')->name('DryAGradingCabut.destroy');
-            });
-            Route::controller(App\Http\Controllers\DryA\DryAGradingCabutStockController::class)->group(function () {
-                Route::get('/dry_a_grading_cabut_stock', 'index')->name('DryAGradingCabutStock.index');
-            Route::controller(App\Http\Controllers\DryA\DryAPenerimaanController::class)->group(function () {
-                Route::get('/dry_a_penerimaan', 'index')->name('DryAPenerimaan.index');
-                Route::get('/dry_a_penerimaan/create', 'create')->name('DryAPenerimaan.create');
-                Route::post('/dry_a_penerimaan/store', 'store')->name('DryAPenerimaan.store');
-                Route::get('/dry_a_penerimaan/show/{id}', 'show')->name('DryAPenerimaan.show');
-                Route::get('/dry_a_penerimaan/edit/{id}', 'edit')->name('DryAPenerimaan.edit');
-                Route::put('/dry_a_penerimaan/update/{id}', 'update')->name('DryAPenerimaan.update');
-                Route::delete('/dry_a_penerimaan/destroy/{nomor_job}', 'destroy')->name('DryAPenerimaan.destroy');
-                Route::get('/dry_a_penerimaan/get_data_nomor_job', 'set')->name('DryAPenerimaan.set');
-                Route::post('/dry_a_penerimaan/simpanData', 'simpanData')->name('DryAPenerimaan.simpanData');
-                Route::post('/dry_a_penerimaan/cek_data', 'CeksendData')->name('DryAPenerimaan.CeksendData');
-            });
+        Route::controller(App\Http\Controllers\DryA\DryAGradingCabutController::class)->group(function () {
+            Route::get('/dry_a_grading_cabut', 'index')->name('DryAGradingCabut.index');
+            Route::get('/dry_a_grading_cabut/create', 'create')->name('DryAGradingCabut.create');
+            Route::post('/dry_a_grading_cabut/store', 'store')->name('DryAGradingCabut.store');
+            Route::post('/dry_a_grading_cabut/cek_data', 'CeksendData')->name('DryAGradingCabut.CeksendData');
+            Route::get('/dry_a_grading_cabut/set', 'set')->name('DryAGradingCabut.set');
+            Route::get('/dry_a_grading_cabut/setjenis', 'setJenis')->name('DryAGradingCabut.setJenis');
+            Route::delete('/dry_a_grading_cabut/destroy/{nomor_bstb}', 'destroy')->name('DryAGradingCabut.destroy');
+        });
+        Route::controller(App\Http\Controllers\DryA\DryAGradingCabutStockController::class)->group(function () {
+            Route::get('/dry_a_grading_cabut_stock', 'index')->name('DryAGradingCabutStock.index');
+        });
+        Route::controller(App\Http\Controllers\DryA\DryAPenerimaanController::class)->group(function () {
+            Route::get('/dry_a_penerimaan', 'index')->name('DryAPenerimaan.index');
+            Route::get('/dry_a_penerimaan/create', 'create')->name('DryAPenerimaan.create');
+            Route::post('/dry_a_penerimaan/store', 'store')->name('DryAPenerimaan.store');
+            Route::get('/dry_a_penerimaan/show/{id}', 'show')->name('DryAPenerimaan.show');
+            Route::get('/dry_a_penerimaan/edit/{id}', 'edit')->name('DryAPenerimaan.edit');
+            Route::put('/dry_a_penerimaan/update/{id}', 'update')->name('DryAPenerimaan.update');
+            Route::delete('/dry_a_penerimaan/destroy/{nomor_job}', 'destroy')->name('DryAPenerimaan.destroy');
+            Route::get('/dry_a_penerimaan/get_data_nomor_job', 'set')->name('DryAPenerimaan.set');
+            Route::post('/dry_a_penerimaan/simpanData', 'simpanData')->name('DryAPenerimaan.simpanData');
+            Route::post('/dry_a_penerimaan/cek_data', 'CeksendData')->name('DryAPenerimaan.CeksendData');
+        });
 
-            Route::controller(App\Http\Controllers\DryA\DryAPenerimaanStockController::class)->group(function () {
-                Route::get('/dry_a_penerimaan_stock', 'index')->name('DryAPenerimaanStock.index');
-            });
+        Route::controller(App\Http\Controllers\DryA\DryAPenerimaanStockController::class)->group(function () {
+            Route::get('/dry_a_penerimaan_stock', 'index')->name('DryAPenerimaanStock.index');
+        });
 
-            Route::controller(App\Http\Controllers\DryA\DryAOutputController::class)->group(function () {
-                Route::get('/dry_a_output', 'index')->name('DryAOutput.index');
-                Route::get('/dry_a_output/create', 'create')->name('DryAOutput.create');
-                Route::post('/dry_a_output/store', 'store')->name('DryAOutput.store');
-                Route::post('/dry_a_output/sendData', 'sendData')->name('DryAOutput.sendData');
-                Route::delete('/dry_a_output/destroy/{nomor_job}', 'destroy')->name('DryAOutput.destroy');
-                Route::get('/dry_a_output/get_data_id_box', 'set')->name('DryAOutput.set');
-                Route::get('/dry_a_output/get_pcc', 'setpcc')->name('DryAOutput.setpcc');
-                Route::post('/dry_a_output/cek_data', 'CeksendData')->name('DryAOutput.CeksendData');
-            });
+        Route::controller(App\Http\Controllers\DryA\DryAOutputController::class)->group(function () {
+            Route::get('/dry_a_output', 'index')->name('DryAOutput.index');
+            Route::get('/dry_a_output/create', 'create')->name('DryAOutput.create');
+            Route::post('/dry_a_output/store', 'store')->name('DryAOutput.store');
+            Route::post('/dry_a_output/sendData', 'sendData')->name('DryAOutput.sendData');
+            Route::delete('/dry_a_output/destroy/{nomor_job}', 'destroy')->name('DryAOutput.destroy');
+            Route::get('/dry_a_output/get_data_id_box', 'set')->name('DryAOutput.set');
+            Route::get('/dry_a_output/get_pcc', 'setpcc')->name('DryAOutput.setpcc');
+            Route::post('/dry_a_output/cek_data', 'CeksendData')->name('DryAOutput.CeksendData');
+        });
 
-            Route::controller(App\Http\Controllers\DryA\TransitDryAController::class)->group(function () {
-                Route::get('/transit_dry_a', 'index')->name('TransitDryA.index');
-            });
+        Route::controller(App\Http\Controllers\DryA\TransitDryAController::class)->group(function () {
+            Route::get('/transit_dry_a', 'index')->name('TransitDryA.index');
         });
     });
 });
