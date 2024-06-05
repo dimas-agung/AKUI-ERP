@@ -75,6 +75,21 @@ class CabutBuluPenyebaranService
                         ]);
                     }
 
+                    // Ambil semua item yang sesuai dengan kriteria
+                    $CabutPenerimaan = CabutBuluPenerimaan::where('nomor_job', $itemObject->nomor_job)
+                        // ->where('nomor_bstb', $itemObject->nomor_bstb)
+                        ->get();
+
+                    foreach ($CabutPenerimaan as $item) {
+
+                        // Update data dengan nilai baru
+                        $item->update([
+                            // Update data TransitPreCleaningStock
+                            'status'       => $itemObject->status ?? 0,
+                            // 'user_updated' => $itemObject->user_created ?? " ",
+                        ]);
+                    }
+
 
                     DB::commit();
                 } catch (\Exception $e) {
@@ -121,6 +136,19 @@ class CabutBuluPenyebaranService
                 foreach ($CabutBuluStock as $cabutStock) {
                     // Update status menjadi 1 pada CabutBuluStock
                     $cabutStock->update(['status' => 1]);
+                }
+            }
+
+            foreach ($CabutBuluPenyebaran as $cabutPenyebaran) {
+                // Hapus data PreGradingHalusInput
+                $cabutPenyebaran->delete();
+
+                // Perbarui status PreCleaningOutput jika ada
+                $CabutBuluPenerimaan = CabutBuluPenerimaan::where('nomor_job', '=', $nomor_job)->get();
+
+                foreach ($CabutBuluPenerimaan as $cabutPenerimaan) {
+                    // Update status menjadi 1 pada CabutBuluStock
+                    $cabutPenerimaan->update(['status' => 1]);
                 }
             }
 

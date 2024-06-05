@@ -35,6 +35,8 @@
                                     <th class="text-center" scope="col">Upah Operator</th>
                                 @endrole
                                 <th class="text-center" scope="col">Status</th>
+                                <th class="text-center" scope="col">Created At</th>
+                                <th class="text-center" scope="col">Updated At</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,6 +68,10 @@
                                         @else
                                             Unknown Status
                                         @endif
+                                    </td>
+                                    <td class="text-center">{{ $item->created_at }}</td>
+                                    <td class="text-center">
+                                        {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
                                     </td>
                                 </tr>
                             @empty
