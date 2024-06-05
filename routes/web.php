@@ -526,6 +526,21 @@ Route::middleware('auth')->group(function () {
             });
         });
         Route::prefix('rambang')->middleware(['role:rambang|admin'])->group(function () {
+            Route::controller(App\Http\Controllers\Rambang\InputHcrKotorController::class)->group(function () {
+                Route::get('/input_hcr_kotor', 'index')->name('InputHcrKotor.index');
+                Route::get('/input_hcr_kotor/create', 'create')->name('InputHcrKotor.create');
+                Route::post('/input_hcr_kotor/store', 'store')->name('InputHcrKotor.store');
+                Route::get('/input_hcr_kotor/show/{id}', 'show')->name('InputHcrKotor.show');
+                Route::get('/input_hcr_kotor/edit/{id}', 'edit')->name('InputHcrKotor.edit');
+                Route::put('/input_hcr_kotor/update/{id}', 'update')->name('InputHcrKotor.update');
+                Route::delete('/input_hcr_kotor/destroy/{id}', 'destroy')->name('InputHcrKotor.destroy');
+                Route::get('/input_hcr_kotor/get_data_nomor_job', 'set')->name('InputHcrKotor.set');
+                Route::post('/input_hcr_kotor/simpanData', 'simpanData')->name('InputHcrKotor.simpanData');
+                Route::post('/input_hcr_kotor/cek_data', 'CeksendData')->name('InputHcrKotor.CeksendData');
+            });
+            Route::controller(App\Http\Controllers\Rambang\StockHcrKotorController::class)->group(function () {
+                Route::get('/stock_hcr_stock', 'index')->name('StockHcrKotor.index');
+            });
             Route::controller(App\Http\Controllers\Rambang\RambangKeringInputController::class)->group(function () {
                 Route::get('/rambang_kering_input', 'index')->name('RambangKeringInput.index');
                 Route::get('/rambang_kering_input/create', 'create')->name('RambangKeringInput.create');
