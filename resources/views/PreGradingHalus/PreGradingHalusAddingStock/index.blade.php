@@ -42,9 +42,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($pre_grading_halus_adding_stocks as $PGHAS)
+                                    @forelse ($pre_grading_halus_adding_stocks as $key=> $PGHAS)
                                         <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $key+1 }}</td>
                                             <td class="text-center">{{ $PGHAS->unit }}</td>
                                             <td class="text-center">{{ $PGHAS->nomor_grading }}</td>
                                             <td class="text-center">{{ $PGHAS->nomor_batch }}</td>
@@ -62,10 +62,13 @@
                                                 {{-- <td class="text-center">{{ $PGHAS->total_modal }}</td> --}}
                                                 <td class="text-center">{{ number_format($PGHAS->total_modal, 2, ',', '.') }}
                                                 </td>
-
+                                            @endrole
+                                            <td class="text-center">{{ $PGHAS->status }}</td>
+                                            <td class="text-center">{{ $PGHAS->created_at }}</td>
+                                            <td class="text-center">{{ $PGHAS->updated_at }}</td>
                                             </tr>
-                                            @php $iteration++; @endphp
-                                        @endif
+                                            {{-- @php $iteration++; @endphp --}}
+                                        {{-- @endif --}}
                                     @empty
                                         <div class="alert alert-danger">
                                             Data Pre Grading Halus Adding Stock belum Tersedia.

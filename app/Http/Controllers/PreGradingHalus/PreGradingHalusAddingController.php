@@ -159,18 +159,20 @@ class PreGradingHalusAddingController extends Controller
             }
 
             $PreGradingHalusInput = PreGradingHalusInput::where('nomor_job', $PreGradingHalusAdding->nomor_job)
-                ->where('id_box_grading_kasar', $PreGradingHalusAdding->id_box_grading_kasar)
-                ->get();
+                // ->where('id_box_grading_kasar', $PreGradingHalusAdding->id_box_grading_kasar)
+                ->update([
+                    'status' => 1,
+                ]);
 
             // Logika Update Status
-            foreach ($PreGradingHalusInput as $item) {
-                if ($item) {
+            // foreach ($PreGradingHalusInput as $item) {
+            //     if ($item) {
 
-                    $item->update([
-                        'status' => 1,
-                    ]);
-                }
-            }
+            //         $item->update([
+            //             'status' => 1,
+            //         ]);
+            //     }
+            // }
 
             // Hapus record utama
             $PreGradingHalusAdding->delete();

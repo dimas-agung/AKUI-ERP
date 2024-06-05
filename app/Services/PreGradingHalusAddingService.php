@@ -38,6 +38,11 @@ class PreGradingHalusAddingService
 
                 // Tambahkan item baru ke tabel PreGradingHalusAdding
                 $this->createItem($item);
+                $PreGradingHalusInput = PreGradingHalusInput::where('nomor_job', $item->nomor_job)
+                    // ->where('id_box_grading_kasar', $PreGradingHalusAdding->id_box_grading_kasar)
+                    ->update([
+                        'status' => 0,
+                    ]);
             }
 
             // Simpan data yang telah digabungkan ke dalam tabel PreGradingHalusAddingStock
@@ -59,6 +64,7 @@ class PreGradingHalusAddingService
                     'status_stock'          => $item->status_stock ?? 1,
                     'id_box_raw_material'   => $item->id_box_raw_material,
                 ]);
+                
             }
 
             // Ambil PreGradingHalusAdding berdasarkan nomor_job dan id_box_grading_kasar
@@ -67,15 +73,12 @@ class PreGradingHalusAddingService
                 ->first();
 
             // Ambil PreGradingHalusInput berdasarkan nomor_job dan id_box_grading_kasar dari PreGradingHalusAdding
-            $PreGradingHalusInput = PreGradingHalusInput::where('nomor_job', $PreGradingHalusAdding->nomor_job)
-                ->where('id_box_grading_kasar', $PreGradingHalusAdding->id_box_grading_kasar)
-                ->first();
 
-            if ($PreGradingHalusInput) {
-                $PreGradingHalusInput->update([
-                    'status' => 0,
-                ]);
-            }
+            // if ($PreGradingHalusInput) {
+            //     // $PreGradingHalusInput->update([
+            //     //     'status' => 0,
+            //     // ]);
+            // }
 
             DB::commit();
 

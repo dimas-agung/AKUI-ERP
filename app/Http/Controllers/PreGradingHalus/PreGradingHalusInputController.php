@@ -43,7 +43,7 @@ class PreGradingHalusInputController extends Controller
     public function set(Request $request)
     {
         $nomor_bstb = $request->nomor_bstb;
-        $data = TransitPreCleaningStock::where('nomor_bstb',$nomor_bstb)->first();
+        // $data = TransitPreCleaningStock::where('nomor_bstb',$nomor_bstb)->first();
         $data = TransitPreCleaningStock::where('nomor_bstb',$nomor_bstb)->get();
 
         // Kembalikan nomor batch sebagai respons

@@ -29,6 +29,7 @@ class PreGradingHalusInput extends Model
         'total_modal',
         'user_created',
         'user_updated',
+        // 'status'
     ];
 
     public function TransitPreCleaningStock()
