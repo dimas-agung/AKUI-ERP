@@ -177,11 +177,11 @@ class GradingHalusOutputService
 
                 ]);
             }
-            $PreCleaningS = TransitGradingHalus::where('nomor_job', '=', $gradingHalusInput->nomor_job)
+            $TransitGradingHalus = TransitGradingHalus::where('nomor_job', '=', $GradingHalusOutput->nomor_job)
                     ->first();
-            if ($PreCleaningS) {
+            if ($TransitGradingHalus) {
                  // Hapus data PreCleaningStock
-                $PreCleaningS->delete();
+                $TransitGradingHalus->delete();
             }
 
             // Hapus data GradingHalusInput
@@ -192,7 +192,7 @@ class GradingHalusOutputService
 
             foreach ($GradingHalusInput as $gradingHI) {
                 // Update status menjadi 1 pada CabutBuluStock
-                $gradingHI->update(['status' => $sisaBerat > 0 ? 0 :1]);
+                $gradingHI->update(['status' => $sisaBerat > 0 ? 1 :0]);
             }
             $updateStatusGradingHalusInput = GradingHalusInput::where('created_at','<=',$GradingHalusOutput->created_at)
                         ->update(['status'=>0]);
