@@ -70,7 +70,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-link" data-original-title="Remove"
-                                                        onclick="confirmDelete('{{ $item->id_box_grading_halus }}')">
+                                                        onclick="confirmDelete('{{ $item->nomor_job }}')">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
                                                 </form>
