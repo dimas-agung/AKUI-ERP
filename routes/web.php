@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -202,9 +203,6 @@ Route::middleware('auth')->group(function (){
     });
     Route::prefix('bahan_baku')->middleware(['role:bahan_baku|admin'])->group(function (){
         Route::prefix('Grading_Kasar')->middleware('role:bahan_baku|admin')->group(function (){
-            // Untuk menangani beberapa role menggunakan cara dibawah
-            // Route::middleware(['role:pur_input','role:output'])->group(function () {
-            // });
             Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputController::class)->group(function(){
                 Route::get('/grading_kasar_input', 'index')->name('GradingKasarInput.index');
                 Route::get('/grading_kasar_input/create', 'create')->name('GradingKasarInput.create');
@@ -252,6 +250,19 @@ Route::middleware('auth')->group(function (){
             });
             Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
                 Route::get('/stock_transit_grading_kasar', 'index')->name('StockTransitGradingKasar.index');
+            });
+            Route::controller(App\Http\Controllers\TransitGradingKasar\ReportController::class)->group(function () {
+                Route::get('/report', 'index')->name('ReportGradingKasar.index');
+                Route::get('/report_input', 'input')->name('ReportGradingKasar.input');
+                Route::post('/report_filter', 'filter')->name('ReportGradingKasar.filter');
+                Route::get('/report_hasil', 'hasil')->name('ReportGradingKasar.hasil');
+                Route::post('/report_filter_h', 'filterH')->name('ReportGradingKasar.filterH');
+                Route::get('/report_stock', 'stock')->name('ReportGradingKasar.stock');
+                Route::post('/report_filter_s', 'filterS')->name('ReportGradingKasar.filterS');
+                Route::get('/report_output', 'output')->name('ReportGradingKasar.output');
+                Route::post('/report_filter_o', 'filterO')->name('ReportGradingKasar.filterO');
+                Route::get('/report_transit', 'transit')->name('ReportGradingKasar.transit');
+                Route::post('/report_filter_t', 'filterT')->name('ReportGradingKasar.filterT');
             });
         });
 

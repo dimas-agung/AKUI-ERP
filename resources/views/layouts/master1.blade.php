@@ -49,6 +49,46 @@
             display: none !important;
             /* Menghilangkan segitiga kebawah */
         }
+
+        .button-card {
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            padding: 0;
+        }
+
+        .button-card .card-body {
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(2, 42, 153, 0.075);
+            /* background-color: #fff; */
+        }
+
+        .button-card .card-body:hover {
+            box-shadow: 0 0.25rem 0.5rem rgba(3, 40, 141, 0.15);
+        }
+
+        .button-card .stats-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        #filterRow {
+            display: none;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
     </style>
 </head>
 
@@ -216,14 +256,14 @@
                         @role('bahan_baku|admin')
                             <li class="sidebar-title">Production</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock*', 'GradingHalusOutput*', 'TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock*', 'GradingHalusOutput*', 'TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*', 'ReportGradingKasar*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Bahan Baku</span>
                                 </a>
                                 <ul class="submenu">
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'ReportGradingKasar*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Grading Kasar Transit</span>
                                         </a>
@@ -257,6 +297,11 @@
                                                 class="submenu-item {{ Route::is('StockTransitGradingKasar*') ? 'active' : '' }}">
                                                 <a href="{{ route('StockTransitGradingKasar.index') }}"
                                                     class="submenu-link">Stock Transit Grading Kasar</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('ReportGradingKasar*') ? 'active' : '' }}">
+                                                <a href="{{ route('ReportGradingKasar.index') }}"
+                                                    class="submenu-link">Report Grading Kasar</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -375,6 +420,8 @@
                                         </ul>
                                     </li>
                                 </ul>
+
+
                             </li>
                         @endrole
                         @role('cleaning|admin')
@@ -827,7 +874,6 @@
                 border-collapse: collapse;
                 border-spacing: 0;
                 border-radius: 10px; /* Menambahkan tepi yang membulat */
-                overflow: hidden; /* Memastikan tidak ada overflow */
                 box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); /* Menambahkan bayangan */
             }`;
             document.head.appendChild(style);

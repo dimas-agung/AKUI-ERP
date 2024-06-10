@@ -34,7 +34,8 @@
                                     <th class="text-center">Total Modal</th>
                                 @endrole
                                 <th class="text-center" scope="col">Status</th>
-                                <th class="text-center" scope="col">NIP Admin</th>
+                                <th class="text-center" scope="col">Created At</th>
+                                <th class="text-center" scope="col">Updated At</th>
                                 {{-- <th class="text-center">Action</th> --}}
                             </tr>
                         </thead>
@@ -65,7 +66,10 @@
                                             Unknown Status
                                         @endif
                                     </td>
-                                    <td class="text-center">{{ $item->user_created }}</td>
+                                    <td class="text-center">{{ $item->created_at }}</td>
+                                    <td class="text-center">
+                                        {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
+                                    </td>
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
