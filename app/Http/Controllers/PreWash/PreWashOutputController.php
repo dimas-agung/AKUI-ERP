@@ -27,7 +27,7 @@ class PreWashOutputController extends Controller
     public function create()
     {
         $PreWashO = PreWashOutput::with('PreWashStock')->get();
-        $PreWashStk = PreWashStock::with('PreWashOutput')->get();
+        $PreWashStk = PreWashStock::with('PreWashOutput')->where('status',1)->get();
         // $TransitPreW = TransitPreWash::with('PreWashOutput')->get();
         $MasterO = MasterOperator::with('PreWashOutput')->get();
         // return $MasterO;

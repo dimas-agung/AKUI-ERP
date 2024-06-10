@@ -51,10 +51,10 @@
                                 <td class="text-center">{{ $item->jenis_job }}</td>
                                 <td class="text-center">{{ $item->berat_job }}</td>
                                 <td class="text-center">{{ $item->pcs_job }}</td>
-                                <td class="text-center">{{ $item->PreWashOutput->berat_bersih }}</td>
-                                <td class="text-center">{{ $item->PreWashOutput->pcs_bersih }}</td>
-                                <td class="text-center">{{ $item->PreWashOutput->upah_operator }}</td>
-                                <td class="text-center">{{ $item->PreWashOutput->upah_operator_bersih }}</td>
+                                <td class="text-center">{{ $item->berat_bersih }}</td>
+                                <td class="text-center">{{ $item->pcs_bersih }}</td>
+                                <td class="text-center">{{ $item->upah_operator }}</td>
+                                <td class="text-center">{{ $item->upah_operator_bersih }}</td>
                                 <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                 <td class="text-center">{{ $item->keterangan }}</td>
                                 @role('admin')

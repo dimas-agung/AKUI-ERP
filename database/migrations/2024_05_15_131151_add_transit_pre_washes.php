@@ -13,7 +13,8 @@ return new class extends Migration
     {
         //
         Schema::table('transit_pre_washes', function (Blueprint $table) {
-            $table->string('upah_operator_bersih');
+            $table->float('berat_bersih',16,2);
+            $table->float('upah_operator_bersih',16,4);
         });
     }
 
