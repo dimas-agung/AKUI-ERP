@@ -19,7 +19,8 @@ class CabutBuluPenerimaanController extends Controller
     public function index(){
         $i =1;
         $CBPenerimaan = CabutBuluPenerimaan::get();
-
+        // $berat_bersih = generate_berat_bersih(299);
+        // return $berat_bersih;
 
         return response()->view('CabutBulu.CabutBuluPenerimaan.index', [
             'CBPenerimaan' => $CBPenerimaan,

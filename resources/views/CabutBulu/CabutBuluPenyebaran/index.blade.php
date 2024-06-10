@@ -32,6 +32,9 @@
                                         <th scope="col" class="text-center">Jenis Job</th>
                                         <th scope="col" class="text-center">Berat Job</th>
                                         <th scope="col" class="text-center">Pcs Job</th>
+                                        <th scope="col" class="text-center">Upah Operator</th>
+                                        <th scope="col" class="text-center">Berat Bersih</th>
+                                        <th scope="col" class="text-center">Upah Operator bersih</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
                                         <th scope="col" class="text-center">Keterangan</th>
                                         @role('admin')
@@ -54,6 +57,10 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($cabut_bulu_penyebarans as $item)
+                                        @php
+                                            $berat_bersih = generate_berat_bersih($item->berat_job);
+                                            $upah_bersih = $item->upah_operator /$item->berat_job * $berat_bersih;
+                                        @endphp
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $item->nomor_job }}</td>
@@ -61,6 +68,9 @@
                                             <td class="text-center">{{ $item->jenis_job }}</td>
                                             <td class="text-center">{{ $item->berat_job }}</td>
                                             <td class="text-center">{{ $item->pcs_job }}</td>
+                                            <td class="text-center">{{ $item->upah_operator }}</td>
+                                            <td class="text-center">{!! $berat_bersih !!}</td>
+                                            <td class="text-center">{!! $upah_bersih !!}</td>
                                             <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                             <td class="text-center">{{ $item->keterangan }}</td>
                                             @role('admin')
