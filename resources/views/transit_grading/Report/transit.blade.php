@@ -25,27 +25,33 @@
             </div>
             <div class="card-body" style="overflow: auto;">
                 <div id="filterRow" class="row mb-5 mt-3">
-                    <div class="col-4">
+                    <div class="col-3">
+                        <div class="input-group">
+                            <input type="number" class="form-control rounded-pill" placeholder="Filter by year..."
+                                id="filterInputYear" min="1900" max="2100">
+                        </div>
+                    </div>
+                    <div class="col-3">
                         <div class="input-group">
                             <input type="month" class="form-control rounded-pill" placeholder="Filter by start month..."
                                 id="filterInputStartMonth">
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="input-group">
                             <input type="month" class="form-control rounded-pill" placeholder="Filter by end month..."
                                 id="filterInputEndMonth">
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="input-group">
                             <input type="text" class="form-control rounded-pill" placeholder="Masukan Jenis"
                                 id="filterInputType">
                         </div>
                     </div>
-                    <div class="col-4">
-                        <button type="button" class="btn btn-outline-success rounded-pill ms-2" onclick="applyFilter()">
-                            <strong><i class="bi bi-funnel"></i> Filter</strong>
+                    <div class="col-12 mt-3">
+                        <button type="button" class="btn btn-outline-success rounded-pill" onclick="applyFilter()">
+                            <strong><i class="bi bi-funnel"></i> Apply Filter</strong>
                         </button>
                     </div>
                 </div>
