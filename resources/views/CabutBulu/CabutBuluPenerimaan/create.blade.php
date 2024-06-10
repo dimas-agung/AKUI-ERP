@@ -173,7 +173,7 @@
                                     jenis_job: rowData.jenis_job,
                                     berat_job: rowData.berat_job,
                                     pcs_job: rowData.pcs_job,
-                                    upah_operator: rowData.upah_operator_bersih,
+                                    upah_operator: rowData.upah_operator,
                                     tujuan_kirim: rowData.tujuan_kirim,
                                     keterangan: rowData.keterangan,
                                     modal: rowData.modal,
