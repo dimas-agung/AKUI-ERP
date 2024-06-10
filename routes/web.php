@@ -305,6 +305,18 @@ Route::middleware('auth')->group(function () {
                 Route::get('/pre_cleaning_stock', 'index')->name('PreCleaningStock.index');
             });
 
+            Route::controller(App\Http\Controllers\PreCleaning\ReportController::class)->group(function () {
+                Route::get('/pre_cleaning_report', 'index')->name('PreCleaningReport.index');
+                Route::get('/pre_cleaning_report/input', 'input')->name('PreCleaningReport.input');
+                Route::get('/pre_cleaning_report/stock', 'stock')->name('PreCleaningReport.stock');
+                Route::get('/pre_cleaning_report/output', 'output')->name('PreCleaningReport.output');
+                Route::get('/pre_cleaning_report/transit', 'transit')->name('PreCleaningReport.transit');
+                Route::post('/pre_cleaning_report/inputFilter', 'inputFilter')->name('PreCleaningReport.inputFilter');
+                Route::post('/pre_cleaning_report/outputFilter', 'outputFilter')->name('PreCleaningReport.outputFilter');
+                Route::post('/pre_cleaning_report/stockFilter', 'stockFilter')->name('PreCleaningReport.stockFilter');
+                Route::post('/pre_cleaning_report/transitFilter', 'transitFilter')->name('PreCleaningReport.transitFilter');
+            });
+
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningOutputController::class)->group(function () {
                 Route::get('/pre_cleaning_output', 'index')->name('PreCleaningOutput.index');
                 Route::get('/pre_cleaning_output/create', 'create')->name('PreCleaningOutput.create');
