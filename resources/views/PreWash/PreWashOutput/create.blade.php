@@ -213,7 +213,7 @@
 
                     // Menghitung berat_job_sisa
                     let beratJob = parseFloat(response.berat_job);
-                    let beratJobSisa = beratJob - (0.15 * beratJob);
+                    let beratJobSisa = beratJob/1.15;
 
                     // Membulatkan beratJobSisa ke bawah
                     let beratJobSisaRoundedDown = Math.floor(beratJobSisa);
@@ -252,11 +252,12 @@
 
         function calculateUpah() {
             let upah_operator = parseFloat($('#upah_operator').val());
-
+            let berat_job = parseFloat($('#berat_job').val());
+            let berat_bersih = parseFloat($('#berat_bersih').val());
             if (!isNaN(upah_operator)) {
-                let potongan = upah_operator * 0.15; // Menghitung 15% dari upah_operator
-                let hasil_upah = upah_operator - potongan; // Mengurangi potongan dari upah_operator
-                $('#upah_operator_bersih').val(hasil_upah.toFixed(2)); // Menampilkan hasil dengan 2 desimal
+                let upah_per_gram = upah_operator/berat_job; // Menghitung berat/gram
+                let upah_bersih = berat_bersih*upah_per_gram;
+                $('#upah_operator_bersih').val(upah_bersih.toFixed(2)); // Menampilkan hasil dengan 2 desimal
             } else {
                 $('#upah_operator').val(''); // Mengosongkan input jika nilai bukan angka
             }
@@ -272,8 +273,8 @@
                 let berat_job = parseFloat($('#berat_job').val());
 
                 if (!isNaN(berat_job)) {
-                    let potongan = berat_job * 0.15; // Menghitung 15% dari berat_job
-                    let berat_bersih = berat_job - potongan; // Mengurangi potongan dari berat_job
+                    // let potongan = berat_job * 0.15; // Menghitung 15% dari berat_job
+                    let berat_bersih = berat_job/1.15; // Mengurangi potongan dari berat_job
                     $('#berat_bersih').val(berat_bersih.toFixed(2)); // Menampilkan hasil dengan 2 desimal
                 } else {
                     $('#berat_bersih').val(''); // Mengosongkan input jika nilai bukan angka

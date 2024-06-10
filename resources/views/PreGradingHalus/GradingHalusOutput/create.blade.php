@@ -512,11 +512,12 @@
                 return;
             }
             generateQrCode(nomor_job)
+            let berat_bersih = berat_job/1.15;
             let cetak_keterangan = keterangan == ''? '' :'('+keterangan+')';
             $('#cetak_nomor_batch').html(nomor_batch)
             $('#cetak_nomor_job').html(nomor_job)
             $('#cetak_jenis').html(jenis_job+cetak_keterangan)
-            $('#cetak_gramasi').html(Math.floor(berat_job-(berat_job*0.15)))
+            $('#cetak_gramasi').html(Math.floor(berat_bersih))
             $('#cetak_pcs').html(pcs_job)
             window.print();
             var newRow = '<tr>' +

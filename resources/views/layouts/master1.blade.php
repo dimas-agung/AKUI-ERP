@@ -1008,6 +1008,12 @@
                correctLevel : QRCode.CorrectLevel.H
            });
         }
+        function generate_berat_bersih(berat_kotor){
+            let berat_bersih = berat_kotor/1.15;
+            // let upah_bersih = upah*berat_bersih;
+            return  berat_bersih;
+
+        }
     </script>
     @yield('script')
     @yield('printArea')
