@@ -482,7 +482,7 @@ Route::middleware('auth')->group(function () {
         });
     });
     Route::prefix('cleaning')->middleware(['role:cleaning|admin'])->group(function () {
-        Route::prefix('cabut_bulu')->middleware(['role:cabut_bulu|admin'])->group(function () {
+        Route::prefix('cabut_bulu')->middleware(['role:cleaning|admin'])->group(function () {
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenerimaanController::class)->group(function () {
                 Route::get('/cabut_bulu_penerimaan', 'index')->name('CabutBuluPenerimaan.index');
                 Route::get('/cabut_bulu_penerimaan/create', 'create')->name('CabutBuluPenerimaan.create');
@@ -525,7 +525,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/transit_cabut_bulu', 'index')->name('TransitCabutBulu.index');
             });
         });
-        Route::prefix('rambang')->middleware(['role:rambang|admin'])->group(function () {
+        Route::prefix('rambang')->middleware(['role:cleaning|admin'])->group(function () {
             Route::controller(App\Http\Controllers\Rambang\InputHcrKotorController::class)->group(function () {
                 Route::get('/input_hcr_kotor', 'index')->name('InputHcrKotor.index');
                 Route::get('/input_hcr_kotor/create', 'create')->name('InputHcrKotor.create');
@@ -583,7 +583,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/stock_rambang_basah', 'index')->name('StockRambangBasah.index');
             });
         });
-        Route::prefix('cabut_hancuran')->middleware(['role:cabut_hancuran|admin'])->group(function () {
+        Route::prefix('cabut_hancuran')->middleware(['role:cleaning|admin'])->group(function () {
             Route::controller(App\Http\Controllers\CabutHancuran\CabutHancuranPersiapanController::class)->group(function () {
                 Route::get('/cabut_hancuran_persiapan', 'index')->name('CabutHancuranPersiapan.index');
                 Route::get('/cabut_hancuran_persiapan/create', 'create')->name('CabutHancuranPersiapan.create');
