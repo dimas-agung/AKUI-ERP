@@ -566,7 +566,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li
+                                    {{-- <li
                                         class="submenu-item has-sub {{ Route::is('StockRambangBasah*', 'CabutHancuranPersiapan*', 'CabutHancuranPersiapanStock*', 'CabutHancuranPenyebaran*', 'CabutHancuranPengembalian*', 'TransitCabutHancuran*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Cabut Hancuran</span>
@@ -610,7 +610,7 @@
                                                     Hancuran</a>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </li>
                         @endrole
@@ -874,6 +874,18 @@
                 title: 'Success!',
                 text: '{{ session('success') }}',
                 icon: 'success',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000 // Durasi tampilan SweetAlert dalam milidetik
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                title: 'Error!',
+                text: '{{ session('error') }}',
+                icon: 'error',
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
