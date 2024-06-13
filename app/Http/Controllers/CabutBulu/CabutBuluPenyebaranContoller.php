@@ -25,7 +25,7 @@ class CabutBuluPenyebaranContoller extends Controller
     // create
     public function create()
     {
-        $MasterOperator = MasterOperator::all();
+        $MasterOperator = MasterOperator::where('unit','Cabut Bulu')->get();
         $CabutBuluPenyebaran = CabutBuluPenyebaran::all();
         $CabutBuluStock = CabutBuluStock::all();
         // $getUnusedNomorJob = CabutBuluPenyebaran::withCount('CabutBuluStock')->get();
