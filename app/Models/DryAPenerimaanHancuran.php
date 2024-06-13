@@ -20,8 +20,16 @@ class DryAPenerimaanHancuran extends Model
         'nama_team_leader',
         'waktu_penyebaran',
         'waktu_pengembalian',
-        'status',
         'user_created',
         'user_updated',
+        'status',
     ];
+    public function TransitCabutBuluHancuran()
+    {
+        return $this->belongsTo(TransitCabutBuluHancuran::class, 'nomor_job', 'nomor_job');
+    }
+    public function DryAPenerimaanHancuranStock()
+    {
+        return $this->hasMany(DryAPenerimaanHancuranStock::class, 'nomor_job', 'nomor_job');
+    }
 }

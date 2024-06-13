@@ -17,4 +17,8 @@ class MasterTujuanKirimDryA extends Model
         'user_created',
         'user_updated',
     ];
+    public function DryAOutputHancuran()
+    {
+        return $this->hasMany(DryAOutputHancuran::class, 'tujuan_kirim', 'tujuan_kirim');
+    }
 }

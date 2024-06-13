@@ -71,6 +71,7 @@
         .button-card .card-body:hover {
             /* box-shadow: 0 0.25rem 0.5rem rgba(141, 184, 253, 0.3); */
             background-color: #435EBE;
+            box-shadow: 0 0.25rem 0.5rem rgba(3, 40, 141, 0.15);
         }
 
         .button-card .stats-icon {
@@ -281,7 +282,7 @@
                                 <ul class="submenu">
                                     @role('grading_kasar|admin')
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'ReportGradingKasar*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Grading Kasar Transit</span>
                                         </a>
@@ -315,6 +316,11 @@
                                                 class="submenu-item {{ Route::is('StockTransitGradingKasar*') ? 'active' : '' }}">
                                                 <a href="{{ route('StockTransitGradingKasar.index') }}"
                                                     class="submenu-link">Stock Transit Grading Kasar</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('ReportGradingKasar*') ? 'active' : '' }}">
+                                                <a href="{{ route('ReportGradingKasar.index') }}"
+                                                    class="submenu-link">Report Grading Kasar</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -467,6 +473,8 @@
                                     </li>
                                     @endrole
                                 </ul>
+
+
                             </li>
                         @endrole
                         @role('cleaning|admin')
@@ -663,18 +671,56 @@
                         @role('dry_a|admin')
                             {{-- <li class="sidebar-title">Dry A</li> --}}
                             <li
-                                class="sidebar-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*', 'DryAGradingHancuran*', 'DryAGradingHancuranStock*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*', 'DryAOutput*', 'TransitDryA*', 'TransitDryAHancuran*', 'TransitCabutHancuran*', 'DryAPenerimaanHancuran*', 'DryAPenerimaanHancuranStock*', 'DryAOutputHancuran*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Dry A</span>
                                 </a>
                                 <ul class="submenu">
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('TransitCabutHancuran*', 'DryAPenerimaanHancuran*', 'DryAPenerimaanHancuranStock*', 'DryAOutputHancuran*', 'TransitDryAHancuran*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Dry A Hancuran</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitCabutHancuran*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitCabutHancuran.index') }}"
+                                                    class="submenu-link">Transit Cabut Bulu Hancuran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAPenerimaanHancuran*') && !Route::is('DryAPenerimaanHancuranStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAPenerimaanHancuran.index') }}"
+                                                    class="submenu-link">Dry A Penerimaan Hancuran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAPenerimaanHancuranStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAPenerimaanHancuranStock.index') }}"
+                                                    class="submenu-link">Dry A Penerimaan Hancuran Stock</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAOutputHancuran*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAOutputHancuran.index') }}"
+                                                    class="submenu-link">Dry A Output Hancuran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitDryAHancuran*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitDryAHancuran.index') }}"
+                                                    class="submenu-link">Transit Dry A Hancuran</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*', 'DryAOutput*', 'TransitDryA*') && !Route::is('TransitDryAHancuran*', 'TransitCabutHancuran*', 'DryAPenerimaanHancuran*', 'DryAPenerimaanHancuranStock*', 'DryAOutputHancuran*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Dry A Cabut</span>
                                         </a>
                                         <ul class="submenu submenu-level-2">
+                                            <li class="submenu-item {{ Route::is('TransitCabutBulu*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitCabutBulu.index') }}"
+                                                    class="submenu-link">Transit Cabut Bulu</a>
+                                            </li>
                                             <li
                                                 class="submenu-item {{ Route::is('DryAGradingCabut*') && !Route::is('DryAGradingCabutStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAGradingCabut.index') }}" class="submenu-link">Dry
@@ -688,6 +734,17 @@
                                                     class="submenu-link">Dry A
                                                     Grading
                                                     <br>Cabut Stock</a>
+                                            </li>
+
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAPenerimaan*') && !Route::is('DryAPenerimaanStock*') && !Route::is('DryAPenerimaanHancuran*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAPenerimaan.index') }}" class="submenu-link">Dry A
+                                                    Penerimaan Cabut</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAPenerimaanStock*') && !Route::is('DryAPenerimaanHancuranStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAPenerimaanStock.index') }}"
+                                                    class="submenu-link">Dry A Penerimaan Stock Cabut</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -706,11 +763,17 @@
                                                     <br>Hancuran</a>
                                             </li>
                                             <li
+<<<<<<< HEAD
                                                 class="submenu-item {{ Route::is('DryAGradingHancuranStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAGradingHancuranStock.index') }}"
                                                     class="submenu-link">Dry A
                                                     Grading
                                                     <br>Hancuran<br>Stock</a>
+=======
+                                                class="submenu-item {{ Route::is('TransitDryA*') && !Route::is('TransitDryAHancuran*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitDryA.index') }}" class="submenu-link">Transit
+                                                    Dry A Cabut</a>
+>>>>>>> dev-al
                                             </li>
                                         </ul>
                                     </li>
@@ -1009,7 +1072,6 @@
                 border-collapse: collapse;
                 border-spacing: 0;
                 border-radius: 10px; /* Menambahkan tepi yang membulat */
-                overflow: hidden; /* Memastikan tidak ada overflow */
                 box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); /* Menambahkan bayangan */
             }`;
             document.head.appendChild(style);

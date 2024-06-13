@@ -33,7 +33,7 @@ class StockTransitRawMaterialSeeder extends Seeder
             'user_created' => 'Asd-134',
         ]);
         StockTransitRawMaterial::create([
-            'nomor_bstb' => 'BSTB_173621-275671_UGK',
+            'nomor_bstb' => 'BSTB_173621-275672_UGK',
             'nomor_batch' => '173621-275671_UGK',
             'id_box' => 'K002',
             'nama_supplier' => 'Munawirr',
@@ -50,7 +50,7 @@ class StockTransitRawMaterialSeeder extends Seeder
             'user_created' => 'Asd-134',
         ]);
         StockTransitRawMaterial::create([
-            'nomor_bstb' => 'BSTB_173621-275671_UGK',
+            'nomor_bstb' => 'BSTB_173621-275673_UGK',
             'nomor_batch' => '173621-275671_UGK',
             'id_box' => 'K003',
             'nama_supplier' => 'Ahyarr',

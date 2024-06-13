@@ -9,7 +9,7 @@ class DryAOutputHancuran extends Model
 {
     use HasFactory;
     protected $table = 'dry_a_output_hancurans';
-    protected $filllable = [
+    protected $fillable = [
         'jenis_grading',
         'berat_job',
         'nomor_job',
@@ -19,4 +19,12 @@ class DryAOutputHancuran extends Model
         'user_created',
         'user_updated',
     ];
+    public function DryAGradingHancuranStock()
+    {
+        return $this->belongsTo(DryAGradingHancuranStock::class, 'jenis_grading', 'jenis_grading');
+    }
+    public function TransitDryAHancuran()
+    {
+        return $this->hasMany(TransitDryAHancuran::class, 'jenis_grading', 'jenis_grading');
+    }
 }

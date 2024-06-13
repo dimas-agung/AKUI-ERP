@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -290,6 +291,23 @@ Route::middleware('auth')->group(function () {
                 Route::get('/grading_kasar_output/get_pcc', 'setpcc')->name('GradingKasarOutput.setpcc');
                 Route::post('/grading_kasar_output/cek_data', 'CeksendData')->name('GradingKasarOutput.CeksendData');
             });
+            Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
+                Route::get('/stock_transit_grading_kasar', 'index')->name('StockTransitGradingKasar.index');
+            });
+            Route::controller(App\Http\Controllers\TransitGradingKasar\ReportController::class)->group(function () {
+                Route::get('/report', 'index')->name('ReportGradingKasar.index');
+                Route::get('/report_input', 'input')->name('ReportGradingKasar.input');
+                Route::post('/report_filter', 'filter')->name('ReportGradingKasar.filter');
+                Route::get('/report_hasil', 'hasil')->name('ReportGradingKasar.hasil');
+                Route::post('/report_filter_h', 'filterH')->name('ReportGradingKasar.filterH');
+                Route::get('/report_stock', 'stock')->name('ReportGradingKasar.stock');
+                Route::post('/report_filter_s', 'filterS')->name('ReportGradingKasar.filterS');
+                Route::get('/report_output', 'output')->name('ReportGradingKasar.output');
+                Route::post('/report_filter_o', 'filterO')->name('ReportGradingKasar.filterO');
+                Route::get('/report_transit', 'transit')->name('ReportGradingKasar.transit');
+                Route::post('/report_filter_t', 'filterT')->name('ReportGradingKasar.filterT');
+            });
+        });
 
         });
         Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
@@ -708,6 +726,40 @@ Route::middleware('auth')->group(function () {
             });
             Route::controller(App\Http\Controllers\DryAHancuran\DryAGradingHancuranStockController::class)->group(function () {
                 Route::get('/dry_a_grading_hancuran_stock', 'index')->name('DryAGradingHancuranStock.index');
+            });
+        });
+
+        Route::prefix('dry_a_hancuran')->middleware('role:dry_a_hancuran|admin')->group(function (){
+            Route::controller(App\Http\Controllers\DryAHancuran\DryAPenerimaanHancuranController::class)->group(function () {
+                Route::get('/dry_a_penerimaan_hancuran', 'index')->name('DryAPenerimaanHancuran.index');
+                Route::get('/dry_a_penerimaan_hancuran/create', 'create')->name('DryAPenerimaanHancuran.create');
+                Route::post('/dry_a_penerimaan_hancuran/store', 'store')->name('DryAPenerimaanHancuran.store');
+                Route::get('/dry_a_penerimaan_hancuran/show/{id}', 'show')->name('DryAPenerimaanHancuran.show');
+                Route::get('/dry_a_penerimaan_hancuran/edit/{id}', 'edit')->name('DryAPenerimaanHancuran.edit');
+                Route::put('/dry_a_penerimaan_hancuran/update/{id}', 'update')->name('DryAPenerimaanHancuran.update');
+                Route::delete('/dry_a_penerimaan_hancuran/destroy/{nomor_job}', 'destroy')->name('DryAPenerimaanHancuran.destroy');
+                Route::get('/dry_a_penerimaan_hancuran/get_data_nomor_job', 'set')->name('DryAPenerimaanHancuran.set');
+                Route::post('/dry_a_penerimaan_hancuran/simpanData', 'simpanData')->name('DryAPenerimaanHancuran.simpanData');
+                Route::post('/dry_a_penerimaan_hancuran/cek_data', 'CeksendData')->name('DryAPenerimaanHancuran.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\DryAHancuran\DryAPenerimaanHancuranStockController::class)->group(function () {
+                Route::get('/dry_a_penerimaan_hancuran_stock', 'index')->name('DryAPenerimaanHancuranStock.index');
+            });
+
+            Route::controller(App\Http\Controllers\DryAHancuran\DryAOutputHancuranController::class)->group(function () {
+                Route::get('/dry_a_output_hancuran', 'index')->name('DryAOutputHancuran.index');
+                Route::get('/dry_a_output_hancuran/create', 'create')->name('DryAOutputHancuran.create');
+                Route::post('/dry_a_output_hancuran/store', 'store')->name('DryAOutputHancuran.store');
+                Route::post('/dry_a_output_hancuran/sendData', 'sendData')->name('DryAOutputHancuran.sendData');
+                Route::delete('/dry_a_output_hancuran/destroy/{jenis_grading}', 'destroy')->name('DryAOutputHancuran.destroy');
+                Route::get('/dry_a_output_hancuran/get_data_id_box', 'set')->name('DryAOutputHancuran.set');
+                Route::get('/dry_a_output_hancuran/get_pcc', 'setpcc')->name('DryAOutputHancuran.setpcc');
+                Route::post('/dry_a_output_hancuran/cek_data', 'CeksendData')->name('DryAOutputHancuran.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\DryAHancuran\TransitDryAHancuranController::class)->group(function () {
+                Route::get('/transit_dry_a_hancuran', 'index')->name('TransitDryAHancuran.index');
             });
         });
     });

@@ -27,4 +27,8 @@ class DryAPenerimaanHancuranStock extends Model
     {
         return $this->hasMany(DryAGradingHancuran::class, 'nomor_job', 'nomor_job');
     }
+    public function DryAPenerimaanHancuran()
+    {
+        return $this->belongsTo(DryAPenerimaanHancuran::class, 'nomor_job', 'nomor_job');
+    }
 }

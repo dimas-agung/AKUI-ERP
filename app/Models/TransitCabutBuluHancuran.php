@@ -27,4 +27,8 @@ class TransitCabutBuluHancuran extends Model
     {
         return $this->belongsTo(CabutHancuranPengembalian::class, 'nomor_job', 'nomor_job');
     }
+    public function DryAPenerimaanHancuran()
+    {
+        return $this->hasMany(DryAPenerimaanHancuran::class, 'nomor_job', 'nomor_job');
+    }
 }

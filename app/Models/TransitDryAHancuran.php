@@ -18,4 +18,8 @@ class TransitDryAHancuran extends Model
         'tujuan_kirim',
         'status',
     ];
+    public function DryAOutputHancuran()
+    {
+        return $this->belongsTo(DryAOutputHancuran::class, 'jenis_grading', 'jenis_grading');
+    }
 }
