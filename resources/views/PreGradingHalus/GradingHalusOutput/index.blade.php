@@ -64,8 +64,8 @@
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
                                                 <form style="display: flex"
-                                                    id="deleteForm{{ $item->id_box_grading_halus }}"
-                                                    action="{{ route('GradingHalusOutput.destroy', $item->id_box_grading_halus) }}"
+                                                    id="deleteForm{{ $item->nomor_job }}"
+                                                    action="{{ route('GradingHalusOutput.destroy', $item->nomor_job) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
