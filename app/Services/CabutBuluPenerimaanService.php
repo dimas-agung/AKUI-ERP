@@ -52,7 +52,7 @@ class CabutBuluPenerimaanService
                 try {
                     DB::beginTransaction();
 
-                    // Buat instansi PreCleaningInput
+                    // Buat instansi CabutPnput
                     CabutBuluPenerimaan::create($mergedData);
 
                     CabutBuluStock::create([
@@ -89,6 +89,7 @@ class CabutBuluPenerimaanService
                             'berat_job' => $itemObject->berat_jobs ?? 0,
                             'pcs_job'   => $itemObject->pcs_jobs ?? 0,
                             'user_updated' => $itemObject->user_created ?? " ",
+                            'status' => 0,
                         ]);
                     }
 
@@ -134,67 +135,68 @@ class CabutBuluPenerimaanService
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
-            // Ambil data PreCleaningInput berdasarkan nomor_bstb
-            $PreCleaningInputs = CabutBuluPenerimaan::where('nomor_bstb', '=', $nomor_bstb)->get();
+            // Ambil data CabutPnput berdasarkan nomor_bstb
+            $CabutPenerimaan = CabutBuluPenerimaan::where('nomor_bstb', '=', $nomor_bstb)->get();
 
-            if ($PreCleaningInputs->isEmpty()) {
+            if ($CabutPenerimaan->isEmpty()) {
                 // Redirect ke index dengan pesan error jika data tidak ditemukan
                 return redirect()->route('CabutBuluPenerimaan.index')->with(['error' => 'Data tidak ditemukan!']);
             }
 
-            foreach ($PreCleaningInputs as $PreCleaningI) {
+            foreach ($CabutPenerimaan as $CabutP) {
                 // Ambil data PreCleaningStock berdasarkan id_box_grading_kasar dan id_box_raw_material
-                $PreCleaningS = CabutBuluStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
+                $PreCleaningS = CabutBuluStock::where('nomor_job', '=', $CabutP->nomor_job)
                     ->first();
 
                 if ($PreCleaningS) {
                     // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                    $stockPrmRawMaterial = TransitPreWash::where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
-                        ->where('nomor_job', '=', $PreCleaningI->nomor_job)
+                    $transitPreWash = TransitPreWash::where('nomor_bstb', '=', $CabutP->nomor_bstb)
+                        ->where('nomor_job', '=', $CabutP->nomor_job)
                         ->first();
 
-                    if ($stockPrmRawMaterial) {
+                    if ($transitPreWash) {
                         // Simpan nilai sebelum dihapus
-                        $beratSebelumnya = $stockPrmRawMaterial->berat_job;
-                        $pcsSebelumnya = $stockPrmRawMaterial->pcs_job;
+                        $beratSebelumnya = $transitPreWash->berat_job;
+                        $pcsSebelumnya = $transitPreWash->pcs_job;
 
                         // Hitung perbedaan berat dan pcs
-                        $perbedaanBerat = $PreCleaningI->berat_job;
-                        $perbedaanPcs = $PreCleaningI->pcs_job;
+                        $perbedaanBerat = $CabutP->berat_job;
+                        $perbedaanPcs = $CabutP->pcs_job;
 
                         // Hitung total modal baru
-                        // $totalModalBaru = $totalModalSebelumnya - ($beratSebelumnya * $PreCleaningI->modal);
+                        // $totalModalBaru = $totalModalSebelumnya - ($beratSebelumnya * $CabutP->modal);
 
                         // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
-                        $stockPrmRawMaterial->update([
+                        $transitPreWash->update([
                             'berat_job' => max($beratSebelumnya - $perbedaanBerat, 0),
                             'pcs_job' => max($pcsSebelumnya - $perbedaanPcs, 0),
+                            'status' => 1,
                             // 'total_modal' => max($totalModalBaru, 0),
                         ]);
                     }
                 }
 
                 // Simpan data sebelum dihapus
-                $beratSebelumHapus = $PreCleaningI->berat_job;
-                $pcsSebelumHapus = $PreCleaningI->pcs_job;
-                $totalModalSebelumHapus = $PreCleaningI->total_modal;
+                $beratSebelumHapus = $CabutP->berat_job;
+                $pcsSebelumHapus = $CabutP->pcs_job;
+                $totalModalSebelumHapus = $CabutP->total_modal;
 
-                // Hapus data PreCleaningInput dan PreCleaningStock
-                $PreCleaningI->delete();
+                // Hapus data CabutPnput dan PreCleaningStock
+                $CabutP->delete();
                 if ($PreCleaningS) {
                     $PreCleaningS->delete();
                 }
 
                 // Kembalikan nilai sebelum dihapus
-                if ($stockPrmRawMaterial) {
-                    $stockPrmRawMaterial->update([
-                        'berat_job' => $stockPrmRawMaterial->berat_job + $beratSebelumHapus,
-                        'pcs_job' => $stockPrmRawMaterial->pcs_job + $pcsSebelumHapus
+                if ($transitPreWash) {
+                    $transitPreWash->update([
+                        'berat_job' => $transitPreWash->berat_job + $beratSebelumHapus,
+                        'pcs_job' => $transitPreWash->pcs_job + $pcsSebelumHapus
                     ]);
                 }
 
-                $existingItems = PreWashOutput::where('nomor_bstb', $PreCleaningI->nomor_bstb)
-                ->where('nomor_job', $PreCleaningI->nomor_job)
+                $existingItems = PreWashOutput::where('nomor_bstb', $CabutP->nomor_bstb)
+                ->where('nomor_job', $CabutP->nomor_job)
                 ->get();
 
                 // Logika Update Status
@@ -206,7 +208,7 @@ class CabutBuluPenerimaanService
                 } else {
                     // Jika tidak ada item PreWashOutput yang sesuai, buat baru dengan status 1
                     PreWashOutput::create([
-                        'nomor_bstb' => $PreCleaningI->nomor_bstb,
+                        'nomor_bstb' => $CabutP->nomor_bstb,
                         'status' => 1,
                         // Tambahkan kolom-kolom lain sesuai kebutuhan
                     ]);

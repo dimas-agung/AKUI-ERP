@@ -23,7 +23,7 @@ class CabutHancuranPenyebaranController extends Controller
     // create
     public function create()
     {
-        $MasterOperator = MasterOperator::all();
+        $MasterOperator = MasterOperator::where('unit','Cabut Hancuran')->get();;
         $CabutHancuranPenyebaran = CabutHancuranPenyebaran::all();
         $CabutHancuranPersiapanStock = CabutHancuranPersiapanStock::all();
         $getUnusedNomorJob = CabutHancuranPersiapanStock::withCount('CabutHancuranPenyebaran')->get();
