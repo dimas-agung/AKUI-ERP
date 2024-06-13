@@ -43,7 +43,7 @@ class GradingKasarOutputController extends Controller
         return view('transit_grading.GradingKasarOutput.create', compact('GradingKO', 'GradingKS', 'MasTujKir'));
     }
 
-    
+
     public function set(Request $request)
     {
         $id_box_grading_kasar = $request->id_box_grading_kasar;
@@ -129,7 +129,7 @@ class GradingKasarOutputController extends Controller
                 // $GradingKO = GradingKasarOutput::where('nomor_bstb', '=', $nomor_bstb)->get();
 
                 // Ambil data StockTransitRawMaterial berdasarkan nomor_bstb
-                $stockGradingKasar = GradingKasarStock::where('id_box_raw_material', '=', $GradingKO->id_box_raw_material)->first();
+                $stockGradingKasar = GradingKasarStock::where('id_box_grading_kasar', '=', $GradingKO->id_box_grading_kasar)->first();
 
                 if ($stockGradingKasar) {
                     // Simpan nilai sebelum dihapus
@@ -173,8 +173,8 @@ class GradingKasarOutputController extends Controller
                     ]);
                 }
 
-                $stockPRM = StockTransitGradingKasar::where('id_box_raw_material', '=', $GradingKO->id_box_raw_material)
-                ->where('created_at', $GradingKO->created_at)
+                $stockPRM = StockTransitGradingKasar::where('id_box_grading_kasar', '=', $GradingKO->id_box_grading_kasar)
+                // ->where('created_at', $GradingKO->created_at)
                 ->first();
 
                 if ($stockPRM) {
