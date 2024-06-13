@@ -140,15 +140,15 @@ class GradingHalusOutputService
         ], 201);
     }
 
-    public function destroy($nomor_job): RedirectResponse
+    public function destroy($nomor_job)
     {
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
             // Ambil data gradingHalusInputnput berdasarkan id_box_grading$id_box_grading_halus
-            $GradingHalusOutput = GradingHalusOutput::where('nomor_job', '=', $nomor_job)->first();
-            if ($GradingHalusOutput->isEmpty()) {
+            $GradingHalusOutput = GradingHalusOutput::where('nomor_job', $nomor_job)->first();
+            if (empty($GradingHalusOutput)) {
                 // Redirect ke index dengan pesan error jika data tidak ditemukan
                 return redirect()->route('GradingHalusOutput.index')->with(['error' => 'Data tidak ditemukan!']);
             }
@@ -172,7 +172,7 @@ class GradingHalusOutputService
                     'berat_keluar' => max(0, ( $StockGradingHalus->berat_keluar  - ($GradingHalusOutput->berat_job ?? 0))),
                     'pcs_keluar' => max(0, ( $StockGradingHalus->pcs_keluar  - ($GradingHalusOutput->pcs_job ?? 0))),
                     'sisa_berat' => max($sisaBerat, 0),
-                    'sisa_pcs' => max($sisaPcs, 0),
+                    'sisa_pcs' => $sisaPcs,
                     'total_modal' => max($totalModal, 0),
 
                 ]);
@@ -207,7 +207,7 @@ class GradingHalusOutputService
         } catch (\Exception $e) {
             // Rollback transaksi jika terjadi kesalahan
             DB::rollback();
-
+            // return $e;
             // Redirect ke index dengan pesan error
             return redirect()->route('GradingHalusOutput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
