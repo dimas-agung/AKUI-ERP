@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TransitCabutBuluHancuran extends Model
+class DryAPenerimaanHancuran extends Model
 {
     use HasFactory;
-    protected $table = 'transit_cabut_bulu_hancurans';
+    protected $table = 'dry_a_penerimaan_hancurans';
     protected $fillable = [
-        'unit',
         'nomor_job',
         'jenis_rambang',
         'upah_operator',
@@ -21,10 +20,16 @@ class TransitCabutBuluHancuran extends Model
         'nama_team_leader',
         'waktu_penyebaran',
         'waktu_pengembalian',
+        'user_created',
+        'user_updated',
         'status',
     ];
-    public function DryAPenerimaanHancuran()
+    public function TransitCabutBuluHancuran()
     {
-        return $this->hasMany(DryAPenerimaanHancuran::class, 'nomor_job', 'nomor_job');
+        return $this->belongsTo(TransitCabutBuluHancuran::class, 'nomor_job', 'nomor_job');
+    }
+    public function DryAPenerimaanHancuranStock()
+    {
+        return $this->hasMany(DryAPenerimaanHancuranStock::class, 'nomor_job', 'nomor_job');
     }
 }
