@@ -20,6 +20,7 @@
                             <tr>
                                 <th class="text-center" scope="col">No</th>
                                 <th class="text-center" scope="col">Unit</th>
+                                <th class="text-center" scope="col">Nomor BSTB</th>
                                 <th class="text-center" scope="col">Nomor Job</th>
                                 <th class="text-center" scope="col">Nomor Batch</th>
                                 <th class="text-center">Jenis Job</th>
@@ -46,6 +47,7 @@
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td class="text-center">{{ $item->unit }}</td>
+                                <td class="text-center">{{ $item->nomor_bstb }}</td>
                                 <td class="text-center">{{ $item->nomor_job }}</td>
                                 <td class="text-center">{{ $item->nomor_batch }}</td>
                                 <td class="text-center">{{ $item->jenis_job }}</td>
