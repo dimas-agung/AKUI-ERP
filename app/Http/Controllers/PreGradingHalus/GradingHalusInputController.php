@@ -19,12 +19,12 @@ class GradingHalusInputController extends Controller
     public function index(){
         $i =1;
         $PreGHI = GradingHalusInput::with('PreGradingHalusAddingStock')->get();
-        $TransitPre = PreGradingHalusAddingStock::with('GradingHalusInput')->get();
+        // $TransitPre = PreGradingHalusAddingStock::with('GradingHalusInput')->get();
         // return $GradingKI;
 
         return response()->view('PreGradingHalus.GradingHalusInput.index', [
             'PreGHI' => $PreGHI,
-            'TransitPre' => $TransitPre,
+            // 'TransitPre' => $TransitPre,
             'i' => $i,
         ]);
     }

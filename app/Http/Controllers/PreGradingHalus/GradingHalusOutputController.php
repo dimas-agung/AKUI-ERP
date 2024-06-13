@@ -20,12 +20,12 @@ class GradingHalusOutputController extends Controller
     public function index(){
         $i =1;
         $PreGHI = GradingHalusOutput::with('GradingHalusStock')->get();
-        $TransitPre = GradingHalusStock::with('GradingHalusOutput')->get();
+        // $TransitPre = GradingHalusStock::with('GradingHalusOutput')->get();
         // return $TransitPre;
 
         return response()->view('PreGradingHalus.GradingHalusOutput.index', [
             'PreGHI' => $PreGHI,
-            'TransitPre' => $TransitPre,
+            // 'TransitPre' => $TransitPre,
             'i' => $i,
         ]);
     }
@@ -102,8 +102,8 @@ class GradingHalusOutputController extends Controller
     }
 
 
-    public function destroy($nomor_grading): RedirectResponse
+    public function destroy($nomor_job)
     {
-        return $this->GradingHalusOutputService->destroy($nomor_grading);
+        return $this->GradingHalusOutputService->destroy($nomor_job);
     }
 }
