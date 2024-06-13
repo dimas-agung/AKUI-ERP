@@ -25,42 +25,42 @@ class UsersSeeder extends Seeder
         //     'birth_date' => '2000-04-09',
         // ]);
         // $user->syncRoles(['master','admin']);
-        $user = User::create([
-            'email' => 'Pre-cleaning@akuibirdnest.com',
-            'unit_id' => '1',
-            'password' => Hash::make('nyken1018'),
-            'fullname' => 'Nyken Dwi Ashari',
-            'nip' => '223030557',
-            'username' => 'Nyken Dwi Ashari',
-            'phone_number' => '123481912211',
-            'birth_date' => '2000-04-09',
+        // $user = User::create([
+        //     'email' => 'Pre-cleaning@akuibirdnest.com',
+        //     'unit_id' => '1',
+        //     'password' => Hash::make('nyken1018'),
+        //     'fullname' => 'Nyken Dwi Ashari',
+        //     'nip' => '223030557',
+        //     'username' => 'Nyken Dwi Ashari',
+        //     'phone_number' => '123481912211',
+        //     'birth_date' => '2000-04-09',
 
-        ]);
-        $user->assignRole(['pre_cleaning']);
-        $user = User::create([
-            'email' => 'Pre-cleaningSupport1@akuibirdnest.com',
-            'unit_id' => '1',
-            'password' => Hash::make('01032004'),
-            'fullname' => 'Raehan Hadi Al Ghifary',
-            'nip' => '222080413',
-            'username' => 'Raehan Hadi Al Ghifary',
-            'phone_number' => '1234819122121211',
-            'birth_date' => '2000-04-09',
+        // ]);
+        // $user->assignRole(['pre_cleaning']);
+        // $user = User::create([
+        //     'email' => 'Pre-cleaningSupport1@akuibirdnest.com',
+        //     'unit_id' => '1',
+        //     'password' => Hash::make('01032004'),
+        //     'fullname' => 'Raehan Hadi Al Ghifary',
+        //     'nip' => '222080413',
+        //     'username' => 'Raehan Hadi Al Ghifary',
+        //     'phone_number' => '1234819122121211',
+        //     'birth_date' => '2000-04-09',
 
-        ]);
-        $user->assignRole(['pre_cleaning']);
-        $user = User::create([
-            'email' => 'Pre-cleaningSupport2@akuibirdnest.com',
-            'unit_id' => '1',
-            'password' => Hash::make('010799'),
-            'fullname' => 'Lilik Kurniawan',
-            'nip' => '222110461',
-            'username' => 'Lilik Kurniawan',
-            'phone_number' => '12348191221211211',
-            'birth_date' => '2000-04-09',
+        // ]);
+        // $user->assignRole(['pre_cleaning']);
+        // $user = User::create([
+        //     'email' => 'Pre-cleaningSupport2@akuibirdnest.com',
+        //     'unit_id' => '1',
+        //     'password' => Hash::make('010799'),
+        //     'fullname' => 'Lilik Kurniawan',
+        //     'nip' => '222110461',
+        //     'username' => 'Lilik Kurniawan',
+        //     'phone_number' => '12348191221211211',
+        //     'birth_date' => '2000-04-09',
 
-        ]);
-        $user->assignRole(['pre_cleaning']);
+        // ]);
+        // $user->assignRole(['pre_cleaning']);
         // foreach ($request->input('role') as $key => $value) {
         //     # code...
         //     $user->assignRole([$value]);
@@ -95,5 +95,31 @@ class UsersSeeder extends Seeder
         //     ]);
         //     $users[] = $user;
         // }
+
+        // $user->assignRole(['pre_cleaning']);
+        // $user = User::create([
+        //     'email' => 'cleaning@akuibirdnest.com',
+        //     'unit_id' => '1',
+        //     'password' => Hash::make('011212'),
+        //     'fullname' => 'MOCHAMMAD MIFTAKHUL ARIFIN',
+        //     'nip' => '120080122',
+        //     'username' => 'MOCHAMMAD MIFTAKHUL ARIFIN',
+        //     'phone_number' => '1129122121121111',
+        //     'birth_date' => '2000-04-09',
+
+        // ]);
+        // $user->assignRole(['cleaning']);
+        $user = User::create([
+            'email' => 'cleaning2@akuibirdnest.com',
+            'unit_id' => '1',
+            'password' => Hash::make('011212'),
+            'fullname' => 'BAGAS DWI YULIANTO',
+            'nip' => '222030339',
+            'username' => 'BAGAS DWI YULIANTO',
+            'phone_number' => '1291122121121111',
+            'birth_date' => '2000-04-09',
+
+        ]);
+        $user->assignRole(['cleaning']);
     }
 }
