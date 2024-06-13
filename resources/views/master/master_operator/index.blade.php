@@ -210,12 +210,12 @@
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $MasterOP->nama }}</td>
                                             <td class="text-center">{{ $MasterOP->nip }}</td>
-                                            <td class="text-center">{{ $MasterOP->perusahaan_id }}</td>
+                                            <td class="text-center">{{ $MasterOP->plant }}</td>
                                             <td class="text-center">{{ $MasterOP->divisi }}</td>
                                             <td class="text-center">{{ $MasterOP->departemen }}</td>
                                             <td class="text-center">{{ $MasterOP->bagian }}</td>
-                                            <td class="text-center">{{ $MasterOP->workstation_id }}</td>
-                                            <td class="text-center">{{ $MasterOP->unit_id }}</td>
+                                            <td class="text-center">{{ $MasterOP->workstation }}</td>
+                                            <td class="text-center">{{ $MasterOP->unit}}</td>
                                             <td class="text-center">{{ $MasterOP->job }}</td>
                                             <td class="text-center">{{ $MasterOP->grade_operator }}</td>
                                             <td class="text-center">{{ $MasterOP->nama_team_leader }}</td>
