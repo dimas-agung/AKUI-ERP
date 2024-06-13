@@ -26,6 +26,6 @@ class Workstation extends Model
     }
     public function MasterOperator()
     {
-        return $this->hasmany(MasterOperator::class);
+        return $this->hasmany(MasterOperator::class,'workstation','nama');
     }
 }

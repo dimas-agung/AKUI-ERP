@@ -24,6 +24,6 @@ class Perusahaan extends Model
     }
     public function MasterOperator()
     {
-        return $this->hasmany(MasterOperator::class);
+        return $this->hasmany(MasterOperator::class,'plant','plant');
     }
 }
