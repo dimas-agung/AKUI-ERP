@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('inisial_tujuan');
             $table->integer('status')->default(1);
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

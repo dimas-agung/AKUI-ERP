@@ -9,7 +9,7 @@ class DryAGradingHancuran extends Model
 {
     use HasFactory;
     protected $table = 'dry_a_grading_hancurans';
-    protected $filllable = [
+    protected $fillable = [
         'nomor_job',
         'jenis_rambang',
         'upah_operator',

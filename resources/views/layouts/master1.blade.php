@@ -152,7 +152,7 @@
                         @role('master|admin')
                             <li class="sidebar-title">Menu</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*', 'MasterTujuanKirimDryA*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-stack"></i>
                                     <span>Master</span>
@@ -228,6 +228,10 @@
                                     <li class="submenu-item {{ Route::is('MasterJenisDryA*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterJenisDryA.index') }}" class="submenu-link">Master
                                             Jenis<br>Dry A</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterTujuanKirimDryA*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterTujuanKirimDryA.index') }}" class="submenu-link">Master
+                                            Tujuan<br>Kirim Dry A</a>
                                     </li>
                                 </ul>
                             </li>
@@ -553,7 +557,7 @@
                         @role('dry_a|admin')
                             {{-- <li class="sidebar-title">Dry A</li> --}}
                             <li
-                                class="sidebar-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*', 'DryAGradingHancuran*', 'DryAGradingHancuranStock*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Dry A</span>
@@ -562,7 +566,7 @@
                                     <li
                                         class="submenu-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
-                                            <span>Dry A</span>
+                                            <span>Dry A Cabut</span>
                                         </a>
                                         <ul class="submenu submenu-level-2">
                                             <li
@@ -578,6 +582,29 @@
                                                     class="submenu-link">Dry A
                                                     Grading
                                                     <br>Cabut Stock</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('DryAGradingHancuran*', 'DryAGradingHancuranStock*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Dry A Hancuran</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAGradingHancuran*') && !Route::is('DryAGradingHancuranStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAGradingHancuran.index') }}"
+                                                    class="submenu-link">Dry
+                                                    A
+                                                    Grading
+                                                    <br>Hancuran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAGradingHancuranStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAGradingHancuranStock.index') }}"
+                                                    class="submenu-link">Dry A
+                                                    Grading
+                                                    <br>Hancuran<br>Stock</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -749,11 +776,11 @@
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
                     <div class="float-start">
-                        <p>2023 &copy; Mazer</p>
+                        <p id="copyright-year"> &copy; Mazer</p>
                     </div>
                     <div class="float-end">
                         <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                            by <a href="https://saugi.me">Saugi</a></p>
+                            {{-- by <a href="https://saugi.me">Saugi</a></p> --}}
                     </div>
                 </div>
             </footer>
@@ -797,6 +824,8 @@
 
 
     <script>
+        document.getElementById("copyright-year").innerHTML = new Date().getFullYear() + " &copy; Mazer";
+
         $(document).ready(function() {
             $('.select2').select2();
         });

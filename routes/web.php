@@ -186,6 +186,14 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_jenis_dry_a/update/{id}', 'update')->name('MasterJenisDryA.update');
             Route::delete('/master_jenis_dry_a/destroy/{id}', 'destroy')->name('MasterJenisDryA.destroy');
         });
+
+        Route::controller(App\Http\Controllers\MasterTujuanKirimDryAController::class)->group(function () {
+            Route::get('/master_tujuan_kirim_dry_a', 'index')->name('MasterTujuanKirimDryA.index');
+            Route::post('/master_tujuan_kirim_dry_a/store', 'store')->name('MasterTujuanKirimDryA.store');
+            Route::get('/master_tujuan_kirim_dry_a/edit/{id}', 'edit')->name('MasterTujuanKirimDryA.edit');
+            Route::put('/master_tujuan_kirim_dry_a/update/{id}', 'update')->name('MasterTujuanKirimDryA.update');
+            Route::delete('/master_tujuan_kirim_dry_a/destroy/{id}', 'destroy')->name('MasterTujuanKirimDryA.destroy');
+        });
     });
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
@@ -541,6 +549,20 @@ Route::middleware('auth')->group(function () {
             });
             Route::controller(App\Http\Controllers\DryA\DryAGradingCabutStockController::class)->group(function () {
                 Route::get('/dry_a_grading_cabut_stock', 'index')->name('DryAGradingCabutStock.index');
+            });
+        });
+        Route::prefix('dry_a_hancuran')->middleware('role:dry_a|admin')->group(function () {
+            Route::controller(App\Http\Controllers\DryAHancuran\DryAGradingHancuranController::class)->group(function () {
+                Route::get('/dry_a_grading_hancuran', 'index')->name('DryAGradingHancuran.index');
+                Route::get('/dry_a_grading_hancuran/create', 'create')->name('DryAGradingHancuran.create');
+                Route::post('/dry_a_grading_hancuran/store', 'store')->name('DryAGradingHancuran.store');
+                Route::post('/dry_a_grading_hancuran/cek_data', 'CeksendData')->name('DryAGradingHancuran.CeksendData');
+                Route::get('/dry_a_grading_hancuran/set', 'set')->name('DryAGradingHancuran.set');
+                Route::get('/dry_a_grading_hancuran/setjenis', 'setJenis')->name('DryAGradingHancuran.setJenis');
+                Route::delete('/dry_a_grading_hancuran/destroy/{nomor_job}', 'destroy')->name('DryAGradingHancuran.destroy');
+            });
+            Route::controller(App\Http\Controllers\DryAHancuran\DryAGradingHancuranStockController::class)->group(function () {
+                Route::get('/dry_a_grading_hancuran_stock', 'index')->name('DryAGradingHancuranStock.index');
             });
         });
     });

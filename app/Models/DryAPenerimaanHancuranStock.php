@@ -9,7 +9,7 @@ class DryAPenerimaanHancuranStock extends Model
 {
     use HasFactory;
     protected $table = 'dry_a_penerimaan_hancuran_stocks';
-    protected $filllable = [
+    protected $fillable = [
         'unit',
         'nomor_job',
         'jenis_rambang',
@@ -23,4 +23,8 @@ class DryAPenerimaanHancuranStock extends Model
         'waktu_pengembalian',
         'status',
     ];
+    public function DryAGradingHancuran()
+    {
+        return $this->hasMany(DryAGradingHancuran::class, 'nomor_job', 'nomor_job');
+    }
 }

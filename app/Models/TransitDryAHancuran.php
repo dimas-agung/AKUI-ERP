@@ -9,7 +9,7 @@ class TransitDryAHancuran extends Model
 {
     use HasFactory;
     protected $table = 'transit_dry_a_hancurans';
-    protected $filllable = [
+    protected $fillable = [
         'unit',
         'jenis_grading',
         'berat_job',
