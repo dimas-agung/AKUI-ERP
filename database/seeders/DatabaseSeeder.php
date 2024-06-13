@@ -85,5 +85,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(DryAPenerimaanCabutStockSeeder::class);
         $this->call(MasterJenisDryASeeder::class);
+        $this->call(MasterTujuanKirimDryASeeder::class);
+        $this->call(DryAPenerimaanHancuranSeeder::class);
+        $this->call(DryAPenerimaanHancuranStockSeeder::class);
     }
 }

@@ -52,9 +52,45 @@
             /* Menghilangkan segitiga kebawah */
         }
 
-        .dropdown-toggle::after {
-            display: none !important;
-            /* Menghilangkan segitiga kebawah */
+        .button-card {
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            padding: 0;
+        }
+
+        .button-card .card-body {
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 68, 255, 0.075);
+            /* background-color: #fff; */
+        }
+
+        .button-card .card-body:hover {
+            /* box-shadow: 0 0.25rem 0.5rem rgba(141, 184, 253, 0.3); */
+            background-color: #435EBE;
+        }
+
+        .button-card .stats-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        #filterRow {
+            display: none;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
     </style>
 </head>
@@ -119,7 +155,7 @@
                         @role('master|admin')
                             <li class="sidebar-title">Menu</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*', 'MasterTujuanKirimDryA*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-stack"></i>
                                     <span>Master</span>
@@ -196,6 +232,10 @@
                                         <a href="{{ route('MasterJenisDryA.index') }}" class="submenu-link">Master
                                             Jenis<br>Dry A</a>
                                     </li>
+                                    <li class="submenu-item {{ Route::is('MasterTujuanKirimDryA*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterTujuanKirimDryA.index') }}" class="submenu-link">Master
+                                            Tujuan<br>Kirim Dry A</a>
+                                    </li>
                                 </ul>
                             </li>
                         @endrole
@@ -233,7 +273,7 @@
                         @role('bahan_baku|admin')
                             <li class="sidebar-title">Production</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock', 'GradingHalusAdjustmentAdding*', 'GradingHalusAdjustmentStock*', 'GradingHalusAdjustmentInput*', 'GradingHalusOutput*', 'TransitGradingHalus*', 'PreWashOutput*', 'PreWashInput*', 'PreWashStock*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock', 'GradingHalusAdjustmentAdding*', 'GradingHalusAdjustmentStock*', 'GradingHalusAdjustmentInput*', 'GradingHalusOutput*', 'TransitGradingHalus*', 'PreWashOutput*', 'PreWashInput*', 'PreWashStock*', 'PreCleaningReport*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Bahan Baku</span>
@@ -281,7 +321,7 @@
                                     @endrole
                                     @role('pre_cleaning|admin')
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreCleaningReport*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Pre-Cleaning</span>
                                         </a>
@@ -309,6 +349,11 @@
                                                 class="submenu-item {{ Route::is('TransitPreCleaningStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitPreCleaningStock.index') }}"
                                                     class="submenu-link">Transit Pre Cleaning Stock</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('PreCleaningReport*') ? 'active' : '' }}">
+                                                <a href="{{ route('PreCleaningReport.index') }}" class="submenu-link">Pre
+                                                    Cleaning <br>Report</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -618,7 +663,7 @@
                         @role('dry_a|admin')
                             {{-- <li class="sidebar-title">Dry A</li> --}}
                             <li
-                                class="sidebar-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*', 'DryAGradingHancuran*', 'DryAGradingHancuranStock*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Dry A</span>
@@ -627,7 +672,7 @@
                                     <li
                                         class="submenu-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
-                                            <span>Dry A</span>
+                                            <span>Dry A Cabut</span>
                                         </a>
                                         <ul class="submenu submenu-level-2">
                                             <li
@@ -643,6 +688,29 @@
                                                     class="submenu-link">Dry A
                                                     Grading
                                                     <br>Cabut Stock</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('DryAGradingHancuran*', 'DryAGradingHancuranStock*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Dry A Hancuran</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAGradingHancuran*') && !Route::is('DryAGradingHancuranStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAGradingHancuran.index') }}"
+                                                    class="submenu-link">Dry
+                                                    A
+                                                    Grading
+                                                    <br>Hancuran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAGradingHancuranStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAGradingHancuranStock.index') }}"
+                                                    class="submenu-link">Dry A
+                                                    Grading
+                                                    <br>Hancuran<br>Stock</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -810,11 +878,11 @@
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
                     <div class="float-start">
-                        <p>2023 &copy; Mazer</p>
+                        <p id="copyright-year"> &copy; Mazer</p>
                     </div>
                     <div class="float-end">
                         <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                            by <a href="https://saugi.me">Saugi</a></p>
+                            {{-- by <a href="https://saugi.me">Saugi</a></p> --}}
                     </div>
                 </div>
             </footer>
@@ -860,7 +928,9 @@
 
 
     <script>
-    $(document).ready(function() {
+        document.getElementById("copyright-year").innerHTML = new Date().getFullYear() + " &copy; Mazer";
+
+        $(document).ready(function() {
             $('.select2').select2();
         });
 

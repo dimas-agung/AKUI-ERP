@@ -185,6 +185,14 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_jenis_dry_a/update/{id}', 'update')->name('MasterJenisDryA.update');
             Route::delete('/master_jenis_dry_a/destroy/{id}', 'destroy')->name('MasterJenisDryA.destroy');
         });
+
+        Route::controller(App\Http\Controllers\MasterTujuanKirimDryAController::class)->group(function () {
+            Route::get('/master_tujuan_kirim_dry_a', 'index')->name('MasterTujuanKirimDryA.index');
+            Route::post('/master_tujuan_kirim_dry_a/store', 'store')->name('MasterTujuanKirimDryA.store');
+            Route::get('/master_tujuan_kirim_dry_a/edit/{id}', 'edit')->name('MasterTujuanKirimDryA.edit');
+            Route::put('/master_tujuan_kirim_dry_a/update/{id}', 'update')->name('MasterTujuanKirimDryA.update');
+            Route::delete('/master_tujuan_kirim_dry_a/destroy/{id}', 'destroy')->name('MasterTujuanKirimDryA.destroy');
+        });
     });
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
@@ -307,6 +315,18 @@ Route::middleware('auth')->group(function () {
 
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningStockController::class)->group(function () {
                 Route::get('/pre_cleaning_stock', 'index')->name('PreCleaningStock.index');
+            });
+
+            Route::controller(App\Http\Controllers\PreCleaning\ReportController::class)->group(function () {
+                Route::get('/pre_cleaning_report', 'index')->name('PreCleaningReport.index');
+                Route::get('/pre_cleaning_report/input', 'input')->name('PreCleaningReport.input');
+                Route::get('/pre_cleaning_report/stock', 'stock')->name('PreCleaningReport.stock');
+                Route::get('/pre_cleaning_report/output', 'output')->name('PreCleaningReport.output');
+                Route::get('/pre_cleaning_report/transit', 'transit')->name('PreCleaningReport.transit');
+                Route::post('/pre_cleaning_report/inputFilter', 'inputFilter')->name('PreCleaningReport.inputFilter');
+                Route::post('/pre_cleaning_report/outputFilter', 'outputFilter')->name('PreCleaningReport.outputFilter');
+                Route::post('/pre_cleaning_report/stockFilter', 'stockFilter')->name('PreCleaningReport.stockFilter');
+                Route::post('/pre_cleaning_report/transitFilter', 'transitFilter')->name('PreCleaningReport.transitFilter');
             });
 
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningOutputController::class)->group(function () {
@@ -675,6 +695,20 @@ Route::middleware('auth')->group(function () {
 
         Route::controller(App\Http\Controllers\DryA\TransitDryAController::class)->group(function () {
             Route::get('/transit_dry_a', 'index')->name('TransitDryA.index');
+        });
+        Route::prefix('dry_a_hancuran')->middleware('role:dry_a|admin')->group(function () {
+            Route::controller(App\Http\Controllers\DryAHancuran\DryAGradingHancuranController::class)->group(function () {
+                Route::get('/dry_a_grading_hancuran', 'index')->name('DryAGradingHancuran.index');
+                Route::get('/dry_a_grading_hancuran/create', 'create')->name('DryAGradingHancuran.create');
+                Route::post('/dry_a_grading_hancuran/store', 'store')->name('DryAGradingHancuran.store');
+                Route::post('/dry_a_grading_hancuran/cek_data', 'CeksendData')->name('DryAGradingHancuran.CeksendData');
+                Route::get('/dry_a_grading_hancuran/set', 'set')->name('DryAGradingHancuran.set');
+                Route::get('/dry_a_grading_hancuran/setjenis', 'setJenis')->name('DryAGradingHancuran.setJenis');
+                Route::delete('/dry_a_grading_hancuran/destroy/{nomor_job}', 'destroy')->name('DryAGradingHancuran.destroy');
+            });
+            Route::controller(App\Http\Controllers\DryAHancuran\DryAGradingHancuranStockController::class)->group(function () {
+                Route::get('/dry_a_grading_hancuran_stock', 'index')->name('DryAGradingHancuranStock.index');
+            });
         });
     });
 });

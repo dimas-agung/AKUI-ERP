@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
+use App\Models\InputRambangBasah;
 use App\Models\RambangBasahStock;
 use App\Models\RambangKeringInput;
 use App\Models\RambangKeringStock;
@@ -82,6 +83,20 @@ class RambangKeringInputService
                         ]);
                     }
 
+                    // Ambil semua item yang sesuai dengan kriteria
+                    $existingItems = InputRambangBasah::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
+                        ->where('jenis_rambang', $itemObject->jenis_rambang)
+                        ->get();
+
+                    foreach ($existingItems as $existingItem) {
+
+                        // Update data dengan nilai baru
+                        $existingItem->update([
+                            'status'        => 0,
+                        ]);
+                    }
+
+
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollBack();
@@ -109,10 +124,10 @@ class RambangKeringInputService
             // Begin transaction
             DB::beginTransaction();
             // Temukan record berdasarkan ID
-            $PreCleaningOutput = RambangKeringInput::findOrFail($id_box_hcr_kotor);
+            $rambangKeringInput = RambangKeringInput::findOrFail($id_box_hcr_kotor);
             // Hapus semua item terkait
-            $stockPRM = RambangKeringStock::where('id_box_hcr_kotor', '=', $PreCleaningOutput->id_box_hcr_kotor)
-                // ->where('jenis_rambang', $PreCleaningOutput->jenis_rambang)
+            $stockPRM = RambangKeringStock::where('id_box_hcr_kotor', '=', $rambangKeringInput->id_box_hcr_kotor)
+                // ->where('jenis_rambang', $rambangKeringInput->jenis_rambang)
                 ->first();
 
             if ($stockPRM) {
@@ -121,15 +136,15 @@ class RambangKeringInputService
                     $stockPRM->delete();
                 } else {
                     // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
-                    if ($PreCleaningOutput->berat_kering >= $stockPRM->berat_keluar) {
+                    if ($rambangKeringInput->berat_kering >= $stockPRM->berat_keluar) {
                         $stockPRM->delete();
                     } else {
                     }
                 }
             }
 
-            $existingItems = RambangBasahStock::where('id_box_hcr_kotor', $PreCleaningOutput->id_box_hcr_kotor)
-                ->where('jenis_rambang', $PreCleaningOutput->jenis_rambang)
+            $existingItems = RambangBasahStock::where('id_box_hcr_kotor', $rambangKeringInput->id_box_hcr_kotor)
+                ->where('jenis_rambang', $rambangKeringInput->jenis_rambang)
                 ->get();
 
             // Logika Update Status
@@ -138,18 +153,31 @@ class RambangKeringInputService
                 // Perbarui data untuk setiap item yang ada
                 if ($existingItem) {
                     $beratSebelumnya = $existingItem->berat_keluar;
-                    // $sisaBerat = $existingItem->berat_keluar - $PreCleaningOutput->berat_kirim;
+                    // $sisaBerat = $existingItem->berat_keluar - $rambangKeringInput->berat_kirim;
 
                     // Hitung total modal baru berdasarkan perbedaan berat
-                    $perbedaanBerat = $beratSebelumnya - $PreCleaningOutput->berat_basah;
+                    $perbedaanBerat = $beratSebelumnya - $rambangKeringInput->berat_basah;
                     $sisaBerat = $existingItem->berat_keluar - $perbedaanBerat;
 
                     $existingItem->update(['berat_keluar'   => $perbedaanBerat]);
                     $existingItem->update(['sisa_berat'     => $sisaBerat]);
                 }
 
+                // Ambil semua item yang sesuai dengan kriteria
+                $inputRambangBasah = InputRambangBasah::where('id_box_hcr_kotor', $rambangKeringInput->id_box_hcr_kotor)
+                    ->where('jenis_rambang', $rambangKeringInput->jenis_rambang)
+                    ->get();
+
+                foreach ($inputRambangBasah as $item) {
+
+                    // Update data dengan nilai baru
+                    $item->update([
+                        'status'        => 1,
+                    ]);
+                }
+
                 // Hapus record utama
-                $PreCleaningOutput->delete();
+                $rambangKeringInput->delete();
 
                 // Jika tidak ada kesalahan, komit transaksi
                 DB::commit();
@@ -163,54 +191,4 @@ class RambangKeringInputService
             return redirect()->route('RambangKeringInput.index')->with('error', 'Gagal menghapus data');
         }
     }
-
-    // public function destroy($id_box_hcr_kotor)
-    // {
-    //     try {
-    //         // Mulai transaksi
-    //         DB::beginTransaction();
-
-    //         // Temukan record berdasarkan ID
-    //         $PreCleaningOutput = RambangKeringInput::findOrFail($id_box_hcr_kotor);
-
-    //         // Hapus semua item terkait di tabel RambangKeringStock
-    //         $stockPRM = RambangKeringStock::where('id_box_hcr_kotor', $PreCleaningOutput->id_box_hcr_kotor)
-    //             ->where('jenis_rambang', $PreCleaningOutput->jenis_rambang)
-    //             ->first();
-
-    //         if ($stockPRM) {
-    //             if ($stockPRM->berat_keluar === 0 || $PreCleaningOutput->berat_kering >= $stockPRM->berat_keluar) {
-    //                 $stockPRM->delete();
-    //             }
-    //         }
-
-    //         // Ambil dan perbarui data terkait di tabel RambangBasahStock
-    //         $existingItems = RambangBasahStock::where('id_box_hcr_kotor', $PreCleaningOutput->id_box_hcr_kotor)
-    //             ->where('jenis_rambang', $PreCleaningOutput->jenis_rambang)
-    //             ->get();
-
-    //         foreach ($existingItems as $existingItem) {
-    //             if ($existingItem) {
-    //                 $beratSebelumnya = $existingItem->berat_keluar;
-    //                 $perbedaanBerat = $beratSebelumnya - $PreCleaningOutput->berat_basah;
-    //                 $sisaBerat = $existingItem->berat_keluar - $perbedaanBerat;
-
-    //                 $existingItem->update(['berat_keluar' => $perbedaanBerat, 'sisa_berat' => $sisaBerat]);
-    //             }
-    //         }
-
-    //         // Hapus record utama
-    //         $PreCleaningOutput->delete();
-
-    //         // Komit transaksi jika tidak ada kesalahan
-    //         DB::commit();
-
-    //         return redirect()->route('RambangKeringInput.index')->with('success', 'Data berhasil dihapus');
-    //     } catch (\Exception $e) {
-    //         // Rollback transaksi jika terjadi kesalahan
-    //         DB::rollback();
-
-    //         return redirect()->route('RambangKeringInput.index')->with('error', 'Gagal menghapus data');
-    //     }
-    // }
 }
