@@ -67,7 +67,9 @@
                                         <td class="text-center">{{ number_format($item->upah_operator, 2, ',', '.') }}</td>
                                     @endrole
                                     <td>
-                                        @if ($item->status == 1)
+                                        @if ($item->status == 0)
+                                            Non-Aktif
+                                        @elseif ($item->status == 1)
                                             On Stock
                                         @elseif ($item->status == 2)
                                             On Process

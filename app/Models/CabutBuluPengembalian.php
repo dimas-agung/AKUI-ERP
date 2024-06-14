@@ -9,6 +9,9 @@ class CabutBuluPengembalian extends Model
 {
     use HasFactory;
     protected $table = 'cabut_bulu_pengembalians';
+    Public const STATUS_ON_STOCK = 1;
+    Public const STATUS_ON_PROSES = 2;
+    Public const STATUS_FINISHED = 3;
     protected $fillable = [
         'nomor_job',
         'nomor_batch',
@@ -43,5 +46,11 @@ class CabutBuluPengembalian extends Model
     public function TransitCabutBulu()
     {
         return $this->hasMany(TransitCabutBulu::class, 'nomor_job', 'nomor_job');
+    }
+    Public function can_delete (){
+        if ($this->status == self::STATUS_FINISHED){
+            return true;
+        }
+        return false;
     }
 }

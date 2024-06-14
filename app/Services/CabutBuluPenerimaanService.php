@@ -98,7 +98,7 @@ class CabutBuluPenerimaanService
                     ->get();
 
                     $dataToUpdate = [
-                        'status'                => $itemObject->status ?? 0,
+                        'status'                => CabutBuluPenerimaan::STATUS_ON_STOCK,
                     ];
 
                     if ($existingItems) {
@@ -203,7 +203,7 @@ class CabutBuluPenerimaanService
                 if ($existingItems) {
                     foreach ($existingItems as $existingItem) {
                         // Perbarui data untuk setiap item yang ada
-                        $existingItem->update(['status' => 1]);
+                        $existingItem->update(['status' => CabutBuluPenerimaan::STATUS_ON_STOCK]);
                     }
                 } else {
                     // Jika tidak ada item PreWashOutput yang sesuai, buat baru dengan status 1

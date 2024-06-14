@@ -9,6 +9,9 @@ class CabutBuluPenerimaan extends Model
 {
     use HasFactory;
     protected $table = 'cabut_bulu_penerimaans';
+    const STATUS_ON_STOCK = 1;
+    const STATUS_ON_PROSES = 2;
+    const STATUS_FINISHED = 3;
     protected $fillable = [
         'nomor_job',
         'nomor_batch',
@@ -29,5 +32,11 @@ class CabutBuluPenerimaan extends Model
     public function TransitPreWash()
     {
         return $this->belongsTo(TransitPreWash::class, 'nomor_bstb', 'nomor_bstb');
+    }
+    Public function can_delete (){
+        if ($this->status == self::STATUS_ON_STOCK){
+            return true;
+        }
+        return false;
     }
 }

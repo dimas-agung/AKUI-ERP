@@ -9,6 +9,10 @@ class TransitCabutBulu extends Model
 {
     use HasFactory;
     protected $table = 'transit_cabut_bulus';
+    const STATUS_NON_AKTIF = 0;
+    const STATUS_ON_STOCK = 1;
+    const STATUS_ON_PROSES = 2;
+    const STATUS_FINISHED = 3;
     protected $fillable = [
         'workstation',
         'unit',
