@@ -291,9 +291,9 @@ Route::middleware('auth')->group(function () {
                 Route::get('/grading_kasar_output/get_pcc', 'setpcc')->name('GradingKasarOutput.setpcc');
                 Route::post('/grading_kasar_output/cek_data', 'CeksendData')->name('GradingKasarOutput.CeksendData');
             });
-            Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
-                Route::get('/stock_transit_grading_kasar', 'index')->name('StockTransitGradingKasar.index');
-            });
+            // Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
+            //     Route::get('/stock_transit_grading_kasar', 'index')->name('StockTransitGradingKasar.index');
+            // });
             Route::controller(App\Http\Controllers\TransitGradingKasar\ReportController::class)->group(function () {
                 Route::get('/report', 'index')->name('ReportGradingKasar.index');
                 Route::get('/report_input', 'input')->name('ReportGradingKasar.input');
@@ -307,8 +307,6 @@ Route::middleware('auth')->group(function () {
                 Route::get('/report_transit', 'transit')->name('ReportGradingKasar.transit');
                 Route::post('/report_filter_t', 'filterT')->name('ReportGradingKasar.filterT');
             });
-        });
-
         });
         Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
             Route::get('/stock_transit_grading_kasar', 'index')->name('StockTransitGradingKasar.index');
