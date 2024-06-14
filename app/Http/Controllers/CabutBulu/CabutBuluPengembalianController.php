@@ -11,6 +11,13 @@ use Illuminate\Http\Request;
 
 class CabutBuluPengembalianController extends Controller
 {
+    protected $CabutBuluPenyebaranService;
+
+    public function __construct(CabutBuluPengembalianService $CabutBuluPenyebaranService)
+    {
+        $this->CabutBuluPenyebaranService = $CabutBuluPenyebaranService;
+
+    }
     // index
     public function index()
     {
@@ -65,16 +72,11 @@ class CabutBuluPengembalianController extends Controller
         return response()->json(['unavailableBoxes' => $availableBoxes]);
     }
 
-    protected $CabutBuluPenyebaranService;
-
-    public function __construct(CabutBuluPengembalianService $CabutBuluPenyebaranService)
-    {
-        $this->CabutBuluPenyebaranService = $CabutBuluPenyebaranService;
-    }
 
     public function store(Request $request)
     {
         return $this->CabutBuluPenyebaranService->store($request);
+
     }
 
 

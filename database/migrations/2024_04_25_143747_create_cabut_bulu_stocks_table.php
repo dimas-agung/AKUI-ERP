@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('keterangan')->nullable();
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->string('status');
+            $table->string('status')->comment('0=Non-Aktif, 1=On Stock, 2=On Process, 3=Finised');
             $table->timestamps();
         });
     }

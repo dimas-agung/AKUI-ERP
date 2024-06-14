@@ -56,7 +56,9 @@
                                     <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
                                     <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
                                     <td>
-                                        @if ($item->status == 1)
+                                        @if ($item->status == 0)
+                                            Non-Aktif
+                                        @elseif ($item->status == 1)
                                             On Stock
                                         @elseif ($item->status == 2)
                                             On Process

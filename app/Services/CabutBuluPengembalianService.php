@@ -120,23 +120,27 @@ class CabutBuluPengembalianService
 
                     $itemObject = (object) $mergedData;
 
-                    // Ambil semua item yang sesuai dengan kriteria
-                    $existingItems = CabutBuluStock::where('nomor_job', $itemObject->nomor_job)
-                        // ->where('nomor_bstb', $itemObject->nomor_bstb)
-                        ->get();
+                    // Update status di CabutBuluStock
+                    $cabutBuluStockItems = CabutBuluStock::where('nomor_job', $itemObject->nomor_job)->get();
 
-                    foreach ($existingItems as $existingItem) {
-
-                        // Update data dengan nilai baru
-                        $existingItem->update([
-                            // Update data TransitPreCleaningStock
-                            'status'       => $itemObject->status ?? 3,
-                            // 'user_updated' => $itemObject->user_created ?? " ",
+                    foreach ($cabutBuluStockItems as $cabutBuluStockItem) {
+                        $cabutBuluStockItem->update([
+                            'status' => CabutBuluStock::STATUS_FINISHED,
                         ]);
                     }
 
+                    // Update status di CabutBuluPenyebaran
+                    $cabutBuluPenyebaranItems = CabutBuluPenyebaran::where('nomor_job', $itemObject->nomor_job)->get();
+
+                    foreach ($cabutBuluPenyebaranItems as $cabutBuluPenyebaranItem) {
+                        $cabutBuluPenyebaranItem->update([
+                            'status' => CabutBuluPenyebaran::STATUS_FINISHED,
+                        ]);
+                    }
+
+
                     DB::commit();
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     DB::rollBack();
 
                     return response()->json([
@@ -217,7 +221,7 @@ class CabutBuluPengembalianService
                 if ($existingItems->isNotEmpty()) {
                     foreach ($existingItems as $existingItem) {
                         // Perbarui data untuk setiap item yang ada
-                        $existingItem->update(['status' => 2]);
+                        $existingItem->update(['status' => CabutBuluPengembalian::STATUS_ON_PROSES]);
                     }
                 }
             }

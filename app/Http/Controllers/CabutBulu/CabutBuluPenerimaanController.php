@@ -15,6 +15,12 @@ use Illuminate\View\View;
 
 class CabutBuluPenerimaanController extends Controller
 {
+    protected $CabutBuluPenerimaanService;
+
+    public function __construct(CabutBuluPenerimaanService $CabutBuluPenerimaanService)
+    {
+        $this->CabutBuluPenerimaanService = $CabutBuluPenerimaanService;
+    }
     //Index
     public function index(){
         $i =1;
@@ -61,13 +67,6 @@ class CabutBuluPenerimaanController extends Controller
 
         // Kembalikan daftar id box yang tidak tersedia sebagai respons
         return response()->json(['unavailableBoxes' => $availableBoxes]);
-    }
-
-    protected $CabutBuluPenerimaanService;
-
-    public function __construct(CabutBuluPenerimaanService $CabutBuluPenerimaanService)
-    {
-        $this->CabutBuluPenerimaanService = $CabutBuluPenerimaanService;
     }
 
     public function store(Request $request)
