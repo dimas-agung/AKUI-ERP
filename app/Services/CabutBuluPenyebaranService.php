@@ -3,11 +3,9 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
-use App\Models\PreWashOutput;
 use App\Models\CabutBuluPenerimaan;
 use App\Models\CabutBuluPenyebaran;
 use App\Models\CabutBuluStock;
-use App\Models\TransitPreWash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\RedirectResponse;
@@ -40,8 +38,8 @@ class CabutBuluPenyebaranService
 
             // Validasi untuk setiap item dalam dataArray
             $validator = Validator::make($mergedData, [
-                'nomor_job' => 'required', // Ganti dengan nama field yang sesuai
-                // ... tambahkan validasi lain sesuai kebutuhan
+                // Ganti dengan nama field yang sesuai
+                'nomor_job' => 'required',
             ]);
 
             // Jika validasi gagal, kembalikan pesan error
@@ -55,38 +53,31 @@ class CabutBuluPenyebaranService
                     DB::beginTransaction();
 
                     // Buat instansi PreCleaningInput
-                    // CabutBuluPenyebaran::create($mergedData);
                     CabutBuluPenyebaran::create(array_merge($mergedData, ['waktu_penyebaran' => $validatedData['waktu_penyebaran']]));
 
                     $itemObject = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
                     $existingItems = CabutBuluStock::where('nomor_job', $itemObject->nomor_job)
-                        // ->where('nomor_bstb', $itemObject->nomor_bstb)
                         ->get();
 
                     foreach ($existingItems as $existingItem) {
 
                         // Update data dengan nilai baru
                         $existingItem->update([
-                            // Update data TransitPreCleaningStock
-                            'status'       => $itemObject->status ?? 2,
-                            // 'user_updated' => $itemObject->user_created ?? " ",
+                            'status'       => CabutBuluPenyebaran::STATUS_ON_PROSES,
                         ]);
                     }
 
                     // Ambil semua item yang sesuai dengan kriteria
                     $CabutPenerimaan = CabutBuluPenerimaan::where('nomor_job', $itemObject->nomor_job)
-                        // ->where('nomor_bstb', $itemObject->nomor_bstb)
                         ->get();
 
                     foreach ($CabutPenerimaan as $item) {
 
                         // Update data dengan nilai baru
                         $item->update([
-                            // Update data TransitPreCleaningStock
-                            'status'       => $itemObject->status ?? 0,
-                            // 'user_updated' => $itemObject->user_created ?? " ",
+                            'status'       => CabutBuluPenyebaran::STATUS_NON_AKTIF,
                         ]);
                     }
 
@@ -135,7 +126,7 @@ class CabutBuluPenyebaranService
 
                 foreach ($CabutBuluStock as $cabutStock) {
                     // Update status menjadi 1 pada CabutBuluStock
-                    $cabutStock->update(['status' => 1]);
+                    $cabutStock->update(['status' => CabutBuluPenyebaran::STATUS_ON_STOCK]);
                 }
             }
 
@@ -148,7 +139,7 @@ class CabutBuluPenyebaranService
 
                 foreach ($CabutBuluPenerimaan as $cabutPenerimaan) {
                     // Update status menjadi 1 pada CabutBuluStock
-                    $cabutPenerimaan->update(['status' => 1]);
+                    $cabutPenerimaan->update(['status' => CabutBuluPenyebaran::STATUS_ON_STOCK]);
                 }
             }
 
