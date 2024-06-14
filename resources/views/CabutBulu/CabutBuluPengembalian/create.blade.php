@@ -19,20 +19,14 @@
                         <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
-                            {{-- @foreach ($cabut_bulu_stocks as $item)
-                                <option value="{{ $item->nomor_job }}">
-                                    {{ $item->nomor_job }}
-                                </option>
-                            @endforeach --}}
                             @foreach ($get_unused_nomor_job as $item)
-                                @if ($item->cabut_bulu_penyebaran_count == 0)
-                                    <option value="{{ $item->nomor_job }}">
-                                        {{ $item->nomor_job }}</option>
+                                @if ($item->cabut_bulu_penyebaran_count == 0 && $item->status !== 3)
+                                    <option value="{{ $item->nomor_job }}">{{ $item->nomor_job }}</option>
                                 @endif
                             @endforeach
-
                         </select>
                     </div>
+
 
                     <div class="col-md-6">
                         <label for="user_created" class="form-label">NIP Admin</label>

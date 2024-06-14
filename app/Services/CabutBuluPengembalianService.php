@@ -181,31 +181,6 @@ class CabutBuluPengembalianService
                     // ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
                     ->first();
 
-                // if ($PreCleaningS) {
-                //     // Ambil data TransitPreCleaningStock berdasarkan nomor job dan nomor bstb
-                //     $stockPrmRawMaterial = TransitPreWash::where('nomor_job', '=', $PreCleaningI->nomor_job)
-                //         ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
-                //         ->first();
-
-                //     if ($stockPrmRawMaterial) {
-                //         // Simpan nilai sebelum dihapus
-                //         $beratSebelumnya = $stockPrmRawMaterial->berat_job;
-                //         $pcsSebelumnya = $stockPrmRawMaterial->pcs_job;
-
-                //         // Hitung total modal baru berdasarkan perbedaan berats
-                //         $perbedaanBerat = $beratSebelumnya + $PreCleaningI->berat_job;
-                //         $perbedaanPcs = $pcsSebelumnya + $PreCleaningI->pcs_job;
-                //         // $totalModalBaru = $perbedaanBerat * $PreCleaningI->modal;
-
-                //         // Update data TransitPreCleaningStock dengan berat, pcs, dan total modal yang baru
-                //         $stockPrmRawMaterial->update([
-                //             'berat_job' => max($perbedaanBerat, 0),
-                //             'pcs_job' => max($perbedaanPcs, 0),
-                //             // 'total_modal' => max($totalModalBaru, 0),
-                //         ]);
-                //     }
-                // }
-
                 // Hapus data PreGradingHalusInput dan PreCleaningStock
                 $PreCleaningI->delete();
                 if ($PreCleaningS) {
@@ -224,6 +199,16 @@ class CabutBuluPengembalianService
                         $existingItem->update(['status' => CabutBuluPengembalian::STATUS_ON_PROSES]);
                     }
                 }
+
+                // Update status di CabutBuluPenyebaran
+                $cabutBuluPenyebaranItems = CabutBuluPenyebaran::where('nomor_job', $PreCleaningI->nomor_job)
+                    ->get();
+
+                foreach ($cabutBuluPenyebaranItems as $cabutBuluPenyebaranItem) {
+                    $cabutBuluPenyebaranItem->update([
+                        'status' => CabutBuluPenyebaran::STATUS_ON_PROSES,
+                    ]);
+                }
             }
 
             // Commit transaksi
@@ -231,7 +216,7 @@ class CabutBuluPengembalianService
 
             // Redirect ke index dengan pesan sukses
             return redirect()->route('CabutBuluPengembalian.index')->with(['success' => 'Data Berhasil Dihapus!']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Rollback transaksi jika terjadi kesalahan
             DB::rollback();
 

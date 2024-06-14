@@ -9,6 +9,7 @@ class CabutBuluPenerimaan extends Model
 {
     use HasFactory;
     protected $table = 'cabut_bulu_penerimaans';
+    Public const STATUS_NON_AKTIF = 0;
     const STATUS_ON_STOCK = 1;
     const STATUS_ON_PROSES = 2;
     const STATUS_FINISHED = 3;

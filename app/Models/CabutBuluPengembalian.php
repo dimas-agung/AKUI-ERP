@@ -9,6 +9,7 @@ class CabutBuluPengembalian extends Model
 {
     use HasFactory;
     protected $table = 'cabut_bulu_pengembalians';
+    Public const STATUS_NON_AKTIF = 0;
     Public const STATUS_ON_STOCK = 1;
     Public const STATUS_ON_PROSES = 2;
     Public const STATUS_FINISHED = 3;
