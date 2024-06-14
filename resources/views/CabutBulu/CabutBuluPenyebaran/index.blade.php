@@ -84,7 +84,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    @if ($item->status == 2)
+                                                    @if ($item->can_delete())
                                                         <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
                                                             action="{{ route('CabutBuluPenyebaran.destroy', $item->nomor_job) }}"
                                                             method="POST">

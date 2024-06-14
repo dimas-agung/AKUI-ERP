@@ -9,6 +9,10 @@ class CabutBuluPenyebaran extends Model
 {
     use HasFactory;
     protected $table = 'cabut_bulu_penyebarans';
+    const STATUS_NON_AKTIF = 0;
+    const STATUS_ON_STOCK = 1;
+    const STATUS_ON_PROSES = 2;
+    const STATUS_FINISHED = 3;
     protected $fillable = [
         'nomor_job',
         'nomor_batch',
@@ -33,5 +37,12 @@ class CabutBuluPenyebaran extends Model
     public function CabutBuluStock()
     {
         return $this->hasMany(CabutBuluStock::class, 'nomor_job', 'nomor_job');
+    }
+    public function can_delete()
+    {
+        if ($this->status == self::STATUS_ON_PROSES) {
+            return true;
+        }
+        return false;
     }
 }
