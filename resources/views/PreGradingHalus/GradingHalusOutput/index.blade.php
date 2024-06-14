@@ -38,6 +38,7 @@
                                     <th class="text-center" scope="col">Total Modal</th>
                                 @endrole
                                 <th class="text-center" scope="col">NIP Admin</th>
+                                <th class="text-center" scope="col">Created At</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
                         </thead>
@@ -60,6 +61,7 @@
                                         <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
                                     @endrole
                                     <td class="text-center">{{ $item->user_created }}</td>
+                                    <td class="text-center">{{ $item->created_at }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
