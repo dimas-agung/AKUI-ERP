@@ -11,29 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock_transit_grading_kasars', function (Blueprint $table) {
+        Schema::create('transit_raw_material_stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('nomor_job');
-            $table->string('id_box_grading_kasar');
-            $table->string('nomor_bstb');
+            $table->string('id_box');
             $table->string('nomor_batch');
+            $table->string('nomor_bstb');
             $table->string('nama_supplier');
-            $table->string('nomor_nota_internal');
-            $table->string('id_box_raw_material');
-            $table->string('jenis_raw_material');
-            $table->string('jenis_grading');
-            $table->float('berat_keluar');
-            $table->float('pcs_keluar');
-            $table->string('avg_kadar_air');
+            $table->string('jenis');
+            $table->float('berat');
+            $table->float('kadar_air');
             $table->string('tujuan_kirim');
-            $table->string('nomor_grading');
+            $table->string('letak_tujuan');
+            $table->string('inisial_tujuan');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->float('biaya_produksi')->nullable();
-            $table->float('fix_total_modal');
             $table->text('keterangan')->nullable();
             $table->string('user_created');
             $table->string('user_updated')->nullable();
+            $table->string('nomor_nota_internal');
             $table->timestamps();
         });
     }
@@ -43,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_transit_grading_kasars');
+        Schema::dropIfExists('transit_raw_material_stocks');
     }
 };

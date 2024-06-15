@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class InputHcrKotor extends Model
+class HcrKotorInput extends Model
 {
     use HasFactory;
-    protected $table = 'input_hcr_kotors';
+    protected $table = 'hcr_kotor_inputs';
     protected $fillable = [
         'tanggal_cabut',
         'jenis_hcr_kotor',

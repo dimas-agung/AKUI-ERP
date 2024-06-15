@@ -6,7 +6,7 @@ use App\Models\GradingKasarOutput;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Models\PreCleaningInput;
-use App\Models\StockTransitGradingKasar;
+use App\Models\TransitGradingKasarStock;
 use App\Models\PreCleaningStock;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -37,7 +37,7 @@ class PreCleaningInputController extends Controller
     public function create(): View
     {
         $PreCleaningI = PreCleaningInput::with('StockTransitGradingKasar')->get();
-        $stockTGK = StockTransitGradingKasar::with('PreCleaningInput')->get();
+        $stockTGK = TransitGradingKasarStock::with('PreCleaningInput')->get();
         // return $PrmRawMOIC;
         return view('PreCleaning.PreCleaningInput.create', compact('stockTGK', 'PreCleaningI'));
     }
@@ -45,8 +45,8 @@ class PreCleaningInputController extends Controller
     public function set(Request $request)
     {
         $nomor_bstb = $request->nomor_bstb;
-        $data = StockTransitGradingKasar::where('nomor_bstb',$nomor_bstb)->first();
-        $data = StockTransitGradingKasar::where('nomor_bstb',$nomor_bstb)->get();
+        $data = TransitGradingKasarStock::where('nomor_bstb',$nomor_bstb)->first();
+        $data = TransitGradingKasarStock::where('nomor_bstb',$nomor_bstb)->get();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -58,7 +58,7 @@ class PreCleaningInputController extends Controller
         $idBoxes = json_decode($request->idBoxes);
 
         // Cek ketersediaan id box dalam database
-        $unavailableBoxes = StockTransitGradingKasar::whereIn('nomor_bstb', $idBoxes)->pluck('nomor_bstb')->toArray();
+        $unavailableBoxes = TransitGradingKasarStock::whereIn('nomor_bstb', $idBoxes)->pluck('nomor_bstb')->toArray();
 
         // Filter id box yang tidak tersedia
         $availableBoxes = array_diff($idBoxes, $unavailableBoxes);
@@ -143,7 +143,7 @@ class PreCleaningInputController extends Controller
                     $itemObject = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $existingItems = StockTransitGradingKasar::where('nomor_bstb', $itemObject->nomor_bstb)
+                    $existingItems = TransitGradingKasarStock::where('nomor_bstb', $itemObject->nomor_bstb)
                         ->get();
 
                     foreach ($existingItems as $existingItem) {
@@ -217,8 +217,8 @@ class PreCleaningInputController extends Controller
                     ->first();
 
                 if ($PreCleaningS) {
-                    // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                    $stockPrmRawMaterial = StockTransitGradingKasar::where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
+                    // Ambil data TransitGradingKasarStock berdasarkan id_box_grading_kasar dan id_box_raw_material
+                    $stockPrmRawMaterial = TransitGradingKasarStock::where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
                         ->where('nomor_job', '=', $PreCleaningI->nomor_job)
                         ->first();
 
@@ -235,7 +235,7 @@ class PreCleaningInputController extends Controller
                         // Hitung total modal baru
                         $totalModalBaru = $totalModalSebelumnya - ($beratSebelumnya * $PreCleaningI->modal);
 
-                        // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
+                        // Update data TransitGradingKasarStock dengan berat, pcs, dan total modal yang baru
                         $stockPrmRawMaterial->update([
                             'berat_keluar' => max($beratSebelumnya - $perbedaanBerat, 0),
                             'pcs_keluar' => max($pcsSebelumnya - $perbedaanPcs, 0),

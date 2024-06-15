@@ -19,8 +19,8 @@ class CabutHancuranPersiapan extends Model
         'user_created',
         'user_updated',
     ];
-    public function StockRambangBasah()
+    public function RambangBasahStock()
     {
-        return $this->belongsTo(StockRambangBasah::class, 'id_box_hcr_kotor', 'id_stock_hcr_kotor');
+        return $this->belongsTo(RambangBasahStock::class, 'id_box_hcr_kotor', 'id_stock_hcr_kotor');
     }
 }

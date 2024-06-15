@@ -4,8 +4,8 @@ namespace App\Services;
 use App\Models\CabutHancuranPersiapan;
 use App\Models\CabutHancuranPersiapanStock;
 use App\Models\GradingHalusOutput;
-use App\Models\InputRambangBasah;
-use App\Models\StockRambangBasah;
+use App\Models\RambangBasahInput;
+use App\Models\RambangBasahStock;
 use App\Models\TransitGradingHalus;
 use Illuminate\Http\Request;
 use App\Models\GradingHalusInput;
@@ -74,7 +74,7 @@ class CabutHancuranPersiapanService
                     $itemObject = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $existingItems = StockRambangBasah::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
+                    $existingItems = RambangBasahStock::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
                     ->where('jenis_rambang', $itemObject->jenis_rambang)
                     ->get();
 
@@ -91,7 +91,7 @@ class CabutHancuranPersiapanService
                         ]);
                     }
 
-                    $existingItems = InputRambangBasah::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
+                    $existingItems = RambangBasahInput::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
                     ->get();
 
                     $dataToUpdate = [
@@ -146,7 +146,7 @@ class CabutHancuranPersiapanService
 
                     if ($PreCleaningS) {
                         // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                        $stockPrmRawMaterial = StockRambangBasah::where('id_box_hcr_kotor', '=', $PreCleaningI->id_stock_hcr_kotor)
+                        $stockPrmRawMaterial = RambangBasahStock::where('id_box_hcr_kotor', '=', $PreCleaningI->id_stock_hcr_kotor)
                             ->first();
 
                         if ($stockPrmRawMaterial) {

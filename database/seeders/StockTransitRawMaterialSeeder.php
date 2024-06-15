@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\StockTransitRawMaterial;
+use App\Models\TransitRawMaterialStock;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +15,7 @@ class StockTransitRawMaterialSeeder extends Seeder
     {
         //
         // \App\Models\StockTransitRawMaterial::factory(5)->create();
-        StockTransitRawMaterial::create([
+        TransitRawMaterialStock::create([
             'nomor_bstb' => 'BSTB_173621-275671_UGK',
             'nomor_batch' => '173621-275671_UGK',
             'id_box' => 'K001',
@@ -32,7 +32,7 @@ class StockTransitRawMaterialSeeder extends Seeder
             'keterangan' => 'Test 1',
             'user_created' => 'Asd-134',
         ]);
-        StockTransitRawMaterial::create([
+        TransitRawMaterialStock::create([
             'nomor_bstb' => 'BSTB_173621-275672_UGK',
             'nomor_batch' => '173621-275671_UGK',
             'id_box' => 'K002',
@@ -49,7 +49,7 @@ class StockTransitRawMaterialSeeder extends Seeder
             'keterangan' => 'Test 2',
             'user_created' => 'Asd-134',
         ]);
-        StockTransitRawMaterial::create([
+        TransitRawMaterialStock::create([
             'nomor_bstb' => 'BSTB_173621-275673_UGK',
             'nomor_batch' => '173621-275671_UGK',
             'id_box' => 'K003',

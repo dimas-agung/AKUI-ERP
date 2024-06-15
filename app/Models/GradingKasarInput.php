@@ -27,9 +27,9 @@ class GradingKasarInput extends Model
         'user_updated',
     ];
 
-    public function StockTransitRawMaterial()
+    public function TransitRawMaterialStock()
     {
-        return $this->belongsTo(StockTransitRawMaterial::class, 'nomor_bstb', 'nomor_bstb');
+        return $this->belongsTo(TransitRawMaterialStock::class, 'nomor_bstb', 'nomor_bstb');
     }
     public function PrmRawMaterialOutputItem()
     {

@@ -6,22 +6,22 @@ namespace App\Http\Controllers\PurchasingExim;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use App\Models\PrmRawMaterialOutputItem;
-use App\Models\StockTransitRawMaterial;
+use App\Models\TransitRawMaterialStock;
 use Illuminate\Http\Request;
 
 //return type redirectResponse
 use Illuminate\Http\RedirectResponse;
 
-class StockTransitRawMaterialController extends Controller
+class TransitRawMaterialStockController extends Controller
 {
     //Index
     public function index(){
         $i =1;
-        $stockTGK = StockTransitRawMaterial::with('PramRawMaterialOutputItems')->get();
-        // $PrmRawMOH = PrmRawMaterialOutputHeader::with('StockTransitRawMaterial')->get();
-        $PrmRawMOI = PrmRawMaterialOutputItem::with('StockTransitRawMaterial')->get();
+        $stockTGK = TransitRawMaterialStock::with('PramRawMaterialOutputItems')->get();
+        // $PrmRawMOH = PrmRawMaterialOutputHeader::with('TransitRawMaterialStock')->get();
+        $PrmRawMOI = PrmRawMaterialOutputItem::with('TransitRawMaterialStock')->get();
         // return $PrmRawMOI;
-        return response()->view('purchasing_exim.StockTransitRawMaterial.index', [
+        return response()->view('purchasing_exim.TransitRawMaterialStock.index', [
             'stockTGK' => $stockTGK,
             'PrmRawMOI' => $PrmRawMOI,
             'i' => $i,

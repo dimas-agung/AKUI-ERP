@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\StockTransitGradingKasar;
+use App\Models\TransitGradingKasarStock;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +14,7 @@ class TransitGradingKasarSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\StockTransitGradingKasar::factory(5)->create();
-        StockTransitGradingKasar::create([
+        TransitGradingKasarStock::create([
             'nomor_job' => '010324-093511',
             'id_box_grading_kasar' => 'ugk_010324-093513_GK',
             'nomor_bstb' => 'ugk_010324-093511',
@@ -36,7 +36,7 @@ class TransitGradingKasarSeeder extends Seeder
             'keterangan' => 'oke',
             'user_created' => 'Asc-275',
         ]);
-        StockTransitGradingKasar::create([
+        TransitGradingKasarStock::create([
             'nomor_job' => '010324-093512',
             'id_box_grading_kasar' => 'ugk_010324-093525_GK',
             'nomor_bstb' => 'ugk_010324-093511',
@@ -58,7 +58,7 @@ class TransitGradingKasarSeeder extends Seeder
             'keterangan' => 'Test 2',
             'user_created' => 'Asc-275',
         ]);
-        StockTransitGradingKasar::create([
+        TransitGradingKasarStock::create([
             'nomor_job' => '010324-093513',
             'id_box_grading_kasar' => 'ugk_010324-093525_GK',
             'nomor_bstb' => 'ugk_010324-093513',

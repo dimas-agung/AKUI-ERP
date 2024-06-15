@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('input_hcr_kotors', function (Blueprint $table) {
+        Schema::create('hcr_kotor_stocks', function (Blueprint $table) {
             $table->id();
+            $table->string('unit');
+            $table->string('id_box_hcr_kotor');
             $table->date('tanggal_cabut');
             $table->string('jenis_hcr_kotor');
-            $table->float('berat_hcr_kotor');
-            $table->string('id_box_hcr_kotor');
-            $table->string('keterangan')->nullable();
-            $table->string('status');
-            $table->string('user_created');
-            $table->string('user_updated')->nullable();
+            $table->float('berat_masuk');
+            $table->float('berat_keluar');
+            $table->float('sisa_berat');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('input_hcr_kotors');
+        Schema::dropIfExists('hcr_kotor_stocks');
     }
 };

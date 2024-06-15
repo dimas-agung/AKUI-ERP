@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\StockRambangBasah;
+use App\Models\RambangBasahStock;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +14,7 @@ class StockRambangBasahSeeder extends Seeder
     public function run(): void
     {
         //
-        StockRambangBasah::create([
+        RambangBasahStock::create([
             'unit' => 'Rambang',
             'id_box_hcr_kotor' => '200525_Putih Rambang',
             'jenis_rambang' => 'Putih Rambang',
@@ -22,7 +22,7 @@ class StockRambangBasahSeeder extends Seeder
             'berat_keluar' => 0,
             'sisa_berat' => 150,
         ]);
-        StockRambangBasah::create([
+        RambangBasahStock::create([
             'unit' => 'Rambang',
             'id_box_hcr_kotor' => '200524_Hcr Rambang',
             'jenis_rambang' => 'Hcr Rambang',
@@ -30,7 +30,7 @@ class StockRambangBasahSeeder extends Seeder
             'berat_keluar' => 0,
             'sisa_berat' => 50,
         ]);
-        StockRambangBasah::create([
+        RambangBasahStock::create([
             'unit' => 'Rambang',
             'id_box_hcr_kotor' => '200525_Hcr Rambang',
             'jenis_rambang' => 'Putih Rambang',
@@ -38,7 +38,7 @@ class StockRambangBasahSeeder extends Seeder
             'berat_keluar' => 0,
             'sisa_berat' => 200,
         ]);
-        StockRambangBasah::create([
+        RambangBasahStock::create([
             'unit' => 'Rambang',
             'id_box_hcr_kotor' => '200524_Putih Rambang',
             'jenis_rambang' => 'Hcr Rambang',

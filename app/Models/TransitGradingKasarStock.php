@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StockTransitGradingKasar extends Model
+class TransitGradingKasarStock extends Model
 {
     use HasFactory;
-    protected $table ='stock_transit_grading_kasars';
+    protected $table ='transit_grading_kasar_stocks';
     protected $fillable = [
         'nomor_job',
         'id_box_grading_kasar',

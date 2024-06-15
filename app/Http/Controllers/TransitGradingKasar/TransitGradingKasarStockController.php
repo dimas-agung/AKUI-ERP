@@ -4,18 +4,18 @@ namespace App\Http\Controllers\TransitGradingKasar;
 
 use App\Http\Controllers\Controller;
 use App\Models\GradingKasarOutput;
-use App\Models\StockTransitGradingKasar;
+use App\Models\TransitGradingKasarStock;
 use Illuminate\Http\Request;
 
-class StockTransitGradingKasarController extends Controller
+class TransitGradingKasarStockController extends Controller
 {
     //Index
     public function index(){
         $i =1;
-        $GradingKO = GradingKasarOutput::with('StockTransitGradingKasar')->get();
-        $stockTGK = StockTransitGradingKasar::with('GradingKasarOutput')->get();
+        $GradingKO = GradingKasarOutput::with('TransitGradingKasarStock')->get();
+        $stockTGK = TransitGradingKasarStock::with('GradingKasarOutput')->get();
         // return $PrmRawMOI;
-        return response()->view('transit_grading.StockTransitGradingKasar.index', [
+        return response()->view('transit_grading.TransitGradingKasarStock.index', [
             'stockTGK' => $stockTGK,
             'GradingKO' => $GradingKO,
             'i' => $i,

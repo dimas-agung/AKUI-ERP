@@ -32,9 +32,9 @@ class PreCleaningInput extends Model
         'user_created',
         'user_updated',
     ];
-    public function StockTransitGradingKasar()
+    public function TransitGradingKasarStock()
     {
-        return $this->belongsTo(StockTransitGradingKasar::class, 'nomor_job', 'nomor_job');
+        return $this->belongsTo(TransitGradingKasarStock::class, 'nomor_job', 'nomor_job');
     }
     public function preCleaningStock()
     {

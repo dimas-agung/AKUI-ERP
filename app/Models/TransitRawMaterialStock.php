@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StockTransitRawMaterial extends Model
+class TransitRawMaterialStock extends Model
 {
     use HasFactory;
-    protected $table = 'stock_transit_raw_materials';
+    protected $table = 'transit_raw_material_stocks';
     protected $fillable = [
         'nomor_bstb',
         'nomor_batch',

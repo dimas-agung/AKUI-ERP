@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GradingKasarInputRequest;
 use App\Models\GradingKasarHasil;
 use App\Models\GradingKasarInput;
-use App\Models\StockTransitRawMaterial;
+use App\Models\TransitRawMaterialStock;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Services\GradingKasarInputService;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class GradingKasarInputController extends Controller
 {
     public function index(){
         $i =1;
-        $GradingKI = GradingKasarInput::with('StockTransitRawMaterial')->get();
+        $GradingKI = GradingKasarInput::with('TransitRawMaterialStock')->get();
         $GradingKH = GradingKasarHasil::with('GradingKasarInput')->first();
         // return $GradingKH;
 
@@ -38,8 +38,8 @@ class GradingKasarInputController extends Controller
      */
     public function create(): View
     {
-        $stockTGK = StockTransitRawMaterial::with('PramRawMaterialOutputItems')->get();
-        $GradingKI = GradingKasarInput::with('StockTransitRawMaterial')->get();
+        $stockTGK = TransitRawMaterialStock::with('PramRawMaterialOutputItems')->get();
+        $GradingKI = GradingKasarInput::with('TransitRawMaterialStock')->get();
         // return $PrmRawMOIC;
         return view('transit_grading.GradingKasarInput.create', compact('stockTGK', 'GradingKI'));
     }
@@ -47,7 +47,7 @@ class GradingKasarInputController extends Controller
     public function set(Request $request)
     {
         $nomor_bstb = $request->nomor_bstb;
-        $data = StockTransitRawMaterial::where('nomor_bstb',$nomor_bstb)->first();
+        $data = TransitRawMaterialStock::where('nomor_bstb',$nomor_bstb)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -59,7 +59,7 @@ class GradingKasarInputController extends Controller
         $idBoxes = json_decode($request->idBoxes);
 
         // Cek ketersediaan id box dalam database
-        $unavailableBoxes = StockTransitRawMaterial::whereIn('nomor_bstb', $idBoxes)->pluck('nomor_bstb')->toArray();
+        $unavailableBoxes = TransitRawMaterialStock::whereIn('nomor_bstb', $idBoxes)->pluck('nomor_bstb')->toArray();
 
         // Filter id box yang tidak tersedia
         $availableBoxes = array_diff($idBoxes, $unavailableBoxes);
@@ -99,8 +99,8 @@ class GradingKasarInputController extends Controller
     public function edit(string $id)
     {
         //get post by ID
-        $GradingKI = GradingKasarInput::with('StockTransitRawMaterial')->find($id);
-        $data = StockTransitRawMaterial::with('GradingKasarInput')->get();
+        $GradingKI = GradingKasarInput::with('TransitRawMaterialStock')->find($id);
+        $data = TransitRawMaterialStock::with('GradingKasarInput')->get();
         // return $GradingKI;
 
         //render view with post
@@ -145,7 +145,7 @@ class GradingKasarInputController extends Controller
                     'total_modal' => $totalModalSebelumnya,
                 ];
 
-                $stockPrmRawMaterial = StockTransitRawMaterial::where('nomor_bstb', '=', $gradingKI->nomor_bstb)->first();
+                $stockPrmRawMaterial = TransitRawMaterialStock::where('nomor_bstb', '=', $gradingKI->nomor_bstb)->first();
 
                 if ($stockPrmRawMaterial) {
                     // Ambil berat sebelumnya
@@ -164,7 +164,7 @@ class GradingKasarInputController extends Controller
                     $stockPrmRawMaterial->update($dataToUpdate);
                 } else {
                     // Jika item tidak ada, buat item baru dengan nilai lainnya tetap sama
-                    StockTransitRawMaterial::create(array_merge($dataToUpdate, [
+                    TransitRawMaterialStock::create(array_merge($dataToUpdate, [
                         'id_box'               => $gradingKI->id_box,
                         'nomor_batch'          => $gradingKI->nomor_batch,
                         'jenis'                => $gradingKI->jenis,

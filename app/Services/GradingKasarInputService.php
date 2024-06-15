@@ -3,7 +3,7 @@ namespace App\Services;
 use App\Models\GradingKasarInput;
 use App\Models\PrmRawMaterialOutputItem;
 use App\Models\StockTransitGradingKasar;
-use App\Models\StockTransitRawMaterial;
+use App\Models\TransitRawMaterialStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -58,7 +58,7 @@ class GradingKasarInputService
         ]);
 
         $itemObject = (object) $item;
-        $existingItem = StockTransitRawMaterial::where('nama_supplier', $itemObject->nama_supplier)
+        $existingItem = TransitRawMaterialStock::where('nama_supplier', $itemObject->nama_supplier)
             ->where('nomor_bstb', $itemObject->nomor_bstb)
             ->first();
 
@@ -85,7 +85,7 @@ class GradingKasarInputService
             $existingItem->update($dataToUpdate);
         } else {
             // Jika item tidak ada, buat item baru dengan nilai lainnya tetap sama
-            StockTransitRawMaterial::create(array_merge($dataToUpdate, [
+            TransitRawMaterialStock::create(array_merge($dataToUpdate, [
                 'id_box'               => $itemObject->id_box,
                 'nomor_batch'          => $itemObject->nomor_batch,
                 'jenis'                => $itemObject->jenis,

@@ -4,7 +4,7 @@ namespace App\Services;
 use App\Models\GradingKasarHasil;
 use App\Models\GradingKasarOutput;
 use App\Models\GradingKasarStock;
-use App\Models\StockTransitGradingKasar;
+use App\Models\TransitGradingKasarStock;
 use App\Models\StockTransitRawMaterial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -67,7 +67,7 @@ class GradingKasarOutputService
 
         // Creat Prm Raw Material Stock
         $itemObject = (object)$item;
-        $existingItem = StockTransitGradingKasar::where('nomor_job', $itemObject->nomor_job)
+        $existingItem = TransitGradingKasarStock::where('nomor_job', $itemObject->nomor_job)
             ->where('nomor_bstb', $itemObject->nomor_bstb)
             ->first();
             // return $existingItem
@@ -96,7 +96,7 @@ class GradingKasarOutputService
             $existingItem->update($dataToUpdate);
         } else {
             // Jika item tidak ada, buat item baru dalam database
-            StockTransitGradingKasar::create(array_merge($dataToUpdate, [
+            TransitGradingKasarStock::create(array_merge($dataToUpdate, [
             'nomor_job'              => $itemObject->nomor_job,
             'id_box_grading_kasar'              => $itemObject->id_box_grading_kasar,
             'nomor_bstb'                       => $itemObject->nomor_bstb,

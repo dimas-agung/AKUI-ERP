@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock_hcr_kotors', function (Blueprint $table) {
+        Schema::create('rambang_kering_stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('unit');
             $table->string('id_box_hcr_kotor');
-            $table->date('tanggal_cabut');
-            $table->string('jenis_hcr_kotor');
+            $table->string('jenis_rambang');
             $table->float('berat_masuk');
             $table->float('berat_keluar');
             $table->float('sisa_berat');
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_hcr_kotors');
+        Schema::dropIfExists('rambang_kering_stocks');
     }
 };
