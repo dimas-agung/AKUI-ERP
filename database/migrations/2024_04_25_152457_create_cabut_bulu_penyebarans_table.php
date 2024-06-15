@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('keterangan_2')->nullable();
             $table->string('user_created');
             $table->string('user_updated')->nullable();
-            $table->integer('status')->default(2)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_ON_STOCK, 2 => STATUS_ON_PROSES, 3 => STATUS_FINISHED');
+            $table->integer('status')->default(3)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_ON_STOCK, 2 => STATUS_ON_PROSES, 3 => STATUS_FINISHED');
             $table->timestamps();
         });
     }

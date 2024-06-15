@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Rambang;
 
 use App\Http\Controllers\Controller;
-use App\Models\InputHcrKotor;
+use App\Models\HcrKotorInput;
 use App\Models\MasterJenisHcrKotor;
-use App\Models\StockHcrKotor;
+use App\Models\HcrKotorStock;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -16,7 +16,7 @@ class InputHcrKotorController extends Controller
     //Index
     public function index(){
         $i =1;
-        $CBPenerimaan = InputHcrKotor::with('MasterJenisHcrKotor')->get();
+        $CBPenerimaan = HcrKotorInput::with('MasterJenisHcrKotor')->get();
         $jenis = MasterJenisHcrKotor::with('InputHcrKotor')->get();
         // return($jenis);
 
@@ -32,7 +32,7 @@ class InputHcrKotorController extends Controller
      */
     public function create(): View
     {
-        $CBPenerimaan = InputHcrKotor::with('MasterJenisHcrKotor')->get();
+        $CBPenerimaan = HcrKotorInput::with('MasterJenisHcrKotor')->get();
         $stockTGK = MasterJenisHcrKotor::with('InputHcrKotor')->get();
         // return $stockTGK;
         return view('Rambang.InputHcrKotor.create', compact('stockTGK', 'CBPenerimaan'));
@@ -65,7 +65,7 @@ class InputHcrKotorController extends Controller
         ]);
 
         // Cari apakah id_box_hcr_kotor sudah ada dalam database
-        $existingStock = StockHcrKotor::where('id_box_hcr_kotor', $request->id_box)->first();
+        $existingStock = HcrKotorStock::where('id_box_hcr_kotor', $request->id_box)->first();
 
         // Jika sudah ada, update berat_masuk
         if ($existingStock) {
@@ -75,7 +75,7 @@ class InputHcrKotorController extends Controller
             ]);
         } else {
         // Jika belum ada, buat entri baru di StockHcrKotor
-        StockHcrKotor::create([
+        HcrKotorStock::create([
             'unit' => $request->unit ?? 'Rambang',
             'id_box_hcr_kotor' => $request->id_box,
             'tanggal_cabut' => $request->tgl_add,
@@ -87,7 +87,7 @@ class InputHcrKotorController extends Controller
     }
 
         //create post
-        InputHcrKotor::create([
+        HcrKotorInput::create([
             'tanggal_cabut'   => $request->tgl_add,
             'jenis_hcr_kotor'   => $request->jenis,
             'berat_hcr_kotor'   => $request->berat,
@@ -96,7 +96,7 @@ class InputHcrKotorController extends Controller
             'status'   => $request->status ?? 1,
             'user_created'   => $request->user_created,
         ]);
-        // StockHcrKotor::create([
+        // HcrKotorStock::create([
         //     'id_box_hcr_kotor'   => $request->id_box,
         //     'tanggal_cabut'   => $request->tgl_add,
         //     'jenis_hcr_kotor'   => $request->jenis,
@@ -125,9 +125,9 @@ class InputHcrKotorController extends Controller
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
             //get post by id_box_hcr_kotor
-            $inputhcr = InputHcrKotor::findOrFail($id);
+            $inputhcr = HcrKotorInput::findOrFail($id);
 
-            $stock = StockHcrKotor::where('id_box_hcr_kotor', '=', $inputhcr->id_box_hcr_kotor)
+            $stock = HcrKotorStock::where('id_box_hcr_kotor', '=', $inputhcr->id_box_hcr_kotor)
             ->where('jenis_hcr_kotor', $inputhcr->jenis_hcr_kotor)
             ->first();
 

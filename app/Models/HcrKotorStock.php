@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StockHcrKotor extends Model
+class HcrKotorStock extends Model
 {
     use HasFactory;
-    protected $table = 'stock_hcr_kotors';
+    protected $table = 'hcr_kotor_stocks';
     protected $fillable = [
         'unit',
         'id_box_hcr_kotor',
@@ -20,6 +20,6 @@ class StockHcrKotor extends Model
     ];
     public function InputRambangBasah()
     {
-        return $this->hasMany(InputRambangBasah::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
+        return $this->hasMany(RambangBasahInput::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
     }
 }

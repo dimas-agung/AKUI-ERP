@@ -23,6 +23,6 @@ class MasterJenisHcrKotor extends Model
     ];
     public function InputHcrKotor()
     {
-        return $this->hasMany(InputHcrKotor::class, 'jenis_hcr_kotor', 'jenis');
+        return $this->hasMany(HcrKotorInput::class, 'jenis_hcr_kotor', 'jenis');
     }
 }

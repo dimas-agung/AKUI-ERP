@@ -22,6 +22,6 @@ class MasterJenisRambang extends Model
     ];
     public function InputRambangBasah()
     {
-        return $this->belongsTo(InputRambangBasah::class, 'jenis_rambang', 'jenis');
+        return $this->belongsTo(RambangBasahInput::class, 'jenis_rambang', 'jenis');
     }
 }

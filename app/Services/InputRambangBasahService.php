@@ -1,11 +1,11 @@
 <?php
 namespace App\Services;
 
-use App\Models\InputHcrKotor;
-use App\Models\InputRambangBasah;
+use App\Models\HcrKotorInput;
+use App\Models\RambangBasahInput;
 use App\Models\MasterJenisRambang;
-use App\Models\StockHcrKotor;
-use App\Models\StockRambangBasah;
+use App\Models\HcrKotorStock;
+use App\Models\RambangBasahStock;
 use Illuminate\Http\Request;
 use App\Models\GradingHalusStock;
 use Illuminate\Support\Facades\DB;
@@ -50,8 +50,8 @@ class InputRambangBasahService
                     DB::beginTransaction();
 
                     // Create instance of GradingHalusInput
-                    // InputRambangBasah::create($mergedData);
-                    InputRambangBasah::create([
+                    // RambangBasahInput::create($mergedData);
+                    RambangBasahInput::create([
                         'id_box_hcr_kotor'      => $mergedData['id_box_hcr_kotor'],
                         'tanggal_cabut'         => $mergedData['tanggal_cabut'],
                         'jenis_hcr_kotor'         => $mergedData['jenis_hcr_kotor'],
@@ -63,7 +63,7 @@ class InputRambangBasahService
                         'user_created'             => $mergedData['user_created'] ?? 1,
                     ]);
 
-                    $grading = StockRambangBasah::where('id_box_hcr_kotor', $mergedData['id_box_hcr_kotor'])
+                    $grading = RambangBasahStock::where('id_box_hcr_kotor', $mergedData['id_box_hcr_kotor'])
                         ->where('jenis_rambang', $mergedData['jenis_rambang'])
                         ->first();
 
@@ -75,7 +75,7 @@ class InputRambangBasahService
                         ]);
                     } else {
                         // Create new grading data
-                        StockRambangBasah::create([
+                        RambangBasahStock::create([
                             'unit'                  => $mergedData['unit'] ?? 'Rambang',
                             'id_box_hcr_kotor'      => $mergedData['id_box_hcr_kotor'],
                             'jenis_rambang'         => $mergedData['jenis_rambang'],
@@ -87,7 +87,7 @@ class InputRambangBasahService
 
                     $itemObject = (object) $mergedData;
 
-                    $stockhcr = StockHcrKotor::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
+                    $stockhcr = HcrKotorStock::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
                     ->first();
 
                     // Periksa apakah objek model ditemukan
@@ -136,7 +136,7 @@ class InputRambangBasahService
                     //     ]);
                     // }
 
-                    $existingItem = InputHcrKotor::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
+                    $existingItem = HcrKotorInput::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
                     ->get();
 
                     $dataToUpdate = [
@@ -190,7 +190,7 @@ class InputRambangBasahService
             DB::beginTransaction();
 
             // Ambil data InputRambangBasah berdasarkan id
-            $gradingHalusInputs = InputRambangBasah::where('id', $id)->get();
+            $gradingHalusInputs = RambangBasahInput::where('id', $id)->get();
 
             if ($gradingHalusInputs->isEmpty()) {
                 // Redirect ke index dengan pesan error jika data tidak ditemukan
@@ -199,7 +199,7 @@ class InputRambangBasahService
 
             foreach ($gradingHalusInputs as $gradingHalusInput) {
                 // Ambil data GradingHalusStock berdasarkan id_box_hcr_kotor dan jenis_rambang
-                $gradingHalusStock = StockRambangBasah::where('id_box_hcr_kotor', $gradingHalusInput->id_box_hcr_kotor)
+                $gradingHalusStock = RambangBasahStock::where('id_box_hcr_kotor', $gradingHalusInput->id_box_hcr_kotor)
                     ->where('jenis_rambang', $gradingHalusInput->jenis_rambang)
                     ->first();
 
@@ -211,7 +211,7 @@ class InputRambangBasahService
 
                     if ($gradingHalusInput->berat >= $gradingHalusStock->berat_masuk) {
                         // Perbarui status pada InputHcrKotor dan MasterJenisRambang
-                        $inputHcrKotor = InputHcrKotor::where('id_box_hcr_kotor', $gradingHalusInput->id_box_hcr_kotor);
+                        $inputHcrKotor = HcrKotorInput::where('id_box_hcr_kotor', $gradingHalusInput->id_box_hcr_kotor);
                         $inputHcrKotor->update([
                             'status' => max($gradingHalusInput->status, 1)
                         ]);
@@ -231,7 +231,7 @@ class InputRambangBasahService
                     }
                 }
 
-                $stockhcr = StockHcrKotor::where('id_box_hcr_kotor', $gradingHalusInput->id_box_hcr_kotor)
+                $stockhcr = HcrKotorStock::where('id_box_hcr_kotor', $gradingHalusInput->id_box_hcr_kotor)
                 ->first();
 
                 // Periksa apakah objek model ditemukan

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Rambang;
 
 use App\Http\Controllers\Controller;
-use App\Models\InputRambangBasah;
+use App\Models\RambangBasahInput;
 use App\Models\MasterJenisRambang;
-use App\Models\StockHcrKotor;
+use App\Models\HcrKotorStock;
 use App\Services\InputRambangBasahService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class InputRambangBasahController extends Controller
     //Index
     public function index(){
         $i =1;
-        $CBPenerimaan = InputRambangBasah::all();
+        $CBPenerimaan = RambangBasahInput::all();
         // return($jenis);
 
         return response()->view('Rambang.InputRambangBasah.index', [
@@ -26,8 +26,8 @@ class InputRambangBasahController extends Controller
 
     public function create()
     {
-        $PreGHI = InputRambangBasah::with('StockHcrKotor')->get();
-        $TransitPre = StockHcrKotor::with('InputRambangBasah')->get();
+        $PreGHI = RambangBasahInput::with('StockHcrKotor')->get();
+        $TransitPre = HcrKotorStock::with('InputRambangBasah')->get();
         $Unit = MasterJenisRambang::with('InputRambangBasah')->get();
         // return $TransitPre;
         return view('Rambang.InputRambangBasah.create', compact('PreGHI', 'TransitPre', 'Unit'));
@@ -36,7 +36,7 @@ class InputRambangBasahController extends Controller
     public function set(Request $request)
     {
         $id_box_hcr_kotor = $request->id_box_hcr_kotor;
-        $data = StockHcrKotor::where('id_box_hcr_kotor',$id_box_hcr_kotor)->first();
+        $data = HcrKotorStock::where('id_box_hcr_kotor',$id_box_hcr_kotor)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
