@@ -21,7 +21,7 @@ class RambangBasahInput extends Model
         'user_created',
         'user_updated',
     ];
-    public function StockHcrKotor()
+    public function HcrKotorStock()
     {
         return $this->belongsTo(HcrKotorStock::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
     }
@@ -29,7 +29,7 @@ class RambangBasahInput extends Model
     {
         return $this->belongsTo(MasterJenisGradingHalus::class, 'jenis', 'jenis_rambang');
     }
-    public function StockRambangBasah()
+    public function RambangBasahStock()
     {
         return $this->hasMany(RambangBasahStock::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
     }

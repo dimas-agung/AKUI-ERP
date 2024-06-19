@@ -2,8 +2,8 @@
 namespace App\Services;
 
 use App\Models\HcrKotorInput;
-use App\Models\RambangBasahInput;
 use App\Models\MasterJenisRambang;
+use App\Models\RambangBasahInput;
 use App\Models\HcrKotorStock;
 use App\Models\RambangBasahStock;
 use Illuminate\Http\Request;
@@ -50,7 +50,7 @@ class InputRambangBasahService
                     DB::beginTransaction();
 
                     // Create instance of GradingHalusInput
-                    // RambangBasahInput::create($mergedData);
+                    // InputRambangBasah::create($mergedData);
                     RambangBasahInput::create([
                         'id_box_hcr_kotor'      => $mergedData['id_box_hcr_kotor'],
                         'tanggal_cabut'         => $mergedData['tanggal_cabut'],

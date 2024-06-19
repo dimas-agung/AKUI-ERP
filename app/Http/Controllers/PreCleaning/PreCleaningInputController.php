@@ -218,7 +218,7 @@ class PreCleaningInputController extends Controller
                     ->first();
 
                 if ($PreCleaningS) {
-                    // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
+                    // Ambil data TransitGradingKasarStock berdasarkan id_box_grading_kasar dan id_box_raw_material
                     $stockPrmRawMaterial = StockTransitGradingKasar::where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
                         ->where('nomor_job', '=', $PreCleaningI->nomor_job)
                         ->first();
@@ -236,7 +236,7 @@ class PreCleaningInputController extends Controller
                         // Hitung total modal baru
                         $totalModalBaru = $totalModalSebelumnya - ($beratSebelumnya * $PreCleaningI->modal);
 
-                        // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
+                        // Update data TransitGradingKasarStock dengan berat, pcs, dan total modal yang baru
                         $stockPrmRawMaterial->update([
                             'berat_keluar' => max($beratSebelumnya - $perbedaanBerat, 0),
                             'pcs_keluar' => max($pcsSebelumnya - $perbedaanPcs, 0),

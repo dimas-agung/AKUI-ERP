@@ -20,7 +20,7 @@ class MasterJenisRambang extends Model
         'user_created',
         'user_updated',
     ];
-    public function InputRambangBasah()
+    public function RambangBasahInput()
     {
         return $this->belongsTo(RambangBasahInput::class, 'jenis_rambang', 'jenis');
     }

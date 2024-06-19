@@ -18,7 +18,7 @@ class HcrKotorStock extends Model
         'berat_keluar',
         'sisa_berat'
     ];
-    public function InputRambangBasah()
+    public function RambangBasahInput()
     {
         return $this->hasMany(RambangBasahInput::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
     }

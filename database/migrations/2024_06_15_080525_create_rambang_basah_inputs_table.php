@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock_rambang_basahs', function (Blueprint $table) {
+        Schema::create('rambang_basah_inputs', function (Blueprint $table) {
             $table->id();
-            $table->string('unit');
             $table->string('id_box_hcr_kotor');
+            $table->date('tanggal_cabut');
+            $table->string('jenis_hcr_kotor');
+            $table->float('berat_hcr_kotor');
             $table->string('jenis_rambang');
-            $table->float('berat_masuk');
-            $table->float('berat_keluar');
-            $table->float('sisa_berat');
+            $table->float('berat');
+            $table->string('keterangan')->nullable();
+            $table->string('status');
+            $table->string('user_created');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_rambang_basahs');
+        Schema::dropIfExists('rambang_basah_inputs');
     }
 };

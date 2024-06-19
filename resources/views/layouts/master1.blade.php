@@ -264,8 +264,8 @@
                                     </li>
                                     <li
                                         class="submenu-item  {{ Route::is('StockTransitRawMaterial.*') ? 'active' : '' }}">
-                                        <a href="{{ route('StockTransitRawMaterial.index') }}" class="submenu-link">Stock
-                                            Transit Raw Material</a>
+                                        <a href="{{ route('StockTransitRawMaterial.index') }}"
+                                            class="submenu-link">Transit Raw Material Stock</a>
                                     </li>
                                 </ul>
                             </li>
@@ -290,7 +290,7 @@
                                             <li
                                                 class="submenu-item {{ Route::is('StockTransitRawMaterial*') ? 'active' : '' }}">
                                                 <a href="{{ route('StockTransitRawMaterial.index') }}"
-                                                    class="submenu-link">Stock Transit Raw Material</a>
+                                                    class="submenu-link">Transit Raw Material Stock</a>
                                             </li>
                                             <li
                                                 class="submenu-item {{ Route::is('GradingKasarInput*') ? 'active' : '' }}">
@@ -315,7 +315,7 @@
                                             <li
                                                 class="submenu-item {{ Route::is('StockTransitGradingKasar*') ? 'active' : '' }}">
                                                 <a href="{{ route('StockTransitGradingKasar.index') }}"
-                                                    class="submenu-link">Stock Transit Grading Kasar</a>
+                                                    class="submenu-link">Transit Grading Kasar Stock</a>
                                             </li>
                                             <li
                                                 class="submenu-item {{ Route::is('ReportGradingKasar*') ? 'active' : '' }}">
@@ -335,7 +335,7 @@
                                             <li
                                                 class="submenu-item {{ Route::is('StockTransitGradingKasar*') ? 'active' : '' }}">
                                                 <a href="{{ route('StockTransitGradingKasar.index') }}"
-                                                    class="submenu-link">Stock Transit Grading Kasar</a>
+                                                    class="submenu-link">Transit Grading Kasar Stock</a>
                                             </li>
                                             <li class="submenu-item {{ Route::is('PreCleaningInput*') ? 'active' : '' }}">
                                                 <a href="{{ route('PreCleaningInput.index') }}"
@@ -538,8 +538,8 @@
                                                     Hcr <br>Kotor</a>
                                             </li>
                                             <li class="submenu-item {{ Route::is('StockHcrKotor*') ? 'active' : '' }}">
-                                                <a href="{{ route('StockHcrKotor.index') }}" class="submenu-link">Stock
-                                                    Hcr <br>Kotor</a>
+                                                <a href="{{ route('StockHcrKotor.index') }}" class="submenu-link">Hcr
+                                                    Kotor <br>Stock</a>
                                             </li>
                                             <li
                                                 class="submenu-item {{ Route::is('InputRambangBasah*') ? 'active' : '' }}">
@@ -550,8 +550,7 @@
                                             <li
                                                 class="submenu-item {{ Route::is('StockRambangBasah*') ? 'active' : '' }}">
                                                 <a href="{{ route('StockRambangBasah.index') }}"
-                                                    class="submenu-link">Stock
-                                                    Rembang <br>Basah</a>
+                                                    class="submenu-link">Rembang Basah <br>Stock</a>
                                             </li>
                                             <li
                                                 class="submenu-item {{ Route::is('RambangKeringInput*') ? 'active' : '' }}">
@@ -628,8 +627,7 @@
                                             <li
                                                 class="submenu-item {{ Route::is('StockRambangBasah*') ? 'active' : '' }}">
                                                 <a href="{{ route('StockRambangBasah.index') }}"
-                                                    class="submenu-link">Stock
-                                                    Rembang <br>Basah</a>
+                                                    class="submenu-link">Rembang Basah <br>Stock</a>
                                             </li>
                                             <li
                                                 class="submenu-item {{ Route::is('CabutHancuranPersiapan*') ? 'active' : '' }}">

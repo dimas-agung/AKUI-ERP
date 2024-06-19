@@ -216,7 +216,6 @@ Route::middleware('auth')->group(function () {
         });
 
 
-
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialStockController::class)->group(function () {
             Route::get('/prm_raw_material_stock', 'index')->name('PrmRawMaterialStock.index');
             Route::get('/prm_raw_material_stock/show/{id_box}', 'show')->name('PrmRawMaterialStock.show');
@@ -561,8 +560,9 @@ Route::middleware('auth')->group(function () {
                 Route::get('/transit_cabut_bulu', 'index')->name('TransitCabutBulu.index');
             });
         });
-        Route::prefix('rambang')->middleware(['role:cleaning|admin'])->group(function () {
-            Route::controller(App\Http\Controllers\Rambang\InputHcrKotorController::class)->group(function () {
+
+        Route::prefix('Rambang')->middleware('role:cleaning|admin')->group(function (){
+            Route::controller(App\Http\Controllers\Rambang\HcrKotorInputController::class)->group(function () {
                 Route::get('/input_hcr_kotor', 'index')->name('InputHcrKotor.index');
                 Route::get('/input_hcr_kotor/create', 'create')->name('InputHcrKotor.create');
                 Route::post('/input_hcr_kotor/store', 'store')->name('InputHcrKotor.store');
@@ -574,7 +574,8 @@ Route::middleware('auth')->group(function () {
                 Route::post('/input_hcr_kotor/simpanData', 'simpanData')->name('InputHcrKotor.simpanData');
                 Route::post('/input_hcr_kotor/cek_data', 'CeksendData')->name('InputHcrKotor.CeksendData');
             });
-            Route::controller(App\Http\Controllers\Rambang\StockHcrKotorController::class)->group(function () {
+
+            Route::controller(App\Http\Controllers\Rambang\HcrKotorStockController::class)->group(function () {
                 Route::get('/stock_hcr_stock', 'index')->name('StockHcrKotor.index');
             });
             Route::controller(App\Http\Controllers\Rambang\RambangKeringInputController::class)->group(function () {
@@ -602,7 +603,8 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\Rambang\TransitRambangWasteController::class)->group(function () {
                 Route::get('/transit_rambang_waste', 'index')->name('TransitRambangWaste.index');
             });
-            Route::controller(App\Http\Controllers\Rambang\InputRambangBasahController::class)->group(function () {
+
+            Route::controller(App\Http\Controllers\Rambang\RambangBasahInputController::class)->group(function () {
                 Route::get('/input_rambang_basah', 'index')->name('InputRambangBasah.index');
                 Route::get('/input_rambang_basah/create', 'create')->name('InputRambangBasah.create');
                 Route::post('/input_rambang_basah/store', 'store')->name('InputRambangBasah.store');
@@ -615,7 +617,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('/input_rambang_basah/cek_data', 'CeksendData')->name('InputRambangBasah.CeksendData');
             });
 
-            Route::controller(App\Http\Controllers\Rambang\StockRambangBasahController::class)->group(function () {
+            Route::controller(App\Http\Controllers\Rambang\RambangBasahStockController::class)->group(function () {
                 Route::get('/stock_rambang_basah', 'index')->name('StockRambangBasah.index');
             });
         });

@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Rambang;
 
 use App\Http\Controllers\Controller;
-
-use App\Models\StockRambangBasah;
+use App\Models\HcrKotorStock;
 use Illuminate\Http\Request;
 
-class StockRambangBasahController extends Controller
+class HcrKotorStockController extends Controller
 {
     //Index
     public function index(){
         $i =1;
-        $CBPenerimaan = StockRambangBasah::get();
+        $CBPenerimaan = HcrKotorStock::get();
 
-        return response()->view('Rambang.StockRambangBasah.index', [
+        return response()->view('Rambang.HcrKotorStock.index', [
             'CBPenerimaan' => $CBPenerimaan,
             'i' => $i,
         ]);

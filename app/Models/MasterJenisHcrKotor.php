@@ -21,7 +21,7 @@ class MasterJenisHcrKotor extends Model
         'user_created',
         'user_updated',
     ];
-    public function InputHcrKotor()
+    public function HcrKotorInput()
     {
         return $this->hasMany(HcrKotorInput::class, 'jenis_hcr_kotor', 'jenis');
     }

@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock_rambang_kerings', function (Blueprint $table) {
+        Schema::create('rambang_basah_stocks', function (Blueprint $table) {
             $table->id();
+            $table->string('unit');
             $table->string('id_box_hcr_kotor');
             $table->string('jenis_rambang');
             $table->float('berat_masuk');
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_rambang_kerings');
+        Schema::dropIfExists('rambang_basah_stocks');
     }
 };

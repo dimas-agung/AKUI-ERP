@@ -10,15 +10,23 @@ use App\Services\InputRambangBasahService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class InputRambangBasahController extends Controller
+class RambangBasahInputController extends Controller
 {
+
+    protected $InputRambangBasahService;
+
+    public function __construct(InputRambangBasahService $InputRambangBasahService)
+    {
+        $this->InputRambangBasahService = $InputRambangBasahService;
+    }
+
     //Index
     public function index(){
         $i =1;
         $CBPenerimaan = RambangBasahInput::all();
         // return($jenis);
 
-        return response()->view('Rambang.InputRambangBasah.index', [
+        return response()->view('Rambang.RambangBasahInput.index', [
             'CBPenerimaan' => $CBPenerimaan,
             'i' => $i,
         ]);
@@ -26,11 +34,11 @@ class InputRambangBasahController extends Controller
 
     public function create()
     {
-        $PreGHI = RambangBasahInput::with('StockHcrKotor')->get();
-        $TransitPre = HcrKotorStock::with('InputRambangBasah')->get();
-        $Unit = MasterJenisRambang::with('InputRambangBasah')->get();
+        $PreGHI = RambangBasahInput::with('HcrKotorStock')->get();
+        $TransitPre = HcrKotorStock::with('RambangBasahInput')->get();
+        $Unit = MasterJenisRambang::with('RambangBasahInput')->get();
         // return $TransitPre;
-        return view('Rambang.InputRambangBasah.create', compact('PreGHI', 'TransitPre', 'Unit'));
+        return view('Rambang.RambangBasahInput.create', compact('PreGHI', 'TransitPre', 'Unit'));
     }
 
     public function set(Request $request)
@@ -40,13 +48,6 @@ class InputRambangBasahController extends Controller
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
-    }
-
-    protected $InputRambangBasahService;
-
-    public function __construct(InputRambangBasahService $InputRambangBasahService)
-    {
-        $this->InputRambangBasahService = $InputRambangBasahService;
     }
 
     public function store(Request $request)

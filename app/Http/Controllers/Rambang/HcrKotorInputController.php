@@ -11,16 +11,16 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 
-class InputHcrKotorController extends Controller
+class HcrKotorInputController extends Controller
 {
     //Index
     public function index(){
         $i =1;
         $CBPenerimaan = HcrKotorInput::with('MasterJenisHcrKotor')->get();
-        $jenis = MasterJenisHcrKotor::with('InputHcrKotor')->get();
+        $jenis = MasterJenisHcrKotor::with('HcrKotorInput')->get();
         // return($jenis);
 
-        return response()->view('Rambang.InputHcrKotor.index', [
+        return response()->view('Rambang.HcrKotorInput.index', [
             'CBPenerimaan' => $CBPenerimaan,
             'jenis' => $jenis,
             'i' => $i,
@@ -33,7 +33,7 @@ class InputHcrKotorController extends Controller
     public function create(): View
     {
         $CBPenerimaan = HcrKotorInput::with('MasterJenisHcrKotor')->get();
-        $stockTGK = MasterJenisHcrKotor::with('InputHcrKotor')->get();
+        $stockTGK = MasterJenisHcrKotor::with('HcrKotorInput')->get();
         // return $stockTGK;
         return view('Rambang.InputHcrKotor.create', compact('stockTGK', 'CBPenerimaan'));
     }
@@ -74,7 +74,7 @@ class InputHcrKotorController extends Controller
                 'sisa_berat' => $existingStock->sisa_berat + $request->berat, // Jika ada sisa berat, tambahkan juga
             ]);
         } else {
-        // Jika belum ada, buat entri baru di StockHcrKotor
+        // Jika belum ada, buat entri baru di HcrKotorStock
         HcrKotorStock::create([
             'unit' => $request->unit ?? 'Rambang',
             'id_box_hcr_kotor' => $request->id_box,

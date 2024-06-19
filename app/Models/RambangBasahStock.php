@@ -22,4 +22,12 @@ class RambangBasahStock extends Model
     {
         return $this->hasMany(RambangKeringInput::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
     }
+    public function RambangBasahInput()
+    {
+        return $this->hasMany(RambangBasahInput::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
+    }
+    public function CabutHancuranPersiapan()
+    {
+        return $this->hasMany(CabutHancuranPersiapan::class, 'id_stock_hcr_kotor', 'id_box_hcr_kotor');
+    }
 }

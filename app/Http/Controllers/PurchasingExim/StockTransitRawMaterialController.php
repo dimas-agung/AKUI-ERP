@@ -21,7 +21,7 @@ class StockTransitRawMaterialController extends Controller
         // $PrmRawMOH = PrmRawMaterialOutputHeader::with('StockTransitRawMaterial')->get();
         $PrmRawMOI = PrmRawMaterialOutputItem::with('StockTransitRawMaterial')->get();
         // return $PrmRawMOI;
-        return response()->view('purchasing_exim.StockTransitRawMaterial.index', [
+        return response()->view('purchasing_exim.TransitRawMaterialStock.index', [
             'stockTGK' => $stockTGK,
             'PrmRawMOI' => $PrmRawMOI,
             'i' => $i,

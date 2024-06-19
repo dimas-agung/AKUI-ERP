@@ -4,7 +4,7 @@ namespace App\Http\Controllers\CabutHancuran;
 
 use App\Http\Controllers\Controller;
 use App\Models\CabutHancuranPersiapan;
-use App\Models\StockRambangBasah;
+use App\Models\RambangBasahStock;
 use App\Services\CabutHancuranPersiapanService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -29,8 +29,8 @@ class CabutHancuranPersiapanController extends Controller
      */
     public function create(): View
     {
-        $CBPenerimaan = CabutHancuranPersiapan::with('StockRambangBasah')->get();
-        $stockTGK = StockRambangBasah::with('CabutHancuranPersiapan')->get();
+        $CBPenerimaan = CabutHancuranPersiapan::with('RambangBasahStock')->get();
+        $stockTGK = RambangBasahStock::with('CabutHancuranPersiapan')->get();
         // return $stockTGK;
         return view('CabutHancuran.CabutHancuranPersiapan.create', compact('stockTGK', 'CBPenerimaan'));
     }
@@ -38,8 +38,8 @@ class CabutHancuranPersiapanController extends Controller
     public function set(Request $request)
     {
         $id_box_hcr_kotor = $request->id_box_hcr_kotor;
-        $data = StockRambangBasah::where('id_box_hcr_kotor',$id_box_hcr_kotor)->first();
-        $data = StockRambangBasah::where('id_box_hcr_kotor',$id_box_hcr_kotor)->get();
+        $data = RambangBasahStock::where('id_box_hcr_kotor',$id_box_hcr_kotor)->first();
+        $data = RambangBasahStock::where('id_box_hcr_kotor',$id_box_hcr_kotor)->get();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -51,7 +51,7 @@ class CabutHancuranPersiapanController extends Controller
         $idBoxes = json_decode($request->idBoxes);
 
         // Cek ketersediaan id box dalam database
-        $unavailableBoxes = StockRambangBasah::whereIn('id_box_hcr_kotor', $idBoxes)->pluck('id_box_hcr_kotor')->toArray();
+        $unavailableBoxes = RambangBasahStock::whereIn('id_box_hcr_kotor', $idBoxes)->pluck('id_box_hcr_kotor')->toArray();
 
         // Filter id box yang tidak tersedia
         $availableBoxes = array_diff($idBoxes, $unavailableBoxes);
