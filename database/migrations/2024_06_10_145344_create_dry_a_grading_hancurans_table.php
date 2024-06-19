@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('nip_operator');
             $table->string('grade_operator');
             $table->string('nama_team_leader');
-            $table->timestamp('waktu_penyebaran');
-            $table->timestamp('waktu_pengembalian');
+            $table->timestamp('waktu_penyebaran')->nullable();
+            $table->timestamp('waktu_pengembalian')->nullable();
             $table->string('jenis_grading');
             $table->float('berat_grading');
             $table->float('kontribusi', 16, 4);

@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('nip_operator');
             $table->string('grade_operator');
             $table->string('nama_team_leader');
-            $table->timestamp('waktu_penyebaran');
-            $table->timestamp('waktu_pengembalian');
+            $table->timestamp('waktu_penyebaran')->nullable();
+            $table->timestamp('waktu_pengembalian')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
         });
