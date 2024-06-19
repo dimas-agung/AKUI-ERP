@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(MasterJenisGradingHalusSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UsersSeeder::class);
+        $this->call(CabutBuluPenerimaanSeeder::class);
         $this->call(CabutBuluStockSeeder::class);
         $this->call(CabutHancuranPersiapanStockSeeder::class);
         $this->call(DryAPenerimaanCabutStockSeeder::class);
