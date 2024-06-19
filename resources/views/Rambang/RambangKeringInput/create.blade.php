@@ -32,16 +32,18 @@
                         <select class="select2 form-select" style="width: 100%;" name="jenis_rambang" id="jenis_rambang"
                             data-placeholder="Pilih Jenis Rambang">
                             <option value="">Pilih Jenis Rambang</option>
-                            @foreach ($rambang_basah_stock as $item)
+                            {{-- @foreach ($rambang_basah_stock as $item)
                                 @if (
-                                    $item->sisa_berat != 0 &&
-                                        strpos(strtolower($item->jenis_rambang), 'hcr') === false &&
-                                        strpos(strtolower($item->jenis_rambang), 'rambang') !== false)
+                                    $item->sisa_berat != 0 
+                                    // &&
+                                    //     strpos(strtolower($item->jenis_rambang), 'hcr') === false &&
+                                    //     strpos(strtolower($item->jenis_rambang), 'rambang') !== false
+                                    )
                                     <option value="{{ $item->jenis_rambang }}">
                                         {{ $item->jenis_rambang }}
                                     </option>
                                 @endif
-                            @endforeach
+                            @endforeach --}}
                         </select>
                     </div>
 
@@ -149,8 +151,7 @@
 
                 // Mengisi objek jenisRambangOptions dengan jenis rambang yang sesuai dengan setiap id_box_hcr_kotor
                 @foreach ($rambang_basah_stock as $item)
-                    if ("{{ $item->sisa_berat }}" != 0 && "{{ strtolower($item->jenis_rambang) }}" !==
-                        'hcr rambang') {
+                    if ("{{ $item->sisa_berat }}" != 0) {
                         if (!jenisRambangOptions["{{ $item->id_box_hcr_kotor }}"]) {
                             jenisRambangOptions["{{ $item->id_box_hcr_kotor }}"] = [];
                         }

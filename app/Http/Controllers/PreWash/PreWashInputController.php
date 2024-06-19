@@ -35,7 +35,7 @@ class PreWashInputController extends Controller
     public function create()
     {
         $PreWashInput = PreWashInput::with('TransitGradingHalus')->get();
-        $TransitGradingHalus = TransitGradingHalus::all();
+        $TransitGradingHalus = TransitGradingHalus::where('status',1)->get();
         return view('PreWash.PreWashInput.create', [
             // 'pre_grading_halus_stocks' => $AdjustmentAdding,
             'grading_halus_stocks' => $PreWashInput,

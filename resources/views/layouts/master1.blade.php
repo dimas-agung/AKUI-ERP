@@ -697,6 +697,21 @@
                                                     class="submenu-link">Dry A Penerimaan Hancuran Stock</a>
                                             </li>
                                             <li
+                                                class="submenu-item {{ Route::is('DryAGradingHancuran*') && !Route::is('DryAGradingHancuranStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAGradingHancuran.index') }}"
+                                                    class="submenu-link">Dry
+                                                    A
+                                                    Grading
+                                                    <br>Hancuran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAGradingHancuranStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAGradingHancuranStock.index') }}"
+                                                    class="submenu-link">Dry A
+                                                    Grading
+                                                    <br>Hancuran<br>Stock</a>
+                                            </li>
+                                            <li
                                                 class="submenu-item {{ Route::is('DryAOutputHancuran*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAOutputHancuran.index') }}"
                                                     class="submenu-link">Dry A Output Hancuran</a>
@@ -720,6 +735,16 @@
                                                     class="submenu-link">Transit Cabut Bulu</a>
                                             </li>
                                             <li
+                                                class="submenu-item {{ Route::is('DryAPenerimaan*') && !Route::is('DryAPenerimaanStock*') && !Route::is('DryAPenerimaanHancuran*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAPenerimaan.index') }}" class="submenu-link">Dry A
+                                                    Penerimaan Cabut</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAPenerimaanStock*') && !Route::is('DryAPenerimaanHancuranStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAPenerimaanStock.index') }}"
+                                                    class="submenu-link">Dry A Penerimaan Stock Cabut</a>
+                                            </li>
+                                            <li
                                                 class="submenu-item {{ Route::is('DryAGradingCabut*') && !Route::is('DryAGradingCabutStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAGradingCabut.index') }}" class="submenu-link">Dry
                                                     A
@@ -733,48 +758,20 @@
                                                     Grading
                                                     <br>Cabut Stock</a>
                                             </li>
-
-                                            <li
-                                                class="submenu-item {{ Route::is('DryAPenerimaan*') && !Route::is('DryAPenerimaanStock*') && !Route::is('DryAPenerimaanHancuran*') ? 'active' : '' }}">
-                                                <a href="{{ route('DryAPenerimaan.index') }}" class="submenu-link">Dry A
-                                                    Penerimaan Cabut</a>
+                                            <li class="submenu-item {{ Route::is('DryAOutput*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAOutput.index') }}" class="submenu-link">Dry A
+                                                    Output Cabut</a>
                                             </li>
                                             <li
-                                                class="submenu-item {{ Route::is('DryAPenerimaanStock*') && !Route::is('DryAPenerimaanHancuranStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('DryAPenerimaanStock.index') }}"
-                                                    class="submenu-link">Dry A Penerimaan Stock Cabut</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="submenu-item has-sub {{ Route::is('DryAGradingHancuran*', 'DryAGradingHancuranStock*') ? 'active' : '' }}">
-                                        <a href="#" class='submenu-link'>
-                                            <span>Dry A Hancuran</span>
-                                        </a>
-                                        <ul class="submenu submenu-level-2">
-                                            <li
-                                                class="submenu-item {{ Route::is('DryAGradingHancuran*') && !Route::is('DryAGradingHancuranStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('DryAGradingHancuran.index') }}"
-                                                    class="submenu-link">Dry
-                                                    A
-                                                    Grading
-                                                    <br>Hancuran</a>
-                                            </li>
-                                            <li
-<<<<<<< HEAD
-                                                class="submenu-item {{ Route::is('DryAGradingHancuranStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('DryAGradingHancuranStock.index') }}"
-                                                    class="submenu-link">Dry A
-                                                    Grading
-                                                    <br>Hancuran<br>Stock</a>
-=======
                                                 class="submenu-item {{ Route::is('TransitDryA*') && !Route::is('TransitDryAHancuran*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitDryA.index') }}" class="submenu-link">Transit
                                                     Dry A Cabut</a>
->>>>>>> dev-al
                                             </li>
+
+                                           
                                         </ul>
                                     </li>
+                                   
                                 </ul>
                             </li>
                         @endrole
