@@ -2,54 +2,69 @@
 
 namespace App\Http\Controllers\PreCleaning;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\PreCleaningOutputRequest;
+use App\Models\Perusahaan;
+use Illuminate\Http\Request;
 use App\Models\MasterOperator;
 use App\Models\PreCleaningInput;
-use App\Models\Perusahaan;
-use App\Models\PreCleaningOutput;
 use App\Models\PreCleaningStock;
-use App\Models\TransitPreCleaningStock;
-use App\Services\PreCleaningOutputService;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
+use App\Models\PreCleaningOutput;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use App\Models\TransitPreCleaningStock;
+use Barryvdh\Debugbar\Facades\Debugbar;
+use App\Services\PreCleaningOutputService;
+use App\Http\Requests\PreCleaningOutputRequest;
 
 class PreCleaningOutputController extends Controller
 {
-    //index
+    protected $preCleaningOutputs = null;
+    protected $preCleaningStock = null;
+
+    public function getPreCleaningOutputs()
+    {
+        if ($this->preCleaningOutputs === null) {
+            $this->preCleaningOutputs = PreCleaningOutput::all();
+        }
+        return $this->preCleaningOutputs;
+    }
+
+    public function getPreCleaningStock()
+    {
+        if ($this->preCleaningStock === null) {
+            $this->preCleaningStock = PreCleaningStock::where('status', 1)->get();
+        }
+        return $this->preCleaningStock;
+    }
+
+
+    // Index
     public function index()
     {
-        $i = 1;
-        $PreCleaningOutput = PreCleaningOutput::all();
         return response()->view('PreCleaning.PreCleaningOutput.index', [
-            'pre_cleaning_outputs' => $PreCleaningOutput,
-            'i' => $i,
+            'pre_cleaning_outputs' => $this->getPreCleaningOutputs()
         ]);
     }
     // create
     public function create()
     {
-        $PreCleaningStock = PreCleaningStock::with('PreCleaningOutput')->get();
-        $PreCleaningOutput = PreCleaningOutput::with('PreCleaningStock')->whereRaw('berat_masuk - berat_keluar != 0');
-        $MasterOperator = MasterOperator::all();
-        $Perusahaan = Perusahaan::all();
+        $preCleaningStock = $this->getPreCleaningStock()->where('sisa_berat', '!=', 0);
+        $MasterOperator = MasterOperator::where('status', 1)->get();
+        $Perusahaan = Perusahaan::where('status', 1)->get();
         return view('PreCleaning.PreCleaningOutput.create', [
-            'pre_cleaning_outputs'      => $PreCleaningOutput,
-            'pre_cleaning_stocks'       => $PreCleaningStock,
+            'pre_cleaning_stocks'       => $preCleaningStock,
             'master_operators'          => $MasterOperator,
             'perusahaan'                => $Perusahaan,
         ]);
     }
+
     // set
     public function set(Request $request)
     {
         $nomor_job = $request->nomor_job;
-        $data = PreCleaningStock::where('nomor_job', $nomor_job)
-            // ->whereRaw('berat_masuk - berat_keluar != 0') // Tambahkan kondisi ini
+        $data = $this->getPreCleaningStock()->where('nomor_job', $nomor_job)
             ->first();
-        // return $data;
-        // Kembalikan nomor job sebagai respons
         return response()->json($data);
     }
 
@@ -68,13 +83,13 @@ class PreCleaningOutputController extends Controller
         }
     }
 
-
     public function destroy($nomor_job)
     {
         try {
             // Begin transaction
             DB::beginTransaction();
             // Temukan record berdasarkan ID
+            // $PreCleaningOutput = $this->preCleaningOutputs->findOrFail($nomor_job);
             $PreCleaningOutput = PreCleaningOutput::findOrFail($nomor_job);
             // Hapus semua item terkait
             $stockPRM = TransitPreCleaningStock::where('id_box_raw_material', '=', $PreCleaningOutput->id_box_raw_material)
@@ -112,6 +127,7 @@ class PreCleaningOutputController extends Controller
                 }
             }
 
+            // $existingItems = $this->preCleaningStock->where('nomor_job', $PreCleaningOutput->nomor_job)
             $existingItems = PreCleaningStock::where('nomor_job', $PreCleaningOutput->nomor_job)
                 ->where('id_box_grading_kasar', $PreCleaningOutput->id_box_grading_kasar)
                 ->get();
@@ -169,42 +185,4 @@ class PreCleaningOutputController extends Controller
             return redirect()->route('PreCleaningOutput.index')->with('error', 'Gagal menghapus data');
         }
     }
-
-    // public function destroy($nomor_job)
-    // {
-    //     // Hapus data dari PreCleaningOutput
-    //     PreCleaningOutput::where('nomor_job', $nomor_job->nomor_job)
-    //         ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
-    //         ->delete();
-
-    //     // Hitung ulang PreCleaningStock
-    //     $preCleaningStockItems = PreCleaningStock::where('nomor_job', $nomor_job->nomor_job)
-    //         ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
-    //         ->get();
-
-    //     foreach ($preCleaningStockItems as $preCleaningStockItem) {
-    //         $totalBeratKeluar = PreCleaningOutput::where('nomor_job', $nomor_job->nomor_job)
-    //             ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
-    //             ->sum('berat_kirim');
-
-    //         $totalPcsKeluar = PreCleaningOutput::where('nomor_job', $nomor_job->nomor_job)
-    //             ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
-    //             ->sum('pcs_kirim');
-
-    //         $sisaBerat = $preCleaningStockItem->berat_masuk - $totalBeratKeluar;
-    //         $sisaPcs = $preCleaningStockItem->pcs_masuk - $totalPcsKeluar;
-
-    //         $preCleaningStockItem->update([
-    //             'berat_keluar' => $totalBeratKeluar,
-    //             'pcs_keluar' => $totalPcsKeluar,
-    //             'sisa_berat' => $sisaBerat,
-    //             'sisa_pcs' => $sisaPcs,
-    //         ]);
-    //     }
-
-    //     // Hapus data dari TransitPreCleaningStock
-    //     TransitPreCleaningStock::where('nomor_job', $nomor_job->nomor_job)
-    //         ->where('nomor_bstb', $nomor_job->nomor_bstb)
-    //         ->delete();
-    // }
 }

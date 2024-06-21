@@ -32,6 +32,7 @@ class PreCleaningStock extends Model
         'total_modal',
         'keterangan',
         'nomor_grading',
+        'status',
         'user_created',
         'user_updated',
     ];

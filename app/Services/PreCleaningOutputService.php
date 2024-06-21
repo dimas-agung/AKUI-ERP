@@ -20,6 +20,22 @@ class PreCleaningOutputService
                 $this->createItem($item);
             }
 
+            // Ambil PreGradingHalusAdding berdasarkan nomor_job dan id_box_grading_kasar
+            $PreCleaningOutput = PreCleaningOutput::where('nomor_job', $dataArray[0]->nomor_job)
+                ->where('nomor_batch', $dataArray[0]->nomor_batch)
+                ->first();
+
+            // Ambil PreGradingHalusInput berdasarkan nomor_job dan id_box_grading_kasar dari PreGradingHalusAdding
+            $PreCleaningStock = PreCleaningStock::where('nomor_job', $PreCleaningOutput->nomor_job)
+                ->where('nomor_batch', $PreCleaningOutput->nomor_batch)
+                ->first();
+
+            if ($PreCleaningStock) {
+                $PreCleaningStock->update([
+                    'status' => 0,
+                ]);
+            }
+
             DB::commit();
 
             return [
@@ -187,69 +203,5 @@ class PreCleaningOutputService
             // Perbarui data
             $existingItem->update($dataToUpdate);
         }
-    }
-
-
-    public function hapusData($dataArray)
-    {
-        try {
-            DB::beginTransaction();
-
-            foreach ($dataArray as $item) {
-                $this->deleteItem($item);
-            }
-
-            DB::commit();
-
-            return [
-                'success' => true,
-                'message' => 'Data berhasil dihapus!',
-            ];
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return [
-                'success' => false,
-                'error' => 'Gagal menghapus data. ' . $e->getMessage(),
-            ];
-        }
-    }
-
-    private function deleteItem($item)
-    {
-        // Hapus data dari PreCleaningOutput
-        PreCleaningOutput::where('nomor_job', $item->nomor_job)
-            ->where('id_box_grading_kasar', $item->id_box_grading_kasar)
-            ->delete();
-
-        // Hitung ulang PreCleaningStock
-        $preCleaningStockItems = PreCleaningStock::where('nomor_job', $item->nomor_job)
-            ->where('id_box_grading_kasar', $item->id_box_grading_kasar)
-            ->get();
-
-        foreach ($preCleaningStockItems as $preCleaningStockItem) {
-            $totalBeratKeluar = PreCleaningOutput::where('nomor_job', $item->nomor_job)
-                ->where('id_box_grading_kasar', $item->id_box_grading_kasar)
-                ->sum('berat_kirim');
-
-            $totalPcsKeluar = PreCleaningOutput::where('nomor_job', $item->nomor_job)
-                ->where('id_box_grading_kasar', $item->id_box_grading_kasar)
-                ->sum('pcs_kirim');
-
-            $sisaBerat = $preCleaningStockItem->berat_masuk - $totalBeratKeluar;
-            $sisaPcs = $preCleaningStockItem->pcs_masuk - $totalPcsKeluar;
-
-            $preCleaningStockItem->update([
-                'berat_keluar' => $totalBeratKeluar,
-                'pcs_keluar' => $totalPcsKeluar,
-                'sisa_berat' => $sisaBerat,
-                'sisa_pcs' => $sisaPcs,
-            ]);
-        }
-
-        // Hapus data dari TransitPreCleaningStock
-        TransitPreCleaningStock::where('nomor_job', $item->nomor_job)
-            ->where('nomor_bstb', $item->nomor_bstb)
-            ->delete();
     }
 }
