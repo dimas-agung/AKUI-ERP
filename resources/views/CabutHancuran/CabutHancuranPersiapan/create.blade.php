@@ -71,7 +71,7 @@
                                                 name="id_box_hcr_kotor" data-placeholder="Pilih ID Box Stock Hcr Kotor">
                                                 <option value="">Pilih ID Box Stock Hcr Kotor</option>
                                                 @foreach ($stockTGK as $post)
-                                                    @if (strpos(strtolower($post->jenis_rambang), 'hcr rambang') === false)
+                                                    @if (str_contains(strtolower($post->jenis_rambang), 'hcr rambang') === true)
                                                         <option value="{{ $post->id_box_hcr_kotor }}">
                                                             {{ old('id_box_hcr_kotor', $post->id_box_hcr_kotor) }}
                                                         </option>
@@ -185,17 +185,20 @@
                     },
                     success: function(response) {
                         // Ambil nilai pertama dari respons jika ada
-                        let data = response.length > 0 ? response[0] : null;
-
-                        if (data) {
-                            $('#berat_masuk').val(data.berat_masuk);
-                            $('#jenis_rambang').val(data.jenis_rambang);
-
-                            // Hitung sisa berat berdasarkan berat masuk dan berat keluar
-                            hitungTotal();
-                        } else {
-                            console.error('No data found for the selected id_box_hcr_kotor');
-                        }
+                        let data = response.length > 0 ? response : null;
+                        data.forEach(v => {
+                            if (v.jenis_rambang.toLowerCase().includes("hcr rambang")) {
+                                
+                                $('#berat_masuk').val(v.sisa_berat);
+                                $('#jenis_rambang').val(v.jenis_rambang);
+                                // Hitung sisa berat berdasarkan berat masuk dan berat keluar
+                                hitungTotal();
+                            } else {
+                                console.error('No data found for the selected id_box_hcr_kotor');
+                            }
+                            
+                        });
+                       
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -223,7 +226,11 @@
             // Fungsi untuk menghitung sisa berat
             function hitungTotal() {
                 let beratMasuk = parseFloat($('#berat_masuk').val() || 0);
-                let beratKeluar = parseFloat($('#berat_keluar').val() || 0);
+                let beratKeluar = 0;
+                
+                     beratKeluar = parseFloat($('#berat_keluar').val() || 0);
+
+                
                 let sisaBerat = beratMasuk - beratKeluar;
 
                 let upah_operator = beratKeluar * 0.12 * 835

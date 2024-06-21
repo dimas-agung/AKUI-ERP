@@ -14,12 +14,29 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 class GradingHalusOutputController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $i =1;
-        $PreGHI = GradingHalusOutput::with('GradingHalusStock')->get();
+        
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = GradingHalusOutput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(GradingHalusOutput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreGHI = $query->with('GradingHalusStock')->get();
+        }else{
+            $PreGHI = GradingHalusOutput::with('GradingHalusStock')
+            // ->where('created_at','>=', Carbon::now()->subDays(2))
+            ->limit(1000)
+            ->latest()
+            ->get();
+        }
+
         // $TransitPre = GradingHalusStock::with('GradingHalusOutput')->get();
         // return $TransitPre;
 
@@ -105,5 +122,34 @@ class GradingHalusOutputController extends Controller
     public function destroy($nomor_job)
     {
         return $this->GradingHalusOutputService->destroy($nomor_job);
+    }
+    public function filter(Request $request)
+    {
+        $year = $request->input('year');
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+        $type = $request->input('type');
+
+        $query = GradingHalusOutput::query();
+
+        if ($year) {
+            $query->whereYear('created_at', $year);
+        }
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(GradingHalusOutput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+        } elseif ($startDate) {
+            $query->where(GradingHalusOutput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), '>=', $startDate);
+        } elseif ($endDate) {
+            $query->where(GradingHalusOutput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), '<=', $endDate);
+        }
+
+        if ($type) {
+            $query->where('jenis_raw_material', 'LIKE', "%{$type}%");
+        }
+
+        $data = $query->with('GradingHalusStock')->get();
+
+        return response()->json($data);
     }
 }

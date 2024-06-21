@@ -589,11 +589,16 @@
                                         </a>
                                         <ul class="submenu submenu-level-2">
                                             <li
-                                                class="submenu-item {{ Route::is('CabutHancuranStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('CabutHancuranStock.index') }}"
+                                                class="submenu-item {{ Route::is('CabutHancuranPersiapan*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutHancuranPersiapan.index') }}"
                                                     class="submenu-link">Cabut
-                                                    Hancuran
-                                                    <br>Stock</a>
+                                                    Hancuran Persiapan</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('CabutHancuranPersiapanStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('CabutHancuranPersiapanStock.index') }}"
+                                                    class="submenu-link">Cabut
+                                                    Hancuran Persiapan Stock</a>
                                             </li>
                                             <li
                                                 class="submenu-item {{ Route::is('CabutHancuranPenyebaran*') ? 'active' : '' }}">

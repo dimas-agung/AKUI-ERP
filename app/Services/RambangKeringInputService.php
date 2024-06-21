@@ -3,7 +3,8 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
-use App\Models\InputRambangBasah;
+use App\Models\RambangBasahInput;
+// use App\Models\RambangBasahInput;
 use App\Models\RambangBasahStock;
 use App\Models\RambangKeringInput;
 use App\Models\RambangKeringStock;
@@ -84,7 +85,7 @@ class RambangKeringInputService
                     }
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $existingItems = InputRambangBasah::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
+                    $existingItems = RambangBasahInput::where('id_box_hcr_kotor', $itemObject->id_box_hcr_kotor)
                         ->where('jenis_rambang', $itemObject->jenis_rambang)
                         ->get();
 
@@ -127,7 +128,7 @@ class RambangKeringInputService
             $rambangKeringInput = RambangKeringInput::findOrFail($id_box_hcr_kotor);
             // Hapus semua item terkait
             $stockPRM = RambangKeringStock::where('id_box_hcr_kotor', '=', $rambangKeringInput->id_box_hcr_kotor)
-                // ->where('jenis_rambang', $rambangKeringInput->jenis_rambang)
+                ->where('jenis_rambang', $rambangKeringInput->jenis_rambang)
                 ->first();
 
             if ($stockPRM) {
@@ -164,11 +165,11 @@ class RambangKeringInputService
                 }
 
                 // Ambil semua item yang sesuai dengan kriteria
-                $inputRambangBasah = InputRambangBasah::where('id_box_hcr_kotor', $rambangKeringInput->id_box_hcr_kotor)
+                $RambangBasahInput = RambangBasahInput::where('id_box_hcr_kotor', $rambangKeringInput->id_box_hcr_kotor)
                     ->where('jenis_rambang', $rambangKeringInput->jenis_rambang)
                     ->get();
 
-                foreach ($inputRambangBasah as $item) {
+                foreach ($RambangBasahInput as $item) {
 
                     // Update data dengan nilai baru
                     $item->update([
