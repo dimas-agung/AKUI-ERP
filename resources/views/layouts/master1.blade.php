@@ -557,7 +557,7 @@
                         @role('dry_a|admin')
                             {{-- <li class="sidebar-title">Dry A</li> --}}
                             <li
-                                class="sidebar-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*', 'DryAGradingHancuran*', 'DryAGradingHancuranStock*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('DryAGradingCabut*', 'DryAGradingCabutStock*', 'DryAGradingHancuran*', 'DryAGradingHancuranStock*', 'DryAWasteInput*', 'DryAWasteStock*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Dry A</span>
@@ -619,10 +619,10 @@
                                                 <a href="{{ route('DryAWasteInput.index') }}" class="submenu-link">Dry
                                                     A Waste<br>Input</a>
                                             </li>
-                                            {{-- <li class="submenu-item {{ Route::is('DryAWasteStock*') ? 'active' : '' }}">
+                                            <li class="submenu-item {{ Route::is('DryAWasteStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAWasteStock.index') }}" class="submenu-link">Dry A
                                                     Waste<br>Stock</a>
-                                            </li> --}}
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
