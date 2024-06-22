@@ -63,19 +63,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($pre_cleaning_outputs as $PCO)
+                                    @forelse ($pre_cleaning_outputs as $item)
                                         <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $PCO->nomor_job }}</td>
-                                            <td class="text-center">{{ $PCO->id_box_grading_kasar }}</td>
-                                            <td class="text-center">{{ $PCO->nomor_bstb }}</td>
-                                            <td class="text-center">{{ $PCO->id_box_raw_material }}</td>
-                                            <td class="text-center">{{ $PCO->nomor_batch }}</td>
-                                            <td class="text-center">{{ $PCO->nomor_nota_internal }}</td>
-                                            <td class="text-center">{{ $PCO->nama_supplier }}</td>
-                                            <td class="text-center">{{ $PCO->jenis_raw_material }}</td>
-                                            <td class="text-center">{{ $PCO->jenis_kirim }}</td>
-                                            <td class="text-center">{{ $PCO->berat_kirim }}
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td class="text-center">{{ $item->nomor_job }}</td>
+                                            <td class="text-center">{{ $item->id_box_grading_kasar }}</td>
+                                            <td class="text-center">{{ $item->nomor_bstb }}</td>
+                                            <td class="text-center">{{ $item->id_box_raw_material }}</td>
+                                            <td class="text-center">{{ $item->nomor_batch }}</td>
+                                            <td class="text-center">{{ $item->nomor_nota_internal }}</td>
+                                            <td class="text-center">{{ $item->nama_supplier }}</td>
+                                            <td class="text-center">{{ $item->jenis_raw_material }}</td>
+                                            <td class="text-center">{{ $item->jenis_kirim }}</td>
+                                            <td class="text-center">{{ $item->berat_kirim }}
                                             </td>
                                             <td class="text-center">{{ $PCO->pcs_kirim }}</td>
                                             {{-- @role('admin') --}}
@@ -91,32 +91,32 @@
                                             <td class="text-center">{{ $PCO->karat }}</td>
                                             <td class="text-center">{{ $PCO->rontokan_flek }}
                                             </td>
-                                            <td class="text-center">{{ $PCO->rontokan_bahan }}
+                                            <td class="text-center">{{ $item->rontokan_bahan }}
                                             </td>
                                             <td class="text-center">
-                                                {{ $PCO->rontokan_serabut }}</td>
-                                            <td class="text-center">{{ $PCO->ws_0_0_0 }}</td>
+                                                {{ $item->rontokan_serabut }}</td>
+                                            <td class="text-center">{{ $item->ws_0_0_0 }}</td>
                                             <td class="text-center">
-                                                {{ $PCO->berat_pre_cleaning }}</td>
+                                                {{ $item->berat_pre_cleaning }}</td>
                                             <td class="text-center">
-                                                {{ $PCO->pcs_pre_cleaning }}</td>
-                                            <td class="text-center">{{ $PCO->susut }}</td>
-                                            <td class="text-center">{{ $PCO->user_created }}</td>
-                                            <td class="text-center">{{ $PCO->user_updated }}</td>
-                                            <td class="text-center">{{ $PCO->created_at }}</td>
+                                                {{ $item->pcs_pre_cleaning }}</td>
+                                            <td class="text-center">{{ $item->susut }}</td>
+                                            <td class="text-center">{{ $item->user_created }}</td>
+                                            <td class="text-center">{{ $item->user_updated }}</td>
+                                            <td class="text-center">{{ $item->created_at }}</td>
                                             <td class="text-center">
-                                                {{ $PCO->created_at != $PCO->updated_at ? $PCO->updated_at : '' }}
+                                                {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    <form style="display: flex" id="deleteForm{{ $PCO->id }}"
-                                                        action="{{ route('PreCleaningOutput.destroy', $PCO->id) }}"
+                                                    <form style="display: flex" id="deleteForm{{ $item->id }}"
+                                                        action="{{ route('PreCleaningOutput.destroy', $item->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-link"
                                                             data-original-title="Remove"
-                                                            onclick="confirmDelete({{ $PCO->id }})">
+                                                            onclick="confirmDelete({{ $item->id }})">
                                                             <i class="bi bi-trash3 text-danger"></i>
                                                         </button>
                                                     </form>

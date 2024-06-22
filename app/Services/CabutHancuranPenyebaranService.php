@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\CabutBuluPenerimaan;
 use App\Models\CabutBuluPenyebaran;
 use Illuminate\Http\RedirectResponse;
+use App\Models\CabutHancuranPersiapan;
 use App\Models\CabutHancuranPenyebaran;
 use Illuminate\Support\Facades\Validator;
 use App\Models\CabutHancuranPersiapanStock;
@@ -76,6 +77,20 @@ class CabutHancuranPenyebaranService
                         ]);
                     }
 
+                    $CabutHancuranPersiapan = CabutHancuranPersiapan::where('nomor_job', $itemObject->nomor_job)
+                        // ->where('nomor_bstb', $itemObject->nomor_bstb)
+                        ->get();
+
+                    foreach ($CabutHancuranPersiapan as $item) {
+
+                        // Update data dengan nilai baru
+                        $item->update([
+                            // Update data TransitPreCleaningStock
+                            'status'       => $itemObject->status ?? 0,
+                            // 'user_updated' => $itemObject->user_created ?? " ",
+                        ]);
+                    }
+
 
                     DB::commit();
                 } catch (\Exception $e) {
@@ -122,6 +137,14 @@ class CabutHancuranPenyebaranService
                 foreach ($CabutHancuranPersiapanStock as $cabutStock) {
                     // Update status menjadi 1 pada CabutHancuranPersiapanStock
                     $cabutStock->update(['status' => 1]);
+                }
+
+                // Perbarui status PreCleaningOutput jika ada
+                $CabutHancuranPersiapan = CabutHancuranPersiapan::where('nomor_job', '=', $nomor_job)->get();
+
+                foreach ($CabutHancuranPersiapan as $item) {
+                    // Update status menjadi 1 pada CabutHancuranPersiapan
+                    $item->update(['status' => 1]);
                 }
             }
 

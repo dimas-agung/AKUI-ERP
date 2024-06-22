@@ -19,16 +19,10 @@
                         <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
-                            @foreach ($pre_cleaning_stocks as $PreCleaningStock)
-                                @php
-                                    // Menghitung sisa berat
-                                    $sisaBerat = $PreCleaningStock->berat_masuk - $PreCleaningStock->berat_keluar;
-                                @endphp
-                                @if ($sisaBerat != 0)
-                                    <option value="{{ $PreCleaningStock->nomor_job }}">
-                                        {{ $PreCleaningStock->nomor_job }}
-                                    </option>
-                                @endif
+                            @foreach ($pre_cleaning_stocks as $item)
+                                <option value="{{ $item->nomor_job }}">
+                                    {{ $item->nomor_job }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -38,9 +32,9 @@
                         <select class="select2 form-select" style="width: 100%;" name="plant" id="plant"
                             data-placeholder="Pilih Plant">
                             <option value="">Pilih Plant</option>
-                            @foreach ($perusahaan as $Perusahaans)
-                                <option value="{{ $Perusahaans->plant }}">
-                                    {{ $Perusahaans->plant }}
+                            @foreach ($perusahaan as $item)
+                                <option value="{{ $item->plant }}">
+                                    {{ $item->plant }}
                                 </option>
                             @endforeach
                         </select>
@@ -91,14 +85,11 @@
                             name="operator_sikat_dan_kompresor" id="operator_sikat_dan_kompresor"
                             data-placeholder="Pilih Operator Sikat & Kompresor">
                             <option value="">Pilih Operator Sikat & Kompresor</option>
-                            @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->status == 1)
-                                    @if (strpos(strtolower($MasterSPRM->job), 'sikat') !== false &&
-                                            strpos(strtolower($MasterSPRM->job), 'kompresor') !== false)
-                                        <option value="{{ $MasterSPRM->nama }}">
-                                            {{ $MasterSPRM->nama }}
-                                        </option>
-                                    @endif
+                            @foreach ($master_operators->sortBy('nama') as $item)
+                                @if (strpos(strtolower($item->job), 'sikat') !== false && strpos(strtolower($item->job), 'kompresor') !== false)
+                                    <option value="{{ $item->nama }}">
+                                        {{ $item->nama }}
+                                    </option>
                                 @endif
                             @endforeach
                         </select>
@@ -124,13 +115,11 @@
                         <select class="select2 form-select" style="width: 100%;" name="operator_cutter"
                             id="operator_cutter" data-placeholder="Pilih Operator Cutter">
                             <option value="">Pilih Operator Cutter</option>
-                            @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->status == 1)
-                                    @if (strpos(strtolower($MasterSPRM->job), 'cutter') !== false)
-                                        <option value="{{ $MasterSPRM->nama }}">
-                                            {{ $MasterSPRM->nama }}
-                                        </option>
-                                    @endif
+                            @foreach ($master_operators->sortBy('nama') as $item)
+                                @if (strpos(strtolower($item->job), 'cutter') !== false)
+                                    <option value="{{ $item->nama }}">
+                                        {{ $item->nama }}
+                                    </option>
                                 @endif
                             @endforeach
                         </select>
@@ -217,6 +206,7 @@
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" id="tambah_data"
                             onclick="addRow()">Tambah</button>
+                        <a href="{{ Route('PreCleaningOutput.index') }}" type="button" class="btn btn-danger">Close</a>
                     </div>
                 </form>
             </div>
@@ -291,47 +281,22 @@
                     success: function(response) {
                         console.log(response);
 
-                        // Menghitung berat_masuk - berat_keluar
-                        let sisaBerat = response.berat_masuk - response.berat_keluar;
-
-                        // Pemeriksaan jika sisaBerat tidak sama dengan 0
-                        if (sisaBerat !== 0) {
-                            // Menyimpan sisaBerat dalam variabel baru
-                            let sisaBeratFormatted = parseFloat(sisaBerat).toFixed(2);
-
-                            // Mengatur nilai Nomor Batch sesuai dengan respons dari server
-                            $('#id_box_grading_kasar').val(response.id_box_grading_kasar);
-                            $('#id_box_raw_material').val(response.id_box_raw_material);
-                            $('#nomor_batch').val(response.nomor_batch);
-                            $('#nomor_nota_internal').val(response.nomor_nota_internal);
-                            $('#nama_supplier').val(response.nama_supplier);
-                            $('#jenis_raw_material').val(response.jenis_raw_material);
-                            $('#jenis_kirim').val(response.jenis_kirim);
-                            $('#tujuan_kirim').val(response.tujuan_kirim);
-                            $('#modal').val(response.modal);
-                            $('#total_modal').val(response.total_modal);
-                            $('#kadar_air').val(response.kadar_air);
-                            $('#pcs_kirim').val(response.pcs_masuk - response.pcs_keluar);
-                            $('#berat_kirim').val(response.berat_masuk - response.berat_keluar);
-                            if (!isNaN(sisaBeratFormatted)) {
-                                $('#sisa_berat').val(sisaBeratFormatted);
-                            } else {
-                                console.error('Nilai sisa berat tidak valid.');
-                            }
-                        } else {
-                            // Jika sisaBerat === 0, hapus opsi dan reset nilai input
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Berat masuk - berat keluar sama dengan 0. Pilih nomor job lain.',
-                            }).then(() => {
-                                // Hapus opsi nomor job yang sudah dipilih
-                                $('#nomor_job option[value="' + selectedNomorJob + '"]')
-                                    .remove();
-                                // Reset nilai input
-                                $('#nomor_job').val('').trigger('change');
-                            });
-                        }
+                        // Mengatur nilai Nomor Batch sesuai dengan respons dari server
+                        $('#id_box_grading_kasar').val(response.id_box_grading_kasar);
+                        $('#id_box_raw_material').val(response.id_box_raw_material);
+                        $('#nomor_batch').val(response.nomor_batch);
+                        $('#nomor_nota_internal').val(response.nomor_nota_internal);
+                        $('#nama_supplier').val(response.nama_supplier);
+                        $('#jenis_raw_material').val(response.jenis_raw_material);
+                        $('#jenis_kirim').val(response.jenis_kirim);
+                        $('#tujuan_kirim').val(response.tujuan_kirim);
+                        $('#modal').val(response.modal);
+                        $('#total_modal').val(response.total_modal);
+                        $('#kadar_air').val(response.kadar_air);
+                        $('#pcs_kirim').val(response.pcs_masuk - response.pcs_keluar);
+                        $('#berat_kirim').val(response.berat_masuk - response.berat_keluar);
+                        // $('#pcs_kirim').val(response.sisa_pcs);
+                        // $('#berat_kirim').val(response.sisa_berat);
                     },
                     error: function(error) {
                         console.error('Error:', error);
@@ -627,7 +592,7 @@
                 });
 
                 // Mengosongkan nilai dropdown nomor_job
-                $('#id_box_grading_kasar, #id_box_raw_material, #nomor_batch, #nomor_nota_internal, #nama_supplier, #jenis_raw_material, #jenis_kirim, #tujuan_kirim, #modal, #total_modal, #kadar_air, #pcs_kirim, #berat_kirim, #operator_sikat_dan_kompresor, #operator_flex_dan_poles, #operator_cutter, #kuningan, #Sterofoam, #karat, #rontokan_flex, #rontokan_bahan,#rontokan_serabut, #ws, #berat_precleaning, #pcs')
+                $('#id_box_grading_kasar, #id_box_raw_material, #nomor_batch, #nomor_nota_internal, #nama_supplier, #jenis_raw_material, #jenis_kirim, #tujuan_kirim, #modal, #total_modal, #kadar_air, #operator_sikat_dan_kompresor, #operator_flex_dan_poles, #operator_cutter, #kuningan, #Sterofoam, #karat, #rontokan_flex, #rontokan_bahan,#rontokan_serabut, #ws, #berat_precleaning, #pcs')
                     .val('');
                 $('#berat_kirim').val('');
                 $('#pcs_kirim').val('');
