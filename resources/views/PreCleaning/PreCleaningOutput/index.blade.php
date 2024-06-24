@@ -77,19 +77,19 @@
                                             <td class="text-center">{{ $item->jenis_kirim }}</td>
                                             <td class="text-center">{{ $item->berat_kirim }}
                                             </td>
-                                            <td class="text-center">{{ $PCO->pcs_kirim }}</td>
+                                            <td class="text-center">{{ $item->pcs_kirim }}</td>
                                             {{-- @role('admin') --}}
-                                                <td class="text-center">{{ number_format($PCO->modal, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($PCO->total_modal, 2, ',', '.') }}
+                                                <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
+                                                <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
                                                 </td>
                                             {{-- @endrole --}}
-                                            <td class="text-center">{{ $PCO->operator_sikat_n_kompresor }}</td>
-                                            <td class="text-center">{{ $PCO->operator_flek_n_poles }}</td>
-                                            <td class="text-center">{{ $PCO->operator_cutter }}</td>
-                                            <td class="text-center">{{ $PCO->kuningan }}</td>
-                                            <td class="text-center">{{ $PCO->sterofoam }}</td>
-                                            <td class="text-center">{{ $PCO->karat }}</td>
-                                            <td class="text-center">{{ $PCO->rontokan_flek }}
+                                            <td class="text-center">{{ $item->operator_sikat_n_kompresor }}</td>
+                                            <td class="text-center">{{ $item->operator_flek_n_poles }}</td>
+                                            <td class="text-center">{{ $item->operator_cutter }}</td>
+                                            <td class="text-center">{{ $item->kuningan }}</td>
+                                            <td class="text-center">{{ $item->sterofoam }}</td>
+                                            <td class="text-center">{{ $item->karat }}</td>
+                                            <td class="text-center">{{ $item->rontokan_flek }}
                                             </td>
                                             <td class="text-center">{{ $item->rontokan_bahan }}
                                             </td>
