@@ -32,7 +32,6 @@
                                         <th scope="col" class="text-center">Berat</th>
                                         <th scope="col" class="text-center">Pcs</th>
                                         <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
@@ -49,7 +48,6 @@
                                             <td class="text-center">{{ $item->berat }}</td>
                                             <td class="text-center">{{ $item->pcs }}</td>
                                             <td class="text-center">{{ $item->keterangan }}</td>
-                                            <td class="text-center">{{ $item->status }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>
                                             <td class="text-center">{{ $item->created_at }}</td>
