@@ -52,6 +52,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TransitCabutBuluHancuranSeeder::class);
         $this->call(MasterTujuanKirimDryASeeder::class);
         $this->call(DryAGradingHancuranStockSeeder::class);
+        $this->call(DryAWasteStockSeeder::class);
         $this->call(roleSeeders::class);
         $this->call(userSeeders::class);
 

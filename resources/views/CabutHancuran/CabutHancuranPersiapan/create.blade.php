@@ -38,35 +38,6 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>ID Box HCR Kotor</label>
-                                            {{-- <select id="id_stock_hcr_kotor" class="select2 form-select"
-                                                name="id_stock_hcr_kotor" data-placeholder="Pilih ID Box HCR Kotor">
-                                                <option value="">Pilih ID Box HCR Kotor</option>
-                                                @php
-                                                    $selectedNomorBSTB = ''; // Inisialisasi variabel untuk menyimpan nomor_bstb yang sudah ditampilkan
-                                                @endphp
-                                                @foreach ($stockTGK as $post)
-                                                    @if ($selectedNomorBSTB != $post->id_box_hcr_kotor)
-                                                        @php
-                                                            $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
-                                                        @endphp
-                                                        @foreach ($stockTGK as $innerPost)
-                                                            @if ($innerPost->id_box_hcr_kotor == $post->id_box_hcr_kotor && $innerPost->sisa_berat > 0)
-                                                                @if (!$beratMasukShown)
-                                                                    <option value="{{ $innerPost->id_box_hcr_kotor }}">
-                                                                        {{ old('id_box_hcr_kotor', $innerPost->id_box_hcr_kotor) }}
-                                                                    </option>
-                                                                    @php
-                                                                        $beratMasukShown = true; // Set nilai variabel untuk menandai bahwa berat_masuk sudah ditampilkan
-                                                                    @endphp
-                                                                @endif
-                                                            @endif
-                                                        @endforeach
-                                                        @php
-                                                            $selectedNomorBSTB = $post->id_box_hcr_kotor; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
-                                                        @endphp
-                                                    @endif
-                                                @endforeach
-                                            </select> --}}
                                             <select id="id_box_hcr_kotor" class="select2 form-select"
                                                 name="id_box_hcr_kotor" data-placeholder="Pilih ID Box Stock Hcr Kotor">
                                                 <option value="">Pilih ID Box Stock Hcr Kotor</option>
@@ -188,7 +159,7 @@
                         let data = response.length > 0 ? response[0] : null;
 
                         if (data) {
-                            $('#berat_masuk').val(data.berat_masuk);
+                            $('#berat_masuk').val(data.sisa_berat);
                             $('#jenis_rambang').val(data.jenis_rambang);
 
                             // Hitung sisa berat berdasarkan berat masuk dan berat keluar

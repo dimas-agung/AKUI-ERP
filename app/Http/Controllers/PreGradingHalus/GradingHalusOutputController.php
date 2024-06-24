@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\DB;
 
 class GradingHalusOutputController extends Controller
 {
+    protected $GradingHalusOutputService;
+
+    public function __construct(GradingHalusOutputService $GradingHalusOutputService, HppService $HppService)
+    {
+        $this->GradingHalusOutputService = $GradingHalusOutputService;
+    }
     public function index(){
         $i =1;
         $PreGHI = GradingHalusOutput::with('GradingHalusStock')->get();
@@ -89,12 +95,6 @@ class GradingHalusOutputController extends Controller
         return response()->json(['unavailableBoxes' => $availableBoxes]);
     }
 
-    protected $GradingHalusOutputService;
-
-    public function __construct(GradingHalusOutputService $GradingHalusOutputService, HppService $HppService)
-    {
-        $this->GradingHalusOutputService = $GradingHalusOutputService;
-    }
 
     public function store(Request $request)
     {

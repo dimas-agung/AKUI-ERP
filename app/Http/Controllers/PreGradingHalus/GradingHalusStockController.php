@@ -13,6 +13,7 @@ class GradingHalusStockController extends Controller
     {
         $i = 1;
         $GradigHalusStock = GradingHalusStock::all();
+        // return $GradigHalusStock;
         return response()->view('PreGradingHalus.GradingHalusStock.index', [
             'grading_halus_stocks'          => $GradigHalusStock,
             'i'                             => $i

@@ -59,7 +59,7 @@
                             </tr>
                             <?php endif; ?>
                             <?php endforeach; ?>
-                            <?php if ($item->sisa_berat != 0): ?>
+                            <?php if (empty($grading_halus_stocks)): ?>
                             <div class="alert alert-danger">
                                 Data Grading Halus Stock belum Tersedia.
                             </div>
