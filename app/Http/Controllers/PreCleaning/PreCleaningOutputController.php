@@ -21,7 +21,7 @@ class PreCleaningOutputController extends Controller
     public function index()
     {
         $i = 1;
-        $PreCleaningOutput = PreCleaningOutput::all();
+        $PreCleaningOutput = PreCleaningOutput::limit(1000)->latest()->get();
         return response()->view('PreCleaning.PreCleaningOutput.index', [
             'pre_cleaning_outputs' => $PreCleaningOutput,
             'i' => $i,
