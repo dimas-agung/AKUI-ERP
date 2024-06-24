@@ -58,16 +58,15 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    @if ($item->status == 1)
-                                                        <form style="display: flex"
-                                                            id="deleteForm{{ $item->tanggal_cabut }}"
-                                                            action="{{ route('DryAWasteInput.destroy', $item->tanggal_cabut) }}"
+                                                    @if ($item->can_delete())
+                                                        <form style="display: flex" id="deleteForm{{ $item->id }}"
+                                                            action="{{ route('DryAWasteInput.destroy', $item->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="button" class="btn btn-link"
                                                                 data-original-title="Remove"
-                                                                onclick="confirmDelete('{{ $item->tanggal_cabut }}')">
+                                                                onclick="confirmDelete('{{ $item->id }}')">
                                                                 <i class="bi bi-trash3 text-danger"></i>
                                                             </button>
                                                         </form>

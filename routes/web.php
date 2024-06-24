@@ -767,14 +767,12 @@ Route::middleware('auth')->group(function () {
                 Route::get('/dry_a_waste_input', 'index')->name('DryAWasteInput.index');
                 Route::get('/dry_a_waste_input/create', 'create')->name('DryAWasteInput.create');
                 Route::post('/dry_a_waste_input/store', 'store')->name('DryAWasteInput.store');
-                Route::post('/dry_a_waste_input/cek_data', 'CeksendData')->name('DryAWasteInput.CeksendData');
-                Route::get('/dry_a_waste_input/set', 'set')->name('DryAWasteInput.set');
                 Route::get('/dry_a_waste_input/setjenis', 'setJenis')->name('DryAWasteInput.setJenis');
-                Route::delete('/dry_a_waste_input/destroy/{nomor_job}', 'destroy')->name('DryAWasteInput.destroy');
+                Route::delete('/dry_a_waste_input/destroy/{id}', 'destroy')->name('DryAWasteInput.destroy');
             });
-            // Route::controller(App\Http\Controllers\DryAWaste\DryAWasteStockController::class)->group(function () {
-            //     Route::get('/dry_a_grading_hancuran_stock', 'index')->name('DryAGradingHancuranStock.index');
-            // });
+            Route::controller(App\Http\Controllers\DryAWaste\DryAWasteStockController::class)->group(function () {
+                Route::get('/dry_a_waste_stock', 'index')->name('DryAWasteStock.index');
+            });
         });
     });
 });
