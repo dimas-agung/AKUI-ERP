@@ -17,10 +17,9 @@ use Illuminate\View\View;
 class PreCleaningInputController extends Controller
 {
     //Index
-    public function index()
-    {
-        $i = 1;
-        $PreCleaningI = PreCleaningInput::with('StockTransitGradingKasar')->get();
+    public function index(){
+        $i =1;
+        $PreCleaningI = PreCleaningInput::with('TransitGradingKasarStock')->get();
         // $existingItem = StockTransitGradingKasar::with('PreCleaningInput')
         // ->get();
         // return $existingItem;
@@ -37,8 +36,7 @@ class PreCleaningInputController extends Controller
      */
     public function create(): View
     {
-        $PreCleaningI = PreCleaningInput::with('StockTransitGradingKasar')->get();
-        $stockTGK = StockTransitGradingKasar::with('PreCleaningInput')->get();
+        $stockTGK = TransitGradingKasarStock::with('PreCleaningInput')->get();
         // return $PrmRawMOIC;
         return view('PreCleaning.PreCleaningInput.create', compact('stockTGK', 'PreCleaningI'));
     }

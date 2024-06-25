@@ -19,7 +19,7 @@ class GradingHalusOutputController extends Controller
 {
     public function index(Request $request){
         $i =1;
-        
+
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
@@ -106,12 +106,6 @@ class GradingHalusOutputController extends Controller
         return response()->json(['unavailableBoxes' => $availableBoxes]);
     }
 
-    protected $GradingHalusOutputService;
-
-    public function __construct(GradingHalusOutputService $GradingHalusOutputService, HppService $HppService)
-    {
-        $this->GradingHalusOutputService = $GradingHalusOutputService;
-    }
 
     public function store(Request $request)
     {

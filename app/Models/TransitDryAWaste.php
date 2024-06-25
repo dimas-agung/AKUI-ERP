@@ -21,4 +21,8 @@ class TransitDryAWaste extends Model
         'nomor_bstb',
         'status',
     ];
+    public function DryAWasteOutput()
+    {
+        return $this->hasOne(DryAWasteOutput::class, 'jenis_waste', 'jenis_waste');
+    }
 }

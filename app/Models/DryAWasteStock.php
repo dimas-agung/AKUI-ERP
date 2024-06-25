@@ -22,4 +22,8 @@ class DryAWasteStock extends Model
         'sisa_pcs',
         'status',
     ];
+    public function DryAWasteOutput()
+    {
+        return $this->hasMany(DryAWasteOutput::class, 'jenis_waste', 'jenis_waste');
+    }
 }

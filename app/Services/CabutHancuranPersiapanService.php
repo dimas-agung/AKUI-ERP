@@ -80,12 +80,13 @@ class CabutHancuranPersiapanService
 
                     foreach ($existingItems as $existingItem) {
                         // Hitung sisa berat dan sisa pcs
-                        $sisaBerat = $existingItem->berat_masuk - ($itemObject->berat_keluar ?? 0);
+                        $BeratKeluar = $existingItem->berat_keluar + ($itemObject->berat_keluar ?? 0);
+                        $sisaBerat = $existingItem->berat_masuk - $BeratKeluar;
 
                         // Update data dengan nilai baru
                         $existingItem->update([
                             // Update data PreGradingHalusAddingStock
-                            'berat_keluar' => $itemObject->berat_keluar ?? 0,
+                            'berat_keluar' => $BeratKeluar,
                             'sisa_berat'   => $sisaBerat,
                             'user_updated' => $itemObject->user_created ?? "There isn't any",
                         ]);

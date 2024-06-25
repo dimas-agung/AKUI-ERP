@@ -30,4 +30,12 @@ class DryAWasteOutput extends Model
         }
         return false;
     }
+    public function TransitDryAWaste()
+    {
+        return $this->hasMany(TransitDryAWaste::class, 'jenis_waste', 'jenis_waste');
+    }
+    public function DryAWasteStock()
+    {
+    	return $this->belongsTo(DryAWasteStock::class, 'jenis_waste', 'jenis_waste');
+    }
 }
