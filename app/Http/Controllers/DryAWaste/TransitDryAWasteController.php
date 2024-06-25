@@ -11,7 +11,7 @@ class TransitDryAWasteController extends Controller
     public function index ()
     {
         $i = 1;
-        $TransitPreCleaningStock = TransitDryAWaste::with('PreCleaningOutput')->get();
+        $TransitPreCleaningStock = TransitDryAWaste::all();
         // return $PrmRawMOI;
         return response()->view('DryAWaste.TransitDryAWaste.index', [
             'transit_pre_cleaning_stocks' => $TransitPreCleaningStock,

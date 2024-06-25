@@ -78,8 +78,8 @@ class DryAWasteOutputController extends Controller
     }
 
 
-    public function destroy($jenis_waste): RedirectResponse
+    public function destroy($id): RedirectResponse
     {
-        return $this->DryAWasteOutputService->destroy($jenis_waste);
+        return $this->DryAWasteOutputService->destroy($id);
     }
 }

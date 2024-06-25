@@ -550,7 +550,7 @@
                         @endrole
                         @role('dry_a|admin')
                             <li
-                                class="sidebar-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*', 'DryAOutput*', 'TransitDryA*', 'TransitDryAHancuran*', 'TransitCabutHancuran*', 'DryAPenerimaanHancuran*', 'DryAPenerimaanHancuranStock*', 'DryAOutputHancuran*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*', 'DryAOutput*', 'TransitDryA*', 'TransitDryAHancuran*', 'TransitCabutHancuran*', 'DryAPenerimaanHancuran*', 'DryAPenerimaanHancuranStock*', 'DryAOutputHancuran*', 'DryAWasteOutput*', 'DryAWasteStock*', 'TransitDryAWaste*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Dry A</span>
@@ -591,7 +591,7 @@
                                     </li>
 
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*', 'DryAOutput*', 'TransitDryA*') && !Route::is('TransitDryAHancuran*', 'TransitCabutHancuran*', 'DryAPenerimaanHancuran*', 'DryAPenerimaanHancuranStock*', 'DryAOutputHancuran*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*', 'DryAOutput*', 'TransitDryA*') && !Route::is('TransitDryAHancuran*', 'TransitCabutHancuran*', 'DryAPenerimaanHancuran*', 'DryAPenerimaanHancuranStock*', 'DryAOutputHancuran*', 'TransitDryAWaste*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Dry A Cabut</span>
                                         </a>
@@ -616,7 +616,7 @@
                                                     Output Cabut</a>
                                             </li>
                                             <li
-                                                class="submenu-item {{ Route::is('TransitDryA*') && !Route::is('TransitDryAHancuran*') ? 'active' : '' }}">
+                                                class="submenu-item {{ Route::is('TransitDryA*') && !Route::is('TransitDryAHancuran*') && !Route::is('TransitDryAWaste*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitDryA.index') }}" class="submenu-link">Transit
                                                     Dry A Cabut</a>
                                             </li>
@@ -624,7 +624,7 @@
                                     </li>
 
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('DryAWasteOutput*', 'DryAWasteStock*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('DryAWasteOutput*', 'DryAWasteStock*', 'TransitDryAWaste*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Dry A Waste</span>
                                         </a>
@@ -633,13 +633,12 @@
                                                 <a href="{{ route('DryAWasteStock.index') }}" class="submenu-link">Dry A
                                                     Waste<br>Stock</a>
                                             </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('DryAWasteOutput*') && !Route::is('DryAWasteStock*') ? 'active' : '' }}">
+                                            <li class="submenu-item {{ Route::is('DryAWasteOutput*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAWasteOutput.index') }}" class="submenu-link">Dry
                                                     A Waste<br>Output</a>
                                             </li>
                                             <li
-                                                class="submenu-item {{ Route::is('TransitDryAWaste*') && !Route::is('DryAWasteStock*') ? 'active' : '' }}">
+                                                class="submenu-item {{ Route::is('TransitDryAWaste*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitDryAWaste.index') }}"
                                                     class="submenu-link">Transit Dry
                                                     A Waste</a>

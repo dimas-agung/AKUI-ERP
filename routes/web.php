@@ -596,9 +596,10 @@ Route::middleware('auth')->group(function (){
                 Route::get('/dry_a_waste_output', 'index')->name('DryAWasteOutput.index');
                 Route::get('/dry_a_waste_output/create', 'create')->name('DryAWasteOutput.create');
                 Route::get('/dry_a_waste_output/get_pcc', 'setpcc')->name('DryAWasteOutput.setpcc');
+                Route::post('/dry_a_waste_output/sendData', 'sendData')->name('DryAWasteOutput.sendData');
                 Route::post('/dry_a_waste_output/store', 'store')->name('DryAWasteOutput.store');
                 Route::get('/dry_a_waste_output/setjenis', 'setJenis')->name('DryAWasteOutput.setJenis');
-                Route::delete('/dry_a_waste_output/destroy/{jenis_waste}', 'destroy')->name('DryAWasteOutput.destroy');
+                Route::delete('/dry_a_waste_output/destroy/{id}', 'destroy')->name('DryAWasteOutput.destroy');
             });
             Route::controller(App\Http\Controllers\DryAWaste\TransitDryAWasteController::class)->group(function () {
                 Route::get('/transit_dry_a_waste', 'index')->name('TransitDryAWaste.index');

@@ -1,6 +1,9 @@
 <?php
 namespace App\Services;
 
+use App\Models\DryAWasteInput;
+use App\Models\DryAWasteOutput;
+use App\Models\DryAWasteStock;
 use App\Models\GradingHalusOutput;
 use App\Models\MasterJenisGradingHalus;
 use App\Models\PreCleaningOutput;
@@ -8,6 +11,7 @@ use App\Models\TransitGradingHalus;
 use Illuminate\Http\Request;
 use App\Models\GradingHalusInput;
 use App\Models\GradingHalusStock;
+use App\Models\TransitDryAWaste;
 use App\Models\TransitPreCleaningStock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -36,10 +40,10 @@ class DryAWasteOutputService
 
             // Validate each item in dataArray
             $validator = Validator::make($mergedData, [
-                'berat_job' => 'required', // Change with appropriate field name
-                'pcs_job' => 'required', // Change with appropriate field name
+                'berat' => 'required', // Change with appropriate field name
+                'pcs' => 'required', // Change with appropriate field name
                 'tujuan_kirim' => 'required', // Change with appropriate field name
-                'id_box_grading_halus' => 'required', // Change with appropriate field name
+                'jenis_waste' => 'required', // Change with appropriate field name
             ]);
 
             // If validation fails, return error message
@@ -53,21 +57,17 @@ class DryAWasteOutputService
                     DB::beginTransaction();
 
                     // Create instance of GradingHalusInput
-                    GradingHalusOutput::create($mergedData);
+                    DryAWasteOutput::create($mergedData);
 
-                    TransitGradingHalus::create([
-                        'unit'                  => $mergedData['unit'] ?? 'grading halus',
-                        'nomor_batch'           => $mergedData['nomor_batch'],
+                    TransitDryAWaste::create([
+                        'unit'                  => $mergedData['unit'] ?? 'Dry A Waste',
+                        'jenis_waste'           => $mergedData['jenis_waste'],
+                        'berat'                 => $mergedData['berat'],
+                        'pcs'                   => $mergedData['pcs'],
+                        'tujuan_kirim'          => $mergedData['tujuan_kirim'],
                         'nomor_job'             => $mergedData['nomor_job'],
                         'nomor_bstb'            => $mergedData['nomor_bstb'],
-                        'jenis_job'             => $mergedData['jenis_job'],
-                        'upah_operator'         => $mergedData['upah_operator'],
-                        'berat_job'           => $mergedData['berat_job'] ?? 0,
-                        'pcs_job'             => $mergedData['pcs_job'] ?? 0,
-                        'tujuan_kirim'          => $mergedData['tujuan_kirim'],
                         'keterangan'            => $mergedData['keterangan'],
-                        'modal'                 => $mergedData['modal'],
-                        'total_modal'           => $mergedData['total_modal'],
                         'user_created'          => $mergedData['user_created'],
                         'user_update'           => $mergedData['user_updated'] ?? "There isn't any",
                     ]);
@@ -75,28 +75,28 @@ class DryAWasteOutputService
                     $itemObject = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $existingItems = GradingHalusStock::where('id_box_grading_halus', $itemObject->id_box_grading_halus)
+                    $existingItems = DryAWasteStock::where('jenis_waste', $itemObject->jenis_waste)
                     ->get();
 
                     foreach ($existingItems as $existingItem) {
                         // Hitung sisa berat dan sisa pcs
-                        $sisaBerat = $existingItem->berat_masuk - ($itemObject->berat_job ?? 0);
-                        $sisaPcs = $existingItem->pcs_masuk - ($itemObject->pcs_job ?? 0);
-                        $totalModal = $sisaBerat * ($existingItem->modal ?? 0);
+                        $beratKeluar = $existingItem->berat_keluar + ($itemObject->berat ?? 0);
+                        $pcsKeluar = $existingItem->pcs_keluar + ($itemObject->pcs ?? 0);
+                        $sisaBerat = $existingItem->berat_masuk - ($beratKeluar ?? 0);
+                        $sisaPcs = $existingItem->pcs_masuk - ($pcsKeluar ?? 0);
 
                         // Update data dengan nilai baru
                         $existingItem->update([
                             // Update data PreGradingHalusAddingStock
-                            'berat_keluar' => $itemObject->berat_job ?? 0,
-                            'pcs_keluar'   => $itemObject->pcs_job ?? 0,
+                            'berat_keluar' => $beratKeluar ?? 0,
+                            'pcs_keluar'   => $pcsKeluar ?? 0,
                             'sisa_berat'   => $sisaBerat,
                             'sisa_pcs'     => $sisaPcs,
-                            'total_modal'  => $totalModal,
                             'user_updated' => $itemObject->user_created ?? "There isn't any",
                         ]);
                     }
 
-                    $existingItems = GradingHalusInput::where('id_box_grading_halus', $itemObject->id_box_grading_halus)
+                    $existingItems = DryAWasteInput::where('jenis_waste', $itemObject->jenis_waste)
                     ->get();
 
                     $dataToUpdate = [
@@ -116,7 +116,7 @@ class DryAWasteOutputService
                     return response()->json([
                         'success' => false,
                         'error' => 'Failed to save data. ' . $e->getMessage(),
-                        'redirectTo' => route('GradingHalusInput.create')
+                        'redirectTo' => route('DryAWasteOutput.create')
                     ], 504);
                 }
             }
@@ -126,90 +126,168 @@ class DryAWasteOutputService
         return response()->json([
             'success' => true,
             'message' => 'Data successfully saved!',
-            'redirectTo' => route('GradingHalusOutput.index')
+            'redirectTo' => route('DryAWasteOutput.index')
         ], 201);
     }
 
-    public function destroy($id_box_grading_halus): RedirectResponse
+    // public function destroy($id): RedirectResponse
+    // {
+    //     try {
+    //         // Gunakan transaksi database untuk memastikan konsistensi
+    //         DB::beginTransaction();
+
+    //         // Ambil data PreCleaningInput berdasarkan id_box_grading$jenis_waste
+    //         $GradingHalusInputs = DryAWasteOutput::findOrFail($id);
+
+    //         foreach ($GradingHalusInputs as $PreCleaningI) {
+    //             // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
+    //             $PreCleaningS = TransitDryAWaste::where('nomor_job', '=', $PreCleaningI->nomor_job)
+    //                 ->first();
+
+    //                 if ($PreCleaningS) {
+    //                     // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
+    //                     $stockPrmRawMaterial = DryAWasteStock::where('jenis_waste', '=', $PreCleaningI->jenis_waste)
+    //                         ->where('create_at', '=', $PreCleaningI->create_at)
+    //                         ->first();
+
+    //                     if ($stockPrmRawMaterial) {
+    //                         // Simpan nilai sebelum dihapus
+    //                         $beratSebelumnya = $stockPrmRawMaterial->berat_masuk;
+    //                         $pcsSebelumnya = $stockPrmRawMaterial->pcs_masuk;
+
+    //                         // Hitung perbedaan berat dan pcs
+    //                         $perbedaanBerat = $PreCleaningI->berat;
+    //                         $perbedaanPcs = $PreCleaningI->pcs;
+
+    //                         // Hitung total modal baru
+    //                         $beratKeluar = $stockPrmRawMaterial->berat_keluar - $perbedaanBerat;
+    //                         $pcsKeluar = $stockPrmRawMaterial->pcs_keluar - $perbedaanPcs;
+    //                         $beratSisa = $beratSebelumnya - $beratKeluar;
+    //                         $pcsSisa = $pcsSebelumnya - $pcsKeluar;
+
+    //                         // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
+    //                         $stockPrmRawMaterial->update([
+    //                             'berat_keluar' => max($beratKeluar, 0),
+    //                             'pcs_keluar' => max($pcsKeluar, 0),
+    //                             'sisa_berat' => max($beratSisa, 0),
+    //                             'sisa_pcs' => max($pcsSisa, 0)
+    //                         ]);
+    //                     }
+
+    //                     // $existingItems = DryAWasteInput::where('jenis_waste', '=', $PreCleaningI->jenis_waste)
+    //                     // ->where('create_at', '=', $PreCleaningI->create_at)
+    //                     // ->get();
+
+    //                     // $dataToUpdate = [
+    //                     //     'status'                => $PreCleaningI->status ?? 1,
+    //                     // ];
+
+    //                     // if ($existingItems) {
+    //                     //     foreach ($existingItems as $existingItem) {
+    //                     //         $existingItem->update($dataToUpdate);
+    //                     //     }
+    //                     // }
+    //                 }
+
+    //                 if ($PreCleaningS) {
+    //                         // Hapus data PreCleaningStock
+    //                     $PreCleaningS->delete();
+    //             }
+    //         }
+
+    //                 // Hapus data GradingHalusInput
+    //                 $GradingHalusInputs->delete();
+
+    //         // Commit transaksi
+    //         DB::commit();
+
+    //         // Redirect ke index dengan pesan sukses
+    //         return redirect()->route('DryAWasteOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    //     } catch (\Exception $e) {
+    //         // Rollback transaksi jika terjadi kesalahan
+    //         DB::rollback();
+
+    //         // Redirect ke index dengan pesan error
+    //         return redirect()->route('DryAWasteOutput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+    //     }
+    // }
+    public function destroy($id): RedirectResponse
     {
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
-            // Ambil data PreCleaningInput berdasarkan id_box_grading$id_box_grading_halus
-            $GradingHalusInputs = GradingHalusOutput::where('id_box_grading_halus', '=', $id_box_grading_halus)->get();
+            // Ambil data DryAWasteOutput berdasarkan id
+            $gradingHalusInput = DryAWasteOutput::findOrFail($id);
 
-            if ($GradingHalusInputs->isEmpty()) {
-                // Redirect ke index dengan pesan error jika data tidak ditemukan
-                return redirect()->route('GradingHalusOutput.index')->with(['error' => 'Data tidak ditemukan!']);
-            }
+            // Ambil data TransitDryAWaste berdasarkan nomor job
+            $preCleaningStock = TransitDryAWaste::where('nomor_job', $gradingHalusInput->nomor_job)->first();
 
-            foreach ($GradingHalusInputs as $PreCleaningI) {
-                // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
-                $PreCleaningS = TransitGradingHalus::where('nomor_job', '=', $PreCleaningI->nomor_job)
+            if ($preCleaningStock) {
+                // Ambil data DryAWasteStock berdasarkan jenis_waste dan create_at
+                $stockPrmRawMaterial = DryAWasteStock::where('jenis_waste', $gradingHalusInput->jenis_waste)
                     ->first();
 
-                    if ($PreCleaningS) {
-                        // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                        $stockPrmRawMaterial = GradingHalusStock::where('id_box_grading_halus', '=', $PreCleaningI->id_box_grading_halus)
-                            ->first();
+                if ($stockPrmRawMaterial) {
+                    // Simpan nilai sebelum dihapus
+                    $beratSebelumnya = $stockPrmRawMaterial->berat_masuk;
+                    $pcsSebelumnya = $stockPrmRawMaterial->pcs_masuk;
 
-                        if ($stockPrmRawMaterial) {
-                            // Simpan nilai sebelum dihapus
-                            $beratSebelumnya = $stockPrmRawMaterial->berat_masuk;
-                            $pcsSebelumnya = $stockPrmRawMaterial->pcs_masuk;
+                    // Hitung perbedaan berat dan pcs
+                    $perbedaanBerat = $gradingHalusInput->berat;
+                    $perbedaanPcs = $gradingHalusInput->pcs;
 
-                            // Hitung perbedaan berat dan pcs
-                            $perbedaanBerat = $PreCleaningI->berat_adding;
-                            $perbedaanPcs = $PreCleaningI->pcs_adding;
+                    // Hitung total modal baru
+                    $beratKeluar = $stockPrmRawMaterial->berat_keluar - $perbedaanBerat;
+                    $pcsKeluar = $stockPrmRawMaterial->pcs_keluar - $perbedaanPcs;
+                    $beratSisa = $beratSebelumnya - $beratKeluar;
+                    $pcsSisa = $pcsSebelumnya - $pcsKeluar;
 
-                            // Hitung total modal baru
-                            $totalModalBaru = $perbedaanBerat * $PreCleaningI->modal;
+                    // Update data DryAWasteStock dengan berat, pcs, dan total modal yang baru
+                    $stockPrmRawMaterial->update([
+                        'berat_keluar' => max($beratKeluar, 0),
+                        'pcs_keluar' => max($pcsKeluar, 0),
+                        'sisa_berat' => max($beratSisa, 0),
+                        'sisa_pcs' => max($pcsSisa, 0)
+                    ]);
+                }
 
-                            // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
-                            $stockPrmRawMaterial->update([
-                                'berat_keluar' => max(0, $stockPrmRawMaterial->berat_keluars),
-                                'pcs_keluar' => max(0, $stockPrmRawMaterial->pcs_keluars),
-                                'sisa_berat' => max($beratSebelumnya, 0),
-                                'sisa_pcs' => max($pcsSebelumnya, 0),
-                                'total_modal' => max($pcsSebelumnya, 0),
-                            ]);
-                        }
+                    $existingItems = DryAWasteInput::where('jenis_waste', '=', $gradingHalusInput->jenis_waste)
+                    ->first();
 
-                        $existingItems = GradingHalusInput::where('id_box_grading_halus', $PreCleaningI->id_box_grading_halus)
-                        ->get();
+                    $dataToUpdate = [
+                        'status'                => $gradingHalusInput->status ?? 1,
+                    ];
 
+                    if ($existingItems) {
                         $dataToUpdate = [
-                            'status'                => $PreCleaningI->status ?? 0,
+                            'status' => $gradingHalusInput->status ?? 1,
                         ];
 
-                        if ($existingItems) {
-                            foreach ($existingItems as $existingItem) {
-                                $existingItem->update($dataToUpdate);
-                            }
+                        if ($stockPrmRawMaterial->berat_keluar == 0) {
+                            $existingItems->update($dataToUpdate);
                         }
                     }
 
-                if ($PreCleaningS) {
-                    // Hapus data PreCleaningStock
-                    $PreCleaningS->delete();
-                }
-
-                // Hapus data GradingHalusInput
-                $PreCleaningI->delete();
+                // Hapus data TransitDryAWaste
+                $preCleaningStock->delete();
             }
+
+            // Hapus data DryAWasteOutput
+            $gradingHalusInput->delete();
 
             // Commit transaksi
             DB::commit();
 
             // Redirect ke index dengan pesan sukses
-            return redirect()->route('GradingHalusOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            return redirect()->route('DryAWasteOutput.index')->with(['success' => 'Data Berhasil Dihapus!']);
         } catch (\Exception $e) {
             // Rollback transaksi jika terjadi kesalahan
             DB::rollback();
 
             // Redirect ke index dengan pesan error
-            return redirect()->route('GradingHalusOutput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return redirect()->route('DryAWasteOutput.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
+
 }

@@ -212,6 +212,22 @@
             return nomor;
         }
 
+        // Event listener untuk tombol addRow
+        $('#addRow').on('click', function() {
+            if (inisialTujuanGlobal) {
+                const generatedNomorJob = generateNomorBSTB('JOB', inisialTujuanGlobal);
+                $('#nomor_job').val(generatedNomorJob);
+            }
+        });
+
+        // Event listener untuk perubahan jenis_waste
+        $('#jenis_waste').on('change', function() {
+            if (inisialTujuanGlobal) {
+                const generatedNomorJob = generateNomorBSTB('JOB', inisialTujuanGlobal);
+                $('#nomor_job').val(generatedNomorJob);
+            }
+        });
+
         $('#tujuan_kirim').on('change', function() {
             checkAndGenerateNomorBSTB();
         });
@@ -313,12 +329,12 @@
 
             // Mengumpulkan id box dari dataArray
             dataArray.forEach(function(item) {
-                idBoxes.push(item.id_box_grading_halus);
+                idBoxes.push(item.jenis_waste);
             });
 
             // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
             $.ajax({
-                url: `{{ route('GradingHalusOutput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
+                url: `{{ route('DryAWasteOutput.sendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
                 method: 'POST',
                 data: {
                     idBoxes: JSON.stringify(idBoxes),
@@ -362,7 +378,7 @@
                     dataArray);
                 // Mengirim data ke server menggunakan AJAX
                 $.ajax({
-                    url: '{{ route('GradingHalusOutput.store') }}',
+                    url: '{{ route('DryAWasteOutput.store') }}',
                     method: 'POST',
                     beforeSend: function() {
                         Swal.fire({
