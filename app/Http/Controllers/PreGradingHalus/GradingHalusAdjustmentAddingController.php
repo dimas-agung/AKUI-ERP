@@ -14,10 +14,24 @@ use Illuminate\Http\Request;
 class GradingHalusAdjustmentAddingController extends Controller
 {
     //index
-    public function index()
+    public function index(Request $request)
     {
         $i = 1;
-        $GradingHalusAdjustmentAdding = GradingHalusAdjustmentAdding::all();
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = GradingHalusAdjustmentAdding::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(GradingHalusAdjustmentAdding::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $GradingHalusAdjustmentAdding = $query->get();
+        }else{
+            $GradingHalusAdjustmentAdding = GradingHalusAdjustmentAdding::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('PreGradingHalus.AdjustmentAdding.index', [
             'grading_halus_adjustment_addings' => $GradingHalusAdjustmentAdding,
             'i' => $i,

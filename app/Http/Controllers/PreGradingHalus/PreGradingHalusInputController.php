@@ -18,26 +18,41 @@ use Illuminate\View\View;
 class PreGradingHalusInputController extends Controller
 {
     //
-    public function index(){
+    public function index(Request $request){
         $i =1;
         $PreGHI = PreGradingHalusInput::with('TransitPreCleaningStock')->get();
-        $TransitPre = PreGradingHalusStock::with('PreGradingHalusInput')->get();
+        // $TransitPre = PreGradingHalusStock::with('PreGradingHalusInput')->get();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = PreGradingHalusInput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(PreGradingHalusInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreGHI = $query->with('TransitPreCleaningStock')->get();
+        }else{
+            $PreGHI = PreGradingHalusInput::with('TransitPreCleaningStock')
+            // ->where('created_at','>=', Carbon::now()->subDays(2))
+            ->limit(1000)
+            ->latest()
+            ->get();
+        }
         // return $GradingKI;
 
         return response()->view('PreGradingHalus.PreGradingHalusInput.index', [
             'PreGHI' => $PreGHI,
-            'TransitPre' => $TransitPre,
             'i' => $i,
         ]);
     }
 
     public function create(): View
     {
-        $PreGHI = PreGradingHalusInput::with('TransitPreCleaningStock')->get();
+        // $PreGHI = PreGradingHalusInput::with('TransitPreCleaningStock')->get();
         $TransitPre = TransitPreCleaningStock::with('PreGradingHalusInput')->get();
         $Unit = Unit::with('PreGradingHalusInput')->get();
         // return $PrmRawMOIC;
-        return view('PreGradingHalus.PreGradingHalusInput.create', compact('PreGHI', 'TransitPre', 'Unit'));
+        return view('PreGradingHalus.PreGradingHalusInput.create', compact('TransitPre', 'Unit'));
     }
 
     public function set(Request $request)

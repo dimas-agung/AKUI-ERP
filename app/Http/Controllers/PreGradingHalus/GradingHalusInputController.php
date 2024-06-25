@@ -16,9 +16,26 @@ use Illuminate\Support\Facades\DB;
 
 class GradingHalusInputController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $i =1;
-        $PreGHI = GradingHalusInput::with('PreGradingHalusAddingStock')->get();
+        // $PreGHI = GradingHalusInput::with('PreGradingHalusAddingStock')->get();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = GradingHalusInput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(GradingHalusInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreGHI = $query->with('PreGradingHalusAddingStock')->get();
+        }else{
+            $PreGHI = GradingHalusInput::with('PreGradingHalusAddingStock')
+            // ->where('created_at','>=', Carbon::now()->subDays(2))
+            ->limit(1000)
+            ->latest()
+            ->get();
+        }
+
         // $TransitPre = PreGradingHalusAddingStock::with('GradingHalusInput')->get();
         // return $GradingKI;
 

@@ -16,10 +16,25 @@ use App\Models\PreGradingHalusInput;
 class PreGradingHalusAddingController extends Controller
 {
     //index
-    public function index()
+    public function index(Request $request)
     {
         $i = 1;
-        $PreGradingHalusAdding = PreGradingHalusAdding::all();
+        // $PreGradingHalusAdding = PreGradingHalusAdding::all();
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = PreGradingHalusAdding::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(PreGradingHalusAdding::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreGradingHalusAdding = $query->get();
+        }else{
+            $PreGradingHalusAdding = PreGradingHalusAdding::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('PreGradingHalus.PreGradingHalusAdding.index', [
             'pre_grading_halus_addings' => $PreGradingHalusAdding,
             'i' => $i,
