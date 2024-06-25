@@ -14,12 +14,26 @@ use Illuminate\Support\Facades\DB;
 
 class PreWashOutputController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $i = 1;
-        $PreCleaningOutput = PreWashOutput::all();
+        // $PreCleaningOutput = PreWashOutput::all();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = PreWashOutput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(PreWashOutput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreWashOutput = $query->get();
+        }else{
+            $PreWashOutput = PreWashOutput::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('PreWash.PreWashOutput.index', [
-            'pre_cleaning_outputs' => $PreCleaningOutput,
+            'pre_cleaning_outputs' => $PreWashOutput,
             'i' => $i,
         ]);
     }

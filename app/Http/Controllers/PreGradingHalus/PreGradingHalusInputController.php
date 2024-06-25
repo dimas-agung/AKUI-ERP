@@ -20,7 +20,7 @@ class PreGradingHalusInputController extends Controller
     //
     public function index(Request $request){
         $i =1;
-        $PreGHI = PreGradingHalusInput::with('TransitPreCleaningStock')->get();
+        // $PreGHI = PreGradingHalusInput::with('TransitPreCleaningStock')->get();
         // $TransitPre = PreGradingHalusStock::with('PreGradingHalusInput')->get();
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');

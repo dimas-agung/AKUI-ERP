@@ -12,7 +12,7 @@ class TransitPreWashController extends Controller
     public function index()
     {
         $i = 1;
-        $transitprewash = TransitPreWash::with('PreWashOutput')->get();
+        $transitprewash = TransitPreWash::with('PreWashOutput')->where('status',1)->get();
         return response()->view('PreWash.TransitPreWash.index', [
             'transitprewash'          => $transitprewash,
             'i'                             => $i

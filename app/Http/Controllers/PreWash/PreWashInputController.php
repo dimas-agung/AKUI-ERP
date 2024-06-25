@@ -15,10 +15,24 @@ use Illuminate\Support\Facades\Validator;
 class PreWashInputController extends Controller
 {
     //index
-    public function index()
+    public function index(Request $request)
     {
         $i = 1;
-        $PreWashInput = PreWashInput::all();
+        // $PreWashInput = PreWashInput::all();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = PreWashInput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(PreWashInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreWashInput = $query->get();
+        }else{
+            $PreWashInput = PreWashInput::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('PreWash.PreWashInput.index', [
             'pre_wash_inputs' => $PreWashInput,
             'i' => $i,
@@ -34,11 +48,11 @@ class PreWashInputController extends Controller
     // create
     public function create()
     {
-        $PreWashInput = PreWashInput::with('TransitGradingHalus')->get();
+        // $PreWashInput = PreWashInput::with('TransitGradingHalus')->get();
         $TransitGradingHalus = TransitGradingHalus::where('status',1)->get();
         return view('PreWash.PreWashInput.create', [
             // 'pre_grading_halus_stocks' => $AdjustmentAdding,
-            'grading_halus_stocks' => $PreWashInput,
+            // 'grading_halus_stocks' => $PreWashInput,
             'transit_grading_haluses' => $TransitGradingHalus,
         ]);
     }

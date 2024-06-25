@@ -12,7 +12,7 @@ class PreWashStockController extends Controller
     public function index()
     {
         $i = 1;
-        $PreWashStock = PreWashStock::all();
+        $PreWashStock = PreWashStock::where('status',1)->get();
         return response()->view('PreWash.PreWashStock.index', [
             'pre_wash_stocks' => $PreWashStock,
             'i' => $i,
