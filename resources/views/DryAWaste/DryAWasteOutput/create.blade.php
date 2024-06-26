@@ -35,7 +35,7 @@
                                 </div>
                             @endif
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Jenis Waste</label>
                                         <select id="jenis_waste" class="select2 form-select"
@@ -48,7 +48,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tujuan Kirim</label>
                                         <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim"
@@ -61,16 +61,38 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Berat</label>
-                                        <input type="text" class="form-control" id="berat" name="berat">
+                                        <label>NIP Admin</label>
+                                        <input type="text" id="user_created" class="form-control" name="user_created"
+                                            value="{{ auth()->user()->nip }}" readonly data-parsley-required="true">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Pcs</label>
-                                        <input type="text" class="form-control" id="pcs" name="pcs">
+                                        <label>Berat Masuk</label>
+                                        <input type="text" class="form-control" id="berat_masuk" name="berat_masuk"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Pcs Masuk</label>
+                                        <input type="text" class="form-control" id="pcs_masuk" name="pcs_masuk" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Berat Keluar</label>
+                                        <input type="text" class="form-control" id="berat" name="berat"
+                                            placeholder="Masukan Berat Keluar">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Pcs Keluar</label>
+                                        <input type="text" class="form-control" id="pcs" name="pcs"
+                                            placeholder="Masukan Pcs Keluar">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -88,9 +110,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>NIP Admin</label>
-                                        <input type="text" id="user_created" class="form-control" name="user_created"
-                                            value="{{ auth()->user()->nip }}" readonly data-parsley-required="true">
+                                        <label>Modal</label>
+                                        <input type="text" class="form-control" id="modal" name="modal" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -131,6 +152,8 @@
                                 <th class="text-center" scope="col">Nomor Job</th>
                                 <th class="text-center" scope="col">Nomor BSTB</th>
                                 <th class="text-center" scope="col">Keterangan</th>
+                                <th class="text-center" scope="col">Modal</th>
+                                <th class="text-center" scope="col">Total Modal</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
@@ -151,6 +174,28 @@
         let selectedNomorBSTB = '';
         var beratMasukAwal = 0;
         var pcsMasukAwal = 0;
+
+        $('#jenis_waste').on('change', function() {
+            let selectedIdBox = $(this).val();
+            $.ajax({
+                url: "{{ route('DryAWasteOutput.set') }}",
+                method: 'GET',
+                async: false,
+                data: {
+                    jenis_waste: selectedIdBox
+                },
+                success: function(response) {
+                    let data = response.length > 0 ? response[0] : null;
+
+                    $('#berat_masuk').val(data.sisa_berat);
+                    $('#pcs_masuk').val(data.sisa_pcs);
+                    $('#modal').val(data.modal);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
 
         let inisialTujuanGlobal = ''; // Variabel global untuk menyimpan inisial_tujuan
         let nomorBSTBGlobal = ''; // Variabel global untuk menyimpan nomor BSTB
@@ -232,6 +277,36 @@
             checkAndGenerateNomorBSTB();
         });
 
+        $(document).ready(function() {
+            $('#berat').on('input', function() {
+                var berat = parseFloat($(this).val());
+                var berat_masuk = parseFloat($('#berat_masuk').val());
+
+                if (berat > berat_masuk) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Berat keluar tidak boleh lebih dari berat masuk.',
+                        icon: 'error'
+                    });
+                    $(this).val(''); // Kosongkan input berat jika nilai tidak valid
+                }
+            });
+
+            $('#pcs').on('input', function() {
+                var pcs = parseFloat($(this).val());
+                var pcs_masuk = parseFloat($('#pcs_masuk').val());
+
+                if (pcs > pcs_masuk) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Pcs keluar tidak boleh lebih dari pcs masuk.',
+                        icon: 'error'
+                    });
+                    $(this).val(''); // Kosongkan input pcs jika nilai tidak valid
+                }
+            });
+        });
+
         // Variabel global untuk menyimpan indeks baris terakhir
         var currentRowIndex = 0;
         var dataArray = [];
@@ -240,11 +315,13 @@
             // Mengambil nilai dari inputgrading_halus = $('#id_box_grading_halus').val();
             var jenis_waste = $('#jenis_waste').val();
             var berat = $('#berat').val();
+            var berat_masuk = ($('#berat_masuk').val()); // Mengubah berat_masuk ke tipe angka
             var pcs = $('#pcs').val();
             var nomor_job = $('#nomor_job').val();
             var nomor_bstb = $('#nomor_bstb').val();
             var tujuan_kirim = $('#tujuan_kirim').val();
             var keterangan = $('#keterangan').val();
+            var modal = $('#modal').val();
             var user_created = $('#user_created').val();
             // Inisialisasi array untuk menyimpan field yang belum terisi
             let fieldsNotFilled = [];
@@ -252,6 +329,8 @@
             if (!jenis_waste) fieldsNotFilled.push('Jenis Waste');
             if (!tujuan_kirim) fieldsNotFilled.push('Tujuan Kirim');
             if (!user_created) fieldsNotFilled.push('NIP Admin');
+            if (!berat) fieldsNotFilled.push('Berat Keluar');
+            if (!pcs) fieldsNotFilled.push('Pcs Keluar');
 
             // Cek apakah ada field yang belum terisi
             if (fieldsNotFilled.length > 0) {
@@ -266,6 +345,9 @@
                 return;
             }
 
+            // Menghitung total modal
+            var total_modal = (berat_masuk - berat) * modal;
+
             var newRow = '<tr>' +
                 '<td>' + jenis_waste + '</td>' +
                 '<td>' + tujuan_kirim + '</td>' +
@@ -274,6 +356,8 @@
                 '<td>' + nomor_job + '</td>' +
                 '<td>' + nomor_bstb + '</td>' +
                 '<td>' + keterangan + '</td>' +
+                '<td>' + modal + '</td>' +
+                '<td>' + total_modal + '</td>' +
                 '<td>' + user_created + '</td>' +
                 '</td><td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
 
@@ -288,12 +372,18 @@
                 nomor_job: nomor_job,
                 tujuan_kirim: tujuan_kirim,
                 keterangan: keterangan,
+                modal: modal,
+                total_modal: total_modal,
                 user_created: user_created,
             });
             // Membersihkan nilai input setelah ditambahkan
             $('#berat').val('');
             $('#pcs').val('');
+            $('#berat_masuk').val('');
+            $('#pcs_masuk').val('');
             $('#keterangan').val('');
+            $('#modal').val('');
+            $('#total_modal').val('');
             $('#jenis_waste').val(null).trigger('change');
             $('#user_created').prop('readonly', true);
             // Set tujuan_kirim sebagai read-only setelah dipilih
