@@ -14,8 +14,35 @@ use Illuminate\Support\Facades\Redirect;
 
 class GradingHalusAdjustmentInputController extends Controller
 {
+    protected $GradingHalusAdjustmentInput = null;
+    protected $GradingHalusAdjustmentStock = null;
+    protected $MasterJenisGradingHalus = null;
     protected $GradingHalusAdjustmentInputService;
     protected $HppService;
+
+    public function getGradingHalusAdjustmentInput()
+    {
+        if ($this->GradingHalusAdjustmentInput === null) {
+            $this->GradingHalusAdjustmentInput = GradingHalusAdjustmentInput::all();
+        }
+        return $this->GradingHalusAdjustmentInput;
+    }
+
+    public function getGradingHalusAdjustmentStock()
+    {
+        if ($this->GradingHalusAdjustmentStock === null) {
+            $this->GradingHalusAdjustmentStock = GradingHalusAdjustmentStock::where('status', 1)->get();
+        }
+        return $this->GradingHalusAdjustmentStock;
+    }
+
+    public function getMasterJenisGradingHalus()
+    {
+        if ($this->MasterJenisGradingHalus === null) {
+            $this->MasterJenisGradingHalus = MasterJenisGradingHalus::where('status', 1)->get();
+        }
+        return $this->MasterJenisGradingHalus;
+    }
 
     public function __construct(GradingHalusAdjustmentInputService $GradingHalusAdjustmentInputService, HppService $HppService)
     {
@@ -25,22 +52,16 @@ class GradingHalusAdjustmentInputController extends Controller
     //index
     public function index()
     {
-        $i = 1;
-        $AdjustmentInput = GradingHalusAdjustmentInput::all();
         return response()->view('PreGradingHalus.AdjustmentInput.index', [
-            'adjustment_inputs' => $AdjustmentInput,
-            'i' => $i,
+            'adjustment_inputs' => $this->getGradingHalusAdjustmentInput(),
         ]);
     }
     // create
     public function create()
     {
-        // $MasterJenisGradingHalus = MasterJenisGradingHalus::with('AdjustmentInput')->get();
-        $MasterJenisGradingHalus = MasterJenisGradingHalus::all();
-        $GradingHalusAdjustmentStock = GradingHalusAdjustmentStock::with('GradingHalusAdjustmentInput')->get();
         return view('PreGradingHalus.AdjustmentInput.create', [
-            'grading_halus_adjustment_inputs' => $GradingHalusAdjustmentStock,
-            'master_jenis_grading_halus' => $MasterJenisGradingHalus,
+            'grading_halus_adjustment_inputs' => $this->getGradingHalusAdjustmentStock(),
+            'master_jenis_grading_halus' => $this->getMasterJenisGradingHalus(),
         ]);
     }
 
@@ -48,7 +69,7 @@ class GradingHalusAdjustmentInputController extends Controller
     public function getNomorAdjustment(Request $request)
     {
         $nomor_adjustment = $request->nomor_adjustment;
-        $data = GradingHalusAdjustmentStock::where('nomor_adjustment', $nomor_adjustment)->first();
+        $data = $this->getGradingHalusAdjustmentStock()->where('nomor_adjustment', $nomor_adjustment)->first();
 
         return response()->json($data);
     }
@@ -57,7 +78,7 @@ class GradingHalusAdjustmentInputController extends Controller
     public function getJenisGradingHalus(Request $request)
     {
         $jenis = $request->jenis;
-        $data = MasterJenisGradingHalus::where('jenis', $jenis)->first();
+        $data = $this->getMasterJenisGradingHalus()->where('jenis', $jenis)->first();
 
         return response()->json($data);
     }

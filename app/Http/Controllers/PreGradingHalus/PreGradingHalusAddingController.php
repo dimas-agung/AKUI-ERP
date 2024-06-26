@@ -15,31 +15,52 @@ use App\Models\PreGradingHalusInput;
 
 class PreGradingHalusAddingController extends Controller
 {
+    protected $PreGradingHalusAdding = null;
+    protected $PreGradingHalusStock = null;
+    protected $Perusahaan = null;
+
+    public function getPreGradingHalusAdding()
+    {
+        if ($this->PreGradingHalusAdding === null) {
+            $this->PreGradingHalusAdding = PreGradingHalusAdding::all();
+        }
+        return $this->PreGradingHalusAdding;
+    }
+
+    public function getPreGradingHalusStock()
+    {
+        if ($this->PreGradingHalusStock === null) {
+            $this->PreGradingHalusStock = PreGradingHalusStock::where('sisa_berat', '!=', 0)->get();
+        }
+        return $this->PreGradingHalusStock;
+    }
+    public function getPerusahaan()
+    {
+        if ($this->Perusahaan === null) {
+            $this->Perusahaan = Perusahaan::where('status', 1)->get();
+        }
+        return $this->Perusahaan;
+    }
     //index
     public function index()
     {
-        $i = 1;
-        $PreGradingHalusAdding = PreGradingHalusAdding::all();
         return response()->view('PreGradingHalus.PreGradingHalusAdding.index', [
-            'pre_grading_halus_addings' => $PreGradingHalusAdding,
-            'i' => $i,
+            'pre_grading_halus_addings' => $this->getPreGradingHalusAdding(),
         ]);
     }
     // create
     public function create()
     {
-        $PreGradingHalusStock = PreGradingHalusStock::with('PreGradingHalusAdding')->get();
-        $Perusahaan = Perusahaan::all();
         return view('PreGradingHalus.PreGradingHalusAdding.create', [
-            'pre_grading_halus_stocks' => $PreGradingHalusStock,
-            'perusahaan' => $Perusahaan,
+            'pre_grading_halus_stocks' => $this->getPreGradingHalusStock(),
+            'perusahaan' => $this->getPerusahaan(),
         ]);
     }
     // get Data Stock Grading Halus
     public function set(Request $request)
     {
         $nomor_job = $request->nomor_job;
-        $data = PreGradingHalusStock::where('nomor_job', $nomor_job)->first();
+        $data = $this->getPreGradingHalusStock()->where('nomor_job', $nomor_job)->first();
 
         return response()->json($data);
     }
@@ -47,8 +68,7 @@ class PreGradingHalusAddingController extends Controller
     public function getDataPerusahaan(Request $request)
     {
         $nama = $request->nama;
-        $data = Perusahaan::where('nama', $nama)
-            ->where('status', 1)
+        $data = $this->Perusahaan()->where('nama', $nama)
             ->first();
 
         return response()->json($data);
