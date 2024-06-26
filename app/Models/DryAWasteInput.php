@@ -18,6 +18,9 @@ class DryAWasteInput extends Model
         'pcs',
         'keterangan',
         'status',
+        'harga_estimasi',
+        'modal',
+        'total_modal',
         'user_created',
         'user_updated',
     ];

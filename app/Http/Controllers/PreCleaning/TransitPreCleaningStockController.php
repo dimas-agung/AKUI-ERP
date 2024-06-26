@@ -9,18 +9,21 @@ use Illuminate\Http\Request;
 
 class TransitPreCleaningStockController extends Controller
 {
+    protected $TransitPreCleaningStock = null;
+
+    public function getTransitPreCleaningStock()
+    {
+        if ($this->TransitPreCleaningStock === null) {
+            // $this->TransitPreCleaningStock = TransitPreCleaningStock::where('sisa_berat', '!=', 0);
+            $this->TransitPreCleaningStock = TransitPreCleaningStock::all();
+        }
+        return $this->TransitPreCleaningStock;
+    }
     //index
     public function index()
     {
-        $i = 1;
-        $TransitPreCleaningStock = TransitPreCleaningStock::with('PreCleaningOutput')->get();
-        // $PrmRawMOH = PrmRawMaterialOutputHeader::with('StockTransitGradingKasar')->get();
-        $PreCleaningOutput = PreCleaningOutput::with('TransitPreCleaningStock')->get();
-        // return $PrmRawMOI;
         return response()->view('PreCleaning.TransitPreCleaningStock.index', [
-            'transit_pre_cleaning_stocks' => $TransitPreCleaningStock,
-            'pre_cleaning_outputs' => $PreCleaningOutput,
-            'i' => $i,
+            'transit_pre_cleaning_stocks' => $this->getTransitPreCleaningStock(),
         ]);
     }
 }

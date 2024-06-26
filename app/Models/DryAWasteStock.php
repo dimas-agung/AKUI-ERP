@@ -20,6 +20,8 @@ class DryAWasteStock extends Model
         'pcs_masuk',
         'pcs_keluar',
         'sisa_pcs',
+        'modal',
+        'total_modal',
         'status',
     ];
     public function DryAWasteOutput()

@@ -97,7 +97,7 @@
                                 <tbody>
                                     @forelse ($adjustment_inputs as $item)
                                         <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->id_box_grading_halus }}</td>
                                             <td class="text-center">{{ $item->nomor_adjustment }}</td>
                                             <td class="text-center">{{ $item->nomor_batch }}</td>

@@ -13,6 +13,32 @@ use Illuminate\Http\Request;
 
 class GradingHalusAdjustmentAddingController extends Controller
 {
+    protected $GradingHalusAdjustmentAdding = null;
+    protected $GradingHalusStock = null;
+    protected $Perusahaan = null;
+
+    public function getGradingHalusAdjustmentAdding()
+    {
+        if ($this->GradingHalusAdjustmentAdding === null) {
+            $this->GradingHalusAdjustmentAdding = GradingHalusAdjustmentAdding::all();
+        }
+        return $this->GradingHalusAdjustmentAdding;
+    }
+
+    public function getGradingHalusStock()
+    {
+        if ($this->GradingHalusStock === null) {
+            $this->GradingHalusStock = GradingHalusStock::where('sisa_berat', '!=', 0)->get();
+        }
+        return $this->GradingHalusStock;
+    }
+    public function getPerusahaan()
+    {
+        if ($this->Perusahaan === null) {
+            $this->Perusahaan = Perusahaan::where('status', 1)->get();
+        }
+        return $this->Perusahaan;
+    }
     //index
     public function index(Request $request)
     {
@@ -33,26 +59,23 @@ class GradingHalusAdjustmentAddingController extends Controller
             ->get();
         }
         return response()->view('PreGradingHalus.AdjustmentAdding.index', [
-            'grading_halus_adjustment_addings' => $GradingHalusAdjustmentAdding,
-            'i' => $i,
+            'grading_halus_adjustment_addings' => $this->getGradingHalusAdjustmentAdding(),
         ]);
     }
     // create
     public function create()
     {
-        $GradingHalusStock = GradingHalusStock::with('GradingHalusAdjustmentAdding')->get();
-        $Perusahaan = Perusahaan::all();
         return view('PreGradingHalus.AdjustmentAdding.create', [
             // 'pre_grading_halus_stocks' => $AdjustmentAdding,
-            'grading_halus_stocks' => $GradingHalusStock,
-            'perusahaan' => $Perusahaan,
+            'grading_halus_stocks' => $this->getGradingHalusStock(),
+            'perusahaan' => $this->getPerusahaan(),
         ]);
     }
     // get data id Box
     public function set(Request $request)
     {
         $id_box_grading_halus = $request->id_box_grading_halus;
-        $data = GradingHalusStock::where('id_box_grading_halus', $id_box_grading_halus)->first();
+        $data = $this->getGradingHalusStock()->where('id_box_grading_halus', $id_box_grading_halus)->first();
 
         return response()->json($data);
     }

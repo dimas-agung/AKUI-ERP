@@ -2,15 +2,47 @@
 
 namespace App\Http\Controllers\DryAWaste;
 
+// use DataTables;
 use Illuminate\Http\Request;
 use App\Models\DryAWasteInput;
 use App\Models\DryAWasteStock;
+use Yajra\DataTables\DataTables;
 use App\Models\MasterJenisWaste;
 use App\Http\Controllers\Controller;
 use App\Services\DryAWasteInputService;
 
 class DryAWasteInputController extends Controller
 {
+    // Test ServerSide
+    // public function index(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         $data = DryAWasteInput::select('*');
+    //         return DataTables::of($data)
+    //             ->addIndexColumn()
+    //             ->addColumn('action', function ($row) {
+
+    //                 // $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+    //                 $btn = '<form style="display: flex" id="deleteForm' . $row->id . '"
+    //                         action="' . route('DryAWasteInput.destroy', $row->id) . '"
+    //                         method="POST">
+    //                         ' . csrf_field() . '
+    //                         ' . method_field('DELETE') . '
+    //                         <button type="button" class="btn btn-link" data-original-title="Remove"
+    //                             onclick="confirmDelete(' . $row->id . ')">
+    //                             <i class="bi bi-trash3 text-danger"></i>
+    //                         </button>
+    //                     </form>';
+
+    //                 return $btn;
+    //             })
+    //             ->rawColumns(['action'])
+    //             ->make(true);
+    //     }
+
+    //     return view('DryAWaste.DryAWasteInput.index');
+    // }
+
     protected $dryAWasteInputs = null;
     protected $masterJenisWastes = null;
     protected $DryAWasteInputService;

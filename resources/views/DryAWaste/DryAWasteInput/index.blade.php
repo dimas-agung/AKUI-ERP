@@ -23,16 +23,19 @@
                     </div>
                     <div class="card-body" style="overflow: auto;">
                         <div class="table-responsive">
-                            <table id="table1" class="display" style="width:100%">
+                            <table id="table1" class="display data-table" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Tanggal Cabut</th>
                                         <th scope="col" class="text-center">Jenis Waste</th>
+                                        <th scope="col" class="text-center">Harga Estimasi</th>
                                         <th scope="col" class="text-center">Berat</th>
                                         <th scope="col" class="text-center">Pcs</th>
+                                        <th scope="col" class="text-center">Modal</th>
+                                        <th scope="col" class="text-center">Total Modal</th>
                                         <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center">Status</th>
+                                        {{-- <th scope="col" class="text-center">Status</th> --}}
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
@@ -46,10 +49,12 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->tanggal_cabut }}</td>
                                             <td class="text-center">{{ $item->jenis_waste }}</td>
+                                            <td class="text-center">{{ $item->harga_estimasi }}</td>
                                             <td class="text-center">{{ $item->berat }}</td>
                                             <td class="text-center">{{ $item->pcs }}</td>
+                                            <td class="text-center">{{ $item->modal }}</td>
+                                            <td class="text-center">{{ $item->total_modal }}</td>
                                             <td class="text-center">{{ $item->keterangan }}</td>
-                                            <td class="text-center">{{ $item->status }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>
                                             <td class="text-center">{{ $item->created_at }}</td>
@@ -90,6 +95,75 @@
 @endsection
 @section('script')
     <script>
+        // $(function() {
+
+        //     // if (!$.fn.DataTable.isDataTable('.data-table')) {
+        //     if (!$.fn.DataTable.isDataTable('#table1')) {
+
+        //         // let table = $('.data-table').DataTable({
+        //         let table = $('table1').DataTable({
+        //             ajax: "{{ route('DryAWasteInput.index') }}",
+        //             columns: [
+        //                 // {
+        //                 //     data: 'id',
+        //                 //     name: 'id'
+        //                 // },
+        //                 {
+        //                     data: 'DT_RowIndex',
+        //                     name: 'DT_RowIndex'
+        //                 },
+        //                 {
+        //                     data: 'tanggal_cabut',
+        //                     name: 'tanggal_cabut'
+        //                 },
+        //                 {
+        //                     data: 'jenis_waste',
+        //                     name: 'jenis_waste'
+        //                 },
+        //                 {
+        //                     data: 'berat',
+        //                     name: 'berat'
+        //                 },
+        //                 {
+        //                     data: 'pcs',
+        //                     name: 'pcs'
+        //                 },
+        //                 {
+        //                     data: 'keterangan',
+        //                     name: 'keterangan'
+        //                 },
+        //                 {
+        //                     data: 'status',
+        //                     name: 'status'
+        //                 },
+        //                 {
+        //                     data: 'user_created',
+        //                     name: 'user_created'
+        //                 },
+        //                 {
+        //                     data: 'user_updated',
+        //                     name: 'user_updated'
+        //                 },
+        //                 {
+        //                     data: 'created_at',
+        //                     name: 'created_at'
+        //                 },
+        //                 {
+        //                     data: 'updated_at',
+        //                     name: 'updated_at'
+        //                 },
+        //                 {
+        //                     data: 'action',
+        //                     name: 'action',
+        //                     orderable: false,
+        //                     searchable: false
+        //                 },
+        //             ]
+        //         });
+        //     }
+
+        // });
+
         function redirectToPage() {
             window.location.href = "{{ route('DryAWasteInput.create') }}";
         }
