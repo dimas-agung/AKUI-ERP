@@ -13,13 +13,10 @@ class TransitPreCleaningStockController extends Controller
     public function index()
     {
         $i = 1;
-        $TransitPreCleaningStock = TransitPreCleaningStock::with('PreCleaningOutput')->get();
-        // $PrmRawMOH = PrmRawMaterialOutputHeader::with('StockTransitGradingKasar')->get();
-        $PreCleaningOutput = PreCleaningOutput::with('TransitPreCleaningStock')->get();
+        $TransitPreCleaningStock = TransitPreCleaningStock::where('berat_kirim', '>', 0)->get();
         // return $PrmRawMOI;
         return response()->view('PreCleaning.TransitPreCLeaningStock.index', [
             'transit_pre_cleaning_stocks' => $TransitPreCleaningStock,
-            'pre_cleaning_outputs' => $PreCleaningOutput,
             'i' => $i,
         ]);
     }

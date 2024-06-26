@@ -14,7 +14,7 @@ class TransitPreCleaningStockSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\TransitPreCleaningStock::factory(5)->create();
-        for($i=1;$i<=100;$i){
+        for($i=1;$i<=10000;$i++){
 
             TransitPreCleaningStock::create([
                 'nomor_job' => '010324-093511',
@@ -26,7 +26,7 @@ class TransitPreCleaningStockSeeder extends Seeder
                 'id_box_raw_material' => 'AB_010324-093513',
                 'jenis_raw_material' => 'K001',
                 'jenis_kirim' => 'AB',
-                'berat_kirim' => '10',
+                'berat_kirim' => '150',
                 'pcs_kirim' => '5',
                 'kadar_air' => '15',
                 'tujuan_kirim' => 'jombang',

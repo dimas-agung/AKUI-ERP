@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('transit_grading_haluses', function (Blueprint $table) {
             $table->id();
             $table->string('unit');
-            $table->string('nomor_job')->unique();
+            // $table->string('nomor_job')->unique();
+            $table->string('nomor_job');
             $table->string('nomor_batch');
             $table->integer('status')->default('1');
             $table->string('jenis_job');

@@ -12,12 +12,10 @@ class TransitGradingKasarStockController extends Controller
     //Index
     public function index(){
         $i =1;
-        $GradingKO = GradingKasarOutput::with('TransitGradingKasarStock')->get();
-        $stockTGK = TransitGradingKasarStock::with('GradingKasarOutput')->get();
+        $stockTGK = TransitGradingKasarStock::where('berat_keluar', '>', 0)->get();
         // return $PrmRawMOI;
         return response()->view('transit_grading.TransitGradingKasarStock.index', [
             'stockTGK' => $stockTGK,
-            'GradingKO' => $GradingKO,
             'i' => $i,
         ]);
     }

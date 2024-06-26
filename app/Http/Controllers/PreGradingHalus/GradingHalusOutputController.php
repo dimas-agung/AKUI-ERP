@@ -25,24 +25,21 @@ class GradingHalusOutputController extends Controller
     }
     public function index(){
         $i =1;
-        $PreGHI = GradingHalusOutput::with('GradingHalusStock')->get();
-        $TransitPre = GradingHalusStock::with('GradingHalusOutput')->get();
+        $PreGHI = GradingHalusOutput::where('status', '>', 0)->get();
         // return $TransitPre;
 
         return response()->view('PreGradingHalus.GradingHalusOutput.index', [
             'PreGHI' => $PreGHI,
-            'TransitPre' => $TransitPre,
             'i' => $i,
         ]);
     }
 
     public function create()
     {
-        $PreGHI = GradingHalusOutput::with('GradingHalusStock')->get();
-        $TransitPre = GradingHalusStock::with('GradingHalusOutput')->get();
-        $TujuanKirimGHI = MasterTujuanKirimGradingHalus::with('GradingHalusOutput')->get();
+        $TransitPre = GradingHalusStock::where('sisa_berat', '>', 0)->get();
+        $TujuanKirimGHI = MasterTujuanKirimGradingHalus::where('status', '>', 0)->get();
         // return $TujuanKirimGHI;
-        return view('PreGradingHalus.GradingHalusOutput.create', compact('PreGHI', 'TransitPre', 'TujuanKirimGHI'));
+        return view('PreGradingHalus.GradingHalusOutput.create', compact('TransitPre', 'TujuanKirimGHI'));
     }
 
     public function set(Request $request)

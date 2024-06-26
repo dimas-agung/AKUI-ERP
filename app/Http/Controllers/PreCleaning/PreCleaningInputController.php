@@ -19,9 +19,7 @@ class PreCleaningInputController extends Controller
     //Index
     public function index(){
         $i =1;
-        $PreCleaningI = PreCleaningInput::with('TransitGradingKasarStock')->get();
-        // $existingItem = StockTransitGradingKasar::with('PreCleaningInput')
-        // ->get();
+        $PreCleaningI = PreCleaningInput::get();
         // return $existingItem;
 
         // return $GradingKI;
@@ -36,9 +34,9 @@ class PreCleaningInputController extends Controller
      */
     public function create(): View
     {
-        $stockTGK = TransitGradingKasarStock::with('PreCleaningInput')->get();
+        $stockTGK = TransitGradingKasarStock::where('berat_keluar', '>', 0)->get();
         // return $PrmRawMOIC;
-        return view('PreCleaning.PreCleaningInput.create', compact('stockTGK', 'PreCleaningI'));
+        return view('PreCleaning.PreCleaningInput.create', compact('stockTGK'));
     }
 
     public function set(Request $request)
