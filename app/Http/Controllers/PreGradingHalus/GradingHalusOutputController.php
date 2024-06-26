@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 class GradingHalusOutputController extends Controller
 {
+    protected $GradingHalusOutputService;
+
+    public function __construct(GradingHalusOutputService $GradingHalusOutputService, HppService $HppService)
+    {
+        $this->GradingHalusOutputService = $GradingHalusOutputService;
+    }
     public function index(Request $request){
         $i =1;
 

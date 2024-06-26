@@ -130,4 +130,21 @@ class MasterOperatorController extends Controller
         //redirect to index
         return redirect()->route('MasterOperator.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
+    public function getDataOperator(Request $request)
+    {
+        //get by ID
+        $unit = $request->input('unit');
+        $plant = $request->input('plant');
+        $MasterOperator = MasterOperator::with('Perusahaan');
+        if ($unit) {
+            # code...
+            $MasterOperator->where('unit',$unit);
+        }
+        if ($plant) {
+            # code...
+            $MasterOperator->where('plant',$plant);
+        }
+        return $MasterOperator->get();
+
+    }
 }

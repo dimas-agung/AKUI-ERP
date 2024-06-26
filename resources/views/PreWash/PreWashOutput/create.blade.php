@@ -31,7 +31,7 @@
                         <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="operator_perendaman" id="operator_perendaman"
                             data-placeholder="Pilih Operator Perendaman">
-                            <option value="">Pilih Operator Perendaman</option>
+                            <option value="Kosong">Kosong</option>
                             @foreach ($MasterO->sortBy('nama') as $MasterSPRM)
                                 @if ($MasterSPRM->status == 1)
                                     @if (strpos(strtolower($MasterSPRM->job), 'perendaman') !== false)
@@ -47,7 +47,7 @@
                         <label for="basic-usage" class="form-label">Operator Bilas</label>
                         <select class="select2 form-select" style="width: 100%;" name="operator_bilas" id="operator_bilas"
                             data-placeholder="Pilih Operator Bilas">
-                            <option value="">Pilih Operator Bilas</option>
+                            <option value="-">-</option>
                             @foreach ($MasterO->sortBy('nama') as $MasterSPRM)
                                 @if ($MasterSPRM->status == 1)
                                     @if (strpos(strtolower($MasterSPRM->job), 'bilas') !== false)
@@ -64,7 +64,7 @@
                         <label for="basic-usage" class="form-label">Operator Box</label>
                         <select class="select2 form-select" style="width: 100%;" name="operator_box" id="operator_box"
                             data-placeholder="Pilih Operator Box">
-                            <option value="">Pilih Operator Box</option>
+                            <option value="-">-</option>
                             @foreach ($MasterO->sortBy('nama') as $MasterSPRM)
                                 @if ($MasterSPRM->status == 1)
                                     @if (strpos(strtolower($MasterSPRM->job), 'box') !== false)
@@ -187,7 +187,7 @@
             let selectedNomorJob = $(this).val();
             if (dataArray.length > 0) {
                 dataArray.forEach(item => {
-                    
+
                     let lastNomorJob= item.nomor_job;
                     if (selectedNomorJob == lastNomorJob) {
                         Swal.fire({
@@ -241,7 +241,48 @@
                         }).then(() => {
                             $('#nomor_job').val('').trigger('change');
                         });
+                        return;
                     }
+                    $.ajax({
+                        url: `{{ route('MasterOperator.getDataByUnit') }}`,
+                        method: 'GET',
+                        async: false,
+                        data: {
+                            unit: 'Pre Wash',
+                            plant: response.tujuan_kirim,
+                        },
+                        success: function(response) {
+                            resetOperator()
+                            $.each(response, function (i,v) {
+                                let job = v.job.toLowerCase()
+
+                                if (job.includes("bilas")) {
+
+                                    $('#operator_bilas').append($('<option>', {
+                                        value: v.nama,
+                                        text : v.nama
+                                    }));
+                                }
+                                if (job.includes("perendaman")) {
+
+                                    $('#operator_perendaman').append($('<option>', {
+                                        value: v.nama,
+                                        text : v.nama
+                                    }));
+                                }
+                                if (job.includes("box")) {
+                                    $('#operator_box').append($('<option>', {
+                                        value: v.nama,
+                                        text : v.nama
+                                    }));
+
+                                }
+                            });
+                        },
+                        error: function(error) {
+                            console.error('Error:', error);
+                        }
+                    });
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -249,6 +290,30 @@
             });
             calculateUpah()
         });
+
+        function resetOperator() {
+            $('#operator_perendaman')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="Kosong" selected>Kosong</option>')
+                .val('Kosong')
+            ;
+            $('#operator_bilas')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="-" selected>-</option>')
+                .val('Kosong')
+            ;
+            $('#operator_box')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="-" selected>-</option>')
+                .val('Kosong')
+            ;
+        }
 
         function calculateUpah() {
             let upah_operator = parseFloat($('#upah_operator').val());
@@ -265,7 +330,7 @@
 
         $(document).ready(function() {
             $('#berat_job').on('input', function() {
-                
+
                 calculateBeratBersih();
             });
 
@@ -287,7 +352,7 @@
             $('#nomor_job').on('change', function() {
                 // Memanggil fungsi generateNomorBSTB ketika nomor_job berubah
                 if (selectedNomorBSTB== '') {
-                    
+
                     generateNomorBSTB();
                 }
             });
@@ -408,11 +473,13 @@
             $('#nomor_bstb').prop('readonly', true);
             selectedNomorBSTB += nomor_bstb;
             // $('#nomor_bstb').prop('readonly', true);
-         
+
             // $('#operator_perendaman, #operator_bilas, #operator_box, #keterangan')
             //     .val('');
-            $('#operator_perendaman, #nomor_job, #operator_bilas, #operator_box, #keterangan').val(null).trigger('change');
-
+            $('#nomor_job, #keterangan').val(null).trigger('change');
+            // $('#operator_bilas, #operator_box').val('-').trigger('change');
+            // $('#operator_perendaman').val('Kosong').trigger('change');
+            resetOperator();
         }
 
         function hapusBaris(button) {

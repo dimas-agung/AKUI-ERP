@@ -109,17 +109,9 @@ class UsersSeeder extends Seeder
 
         // ]);
         // $user->assignRole(['cleaning']);
-        $user = User::create([
-            'email' => 'cleaning2@akuibirdnest.com',
-            'unit_id' => '1',
-            'password' => Hash::make('011212'),
-            'fullname' => 'BAGAS DWI YULIANTO',
-            'nip' => '222030339',
-            'username' => 'BAGAS DWI YULIANTO',
-            'phone_number' => '1291122121121111',
-            'birth_date' => '2000-04-09',
-
-        ]);
-        $user->assignRole(['cleaning']);
+        $user = User::where('nip','120080122')->first();
+        $user->assignRole(['pre_wash','bahan_baku']);
+        $user = User::where('nip','222030339')->first();
+        $user->assignRole(['pre_wash','bahan_baku']);
     }
 }

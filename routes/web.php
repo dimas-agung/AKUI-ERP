@@ -18,7 +18,10 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::middleware('auth')->group(function () {
-
+    Route::controller(App\Http\Controllers\MasterOperatorController::class)->group(function () {
+         Route::get('/master_operator/getDataOperator', 'getDataOperator')->name('MasterOperator.getDataByUnit');
+       
+    });
     Route::controller(App\Http\Controllers\RegisterController::class)->group(function () {
         Route::get('/reset', 'index')->name('reset.index');
         Route::post('/reset/create', 'update')->name('reset.create');

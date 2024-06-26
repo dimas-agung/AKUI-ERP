@@ -19,7 +19,7 @@ class PreCleaningInputController extends Controller
     //Index
     public function index(){
         $i =1;
-        $PreCleaningI = PreCleaningInput::with('TransitGradingKasarStock')->get();
+        $PreCleaningI = PreCleaningInput::with('StockTransitGradingKasar')->get();
         // $existingItem = StockTransitGradingKasar::with('PreCleaningInput')
         // ->get();
         // return $existingItem;
@@ -36,9 +36,9 @@ class PreCleaningInputController extends Controller
      */
     public function create(): View
     {
-        $stockTGK = TransitGradingKasarStock::with('PreCleaningInput')->get();
+        $stockTGK = StockTransitGradingKasar::with('PreCleaningInput')->where('berat_keluar','>',0)->get();
         // return $PrmRawMOIC;
-        return view('PreCleaning.PreCleaningInput.create', compact('stockTGK', 'PreCleaningI'));
+        return view('PreCleaning.PreCleaningInput.create', compact('stockTGK'));
     }
 
     public function set(Request $request)
@@ -216,7 +216,7 @@ class PreCleaningInputController extends Controller
                     ->first();
 
                 if ($PreCleaningS) {
-                    // Ambil data TransitGradingKasarStock berdasarkan id_box_grading_kasar dan id_box_raw_material
+                    // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
                     $stockPrmRawMaterial = StockTransitGradingKasar::where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
                         ->where('nomor_job', '=', $PreCleaningI->nomor_job)
                         ->first();
@@ -234,7 +234,7 @@ class PreCleaningInputController extends Controller
                         // Hitung total modal baru
                         $totalModalBaru = $totalModalSebelumnya - ($beratSebelumnya * $PreCleaningI->modal);
 
-                        // Update data TransitGradingKasarStock dengan berat, pcs, dan total modal yang baru
+                        // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
                         $stockPrmRawMaterial->update([
                             'berat_keluar' => max($beratSebelumnya - $perbedaanBerat, 0),
                             'pcs_keluar' => max($pcsSebelumnya - $perbedaanPcs, 0),

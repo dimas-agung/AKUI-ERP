@@ -146,32 +146,41 @@ class PreWashInputController extends Controller
                     $itemObject = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $existingItems = TransitGradingHalus::where('nomor_job', $itemObject->nomor_job)
-                        ->where('nomor_bstb', $itemObject->nomor_bstb)
-                        ->get();
-
-                    foreach ($existingItems as $existingItem) {
-
-                        // Update data dengan nilai baru
-                        $existingItem->update([
+                    $existingItems = TransitGradingHalus::
+                        where('nomor_bstb', $itemObject->nomor_bstb)
+                        ->update([
                             'status'      => 0,
                             // 'user_updated' => $itemObject->user_created ?? " ",
                         ]);
-                    }
+
+                    // foreach ($existingItems as $existingItem) {
+
+                    //     // Update data dengan nilai baru
+                    //     $existingItem->update([
+                    //         'status'      => 0,
+                    //         // 'user_updated' => $itemObject->user_created ?? " ",
+                    //     ]);
+                    // }
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $GradingHalusOutput = GradingHalusOutput::where('nomor_job', $itemObject->nomor_job)
-                        ->where('nomor_bstb', $itemObject->nomor_bstb)
-                        ->get();
-
-                    foreach ($GradingHalusOutput as $item) {
-
-                        // Update data dengan nilai baru
-                        $item->update([
+                    $GradingHalusOutput = GradingHalusOutput::
+                        // where('nomor_job', $itemObject->nomor_job)
+                        // ->
+                        where('nomor_bstb', $itemObject->nomor_bstb)
+                        ->update([
                             'status'      => 0,
                             // 'user_updated' => $itemObject->user_created ?? " ",
                         ]);
-                    }
+                        // ->get();
+
+                    // foreach ($GradingHalusOutput as $item) {
+
+                    //     // Update data dengan nilai baru
+                    //     $item->update([
+                    //         'status'      => 0,
+                    //         // 'user_updated' => $itemObject->user_created ?? " ",
+                    //     ]);
+                    // }
 
                     DB::commit();
                 } catch (\Exception $e) {
@@ -202,15 +211,15 @@ class PreWashInputController extends Controller
             DB::beginTransaction();
 
             // Temukan semua record berdasarkan nomor_bstb
-            $pengirimanWastes = PreWashInput::where('nomor_bstb', $nomor_bstb)->get();
+            $PreWashInput = PreWashInput::where('nomor_bstb', $nomor_bstb)->get();
 
-            if ($pengirimanWastes->isEmpty()) {
+            if ($PreWashInput->isEmpty()) {
                 throw new \Exception('Data tidak ditemukan');
             }
 
-            foreach ($pengirimanWastes as $RambangPengirimanWaste) {
+            foreach ($PreWashInput as $preWashInput) {
                 // Hapus semua item terkait di TransitRambangWaste
-                $stockTrans = PreWashStock::where('nomor_job', '=', $RambangPengirimanWaste->nomor_job)->first();
+                $stockTrans = PreWashStock::where('nomor_job', '=', $preWashInput->nomor_job)->first();
                 // $stockTrans->delete();
                 if ($stockTrans) {
                     // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
@@ -221,33 +230,34 @@ class PreWashInputController extends Controller
                 }
 
                 // Temukan semua item terkait di RambangKeringStock
-                $existingItems = TransitGradingHalus::where('nomor_job', $RambangPengirimanWaste->nomor_job)
-                    ->where('nomor_bstb', $RambangPengirimanWaste->nomor_bstb)
-                    ->get();
+                $existingItems = TransitGradingHalus::where('nomor_bstb', $preWashInput->nomor_bstb)->update(['status' => 1]);
+                    // ->get();
 
                 // Logika Update Status
-                foreach ($existingItems as $existingItem) {
-                    if ($existingItem) {
+                // foreach ($existingItems as $existingItem) {
+                //     if ($existingItem) {
 
-                        $existingItem->update(['status' => 1]);
-                    }
-                }
+                //         $existingItem->update(['status' => 1]);
+                //     }
+                // }
 
-                $GradingHalusOutput = GradingHalusOutput::where('nomor_job', $RambangPengirimanWaste->nomor_job)
-                    ->where('nomor_bstb', $RambangPengirimanWaste->nomor_bstb)
-                    ->get();
+                $GradingHalusOutput = GradingHalusOutput::where('nomor_bstb', $preWashInput->nomor_bstb)->update(['status' => 1]);
+                    // ->get();
 
                 // Logika Update Status
-                foreach ($GradingHalusOutput as $item) {
-                    if ($item) {
+                // foreach ($GradingHalusOutput as $item) {
+                //     if ($item) {
 
-                        $item->update(['status' => 1]);
-                    }
-                }
+                //         $item->update(['status' => 1]);
+                //     }
+                // }
 
                 // Hapus record utama
-                $RambangPengirimanWaste->delete();
+                $preWashInput->delete();
             }
+            $existingItems = TransitGradingHalus::where('nomor_bstb', $nomor_bstb)->update(['status' => 1]);
+
+            $GradingHalusOutput = GradingHalusOutput::where('nomor_bstb', $nomor_bstb)->update(['status' => 1]);
 
             // Jika tidak ada kesalahan, komit transaksi
             DB::commit();
