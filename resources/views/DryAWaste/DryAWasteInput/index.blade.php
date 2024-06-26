@@ -23,7 +23,7 @@
                     </div>
                     <div class="card-body" style="overflow: auto;">
                         <div class="table-responsive">
-                            <table id="table1" class="display" style="width:100%">
+                            <table id="table1" class="display data-table" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
@@ -32,6 +32,7 @@
                                         <th scope="col" class="text-center">Berat</th>
                                         <th scope="col" class="text-center">Pcs</th>
                                         <th scope="col" class="text-center">Keterangan</th>
+                                        <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
@@ -40,7 +41,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($dry_a_waste_input as $item)
+                                    {{-- @forelse ($dry_a_waste_input as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->tanggal_cabut }}</td>
@@ -76,7 +77,7 @@
                                         <div class="alert alert-danger">
                                             Data Dry A Waste Input belum Tersedia.
                                         </div>
-                                    @endforelse
+                                    @endforelse --}}
                                 </tbody>
                             </table>
                         </div>
@@ -88,6 +89,75 @@
 @endsection
 @section('script')
     <script>
+        $(function() {
+
+            // if (!$.fn.DataTable.isDataTable('.data-table')) {
+            if (!$.fn.DataTable.isDataTable('#table1')) {
+
+                // let table = $('.data-table').DataTable({
+                let table = $('table1').DataTable({
+                    ajax: "{{ route('DryAWasteInput.index') }}",
+                    columns: [
+                        // {
+                        //     data: 'id',
+                        //     name: 'id'
+                        // },
+                        {
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'tanggal_cabut',
+                            name: 'tanggal_cabut'
+                        },
+                        {
+                            data: 'jenis_waste',
+                            name: 'jenis_waste'
+                        },
+                        {
+                            data: 'berat',
+                            name: 'berat'
+                        },
+                        {
+                            data: 'pcs',
+                            name: 'pcs'
+                        },
+                        {
+                            data: 'keterangan',
+                            name: 'keterangan'
+                        },
+                        {
+                            data: 'status',
+                            name: 'status'
+                        },
+                        {
+                            data: 'user_created',
+                            name: 'user_created'
+                        },
+                        {
+                            data: 'user_updated',
+                            name: 'user_updated'
+                        },
+                        {
+                            data: 'created_at',
+                            name: 'created_at'
+                        },
+                        {
+                            data: 'updated_at',
+                            name: 'updated_at'
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        },
+                    ]
+                });
+            }
+
+        });
+
         function redirectToPage() {
             window.location.href = "{{ route('DryAWasteInput.create') }}";
         }

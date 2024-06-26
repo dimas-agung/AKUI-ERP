@@ -923,6 +923,7 @@
                 buttons: [
                     'csv', 'excel', 'print', 'copy'
                 ],
+                // processing: true,
                 paging: true,
                 scrollCollapse: true,
                 scrollX: true,
@@ -931,7 +932,8 @@
                 columnDefs: [{
                     "targets": '_all',
                     "className": 'nowrap'
-                }]
+                }],
+                // serverSide: true,
             });
         });
 
