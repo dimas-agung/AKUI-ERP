@@ -13,34 +13,35 @@ use App\Services\DryAWasteInputService;
 
 class DryAWasteInputController extends Controller
 {
-    public function index(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = DryAWasteInput::select('*');
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
+    // Test ServerSide
+    // public function index(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         $data = DryAWasteInput::select('*');
+    //         return DataTables::of($data)
+    //             ->addIndexColumn()
+    //             ->addColumn('action', function ($row) {
 
-                    // $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-                    $btn = '<form style="display: flex" id="deleteForm' . $row->id . '"
-                            action="' . route('DryAWasteInput.destroy', $row->id) . '"
-                            method="POST">
-                            ' . csrf_field() . '
-                            ' . method_field('DELETE') . '
-                            <button type="button" class="btn btn-link" data-original-title="Remove"
-                                onclick="confirmDelete(' . $row->id . ')">
-                                <i class="bi bi-trash3 text-danger"></i>
-                            </button>
-                        </form>';
+    //                 // $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+    //                 $btn = '<form style="display: flex" id="deleteForm' . $row->id . '"
+    //                         action="' . route('DryAWasteInput.destroy', $row->id) . '"
+    //                         method="POST">
+    //                         ' . csrf_field() . '
+    //                         ' . method_field('DELETE') . '
+    //                         <button type="button" class="btn btn-link" data-original-title="Remove"
+    //                             onclick="confirmDelete(' . $row->id . ')">
+    //                             <i class="bi bi-trash3 text-danger"></i>
+    //                         </button>
+    //                     </form>';
 
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
+    //                 return $btn;
+    //             })
+    //             ->rawColumns(['action'])
+    //             ->make(true);
+    //     }
 
-        return view('DryAWaste.DryAWasteInput.index');
-    }
+    //     return view('DryAWaste.DryAWasteInput.index');
+    // }
 
     protected $dryAWasteInputs = null;
     protected $masterJenisWastes = null;
@@ -68,12 +69,12 @@ class DryAWasteInputController extends Controller
     }
 
     // Index
-    // public function index()
-    // {
-    //     return response()->view('DryAWaste.DryAWasteInput.index', [
-    //         'dry_a_waste_input'     => $this->getdryAWasteInputs()
-    //     ]);
-    // }
+    public function index()
+    {
+        return response()->view('DryAWaste.DryAWasteInput.index', [
+            'dry_a_waste_input'     => $this->getdryAWasteInputs()
+        ]);
+    }
     // create
     public function create()
     {
