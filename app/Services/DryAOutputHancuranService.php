@@ -70,6 +70,8 @@ class DryAOutputHancuranService
                             'nomor_job'        => $mergedData['nomor_job'],
                             'nomor_bstb'       => $mergedData['nomor_bstb'],
                             'tujuan_kirim'     => $mergedData['tujuan_kirim'] ?? 0,
+                            'modal'            => $mergedData['modal'] ?? 0,
+                            'total_modal'      => $mergedData['total_modal'] ?? 0,
                             'status'           => $mergedData['status'] ?? 1,
                         ]);
                     }
@@ -81,12 +83,16 @@ class DryAOutputHancuranService
                         ->get();
 
                     foreach ($existingItems as $existingItem) {
+                        $beratKeluar = $existingItem->berat_keluar + ($itemObject->berat_job);
+                        $sisaBerat = $existingItem->berat_masuk - $beratKeluar;
+                        $totalModal = $existingItem->modal * $sisaBerat;
 
                         // Update data dengan nilai baru
                         $existingItem->update([
                             // Update data PreGradingHalusAddingStock
-                            'berat_keluar'  => $itemObject->berat_job ?? 0,
-                            'sisa_berat'    => $existingItem->berat_masuk - $itemObject->berat_job ?? 0,
+                            'berat_keluar'  => $beratKeluar ?? 0,
+                            'sisa_berat'    => $sisaBerat ?? 0,
+                            'total_modal'    => $totalModal,
                         ]);
                     }
 
@@ -149,10 +155,22 @@ class DryAOutputHancuranService
                     $stockRecords = DryAGradingHancuranStock::where('jenis_grading', '=', $transitRecord->jenis_grading)->get();
 
                     foreach ($stockRecords as $stockRecord) {
+                        // Simpan nilai sebelum dihapus
+                        $beratSebelumnya = $stockRecord->berat_masuk;
+
+                        // Hitung perbedaan berat dan pcs
+                        $perbedaanBerat = $transitRecord->berat_job;
+
+                        // Hitung total modal baru
+                        $beratKeluar = $stockRecord->berat_keluar - $perbedaanBerat;
+                        $beratSisa = $beratSebelumnya - $beratKeluar;
+                        $totalModal = $transitRecord->modal * $beratSisa;
+
                         // Update data DryAGradingHancuranStock
                         $stockRecord->update([
-                            'berat_keluar' => 0,
-                            'sisa_berat' => $stockRecord->berat_masuk // Menghitung sisa berat yang benar
+                            'berat_keluar' => max($beratKeluar, 0),
+                            'sisa_berat' => max($beratSisa, 0),
+                            'total_modal' => max($totalModal, 0)
                         ]);
                     }
 

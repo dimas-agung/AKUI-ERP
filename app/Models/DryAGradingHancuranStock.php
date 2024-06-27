@@ -14,6 +14,8 @@ class DryAGradingHancuranStock extends Model
         'berat_masuk',
         'berat_keluar',
         'sisa_berat',
+        'modal',
+        'total_modal',
     ];
     public function DryAOutputHancuran()
     {

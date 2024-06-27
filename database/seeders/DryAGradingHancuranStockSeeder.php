@@ -20,6 +20,8 @@ class DryAGradingHancuranStockSeeder extends Seeder
             'berat_masuk' => 100,
             'berat_keluar' => 0,
             'sisa_berat' => 100,
+            'modal' => 100,
+            'total_modal' => 10000,
         ]);
 
         DryAGradingHancuranStock::create([
@@ -28,6 +30,8 @@ class DryAGradingHancuranStockSeeder extends Seeder
             'berat_masuk' => 200,
             'berat_keluar' => 0,
             'sisa_berat' => 200,
+            'modal' => 150,
+            'total_modal' => 30000,
         ]);
 
         DryAGradingHancuranStock::create([
@@ -36,6 +40,8 @@ class DryAGradingHancuranStockSeeder extends Seeder
             'berat_masuk' => 300,
             'berat_keluar' => 0,
             'sisa_berat' => 300,
+            'modal' => 200,
+            'total_modal' => 60000,
         ]);
     }
 }

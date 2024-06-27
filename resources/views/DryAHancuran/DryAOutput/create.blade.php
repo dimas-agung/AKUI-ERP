@@ -91,7 +91,7 @@
                                     <div class="form-group">
                                         <label>Nomer BSTB</label>
                                         <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
-                                            readonly>
+                                            placeholder="Masukkan Nomer BSTB" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -103,25 +103,32 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Total Berat</label>
-                                        <input type="text" id="total_berat" class="form-control" name="total_berat"
-                                            readonly>
+                                        <label>Modal</label>
+                                        <input type="text" id="modal" class="form-control" name="modal" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Berat Masuk</label>
                                         <input type="text" id="berat_masuk" class="form-control" name="berat_masuk"
                                             readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Berat Keluar</label>
-                                        <input type="text" id="berat_job" class="form-control" name="berat_job">
+                                        <label>Total Berat</label>
+                                        <input type="text" id="total_berat" class="form-control" name="total_berat"
+                                            readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Berat Keluar</label>
+                                        <input type="text" id="berat_job" class="form-control" name="berat_job"
+                                            placeholder="Silahkan isi Berat keluar">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Sisa Berat</label>
                                         <input type="text" id="sisa_berat" class="form-control" name="sisa_berat"
@@ -156,7 +163,10 @@
                                 <th class="text-center">Nomor BSTB</th>
                                 <th class="text-center">Berat Job</th>
                                 <th class="text-center">Tujuan Kirim</th>
+                                <th class="text-center">Modal</th>
+                                <th class="text-center">Total Modal</th>
                                 <th class="text-center">User Created</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
@@ -189,6 +199,7 @@
                     success: function(response) {
                         if (response.length > 0) {
                             $('#berat_masuk').val(response[0].berat_masuk);
+                            $('#modal').val(response[0].modal);
                         } else {
                             $('#berat_masuk').val('');
                         }
@@ -291,6 +302,22 @@
             tombolAddDiklik = true;
         });
 
+        $(document).ready(function() {
+            $('#berat_job').on('input', function() {
+                var berat = parseFloat($(this).val());
+                var berat_masuk = parseFloat($('#berat_masuk').val());
+
+                if (berat > berat_masuk) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Berat keluar tidak boleh lebih dari berat masuk.',
+                        icon: 'error'
+                    });
+                    $(this).val(''); // Kosongkan input berat jika nilai tidak valid
+                }
+            });
+        });
+
         // Hitung Total Berat
         function hitungTotalBerat() {
             let totalBerat = 0;
@@ -314,8 +341,10 @@
             var jenis_grading = $('#jenis_grading').val();
             var berat_job = $('#berat_job').val();
             var nomor_job = $('#nomor_job').val();
+            var berat_masuk = $('#berat_masuk').val();
             var nomor_bstb = $('#nomor_bstb').val();
             var tujuan_kirim = $('#tujuan_kirim').val();
+            var modal = $('#modal').val();
             var user_created = $('#user_created').val();
 
             // Inisialisasi array untuk menyimpan field yang belum terisi
@@ -338,12 +367,17 @@
                 return;
             }
 
+            // Menghitung total modal
+            var total_modal = berat_job * modal;
+
             var newRow = '<tr>' +
                 '<td>' + jenis_grading + '</td>' +
                 '<td>' + nomor_job + '</td>' +
                 '<td>' + nomor_bstb + '</td>' +
                 '<td>' + berat_job + '</td>' +
                 '<td>' + tujuan_kirim + '</td>' +
+                '<td>' + modal + '</td>' +
+                '<td>' + total_modal + '</td>' +
                 '<td>' + user_created + '</td>' +
                 '</td><td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
 
@@ -359,6 +393,8 @@
                 nomor_bstb: nomor_bstb,
                 berat_job: berat_job,
                 tujuan_kirim: tujuan_kirim,
+                modal: modal,
+                total_modal: total_modal,
                 user_created: user_created,
             });
 
@@ -366,6 +402,7 @@
             $('#sisa_berat').val('');
             $('#berat_masuk').val('');
             $('#berat_job').val('');
+            $('#modal').val('');
             $('#jenis_grading').val(null).trigger('change');
             $('#tujuan_kirim').prop('disabled', true);
 

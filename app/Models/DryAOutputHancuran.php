@@ -16,6 +16,8 @@ class DryAOutputHancuran extends Model
         'nomor_bstb',
         'tujuan_kirim',
         'status',
+        'modal',
+        'total_modal',
         'user_created',
         'user_updated',
     ];

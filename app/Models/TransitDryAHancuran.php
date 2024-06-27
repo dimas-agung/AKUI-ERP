@@ -17,6 +17,8 @@ class TransitDryAHancuran extends Model
         'nomor_bstb',
         'tujuan_kirim',
         'status',
+        'modal',
+        'total_modal',
     ];
     public function DryAOutputHancuran()
     {
