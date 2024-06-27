@@ -16,24 +16,54 @@ use App\Services\DryAGradingHancuranService;
 
 class DryAGradingHancuranController extends Controller
 {
+    protected $DryAGradingHancuran = null;
+    protected $DryAPenerimaanHancuranStock = null;
+    protected $MasterJenisDryA = null;
+    protected $DryAGradingHancuranService;
+
+    public function __construct(DryAGradingHancuranService $DryAGradingHancuranService)
+    {
+        $this->DryAGradingHancuranService = $DryAGradingHancuranService;
+    }
+
+    public function getDryAGradingHancuran()
+    {
+        if ($this->DryAGradingHancuran === null) {
+            $this->DryAGradingHancuran = DryAGradingHancuran::where('status', 1)->get();
+        }
+        return $this->DryAGradingHancuran;
+    }
+
+    public function getDryAPenerimaanHancuranStock()
+    {
+        if ($this->DryAPenerimaanHancuranStock === null) {
+            $this->DryAPenerimaanHancuranStock = DryAPenerimaanHancuranStock::where('status', 1)->get();
+        }
+        return $this->DryAPenerimaanHancuranStock;
+    }
+
+    public function getMasterJenisDryA()
+    {
+        if ($this->MasterJenisDryA === null) {
+            $this->MasterJenisDryA = MasterJenisDryA::where('status', 1)->get();
+        }
+        return $this->MasterJenisDryA;
+    }
+
     //index
     public function index()
     {
-        $DryAGradingHancuran = DryAGradingHancuran::all();
         return response()->view('DryAHancuran.DryAGradingHancuran.index', [
-            'dry_a_grading_hancuran' => $DryAGradingHancuran,
+            'dry_a_grading_hancuran' => $this->getDryAGradingHancuran(),
         ]);
     }
 
     // create
     public function create()
     {
-        $DryAPenerimaanHancuranStock = DryAPenerimaanHancuranStock::withCount('DryAGradingHancuran')->get();
-        $MasterJenisDryA = MasterJenisDryA::all();
-        // return $DryAPenerimaanHancuranStock;
         return response()->view('DryAHancuran.DryAGradingHancuran.create', [
-            'dry_a_penerimaan_hancuran_stock' => $DryAPenerimaanHancuranStock,
-            'master_jenis_dry_a' => $MasterJenisDryA,
+            'dry_a_penerimaan_hancuran_stock' => $this->getDryAPenerimaanHancuranStock(),
+            'master_jenis_dry_a' => $this->getMasterJenisDryA(),
         ]);
     }
 
@@ -41,7 +71,7 @@ class DryAGradingHancuranController extends Controller
     public function set(Request $request)
     {
         $nomor_job = $request->nomor_job;
-        $data = DryAPenerimaanHancuranStock::where('nomor_job', $nomor_job)->first();
+        $data = $this->getDryAPenerimaanHancuranStock()->where('nomor_job', $nomor_job)->first();
         return response()->json($data);
     }
 
@@ -49,7 +79,7 @@ class DryAGradingHancuranController extends Controller
     public function setJenis(Request $request)
     {
         $jenis_grading = $request->jenis_grading;
-        $data = MasterJenisDryA::where('jenis', $jenis_grading)->first();
+        $data = $this->getMasterJenisDryA()->where('jenis', $jenis_grading)->first();
         return response()->json($data);
     }
 
@@ -59,20 +89,13 @@ class DryAGradingHancuranController extends Controller
         $idBoxes = json_decode($request->idBoxes);
 
         // Cek ketersediaan id box dalam database
-        $unavailableBoxes = DryAPenerimaanHancuranStock::whereIn('nomor_job', $idBoxes)->pluck('nomor_job')->toArray();
+        $unavailableBoxes = $this->getDryAPenerimaanHancuranStock()->whereIn('nomor_job', $idBoxes)->pluck('nomor_job')->toArray();
 
         // Filter id box yang tidak tersedia
         $availableBoxes = array_diff($idBoxes, $unavailableBoxes);
 
         // Kembalikan daftar id box yang tidak tersedia sebagai respons
         return response()->json(['unavailableBoxes' => $availableBoxes]);
-    }
-
-    protected $DryAGradingHancuranService;
-
-    public function __construct(DryAGradingHancuranService $DryAGradingHancuranService)
-    {
-        $this->DryAGradingHancuranService = $DryAGradingHancuranService;
     }
 
     public function store(Request $request)

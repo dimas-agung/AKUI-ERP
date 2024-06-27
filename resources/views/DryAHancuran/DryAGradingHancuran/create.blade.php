@@ -86,10 +86,10 @@
                                 </option>
                             @endforeach
                         </select>
-                        <input type="hidden" id="harga_esti" name="harga_esti" readonly>
                         <input type="hidden" id="harga_estimasi" name="harga_estimasi" readonly>
-                        <input type="hidden" id="pengurangan_harga" name="pengurangan_harga" readonly>
                         <input type="hidden" id="kontribusi" name="kontribusi" readonly>
+                        <input type="hidden" id="modal" name="modal" readonly>
+                        <input type="hidden" id="total_modal" name="total_modal" readonly>
                     </div>
 
                     <div class="col-md-3">
@@ -151,6 +151,9 @@
                                 <th scope="col" class="text-center">Berat Grading</th>
                                 <th scope="col" class="text-center">Susut Belakang</th>
                                 <th scope="col" class="text-center">Kontribusi</th>
+                                <th scope="col" class="text-center">Harga Estimasi</th>
+                                <th scope="col" class="text-center">Modal</th>
+                                <th scope="col" class="text-center">Total Modal</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
@@ -222,10 +225,10 @@
 
                         // Mengatur nilai Kategori Susut sesuai dengan respons dari server
                         $('#kategori_susut').val(response.kategori_susut);
-                        $('#harga_esti').val(response.harga_estimasi);
-                        $('#pengurangan_harga').val(response.pengurangan_harga);
+                        $('#harga_estimasi').val(response.harga_estimasi);
+                        $('#modal').val(response.harga_estimasi);
 
-                        // hargaEstimasi();
+                        updateTotalModal();
 
                     },
                     error: function(error) {
@@ -233,247 +236,19 @@
                     }
                 });
             });
+            $('#berat_grading').on('input', function() {
+                updateTotalModal();
+            });
+
+            function updateTotalModal() {
+                const modal = parseFloat($('#modal').val()) || 0;
+                const berat = parseFloat($('#berat_grading').val()) || 0;
+                const totalModal = modal * berat;
+
+                $('#total_modal').val(totalModal.toFixed(2)); // Mengatur total modal dengan 2 desimal
+            }
         });
 
-        // // Hitung Harga Estimasi
-        // function hargaEstimasi() {
-        //     // Pastikan nilai modal adalah angka
-        //     const modal_number = parseFloat($('#modal').val());
-
-        //     // Cek apakah nomor_grading dan jenis_grading sudah terisi
-        //     const nomorJobTerisi = $('#nomor_job').val() !== '';
-        //     const jenisGradingTerisi = $('#jenis_grading').val() !== '';
-
-        //     // Pastikan nilai modal adalah angka dan nomor_grading serta jenis_grading sudah terisi
-        //     if (!isNaN(modal_number) && nomorJobTerisi && jenisGradingTerisi) {
-        //         // Pastikan nilai pengurangan_harga adalah angka
-        //         const pengurangan_harga_number = parseFloat($('#pengurangan_harga').val());
-        //         // Pastikan nilai harga_estimasi adalah angka
-        //         const harga_estimasi = parseFloat($('#harga_esti').val());
-
-        //         // Menghasilkan nomor BSTB baru
-        //         if (isNaN(pengurangan_harga_number) || pengurangan_harga_number === null || pengurangan_harga_number ===
-        //             0) {
-        //             $('#harga_estimasi').val(harga_estimasi);
-        //         } else {
-        //             $('#harga_estimasi').val(modal_number - (modal_number * pengurangan_harga_number));
-        //         }
-        //     } else {
-        //         // Jika nomor_job atau jenis_grading belum terisi, tidak melakukan perhitungan
-        //         console.log('Nomor Job atau jenis grading belum terisi.');
-        //     }
-        // }
-        // // Hitung Susut Depan
-        // function hitungSusutDepan() {
-        //     let beratGradingSD = 0;
-
-        //     // Iterasi melalui setiap baris tabel
-        //     $('#dataTable tbody tr').each(function() {
-        //         let kategoriSusut = $(this).find('td:eq(16)').text();
-        //         let beratGrading = parseFloat($(this).find('td:eq(17)').text()) || 0; // Default ke 0 jika NaN
-        //         let beratAdding = parseFloat($(this).find('td:eq(3)').text()) || 0; // Default ke 0 jika NaN
-
-        //         // Menambahkan berat grading jika kategori susut adalah "SD"
-        //         if (kategoriSusut === "SD") {
-        //             beratGradingSD += beratGrading;
-        //         }
-        //     });
-
-        //     // Menghitung berat adjustment per adding untuk kategori SD
-        //     let totalBeratAdding = parseFloat($('#berat_job').val()) ||
-        //         0; // Menggunakan berat adding dari input form dan default ke 0 jika NaN
-        //     let susutDepan = totalBeratAdding !== 0 ? beratGradingSD / totalBeratAdding : 0;
-
-        //     $('#dataTable tbody tr').each(function() {
-        //         let currentKategoriSusut = $(this).find('td:eq(16)').text();
-        //         let row = $(this);
-        //         row.find('td:eq(20)').text(susutDepan.toFixed(4)); // Update nilai di tabel
-        //     });
-
-        //     console.log("Susut Depan = " + susutDepan);
-        //     $('#susut_depan').val(susutDepan.toFixed(4));
-        // }
-        // // Hitung Susut Belakang
-        // function hitungSusutBelakang() {
-        //     let totalBeratGrading = 0;
-        //     // Mengambil berat adding dari input form dan default ke 0 jika NaN
-        //     let totalBeratAdding = parseFloat($('#berat').val()) || 0;
-
-        //     // Menghitung total berat adjustment dari setiap baris tabel
-        //     $('#dataTable tbody tr').each(function() {
-        //         // Default ke 0 jika NaN atau 0
-        //         let beratGrading = parseFloat($(this).find('td:eq(11)').text()) || 0;
-
-        //         totalBeratGrading += beratGrading;
-        //     });
-
-        //     // Menghindari pembagian oleh nol
-        //     let susutBelakang = totalBeratAdding !== 0 ? totalBeratGrading / totalBeratAdding : 0;
-
-        //     $('#dataTable tbody tr').each(function() {
-        //         $(this).find('td:eq(12)').text(susutBelakang.toFixed(4));
-        //     });
-
-        //     console.log("Susut Belakang = " + susutBelakang);
-        //     $('#susut_belakang').val(susutBelakang.toFixed(4));
-        // }
-        // // Hitung Kontribusi
-        // function hitungKontribusi() {
-        //     // Inisialisasi variabel untuk menyimpan total berat grading dari seluruh tabel
-        //     let totalBeratGrading = 0;
-        //     // Inisialisasi variabel untuk menyimpan jumlah data berat grading yang valid
-        //     let jumlahData = 0;
-
-        //     // Iterasi melalui setiap baris tabel
-        //     $('#dataTable tbody tr').each(function() {
-        //         // Mendapatkan berat grading dari kolom yang sesuai
-        //         // Kolom 10 berisi berat grading
-        //         let beratGrading = parseFloat($(this).find('td:eq(11)').text()) || 0;
-
-        //         // Pastikan beratGrading adalah angka yang valid
-        //         if (!isNaN(beratGrading)) {
-        //             // Menambahkan berat grading ke total
-        //             totalBeratGrading += beratGrading;
-        //             // Menambah jumlah data berat grading yang valid
-        //             jumlahData++;
-        //         }
-        //     });
-
-        //     // Menghindari pembagian oleh nol dan pastikan ada data berat grading yang valid
-        //     if (totalBeratGrading !== 0 && jumlahData > 0) {
-        //         // Iterasi melalui setiap baris tabel
-        //         $('#dataTable tbody tr').each(function() {
-        //             // Mendapatkan berat grading dari kolom yang sesuai
-        //             // Kolom 10 berisi berat grading
-        //             let beratGrading = parseFloat($(this).find('td:eq(11)').text()) || 0;
-
-        //             // Menghitung presentase berat grading berdasarkan total berat grading
-        //             let presentaseBeratGrading = (beratGrading / totalBeratGrading) * 100;
-
-        //             // Menampilkan hasil perhitungan pada kolom yang sesuai
-        //             $(this).find('td:eq(13)').text(Math.round(presentaseBeratGrading) + '%');
-        //         });
-        //     } else {
-        //         // Jika tidak ada data berat grading yang valid atau total berat grading adalah nol, set semua nilai pada kolom hasil perhitungan ke 0
-        //         $('#dataTable tbody tr').each(function() {
-        //             $(this).find('td:eq(13)').text('0%');
-        //         });
-        //     }
-        // }
-
-
-
-
-        // // ADD ROW
-        // let dataArray = [];
-
-        // function addRow() {
-        //     if (validateForm()) {
-        //         let nomor_job = $('#nomor_job').val();
-        //         let jenis_rambang = $('#jenis_rambang').val();
-        //         let upah_operator = $('#upah_operator').val();
-        //         let berat = $('#berat').val();
-        //         let nama_operator = $('#nama_operator').val();
-        //         let nip_operator = $('#nip_operator').val();
-        //         let grade_operator = $('#grade_operator').val();
-        //         let nama_team_leader = $('#nama_team_leader').val();
-        //         let waktu_penyebaran = $('#waktu_penyebaran').val();
-        //         let waktu_pengembalian = $('#waktu_pengembalian').val();
-        //         let jenis_grading = $('#jenis_grading').val();
-        //         let berat_grading = $('#berat_grading').val();
-        //         let susut_belakang = $('#susut_belakang').val();
-        //         let kontribusi = $('#kontribusi').val();
-        //         let user_created = $('#user_created').val();
-
-        //         let newRow = `<tr>` +
-        //             `<td class="text-center">${nomor_job}</td>` +
-        //             `<td class="text-center">${jenis_rambang}</td>` +
-        //             `<td class="text-center">${upah_operator}</td>` +
-        //             `<td class="text-center">${berat}</td>` +
-        //             `<td class="text-center">${nip_operator}</td>` +
-        //             `<td class="text-center">${nama_operator}</td>` +
-        //             `<td class="text-center">${grade_operator}</td>` +
-        //             `<td class="text-center">${nama_team_leader}</td>` +
-        //             `<td class="text-center">${waktu_penyebaran}</td>` +
-        //             `<td class="text-center">${waktu_pengembalian}</td>` +
-        //             `<td class="text-center">${jenis_grading}</td>` +
-        //             `<td class="text-center">${berat_grading}</td>` +
-        //             `<td class="text-center">${susut_belakang}</td>` +
-        //             `<td class="text-center">${kontribusi}</td>` +
-        //             `<td class="text-center">${user_created}</td>` +
-        //             `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
-        //             `</tr>`;
-        //         // Tambahkan Kedalam Tabel
-        //         $('#dataTable tbody').append(newRow);
-
-        //         $('#nomor_job').prop('disabled', true);
-        //         $('#berat_kotor').prop('readonly', true);
-
-        //         dataArray.push({
-        //             nomor_job: nomor_job,
-        //             jenis_rambang: jenis_rambang,
-        //             upah_operator: upah_operator,
-        //             berat: berat,
-        //             nama_operator: nama_operator,
-        //             nip_operator: nip_operator,
-        //             grade_operator: grade_operator,
-        //             nama_team_leader: nama_team_leader,
-        //             waktu_penyebaran: waktu_penyebaran,
-        //             waktu_pengembalian: waktu_pengembalian,
-        //             jenis_grading: jenis_grading,
-        //             berat_grading: berat_grading,
-        //             susut_belakang: susut_belakang,
-        //             kontribusi: kontribusi,
-        //             user_created: user_created,
-        //         });
-        //         console.log(dataArray);
-
-        //         $('#jenis_grading').val(null).trigger('change');
-        //         $('#berat_grading').val('');
-
-        //         hitungSusutBelakang();
-        //         hitungKontribusi();
-        //         hitungTotalBerat();
-        //     }
-
-        // }
-
-        // // Hapus Baris
-        // function hapusBaris(button) {
-        //     // Dapatkan elemen baris terkait dengan tombol delete yang diklik
-        //     let row = $(button).closest('tr');
-
-        //     // Hapus baris dari tabel
-        //     row.remove();
-
-        //     // Hapus baris dari dataArray berdasarkan indeks baris di tabel
-        //     let rowIndex = row.index();
-        //     dataArray.splice(rowIndex, 1);
-
-        //     // Cek apakah tabel tidak memiliki baris data lagi
-        //     if ($('#dataTable tbody tr').length === 0) {
-        //         $('#nomor_job').prop('disabled', false).val(null).trigger('change');
-        //         $('#jenis_rambang').val('');
-        //         $('#upah_operator').val('');
-        //         $('#berat').val('');
-        //         $('#nama_operator').val('');
-        //         $('#nip_operator').val('');
-        //         $('#grade_operator').val('');
-        //         $('#nama_team_leader').val('');
-
-        //         // Set susut_depan dan susut_belakang to 0 when table is empty
-        //         $('#susut_belakang').val('0.0000');
-        //         hitungTotalBerat();
-        //     } else {
-        //         // hitungSusutDepan();
-        //         hitungSusutBelakang();
-        //         hitungKontribusi();
-        //         hitungTotalBerat();
-        //     }
-        // }
-
-
-        // TEST
         // Hitung Susut Belakang
         function hitungSusutBelakang() {
             let totalBeratGrading = 0;
@@ -629,6 +404,9 @@
                 let berat_grading = $('#berat_grading').val();
                 let susut_belakang = $('#susut_belakang').val();
                 let kontribusi = $('#kontribusi').val();
+                let harga_estimasi = $('#harga_estimasi').val();
+                let modal = $('#modal').val();
+                let total_modal = $('#total_modal').val();
                 let user_created = $('#user_created').val();
 
                 let newRow = `<tr>` +
@@ -646,6 +424,9 @@
                     `<td class="text-center">${berat_grading}</td>` +
                     `<td class="text-center">${susut_belakang}</td>` +
                     `<td class="text-center">${kontribusi}</td>` +
+                    `<td class="text-center">${harga_estimasi}</td>` +
+                    `<td class="text-center">${modal}</td>` +
+                    `<td class="text-center">${total_modal}</td>` +
                     `<td class="text-center">${user_created}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
                     `</tr>`;
@@ -670,6 +451,9 @@
                     berat_grading: berat_grading,
                     susut_belakang: susut_belakang,
                     kontribusi: kontribusi,
+                    harga_estimasi: harga_estimasi,
+                    modal: modal,
+                    total_modal: total_modal,
                     user_created: user_created,
                 });
                 console.log(dataArray);

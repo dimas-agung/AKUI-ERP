@@ -28,6 +28,8 @@
                                         <th scope="col" class="text-center">Berat Masuk</th>
                                         <th scope="col" class="text-center">Berat Keluar</th>
                                         <th scope="col" class="text-center">Sisa Berat</th>
+                                        <th scope="col" class="text-center">Modal</th>
+                                        <th scope="col" class="text-center">Total Modal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -39,6 +41,8 @@
                                             <td class="text-center">{{ $item->berat_masuk }}</td>
                                             <td class="text-center">{{ $item->berat_keluar }}</td>
                                             <td class="text-center">{{ $item->sisa_berat }}</td>
+                                            <td class="text-center">{{ $item->modal }}</td>
+                                            <td class="text-center">{{ $item->total_modal }}</td>
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">

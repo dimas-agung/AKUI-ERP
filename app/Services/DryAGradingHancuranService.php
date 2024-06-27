@@ -55,20 +55,57 @@ class DryAGradingHancuranService
                     // Buat instansi PreCleaningInput
                     DryAGradingHancuran::create($mergedData);
 
-                    DryAGradingHancuranStock::create([
-                        'unit'                  => $mergedData['unit'] ?? 'Dry A',
-                        'jenis_grading'         => $mergedData['jenis_grading'],
-                        'berat_masuk'           => $mergedData['berat_grading'],
-                        'berat_keluar'          => $mergedData['berat_keluar'] ?? 0,
-                        'sisa_berat'            => $mergedData['berat_grading'],
-                    ]);
+                    // DryAGradingHancuranStock::create([
+                    //     'unit'                  => $mergedData['unit'] ?? 'Dry A',
+                    //     'jenis_grading'         => $mergedData['jenis_grading'],
+                    //     'berat_masuk'           => $mergedData['berat_grading'],
+                    //     'berat_keluar'          => $mergedData['berat_keluar'] ?? 0,
+                    //     'sisa_berat'            => $mergedData['berat_grading'],
+                    //     'modal'                 => $mergedData['modal'] ?? 0,
+                    //     'total_modal'           => $mergedData['total_modal'] ?? 0,
+                    // ]);
 
                     // Tambahkan Jika Butuh Update
-                    $itemObject = (object) $mergedData;
+                    $DryAGradingHancuran = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $DryAPenerimaanHancuranStock = DryAPenerimaanHancuranStock::where('nomor_job', $itemObject->nomor_job)
-                        ->where('jenis_rambang', $itemObject->jenis_rambang)
+                    $DryAGradingHancuranStock = DryAGradingHancuranStock::where('jenis_grading', $DryAGradingHancuran->jenis_grading)
+                        ->get();
+
+                    $found = false;
+
+                    foreach ($DryAGradingHancuranStock as $item) {
+                        $found = true;
+
+                        // Hitung sisa berat
+                        $beratMasuk = $item->berat_masuk + ($DryAGradingHancuran->berat_grading ?? 0);
+                        $sisaBerat = $beratMasuk;
+                        $totalModal = $item->modal * $sisaBerat;
+
+                        // Update data dengan nilai baru
+                        $item->update([
+                            'berat_masuk'  => $beratMasuk,
+                            'sisa_berat'   => $sisaBerat,
+                            'total_modal'  => $totalModal,
+                            'user_updated' => $DryAGradingHancuran->user_created ?? "There isn't any",
+                        ]);
+                    }
+
+                    if (!$found) {
+                        DryAGradingHancuranStock::create([
+                            'unit'                  => $mergedData['unit'] ?? 'Dry A',
+                            'jenis_grading'         => $mergedData['jenis_grading'],
+                            'berat_masuk'           => $mergedData['berat_grading'],
+                            'berat_keluar'          => $mergedData['berat_keluar'] ?? 0,
+                            'sisa_berat'            => $mergedData['berat_grading'],
+                            'modal'                 => $mergedData['modal'] ?? 0,
+                            'total_modal'           => $mergedData['total_modal'] ?? 0,
+                        ]);
+                    }
+
+                    // Ambil semua item yang sesuai dengan kriteria
+                    $DryAPenerimaanHancuranStock = DryAPenerimaanHancuranStock::where('nomor_job', $DryAGradingHancuran->nomor_job)
+                        ->where('jenis_rambang', $DryAGradingHancuran->jenis_rambang)
                         ->get();
 
                     foreach ($DryAPenerimaanHancuranStock as $item) {
@@ -80,8 +117,8 @@ class DryAGradingHancuranService
                     }
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $DryAPenerimaanHancuran = DryAPenerimaanHancuran::where('nomor_job', $itemObject->nomor_job)
-                        ->where('jenis_rambang', $itemObject->jenis_rambang)
+                    $DryAPenerimaanHancuran = DryAPenerimaanHancuran::where('nomor_job', $DryAGradingHancuran->nomor_job)
+                        ->where('jenis_rambang', $DryAGradingHancuran->jenis_rambang)
                         ->get();
 
                     foreach ($DryAPenerimaanHancuran as $item) {
@@ -113,76 +150,10 @@ class DryAGradingHancuranService
         ], 201);
     }
 
-    // public function destroy($nomor_job)
-    // {
-    //     try {
-    //         Log::info('Trying to delete job: ' . $nomor_job);
-
-    //         // Begin transaction
-    //         DB::beginTransaction();
-
-    //         // Temukan record berdasarkan ID
-    //         $DryAGradingHancuran = DryAGradingHancuran::where('nomor_job', $nomor_job)->first();
-
-    //         if (!$DryAGradingHancuran) {
-    //             throw new \Exception('Record not found for nomor_job: ' . $nomor_job);
-    //         }
-
-    //         Log::info('Found job: ' . $DryAGradingHancuran->nomor_job);
-
-    //         // Hapus semua item terkait
-    //         $stockDry = DryAGradingHancuranStock::where('jenis_grading', '=', $DryAGradingHancuran->jenis_grading)->first();
-
-    //         if ($stockDry) {
-    //             Log::info('Found related stock: ' . $stockDry->id);
-    //             if ($stockDry->berat_keluar === 0) {
-    //                 $stockDry->delete();
-    //                 Log::info('Deleted related stock: ' . $stockDry->id);
-    //             } else {
-    //                 if ($DryAGradingHancuran->berat_grading >= $stockDry->berat_keluar) {
-    //                     $stockDry->delete();
-    //                     Log::info('Deleted related stock due to weight: ' . $stockDry->id);
-    //                 }
-    //             }
-    //         }
-
-    //         $existingItems = DryAPenerimaanHancuranStock::where('nomor_job', $DryAGradingHancuran->nomor_job)
-    //             ->where('jenis_rambang', $DryAGradingHancuran->jenis_rambang)
-    //             ->get();
-
-    //         foreach ($existingItems as $existingItem) {
-    //             $existingItem->update(['status' => 1]);
-    //         }
-
-    //         $DryAPenerimaanHancuran = DryAPenerimaanHancuran::where('nomor_job', $DryAGradingHancuran->nomor_job)
-    //             ->where('jenis_rambang', $DryAGradingHancuran->jenis_rambang)
-    //             ->get();
-
-    //         foreach ($DryAPenerimaanHancuran as $item) {
-    //             $item->update(['status' => 1]);
-    //         }
-
-    //         // Hapus record utama
-    //         $DryAGradingHancuran->delete();
-
-    //         // Jika tidak ada kesalahan, komit transaksi
-    //         DB::commit();
-
-    //         return redirect()->route('DryAGradingHancuran.index')->with('success', 'Data berhasil dihapus');
-    //     } catch (\Exception $e) {
-    //         Log::error('Error deleting job: ' . $nomor_job . ', Error: ' . $e->getMessage());
-
-    //         // Jika terjadi kesalahan, rollback transaksi
-    //         DB::rollback();
-
-    //         return redirect()->route('DryAGradingHancuran.index')->with('error', 'Gagal menghapus data');
-    //     }
-    // }
-
     public function destroy($nomor_job)
     {
         try {
-            Log::info('Trying to delete job: ' . $nomor_job);
+            // Log::info('Trying to delete job: ' . $nomor_job);
 
             // Begin transaction
             DB::beginTransaction();
@@ -195,7 +166,7 @@ class DryAGradingHancuranService
             }
 
             foreach ($DryAGradingHancurans as $DryAGradingHancuran) {
-                Log::info('Found job: ' . $DryAGradingHancuran->nomor_job);
+                // Log::info('Found job: ' . $DryAGradingHancuran->nomor_job);
 
                 // Hapus semua item terkait
                 $stockDry = DryAGradingHancuranStock::where('jenis_grading', '=', $DryAGradingHancuran->jenis_grading)
@@ -203,15 +174,28 @@ class DryAGradingHancuranService
                     ->first();
 
                 if ($stockDry) {
-                    Log::info('Found related stock: ' . $stockDry->id);
-                    if ($stockDry->berat_keluar === 0) {
-                        $stockDry->delete();
-                        Log::info('Deleted related stock: ' . $stockDry->id);
-                    } else {
-                        if ($DryAGradingHancuran->berat_grading >= $stockDry->berat_keluar) {
+                    // Log::info('Found related stock: ' . $stockDry->id);
+
+                    if ($DryAGradingHancuran->berat_grading >= $stockDry->berat_keluar) {
+                        // Hitung sisa berat
+                        $beratMasuk = $stockDry->berat_masuk - ($DryAGradingHancuran->berat_grading ?? 0);
+                        $sisaBerat = $beratMasuk;
+                        $totalModal = $stockDry->modal * $sisaBerat;
+                        // Log::info('Found related stock: ' . $stockDry->id);
+                        if ($stockDry->sisa_berat === 0) {
                             $stockDry->delete();
-                            Log::info('Deleted related stock due to weight: ' . $stockDry->id);
+                        } else {
+
+                            $stockDry->update([
+                                'berat_masuk'  => $beratMasuk,
+                                'sisa_berat'   => $sisaBerat,
+                                'total_modal'  => $totalModal,
+                                'user_updated' => $DryAGradingHancuran->user_created ?? "There isn't any",
+                            ]);
                         }
+                        // Update data dengan nilai baru
+
+                        // Log::info('Deleted related stock due to weight: ' . $stockDry->id);
                     }
                 }
 
