@@ -156,7 +156,7 @@
                         @role('master|admin')
                             <li class="sidebar-title">Menu</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*', 'MasterTujuanKirimDryA*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*', 'MasterTujuanKirimDryA*', 'MasterJenisWaste*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-stack"></i>
                                     <span>Master</span>
@@ -240,6 +240,10 @@
                                     <li class="submenu-item {{ Route::is('MasterTujuanKirimDryA*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterTujuanKirimDryA.index') }}" class="submenu-link">Master
                                             Tujuan<br>Kirim Dry A</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterJenisWaste*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterJenisWaste.index') }}" class="submenu-link">Master
+                                            Jenis<br>Waste</a>
                                     </li>
                                 </ul>
                             </li>
@@ -1121,6 +1125,7 @@
                 buttons: [
                     'csv', 'excel', 'print', 'copy'
                 ],
+                // processing: true,
                 paging: true,
                 scrollCollapse: true,
                 scrollX: true,
@@ -1129,7 +1134,8 @@
                 columnDefs: [{
                     "targets": '_all',
                     "className": 'nowrap'
-                }]
+                }],
+                // serverSide: true,
             });
         });
 

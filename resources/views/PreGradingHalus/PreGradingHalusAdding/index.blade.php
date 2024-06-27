@@ -82,7 +82,7 @@
                                 <tbody>
                                     @forelse ($pre_grading_halus_addings as $PGHA)
                                         <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $PGHA->nomor_job }}</td>
                                             <td class="text-center">{{ $PGHA->nomor_grading }}</td>
                                             <td class="text-center">{{ $PGHA->id_box_grading_kasar }}</td>

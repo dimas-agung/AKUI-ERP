@@ -71,6 +71,7 @@ class DryAWasteInputService
                         $pcsMasuk = $item->pcs_masuk + ($DryAWasteInput->pcs ?? 0);
                         $sisaBerat = $beratMasuk;
                         $sisaPcs = $pcsMasuk;
+                        $totalModal = $item->modal * $sisaBerat;
 
                         // Update data dengan nilai baru
                         $item->update([
@@ -78,6 +79,7 @@ class DryAWasteInputService
                             'pcs_masuk'    => $pcsMasuk,
                             'sisa_berat'   => $sisaBerat,
                             'sisa_pcs'     => $sisaPcs,
+                            'total_modal'  => $totalModal,
                             'user_updated' => $DryAWasteInput->user_created ?? "There isn't any",
                         ]);
                     }
@@ -92,6 +94,8 @@ class DryAWasteInputService
                             'pcs_masuk'         => $mergedData['pcs'],
                             'pcs_keluar'        => $mergedData['pcs_keluar'] ?? 0,
                             'sisa_pcs'          => $mergedData['pcs'] ?? 0,
+                            'modal'             => $mergedData['modal'] ?? 0,
+                            'total_modal'       => $mergedData['total_modal'] ?? 0,
                         ]);
                     }
 
@@ -145,6 +149,7 @@ class DryAWasteInputService
                 $pcsBaru = $pcsSebelumnya - $DryAWasteInput->pcs;
                 $sisaBeratBaru = $DryAWasteStock->sisa_berat - $DryAWasteInput->berat;
                 $sisaPcsBaru = $DryAWasteStock->sisa_pcs - $DryAWasteInput->pcs;
+                $totalModal = $DryAWasteStock->modal * $sisaBeratBaru;
 
                 if ($sisaBeratBaru <= 0 && $sisaPcsBaru <= 0) {
                     // Hapus data DryAWasteStock jika sisa_berat dan sisa_pcs baru <= 0
@@ -156,6 +161,7 @@ class DryAWasteInputService
                         'pcs_masuk'     => $pcsBaru,
                         'sisa_berat'    => $sisaBeratBaru,
                         'sisa_pcs'      => $sisaPcsBaru,
+                        'total_modal'   => $totalModal,
                     ]);
                 }
             }
