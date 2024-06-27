@@ -17,28 +17,17 @@ class PreWashInputController extends Controller
     //index
     public function index()
     {
-        $i = 1;
-        $PreWashInput = PreWashInput::all();
+        $PreWashInput = PreWashInput::where('status', 1)->get();
         return response()->view('PreWash.PreWashInput.index', [
             'pre_wash_inputs' => $PreWashInput,
-            'i' => $i,
         ]);
     }
-
-    // create
-    // public function create()
-    // {
-    //     $PreWashInput = PreWashInput::with('TransitGradingHalus')->get();
-    //     return response()->view('PreWash.PreWashInput.create', compact('PreWashInput'));
-    // }
     // create
     public function create()
     {
-        $PreWashInput = PreWashInput::with('TransitGradingHalus')->get();
-        $TransitGradingHalus = TransitGradingHalus::all();
+        $TransitGradingHalus = TransitGradingHalus::distinct('nomor_bstb')->pluck('nomor_bstb');
+        // return $TransitGradingHalus;
         return view('PreWash.PreWashInput.create', [
-            // 'pre_grading_halus_stocks' => $AdjustmentAdding,
-            'grading_halus_stocks' => $PreWashInput,
             'transit_grading_haluses' => $TransitGradingHalus,
         ]);
     }
@@ -179,7 +168,6 @@ class PreWashInputController extends Controller
             'redirectTo' => route('PreWashInput.index')
         ], 201);
     }
-
 
     public function destroy($nomor_bstb)
     {

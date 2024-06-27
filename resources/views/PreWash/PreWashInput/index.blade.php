@@ -46,7 +46,7 @@
                         <tbody>
                             @forelse ($pre_wash_inputs as $item)
                                 <tr>
-                                    <td class="text-center">{{ $i++ }}</td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
                                     {{-- <td class="text-center">{{ $item->unit }}</td> --}}
                                     <td class="text-center">{{ $item->nomor_job }}</td>
                                     <td class="text-center">{{ $item->nomor_batch }}</td>

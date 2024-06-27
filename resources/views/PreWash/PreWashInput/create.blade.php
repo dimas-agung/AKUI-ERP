@@ -27,21 +27,9 @@
                                                 $selectedNomorBSTB = ''; // Inisialisasi variabel untuk menyimpan nomor_bstb yang sudah ditampilkan
                                             @endphp
                                             @foreach ($transit_grading_haluses as $post)
-                                                @if ($selectedNomorBSTB != $post->nomor_bstb && $post->status != 0)
-                                                    @php
-                                                        $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
-                                                    @endphp
-                                                    @foreach ($transit_grading_haluses as $innerPost)
-                                                        @if ($innerPost->nomor_bstb == $post->nomor_bstb && $innerPost->status != 0)
-                                                            <option value="{{ $innerPost->nomor_bstb }}">
-                                                                {{ old('nomor_bstb', $innerPost->nomor_bstb) }}
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
-                                                    @php
-                                                        $selectedNomorBSTB = $post->nomor_bstb; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
-                                                    @endphp
-                                                @endif
+                                                <option value="{{ $post }}">
+                                                    {{ old('nomor_bstb', $post) }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
