@@ -148,7 +148,7 @@
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
-                                            @if ($item->status == 1)
+                                            {{-- @if ($item->status == 1) --}}
                                                 <form style="display: flex" id="deleteForm{{ $item->nomor_grading }}"
                                                     action="{{ route('GradingHalusInput.destroy', $item->nomor_grading) }}"
                                                     method="POST">
@@ -160,7 +160,7 @@
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
                                                 </form>
-                                            @endif
+                                            {{-- @endif --}}
                                         </div>
                                     </td>
                                 </tr>
