@@ -34,6 +34,8 @@
                                         <th scope="col" class="text-center">Pcs Masuk</th>
                                         <th scope="col" class="text-center">Pcs Keluar</th>
                                         <th scope="col" class="text-center">Sisa Pcs</th>
+                                        <th scope="col" class="text-center">Modal</th>
+                                        <th scope="col" class="text-center">Total Modal</th>
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
                                     </tr>
@@ -49,6 +51,8 @@
                                             <td class="text-center">{{ $item->pcs_masuk }}</td>
                                             <td class="text-center">{{ $item->pcs_keluar }}</td>
                                             <td class="text-center">{{ $item->sisa_pcs }}</td>
+                                            <td class="text-center">{{ $item->modal }}</td>
+                                            <td class="text-center">{{ $item->total_modal }}</td>
                                             <td class="text-center">{{ $item->created_at }}</td>
                                             <td class="text-center">
                                                 {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}

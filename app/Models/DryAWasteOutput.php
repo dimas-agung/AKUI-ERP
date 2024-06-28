@@ -20,6 +20,8 @@ class DryAWasteOutput extends Model
         'nomor_bstb',
         'keterangan',
         'status',
+        'modal',
+        'total_modal',
         'user_created',
         'user_updated',
     ];

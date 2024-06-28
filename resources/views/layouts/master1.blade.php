@@ -1121,6 +1121,7 @@
             }`;
             document.head.appendChild(style);
             $('#table1').DataTable({
+                // ajax: 'scripts/server_processing.php',
                 dom: '<"row"<"col-md-2"l><"col-md-6"B><"col-md-4"f>>tip',
                 buttons: [
                     'csv', 'excel', 'print', 'copy'
@@ -1131,6 +1132,7 @@
                 scrollX: true,
                 scrollY: '100vh',
                 fixedHeader: true,
+                // serverSide: true
                 columnDefs: [{
                     "targets": '_all',
                     "className": 'nowrap'

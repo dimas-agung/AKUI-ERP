@@ -789,6 +789,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/dry_a_waste_output', 'index')->name('DryAWasteOutput.index');
                 Route::get('/dry_a_waste_output/create', 'create')->name('DryAWasteOutput.create');
                 Route::get('/dry_a_waste_output/get_pcc', 'setpcc')->name('DryAWasteOutput.setpcc');
+                Route::get('/dry_a_waste_output/get_data_id_box', 'set')->name('DryAWasteOutput.set');
                 Route::post('/dry_a_waste_output/sendData', 'sendData')->name('DryAWasteOutput.sendData');
                 Route::post('/dry_a_waste_output/store', 'store')->name('DryAWasteOutput.store');
                 Route::get('/dry_a_waste_output/setjenis', 'setJenis')->name('DryAWasteOutput.setJenis');

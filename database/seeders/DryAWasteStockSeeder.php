@@ -22,6 +22,8 @@ class DryAWasteStockSeeder extends Seeder
             'pcs_masuk' => '10',
             'pcs_keluar' => '0',
             'sisa_pcs' => '10',
+            'modal' => '1000',
+            'total_modal' => '50000',
             'status' => 1,
         ]);
         DryAWasteStock::create([
@@ -33,6 +35,8 @@ class DryAWasteStockSeeder extends Seeder
             'pcs_masuk' => '20',
             'pcs_keluar' => '0',
             'sisa_pcs' => '20',
+            'modal' => '1000',
+            'total_modal' => '100000',
             'status' => 1,
         ]);
         DryAWasteStock::create([
@@ -44,6 +48,8 @@ class DryAWasteStockSeeder extends Seeder
             'pcs_masuk' => '30',
             'pcs_keluar' => '0',
             'sisa_pcs' => '30',
+            'modal' => '1000',
+            'total_modal' => '300000',
             'status' => 1,
         ]);
     }

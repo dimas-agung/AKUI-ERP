@@ -25,11 +25,13 @@
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Unit</th>
                                         <th scope="col" class="text-center">Jenis Waste</th>
+                                        <th scope="col" class="text-center">Nomor Job</th>
+                                        <th scope="col" class="text-center">Nomor BSTB</th>
                                         <th scope="col" class="text-center">Berat</th>
                                         <th scope="col" class="text-center">Pcs</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
-                                        <th scope="col" class="text-center">Nomor Job</th>
-                                        <th scope="col" class="text-center">Nomor BSTB</th>
+                                        <th scope="col" class="text-center">Modal</th>
+                                        <th scope="col" class="text-center">Total Modal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,11 +42,13 @@
                                         <td class="text-center">{{ $i++ }}</td>
                                         <td class="text-center">{{ $TPCS->unit }}</td>
                                         <td class="text-center">{{ $TPCS->jenis_waste }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_job }}</td>
+                                        <td class="text-center">{{ $TPCS->nomor_bstb }}</td>
                                         <td class="text-center">{{ $TPCS->berat }}</td>
                                         <td class="text-center">{{ $TPCS->pcs }}</td>
                                         <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
-                                        <td class="text-center">{{ $TPCS->nomor_job }}</td>
-                                        <td class="text-center">{{ $TPCS->nomor_bstb }}</td>
+                                        <td class="text-center">{{ $TPCS->modal }}</td>
+                                        <td class="text-center">{{ $TPCS->total_modal }}</td>
                                     </tr>
                                     <?php endif; ?>
                                     <?php endforeach; ?>

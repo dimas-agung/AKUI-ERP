@@ -49,8 +49,8 @@ class PreGradingHalusInputController extends Controller
     public function create(): View
     {
         // $PreGHI = PreGradingHalusInput::with('TransitPreCleaningStock')->get();
-        $TransitPre = TransitPreCleaningStock::with('PreGradingHalusInput')->get();
-        $Unit = Unit::with('PreGradingHalusInput')->get();
+        $TransitPre = TransitPreCleaningStock::where('berat_kirim', '>', 0)->get();
+        $Unit = Unit::where('status', '>', 0)-> get();
         // return $PrmRawMOIC;
         return view('PreGradingHalus.PreGradingHalusInput.create', compact('TransitPre', 'Unit'));
     }

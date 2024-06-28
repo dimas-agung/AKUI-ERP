@@ -41,24 +41,22 @@ class GradingHalusInputController extends Controller
 
         return response()->view('PreGradingHalus.GradingHalusInput.index', [
             'PreGHI' => $PreGHI,
-            // 'TransitPre' => $TransitPre,
             'i' => $i,
         ]);
     }
 
     public function create()
     {
-        $PreGHI = GradingHalusInput::with('PreGradingHalusAddingStock')->get();
-        $TransitPre = PreGradingHalusAddingStock::with('GradingHalusInput')->get();
-        $Unit = MasterJenisGradingHalus::with('GradingHalusInput')->get();
+        $TransitPre = PreGradingHalusAddingStock::get();
+        $Unit = MasterJenisGradingHalus::get();
         // return $TransitPre;
-        return view('PreGradingHalus.GradingHalusInput.create', compact('PreGHI', 'TransitPre', 'Unit'));
+        return view('PreGradingHalus.GradingHalusInput.create', compact('TransitPre', 'Unit'));
     }
 
     public function set(Request $request)
     {
         $nomor_grading = $request->nomor_grading;
-        $data = PreGradingHalusAddingStock::where('nomor_grading',$nomor_grading)->first();
+        $data = PreGradingHalusAddingStock::where('status_stock', '>', 0)->where('nomor_grading',$nomor_grading)->first();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);

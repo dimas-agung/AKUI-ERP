@@ -12,8 +12,9 @@ class PreCleaningStockController extends Controller
     public function index()
     {
         $i = 1;
-        $PCStock = PreCleaningStock::all();
-        // dd($PCStock);
+        $PCStock = PreCleaningStock::where('sisa_berat','>',0)->get();
+        // $PCStock = PreCleaningStock::get();
+        // return ($PCStock);
         return response()->view('PreCleaning.PreCleaningStock.index', [
             'PCStock'       => $PCStock,
             'i'             => $i

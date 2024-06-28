@@ -19,9 +19,7 @@ class PreCleaningInputController extends Controller
     //Index
     public function index(){
         $i =1;
-        $PreCleaningI = PreCleaningInput::with('StockTransitGradingKasar')->get();
-        // $existingItem = StockTransitGradingKasar::with('PreCleaningInput')
-        // ->get();
+        $PreCleaningI = PreCleaningInput::get();
         // return $existingItem;
 
         // return $GradingKI;

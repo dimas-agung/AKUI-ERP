@@ -15,7 +15,7 @@ class PreGradingHalusInputSeeder extends Seeder
     public function run(): void
     {
         $data=[];
-        for($i=0;$i<=1000;$i++){
+        for($i=0;$i<=100;$i++){
             $data= [
                 'unit' => 'Grading Halus',
                 'nomor_job' => '010324-093511',

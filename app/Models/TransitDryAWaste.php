@@ -20,6 +20,8 @@ class TransitDryAWaste extends Model
         'nomor_job',
         'nomor_bstb',
         'status',
+        'modal',
+        'total_modal',
     ];
     public function DryAWasteOutput()
     {
