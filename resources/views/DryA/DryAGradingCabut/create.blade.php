@@ -370,7 +370,8 @@
             // Menghitung berat adjustment per adding untuk kategori SD
             let totalBeratAdding = parseFloat($('#berat_job').val()) ||
                 0; // Menggunakan berat adding dari input form dan default ke 0 jika NaN
-            let susutDepan = totalBeratAdding !== 0 ? beratGradingSD / totalBeratAdding : 0;
+            let susutDepan = totalBeratAdding !== 0 ? 1 - (beratGradingSD / totalBeratAdding) : 0;
+            // let susutDepan = totalBeratAdding !== 0 ? beratGradingSD / totalBeratAdding : 0;
 
             $('#dataTable tbody tr').each(function() {
                 let currentKategoriSusut = $(this).find('td:eq(16)').text();
@@ -402,7 +403,7 @@
             });
 
             // Menghindari pembagian oleh nol
-            let susutBelakang = totalBeratAdding !== 0 ? totalBeratGrading / totalBeratAdding : 0;
+            let susutBelakang = totalBeratAdding !== 0 ? 1 - (totalBeratGrading / totalBeratAdding) : 0;
 
             $('#dataTable tbody tr').each(function() {
                 $(this).find('td:eq(21)').text(susutBelakang.toFixed(4));
