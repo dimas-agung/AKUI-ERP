@@ -288,7 +288,7 @@
             // Menghitung berat adjustment per adding untuk kategori SD
             let totalBeratAdding = parseFloat($('#berat_adding').val()); // Menggunakan berat adding dari input form
             // console.log("Berat Adding = " + totalBeratAdding);
-            let susutDepan = totalBeratAdding !== 0 ? beratAdjustmentSD / totalBeratAdding : 0;
+            let susutDepan = totalBeratAdding !== 0 ? 1 - (beratAdjustmentSD / totalBeratAdding) : 0;
 
             $('#dataTable tbody tr').each(function() {
                 let currentKategoriSusut = $(this).find('td:eq(6)').text();
@@ -321,7 +321,7 @@
 
             // Menghindari pembagian oleh nol
             if (totalBeratAdding !== 0) {
-                let susutBelakang = totalBeratAdjustment / totalBeratAdding;
+                let susutBelakang = 1 - (totalBeratAdjustment / totalBeratAdding);
 
                 // Memperbarui tabel dengan hasil perhitungan
                 $('#dataTable tbody tr').each(function() {
