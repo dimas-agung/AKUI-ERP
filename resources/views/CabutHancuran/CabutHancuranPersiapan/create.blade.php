@@ -43,9 +43,14 @@
                                                 <option value="">Pilih ID Box Stock Hcr Kotor</option>
                                                 @foreach ($stockTGK as $post)
                                                     @if (str_contains(strtolower($post->jenis_rambang), 'hcr rambang') === true)
-                                                        <option value="{{ $post->id_box_hcr_kotor }}">
-                                                            {{ old('id_box_hcr_kotor', $post->id_box_hcr_kotor) }}
-                                                        </option>
+                                                        @if (str_ends_with($post->id_box_hcr_kotor, Auth::user()->unit->perusahaan->plant))
+                                                            {{-- @php
+                                                                continue;
+                                                            @endphp --}}
+                                                            <option value="{{ $post->id_box_hcr_kotor }}">
+                                                                {{ old('id_box_hcr_kotor', $post->id_box_hcr_kotor) }}
+                                                            </option>
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </select>

@@ -51,6 +51,7 @@ class User extends Authenticatable
     ];
     public function unit()
     {
-        return $this->belongsTo(Unit::class, 'id', 'unit_id');
+        // return $this->hasOne(Unit::class, 'id', 'unit_id');
+        return $this->belongsTo(Unit::class, 'unit_id', 'id');
     }
 }

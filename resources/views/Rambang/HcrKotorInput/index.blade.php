@@ -207,7 +207,7 @@
         function generateNomorGrading() {
             const tanggal = $('#tgl_add').val();
             const jenis = $('#jenis').val();
-
+            const plant = '{{Auth::user()->unit->perusahaan->plant}}';
             // Hanya lakukan generate jika kedua tanggal dan jenis sudah terpilih
             if (tanggal && jenis) {
                 const now = new Date();
@@ -218,7 +218,7 @@
                 // Memformat tanggal menjadi ddmmyy
                 const formattedTanggal = formatDateToDdmmyy(tanggal);
                 // Menggabungkan nilai-nilai tersebut untuk membentuk nomor grading
-                const nomor_grading = `${formattedTanggal}_${jenis}`;
+                const nomor_grading = `${formattedTanggal}_${jenis}_${plant}`;
                 // Menampilkan hasil di konsol (opsional)
                 console.log(nomor_grading);
                 // Menampilkan hasil di input nomor_grading

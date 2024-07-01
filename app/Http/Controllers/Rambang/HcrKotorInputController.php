@@ -35,7 +35,7 @@ class HcrKotorInputController extends Controller
         $CBPenerimaan = HcrKotorInput::with('MasterJenisHcrKotor')->get();
         $stockTGK = MasterJenisHcrKotor::with('HcrKotorInput')->get();
         // return $stockTGK;
-        return view('Rambang.InputHcrKotor.create', compact('stockTGK', 'CBPenerimaan'));
+        return view('Rambang.HcrKotorInput.create', compact('stockTGK', 'CBPenerimaan'));
     }
 
 

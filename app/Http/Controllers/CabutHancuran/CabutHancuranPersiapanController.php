@@ -8,7 +8,9 @@ use App\Models\RambangBasahStock;
 use App\Services\CabutHancuranPersiapanService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class CabutHancuranPersiapanController extends Controller
 {
@@ -27,10 +29,18 @@ class CabutHancuranPersiapanController extends Controller
     /**
      * Create
      */
-    public function create(): View
+    public function create()
     {
         $CBPenerimaan = CabutHancuranPersiapan::with('RambangBasahStock')->get();
         $stockTGK = RambangBasahStock::with('CabutHancuranPersiapan')->get();
+        // $stockTGK->filter(function ($item) {
+        //     return Str::endsWith($item->id_box_hcr_kotor, Auth::user()->unit->perusahaan->plant) == true;
+        // })->values();
+        // $stockTGK->each(function ($item, int $key) {
+        //     if (Str::endsWith($item->id_box_hcr_kotor, Auth::user()->unit->perusahaan->plant) == false) {
+        //         return false;
+        //     }
+        // });
         // return $stockTGK;
         return view('CabutHancuran.CabutHancuranPersiapan.create', compact('stockTGK', 'CBPenerimaan'));
     }
