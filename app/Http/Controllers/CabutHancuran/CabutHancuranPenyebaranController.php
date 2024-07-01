@@ -11,27 +11,49 @@ use App\Services\CabutHancuranPenyebaranService;
 
 class CabutHancuranPenyebaranController extends Controller
 {
-    // index
-    public function index()
+    protected $CabutHancuranPenyebaranService;
+
+    public function __construct(CabutHancuranPenyebaranService $CabutHancuranPenyebaranService)
     {
-        $CabutHancuranPenyebaran = CabutHancuranPenyebaran::all();
+        $this->CabutHancuranPenyebaranService = $CabutHancuranPenyebaranService;
+    }
+
+    public function index(Request $request)
+    {
+        // $i = 1;
+        // $PreGHI = GradingHalusInput::with('PreGradingHalusAddingStock')->get();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = CabutHancuranPenyebaran::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(CabutHancuranPenyebaran::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $CabutHancuranPenyebaran = $query->with('CabutHancuranPersiapanStock')->get();
+        } else {
+            $CabutHancuranPenyebaran = CabutHancuranPenyebaran::with('CabutHancuranPersiapanStock')
+                // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->limit(1000)
+                ->latest()
+                ->get();
+        }
+
         return response()->view('CabutHancuran.CabutHancuranPenyebaran.index', [
             'cabut_hancuran_penyebarans' => $CabutHancuranPenyebaran,
+            // 'i' => $i,
         ]);
     }
 
     // create
     public function create()
     {
-        $MasterOperator = MasterOperator::all();
-        $CabutHancuranPenyebaran = CabutHancuranPenyebaran::all();
-        $CabutHancuranPersiapanStock = CabutHancuranPersiapanStock::all();
-        $getUnusedNomorJob = CabutHancuranPersiapanStock::withCount('CabutHancuranPenyebaran')->get();
+        $MasterOperator = MasterOperator::where('status', 1)->orderBy('nip')->get();
+        $getUnusedNomorJob = CabutHancuranPersiapanStock::where('status', 1)
+            ->withCount('CabutHancuranPenyebaran')->get();
         // return $getUnusedNomorJob;
         return view('CabutHancuran.CabutHancuranPenyebaran.create', [
-            'cabut_hancuran_penyebarans' => $CabutHancuranPenyebaran,
             'master_operators' => $MasterOperator,
-            'cabut_hancuran_persiapan_stocks' => $CabutHancuranPersiapanStock,
             'get_unused_nomor_job' => $getUnusedNomorJob,
         ]);
     }
@@ -69,13 +91,6 @@ class CabutHancuranPenyebaranController extends Controller
 
         // Kembalikan daftar id box yang tidak tersedia sebagai respons
         return response()->json(['unavailableBoxes' => $availableBoxes]);
-    }
-
-    protected $CabutHancuranPenyebaranService;
-
-    public function __construct(CabutHancuranPenyebaranService $CabutHancuranPenyebaranService)
-    {
-        $this->CabutHancuranPenyebaranService = $CabutHancuranPenyebaranService;
     }
 
     public function store(Request $request)

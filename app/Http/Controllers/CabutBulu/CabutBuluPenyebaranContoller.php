@@ -11,28 +11,48 @@ use App\Services\CabutBuluPenyebaranService;
 
 class CabutBuluPenyebaranContoller extends Controller
 {
-    // index
-    public function index()
+    protected $CabutBuluPenyebaranService;
+
+    public function __construct(CabutBuluPenyebaranService $CabutBuluPenyebaranService)
     {
-        $i = 1;
-        $CabutBuluPenyebaran = CabutBuluPenyebaran::all();
+        $this->CabutBuluPenyebaranService = $CabutBuluPenyebaranService;
+    }
+
+    public function index(Request $request)
+    {
+        // $i = 1;
+        // $PreGHI = GradingHalusInput::with('PreGradingHalusAddingStock')->get();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = CabutBuluPenyebaran::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(CabutBuluPenyebaran::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $CabutBuluPenyebaran = $query->with('CabutBuluStock')->get();
+        } else {
+            $CabutBuluPenyebaran = CabutBuluPenyebaran::with('CabutBuluStock')
+                // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->limit(1000)
+                ->latest()
+                ->get();
+        }
+
         return response()->view('CabutBulu.CabutBuluPenyebaran.index', [
             'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
-            'i' => $i,
+            // 'i' => $i,
         ]);
     }
 
     // create
     public function create()
     {
-        $MasterOperator = MasterOperator::all();
-        $CabutBuluPenyebaran = CabutBuluPenyebaran::all();
-        $CabutBuluStock = CabutBuluStock::all();
-        // $getUnusedNomorJob = CabutBuluPenyebaran::withCount('CabutBuluStock')->get();
+        $MasterOperator = MasterOperator::where('status', 1)->get();
+        $CabutBuluStock = CabutBuluStock::where('status', 1)->get();
         $getUnusedNomorJob = CabutBuluStock::withCount('CabutBuluPenyebaran')->get();
         // return $getUnusedNomorJob;
         return view('CabutBulu.CabutBuluPenyebaran.create', [
-            'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
             'master_operators' => $MasterOperator,
             'cabut_bulu_stocks' => $CabutBuluStock,
             'get_unused_nomor_job' => $getUnusedNomorJob,
@@ -45,7 +65,6 @@ class CabutBuluPenyebaranContoller extends Controller
         $nomor_job = $request->nomor_job;
         $data = CabutBuluStock::where('nomor_job', $nomor_job)
             ->first();
-        // return $data;
         // Kembalikan nomor job sebagai respons
         return response()->json($data);
     }
@@ -54,7 +73,6 @@ class CabutBuluPenyebaranContoller extends Controller
         $nip = $request->nip;
         $data = MasterOperator::where('nip', $nip)
             ->first();
-        // return $data;
         // Kembalikan nomor job sebagai respons
         return response()->json($data);
     }
@@ -65,7 +83,6 @@ class CabutBuluPenyebaranContoller extends Controller
         $idBoxes = json_decode($request->idBoxes);
 
         // Cek ketersediaan id box dalam database
-        // $unavailableBoxes = TransitPreWash::whereIn('nomor_bstb', $idBoxes)->pluck('nomor_bstb')->toArray();
         $unavailableBoxes = CabutBuluStock::whereIn('nomor_job', $idBoxes)->pluck('nomor_job')->toArray();
 
         // Filter id box yang tidak tersedia
@@ -75,18 +92,10 @@ class CabutBuluPenyebaranContoller extends Controller
         return response()->json(['unavailableBoxes' => $availableBoxes]);
     }
 
-    protected $CabutBuluPenyebaranService;
-
-    public function __construct(CabutBuluPenyebaranService $CabutBuluPenyebaranService)
-    {
-        $this->CabutBuluPenyebaranService = $CabutBuluPenyebaranService;
-    }
-
     public function store(Request $request)
     {
         return $this->CabutBuluPenyebaranService->store($request);
     }
-
 
     public function destroy($nomor_job)
     {

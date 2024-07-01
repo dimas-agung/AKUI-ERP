@@ -20,10 +20,8 @@
                             data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($get_unused_nomor_job as $item)
-                                @if ($item->cabut_hancuran_pengembalian_count == 0 && ($item->status = 2))
-                                    <option value="{{ $item->nomor_job }}">
-                                        {{ $item->nomor_job }}</option>
-                                @endif
+                                <option value="{{ $item->nomor_job }}">
+                                    {{ $item->nomor_job }}</option>
                             @endforeach
                         </select>
                     </div>

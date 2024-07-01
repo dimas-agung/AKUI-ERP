@@ -16,14 +16,30 @@ use Illuminate\Support\Facades\Validator;
 
 class RambangPengirimanWasteController extends Controller
 {
-    // index
-    public function index()
+    public function index(Request $request)
     {
-        $i = 1;
-        $RambangPengirimanWaste = RambangPengirimanWaste::all();
+        // $i = 1;
+        // $PreGHI = GradingHalusInput::with('PreGradingHalusAddingStock')->get();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = RambangPengirimanWaste::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(RambangPengirimanWaste::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $RambangPengirimanWaste = $query->with('RambangKeringStock')->get();
+        } else {
+            $RambangPengirimanWaste = RambangPengirimanWaste::with('RambangKeringStock')
+                // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->limit(1000)
+                ->latest()
+                ->get();
+        }
+
         return response()->view('Rambang.RambangPengirimanWaste.index', [
             'rambang_pengiriman_waste' => $RambangPengirimanWaste,
-            'i' => $i,
+            // 'i' => $i,
         ]);
     }
 
@@ -31,8 +47,8 @@ class RambangPengirimanWasteController extends Controller
     public function create()
     {
         $i = 1;
-        $RambangKeringStock = RambangKeringStock::all();
-        $Perusahaan = Perusahaan::all();
+        $RambangKeringStock = RambangKeringStock::where('sisa_berat', '!=', 0)->get();
+        $Perusahaan = Perusahaan::where('status', 1)->get();
         return response()->view('Rambang.RambangPengirimanWaste.create', [
             'rambang_kering_stock' => $RambangKeringStock,
             'perusahaan' => $Perusahaan,
