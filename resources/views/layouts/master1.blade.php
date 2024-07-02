@@ -154,7 +154,7 @@
                             </a>
                         </li>
                         @role('master|admin')
-                            <li class="sidebar-title">Menu {{Auth::user()->unit->perusahaan->plant}}</li>
+                            <li class="sidebar-title">Menu</li>
                             <li
                                 class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*', 'MasterTujuanKirimDryA*', 'MasterJenisWaste*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
@@ -1037,13 +1037,13 @@
 
     <script>
          function toggleFilter() {
-        var filterRow = document.getElementById('filterRow');
-        if (filterRow.style.display === 'none' || filterRow.style.display === '') {
-            filterRow.style.display = 'flex';
-        } else {
-            filterRow.style.display = 'none';
+            var filterRow = document.getElementById('filterRow');
+            if (filterRow.style.display === 'none' || filterRow.style.display === '') {
+                filterRow.style.display = 'flex';
+            } else {
+                filterRow.style.display = 'none';
+            }
         }
-    }
         document.getElementById("copyright-year").innerHTML = new Date().getFullYear() + " &copy; Mazer";
 
         $(document).ready(function() {
