@@ -41,31 +41,13 @@
                                             <select id="nomor_bstb" class="select2 form-select" name="nomor_bstb"
                                                 data-placeholder="Pilih Nomor BSTB">
                                                 <option value="">Pilih Nomor BSTB</option>
-                                                @php
-                                                    $selectedNomorBSTB = ''; // Inisialisasi variabel untuk menyimpan nomor_bstb yang sudah ditampilkan
-                                                @endphp
-                                                @foreach ($stockTGK as $post)
-                                                    @if ($selectedNomorBSTB != $post->nomor_bstb)
-                                                        @php
-                                                            $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
-                                                        @endphp
-                                                        @foreach ($stockTGK as $innerPost)
-                                                            @if ($innerPost->nomor_bstb == $post->nomor_bstb && $innerPost->berat_job > 0)
-                                                                @if (!$beratMasukShown)
-                                                                    <option value="{{ $innerPost->nomor_bstb }}">
-                                                                        {{ old('nomor_bstb', $innerPost->nomor_bstb) }}
-                                                                    </option>
-                                                                    @php
-                                                                        $beratMasukShown = true; // Set nilai variabel untuk menandai bahwa berat_masuk sudah ditampilkan
-                                                                    @endphp
-                                                                @endif
-                                                            @endif
-                                                        @endforeach
-                                                        @php
-                                                            $selectedNomorBSTB = $post->nomor_bstb; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
-                                                        @endphp
-                                                    @endif
+
+                                                @foreach ($stockTGK as $innerPost)
+                                                    <option value="{{ $innerPost }}">
+                                                        {{ old('nomor_bstb', $innerPost) }}
+                                                    </option>
                                                 @endforeach
+
                                             </select>
                                         </div>
                                     </div>

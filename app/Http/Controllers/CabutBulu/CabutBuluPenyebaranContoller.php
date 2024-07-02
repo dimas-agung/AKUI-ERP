@@ -8,14 +8,30 @@ use App\Models\MasterOperator;
 use App\Models\CabutBuluPenyebaran;
 use App\Http\Controllers\Controller;
 use App\Services\CabutBuluPenyebaranService;
+use Illuminate\Support\Facades\Auth;
 
 class CabutBuluPenyebaranContoller extends Controller
 {
     // index
-    public function index()
+    public function index(Request $request)
     {
         $i = 1;
-        $CabutBuluPenyebaran = CabutBuluPenyebaran::all();
+        $CabutBuluPenyebaran = CabutBuluPenyebaran::with('CabutBuluStock');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        if ($startDate && $endDate) {
+            $CabutBuluPenyebaran->whereBetween(CabutBuluPenyebaran::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            if(Auth::user()->plant){
+                $CabutBuluPenyebaran->where('tujuan_kirim',Auth::user()->plant);
+            }
+            $CabutBuluPenyebaran->get();
+        }else{
+            if(Auth::user()->plant){
+                $CabutBuluPenyebaran->where('tujuan_kirim',Auth::user()->plant);
+            }
+            $CabutBuluPenyebaran->limit(1000)->get();
+        }
         return response()->view('CabutBulu.CabutBuluPenyebaran.index', [
             'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
             'i' => $i,

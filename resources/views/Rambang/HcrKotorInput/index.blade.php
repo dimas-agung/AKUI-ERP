@@ -207,7 +207,7 @@
         function generateNomorGrading() {
             const tanggal = $('#tgl_add').val();
             const jenis = $('#jenis').val();
-            const plant = '{{Auth::user()->unit->perusahaan->plant}}';
+            const plant = '{{Auth::user()->plant}}';
             // Hanya lakukan generate jika kedua tanggal dan jenis sudah terpilih
             if (tanggal && jenis) {
                 const now = new Date();

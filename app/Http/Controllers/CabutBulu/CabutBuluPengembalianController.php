@@ -8,6 +8,7 @@ use App\Models\CabutBuluPenyebaran;
 use App\Models\CabutBuluStock;
 use App\Services\CabutBuluPengembalianService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CabutBuluPengembalianController extends Controller
 {
@@ -19,13 +20,27 @@ class CabutBuluPengembalianController extends Controller
 
     }
     // index
-    public function index()
+    public function index(Request $request)
     {
         $i = 1;
-        $CabutBuluPenyebaran = CabutBuluPengembalian::all();
+        $CabutBuluPengembalian = CabutBuluPengembalian::with('TransitCabutBulu');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
+        if ($startDate && $endDate) {
+            $CabutBuluPengembalian->whereBetween(CabutBuluPengembalian::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            if(Auth::user()->plant){
+                $CabutBuluPengembalian->where('tujuan_kirim',Auth::user()->plant);
+            }
+            $CabutBuluPengembalian = $CabutBuluPengembalian->get();
+        }else{
+            if(Auth::user()->plant){
+                $CabutBuluPengembalian->where('tujuan_kirim',Auth::user()->plant);
+            }
+            $CabutBuluPengembalian = $CabutBuluPengembalian->limit(1000)->get();
+        }
         return response()->view('CabutBulu.CabutBuluPengembalian.index', [
-            'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
+            'cabut_bulu_penyebarans' => $CabutBuluPengembalian,
             'i' => $i,
         ]);
     }
