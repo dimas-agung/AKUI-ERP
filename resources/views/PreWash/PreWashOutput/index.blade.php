@@ -77,6 +77,8 @@
                                             <th scope="col" class="text-center">Total Modal</th>
                                         @endrole
                                         <th scope="col" class="text-center">NIP Admin</th>
+                                        <th scope="col" class="text-center">Created At</th>
+                                        <th scope="col" class="text-center">Updated At</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -106,6 +108,11 @@
                                                 </td>
                                             @endrole
                                             <td class="text-center">{{ $PCO->user_created }}</td>
+                                            <td class="text-center">{{ $PCO->created_at }}</td>
+                                            <td class="text-center">
+                                                {{ $PCO->created_at != $PCO->updated_at ? $PCO->updated_at : '' }}
+                                            </td>
+                                           
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     @if ($PCO->status == 1)

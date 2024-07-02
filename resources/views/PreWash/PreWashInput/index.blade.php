@@ -72,9 +72,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($pre_wash_inputs as $item)
+                            @forelse ($pre_wash_inputs as $key=> $item)
                                 <tr>
-                                    <td class="text-center">{{ $i++ }}</td>
+                                    <td class="text-center">{{ $key+1 }}</td>
                                     {{-- <td class="text-center">{{ $item->unit }}</td> --}}
                                     <td class="text-center">{{ $item->nomor_job }}</td>
                                     <td class="text-center">{{ $item->nomor_batch }}</td>

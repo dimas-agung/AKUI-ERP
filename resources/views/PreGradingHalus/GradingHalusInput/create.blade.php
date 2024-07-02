@@ -370,7 +370,7 @@
 
             // Menghitung berat grading per adding untuk kategori SD
             let totalBeratAdding = parseFloat($('#berat_adding').val()); // Menggunakan berat adding dari input form
-            let beratGradingPerAddingSD = totalBeratAdding !== 0 ? beratGradingSD / totalBeratAdding : 0;
+            let beratGradingPerAddingSD = totalBeratAdding !== 0 ? 1- (beratGradingSD / totalBeratAdding) : 0;
 
             $('#tableBody tr').each(function() {
                 let currentKategoriSusut = $(this).find('td:eq(15)').text();
@@ -400,7 +400,7 @@
 
             // Menghindari pembagian oleh nol
             if (totalBeratAdding !== 0) {
-                let rataRataBeratGradingPerAdding = totalBeratGrading / totalBeratAdding;
+                let rataRataBeratGradingPerAdding = 1- (totalBeratGrading / totalBeratAdding);
 
                 // Memperbarui tabel dengan hasil perhitungan
                 $('#tableBody tr').each(function() {
@@ -438,7 +438,7 @@
                     let beratGrading = parseFloat($(this).find('td:eq(10)')
                         .text()); // Kolom 10 berisi berat grading
                     // Menghitung presentase berat grading berdasarkan total berat grading
-                    let presentaseBeratGrading = (beratGrading / totalBeratGrading) * 100;
+                    let presentaseBeratGrading =  ((beratGrading / totalBeratGrading) * 100);
 
                     // Menampilkan hasil perhitungan pada kolom yang sesuai
                     $(this).find('td:eq(20)').text(Math.round(presentaseBeratGrading) + '%');
