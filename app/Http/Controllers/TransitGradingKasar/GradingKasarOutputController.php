@@ -173,7 +173,7 @@ class GradingKasarOutputController extends Controller
                     ]);
                 }
 
-                $stockPRM = StockTransitGradingKasar::where('id_box_grading_kasar', '=', $GradingKO->id_box_grading_kasar)
+                $stockPRM = StockTransitGradingKasar::where('nomor_job', '=', $GradingKO->nomor_job)
                 // ->where('created_at', $GradingKO->created_at)
                 ->first();
 

@@ -273,11 +273,11 @@ class PreCleaningInputController extends Controller
                     }
                 } else {
                     // Jika tidak ada item GradingKasarOutput yang sesuai, buat baru dengan status 1
-                    GradingKasarOutput::create([
-                        'nomor_bstb' => $PreCleaningI->nomor_bstb,
-                        'status' => 1,
-                        // Tambahkan kolom-kolom lain sesuai kebutuhan
-                    ]);
+                    // GradingKasarOutput::create([
+                    //     'nomor_bstb' => $PreCleaningI->nomor_bstb,
+                    //     'status' => 1,
+                    //     // Tambahkan kolom-kolom lain sesuai kebutuhan
+                    // ]);
                 }
             }
 

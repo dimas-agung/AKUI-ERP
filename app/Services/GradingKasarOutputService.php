@@ -68,7 +68,7 @@ class GradingKasarOutputService
         // Creat Prm Raw Material Stock
         $itemObject = (object)$item;
         $existingItem = StockTransitGradingKasar::where('nomor_job', $itemObject->nomor_job)
-            ->where('nomor_bstb', $itemObject->nomor_bstb)
+            // ->where('nomor_bstb', $itemObject->nomor_bstb)
             ->first();
             // return $existingItem
 
