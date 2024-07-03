@@ -18,6 +18,7 @@ class PrmRawMaterialStock extends Model
         'nomor_nota_internal',
         'berat_masuk',
         'berat_keluar',
+        'berat_adjustment',
         'sisa_berat',
         'avg_kadar_air',
         'modal',

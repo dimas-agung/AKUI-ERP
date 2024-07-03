@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     Route::controller(App\Http\Controllers\MasterOperatorController::class)->group(function () {
          Route::get('/master_operator/getDataOperator', 'getDataOperator')->name('MasterOperator.getDataByUnit');
-       
+
     });
     Route::controller(App\Http\Controllers\RegisterController::class)->group(function () {
         Route::get('/reset', 'index')->name('reset.index');
@@ -246,6 +246,16 @@ Route::middleware('auth')->group(function () {
             Route::get('/prm_raw_material_output/get_pcc', 'setpcc')->name('PrmRawMaterialOutput.setpcc');
             Route::post('/prm_raw_material_output/cek_data', 'CeksendData')->name('PrmRawMaterialOutput.CeksendData');
             Route::get('/prm_raw_material_output/getBerat/{id}', 'getBerat')->name('PrmRawMaterialOutput.getBerat');
+        });
+        Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialAdjustmentController::class)->group(function () {
+            Route::get('/prm_raw_material_adjustment', 'index')->name('PrmRawMaterialAdjustment.index');
+            Route::get('/prm_raw_material_adjustment/create', 'create')->name('PrmRawMaterialAdjustment.create');
+            Route::post('/prm_raw_material_adjustment/store', 'store')->name('PrmRawMaterialAdjustment.store');
+
+            Route::delete('/prm_raw_material_adjustment/destroy/{id}', 'destroy')->name('PrmRawMaterialAdjustment.destroy');
+
+            Route::get('/prm_raw_material_adjustment/get_data_id_box', 'getDataStock')->name('PrmRawMaterialAdjustment.getDataStock');
+
         });
     });
     Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->middleware(['role:purchasing|grading_kasar|admin'])->group(function () {

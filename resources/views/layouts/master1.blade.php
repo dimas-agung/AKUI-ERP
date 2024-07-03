@@ -252,7 +252,7 @@
                         @role('purchasing|admin')
                             <li class="sidebar-title">Purchasing & EXIM</li>
                             <li
-                                class="sidebar-item  has-sub {{ Route::is('PrmRawMaterialInput.*', 'PrmRawMaterialStock.*', 'PrmRawMaterialOutput.*', 'StockTransitRawMaterial.*') ? 'active' : '' }}">
+                                class="sidebar-item  has-sub {{ Route::is('PrmRawMaterialInput.*', 'PrmRawMaterialStock.*', 'PrmRawMaterialOutput.*', 'StockTransitRawMaterial.*','PrmRawMaterialAdjustment.*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-collection-fill"></i>
                                     <span>Purchasing & EXIM</span>
@@ -261,6 +261,10 @@
                                     <li class="submenu-item {{ Route::is('PrmRawMaterialInput.*') ? 'active' : '' }}">
                                         <a href="{{ route('PrmRawMaterialInput.index') }}" class="submenu-link">Prm Raw
                                             Material Input</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('PrmRawMaterialAdjustment.*') ? 'active' : '' }}">
+                                        <a href="{{ route('PrmRawMaterialAdjustment.index') }}" class="submenu-link">Prm Raw
+                                            Material Adjustment</a>
                                     </li>
                                     <li class="submenu-item  {{ Route::is('PrmRawMaterialStock.*') ? 'active' : '' }}">
                                         <a href="{{ route('PrmRawMaterialStock.index') }}" class="submenu-link">Prm Raw
