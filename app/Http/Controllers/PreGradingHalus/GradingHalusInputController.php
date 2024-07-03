@@ -16,11 +16,22 @@ use Illuminate\Support\Facades\DB;
 
 class GradingHalusInputController extends Controller
 {
-    public function index(){
-        $i =1;
-        $PreGHI = GradingHalusInput::where('status', '>', 0)->get();
-        // return $GradingKI;
+    public function index(Request $request){
+        $i = 1;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
+        $query = GradingHalusInput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(GradingHalusInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreGHI = $query->get();
+        }else{
+            $PreGHI = GradingHalusInput::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('PreGradingHalus.GradingHalusInput.index', [
             'PreGHI' => $PreGHI,
             'i' => $i,

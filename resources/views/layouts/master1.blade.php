@@ -648,6 +648,41 @@
                                 </ul>
                             </li>
                         @endrole
+                        @role('moulding|admin')
+                            <li
+                                class="sidebar-item has-sub {{ Route::is('TransitDryAHancuran*', 'GradingWarnaPenerimaan*', 'GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-three-dots"></i>
+                                    <span>Moulding</span>
+                                </a>
+                                <ul class="submenu">
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('TransitDryAHancuran*', 'GradingWarnaPenerimaan*', 'GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Grading Warna</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitDryAHancuran*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitDryAHancuran.index') }}"
+                                                    class="submenu-link">Transit Dry A Hancuran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarnaPenerimaan*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarnaPenerimaan.index') }}"
+                                                    class="submenu-link">Grading Warna
+                                                    Penerimaan</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarnaPenerimaanStock.index') }}"
+                                                    class="submenu-link">Grading Warna Penerimaan Stock</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endrole
                     </ul>
                 </div>
             </div>

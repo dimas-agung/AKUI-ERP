@@ -14,7 +14,7 @@ class PreCleaningStockSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i=1;$i<10000;$i++){
+        for($i=1;$i<100;$i++){
             PreCleaningStock::create([
                 'unit' => 'Pre-Cleaning',
                 'nomor_job' => '010324-093511',

@@ -14,7 +14,7 @@ class TransitPreCleaningStockSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\TransitPreCleaningStock::factory(5)->create();
-        for($i=1;$i<=10000;$i++){
+        for($i=1;$i<=100;$i++){
 
             TransitPreCleaningStock::create([
                 'nomor_job' => '010324-093511',

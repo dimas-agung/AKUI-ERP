@@ -29,4 +29,15 @@ class GradingWarnaPenerimaan extends Model
         'user_updated',
     ];
 
+    // Relasi dengan TransitDryAHancuran
+    public function transitDryAHancuran()
+    {
+        return $this->hasMany(TransitDryAHancuran::class, 'nomor_bstb', 'nomor_bstb');
+    }
+
+    // Relasi dengan TransitDryACabut
+    public function transitDryACabut()
+    {
+        return $this->hasMany(TransitDryACabut::class, 'nomor_bstb', 'nomor_bstb');
+    }
 }

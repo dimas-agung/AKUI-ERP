@@ -5,22 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GradingWarnaPenerimaanStock extends Model
+class GradingWarnaStock extends Model
 {
     use HasFactory;
     protected $table = 'grading_warna_penerimaan_stocks';
     protected $fillable = [
         'unit',
-        'nomor_job',
-        'nomor_bstb',
+        'id_box_grading_warna',
         'nomor_batch',
         'tujuan_kirim',
-        'keterangan',
-        'berat_kotor',
         'jenis_grading',
-        'berat_1_grading',
-        'pcs_1_grading',
-        'berat_2_grading',
+        'berat_masuk',
+        'pcs_masuk',
+        'berat_keluar',
+        'pcs_keluar',
+        'sisa_berat',
+        'sisa_pcs',
         'modal',
         'total_modal',
         'status',

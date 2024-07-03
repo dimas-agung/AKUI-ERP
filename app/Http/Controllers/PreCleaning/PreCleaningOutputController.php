@@ -17,10 +17,29 @@ use Illuminate\Support\Facades\DB;
 class PreCleaningOutputController extends Controller
 {
     //index
-    public function index()
+    public function index(Request $request)
     {
+        // $i = 1;
+        // $PreCleaningOutput = PreCleaningOutput::all();
+        // return response()->view('PreCleaning.PreCleaningOutput.index', [
+        //     'pre_cleaning_outputs' => $PreCleaningOutput,
+        //     'i' => $i,
+        // ]);
         $i = 1;
-        $PreCleaningOutput = PreCleaningOutput::all();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = PreCleaningOutput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(PreCleaningOutput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreCleaningOutput = $query->get();
+        }else{
+            $PreCleaningOutput = PreCleaningOutput::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('PreCleaning.PreCleaningOutput.index', [
             'pre_cleaning_outputs' => $PreCleaningOutput,
             'i' => $i,

@@ -24,4 +24,8 @@ class TransitDryAHancuran extends Model
     {
         return $this->belongsTo(DryAOutputHancuran::class, 'jenis_grading', 'jenis_grading');
     }
+    public function gradingWarnaPenerimaan()
+    {
+        return $this->belongsTo(GradingWarnaPenerimaan::class, 'nomor_job', 'nomor_job');
+    }
 }

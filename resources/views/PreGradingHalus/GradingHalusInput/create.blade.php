@@ -367,7 +367,7 @@
                 }
             });
 
-            // Menghitung berat grading per adding untuk kategori SD
+            // Menghitung berat grading per adding untuk kategori SD (Susut Depan)
             let totalBeratAdding = parseFloat($('#berat_adding').val()); // Menggunakan berat adding dari input form
             let beratGradingPerAddingSD = totalBeratAdding !== 0 ? beratGradingSD / totalBeratAdding : 0;
 
@@ -375,10 +375,13 @@
                 let currentKategoriSusut = $(this).find('td:eq(15)').text();
                 if (currentKategoriSusut === "SD") {
                     let row = $(this);
-                    row.find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(2)); // Update nilai di tabel
+                    row.find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(4)); // Update nilai di tabel
+                    console.log(beratGradingPerAddingSD);
                 } else {
                     let row = $(this);
-                    row.find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(2)); // Update nilai di tabel
+                    row.find('td:eq(17)').text(beratGradingPerAddingSD.toFixed(4)); // Update nilai di tabel
+                    // console.log('susut depan='
+                    //     beratGradingPerAddingSD.toFixed(4));
                 }
             });
         }

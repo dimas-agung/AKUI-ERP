@@ -16,7 +16,7 @@ class TransitGradingHalusSeeder extends Seeder
     public function run(): void
     {
         $data=[];
-        for($i=0;$i<=5000;$i++){
+        for($i=0;$i<=500;$i++){
             $data= [
                 'unit' => 'Transit Grading Halus',
                 'nomor_job' => '010324-093511',

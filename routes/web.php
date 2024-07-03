@@ -607,6 +607,27 @@ Route::middleware('auth')->group(function (){
             });
         });
     });
+    Route::prefix('moulding')->middleware(['role:moulding|admin'])->group(function (){
+        Route::prefix('grading_warna')->middleware('role:grading_warna|admin')->group(function (){
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaPenerimaanController::class)->group(function () {
+                Route::get('/grading_warna_penerimaan', 'index')->name('GradingWarnaPenerimaan.index');
+                Route::get('/grading_warna_penerimaan/create', 'create')->name('GradingWarnaPenerimaan.create');
+                Route::post('/grading_warna_penerimaan/store', 'store')->name('GradingWarnaPenerimaan.store');
+                Route::get('/grading_warna_penerimaan/getDataHancuran', 'getDataHancuran')->name('GradingWarnaPenerimaan.getDataHancuran');
+                Route::get('/grading_warna_penerimaan/getDataCabut', 'getDataCabut')->name('GradingWarnaPenerimaan.getDataCabut');
+                Route::get('/grading_warna_penerimaan/get_data', 'setHancuran')->name('GradingWarnaPenerimaan.setHancuran');
+                Route::get('/grading_warna_penerimaan/get_data_id_box', 'setCabut')->name('GradingWarnaPenerimaan.setCabut');
+                Route::delete('/grading_warna_penerimaan/destroy/{nomor_bstb}', 'destroy')->name('GradingWarnaPenerimaan.destroy');
+                Route::get('/grading_warna_penerimaan/get_data_nomor_job', 'set')->name('GradingWarnaPenerimaan.set');
+                Route::post('/grading_warna_penerimaan/simpanData', 'simpanData')->name('GradingWarnaPenerimaan.simpanData');
+                Route::post('/grading_warna_penerimaan/cek_data', 'CeksendData')->name('GradingWarnaPenerimaan.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaPenerimaanStockController::class)->group(function () {
+                Route::get('/grading_warna_penerimaan_stock', 'index')->name('GradingWarnaPenerimaanStock.index');
+            });
+        });
+    });
 });
 
 Auth::routes();
