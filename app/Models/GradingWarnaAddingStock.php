@@ -10,8 +10,9 @@ class GradingWarnaAddingStock extends Model
     use HasFactory;
     const STATUS_NON_AKTIF = 0;
     const STATUS_AKTIF = 1;
-    protected $table = 'grading_warna_addings';
+    protected $table = 'grading_warna_adding_stocks';
     protected $fillable = [
+        'unit',
         'nomor_lot',
         'nomor_batch',
         'berat_masuk',
@@ -24,4 +25,8 @@ class GradingWarnaAddingStock extends Model
         'total_modal',
         'status',
     ];
+    public function GradingWarnaAdding()
+    {
+        return $this->hasMany(GradingWarnaAdding::class, 'nomor_lot', 'nomor_lot');
+    }
 }

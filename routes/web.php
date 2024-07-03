@@ -586,6 +586,21 @@ Route::middleware('auth')->group(function () {
             });
         });
     });
+    Route::prefix('moulding')->middleware(['role:moulding|admin'])->group(function () {
+        Route::prefix('grading_warna')->middleware('role:moulding|admin')->group(function () {
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaAddingController::class)->group(function () {
+                Route::get('/grading_warna_adding', 'index')->name('GradingWarnaAdding.index');
+                Route::get('/grading_warna_adding/create', 'create')->name('GradingWarnaAdding.create');
+                Route::post('/grading_warna_adding/store', 'store')->name('GradingWarnaAdding.store');
+                Route::post('/grading_warna_adding/cek_data', 'CeksendData')->name('GradingWarnaAdding.CeksendData');
+                Route::get('/grading_warna_adding/get_data/{nomor_job}', 'getDataByNomorJob')->name('GradingWarnaAdding.getData');
+                Route::delete('/grading_warna_adding/destroy/{nomor_bstb}', 'destroy')->name('GradingWarnaAdding.destroy');
+            });
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaAddingStockController::class)->group(function () {
+                Route::get('/grading_warna_adding_stock', 'index')->name('GradingWarnaAddingStock.index');
+            });
+        });
+    });
 });
 
 Auth::routes();

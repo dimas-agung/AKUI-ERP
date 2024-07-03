@@ -7,6 +7,7 @@ namespace Database\Seeders;
 // use App\Models\GradingKasarInput;
 
 use App\Models\GradingHalusStock;
+use App\Models\GradingWarnaPenerimaanStock;
 use App\Models\MasterJenisDryA;
 use App\Models\MasterJenisGradingHalus;
 use App\Models\MasterJenisGradingKasar;
@@ -55,7 +56,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PreGradingHalusStockSeeder::class);
         $this->call(GradingHalusStockSeeder::class);
         $this->call(MasterOngkosCuciSeeder::class);
-        $this->call(TransitGradingHalusSeeder::class);
+        // $this->call(TransitGradingHalusSeeder::class);
         $this->call(RambangBasahStockSeeder::class);
         // $this->call(MasterJenisGradingHalusSeeder::class);
         $this->call(RoleSeeder::class);
@@ -69,6 +70,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DryAPenerimaanHancuranSeeder::class);
         $this->call(DryAPenerimaanHancuranStockSeeder::class);
         $this->call(MasterJenisWasteSeeder::class);
-        $this->call(DryAWasteInputSeeder::class);
+        // $this->call(DryAWasteInputSeeder::class);
+        $this->call(GradingWarnaPenerimaanStockSeeder::class);
     }
 }

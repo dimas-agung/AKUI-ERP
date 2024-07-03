@@ -38,4 +38,12 @@ class GradingWarnaAdding extends Model
         }
         return false;
     }
+    public function GradingWarnaPenerimaanStock()
+    {
+        return $this->hasMany(GradingWarnaPenerimaanStock::class, 'nomor_job', 'nomor_job');
+    }
+    public function GradingWarnaAddingStock()
+    {
+        return $this->hasMany(GradingWarnaAddingStock::class, 'nomor_lot', 'nomor_lot');
+    }
 }

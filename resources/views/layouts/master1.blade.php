@@ -632,6 +632,40 @@
                                 </ul>
                             </li>
                         @endrole
+
+                        @role('moulding|admin')
+                            <li
+                                class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*') ? 'active' : '' }}">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-three-dots"></i>
+                                    <span>Moulding</span>
+                                </a>
+                                <ul class="submenu">
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Grading Warna</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarnaAdding*') && !Route::is('GradingWarnaAddingStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarnaAdding.index') }}"
+                                                    class="submenu-link">Grading
+                                                    <br>Warna Adding</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarnaAddingStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarnaAddingStock.index') }}"
+                                                    class="submenu-link">Grading
+                                                    <br>Warna Adding<br>Stock</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endrole
+
+
                     </ul>
                 </div>
             </div>
