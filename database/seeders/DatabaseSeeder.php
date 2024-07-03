@@ -72,5 +72,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterJenisWasteSeeder::class);
         // $this->call(DryAWasteInputSeeder::class);
         $this->call(GradingWarnaPenerimaanStockSeeder::class);
+        $this->call(MasterJenisGradingWarnaSeeder::class);
     }
 }
