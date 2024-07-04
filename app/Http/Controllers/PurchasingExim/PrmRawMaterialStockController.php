@@ -15,7 +15,7 @@ class PrmRawMaterialStockController extends Controller
     {
         $i = 1;
         $PrmRawMaterialInput = PrmRawMaterialInputItem::with('PrmRawMaterialStock')->get();
-        $PrmRawMaterialStock = PrmRawMaterialStock::with('PrmRawMaterialOutputItem')->where('sisa_berat','>',0)->get();
+        $PrmRawMaterialStock = PrmRawMaterialStock::with('PrmRawMaterialOutputItem')->where('sisa_berat','!=',0)->get();
 
         // return $PrmRawMaterialInput;
         return response()->view('purchasing_exim.prm_raw_material_stock.index', [

@@ -168,10 +168,14 @@
                 const tanggal_adjustment = $('#tanggal_adjustment').val();
 
                 var date = new Date($('#tanggal_adjustment').val());
-                var day = date.getDate();
-                var month = date.getMonth() + 1;
+                var day = ("0" + date.getDate()).slice(-2);
+                var month =date.getMonth();
+                if (month < 10) {
+                    month = '0' + month;
+                }
+             
                 var year = date.getFullYear();
-                const nomor_adjustment = `NSA_${day}${month}${year}_A`;
+                const nomor_adjustment = `NASA_${day}${month}${year}_A`;
                 $('#nomor_adjustment').val(nomor_adjustment);
 
         }

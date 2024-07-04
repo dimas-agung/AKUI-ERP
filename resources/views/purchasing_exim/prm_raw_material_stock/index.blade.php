@@ -32,6 +32,7 @@
                                         <th scope="col" class="text-center">Jenis</th>
                                         <th scope="col" class="text-center" id="berat_masuk_header">Berat Masuk</th>
                                         <th scope="col" class="text-center" id="berat_keluar_header">Berat Keluar</th>
+                                        <th scope="col" class="text-center" id="berat_adjustment_header">Berat Adjustment</th>
                                         <th scope="col" class="text-center" id="sisa_berat_header">Sisa Berat</th>
                                         <th scope="col" class="text-center" id="avg_kadar_air_header">Avg Kadar Air</th>
                                         <th scope="col" class="text-center" id="modal_header">Modal</th>
@@ -57,6 +58,8 @@
                                                 {{ $MasterStock->berat_masuk }}</td>
                                             <td class="text-center berat_keluar">
                                                 {{ $MasterStock->berat_keluar }}</td>
+                                            <td class="text-center berat_adjustment">
+                                                {{ $MasterStock->berat_adjustment }}</td>
                                             <td class="text-center sisa_berat">
                                                 {{ $MasterStock->sisa_berat }}</td>
                                             <td class="text-center avg_kadar_air">

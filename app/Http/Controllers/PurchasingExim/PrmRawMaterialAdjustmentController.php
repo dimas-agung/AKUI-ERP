@@ -89,11 +89,11 @@ class PrmRawMaterialAdjustmentController extends Controller
                     'user_created' => Auth::user()->nip,
                 ]);
                 $PrmRawMaterialStock = PrmRawMaterialStock::where('id_box', $PrmRawMaterialAdjustment->id_box_raw_material)->first();
-                $sisa_berat_stock =  $PrmRawMaterialStock->berat_masuk - $PrmRawMaterialStock->berat_keluar -  $PrmRawMaterialAdjustment->berat_adjustment;
+                $sisa_berat_stock =  $PrmRawMaterialStock->sisa_berat -  $PrmRawMaterialAdjustment->berat_adjustment;
                 $PrmRawMaterialStock->update([
                     'sisa_berat' => $sisa_berat_stock,
-                    'berat_adjustment' =>  $PrmRawMaterialAdjustment->berat_adjustment,
-                    'total_modal' =>  $PrmRawMaterialAdjustment->modal * $sisa_berat_stock,
+                    'berat_adjustment' =>   $PrmRawMaterialStock->berat_adjustment + $PrmRawMaterialAdjustment->berat_adjustment ,
+                    'total_modal' => $PrmRawMaterialStock->modal * (int)$sisa_berat_stock,
                 ]);
             }
             DB::commit();
@@ -129,7 +129,7 @@ class PrmRawMaterialAdjustmentController extends Controller
                 $PrmRawMaterialStock->update([
                     'sisa_berat' => $sisa_berat_stock,
                     'berat_adjustment' =>  ($PrmRawMaterialStock->berat_adjustment - $PrmRawMaterialAdjustment->berat_adjustment),
-                    'total_modal' =>  $PrmRawMaterialAdjustment->modal * $sisa_berat_stock,
+                    'total_modal' =>  $PrmRawMaterialStock->modal * $sisa_berat_stock,
                 ]);
             // Simpan id_box dari input yang akan dihapus
             $PrmRawMaterialAdjustment->delete();
