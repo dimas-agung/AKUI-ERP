@@ -75,7 +75,7 @@
                                         <th scope="col" class="text-center">Nip Operator</th>
                                         <th scope="col" class="text-center">Grade Operator</th>
                                         <th scope="col" class="text-center">Nama Team Leader</th>
-                                        <th scope="col" class="text-center">Keterangan 2</th>
+                                        <th scope="col" class="text-center">Pcs 2</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>

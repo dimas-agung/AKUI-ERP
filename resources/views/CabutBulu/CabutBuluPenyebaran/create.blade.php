@@ -103,7 +103,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="keterangan_2" class="form-label">Keterangan 2</label>
+                        <label for="keterangan_2" class="form-label">Pcs 1</label>
                         <input type="text" class="form-control" id="keterangan_2">
                     </div>
                     <div class="col-md-6">
