@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MouldingPersiapan extends Model
 {
     use HasFactory;
-    protected $table = 'grading_warna_penerimaan_stocks';
+    protected $table = 'moulding_persiapans';
     protected $fillable = [
         'id_box_grading_warna',
         'nomor_batch',
@@ -19,6 +19,7 @@ class MouldingPersiapan extends Model
         'pcs_job',
         'nomor_job',
         'biaya_produksi',
+        'upah_operator',
         'modal_per_jenis',
         'total_modal_per_jenis',
         'modal_nomor_job',
@@ -27,4 +28,17 @@ class MouldingPersiapan extends Model
         'user_updated',
         'status',
     ];
+
+    public function GradingWarnaStock()
+    {
+        return $this->belongsTo(GradingWarnaStock::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
+    }
+    public function MasterJobMoulding()
+    {
+        return $this->belongsTo(MasterJobMoulding::class, 'jenis', 'job_order');
+    }
+    // public function RambangBasahStock()
+    // {
+    //     return $this->hasMany(RambangBasahStock::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
+    // }
 }

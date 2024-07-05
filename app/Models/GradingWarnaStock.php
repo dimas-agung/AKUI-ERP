@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class GradingWarnaStock extends Model
 {
     use HasFactory;
-    protected $table = 'grading_warna_penerimaan_stocks';
+    protected $table = 'grading_warna_stocks';
     protected $fillable = [
         'unit',
         'id_box_grading_warna',
@@ -25,4 +25,8 @@ class GradingWarnaStock extends Model
         'total_modal',
         'status',
     ];
+    public function MouldingPersiapan()
+    {
+        return $this->hasMany(MouldingPersiapan::class, 'id_box_grading_warna', 'id_box_grading_warna');
+    }
 }
