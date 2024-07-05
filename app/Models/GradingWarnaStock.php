@@ -5,16 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GradingWarnaAddingStock extends Model
+class GradingWarnaStock extends Model
 {
     use HasFactory;
     const STATUS_NON_AKTIF = 0;
     const STATUS_AKTIF = 1;
-    protected $table = 'grading_warna_adding_stocks';
+    protected $table = 'grading_warna_stocks';
     protected $fillable = [
         'unit',
-        'nomor_lot',
+        'id_box_grading_warna',
         'nomor_batch',
+        'jenis_grading',
         'berat_masuk',
         'berat_keluar',
         'sisa_berat',
@@ -25,12 +26,4 @@ class GradingWarnaAddingStock extends Model
         'total_modal',
         'status',
     ];
-    public function GradingWarnaAdding()
-    {
-        return $this->hasMany(GradingWarnaAdding::class, 'nomor_lot', 'nomor_lot');
-    }
-    public function GradingWarna()
-    {
-        return $this->hasMany(GradingWarna::class, 'nomor_lot', 'nomor_lot');
-    }
 }

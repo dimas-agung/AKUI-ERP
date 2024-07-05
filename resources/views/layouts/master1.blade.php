@@ -640,14 +640,14 @@
 
                         @role('moulding|admin')
                             <li
-                                class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Moulding</span>
                                 </a>
                                 <ul class="submenu">
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Grading Warna</span>
                                         </a>
@@ -663,6 +663,11 @@
                                                 <a href="{{ route('GradingWarnaAddingStock.index') }}"
                                                     class="submenu-link">Grading
                                                     <br>Warna Adding<br>Stock</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarna*') && !Route::is('GradingWarnaAdding*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarna.index') }}" class="submenu-link">Grading
+                                                    <br>Warna</a>
                                             </li>
                                         </ul>
                                     </li>
