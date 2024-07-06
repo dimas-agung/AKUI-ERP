@@ -8,6 +8,7 @@ use App\Models\GradingWarnaStock;
 use App\Models\MasterJobMoulding;
 use App\Models\MouldingPersiapan;
 use App\Services\DryAOutputHancuranService;
+use App\Services\MouldingPersiapanService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -16,6 +17,14 @@ use Illuminate\View\View;
 
 class MouldingPersiapanController extends Controller
 {
+
+        protected $MouldingPersiapanService;
+
+        public function __construct(MouldingPersiapanService $MouldingPersiapanService)
+        {
+            $this->MouldingPersiapanService = $MouldingPersiapanService;
+        }
+
         //Index
         public function index(){
             $i =1;
@@ -57,5 +66,29 @@ class MouldingPersiapanController extends Controller
 
             // Kembalikan nomor batch sebagai respons
             return response()->json($data);
+        }
+
+        public function CeksendData(Request $request)
+        {
+            // Ambil id box dari request dan konversi ke dalam array
+            $idBoxes = json_decode($request->idBoxes);
+
+            // Cek ketersediaan id box dalam database
+            $unavailableBoxes = GradingWarnaStock::whereIn('id_box_grading_warna', $idBoxes)->pluck('id_box_grading_warna')->toArray();
+
+            // Filter id box yang tidak tersedia
+            $availableBoxes = array_diff($idBoxes, $unavailableBoxes);
+
+            // Kembalikan daftar id box yang tidak tersedia sebagai respons
+            return response()->json(['unavailableBoxes' => $availableBoxes]);
+        }
+
+        public function store(Request $request)
+        {
+            return $this->MouldingPersiapanService->store($request);
+        }
+        public function destroy($nomor_job): RedirectResponse
+        {
+            return $this->MouldingPersiapanService->destroy($nomor_job);
         }
 }

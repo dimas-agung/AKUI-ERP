@@ -641,7 +641,7 @@ Route::middleware('auth')->group(function (){
                 Route::get('/moulding_persiapan/create', 'create')->name('MouldingPersiapan.create');
                 Route::post('/moulding_persiapan/store', 'store')->name('MouldingPersiapan.store');
                 Route::post('/moulding_persiapan/sendData', 'sendData')->name('MouldingPersiapan.sendData');
-                Route::delete('/moulding_persiapan/destroy/{jenis_grading}', 'destroy')->name('MouldingPersiapan.destroy');
+                Route::delete('/moulding_persiapan/destroy/{nomor_job}', 'destroy')->name('MouldingPersiapan.destroy');
                 Route::get('/moulding_persiapan/get_data_id_box', 'set')->name('MouldingPersiapan.set');
                 Route::get('/moulding_persiapan/get_pcc', 'setpcc')->name('MouldingPersiapan.setpcc');
                 Route::post('/moulding_persiapan/cek_data', 'CeksendData')->name('MouldingPersiapan.CeksendData');

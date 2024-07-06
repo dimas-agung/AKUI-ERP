@@ -57,26 +57,16 @@
                                         <select id="job_order" class="select2 form-select" name="job_order"
                                             data-placeholder="Pilih order job">
                                             <option value="">Pilih order job</option>
-                                            @foreach ($MasTujKir as $post)
-                                                @php
-                                                    $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
-                                                @endphp
-                                                @foreach ($MasTujKir as $innerPost)
-                                                    @if ($innerPost->status > 0)
-                                                        @if (!$beratMasukShown)
-                                                            <option value="{{ $innerPost->jenis }}">
-                                                                {{ old('jenis', $innerPost->jenis) }}
-                                                            </option>
-                                                            @php
-                                                                $beratMasukShown = true; // Set nilai variabel untuk menandai bahwa berat_masuk sudah ditampilkan
-                                                            @endphp
-                                                        @endif
-                                                    @endif
-                                                @endforeach
-                                                @php
-                                                    $selectedNomorBSTB = $post->jenis; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
-                                                @endphp
+                                            @foreach ($MasTujKir as $innerPost)
+                                                @if ($innerPost->status > 0)
+                                                    <option value="{{ $innerPost->jenis }}">
+                                                        {{ old('jenis', $innerPost->jenis) }}
+                                                    </option>
+                                                @endif
                                             @endforeach
+                                            @php
+                                                $selectedNomorBSTB = $post->jenis; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
+                                            @endphp
                                         </select>
                                     </div>
                                 </div>
@@ -125,7 +115,7 @@
                                         <label>Upah Operator</label>
                                         <input type="text" id="upah_operator" class="form-control" name="upah_operator"
                                             readonly>
-                                        <input type="text" id="upahmasuk" class="form-control" name="upahmasuk">
+                                        <input type="hidden" id="upahmasuk" class="form-control" name="upahmasuk">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -189,6 +179,9 @@
                                 <th class="text-center">Nomor Job</th>
                                 <th class="text-center">Upah Operator</th>
                                 <th class="text-center">Modal Per Jenis</th>
+                                <th class="text-center">Total Modal Per Jenis</th>
+                                <th class="text-center">Modal Nomor Job</th>
+                                <th class="text-center">Total Modal Nomor Job</th>
                                 <th class="text-center">User Created</th>
                                 <th class="text-center">Action</th>
                             </tr>
@@ -280,8 +273,6 @@
             });
         });
 
-
-
         // Ketika terjadi perubahan pada elemen dengan id 'tujuan_kirim'
         $('#job_order').on('change', function() {
             // Mengambil nilai job_order yang dipilih
@@ -358,7 +349,6 @@
             var pcs_job = $('#pcs_job').val();
             var nomor_job = $('#nomor_job').val();
             var modal_per_jenis = $('#modal').val();
-            var total_modal_per_jenis = $('#total_modal_per_jenis').val();
             var modal_nomor_job = $('#modal_nomor_job').val();
             var total_modal_nomor_job = $('#total_modal_nomor_job').val();
             var user_created = $('#user_created').val();
@@ -385,20 +375,7 @@
                 return;
             }
 
-            // Menghitung total berat job
-            var total_berat_job = 0;
-            $('#tableBody tr').each(function() {
-                var currentBerat = parseFloat($(this).find('td:nth-child(6)').text());
-                if (!isNaN(currentBerat)) {
-                    total_berat_job += currentBerat;
-                }
-            });
-
-            // Tambahkan berat job saat ini ke total berat job
-            total_berat_job += berat_job;
-
-            // Menghitung upah_operator berdasarkan total berat job
-            var upah_operator = upahmasuk * total_berat_job;
+            var total_modal_per_jenis = modal_per_jenis * berat_job;
 
             var newRow = '<tr>' +
                 '<td>' + id_box_grading_warna + '</td>' +
@@ -409,8 +386,12 @@
                 '<td>' + berat_job + '</td>' +
                 '<td>' + pcs_job + '</td>' +
                 '<td>' + nomor_job + '</td>' +
-                '<td>' + upah_operator + '</td>' +
+                // '<td>' + upah_operator + '</td>' +
+                '<td class="upah_operator"></td>' +
                 '<td>' + modal_per_jenis + '</td>' +
+                '<td class="total_modal_per_jenis">' + total_modal_per_jenis + '</td>' +
+                '<td class="modal_nomor_job"></td>' +
+                '<td class="total_modal_nomor_job"></td>' +
                 '<td>' + user_created + '</td>' +
                 '</td><td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
 
@@ -428,8 +409,11 @@
                 berat_job: berat_job,
                 pcs_job: pcs_job,
                 nomor_job: nomor_job,
-                upahmasuk: upahmasuk,
+                upah_operator: 0, // Placeholder for now, will be updated later
                 modal_per_jenis: modal_per_jenis,
+                total_modal_per_jenis: total_modal_per_jenis,
+                modal_nomor_job: 0, // Placeholder for now, will be updated later
+                total_modal_nomor_job: 0, // Placeholder for now, will be updated later
                 user_created: user_created,
             });
 
@@ -447,6 +431,61 @@
             // Update indeks baris terakhir
             currentRowIndex++;
             hitungTotalBerat();
+            // Menghitung dan memperbarui upah_operator untuk semua baris
+            updateUpahOperator();
+            // Menghitung dan memperbarui modal_nomor_job untuk semua baris
+            updateModalNomorJob();
+        }
+
+        function updateUpahOperator() {
+            // Menghitung total berat job
+            var total_berat_job = 0;
+            $('#tableBody tr').each(function() {
+                var currentBerat = parseFloat($(this).find('td:nth-child(6)').text());
+                if (!isNaN(currentBerat)) {
+                    total_berat_job += currentBerat;
+                }
+            });
+
+            // Menghitung upah_operator berdasarkan total berat job
+            var upahmasuk = parseFloat($('#upahmasuk').val());
+            var upah_operator = upahmasuk * total_berat_job;
+
+            // Memperbarui kolom upah_operator di setiap baris dan dataArray
+            $('#tableBody tr').each(function(index) {
+                $(this).find('.upah_operator').text(upah_operator.toFixed(2));
+                dataArray[index].upah_operator = upah_operator; // Update the upah_operator in dataArray
+            });
+            // Menampilkan hasil upah_operator di input dengan id 'upah_operator'
+            $('#upah_operator').val(upah_operator.toFixed(2));
+        }
+
+        function updateModalNomorJob() {
+            // Menghitung total berat job
+            var total_berat_job = 0;
+            var total_modal = 0;
+            $('#tableBody tr').each(function() {
+                var currentBerat = parseFloat($(this).find('td:nth-child(6)').text());
+                var currentModal = parseFloat($(this).find('.total_modal_per_jenis').text());
+                if (!isNaN(currentBerat)) {
+                    total_berat_job += currentBerat;
+                }
+                if (!isNaN(currentModal)) {
+                    total_modal += currentModal;
+                }
+            });
+
+            // Menghitung modal_nomor_job berdasarkan total modal dan total berat job
+            var modal_nomor_job = total_modal / total_berat_job;
+            console.log(total_modal);
+
+            // Memperbarui kolom modal_nomor_job di setiap baris dan dataArray
+            $('#tableBody tr').each(function(index) {
+                $(this).find('.modal_nomor_job').text(modal_nomor_job);
+                $(this).find('.total_modal_nomor_job').text(total_modal);
+                dataArray[index].modal_nomor_job = modal_nomor_job; // Update the modal_nomor_job in dataArray
+                dataArray[index].total_modal_nomor_job = total_modal; // Update the modal_nomor_job in dataArray
+            });
         }
 
         // Ambil indeks terakhir sebelum menghapus baris
@@ -465,13 +504,15 @@
             let rowIndex = row.index();
             dataArray.splice(rowIndex, 1);
 
+            // Memperbarui perhitungan setelah baris dihapus
+            hitungTotalBerat();
+            updateUpahOperator();
+            updateModalNomorJob();
+
             // Cek apakah tabel tidak memiliki baris data lagi
             if ($('#tableBody tr').length === 0) {
                 $('#job_order').prop('disabled', false).val(null).trigger('change');
                 $('#nomor_job').val('');
-                hitungTotalBerat();
-            } else {
-                hitungTotalBerat();
             }
         }
 
@@ -481,7 +522,7 @@
 
             // Mengumpulkan id box dari dataArray
             dataArray.forEach(function(item) {
-                idBoxes.push(item.jenis_grading);
+                idBoxes.push(item.id_box_grading_warna);
             });
 
             // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
@@ -500,7 +541,7 @@
                         // Ada id box yang tidak tersedia, tampilkan pesan kesalahan
                         Swal.fire({
                             title: 'Error!',
-                            text: 'Beberapa jenis grading sudah tidak tersedia.',
+                            text: 'Beberapa id box grading warna sudah tidak tersedia.',
                             icon: 'error',
                             showCancelButton: false, // Sembunyikan tombol cancel
                             confirmButtonText: 'OK' // Ganti teks tombol konfirmasi

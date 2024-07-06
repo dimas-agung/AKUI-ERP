@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nomor_batch');
             $table->string('tujuan_kirim');
             $table->string('jenis_grading');
-            $table->float('job_order');
+            $table->string('job_order');
             $table->float('berat_job');
             $table->float('pcs_job')->nullable();
             $table->string('nomor_job');

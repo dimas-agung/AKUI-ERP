@@ -36,6 +36,7 @@
                                 <th class="text-center" scope="col">Total Modal Per Jenis</th>
                                 <th class="text-center" scope="col">Modal Nomor Job</th>
                                 <th class="text-center" scope="col">Total Modal Nomor Job</th>
+                                <th class="text-center" scope="col">Status</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
@@ -48,7 +49,6 @@
                                     <td class="text-center">{!! $item->nomor_batch !!}</td>
                                     <td class="text-center">{!! $item->tujuan_kirim !!}</td>
                                     <td class="text-center">{!! $item->jenis_grading !!}</td>
-                                    <td class="text-center">{!! $item->tujuan_kirim !!}</td>
                                     <td class="text-center">{!! $item->job_order !!}</td>
                                     <td class="text-center">{!! $item->berat_job !!}</td>
                                     <td class="text-center">{!! $item->pcs_job !!}</td>
@@ -63,14 +63,14 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
-                                                <form style="display: flex" id="deleteForm{{ $item->jenis_grading }}"
-                                                    action="{{ route('MouldingPersiapan.destroy', $item->jenis_grading) }}"
+                                                <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
+                                                    action="{{ route('MouldingPersiapan.destroy', $item->nomor_job) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-link btn-danger"
                                                         data-original-title="Remove"
-                                                        onclick="confirmDelete('{{ $item->jenis_grading }}')">
+                                                        onclick="confirmDelete('{{ $item->nomor_job }}')">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
                                                 </form>
