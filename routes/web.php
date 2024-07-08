@@ -210,6 +210,14 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_jenis_grading_warna/update/{id}', 'update')->name('MasterJenisGradingWarna.update');
             Route::delete('/master_jenis_grading_warna/destroy/{id}', 'destroy')->name('MasterJenisGradingWarna.destroy');
         });
+
+        Route::controller(App\Http\Controllers\MasterTujuanKirimMouldingController::class)->group(function () {
+            Route::get('/master_tujuan_kirim_moulding', 'index')->name('MasterTujuanKirimMoulding.index');
+            Route::post('/master_tujuan_kirim_moulding/store', 'store')->name('MasterTujuanKirimMoulding.store');
+            Route::get('/master_tujuan_kirim_moulding/edit/{id}', 'edit')->name('MasterTujuanKirimMoulding.edit');
+            Route::put('/master_tujuan_kirim_moulding/update/{id}', 'update')->name('MasterTujuanKirimMoulding.update');
+            Route::delete('/master_tujuan_kirim_moulding/destroy/{id}', 'destroy')->name('MasterTujuanKirimMoulding.destroy');
+        });
     });
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {

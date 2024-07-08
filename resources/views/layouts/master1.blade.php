@@ -152,7 +152,7 @@
                         @role('master|admin')
                             <li class="sidebar-title">Menu</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*', 'MasterTujuanKirimDryA*', 'MasterJenisWaste*', 'MasterJenisGradingWarna*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*', 'MasterTujuanKirimDryA*', 'MasterJenisWaste*', 'MasterJenisGradingWarna*', 'MasterTujuanKirimMoulding*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-stack"></i>
                                     <span>Master</span>
@@ -241,6 +241,12 @@
                                         <a href="{{ route('MasterJenisGradingWarna.index') }}"
                                             class="submenu-link">Master
                                             Jenis<br>Grading Warna</a>
+                                    </li>
+                                    <li
+                                        class="submenu-item {{ Route::is('MasterTujuanKirimMoulding*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterTujuanKirimMoulding.index') }}"
+                                            class="submenu-link">Master
+                                            Tujuan<br>Kirim Moulding</a>
                                     </li>
                                 </ul>
                             </li>
