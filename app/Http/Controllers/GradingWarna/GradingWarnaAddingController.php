@@ -7,6 +7,7 @@ use App\Models\GradingWarnaAdding;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\GradingWarnaPenerimaanStock;
+use App\Models\MasterTujuanKirimMoulding;
 use App\Models\Perusahaan;
 use App\Services\GradingWarnaAddingService;
 
@@ -47,11 +48,11 @@ class GradingWarnaAddingController extends Controller
     {
         $GradingWarnaPenerimaanStock = GradingWarnaPenerimaanStock::select('nomor_job')->distinct()
             ->where('status', 1)->get();
-        $Perusahaan = Perusahaan::where('status', 1)->get();
+        $MasterTujuanKirimMoulding = MasterTujuanKirimMoulding::where('status', 1)->get();
         // return $GradingWarnaPenerimaanStock;
         return view('GradingWarna.GradingWarnaAdding.create', [
             'grading_warna_penerimaan_stock' => $GradingWarnaPenerimaanStock,
-            'perusahaan' => $Perusahaan,
+            'master_tujuan_kirim_moulding' => $MasterTujuanKirimMoulding,
         ]);
     }
     public function getDataByNomorJob($nomor_job)

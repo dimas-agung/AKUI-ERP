@@ -26,20 +26,14 @@
                         </select>
                     </div>
 
-                    {{-- <div class="col-md-4">
-                        <label for="tujuan_kirim" class="form-label">Tujuan Kirim</label>
-                        <input type="text" class="form-control" id="tujuan_kirim" readonly>
-                    </div> --}}
                     <div class="col-md-4">
-                        {{-- <label class="form-label">Tujuan Kirim</label> --}}
-                        <label class="form-label">Plant</label>
+                        <label class="form-label">Tujuan Kirim</label>
                         <select class="select2 form-select" style="width: 100%;" name="tujuan_kirim" id="tujuan_kirim"
-                            data-placeholder="Pilih Plant">
-                            {{-- <option value="">Pilih Tujuan Kirim</option> --}}
-                            <option value="">Pilih Plant</option>
-                            @foreach ($perusahaan as $item)
-                                <option value="{{ $item->plant }}">
-                                    {{ $item->nama }}
+                            data-placeholder="Pilih Tujuan Kirim">
+                            <option value="">Pilih Tujuan Kirim</option>
+                            @foreach ($master_tujuan_kirim_moulding as $item)
+                                <option value="{{ $item->inisial_tujuan }}">
+                                    {{ $item->tujuan_kirim }}
                                 </option>
                             @endforeach
                         </select>
