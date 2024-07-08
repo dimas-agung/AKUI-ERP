@@ -13,10 +13,24 @@ class RambangKeringInputController extends Controller
 {
 
     // index
-    public function index()
-    {
+    public function index(Request $request){
         $i = 1;
-        $RambangKeringInput = RambangKeringInput::all();
+        // $RambangKeringInput = RambangKeringInput::all();
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
+        $query = RambangKeringInput::query();
+    
+    
+        if ($startDate && $endDate) {
+            $query->whereBetween(RambangKeringInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $RambangKeringInput = $query->get();
+        }else{
+            $RambangKeringInput = RambangKeringInput::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('Rambang.RambangKeringInput.index', [
             'rambang_kering_input' => $RambangKeringInput,
             'i' => $i,

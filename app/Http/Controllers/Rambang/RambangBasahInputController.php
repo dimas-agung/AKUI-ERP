@@ -21,11 +21,25 @@ class RambangBasahInputController extends Controller
     }
 
     //Index
-    public function index(){
+    public function index(Request $request){
         $i =1;
-        $CBPenerimaan = RambangBasahInput::all();
+        // $CBPenerimaan = RambangBasahInput::all();
         // return($jenis);
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
+        $query = RambangBasahInput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(RambangBasahInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $CBPenerimaan = $query->get();
+        }else{
+            $CBPenerimaan = RambangBasahInput::limit(1000)
+            ->latest()
+            ->get();
+        }
+        
         return response()->view('Rambang.RambangBasahInput.index', [
             'CBPenerimaan' => $CBPenerimaan,
             'i' => $i,

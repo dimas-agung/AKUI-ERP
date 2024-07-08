@@ -30,7 +30,7 @@ class CabutBuluPenyebaranContoller extends Controller
             if(Auth::user()->plant){
                 $CabutBuluPenyebaran->where('tujuan_kirim',Auth::user()->plant);
             }
-            $CabutBuluPenyebaran = $CabutBuluPenyebaran->limit(1000)->get();
+            $CabutBuluPenyebaran = $CabutBuluPenyebaran->limit(1000)->latest()->get();
         }
         return response()->view('CabutBulu.CabutBuluPenyebaran.index', [
             'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,

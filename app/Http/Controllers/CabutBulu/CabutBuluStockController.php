@@ -16,7 +16,7 @@ class CabutBuluStockController extends Controller
         if(Auth::user()->plant){
             $cabut_bulu_stock->where('tujuan_kirim',Auth::user()->plant);
         }
-        $cabut_bulu_stock = $cabut_bulu_stock->get();
+        $cabut_bulu_stock = $cabut_bulu_stock->latest()->get();
         return response()->view('CabutBulu.CabutBuluStock.index', [
             'cabut_bulu_stock' => $cabut_bulu_stock,
         ]);

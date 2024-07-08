@@ -37,7 +37,7 @@ class CabutBuluPengembalianController extends Controller
             if(Auth::user()->plant){
                 $CabutBuluPengembalian->where('tujuan_kirim',Auth::user()->plant);
             }
-            $CabutBuluPengembalian = $CabutBuluPengembalian->limit(1000)->get();
+            $CabutBuluPengembalian = $CabutBuluPengembalian->limit(1000)->latest()->get();
         }
         return response()->view('CabutBulu.CabutBuluPengembalian.index', [
             'cabut_bulu_penyebarans' => $CabutBuluPengembalian,

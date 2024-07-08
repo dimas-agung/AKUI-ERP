@@ -18,7 +18,7 @@ class TransitCabutBuluController extends Controller
         if(Auth::user()->plant){
             $TransitPreCleaningStock->where('tujuan_kirim',Auth::user()->plant);
         }
-        $TransitPreCleaningStock=$TransitPreCleaningStock->get();
+        $TransitPreCleaningStock=$TransitPreCleaningStock->latest()->get();
         return response()->view('CabutBulu.CabutBuluTransit.index', [
             'transit_pre_cleaning_stocks' => $TransitPreCleaningStock,
             'i' => $i,

@@ -14,12 +14,24 @@ use Illuminate\Support\Facades\DB;
 class HcrKotorInputController extends Controller
 {
     //Index
-    public function index(){
+    public function index(Request $request){
         $i =1;
-        $CBPenerimaan = HcrKotorInput::with('MasterJenisHcrKotor')->get();
         $jenis = MasterJenisHcrKotor::with('HcrKotorInput')->get();
         // return($jenis);
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
+        $query = HcrKotorInput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(HcrKotorInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $CBPenerimaan = $query->get();
+        }else{
+            $CBPenerimaan = HcrKotorInput::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('Rambang.HcrKotorInput.index', [
             'CBPenerimaan' => $CBPenerimaan,
             'jenis' => $jenis,

@@ -17,10 +17,24 @@ use Illuminate\Support\Facades\Validator;
 class RambangPengirimanWasteController extends Controller
 {
     // index
-    public function index()
+    public function index(Request $request)
     {
         $i = 1;
-        $RambangPengirimanWaste = RambangPengirimanWaste::all();
+        // $RambangPengirimanWaste = RambangPengirimanWaste::all();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
+        $query = RambangPengirimanWaste::query();
+    
+    
+        if ($startDate && $endDate) {
+            $query->whereBetween(RambangPengirimanWaste::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $RambangPengirimanWaste = $query->get();
+        }else{
+            $RambangPengirimanWaste = RambangPengirimanWaste::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('Rambang.RambangPengirimanWaste.index', [
             'rambang_pengiriman_waste' => $RambangPengirimanWaste,
             'i' => $i,

@@ -54,7 +54,8 @@ class GradingHalusOutputController extends Controller
 
     public function create()
     {
-        $TransitPre = GradingHalusStock::where('sisa_berat', '>', 0)->get();
+        // $TransitPre = GradingHalusStock::where('sisa_berat', '>', 0)->get();
+         $TransitPre = GradingHalusStock::all();
         $TujuanKirimGHI = MasterTujuanKirimGradingHalus::where('status', '>', 0)->get();
         // return $TujuanKirimGHI;
         return view('PreGradingHalus.GradingHalusOutput.create', compact('TransitPre', 'TujuanKirimGHI'));

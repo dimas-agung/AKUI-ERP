@@ -39,7 +39,7 @@ class CabutBuluPenerimaanController extends Controller
             if(Auth::user()->plant){
                 $CBPenerimaan->where('tujuan_kirim',Auth::user()->plant);
             }
-            $CabutPenerimaan = $CBPenerimaan->limit(1000)->get();
+            $CabutPenerimaan = $CBPenerimaan->limit(1000)->latest()->get();
         }
         // $berat_bersih = generate_berat_bersih(299);
         // return $berat_bersih;
