@@ -31,4 +31,8 @@ class DryAGradingHancuran extends Model
         'user_created',
         'user_updated',
     ];
+    public function DryAPenerimaanHancuranStock()
+    {
+        return $this->hasMany(DryAPenerimaanHancuranStock::class, 'nomor_job', 'nomor_job');
+    }
 }

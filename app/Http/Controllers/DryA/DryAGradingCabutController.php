@@ -15,9 +15,25 @@ use App\Services\DryAGradingCabutService;
 class DryAGradingCabutController extends Controller
 {
     //index
-    public function index()
+    public function index(Request $request)
     {
-        $DryAGradingCabut = DryAGradingCabut::all();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = DryAGradingCabut::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(DryAGradingCabut::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $DryAGradingCabut = $query->with('DryAPenerimaanCabutStock')->get();
+        } else {
+            $DryAGradingCabut = DryAGradingCabut::with('DryAPenerimaanCabutStock')
+                // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->limit(1000)
+                ->latest()
+                ->get();
+        }
+
         return response()->view('DryA.DryAGradingCabut.index', [
             'dry_a_grading_cabut' => $DryAGradingCabut,
         ]);

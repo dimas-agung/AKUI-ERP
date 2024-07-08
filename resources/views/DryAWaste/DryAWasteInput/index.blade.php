@@ -14,14 +14,43 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Dry A Waste Input
-                                <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong><i class="bi bi-plus-circle"></i> Add Data <i
-                                            class="bi bi-plus-circle"></i></strong>
-                                </button>
+                                <div style="position: absolute;right: 0px;">
+                                    <a class="btn btn-outline-warning rounded-pill" style="margin-right: 10px"
+                                        onclick="toggleFilter()">
+                                        <strong>Filter</strong>
+                                    </a>
+                                    <button onclick="redirectToPage()" type="button"
+                                        class="btn btn-outline-success rounded-pill">
+                                        <strong><i class="bi bi-plus-circle"></i> Add Data <i
+                                                class="bi bi-plus-circle"></i></strong>
+                                    </button>
+                                </div>
                             </div>
                         </h5>
                     </div>
                     <div class="card-body" style="overflow: auto;">
+                        <div id="filterRow" class="row mb-5 mt-3">
+                            <div class="col-4">
+                                <label class="form-label">Tanggal Mulai</label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control " placeholder="Filter by start date..."
+                                        id="filterInputStartDate">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Tanggal Akhir</label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control " placeholder="Filter by end date..."
+                                        id="filterInputEndDate">
+                                </div>
+                            </div>
+
+                            <div class="col-4 mt-3" style="margin-top: 10px">
+                                <button type="button" class="btn btn-outline-success rounded-pill" onclick="applyFilter()">
+                                    <strong><i class="bi bi-funnel"></i> Apply Filter</strong>
+                                </button>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table id="table1" class="display data-table" style="width:100%">
                                 <thead>
@@ -163,6 +192,31 @@
         //     }
 
         // });
+        function toggleFilter() {
+            var filterRow = document.getElementById('filterRow');
+            if (filterRow.style.display === 'none' || filterRow.style.display === '') {
+                filterRow.style.display = 'flex';
+            } else {
+                filterRow.style.display = 'none';
+            }
+        }
+
+        function applyFilter() {
+
+            const start_date = document.getElementById('filterInputStartDate').value;
+            const end_date = document.getElementById('filterInputEndDate').value;
+
+            const filters = {
+                start_date: start_date,
+                end_date: end_date,
+            };
+            var url = '{{ route('DryAWasteInput.index') }}';
+
+            // url = url.replace(':slug', slug);
+            url = url + '?start_date=' + start_date + '&end_date=' + end_date;
+            window.location.href = url;
+
+        }
 
         function redirectToPage() {
             window.location.href = "{{ route('DryAWasteInput.create') }}";
