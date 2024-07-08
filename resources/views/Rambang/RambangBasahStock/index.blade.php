@@ -25,6 +25,8 @@
                                 <th class="text-center" scope="col">Berat Masuk</th>
                                 <th class="text-center" scope="col">Berat Keluar</th>
                                 <th class="text-center" scope="col">Sisa Berat</th>
+                                <th class="text-center" scope="col">Created At</th>
+                                <th class="text-center" scope="col">Update At</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,6 +39,10 @@
                                     <td class="text-center">{!! $item->berat_masuk !!}</td>
                                     <td class="text-center">{!! $item->berat_keluar !!}</td>
                                     <td class="text-center">{!! $item->sisa_berat !!}</td>
+                                    <td class="text-center">{{ $item->created_at }}</td>
+                                    <td class="text-center">
+                                        {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
+                                    </td>
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">

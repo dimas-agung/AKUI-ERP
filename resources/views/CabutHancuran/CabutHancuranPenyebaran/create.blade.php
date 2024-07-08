@@ -21,6 +21,11 @@
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($get_unused_nomor_job as $item)
                                 @if ($item->cabut_bulu_penyebaran_count == 0 && $item->status == 1)
+                                @if (!str_ends_with($item->nomor_job, Auth::user()->plant))
+                                    @php
+                                        continue;
+                                    @endphp
+                                @endif
                                     <option value="{{ $item->nomor_job }}">
                                         {{ $item->nomor_job }}</option>
                                 @endif

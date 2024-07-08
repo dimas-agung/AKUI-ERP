@@ -32,6 +32,11 @@
                         </thead>
                         <tbody>
                             @forelse ($cabut_hancuran_persiapan_stocks as $item)
+                                @if (!str_ends_with($item->nomor_job, Auth::user()->plant))
+                                    @php
+                                        continue;
+                                    @endphp
+                                @endif
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td class="text-center">{{ $item->nomor_job }}</td>

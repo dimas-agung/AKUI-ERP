@@ -15,11 +15,18 @@
                         <i class="fa fa-plus"></i>
                         Add Data
                     </a> --}}
-                    <button class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#inlineForm"
-                        onclick="renderSelect2()">
-                        <i class="fa fa-plus"></i>
-                        Add Data
-                    </button>
+                    <div style="position: absolute;right: 0px;">
+
+                        <a class="btn btn-outline-warning rounded-pill" style="margin-right: 10px" onclick="toggleFilter()">
+                            <strong>Filter</strong>
+                        </a>
+                      
+                        <button class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#inlineForm"
+                            onclick="renderSelect2()">
+                            <i class="fa fa-plus"></i>
+                            Add Data
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="card-body" style="overflow: auto;">
@@ -129,6 +136,28 @@
                         </div>
                     </div>
                 </div>
+                <div id="filterRow" class="row mb-5 mt-3">
+                    <div class="col-4">
+                        <label class="form-label">Tanggal Mulai</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control " placeholder="Filter by start date..."
+                                id="filterInputStartDate">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label">Tanggal Akhir</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control " placeholder="Filter by end date..."
+                                id="filterInputEndDate">
+                        </div>
+                    </div>
+
+                    <div class="col-4 mt-3" style="margin-top: 10px">
+                        <button type="button" class="btn btn-outline-success rounded-pill" onclick="applyFilter()">
+                            <strong><i class="bi bi-funnel"></i> Apply Filter</strong>
+                        </button>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table id="table1" class="display" style="width:100%">
                         <thead>
@@ -140,6 +169,8 @@
                                 <th class="text-center" scope="col">ID Box Hcr Kotor</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
+                                <th class="text-center" scope="col">Created At</th>
+                                <th class="text-center" scope="col">Update At</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
                         </thead>
@@ -153,6 +184,10 @@
                                     <td class="text-center">{!! $item->id_box_hcr_kotor !!}</td>
                                     <td class="text-center">{!! $item->keterangan !!}</td>
                                     <td class="text-center">{!! $item->user_created !!}</td>
+                                    <td class="text-center">{{ $item->created_at }}</td>
+                                            <td class="text-center">
+                                                {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
+                                            </td>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
@@ -185,6 +220,14 @@
 @endsection
 @section('script')
     <script>
+         function toggleFilter() {
+            var filterRow = document.getElementById('filterRow');
+            if (filterRow.style.display === 'none' || filterRow.style.display === '') {
+                filterRow.style.display = 'flex';
+            } else {
+                filterRow.style.display = 'none';
+            }
+        }
         document.addEventListener('DOMContentLoaded', function() {
             flatpickr('.flatpickr-date', {
                 dateFormat: 'Y-m-d', // Format tanggal yang diinginkan
@@ -252,6 +295,22 @@
                     document.getElementById('deleteForm' + id).submit();
                 }
             });
+        }
+        function applyFilter() {
+
+        const start_date = document.getElementById('filterInputStartDate').value;
+        const end_date = document.getElementById('filterInputEndDate').value;
+
+        const filters = {
+            start_date: start_date,
+            end_date: end_date,
+        };
+        var url = '{{ route("InputHcrKotor.index") }}';
+
+        // url = url.replace(':slug', slug);
+        url = url+'?start_date='+start_date+'&end_date='+end_date ;
+        window.location.href=url;
+
         }
     </script>
 @endsection

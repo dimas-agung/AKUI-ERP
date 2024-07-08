@@ -43,7 +43,7 @@
                                                 <option value="">Pilih ID Box Stock Hcr Kotor</option>
                                                 @foreach ($stockTGK as $post)
                                                     @if (str_contains(strtolower($post->jenis_rambang), 'hcr rambang') === true)
-                                                        @if (str_ends_with($post->id_box_hcr_kotor, Auth::user()->unit->perusahaan->plant))
+                                                        @if (str_ends_with($post->id_box_hcr_kotor, Auth::user()->plant))
                                                             {{-- @php
                                                                 continue;
                                                             @endphp --}}
@@ -60,7 +60,9 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="form-label">Jenis Rambang</label>
+                                            
                                             <input type="text" class="form-control" id="jenis_rambang" readonly>
+                                            <input type="hidden" class="form-control" id="tanggal_cabut" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -164,9 +166,15 @@
                         let data = response.length > 0 ? response : null;
                         data.forEach(v => {
                             if (v.jenis_rambang.toLowerCase().includes("hcr rambang")) {
+                                // console.log(tgl_cabut);
+                                var dateCabut = selectedIdBox.replace(/_.*/,'');
+                                let tgl_cabut = convertDate(dateCabut);
+                                console.log(tgl_cabut);
 
                                 $('#berat_masuk').val(v.sisa_berat);
                                 $('#jenis_rambang').val(v.jenis_rambang);
+                                $('#tanggal_cabut').val(tgl_cabut);
+                                
                                 // Hitung sisa berat berdasarkan berat masuk dan berat keluar
                                 hitungTotal();
                             } else {
@@ -181,6 +189,17 @@
                     }
                 });
             });
+            function convertDate(dateStr) {
+                // Extract day, month, and year parts from the input string
+                let day = dateStr.slice(0, 2);
+                let month = dateStr.slice(2, 4);
+                let year = dateStr.slice(4, 6);
+
+                // Format the date as "dd-mm-yyyy"
+                let formattedDate = `${day}-${month}-${year}`;
+
+                return formattedDate;
+            }
 
             // Fungsi generateNomorBSTB (letakkan di sini atau muat dari file eksternal)
             function generateNomorBSTB() {
@@ -191,8 +210,8 @@
                 const jam = ('0' + now.getHours()).slice(-2);
                 const menit = ('0' + now.getMinutes()).slice(-2);
                 const detik = ('0' + now.getSeconds()).slice(-2);
-
-                const nomorJob = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_A_UCH`;
+                const plant = '{{ Auth::user()->plant }}'
+                const nomorJob = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_UCH_${plant}`;
 
                 // Menampilkan hasil ke dalam elemen HTML dengan ID 'nomor_job'
                 $('#nomor_job').val(nomorJob); // Menggunakan .val() karena ini input field
@@ -204,7 +223,7 @@
                 let beratMasuk = parseFloat($('#berat_masuk').val() || 0);
                 let beratKeluar = 0;
 
-                     beratKeluar = parseFloat($('#berat_keluar').val() || 0);
+                beratKeluar = parseFloat($('#berat_keluar').val() || 0);
 
 
                 let sisaBerat = beratMasuk - beratKeluar;
@@ -238,7 +257,15 @@
             var nomor_job = $('#nomor_job').val();
             var upah_operator = $('#upah_operator').val();
             var user_created = $('#user_created').val();
+            var tanggal_cabut = $('#tanggal_cabut').val();
 
+            generateQrCode(nomor_job)
+
+            $('#cetak_tanggal_cabut').html(tanggal_cabut)
+            $('#cetak_nomor_job').html(nomor_job)
+            $('#cetak_jenis').html(jenis_rambang)
+            $('#cetak_gramasi').html(berat_keluar)
+            window.print();
             // Inisialisasi array untuk menyimpan field yang belum terisi
             let fieldsNotFilled = [];
             // Periksa setiap field
@@ -416,4 +443,37 @@
             var dataArray = [];
         }
     </script>
+@endsection
+@section('printArea')
+    <style>
+        @media print {
+            body {
+            visibility: hidden;
+            /* display: none; */
+            /* position: relative; */
+            }
+            #printableArea1 {
+            visibility: visible;
+            /* display: inline; */
+            position: absolute;
+            left: 0;
+            top: 0;
+            /* bottom: 0; */
+            /* right: 0; */
+            }
+            .no-print {
+                display: none; /* Menyembunyikan elemen dengan class "no-print" saat mencetak */
+            }
+        }
+    </style>
+    <div class="row" id="printableArea1" style="max-width: 200px;margin: 10px;">
+
+        <div id="qrcode" class="col" style="max-width: 70px;padding-right:0;padding-left:0;"></div>
+        <div class="col" style="font-size: 9px;width: 220px;padding-right:0;padding-left:0;" >
+            <span style="text-align: center;font-weight: bold;;font-size:10px;" id="cetak_tanggal_cabut">1234567890</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;"  id="cetak_nomor_job">010324-083609_AKI_ugk</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_jenis">PT12</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_gramasi">100</span><span style="font-family:Calibri;font-weight: bold;font-size:10px;" >gr</span>
+        </div>
+    </div>
 @endsection

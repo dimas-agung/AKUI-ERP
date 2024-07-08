@@ -68,7 +68,7 @@
                                             <input type="text" pattern="[0-9.]*" inputmode="numeric"
                                                 onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                                                 name="upah_operator" placeholder="Masukkan Upah Operator"
-                                                class="form-control" value="{{ old('upah_operator') }}">
+                                                class="form-control" value="{{ 0}}">
                                             <!-- error message -->
                                             @error('upah_operator')
                                                 <div class="alert alert-danger mt-2">
@@ -81,7 +81,7 @@
                                             <input type="text" pattern="[0-9.]*" inputmode="numeric"
                                                 onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                                                 name="pengurangan_harga" placeholder="Masukkan Pengurangan Harga"
-                                                class="form-control" value="{{ old('pengurangan_harga') }}">
+                                                class="form-control" value="{{ 0}}">
                                             <!-- error message -->
                                             @error('pengurangan_harga')
                                                 <div class="alert alert-danger mt-2">
@@ -96,7 +96,7 @@
                                                 name="harga_estimasi" placeholder="Masukkan Harga Estimasi"
                                                 class="form-control" required
                                                 oninvalid="this.setCustomValidity('Mohon isi Harga Estimasi')"
-                                                oninput="this.setCustomValidity('')" value="{{ old('harga_estimasi') }}">
+                                                oninput="this.setCustomValidity('')" value="{{ 0 }}">
                                             <!-- error message -->
                                             @error('harga_estimasi')
                                                 <div class="alert alert-danger mt-2">
