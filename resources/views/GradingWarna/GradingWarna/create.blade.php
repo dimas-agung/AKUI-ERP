@@ -14,7 +14,7 @@
                 </div>
                 <hr>
                 <form method="POST" class="row g-3" id="myForm">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="basic-usage" class="form-label">Nomor Lot</label>
                         <select class="select2 form-select" style="width: 100%;" name="nomor_lot" id="nomor_lot"
                             data-placeholder="Pilih Nomor Lot">
@@ -24,40 +24,52 @@
                                     {{ $item->nomor_lot }}</option>
                             @endforeach
                         </select>
-                        {{-- <label for="">Modal</label><br> --}}
-                        <input type="text" id="modal">
-                        {{-- <label for="">Total Modal</label> --}}
-                        <input type="text" id="total_modal">
+                        <input type="hidden" id="modal">
+                        <input type="hidden" id="total_modal">
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="nomor_batch" class="form-label">Nomor Batch</label>
                         <input type="text" class="form-control" id="nomor_batch" readonly>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="tujuan_kirim" class="form-label">Tujuan Kirim</label>
                         <input type="text" class="form-control" id="tujuan_kirim" readonly>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <label for="user_created" class="form-label">NIP Admin</label>
+                        <input type="text" class="form-control" id="user_created" readonly
+                            value="{{ auth()->user()->nip }}">
+                    </div>
+
+                    <div class="col-md-3">
                         <label for="berat_lot" class="form-label">Berat Lot</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="berat_lot" readonly>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="pcs_lot" class="form-label">Pcs Lot</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="pcs_lot" readonly>
                     </div>
 
-                    <div class="col-md-4">
-                        <label for="user_created" class="form-label">NIP Admin</label>
-                        <input type="text" class="form-control" id="user_created" readonly
-                            value="{{ auth()->user()->nip }}">
+                    <div class="col-md-3">
+                        <label for="sisa_berat_lot" class="form-label">Sisa Berat Lot</label>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="sisa_berat_lot" readonly>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="sisa_pcs_lot" class="form-label">Sisa Pcs Lot</label>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="sisa_pcs_lot" readonly>
                     </div>
 
                     <div class="col-md-3">
@@ -70,18 +82,12 @@
                                     {{ $item->jenis }}</option>
                             @endforeach
                         </select>
-                        {{-- <label for="">Kategori Susut</label> --}}
-                        <input type="text" id="kategori_susut">
-                        {{-- <label for="">Upah Operator</label> --}}
-                        <input type="text" id="upah_operator">
-                        {{-- <label for="">Pengurangan Harga</label> --}}
-                        <input type="text" id="pengurangan_harga">
-                        {{-- <label for="">Harga Esti</label> --}}
-                        <input type="text" id="harga_esti">
-                        {{-- <label for="">Harga Estimasi</label> --}}
-                        <input type="text" id="harga_estimasi">
-                        {{-- <label for="">Kontribusi</label> --}}
-                        <input type="text" id="kontribusi">
+                        <input type="hidden" id="kategori_susut">
+                        <input type="hidden" id="upah_operator">
+                        <input type="hidden" id="pengurangan_harga">
+                        <input type="hidden" id="harga_esti">
+                        <input type="hidden" id="harga_estimasi">
+                        <input type="hidden" id="kontribusi">
                     </div>
 
                     <div class="col-md-3">
@@ -209,6 +215,11 @@
                         $('#pcs_lot').val(response.sisa_pcs);
                         $('#modal').val(response.modal);
                         $('#total_modal').val(response.total_modal);
+                        // hitung Sisa Lot
+                        $('#sisa_berat_lot').val(response.sisa_berat);
+                        $('#sisa_pcs_lot').val(response.sisa_pcs);
+                        initialSisaBeratLot = parseFloat(response.sisa_berat);
+                        initialSisaPcsLot = parseFloat(response.sisa_pcs);
 
                         hargaEstimasi();
 
@@ -259,20 +270,46 @@
             });
 
             function generateIDBoxGradingWarna(tujuanKirim, jenisGrading) {
-                // const now = new Date();
-                // const tahun = now.getFullYear().toString().substr(-2);
-                // const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
-                // const tanggal = ('0' + now.getDate()).slice(-2);
-                // const jam = ('0' + now.getHours()).slice(-2);
-                // const menit = ('0' + now.getMinutes()).slice(-2);
-                // const detik = ('0' + now.getSeconds()).slice(-2);
-
-                // const IDBoxGradingWarna =
-                //     `${tujuanKirim}_${jenisGrading}_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_UGW`;
                 const IDBoxGradingWarna = `${tujuanKirim}_${jenisGrading}`;
 
                 return IDBoxGradingWarna;
             }
+
+            // Validasi berat_grading tidak boleh lebih dari sisa_berat_lot
+            $('#berat_grading').on('input', function() {
+                const beratGrading = parseFloat($(this).val()) || 0;
+                const sisaBeratLot = initialSisaBeratLot - beratGrading;
+
+                if (beratGrading > initialSisaBeratLot) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Berat Grading tidak boleh lebih dari Sisa Berat Lot.',
+                    });
+                    $(this).val('');
+                    $('#sisa_berat_lot').val(initialSisaBeratLot);
+                } else {
+                    $('#sisa_berat_lot').val(sisaBeratLot);
+                }
+            });
+
+            // Validasi pcs_grading tidak boleh lebih dari sisa_pcs_lot
+            $('#pcs_grading').on('input', function() {
+                const pcsGrading = parseFloat($(this).val()) || 0;
+                const sisaPcsLot = initialSisaPcsLot - pcsGrading;
+
+                if (pcsGrading > initialSisaPcsLot) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Pcs Grading tidak boleh lebih dari Sisa Pcs Lot.',
+                    });
+                    $(this).val('');
+                    $('#sisa_pcs_lot').val(initialSisaPcsLot);
+                } else {
+                    $('#sisa_pcs_lot').val(sisaPcsLot);
+                }
+            });
         });
 
         // Hitung harga estimasi
@@ -533,6 +570,12 @@
                 hitungSusutDepan();
                 hitungSusutBelakang();
                 hitungKontribusi();
+
+                // Update nilai sisa berat dan pcs
+                initialSisaBeratLot -= parseFloat(berat_grading);
+                initialSisaPcsLot -= parseFloat(pcs_grading);
+                $('#sisa_berat_lot').val(initialSisaBeratLot);
+                $('#sisa_pcs_lot').val(initialSisaPcsLot);
             }
         }
 
@@ -540,11 +583,17 @@
         function hapusBaris(button) {
             // Dapatkan elemen baris terkait dengan tombol delete yang diklik
             let row = $(button).closest('tr');
+            // cari berat_grading dan pcs_grading
+            let berat_grading = parseFloat(row.find('td:eq(10)').text()) || 0;
+            let pcs_grading = parseFloat(row.find('td:eq(11)').text()) || 0;
 
-            // Hapus baris dari tabel
             row.remove();
+            // hitung ulang sisa_lot
+            initialSisaBeratLot += berat_grading;
+            initialSisaPcsLot += pcs_grading;
+            $('#sisa_berat_lot').val(initialSisaBeratLot);
+            $('#sisa_pcs_lot').val(initialSisaPcsLot);
 
-            // Hapus baris dari dataArray berdasarkan indeks baris di tabel
             let rowIndex = row.index();
             dataArray.splice(rowIndex, 1);
 

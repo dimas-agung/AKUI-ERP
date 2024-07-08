@@ -3,7 +3,7 @@
     Grading Warna
 @endsection
 @section('title')
-    Grading Warna Adding Stock
+    Grading Warna Stock
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Grading Warna Adding Stock
+                                Data Grading Warna Stock
                             </div>
                         </h5>
                     </div>
@@ -24,9 +24,9 @@
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Unit</th>
-                                        <th scope="col" class="text-center">Nomor Lot</th>
+                                        <th scope="col" class="text-center">ID Box Grading Warna</th>
                                         <th scope="col" class="text-center">Nomor Batch</th>
-                                        <th scope="col" class="text-center">Tujuan Kirim</th>
+                                        <th scope="col" class="text-center">Jenis Grading</th>
                                         <th scope="col" class="text-center">Berat Masuk</th>
                                         <th scope="col" class="text-center">Berat Keluar</th>
                                         <th scope="col" class="text-center">Sisa Berat</th>
@@ -40,13 +40,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($grading_warna_adding_stock as $item)
+                                    @forelse ($grading_warna_stock as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->unit }}</td>
-                                            <td class="text-center">{{ $item->nomor_lot }}</td>
+                                            <td class="text-center">{{ $item->id_box_grading_warna }}</td>
                                             <td class="text-center">{{ $item->nomor_batch }}</td>
-                                            <td class="text-center">{{ $item->tujuan_kirim }}</td>
+                                            <td class="text-center">{{ $item->jenis_grading }}</td>
                                             <td class="text-center">{{ $item->berat_masuk }}</td>
                                             <td class="text-center">{{ $item->berat_keluar }}</td>
                                             <td class="text-center">{{ $item->sisa_berat }}</td>
@@ -62,7 +62,7 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Grading Warna Adding Stock belum Tersedia.
+                                            Data Grading Warna Stock belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -76,10 +76,6 @@
 @endsection
 @section('script')
     <script>
-        function redirectToPage() {
-            window.location.href = "{{ route('GradingWarnaAdding.create') }}";
-        }
-
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Konfirmasi',

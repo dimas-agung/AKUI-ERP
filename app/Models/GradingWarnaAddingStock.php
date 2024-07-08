@@ -15,6 +15,7 @@ class GradingWarnaAddingStock extends Model
         'unit',
         'nomor_lot',
         'nomor_batch',
+        'tujuan_kirim',
         'berat_masuk',
         'berat_keluar',
         'sisa_berat',

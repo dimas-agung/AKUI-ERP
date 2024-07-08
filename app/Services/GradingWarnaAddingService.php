@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\GradingWarnaAdding;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
+use App\Models\GradingWarnaPenerimaan;
 use App\Models\GradingWarnaAddingStock;
-use App\Models\GradingWarnaPenerimaanStock;
 use Illuminate\Support\Facades\Validator;
+use App\Models\GradingWarnaPenerimaanStock;
 
 class GradingWarnaAddingService
 {
@@ -85,6 +86,7 @@ class GradingWarnaAddingService
                             'unit'              => $data['unit'] ?? 'Grading Warna',
                             'nomor_lot'         => $data['nomor_lot'],
                             'nomor_batch'       => $data['nomor_batch'],
+                            'tujuan_kirim'       => $data['tujuan_kirim'],
                             // 'berat_masuk'       => $data['berat_2_grading'] ?? 0,
                             'berat_masuk'       => $beratMasuk,
                             'berat_keluar'      => $data['berat_keluar'] ?? 0,
@@ -102,6 +104,14 @@ class GradingWarnaAddingService
                     $GradingWarnaPenerimaanStock = GradingWarnaPenerimaanStock::where('nomor_job', '=', $GradingWarnaAdding->nomor_job)
                         ->get();
                     foreach ($GradingWarnaPenerimaanStock as $item) {
+                        $item->update([
+                            'status'       => GradingWarnaAdding::STATUS_NON_AKTIF,
+                        ]);
+                    }
+                    // Update Status Penerimaan
+                    $GradingWarnaPenerimaan = GradingWarnaPenerimaan::where('nomor_job', '=', $GradingWarnaAdding->nomor_job)
+                        ->get();
+                    foreach ($GradingWarnaPenerimaan as $item) {
                         $item->update([
                             'status'       => GradingWarnaAdding::STATUS_NON_AKTIF,
                         ]);
@@ -188,6 +198,14 @@ class GradingWarnaAddingService
             $GradingWarnaPenerimaanStock = GradingWarnaPenerimaanStock::where('nomor_job', '=', $GradingWarnaAdding->nomor_job)
                 ->get();
             foreach ($GradingWarnaPenerimaanStock as $item) {
+                $item->update([
+                    'status'       => GradingWarnaAdding::STATUS_AKTIF,
+                ]);
+            }
+            // Update Status PenerimaanStock
+            $GradingWarnaPenerimaan = GradingWarnaPenerimaan::where('nomor_job', '=', $GradingWarnaAdding->nomor_job)
+                ->get();
+            foreach ($GradingWarnaPenerimaan as $item) {
                 $item->update([
                     'status'       => GradingWarnaAdding::STATUS_AKTIF,
                 ]);

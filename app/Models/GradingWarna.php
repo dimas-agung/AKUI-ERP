@@ -14,6 +14,7 @@ class GradingWarna extends Model
     protected $fillable = [
         'nomor_lot',
         'nomor_batch',
+        'tujuan_kirim',
         'berat_lot',
         'pcs_lot',
         'jenis_grading',

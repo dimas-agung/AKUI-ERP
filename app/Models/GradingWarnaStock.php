@@ -15,6 +15,7 @@ class GradingWarnaStock extends Model
         'unit',
         'id_box_grading_warna',
         'nomor_batch',
+        'tujuan_kirim',
         'jenis_grading',
         'berat_masuk',
         'berat_keluar',

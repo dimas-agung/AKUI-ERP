@@ -616,6 +616,9 @@ Route::middleware('auth')->group(function () {
                 Route::get('/grading_warna/set_lot', 'setLot')->name('GradingWarna.setLot');
                 Route::get('/grading_warna/set_jenis', 'setJenis')->name('GradingWarna.setJenis');
             });
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaStockController::class)->group(function () {
+                Route::get('/grading_warna_stock', 'index')->name('GradingWarnaStock.index');
+            });
         });
     });
 });
