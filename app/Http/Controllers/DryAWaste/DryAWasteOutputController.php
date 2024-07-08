@@ -18,11 +18,23 @@ class DryAWasteOutputController extends Controller
     {
         $this->DryAWasteOutputService = $DryAWasteOutputService;
     }
-    public function index(){
-        $i =1;
-        $PreGHI = DryAWasteOutput::with('DryAWasteStock')->get();
-        // return $TransitPre;
 
+    public function index(Request $request){
+        $i = 1;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = DryAWasteOutput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(DryAWasteOutput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreGHI = $query->get();
+        }else{
+            $PreGHI = DryAWasteOutput::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('DryAWaste.DryAWasteOutput.index', [
             'PreGHI' => $PreGHI,
             'i' => $i,

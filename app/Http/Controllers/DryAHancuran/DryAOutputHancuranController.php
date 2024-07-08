@@ -16,11 +16,32 @@ use Illuminate\View\View;
 class DryAOutputHancuranController extends Controller
 {
     //Index
-    public function index(){
-        $i =1;
-        $PreCleaningI = DryAOutputHancuran::get();
-        // return $existingItem;
+    // public function index(){
+    //     $i =1;
+    //     $PreCleaningI = DryAOutputHancuran::get();
+    //     // return $existingItem;
 
+    //     return response()->view('DryAHancuran.DryAOutput.index', [
+    //         'PreCleaningI' => $PreCleaningI,
+    //         'i' => $i,
+    //     ]);
+    // }
+    public function index(Request $request){
+        $i = 1;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = DryAOutputHancuran::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(DryAOutputHancuran::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreCleaningI = $query->get();
+        }else{
+            $PreCleaningI = DryAOutputHancuran::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('DryAHancuran.DryAOutput.index', [
             'PreCleaningI' => $PreCleaningI,
             'i' => $i,

@@ -11,7 +11,7 @@
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data Pre-Cleaning Input</h4>
-                    <div style="position: absolute;right: 0px;">
+                    <div style="position: absolute;right: 25px;">
                         <a class="btn btn-outline-warning rounded-pill" style="margin-right: 10px" onclick="toggleFilter()">
                             <strong>Filter</strong>
                         </a>

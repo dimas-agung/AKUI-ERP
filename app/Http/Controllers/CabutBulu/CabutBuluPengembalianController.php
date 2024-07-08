@@ -19,11 +19,32 @@ class CabutBuluPengembalianController extends Controller
 
     }
     // index
-    public function index()
-    {
-        $i = 1;
-        $CabutBuluPenyebaran = CabutBuluPengembalian::all();
+    // public function index()
+    // {
+    //     $i = 1;
+    //     $CabutBuluPenyebaran = CabutBuluPengembalian::all();
 
+    //     return response()->view('CabutBulu.CabutBuluPengembalian.index', [
+    //         'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
+    //         'i' => $i,
+    //     ]);
+    // }
+    public function index(Request $request){
+        $i = 1;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = CabutBuluPengembalian::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(CabutBuluPengembalian::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $CabutBuluPenyebaran = $query->get();
+        }else{
+            $CabutBuluPenyebaran = CabutBuluPengembalian::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('CabutBulu.CabutBuluPengembalian.index', [
             'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
             'i' => $i,

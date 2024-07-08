@@ -22,11 +22,32 @@ class CabutBuluPenerimaanController extends Controller
         $this->CabutBuluPenerimaanService = $CabutBuluPenerimaanService;
     }
     //Index
-    public function index(){
-        $i =1;
-        $CBPenerimaan = CabutBuluPenerimaan::get();
+    // public function index(){
+    //     $i =1;
+    //     $CBPenerimaan = CabutBuluPenerimaan::get();
 
 
+    //     return response()->view('CabutBulu.CabutBuluPenerimaan.index', [
+    //         'CBPenerimaan' => $CBPenerimaan,
+    //         'i' => $i,
+    //     ]);
+    // }
+    public function index(Request $request){
+        $i = 1;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = CabutBuluPenerimaan::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(CabutBuluPenerimaan::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $CBPenerimaan = $query->get();
+        }else{
+            $CBPenerimaan = CabutBuluPenerimaan::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('CabutBulu.CabutBuluPenerimaan.index', [
             'CBPenerimaan' => $CBPenerimaan,
             'i' => $i,

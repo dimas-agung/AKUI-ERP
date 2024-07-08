@@ -12,10 +12,31 @@ use App\Services\CabutBuluPenyebaranService;
 class CabutBuluPenyebaranContoller extends Controller
 {
     // index
-    public function index()
-    {
+    // public function index()
+    // {
+    //     $i = 1;
+    //     $CabutBuluPenyebaran = CabutBuluPenyebaran::all();
+    //     return response()->view('CabutBulu.CabutBuluPenyebaran.index', [
+    //         'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
+    //         'i' => $i,
+    //     ]);
+    // }
+    public function index(Request $request){
         $i = 1;
-        $CabutBuluPenyebaran = CabutBuluPenyebaran::all();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = CabutBuluPenyebaran::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(CabutBuluPenyebaran::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $CabutBuluPenyebaran = $query->get();
+        }else{
+            $CabutBuluPenyebaran = CabutBuluPenyebaran::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('CabutBulu.CabutBuluPenyebaran.index', [
             'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
             'i' => $i,

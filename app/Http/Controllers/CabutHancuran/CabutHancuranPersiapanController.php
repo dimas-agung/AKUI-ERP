@@ -13,11 +13,32 @@ use Illuminate\View\View;
 class CabutHancuranPersiapanController extends Controller
 {
     //Index
-    public function index(){
-        $i =1;
-        $CBPenerimaan = CabutHancuranPersiapan::get();
+    // public function index(){
+    //     $i =1;
+    //     $CBPenerimaan = CabutHancuranPersiapan::get();
 
 
+    //     return response()->view('CabutHancuran.CabutHancuranPersiapan.index', [
+    //         'CBPenerimaan' => $CBPenerimaan,
+    //         'i' => $i,
+    //     ]);
+    // }
+    public function index(Request $request){
+        $i = 1;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = CabutHancuranPersiapan::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(CabutHancuranPersiapan::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $CBPenerimaan = $query->get();
+        }else{
+            $CBPenerimaan = CabutHancuranPersiapan::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('CabutHancuran.CabutHancuranPersiapan.index', [
             'CBPenerimaan' => $CBPenerimaan,
             'i' => $i,

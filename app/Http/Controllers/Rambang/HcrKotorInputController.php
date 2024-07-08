@@ -14,12 +14,36 @@ use Illuminate\Support\Facades\DB;
 class HcrKotorInputController extends Controller
 {
     //Index
-    public function index(){
-        $i =1;
-        $CBPenerimaan = HcrKotorInput::with('MasterJenisHcrKotor')->get();
-        $jenis = MasterJenisHcrKotor::with('HcrKotorInput')->get();
-        // return($jenis);
+    // public function index(){
+    //     $i =1;
+    //     $CBPenerimaan = HcrKotorInput::with('MasterJenisHcrKotor')->get();
+    //     $jenis = MasterJenisHcrKotor::with('HcrKotorInput')->get();
+    //     // return($jenis);
 
+    //     return response()->view('Rambang.HcrKotorInput.index', [
+    //         'CBPenerimaan' => $CBPenerimaan,
+    //         'jenis' => $jenis,
+    //         'i' => $i,
+    //     ]);
+    // }
+    public function index(Request $request){
+        $i = 1;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = HcrKotorInput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(HcrKotorInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $CBPenerimaan = $query->get();
+            $jenis = MasterJenisHcrKotor::with('HcrKotorInput')->get();
+        }else{
+            $CBPenerimaan = HcrKotorInput::limit(1000)
+            ->latest()
+            ->get();
+            $jenis = MasterJenisHcrKotor::with('HcrKotorInput')->get();
+        }
         return response()->view('Rambang.HcrKotorInput.index', [
             'CBPenerimaan' => $CBPenerimaan,
             'jenis' => $jenis,

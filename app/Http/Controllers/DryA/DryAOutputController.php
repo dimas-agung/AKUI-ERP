@@ -15,12 +15,33 @@ use Illuminate\View\View;
 
 class DryAOutputController extends Controller
 {
-    //Index
-    public function index(){
-        $i =1;
-        $PreCleaningI = DryAOutputCabut::get();
-        // return $existingItem;
+    // //Index
+    // public function index(){
+    //     $i =1;
+    //     $PreCleaningI = DryAOutputCabut::get();
+    //     // return $existingItem;
 
+    //     return response()->view('DryA.DryAOutput.index', [
+    //         'PreCleaningI' => $PreCleaningI,
+    //         'i' => $i,
+    //     ]);
+    // }
+    public function index(Request $request){
+        $i = 1;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = DryAOutputCabut::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(DryAOutputCabut::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreCleaningI = $query->get();
+        }else{
+            $PreCleaningI = DryAOutputCabut::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('DryA.DryAOutput.index', [
             'PreCleaningI' => $PreCleaningI,
             'i' => $i,

@@ -14,13 +14,42 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Cabut Bulu Pengembalian
-                                <button onclick="redirectToPage()" type="button" class="btn btn-outline-success rounded-pill">
-                                    <strong> Add Data </strong>
-                                </button>
+                                <div style="position: absolute;right: 25px;">
+                                    <a class="btn btn-outline-warning rounded-pill" style="margin-right: 10px"
+                                        onclick="toggleFilter()">
+                                        <strong>Filter</strong>
+                                    </a>
+                                    <button onclick="redirectToPage()" type="button"
+                                        class="btn btn-outline-success rounded-pill">
+                                        <strong> Add Data </strong>
+                                    </button>
+                                </div>
                             </div>
                         </h5>
                     </div>
                     <div class="card-body" style="overflow: auto;">
+                        <div id="filterRow" class="row mb-5 mt-3">
+                            <div class="col-4">
+                                <label class="form-label">Tanggal Mulai</label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control " placeholder="Filter by start date..."
+                                        id="filterInputStartDate">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Tanggal Akhir</label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control " placeholder="Filter by end date..."
+                                        id="filterInputEndDate">
+                                </div>
+                            </div>
+
+                            <div class="col-4 mt-3" style="margin-top: 10px">
+                                <button type="button" class="btn btn-outline-success rounded-pill" onclick="applyFilter()">
+                                    <strong><i class="bi bi-funnel"></i> Apply Filter</strong>
+                                </button>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table id="table1" class="display" style="width:100%">
                                 <thead>
@@ -142,6 +171,33 @@
                     document.getElementById('deleteForm' + id).submit();
                 }
             });
+        }
+    </script>
+    <script>
+        function toggleFilter() {
+            var filterRow = document.getElementById('filterRow');
+            if (filterRow.style.display === 'none' || filterRow.style.display === '') {
+                filterRow.style.display = 'flex';
+            } else {
+                filterRow.style.display = 'none';
+            }
+        }
+
+        function applyFilter() {
+
+            const start_date = document.getElementById('filterInputStartDate').value;
+            const end_date = document.getElementById('filterInputEndDate').value;
+
+            const filters = {
+                start_date: start_date,
+                end_date: end_date,
+            };
+            var url = '{{ route('PreCleaningInput.index') }}';
+
+            // url = url.replace(':slug', slug);
+            url = url + '?start_date=' + start_date + '&end_date=' + end_date;
+            window.location.href = url;
+
         }
     </script>
 @endsection

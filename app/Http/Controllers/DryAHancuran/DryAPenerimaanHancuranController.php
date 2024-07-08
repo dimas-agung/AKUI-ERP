@@ -12,11 +12,32 @@ use App\Services\DryAPenerimaanHancuranService;
 class DryAPenerimaanHancuranController extends Controller
 {
     // Index
-    public function index(){
-        $i =1;
-        $PreGHI = DryAPenerimaanHancuran::get();
-        // return $GradingKI;
+    // public function index(){
+    //     $i =1;
+    //     $PreGHI = DryAPenerimaanHancuran::get();
+    //     // return $GradingKI;
 
+    //     return response()->view('DryAHancuran.DryAPenerimaan.index', [
+    //         'PreGHI' => $PreGHI,
+    //         'i' => $i,
+    //     ]);
+    // }
+    public function index(Request $request){
+        $i = 1;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = DryAPenerimaanHancuran::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(DryAPenerimaanHancuran::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreGHI = $query->get();
+        }else{
+            $PreGHI = DryAPenerimaanHancuran::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('DryAHancuran.DryAPenerimaan.index', [
             'PreGHI' => $PreGHI,
             'i' => $i,
