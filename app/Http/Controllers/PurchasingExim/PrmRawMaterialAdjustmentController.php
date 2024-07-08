@@ -73,10 +73,10 @@ class PrmRawMaterialAdjustmentController extends Controller
                     'id_box_raw_material' =>  $item->id_box_raw_material,
                     'nomor_adjustment' =>  $item->nomor_adjustment,
                     'tanggal_adjustment' =>  $item->tanggal_adjustment,
-                    'nama_supplier' =>  $item->berat_saldo_awal,
+                    'nama_supplier' =>  $item->nama_supplier,
                     'nomor_batch_adjustment' =>  $item->nomor_batch_adjustment,
                     'nomor_batch' =>  $item->nomor_batch,
-                    'jenis' =>  $item->berat_saldo_awal,
+                    'jenis' =>  $item->jenis,
                     'berat_adjustment' =>  $item->berat_adjustment,
                     'berat_saldo_awal' =>  $item->berat_saldo_awal,
                     'berat_saldo_terakhir' =>  $item->berat_saldo_terakhir,
@@ -93,7 +93,8 @@ class PrmRawMaterialAdjustmentController extends Controller
                 $PrmRawMaterialStock->update([
                     'sisa_berat' => $sisa_berat_stock,
                     'berat_adjustment' =>   $PrmRawMaterialStock->berat_adjustment + $PrmRawMaterialAdjustment->berat_adjustment ,
-                    'total_modal' => $PrmRawMaterialStock->modal * (int)$sisa_berat_stock,
+                    'modal' => $modal_saldo_awal,
+                    'total_modal' => $modal_saldo_awal * (int)$sisa_berat_stock,
                 ]);
             }
             DB::commit();
@@ -129,7 +130,8 @@ class PrmRawMaterialAdjustmentController extends Controller
                 $PrmRawMaterialStock->update([
                     'sisa_berat' => $sisa_berat_stock,
                     'berat_adjustment' =>  ($PrmRawMaterialStock->berat_adjustment - $PrmRawMaterialAdjustment->berat_adjustment),
-                    'total_modal' =>  $PrmRawMaterialStock->modal * $sisa_berat_stock,
+                    'modal' =>  $PrmRawMaterialStock->total_modal / $sisa_berat_stock,
+                    // 'total_modal' =>  $PrmRawMaterialStock->modal * $sisa_berat_stock,
                 ]);
             // Simpan id_box dari input yang akan dihapus
             $PrmRawMaterialAdjustment->delete();
