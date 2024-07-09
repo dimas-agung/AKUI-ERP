@@ -37,7 +37,7 @@
                         </thead>
                         <tbody>
                             @forelse ($CBPenerimaan as $item)
-                                @if (!str_ends_with($item->id_box_hcr_kotor, Auth::user()->plant))
+                                @if (!str_ends_with($item->id_stock_hcr_kotor, Auth::user()->plant))
                                     @php
                                         continue;
                                     @endphp

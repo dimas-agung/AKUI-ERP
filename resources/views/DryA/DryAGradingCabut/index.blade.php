@@ -47,9 +47,9 @@
                                         <th scope="col" class="text-center">Pcs 1 Grading</th>
                                         <th scope="col" class="text-center">Berat 2 Grading</th>
                                         <th scope="col" class="text-center">Kategori Susut</th>
+                                        <th scope="col" class="text-center">Susut Depan</th>
+                                        <th scope="col" class="text-center">Susut Belakang</th>
                                         @role('admin')
-                                            <th scope="col" class="text-center">Susut Depan</th>
-                                            <th scope="col" class="text-center">Susut Belakang</th>
                                             <th scope="col" class="text-center">Biaya Produksi</th>
                                             <th scope="col" class="text-center">Kontribusi</th>
                                             <th scope="col" class="text-center">Harga Estimasi</th>
@@ -86,13 +86,13 @@
                                             <td class="text-center">{{ $item->nama_team_leader }}</td>
                                             @role('admin')
                                                 <td class="text-center">
-                                                    {{ number_format($item->modal, 2, ',', '.') }}
+                                                    {{ number_format($item->modal, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->total_modal, 2, ',', '.') }}
+                                                    {{ number_format($item->total_modal, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->upah_operator, 2, ',', '.') }}
+                                                    {{ number_format($item->upah_operator, 1, ',', '.') }}
                                                 </td>
                                             @endrole
                                             <td class="text-center">{{ $item->jenis_grading }}</td>
@@ -105,40 +105,40 @@
                                             {{-- <td class="text-center">{{ $item->susut_belakang }}</td> --}}
                                             @role('admin')
                                                 <td class="text-center">
-                                                    {{ number_format($item->biaya_produksi, 2, ',', '.') }}
+                                                    {{ number_format(floor($item->biaya_produksi), 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->kontribusi, 2, ',', '.') }}
+                                                    {{ number_format($item->kontribusi, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->harga_estimasi, 2, ',', '.') }}
+                                                    {{ number_format($item->harga_estimasi, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->total_harga, 2, ',', '.') }}
+                                                    {{ number_format($item->total_harga, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->nilai_laba_rugi, 2, ',', '.') }}
+                                                    {{ number_format($item->nilai_laba_rugi, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->nilai_prosentase_total_keuntungan, 2, ',', '.') }}
+                                                    {{ number_format($item->nilai_prosentase_total_keuntungan, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->nilai_dikurangi_keuntungan, 2, ',', '.') }}
+                                                    {{ number_format($item->nilai_dikurangi_keuntungan, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->prosentase_harga_gramasi, 2, ',', '.') }}
+                                                    {{ number_format($item->prosentase_harga_gramasi, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->selisih_laba_rugi_kg, 2, ',', '.') }}
+                                                    {{ number_format($item->selisih_laba_rugi_kg, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->selisih_laba_rugi_per_gram, 2, ',', '.') }}
+                                                    {{ number_format($item->selisih_laba_rugi_per_gram, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->hpp, 2, ',', '.') }}
+                                                    {{ number_format($item->hpp, 1, ',', '.') }}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ number_format($item->total_hpp, 2, ',', '.') }}
+                                                    {{ number_format($item->total_hpp, 1, ',', '.') }}
                                                 </td>
                                             @endrole
                                             <td class="text-center">{{ $item->user_created }}</td>
