@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('tujuan_kirim');
             $table->integer('status')->default(1);
             $table->string('user_created');
-            $table->string('user_updated');
+            $table->string('user_updated')->nullable();
             $table->timestamps();
         });
     }

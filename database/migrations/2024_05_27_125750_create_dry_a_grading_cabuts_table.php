@@ -41,8 +41,8 @@ return new class extends Migration
             $table->float('nilai_prosentase_total_keuntungan', 16, 4);
             $table->float('nilai_dikurangi_keuntungan', 16, 4);
             $table->float('prosentase_harga_gramasi', 16, 4);
-            $table->float('selisi_laba_rugi_kg', 16, 4);
-            $table->float('selisi_laba_rugi_per_gram', 16, 4);
+            $table->float('selisih_laba_rugi_kg', 16, 4);
+            $table->float('selisih_laba_rugi_per_gram', 16, 4);
             $table->float('hpp', 16, 4);
             $table->float('total_hpp', 16, 4);
             $table->string('user_created');

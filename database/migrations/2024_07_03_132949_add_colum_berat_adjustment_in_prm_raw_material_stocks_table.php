@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('prm_raw_material_stocks', function (Blueprint $table) {
-            $table->float('berat_adjustment', 16, 2)->after('berat_keluar');
+            $table->float('berat_adjustment', 16, 2)->default(0)->after('berat_keluar');
         });
     }
 

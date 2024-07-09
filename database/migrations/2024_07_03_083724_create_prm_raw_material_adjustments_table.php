@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('prm_raw_material_adjustments', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_adjustment');
+            $table->string('nomor_batch');
             $table->string('nomor_batch_adjustment');
             $table->date('tanggal_adjustment');
             $table->string('id_box_raw_material');
