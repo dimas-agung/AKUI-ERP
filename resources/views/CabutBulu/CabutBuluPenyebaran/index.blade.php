@@ -219,4 +219,31 @@
 
         }
     </script>
+    <script>
+        function toggleFilter() {
+            var filterRow = document.getElementById('filterRow');
+            if (filterRow.style.display === 'none' || filterRow.style.display === '') {
+                filterRow.style.display = 'flex';
+            } else {
+                filterRow.style.display = 'none';
+            }
+        }
+
+        function applyFilter() {
+
+            const start_date = document.getElementById('filterInputStartDate').value;
+            const end_date = document.getElementById('filterInputEndDate').value;
+
+            const filters = {
+                start_date: start_date,
+                end_date: end_date,
+            };
+            var url = '{{ route('PreCleaningInput.index') }}';
+
+            // url = url.replace(':slug', slug);
+            url = url + '?start_date=' + start_date + '&end_date=' + end_date;
+            window.location.href = url;
+
+        }
+    </script>
 @endsection

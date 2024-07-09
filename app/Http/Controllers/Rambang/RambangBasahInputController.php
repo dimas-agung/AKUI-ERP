@@ -39,7 +39,6 @@ class RambangBasahInputController extends Controller
             ->latest()
             ->get();
         }
-        
         return response()->view('Rambang.RambangBasahInput.index', [
             'CBPenerimaan' => $CBPenerimaan,
             'i' => $i,

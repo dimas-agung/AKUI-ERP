@@ -17,12 +17,22 @@ use Illuminate\View\View;
 class PreCleaningInputController extends Controller
 {
     //Index
-    public function index(){
-        $i =1;
-        $PreCleaningI = PreCleaningInput::get();
-        // return $existingItem;
+    public function index(Request $request){
+        $i = 1;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
-        // return $GradingKI;
+        $query = PreCleaningInput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(PreCleaningInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreCleaningI = $query->get();
+        }else{
+            $PreCleaningI = PreCleaningInput::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('PreCleaning.PreCleaningInput.index', [
             'PreCleaningI' => $PreCleaningI,
             'i' => $i,

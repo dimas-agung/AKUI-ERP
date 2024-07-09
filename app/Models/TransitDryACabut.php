@@ -21,6 +21,7 @@ class TransitDryACabut extends Model
         'berat_1_grading',
         'pcs_1_grading',
         'berat_2_grading',
+        'status',
         'modal',
         'total_modal',
         'status'
@@ -28,5 +29,10 @@ class TransitDryACabut extends Model
     public function DryAOutputCabut()
     {
         return $this->belongsTo(DryAOutputCabut::class, 'nomor_job', 'nomor_job');
+    }
+
+    public function gradingWarnaPenerimaan()
+    {
+        return $this->belongsTo(GradingWarnaPenerimaan::class, 'nomor_job', 'nomor_job');
     }
 }

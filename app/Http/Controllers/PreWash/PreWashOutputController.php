@@ -16,6 +16,12 @@ class PreWashOutputController extends Controller
 {
     public function index(Request $request)
     {
+        // $i = 1;
+        // $PreCleaningOutput = PreWashOutput::all();
+        // return response()->view('PreWash.PreWashOutput.index', [
+        //     'pre_cleaning_outputs' => $PreCleaningOutput,
+        //     'i' => $i,
+        // ]);
         $i = 1;
         // $PreCleaningOutput = PreWashOutput::all();
         $startDate = $request->input('start_date');

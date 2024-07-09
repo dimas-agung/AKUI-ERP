@@ -12,7 +12,6 @@
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data Grading Halus Output</h4>
                     <div style="position: absolute;right: 0px;">
-
                         <a class="btn btn-outline-warning rounded-pill" style="margin-right: 10px" onclick="toggleFilter()">
                             <strong>Filter</strong>
                         </a>
@@ -39,7 +38,6 @@
                                 id="filterInputEndDate">
                         </div>
                     </div>
-                    
                     <div class="col-4 mt-3" style="margin-top: 10px">
                         <button type="button" class="btn btn-outline-success rounded-pill" onclick="applyFilter()">
                             <strong><i class="bi bi-funnel"></i> Apply Filter</strong>
@@ -148,10 +146,10 @@
             });
         }
         function applyFilter() {
-           
+
             const start_date = document.getElementById('filterInputStartDate').value;
             const end_date = document.getElementById('filterInputEndDate').value;
-        
+
             const filters = {
                 start_date: start_date,
                 end_date: end_date,
@@ -161,8 +159,7 @@
             // url = url.replace(':slug', slug);
              url = url+'?start_date='+start_date+'&end_date='+end_date ;
             window.location.href=url;
-            
+
         }
     </script>
-    
 @endsection

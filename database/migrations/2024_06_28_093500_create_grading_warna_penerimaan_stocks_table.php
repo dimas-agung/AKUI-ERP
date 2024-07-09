@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('grading_warna_penerimaan_stocks', function (Blueprint $table) {
             $table->id();
+            $table->string('unit');
             $table->string('nomor_job');
             $table->string('nomor_bstb');
             $table->string('nomor_batch');

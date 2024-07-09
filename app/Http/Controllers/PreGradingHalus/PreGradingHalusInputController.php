@@ -40,6 +40,17 @@ class PreGradingHalusInputController extends Controller
         }
         // return $GradingKI;
 
+        $query = PreGradingHalusInput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(PreGradingHalusInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreGHI = $query->get();
+        }else{
+            $PreGHI = PreGradingHalusInput::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('PreGradingHalus.PreGradingHalusInput.index', [
             'PreGHI' => $PreGHI,
             'i' => $i,

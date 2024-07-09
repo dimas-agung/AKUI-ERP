@@ -10,6 +10,7 @@ class GradingWarnaPenerimaanStock extends Model
     use HasFactory;
     protected $table = 'grading_warna_penerimaan_stocks';
     protected $fillable = [
+        'unit',
         'nomor_job',
         'nomor_bstb',
         'nomor_batch',

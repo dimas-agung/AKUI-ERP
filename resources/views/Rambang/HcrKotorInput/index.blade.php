@@ -20,7 +20,7 @@
                         <a class="btn btn-outline-warning rounded-pill" style="margin-right: 10px" onclick="toggleFilter()">
                             <strong>Filter</strong>
                         </a>
-                      
+
                         <button class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#inlineForm"
                             onclick="renderSelect2()">
                             <i class="fa fa-plus"></i>
@@ -30,6 +30,28 @@
                 </div>
             </div>
             <div class="card-body" style="overflow: auto;">
+                <div id="filterRow" class="row mb-5 mt-3">
+                    <div class="col-4">
+                        <label class="form-label">Tanggal Mulai</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control " placeholder="Filter by start date..."
+                                id="filterInputStartDate">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label">Tanggal Akhir</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control " placeholder="Filter by end date..."
+                                id="filterInputEndDate">
+                        </div>
+                    </div>
+
+                    <div class="col-4 mt-3" style="margin-top: 10px">
+                        <button type="button" class="btn btn-outline-success rounded-pill" onclick="applyFilter()">
+                            <strong><i class="bi bi-funnel"></i> Apply Filter</strong>
+                        </button>
+                    </div>
+                </div>
                 {{-- Create Data --}}
                 <div class="modal fade text-left border border-primary border-3" id="inlineForm" role="dialog"
                     aria-labelledby="myModalLabel33" aria-hidden="true">
@@ -315,6 +337,33 @@
         // url = url.replace(':slug', slug);
         url = url+'?start_date='+start_date+'&end_date='+end_date ;
         window.location.href=url;
+
+        }
+    </script>
+    <script>
+        function toggleFilter() {
+            var filterRow = document.getElementById('filterRow');
+            if (filterRow.style.display === 'none' || filterRow.style.display === '') {
+                filterRow.style.display = 'flex';
+            } else {
+                filterRow.style.display = 'none';
+            }
+        }
+
+        function applyFilter() {
+
+            const start_date = document.getElementById('filterInputStartDate').value;
+            const end_date = document.getElementById('filterInputEndDate').value;
+
+            const filters = {
+                start_date: start_date,
+                end_date: end_date,
+            };
+            var url = '{{ route('PreCleaningInput.index') }}';
+
+            // url = url.replace(':slug', slug);
+            url = url + '?start_date=' + start_date + '&end_date=' + end_date;
+            window.location.href = url;
 
         }
     </script>

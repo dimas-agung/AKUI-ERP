@@ -851,6 +851,44 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaStockController::class)->group(function () {
                 Route::get('/grading_warna_stock', 'index')->name('GradingWarnaStock.index');
             });
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaPenerimaanController::class)->group(function () {
+                Route::get('/grading_warna_penerimaan', 'index')->name('GradingWarnaPenerimaan.index');
+                Route::get('/grading_warna_penerimaan/create', 'create')->name('GradingWarnaPenerimaan.create');
+                Route::post('/grading_warna_penerimaan/store', 'store')->name('GradingWarnaPenerimaan.store');
+                Route::get('/grading_warna_penerimaan/getDataHancuran', 'getDataHancuran')->name('GradingWarnaPenerimaan.getDataHancuran');
+                Route::get('/grading_warna_penerimaan/getDataCabut', 'getDataCabut')->name('GradingWarnaPenerimaan.getDataCabut');
+                Route::get('/grading_warna_penerimaan/get_data', 'setHancuran')->name('GradingWarnaPenerimaan.setHancuran');
+                Route::get('/grading_warna_penerimaan/get_data_id_box', 'setCabut')->name('GradingWarnaPenerimaan.setCabut');
+                Route::delete('/grading_warna_penerimaan/destroy/{nomor_bstb}', 'destroy')->name('GradingWarnaPenerimaan.destroy');
+                Route::get('/grading_warna_penerimaan/get_data_nomor_job', 'set')->name('GradingWarnaPenerimaan.set');
+                Route::post('/grading_warna_penerimaan/simpanData', 'simpanData')->name('GradingWarnaPenerimaan.simpanData');
+                Route::post('/grading_warna_penerimaan/cek_data', 'CeksendData')->name('GradingWarnaPenerimaan.CeksendData');
+            });
+
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaPenerimaanStockController::class)->group(function () {
+                Route::get('/grading_warna_penerimaan_stock', 'index')->name('GradingWarnaPenerimaanStock.index');
+            });
+        });
+
+        Route::prefix('moulding')->middleware('role:moulding|admin')->group(function (){
+            Route::controller(App\Http\Controllers\MasterJobMouldingController::class)->group(function () {
+                Route::get('/master_job_moulding', 'index')->name('MasterJobMoulding.index');
+                Route::post('/master_job_moulding/store', 'store')->name('MasterJobMoulding.store');
+                Route::get('/master_job_moulding/edit/{id}', 'edit')->name('MasterJobMoulding.edit');
+                Route::put('/master_job_moulding/update/{id}', 'update')->name('MasterJobMoulding.update');
+                Route::delete('/master_job_moulding/destroy/{id}', 'destroy')->name('MasterJobMoulding.destroy');
+            });
+
+            Route::controller(App\Http\Controllers\Moulding\MouldingPersiapanController::class)->group(function () {
+                Route::get('/moulding_persiapan', 'index')->name('MouldingPersiapan.index');
+                Route::get('/moulding_persiapan/create', 'create')->name('MouldingPersiapan.create');
+                Route::post('/moulding_persiapan/store', 'store')->name('MouldingPersiapan.store');
+                Route::post('/moulding_persiapan/sendData', 'sendData')->name('MouldingPersiapan.sendData');
+                Route::delete('/moulding_persiapan/destroy/{nomor_job}', 'destroy')->name('MouldingPersiapan.destroy');
+                Route::get('/moulding_persiapan/get_data_id_box', 'set')->name('MouldingPersiapan.set');
+                Route::get('/moulding_persiapan/get_pcc', 'setpcc')->name('MouldingPersiapan.setpcc');
+                Route::post('/moulding_persiapan/cek_data', 'CeksendData')->name('MouldingPersiapan.CeksendData');
+            });
         });
     });
 });

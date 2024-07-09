@@ -13,15 +13,24 @@ use Illuminate\Support\Facades\DB;
 
 class DryAPenerimaanController extends Controller
 {
-    public function index(){
-        $i =1;
-        $PreGHI = DryAPenerimaanCabut::with('TransitCabutBulu')->get();
-        $TransitPre = TransitCabutBulu::with('DryAPenerimaanCabut')->get();
-        // return $GradingKI;
+    public function index(Request $request){
+        $i = 1;
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
+        $query = DryAPenerimaanCabut::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(DryAPenerimaanCabut::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreGHI = $query->get();
+        }else{
+            $PreGHI = DryAPenerimaanCabut::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('DryA.DryAPenerimaan.index', [
             'PreGHI' => $PreGHI,
-            'TransitPre' => $TransitPre,
             'i' => $i,
         ]);
     }

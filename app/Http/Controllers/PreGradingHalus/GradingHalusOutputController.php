@@ -46,6 +46,17 @@ class GradingHalusOutputController extends Controller
         // $TransitPre = GradingHalusStock::with('GradingHalusOutput')->get();
         // return $TransitPre;
 
+        $query = GradingHalusOutput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(GradingHalusOutput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreGHI = $query->get();
+        }else{
+            $PreGHI = GradingHalusOutput::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('PreGradingHalus.GradingHalusOutput.index', [
             'PreGHI' => $PreGHI,
             'i' => $i,

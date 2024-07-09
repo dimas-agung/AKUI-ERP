@@ -24,7 +24,6 @@
                                         Add Data
                                     </a>
                                 </div>
-
                             </div>
                         </h5>
                     </div>
@@ -112,7 +111,7 @@
                                             <td class="text-center">
                                                 {{ $PCO->created_at != $PCO->updated_at ? $PCO->updated_at : '' }}
                                             </td>
-                                           
+
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     @if ($PCO->status == 1)

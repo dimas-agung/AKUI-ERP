@@ -12,7 +12,6 @@
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h4 class="card-title">Data Pre-Grading Halus Input</h4>
                     <div style="position: absolute;right: 0px;">
-
                         <a class="btn btn-outline-warning rounded-pill" style="margin-right: 10px" onclick="toggleFilter()">
                             <strong>Filter</strong>
                         </a>
@@ -21,7 +20,6 @@
                             Add Data
                         </a>
                     </div>
-
                 </div>
             </div>
             <div class="card-body" style="overflow: auto;">
@@ -120,7 +118,8 @@
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-link" data-original-title="Remove"
+                                                    <button type="button" class="btn btn-link"
+                                                        data-original-title="Remove"
                                                         onclick="confirmDelete('{{ $item->nomor_bstb }}')">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>

@@ -27,4 +27,8 @@ class GradingWarnaStock extends Model
         'total_modal',
         'status',
     ];
+    public function MouldingPersiapan()
+    {
+        return $this->hasMany(MouldingPersiapan::class, 'id_box_grading_warna', 'id_box_grading_warna');
+    }
 }

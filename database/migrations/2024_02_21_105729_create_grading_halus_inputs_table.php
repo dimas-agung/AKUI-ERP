@@ -31,7 +31,7 @@ return new class extends Migration
             $table->float('total_modal', 16, 4);
             $table->string('kategori_susut')->nullable();
             $table->string('id_box_grading_halus');
-            $table->string('susut_depan')->nullable();
+            $table->float('susut_depan', 16, 4)->nullable();
             $table->string('susut_belakang')->nullable();
             $table->float('biaya_produksi', 16, 4)->nullable();
             $table->string('kontribusi')->nullable();

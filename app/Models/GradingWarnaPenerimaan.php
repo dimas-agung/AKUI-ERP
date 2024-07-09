@@ -9,11 +9,7 @@ class GradingWarnaPenerimaan extends Model
 {
     use HasFactory;
     protected $table = 'grading_warna_penerimaans';
-<<<<<<< HEAD
     Public const STATUS_NON_AKTIF = 0;
-=======
-    public const STATUS_NON_AKTIF = 0;
->>>>>>> dev-helmi
     const STATUS_ON_STOCK = 1;
     protected $fillable = [
         'nomor_job',
@@ -32,4 +28,16 @@ class GradingWarnaPenerimaan extends Model
         'user_created',
         'user_updated',
     ];
+
+    // Relasi dengan TransitDryAHancuran
+    public function transitDryAHancuran()
+    {
+        return $this->hasMany(TransitDryAHancuran::class, 'nomor_bstb', 'nomor_bstb');
+    }
+
+    // Relasi dengan TransitDryACabut
+    public function transitDryACabut()
+    {
+        return $this->hasMany(TransitDryACabut::class, 'nomor_bstb', 'nomor_bstb');
+    }
 }

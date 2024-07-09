@@ -18,8 +18,14 @@ use Illuminate\Support\Facades\DB;
 class PreCleaningOutputController extends Controller
 {
     //index
-    public function index()
+    public function index(Request $request)
     {
+        // $i = 1;
+        // $PreCleaningOutput = PreCleaningOutput::all();
+        // return response()->view('PreCleaning.PreCleaningOutput.index', [
+        //     'pre_cleaning_outputs' => $PreCleaningOutput,
+        //     'i' => $i,
+        // ]);
         $i = 1;
         $PreCleaningOutput = PreCleaningOutput::limit(1000)->latest()->get();
         return response()->view('PreCleaning.PreCleaningOutput.index', [

@@ -39,6 +39,17 @@ class GradingHalusInputController extends Controller
         // $TransitPre = PreGradingHalusAddingStock::with('GradingHalusInput')->get();
         // return $GradingKI;
 
+        $query = GradingHalusInput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(GradingHalusInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $PreGHI = $query->get();
+        }else{
+            $PreGHI = GradingHalusInput::limit(1000)
+            ->latest()
+            ->get();
+        }
         return response()->view('PreGradingHalus.GradingHalusInput.index', [
             'PreGHI' => $PreGHI,
             'i' => $i,
