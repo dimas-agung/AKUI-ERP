@@ -43,11 +43,6 @@
                                         id="filterInputEndDate">
                                 </div>
                             </div>
-<<<<<<< HEAD
-
-=======
-
->>>>>>> dev-helmi
                             <div class="col-4 mt-3" style="margin-top: 10px">
                                 <button type="button" class="btn btn-outline-success rounded-pill" onclick="applyFilter()">
                                     <strong><i class="bi bi-funnel"></i> Apply Filter</strong>
