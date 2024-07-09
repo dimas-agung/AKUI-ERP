@@ -31,6 +31,11 @@
                         </thead>
                         <tbody>
                             @forelse ($CBPenerimaan as $item)
+                                @if (!str_ends_with($item->id_box_hcr_kotor, Auth::user()->plant))
+                                    @php
+                                        continue;
+                                    @endphp
+                                @endif
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{!! $item->unit !!}</td>

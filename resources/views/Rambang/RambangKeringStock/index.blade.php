@@ -63,6 +63,11 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($rambang_kering_stock as $item)
+                                        @if (!str_ends_with($item->id_box_hcr_kotor, Auth::user()->plant))
+                                            @php
+                                                continue;
+                                            @endphp
+                                        @endif
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->id_box_hcr_kotor }}</td>

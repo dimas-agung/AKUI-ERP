@@ -24,6 +24,11 @@
                                             id="id_box_hcr_kotor" data-placeholder="Pilih Id Box Hancuran Kotor">
                                             <option value="">Pilih Id Box Hancuran Kotor</option>
                                             @foreach ($rambang_kering_stock as $item)
+                                                @if (!str_ends_with($item->id_box_hcr_kotor, Auth::user()->plant))
+                                                    @php
+                                                        continue;
+                                                    @endphp
+                                                @endif
                                                 <option value="{{ $item->id_box_hcr_kotor }}">
                                                     {{ old('id_box_hcr_kotor', $item->id_box_hcr_kotor) }}
                                                 </option>
@@ -207,7 +212,7 @@
                 const menit = ('0' + now.getMinutes()).slice(-2);
                 const detik = ('0' + now.getSeconds()).slice(-2);
 
-                const nomorGrading = `BSTB_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_${selectedPlant}_UPC`;
+                const nomorGrading = `BSTB_${tanggal}${bulan}${tahun}_${jam}${menit}${detik}_UPC_${selectedPlant}`;
 
                 return nomorGrading;
             }

@@ -20,6 +20,11 @@
                             id="id_box_hcr_kotor" data-placeholder="Pilih Id Box Hcr Kotor">
                             <option value="">Pilih Id Box Hancuran Kotor</option>
                             @foreach ($rambang_basah_stock as $item)
+                                @if (!str_ends_with($item->id_box_hcr_kotor, Auth::user()->plant))
+                                    @php
+                                        continue;
+                                    @endphp
+                                @endif
                                 @if ($item->sisa_berat != 0)
                                     <option value="{{ $item->id_box_hcr_kotor }}">
                                         {{ $item->id_box_hcr_kotor }}</option>
@@ -49,7 +54,7 @@
 
                     <div class="col-md-6">
                         <label for="berat_basah" class="form-label">Berat Basah</label>
-                        <input type="text" class="form-control" id="berat_basah" readonly>
+                        <input type="number" class="form-control" id="berat_basah">
                     </div>
 
                     <div class="col-md-6">

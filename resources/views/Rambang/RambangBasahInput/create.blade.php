@@ -42,6 +42,11 @@
                                             class="select2 form-select" name="id_box_hcr_kotor">
                                             <option value="">Pilih Id Box Hcr Kotor</option>
                                             @foreach ($TransitPre->sortBy('id_box_hcr_kotor') as $post)
+                                                @if (!str_ends_with($post->id_box_hcr_kotor, Auth::user()->plant))
+                                                    @php
+                                                        continue;
+                                                    @endphp
+                                                @endif
                                                 <option value="{{ $post->id_box_hcr_kotor }}">
                                                     {{ old('id_box_hcr_kotor', $post->id_box_hcr_kotor) }}</option>
                                             @endforeach
