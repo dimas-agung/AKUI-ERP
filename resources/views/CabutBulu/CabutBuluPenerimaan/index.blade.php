@@ -131,14 +131,7 @@
 @endsection
 @section('script')
     <script>
-         function toggleFilter() {
-            var filterRow = document.getElementById('filterRow');
-            if (filterRow.style.display === 'none' || filterRow.style.display === '') {
-                filterRow.style.display = 'flex';
-            } else {
-                filterRow.style.display = 'none';
-            }
-        }
+        
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Konfirmasi',
@@ -155,6 +148,14 @@
                     document.getElementById('deleteForm' + id).submit();
                 }
             });
+        }
+        function toggleFilter() {
+            var filterRow = document.getElementById('filterRow');
+            if (filterRow.style.display === 'none' || filterRow.style.display === '') {
+                filterRow.style.display = 'flex';
+            } else {
+                filterRow.style.display = 'none';
+            }
         }
         function applyFilter() {
 

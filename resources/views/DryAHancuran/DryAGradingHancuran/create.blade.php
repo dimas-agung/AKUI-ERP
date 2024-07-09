@@ -20,6 +20,11 @@
                             data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($dry_a_penerimaan_hancuran_stock as $item)
+                                @if (!str_ends_with($item->nomor_job, Auth::user()->plant))
+                                    @php
+                                        continue;
+                                    @endphp
+                                @endif
                                 @if ($item->dry_a_grading_hancuran_count == 0)
                                     <option value="{{ $item->nomor_job }}">
                                         {{ $item->nomor_job }}</option>

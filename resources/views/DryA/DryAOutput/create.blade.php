@@ -44,27 +44,16 @@
                                                 @php
                                                     $selectedNomorBSTB = ''; // Inisialisasi variabel untuk menyimpan nomor_job yang sudah ditampilkan
                                                 @endphp
-                                                @foreach ($stockTGK as $post)
-                                                    @if ($selectedNomorBSTB != $post->nomor_job)
+                                                @foreach ($DryAGradingCabutStock as $nomor_job)
+                                                    @if (!str_contains($nomor_job,Auth::user()->plant))
                                                         @php
-                                                            $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
-                                                        @endphp
-                                                        @foreach ($stockTGK as $innerPost)
-                                                            @if ($innerPost->nomor_job == $post->nomor_job && $innerPost->berat_kotor > 0)
-                                                                @if (!$beratMasukShown)
-                                                                    <option value="{{ $innerPost->nomor_job }}">
-                                                                        {{ old('nomor_job', $innerPost->nomor_job) }}
-                                                                    </option>
-                                                                    @php
-                                                                        $beratMasukShown = true; // Set nilai variabel untuk menandai bahwa berat_masuk sudah ditampilkan
-                                                                    @endphp
-                                                                @endif
-                                                            @endif
-                                                        @endforeach
-                                                        @php
-                                                            $selectedNomorBSTB = $post->nomor_job; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
+                                                            
+                                                            continue;
                                                         @endphp
                                                     @endif
+                                                                    <option value="{{ $nomor_job }}">
+                                                                        {{ old('nomor_job', $nomor_job) }}
+                                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -73,7 +62,7 @@
                                         <div class="form-group">
                                             <label>Nomer BSTB</label>
                                             <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
-                                                placeholder="Masukkan Nomer BSTB">
+                                                placeholder="Masukkan Nomer BSTB" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -257,9 +246,9 @@
                 const jam = ('0' + now.getHours()).slice(-2);
                 const menit = ('0' + now.getMinutes()).slice(-2);
                 const detik = ('0' + now.getSeconds()).slice(-2);
-
+                const plant = '{{Auth::user()->plant}}';
                 // Menghasilkan nomor_bstb berdasarkan rumus yang diinginkan
-                const nomor_bstb = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_UDA`;
+                const nomor_bstb = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_UDA_${plant}`;
 
                 // Memasukkan nilai yang dihasilkan ke dalam input nomor_bstb
                 $('#nomor_bstb').val(nomor_bstb);

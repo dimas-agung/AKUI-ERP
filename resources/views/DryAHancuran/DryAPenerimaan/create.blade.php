@@ -41,7 +41,12 @@
                                         <select id="nomor_job" class="select2 form-select" name="nomor_job"
                                             data-placeholder="Pilih Nomor Job">
                                             <option value="">Pilih Nomor Job</option>
-                                            @foreach ($TransitPre->sortBy('nomor_job') as $post)
+                                            @foreach ($TransitCabutBuluHancuran->sortBy('nomor_job') as $post)
+                                                @if (!str_ends_with($post->nomor_job, Auth::user()->plant))
+                                                    @php
+                                                        continue;
+                                                    @endphp
+                                                @endif
                                                 @if ($post->berat > 0)
                                                     <option value="{{ $post->nomor_job }}">
                                                         {{ old('nomor_job', $post->nomor_job) }}

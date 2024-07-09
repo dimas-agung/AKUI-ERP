@@ -53,10 +53,11 @@ class DryAOutputController extends Controller
      */
     public function create(): View
     {
-        $PreCleaningI = DryAOutputCabut::with('DryAGradingCabutStock')->get();
-        $stockTGK = DryAGradingCabutStock::with('DryAOutputCabut')->get();
+        // $PreCleaningI = DryAOutputCabut::with('DryAGradingCabutStock')->get();
+        // $stockTGK = DryAGradingCabutStock::with('DryAOutputCabut')->get();
+        $DryAGradingCabutStock = DryAGradingCabutStock::distinct('nomor_job')->where('berat_kotor','>',0)->pluck('nomor_job');
         // return $PrmRawMOIC;
-        return view('DryA.DryAOutput.create', compact('stockTGK', 'PreCleaningI'));
+        return view('DryA.DryAOutput.create', compact('DryAGradingCabutStock'));
     }
 
     public function set(Request $request)
