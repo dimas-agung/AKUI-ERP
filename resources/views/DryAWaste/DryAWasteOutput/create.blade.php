@@ -98,22 +98,26 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nomor Job</label>
-                                        <input type="text" class="form-control" id="nomor_job" name="nomor_job" readonly>
+                                        <input type="text" class="form-control" id="nomor_job" name="nomor_job" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Nomor BSTB</label>
                                         <input type="text" class="form-control" id="nomor_bstb" name="nomor_bstb"
-                                            readonly>
+                                            >
                                     </div>
                                 </div>
+                                @role('admin')
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Modal</label>
                                         <input type="text" class="form-control" id="modal" name="modal" readonly>
                                     </div>
                                 </div>
+                                @elserole('dry_a')
+                                <input type="hidden" class="form-control" id="modal" name="modal" readonly>
+                                @endrole
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Keterangan</label>
@@ -152,8 +156,10 @@
                                 <th class="text-center" scope="col">Nomor Job</th>
                                 <th class="text-center" scope="col">Nomor BSTB</th>
                                 <th class="text-center" scope="col">Keterangan</th>
+                                @role('admin')
                                 <th class="text-center" scope="col">Modal</th>
                                 <th class="text-center" scope="col">Total Modal</th>
+                                @endrole
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
@@ -356,8 +362,10 @@
                 '<td>' + nomor_job + '</td>' +
                 '<td>' + nomor_bstb + '</td>' +
                 '<td>' + keterangan + '</td>' +
+                @role('admin')
                 '<td>' + modal + '</td>' +
                 '<td>' + total_modal + '</td>' +
+                @endrole
                 '<td>' + user_created + '</td>' +
                 '</td><td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
 
@@ -385,6 +393,8 @@
             $('#modal').val('');
             $('#total_modal').val('');
             $('#jenis_waste').val(null).trigger('change');
+            $('#nomor_bstb').prop('readonly', true);
+            $('#nomor_job').prop('readonly', true);
             $('#user_created').prop('readonly', true);
             // Set tujuan_kirim sebagai read-only setelah dipilih
             $('#tujuan_kirim').prop('disabled', true);
