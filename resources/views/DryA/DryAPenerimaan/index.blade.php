@@ -44,6 +44,11 @@
                         </thead>
                         <tbody>
                             @forelse ($PreGHI as $item)
+                                @if ($item->tujuan_kirim != Auth::user()->plant)
+                                    @php
+                                        continue;
+                                    @endphp
+                                @endif
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{{ $item->nomor_job }}</td>

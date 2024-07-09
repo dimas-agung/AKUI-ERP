@@ -43,6 +43,11 @@
                             <?php foreach ($grading_halus_stocks as $item): ?>
                             <?php if($item->berat_job > 0): ?>
                             <?php $dataFound = true; ?>
+                            @if ($item->tujuan_kirim != Auth::user()->plant)
+                                @php
+                                    continue;
+                                @endphp
+                            @endif
                             <tr>
                                 <td class="text-center">{{ $i++ }}</td>
                                 <td class="text-center">{{ $item->unit }}</td>

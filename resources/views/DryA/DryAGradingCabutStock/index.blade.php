@@ -45,6 +45,11 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($dry_a_grading_cabut_stock as $item)
+                                        @if ($item->tujuan_kirim != Auth::user()->plant)
+                                            @php
+                                                continue;
+                                            @endphp
+                                        @endif
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->unit }}</td>

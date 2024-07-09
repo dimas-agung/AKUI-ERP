@@ -20,6 +20,11 @@
                             data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($dry_a_penerimaan_cabut_stock as $item)
+                                @if ($item->tujuan_kirim != Auth::user()->plant)
+                                    @php
+                                        continue;
+                                    @endphp
+                                @endif
                                 @if ($item->dry_a_grading_cabut_count == 0)
                                     <option value="{{ $item->nomor_job }}">
                                         {{ $item->nomor_job }}</option>
