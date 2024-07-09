@@ -109,9 +109,32 @@ class UsersSeeder extends Seeder
 
         // ]);
         // $user->assignRole(['cleaning']);
-        $user = User::where('nip','120080122')->first();
-        $user->assignRole(['pre_wash','bahan_baku']);
-        $user = User::where('nip','222030339')->first();
-        $user->assignRole(['pre_wash','bahan_baku']);
+        // $user = User::where('nip','120080122')->first();
+        // $user->assignRole(['pre_wash','bahan_baku']);
+        // $user = User::where('nip','222030339')->first();
+        // $user->assignRole(['pre_wash','bahan_baku']);
+
+        // $user = User::create([
+        //     'email' => 'DryAAkui@gmail.com',
+        //     'password' => Hash::make('011212drya'),
+        //     'fullname' => 'Ahmat Ahfaja',
+        //     'nip' => '223060626',
+        //     'unit_id' => '52',
+        //     'username' => 'Ahmat Ahfaja',
+        //     'phone_number' => '0111111112311',
+        //     'birth_date' => '2000-04-09',
+        // ]);
+        // $user->syncRoles(['dry_a']);
+        $user = User::create([
+            'email' => 'DryAObi@gmail.com',
+            'password' => Hash::make('ADM011212'),
+            'fullname' => 'Very Nur Ramadhani',
+            'nip' => '223070658',
+            'unit_id' => '52',
+            'username' => 'Very Nur Ramadhani',
+            'phone_number' => '01111211112311',
+            'birth_date' => '2000-04-09',
+        ]);
+        $user->syncRoles(['dry_a']);
     }
 }

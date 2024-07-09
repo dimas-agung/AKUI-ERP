@@ -32,11 +32,11 @@ class DryAOutputHancuranController extends Controller
      */
     public function create(): View
     {
-        $PreCleaningI = DryAOutputHancuran::with('DryAGradingHancuranStock')->get();
+        // $PreCleaningI = DryAOutputHancuran::where('status',1)->get();
         $MasTujKir = MasterTujuanKirimDryA::with('DryAOutputHancuran')->get();
-        $stockTGK = DryAGradingHancuranStock::with('DryAOutputHancuran')->get();
+        $stockTGK = DryAGradingHancuranStock::where('sisa_berat','<>',0)->get();
         // return $stockTGK;
-        return view('DryAHancuran.DryAOutput.create', compact('stockTGK', 'PreCleaningI', 'MasTujKir'));
+        return view('DryAHancuran.DryAOutput.create', compact('stockTGK', 'MasTujKir'));
     }
     public function set(Request $request)
     {
