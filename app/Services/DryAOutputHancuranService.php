@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class DryAOutputHancuranService
 {
@@ -18,7 +19,7 @@ class DryAOutputHancuranService
     {
         // Decode JSON string to associative array
         $dataArray = json_decode($request->input('dataArray'), true);
-
+        $plant = Auth::user()->plant;
         // Check if $dataArray or $tableDataArray is empty
         if (empty($dataArray)) {
             return response()->json([
@@ -79,7 +80,7 @@ class DryAOutputHancuranService
                     $itemObject = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $existingItems = DryAGradingHancuranStock::where('jenis_grading', $itemObject->jenis_grading)
+                    $existingItems = DryAGradingHancuranStock::where(['jenis_grading'=>$itemObject->jenis_grading,'plant'=> $plant])
                         ->get();
 
                     foreach ($existingItems as $existingItem) {
@@ -137,7 +138,7 @@ class DryAOutputHancuranService
 
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
-
+            $plant = Auth::user()->plant;
             // Ambil data DryAOutputHancuran berdasarkan jenis_grading
             $DryAOutputHancuranRecords = DryAOutputHancuran::where('jenis_grading', '=', $jenis_grading)->get();
 
@@ -152,7 +153,7 @@ class DryAOutputHancuranService
 
                 foreach ($transitDryAHancuranRecords as $transitRecord) {
                     // Ambil data DryAGradingHancuranStock berdasarkan jenis_grading
-                    $stockRecords = DryAGradingHancuranStock::where('jenis_grading', '=', $transitRecord->jenis_grading)->get();
+                    $stockRecords =  DryAGradingHancuranStock::where(['jenis_grading'=>$transitRecord->jenis_grading,'plant'=> $plant])->get();
 
                     foreach ($stockRecords as $stockRecord) {
                         // Simpan nilai sebelum dihapus

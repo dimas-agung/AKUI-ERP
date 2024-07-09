@@ -15,6 +15,7 @@ use App\Models\DryAPenerimaanHancuran;
 use App\Models\DryAGradingHancuranStock;
 use Illuminate\Support\Facades\Validator;
 use App\Models\DryAPenerimaanHancuranStock;
+use Illuminate\Support\Facades\Auth;
 
 class DryAGradingHancuranService
 {
@@ -22,7 +23,7 @@ class DryAGradingHancuranService
     {
         // Decode JSON string to associative array
         $dataArray = json_decode($request->input('dataArray'), true);
-
+        $plant = Auth::user()->plant;
         // Check if $dataArray is empty
         if (empty($dataArray)) {
             return response()->json([
@@ -69,7 +70,7 @@ class DryAGradingHancuranService
                     $DryAGradingHancuran = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $DryAGradingHancuranStock = DryAGradingHancuranStock::where('jenis_grading', $DryAGradingHancuran->jenis_grading)
+                    $DryAGradingHancuranStock = DryAGradingHancuranStock::where(['jenis_grading'=>$DryAGradingHancuran->jenis_grading,'plant'=> $plant])
                         ->get();
 
                     $found = false;
@@ -99,6 +100,7 @@ class DryAGradingHancuranService
                             'berat_keluar'          => $mergedData['berat_keluar'] ?? 0,
                             'sisa_berat'            => $mergedData['berat_grading'],
                             'modal'                 => $mergedData['modal'] ?? 0,
+                            'plant' => $plant,
                             'total_modal'           => $mergedData['total_modal'] ?? 0,
                         ]);
                     }
@@ -157,7 +159,7 @@ class DryAGradingHancuranService
 
             // Begin transaction
             DB::beginTransaction();
-
+            $plant = Auth::user()->plant;
             // Temukan semua record berdasarkan nomor_job
             $DryAGradingHancurans = DryAGradingHancuran::where('nomor_job', $nomor_job)->get();
 
@@ -169,8 +171,8 @@ class DryAGradingHancuranService
                 // Log::info('Found job: ' . $DryAGradingHancuran->nomor_job);
 
                 // Hapus semua item terkait
-                $stockDry = DryAGradingHancuranStock::where('jenis_grading', '=', $DryAGradingHancuran->jenis_grading)
-                    ->where('created_at', $DryAGradingHancuran->created_at)
+                $stockDry = DryAGradingHancuranStock::where(['jenis_grading'=>$DryAGradingHancuran->jenis_grading,'plant'=> $plant])
+                    // ->where('created_at', $DryAGradingHancuran->created_at)
                     ->first();
 
                 if ($stockDry) {
