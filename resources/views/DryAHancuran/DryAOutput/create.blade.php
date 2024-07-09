@@ -42,6 +42,11 @@
                                             data-placeholder="Pilih Jenis Grading">
                                             <option value="">Pilih Jenis Grading</option>
                                             @foreach ($stockTGK as $post)
+                                                @if ($post->plant, Auth::user()->plant)
+                                                    @php
+                                                        continue;
+                                                    @endphp
+                                                @endif
                                                 @if ($post->sisa_berat > 0)
                                                     <option value="{{ $post->jenis_grading }}">
                                                         {{ old('jenis_grading', $post->jenis_grading) }}

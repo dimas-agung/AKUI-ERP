@@ -65,6 +65,11 @@
                         </thead>
                         <tbody>
                             @forelse ($PreCleaningI as $item)
+                                @if ($item->tujuan_kirim, Auth::user()->plant)
+                                    @php
+                                        continue;
+                                    @endphp
+                                @endif
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{!! $item->jenis_grading !!}</td>
