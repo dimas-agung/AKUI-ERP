@@ -34,4 +34,8 @@ class CabutHancuranPengembalian extends Model
     {
         return $this->hasMany(TransitCabutBuluHancuran::class, 'nomor_job', 'nomor_job');
     }
+    public function CabutHancuranPersiapanStock()
+    {
+        return $this->hasMany(CabutHancuranPersiapanStock::class, 'nomor_job', 'nomor_job');
+    }
 }

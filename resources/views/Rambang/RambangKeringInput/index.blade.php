@@ -43,7 +43,11 @@
                                         id="filterInputEndDate">
                                 </div>
                             </div>
-        
+<<<<<<< HEAD
+
+=======
+
+>>>>>>> dev-helmi
                             <div class="col-4 mt-3" style="margin-top: 10px">
                                 <button type="button" class="btn btn-outline-success rounded-pill" onclick="applyFilter()">
                                     <strong><i class="bi bi-funnel"></i> Apply Filter</strong>
@@ -71,7 +75,7 @@
                                 <tbody>
                                     @forelse ($rambang_kering_input as $item)
                                         <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->id_box_hcr_kotor }}</td>
                                             <td class="text-center">{{ $item->jenis_rambang }}</td>
                                             <td class="text-center">{{ $item->berat_basah }}</td>
@@ -118,6 +122,32 @@
 @endsection
 @section('script')
     <script>
+        function toggleFilter() {
+            var filterRow = document.getElementById('filterRow');
+            if (filterRow.style.display === 'none' || filterRow.style.display === '') {
+                filterRow.style.display = 'flex';
+            } else {
+                filterRow.style.display = 'none';
+            }
+        }
+
+        function applyFilter() {
+
+            const start_date = document.getElementById('filterInputStartDate').value;
+            const end_date = document.getElementById('filterInputEndDate').value;
+
+            const filters = {
+                start_date: start_date,
+                end_date: end_date,
+            };
+            var url = '{{ route('RambangKeringInput.index') }}';
+
+            // url = url.replace(':slug', slug);
+            url = url + '?start_date=' + start_date + '&end_date=' + end_date;
+            window.location.href = url;
+
+        }
+
         function redirectToPage() {
             window.location.href = "{{ route('RambangKeringInput.create') }}";
         }

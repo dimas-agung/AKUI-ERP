@@ -6,30 +6,53 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CabutHancuranPenyebaran;
 use App\Models\CabutHancuranPengembalian;
+use App\Models\CabutHancuranPersiapanStock;
 use App\Services\CabutHancuranPengembalianService;
 
 class CabutHancuranPengembalianController extends Controller
 {
-    // index
-    public function index()
+
+    protected $CabutHancuranPengembalianService;
+
+    public function __construct(CabutHancuranPengembalianService $CabutHancuranPengembalianService)
     {
-        $CabutHancuranPengembalian = CabutHancuranPengembalian::all();
+        $this->CabutHancuranPengembalianService = $CabutHancuranPengembalianService;
+    }
+
+    public function index(Request $request)
+    {
+        // $i = 1;
+        // $PreGHI = GradingHalusInput::with('PreGradingHalusAddingStock')->get();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = CabutHancuranPengembalian::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(CabutHancuranPengembalian::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $CabutHancuranPengembalian = $query->with('CabutHancuranPersiapanStock')->get();
+        } else {
+            $CabutHancuranPengembalian = CabutHancuranPengembalian::with('CabutHancuranPersiapanStock')
+                // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->limit(1000)
+                ->latest()
+                ->get();
+        }
 
         return response()->view('CabutHancuran.CabutHancuranPengembalian.index', [
             'cabut_hancuran_pengembalian' => $CabutHancuranPengembalian,
+            // 'i' => $i,
         ]);
     }
 
     // create
     public function create()
     {
-        $CabutHancuranPengembalian = CabutHancuranPengembalian::all();
-        $CabutHancuranPenyebaran = CabutHancuranPenyebaran::all();
-        $getUnusedNomorJob = CabutHancuranPenyebaran::withCount('CabutHancuranPengembalian')->get();
+        $getUnusedNomorJob = CabutHancuranPersiapanStock::where('status', 2)
+            ->withCount('CabutHancuranPengembalian')->get();
         // return $getUnusedNomorJob;
         return view('CabutHancuran.CabutHancuranPengembalian.create', [
-            'cabut_hancuran_pengembalian' => $CabutHancuranPengembalian,
-            'cabut_hancuran_penyeabaran' => $CabutHancuranPenyebaran,
             'get_unused_nomor_job' => $getUnusedNomorJob,
         ]);
     }
@@ -59,13 +82,6 @@ class CabutHancuranPengembalianController extends Controller
 
         // Kembalikan daftar id box yang tidak tersedia sebagai respons
         return response()->json(['unavailableBoxes' => $availableBoxes]);
-    }
-
-    protected $CabutHancuranPengembalianService;
-
-    public function __construct(CabutHancuranPengembalianService $CabutHancuranPengembalianService)
-    {
-        $this->CabutHancuranPengembalianService = $CabutHancuranPengembalianService;
     }
 
     public function store(Request $request)

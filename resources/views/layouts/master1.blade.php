@@ -156,7 +156,7 @@
                         @role('master|admin')
                             <li class="sidebar-title">Menu</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*', 'MasterTujuanKirimDryA*', 'MasterJenisWaste*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*', 'MasterTujuanKirimDryA*', 'MasterJenisWaste*', 'MasterJenisGradingWarna*', 'MasterTujuanKirimMoulding*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-stack"></i>
                                     <span>Master</span>
@@ -244,6 +244,17 @@
                                     <li class="submenu-item {{ Route::is('MasterJenisWaste*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterJenisWaste.index') }}" class="submenu-link">Master
                                             Jenis<br>Waste</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterJenisGradingWarna*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterJenisGradingWarna.index') }}"
+                                            class="submenu-link">Master
+                                            Jenis<br>Grading Warna</a>
+                                    </li>
+                                    <li
+                                        class="submenu-item {{ Route::is('MasterTujuanKirimMoulding*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterTujuanKirimMoulding.index') }}"
+                                            class="submenu-link">Master
+                                            Tujuan<br>Kirim Moulding</a>
                                     </li>
                                 </ul>
                             </li>
@@ -818,6 +829,51 @@
                                 </ul>
                             </li>
                         @endrole
+
+                        @role('moulding|admin')
+                            <li
+                                class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*') ? 'active' : '' }}">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-three-dots"></i>
+                                    <span>Moulding</span>
+                                </a>
+                                <ul class="submenu">
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Grading Warna</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarnaAdding*') && !Route::is('GradingWarnaAddingStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarnaAdding.index') }}"
+                                                    class="submenu-link">Grading
+                                                    <br>Warna Adding</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarnaAddingStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarnaAddingStock.index') }}"
+                                                    class="submenu-link">Grading
+                                                    <br>Warna Adding<br>Stock</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarna*') && !Route::is('GradingWarnaAdding*') && !Route::is('GradingWarnaStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarna.index') }}" class="submenu-link">Grading
+                                                    <br>Warna</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarnaStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarnaStock.index') }}"
+                                                    class="submenu-link">Grading
+                                                    <br>Warna Stock</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endrole
+
+
                     </ul>
                 </div>
             </div>

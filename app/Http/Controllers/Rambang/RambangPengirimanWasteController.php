@@ -23,10 +23,10 @@ class RambangPengirimanWasteController extends Controller
         // $RambangPengirimanWaste = RambangPengirimanWaste::all();
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
-    
+
         $query = RambangPengirimanWaste::query();
-    
-    
+
+
         if ($startDate && $endDate) {
             $query->whereBetween(RambangPengirimanWaste::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
             $RambangPengirimanWaste = $query->get();
@@ -37,7 +37,7 @@ class RambangPengirimanWasteController extends Controller
         }
         return response()->view('Rambang.RambangPengirimanWaste.index', [
             'rambang_pengiriman_waste' => $RambangPengirimanWaste,
-            'i' => $i,
+            // 'i' => $i,
         ]);
     }
 
@@ -45,8 +45,8 @@ class RambangPengirimanWasteController extends Controller
     public function create()
     {
         $i = 1;
-        $RambangKeringStock = RambangKeringStock::all();
-        $Perusahaan = Perusahaan::all();
+        $RambangKeringStock = RambangKeringStock::where('sisa_berat', '!=', 0)->get();
+        $Perusahaan = Perusahaan::where('status', 1)->get();
         return response()->view('Rambang.RambangPengirimanWaste.create', [
             'rambang_kering_stock' => $RambangKeringStock,
             'perusahaan' => $Perusahaan,

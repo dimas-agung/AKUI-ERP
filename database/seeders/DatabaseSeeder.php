@@ -7,6 +7,7 @@ namespace Database\Seeders;
 // use App\Models\GradingKasarInput;
 
 use App\Models\GradingHalusStock;
+use App\Models\GradingWarnaPenerimaanStock;
 use App\Models\MasterJenisDryA;
 use App\Models\MasterJenisGradingHalus;
 use App\Models\MasterJenisGradingKasar;

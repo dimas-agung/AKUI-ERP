@@ -18,4 +18,8 @@ class RambangKeringStock extends Model
         'berat_keluar',
         'sisa_berat',
     ];
+    public function RambangPengirimanWaste()
+    {
+        return $this->hasMany(RambangPengirimanWaste::class, 'id_box_hcr_kotor', 'id_box_hcr_kotor');
+    }
 }

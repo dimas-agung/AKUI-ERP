@@ -205,6 +205,22 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_jenis_waste/update/{id}', 'update')->name('MasterJenisWaste.update');
             Route::delete('/master_jenis_waste/destroy/{id}', 'destroy')->name('MasterJenisWaste.destroy');
         });
+
+        Route::controller(App\Http\Controllers\MasterJenisGradingWarnaController::class)->group(function () {
+            Route::get('/master_jenis_grading_warna', 'index')->name('MasterJenisGradingWarna.index');
+            Route::post('/master_jenis_grading_warna/store', 'store')->name('MasterJenisGradingWarna.store');
+            Route::get('/master_jenis_grading_warna/edit/{id}', 'edit')->name('MasterJenisGradingWarna.edit');
+            Route::put('/master_jenis_grading_warna/update/{id}', 'update')->name('MasterJenisGradingWarna.update');
+            Route::delete('/master_jenis_grading_warna/destroy/{id}', 'destroy')->name('MasterJenisGradingWarna.destroy');
+        });
+
+        Route::controller(App\Http\Controllers\MasterTujuanKirimMouldingController::class)->group(function () {
+            Route::get('/master_tujuan_kirim_moulding', 'index')->name('MasterTujuanKirimMoulding.index');
+            Route::post('/master_tujuan_kirim_moulding/store', 'store')->name('MasterTujuanKirimMoulding.store');
+            Route::get('/master_tujuan_kirim_moulding/edit/{id}', 'edit')->name('MasterTujuanKirimMoulding.edit');
+            Route::put('/master_tujuan_kirim_moulding/update/{id}', 'update')->name('MasterTujuanKirimMoulding.update');
+            Route::delete('/master_tujuan_kirim_moulding/destroy/{id}', 'destroy')->name('MasterTujuanKirimMoulding.destroy');
+        });
     });
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
@@ -807,6 +823,33 @@ Route::middleware('auth')->group(function () {
             });
             Route::controller(App\Http\Controllers\DryAWaste\TransitDryAWasteController::class)->group(function () {
                 Route::get('/transit_dry_a_waste', 'index')->name('TransitDryAWaste.index');
+            });
+        });
+    });
+    Route::prefix('moulding')->middleware(['role:moulding|admin'])->group(function () {
+        Route::prefix('grading_warna')->middleware('role:moulding|admin')->group(function () {
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaAddingController::class)->group(function () {
+                Route::get('/grading_warna_adding', 'index')->name('GradingWarnaAdding.index');
+                Route::get('/grading_warna_adding/create', 'create')->name('GradingWarnaAdding.create');
+                Route::post('/grading_warna_adding/store', 'store')->name('GradingWarnaAdding.store');
+                Route::post('/grading_warna_adding/cek_data', 'CeksendData')->name('GradingWarnaAdding.CeksendData');
+                Route::get('/grading_warna_adding/get_data/{nomor_job}', 'getDataByNomorJob')->name('GradingWarnaAdding.getData');
+                Route::delete('/grading_warna_adding/destroy/{nomor_job}', 'destroy')->name('GradingWarnaAdding.destroy');
+            });
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaAddingStockController::class)->group(function () {
+                Route::get('/grading_warna_adding_stock', 'index')->name('GradingWarnaAddingStock.index');
+            });
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaController::class)->group(function () {
+                Route::get('/grading_warna', 'index')->name('GradingWarna.index');
+                Route::get('/grading_warna/create', 'create')->name('GradingWarna.create');
+                Route::post('/grading_warna/store', 'store')->name('GradingWarna.store');
+                Route::post('/grading_warna/cek_data', 'CeksendData')->name('GradingWarna.CeksendData');
+                Route::delete('/grading_warna/destroy/{nomor_lot}', 'destroy')->name('GradingWarna.destroy');
+                Route::get('/grading_warna/set_lot', 'setLot')->name('GradingWarna.setLot');
+                Route::get('/grading_warna/set_jenis', 'setJenis')->name('GradingWarna.setJenis');
+            });
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaStockController::class)->group(function () {
+                Route::get('/grading_warna_stock', 'index')->name('GradingWarnaStock.index');
             });
         });
     });

@@ -89,7 +89,7 @@
                                             $upah_bersih = $item->upah_operator /$item->berat_job * $berat_bersih;
                                         @endphp
                                         <tr>
-                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->nomor_job }}</td>
                                             <td class="text-center">{{ $item->nomor_batch }}</td>
                                             <td class="text-center">{{ $item->jenis_job }}</td>
@@ -154,9 +154,36 @@
 @endsection
 @section('script')
     <script>
+        function toggleFilter() {
+            var filterRow = document.getElementById('filterRow');
+            if (filterRow.style.display === 'none' || filterRow.style.display === '') {
+                filterRow.style.display = 'flex';
+            } else {
+                filterRow.style.display = 'none';
+            }
+        }
+
+        function applyFilter() {
+
+            const start_date = document.getElementById('filterInputStartDate').value;
+            const end_date = document.getElementById('filterInputEndDate').value;
+
+            const filters = {
+                start_date: start_date,
+                end_date: end_date,
+            };
+            var url = '{{ route('CabutBuluPenyebaran.index') }}';
+
+            // url = url.replace(':slug', slug);
+            url = url + '?start_date=' + start_date + '&end_date=' + end_date;
+            window.location.href = url;
+
+        }
+
         function redirectToPage() {
             window.location.href = "{{ route('CabutBuluPenyebaran.create') }}";
         }
+
 
         function confirmDelete(id) {
             Swal.fire({

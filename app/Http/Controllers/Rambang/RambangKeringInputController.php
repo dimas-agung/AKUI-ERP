@@ -11,6 +11,7 @@ use App\Services\RambangKeringInputService;
 
 class RambangKeringInputController extends Controller
 {
+    protected $RambangKeringInputService;
 
     // index
     public function index(Request $request){
@@ -19,10 +20,10 @@ class RambangKeringInputController extends Controller
 
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
-    
+
         $query = RambangKeringInput::query();
-    
-    
+
+
         if ($startDate && $endDate) {
             $query->whereBetween(RambangKeringInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
             $RambangKeringInput = $query->get();
@@ -33,14 +34,13 @@ class RambangKeringInputController extends Controller
         }
         return response()->view('Rambang.RambangKeringInput.index', [
             'rambang_kering_input' => $RambangKeringInput,
-            'i' => $i,
+            // 'i' => $i,
         ]);
     }
 
     // create
     public function create()
     {
-        // $RambangKeringInput = RambangKeringInput::all();
         $RambangBasahStock = RambangBasahStock::with('RambangKeringInput')->get();
         // return $RambangBasahStock;
         return response()->view('Rambang.RambangKeringInput.create', [
@@ -75,13 +75,6 @@ class RambangKeringInputController extends Controller
 
         // Kembalikan daftar id box yang tidak tersedia sebagai respons
         return response()->json(['unavailableBoxes' => $availableBoxes]);
-    }
-
-    protected $RambangKeringInputService;
-
-    public function __construct(RambangKeringInputService $RambangKeringInputService)
-    {
-        $this->RambangKeringInputService = $RambangKeringInputService;
     }
 
     public function store(Request $request)

@@ -53,9 +53,9 @@
                         <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="nip_operator" id="nip_operator" data-placeholder="Pilih NIP Operator">
                             <option value="">NIP Operator</option>
-                            @foreach ($master_operators->sortBy('nip') as $MasterSPRM)
-                                <option value="{{ $MasterSPRM->nip }}">
-                                    {{ $MasterSPRM->nip }}
+                            @foreach ($master_operators as $item)
+                                <option value="{{ $item->nip }}">
+                                    {{ $item->nip }}
                                 </option>
                             @endforeach
                         </select>

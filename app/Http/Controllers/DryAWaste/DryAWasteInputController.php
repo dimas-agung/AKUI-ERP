@@ -68,11 +68,29 @@ class DryAWasteInputController extends Controller
         $this->DryAWasteInputService = $DryAWasteInputService;
     }
 
-    // Index
-    public function index()
+    //index
+    public function index(Request $request)
     {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = DryAWasteInput::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(DryAWasteInput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            // $DryAWasteInput = $query->with('DryAPenerimaanCabutStock')->get();
+        } else {
+            // $DryAWasteInput = DryAWasteInput::with('DryAPenerimaanCabutStock')
+            $DryAWasteInput = DryAWasteInput::where('status', 1)
+                // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->limit(1000)
+                ->latest()
+                ->get();
+        }
+
         return response()->view('DryAWaste.DryAWasteInput.index', [
-            'dry_a_waste_input'     => $this->getdryAWasteInputs()
+            'dry_a_waste_input' => $DryAWasteInput,
         ]);
     }
     // create

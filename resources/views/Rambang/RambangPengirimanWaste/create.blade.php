@@ -23,25 +23,10 @@
                                         <select class="select2 form-select" style="width: 100%;" name="id_box_hcr_kotor"
                                             id="id_box_hcr_kotor" data-placeholder="Pilih Id Box Hancuran Kotor">
                                             <option value="">Pilih Id Box Hancuran Kotor</option>
-                                            @php
-                                                $selectedIdBoxHcrKotor = ''; // Inisialisasi variabel untuk menyimpan id_box_hcr_kotor yang sudah ditampilkan
-                                            @endphp
-                                            @foreach ($rambang_kering_stock as $post)
-                                                @if ($selectedIdBoxHcrKotor != $post->id_box_hcr_kotor)
-                                                    @php
-                                                        $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
-                                                    @endphp
-                                                    @foreach ($rambang_kering_stock as $innerPost)
-                                                        @if ($innerPost->id_box_hcr_kotor == $post->id_box_hcr_kotor && $innerPost->sisa_berat != 0)
-                                                            <option value="{{ $innerPost->id_box_hcr_kotor }}">
-                                                                {{ old('id_box_hcr_kotor', $innerPost->id_box_hcr_kotor) }}
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
-                                                    @php
-                                                        $selectedIdBoxHcrKotor = $post->id_box_hcr_kotor; // Set nilai variabel dengan id_box_hcr_kotor yang baru ditampilkan
-                                                    @endphp
-                                                @endif
+                                            @foreach ($rambang_kering_stock as $item)
+                                                <option value="{{ $item->id_box_hcr_kotor }}">
+                                                    {{ old('id_box_hcr_kotor', $item->id_box_hcr_kotor) }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -50,9 +35,9 @@
                                         <select class="select2 form-select" style="width: 100%;" name="plant"
                                             id="plant" data-placeholder="Pilih Plant">
                                             <option value="">Pilih Plant</option>
-                                            @foreach ($perusahaan as $Perusahaans)
-                                                <option value="{{ $Perusahaans->plant }}">
-                                                    {{ $Perusahaans->plant }}
+                                            @foreach ($perusahaan as $item)
+                                                <option value="{{ $item->plant }}">
+                                                    {{ $item->plant }}
                                                 </option>
                                             @endforeach
                                         </select>

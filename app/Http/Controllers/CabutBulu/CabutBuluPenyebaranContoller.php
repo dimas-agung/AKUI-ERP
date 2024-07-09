@@ -34,7 +34,7 @@ class CabutBuluPenyebaranContoller extends Controller
         }
         return response()->view('CabutBulu.CabutBuluPenyebaran.index', [
             'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
-            'i' => $i,
+            // 'i' => $i,
         ]);
     }
 
@@ -48,7 +48,6 @@ class CabutBuluPenyebaranContoller extends Controller
         $getUnusedNomorJob = CabutBuluStock::withCount('CabutBuluPenyebaran')->get();
         // return $getUnusedNomorJob;
         return view('CabutBulu.CabutBuluPenyebaran.create', [
-            'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
             'master_operators' => $MasterOperator,
             'cabut_bulu_stocks' => $CabutBuluStock,
             'get_unused_nomor_job' => $getUnusedNomorJob,
@@ -61,7 +60,6 @@ class CabutBuluPenyebaranContoller extends Controller
         $nomor_job = $request->nomor_job;
         $data = CabutBuluStock::where('nomor_job', $nomor_job)
             ->first();
-        // return $data;
         // Kembalikan nomor job sebagai respons
         return response()->json($data);
     }
@@ -70,7 +68,6 @@ class CabutBuluPenyebaranContoller extends Controller
         $nip = $request->nip;
         $data = MasterOperator::where('nip', $nip)
             ->first();
-        // return $data;
         // Kembalikan nomor job sebagai respons
         return response()->json($data);
     }
@@ -81,7 +78,6 @@ class CabutBuluPenyebaranContoller extends Controller
         $idBoxes = json_decode($request->idBoxes);
 
         // Cek ketersediaan id box dalam database
-        // $unavailableBoxes = TransitPreWash::whereIn('nomor_bstb', $idBoxes)->pluck('nomor_bstb')->toArray();
         $unavailableBoxes = CabutBuluStock::whereIn('nomor_job', $idBoxes)->pluck('nomor_job')->toArray();
 
         // Filter id box yang tidak tersedia
@@ -91,18 +87,10 @@ class CabutBuluPenyebaranContoller extends Controller
         return response()->json(['unavailableBoxes' => $availableBoxes]);
     }
 
-    protected $CabutBuluPenyebaranService;
-
-    public function __construct(CabutBuluPenyebaranService $CabutBuluPenyebaranService)
-    {
-        $this->CabutBuluPenyebaranService = $CabutBuluPenyebaranService;
-    }
-
     public function store(Request $request)
     {
         return $this->CabutBuluPenyebaranService->store($request);
     }
-
 
     public function destroy($nomor_job)
     {

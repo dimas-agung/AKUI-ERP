@@ -51,10 +51,27 @@ class DryAGradingHancuranController extends Controller
     }
 
     //index
-    public function index()
+    public function index(Request $request)
     {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = DryAGradingHancuran::query();
+
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(DryAGradingHancuran::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $DryAGradingHancuran = $query->with('DryAPenerimaanHancuranStock')->get();
+        } else {
+            $DryAGradingHancuran = DryAGradingHancuran::with('DryAPenerimaanHancuranStock')
+                // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->limit(1000)
+                ->latest()
+                ->get();
+        }
+
         return response()->view('DryAHancuran.DryAGradingHancuran.index', [
-            'dry_a_grading_hancuran' => $this->getDryAGradingHancuran(),
+            'dry_a_grading_hancuran' => $DryAGradingHancuran,
         ]);
     }
 
