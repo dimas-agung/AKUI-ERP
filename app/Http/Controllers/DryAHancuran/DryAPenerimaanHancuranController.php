@@ -46,10 +46,10 @@ class DryAPenerimaanHancuranController extends Controller
 
     public function create()
     {
-        $PreGHI = DryAPenerimaanHancuran::with('TransitCabutBuluHancuran')->get();
-        $TransitPre = TransitCabutBuluHancuran::with('DryAPenerimaanHancuran')->get();
+        // $PreGHI = DryAPenerimaanHancuran::with('TransitCabutBuluHancuran')->get();
+        $TransitCabutBuluHancuran = TransitCabutBuluHancuran::with('DryAPenerimaanHancuran')->where('sisa_berat','>',0)->get();
         // return $TransitPre;
-        return view('DryAHancuran.DryAPenerimaan.create', compact('PreGHI', 'TransitPre'));
+        return view('DryAHancuran.DryAPenerimaan.create', compact('TransitCabutBuluHancuran'));
     }
 
     public function set(Request $request)

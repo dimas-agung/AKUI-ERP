@@ -23,32 +23,7 @@ class CabutBuluPenerimaanController extends Controller
         $this->CabutBuluPenerimaanService = $CabutBuluPenerimaanService;
     }
     //Index
-    public function index(Request $request){
-        $i =1;
-        $CBPenerimaan = CabutBuluPenerimaan::with('TransitPreWash');
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
 
-        if ($startDate && $endDate) {
-            $CBPenerimaan->whereBetween(CabutBuluPenerimaan::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
-            if(Auth::user()->plant){
-                $CBPenerimaan->where('tujuan_kirim',Auth::user()->plant);
-            }
-            $CabutPenerimaan = $CBPenerimaan->get();
-        }else{
-            if(Auth::user()->plant){
-                $CBPenerimaan->where('tujuan_kirim',Auth::user()->plant);
-            }
-            $CabutPenerimaan = $CBPenerimaan->limit(1000)->latest()->get();
-        }
-        // $berat_bersih = generate_berat_bersih(299);
-        // return $berat_bersih;
-
-    //     return response()->view('CabutBulu.CabutBuluPenerimaan.index', [
-    //         'CBPenerimaan' => $CBPenerimaan,
-    //         'i' => $i,
-    //     ]);
-    // }
     public function index(Request $request){
         $i = 1;
         $startDate = $request->input('start_date');
@@ -66,7 +41,7 @@ class CabutBuluPenerimaanController extends Controller
             ->get();
         }
         return response()->view('CabutBulu.CabutBuluPenerimaan.index', [
-            'CBPenerimaan' => $CabutPenerimaan,
+            'CBPenerimaan' => $CBPenerimaan,
             'i' => $i,
         ]);
     }
