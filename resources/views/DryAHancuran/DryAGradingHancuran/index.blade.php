@@ -41,9 +41,11 @@
                                         <th scope="col" class="text-center">Berat Grading</th>
                                         <th scope="col" class="text-center">Kontribusi</th>
                                         <th scope="col" class="text-center">Susut Belakang</th>
+                                        @role('admin')
                                         <th scope="col" class="text-center">Harga Estimasi</th>
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
@@ -74,6 +76,7 @@
                                                 {{ number_format($item->kontribusi, 2, ',', '.') }}
                                             </td>
                                             <td class="text-center">{{ $item->susut_belakang }}</td>
+                                            @role('admin')
                                             <td class="text-center">
                                                 {{ number_format($item->harga_estimasi, 2, ',', '.') }}
                                             </td>
@@ -83,6 +86,7 @@
                                             <td class="text-center">
                                                 {{ number_format($item->total_modal, 2, ',', '.') }}
                                             </td>
+                                            @endrole
                                             <td class="text-center">{{ $item->status }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>

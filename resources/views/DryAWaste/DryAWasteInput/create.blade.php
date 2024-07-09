@@ -30,9 +30,9 @@
                                 </option>
                             @endforeach
                         </select>
-                        <input type="text" id="harga_estimasi" name="harga_estimasi" readonly>
-                        <input type="text" id="modal" name="modal" readonly>
-                        <input type="text" id="total_modal" name="total_modal" readonly>
+                        <input type="hidden" id="harga_estimasi" name="harga_estimasi" readonly>
+                        <input type="hidden" id="modal" name="modal" readonly>
+                        <input type="hidden" id="total_modal" name="total_modal" readonly>
                     </div>
 
                     <div class="col-md-4">
@@ -78,11 +78,13 @@
                             <tr>
                                 <th scope="col" class="text-center">Tanggal Cabut</th>
                                 <th scope="col" class="text-center">Jenis Waste</th>
-                                <th scope="col" class="text-center">Harga Estimasi</th>
                                 <th scope="col" class="text-center">Berat</th>
                                 <th scope="col" class="text-center">Pcs</th>
+                                @role('admin')
+                                <th scope="col" class="text-center">Harga Estimasi</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
+                                @endrole
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
@@ -228,11 +230,13 @@
                 let newRow = `<tr>` +
                     `<td class="text-center">${tanggal_cabut}</td>` +
                     `<td class="text-center">${jenis_waste}</td>` +
-                    `<td class="text-center">${harga_estimasi}</td>` +
                     `<td class="text-center">${berat}</td>` +
                     `<td class="text-center">${pcs}</td>` +
+                    @role('admin')
+                    `<td class="text-center">${harga_estimasi}</td>` +
                     `<td class="text-center">${modal}</td>` +
                     `<td class="text-center">${total_modal}</td>` +
+                    @endrole
                     `<td class="text-center">${keterangan}</td>` +
                     `<td class="text-center">${user_created}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +

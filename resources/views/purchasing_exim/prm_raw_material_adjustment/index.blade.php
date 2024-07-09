@@ -1,3 +1,4 @@
+
 @extends('layouts.master1')
 {{-- @extends('layouts.template') --}}
 @section('menu')

@@ -95,7 +95,7 @@
         start_date: start_date,
         end_date: end_date,
     };
-    var url = '{{ route("HcrKotorStock.index") }}';
+    var url = '{{ route("StockHcrKotor.index") }}';
 
     // url = url.replace(':slug', slug);
     url = url+'?start_date='+start_date+'&end_date='+end_date ;

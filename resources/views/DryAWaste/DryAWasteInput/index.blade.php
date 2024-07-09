@@ -29,11 +29,13 @@
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Tanggal Cabut</th>
                                         <th scope="col" class="text-center">Jenis Waste</th>
-                                        <th scope="col" class="text-center">Harga Estimasi</th>
                                         <th scope="col" class="text-center">Berat</th>
                                         <th scope="col" class="text-center">Pcs</th>
+                                        @role('admin')
+                                        <th scope="col" class="text-center">Harga Estimasi</th>
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Keterangan</th>
                                         {{-- <th scope="col" class="text-center">Status</th> --}}
                                         <th scope="col" class="text-center">User Created</th>
@@ -49,11 +51,13 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->tanggal_cabut }}</td>
                                             <td class="text-center">{{ $item->jenis_waste }}</td>
-                                            <td class="text-center">{{ $item->harga_estimasi }}</td>
                                             <td class="text-center">{{ $item->berat }}</td>
                                             <td class="text-center">{{ $item->pcs }}</td>
+                                            @role('admin')
+                                            <td class="text-center">{{ $item->harga_estimasi }}</td>
                                             <td class="text-center">{{ $item->modal }}</td>
                                             <td class="text-center">{{ $item->total_modal }}</td>
+                                            @endrole
                                             <td class="text-center">{{ $item->keterangan }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>

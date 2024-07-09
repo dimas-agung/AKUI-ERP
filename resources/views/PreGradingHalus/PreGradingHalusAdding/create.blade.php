@@ -206,7 +206,7 @@
                                         text: 'Harap Pilih job dengan nomor nota yang sama.',
                                     });
                                     $('#nomor_job').find('option:selected').remove();
-                                // $('#nomor_job').prop('selectedIndex', 0)
+                                $('#nomor_job').prop('selectedIndex', 0)
                                     return;
                             }
                         }

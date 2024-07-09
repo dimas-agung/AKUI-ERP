@@ -786,8 +786,10 @@
                                         </ul>
                                     </li>
 
+                                    
+
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('DryAWasteInput*', 'DryAWasteStock*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('DryAWasteOutput*', 'DryAWasteStock*', 'TransitDryAWaste*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Dry A Waste</span>
                                         </a>
@@ -797,19 +799,6 @@
                                                 <a href="{{ route('DryAWasteInput.index') }}" class="submenu-link">Dry
                                                     A Waste<br>Input</a>
                                             </li>
-                                            <li class="submenu-item {{ Route::is('DryAWasteStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('DryAWasteStock.index') }}" class="submenu-link">Dry A
-                                                    Waste<br>Stock</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                    <li
-                                        class="submenu-item has-sub {{ Route::is('DryAWasteOutput*', 'DryAWasteStock*', 'TransitDryAWaste*') ? 'active' : '' }}">
-                                        <a href="#" class='submenu-link'>
-                                            <span>Dry A Waste</span>
-                                        </a>
-                                        <ul class="submenu submenu-level-2">
                                             <li class="submenu-item {{ Route::is('DryAWasteStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAWasteStock.index') }}" class="submenu-link">Dry A
                                                     Waste<br>Stock</a>

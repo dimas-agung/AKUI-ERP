@@ -29,8 +29,10 @@
                                         <th scope="col" class="text-center">Nomor Job</th>
                                         <th scope="col" class="text-center">Nomor BSTB</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
+                                        @role('admin')
                                         <th class="text-center" scope="col">Modal</th>
                                         <th class="text-center" scope="col">Total Modal</th>
+                                        @endrole
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,8 +47,10 @@
                                                 <td class="text-center">{{ $TPCS->nomor_job }}</td>
                                                 <td class="text-center">{{ $TPCS->nomor_bstb }}</td>
                                                 <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
+                                                @role('admin')
                                                 <td class="text-center">{{ $TPCS->modal }}</td>
                                                 <td class="text-center">{{ $TPCS->total_modal }}</td>
+                                                @endrole
                                             </tr>
                                         @endif
                                     @empty

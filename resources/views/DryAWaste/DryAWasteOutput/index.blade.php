@@ -30,8 +30,10 @@
                                 <th class="text-center" scope="col">Nomor Job</th>
                                 <th class="text-center" scope="col">Nomor BSTB</th>
                                 <th class="text-center" scope="col">Keterangan</th>
+                                @role('admin')
                                 <th class="text-center" scope="col">Modal</th>
                                 <th class="text-center" scope="col">Total Modal</th>
+                                @endrole
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
@@ -47,8 +49,10 @@
                                     <td class="text-center">{{ $item->nomor_job }}</td>
                                     <td class="text-center">{{ $item->nomor_bstb }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
+                                    @role('admin')
                                     <td class="text-center">{{ $item->modal }}</td>
                                     <td class="text-center">{{ $item->total_modal }}</td>
+                                    @endrole
                                     <td class="text-center">{{ $item->user_created }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">

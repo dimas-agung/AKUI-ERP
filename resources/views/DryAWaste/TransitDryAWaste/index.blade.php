@@ -30,8 +30,10 @@
                                         <th scope="col" class="text-center">Berat</th>
                                         <th scope="col" class="text-center">Pcs</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
+                                        @role('admin')
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,8 +49,10 @@
                                         <td class="text-center">{{ $TPCS->berat }}</td>
                                         <td class="text-center">{{ $TPCS->pcs }}</td>
                                         <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
+                                        @role('admin')
                                         <td class="text-center">{{ $TPCS->modal }}</td>
                                         <td class="text-center">{{ $TPCS->total_modal }}</td>
+                                        @endrole
                                     </tr>
                                     <?php endif; ?>
                                     <?php endforeach; ?>
