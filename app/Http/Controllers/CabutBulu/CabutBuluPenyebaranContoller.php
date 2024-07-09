@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Auth;
 
 class CabutBuluPenyebaranContoller extends Controller
 {
+    protected $CabutBuluPenyebaranService;
+
+    public function __construct(CabutBuluPenyebaranService $CabutBuluPenyebaranService)
+    {
+        $this->CabutBuluPenyebaranService = $CabutBuluPenyebaranService;
+
+    }
     // index
     public function index(Request $request)
     {

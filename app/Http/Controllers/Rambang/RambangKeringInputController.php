@@ -12,6 +12,11 @@ use App\Services\RambangKeringInputService;
 class RambangKeringInputController extends Controller
 {
     protected $RambangKeringInputService;
+    
+    public function __construct(RambangKeringInputService $RambangKeringInputService)
+    {
+        $this->RambangKeringInputService = $RambangKeringInputService;
+    }
 
     // index
     public function index(Request $request){

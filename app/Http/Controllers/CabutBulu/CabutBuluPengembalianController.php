@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CabutBuluPengembalianController extends Controller
 {
-    protected $CabutBuluPenyebaranService;
+    protected $CabutBuluPengembalianService;
 
-    public function __construct(CabutBuluPengembalianService $CabutBuluPenyebaranService)
+    public function __construct(CabutBuluPengembalianService $CabutBuluPengembalianService)
     {
-        $this->CabutBuluPenyebaranService = $CabutBuluPenyebaranService;
+        $this->CabutBuluPengembalianService = $CabutBuluPengembalianService;
 
     }
     // index
@@ -90,13 +90,13 @@ class CabutBuluPengembalianController extends Controller
 
     public function store(Request $request)
     {
-        return $this->CabutBuluPenyebaranService->store($request);
+        return $this->CabutBuluPengembalianService->store($request);
 
     }
 
 
     public function destroy($nomor_job)
     {
-        return $this->CabutBuluPenyebaranService->destroy($nomor_job);
+        return $this->CabutBuluPengembalianService->destroy($nomor_job);
     }
 }
