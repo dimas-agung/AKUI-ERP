@@ -59,10 +59,13 @@
                                 <th class="text-center" scope="col">Pcs Job</th>
                                 <th class="text-center" scope="col">Nomor Job</th>
                                 <th class="text-center" scope="col">Biaya Produksi</th>
-                                <th class="text-center" scope="col">Modal Per Jenis</th>
-                                <th class="text-center" scope="col">Total Modal Per Jenis</th>
-                                <th class="text-center" scope="col">Modal Nomor Job</th>
-                                <th class="text-center" scope="col">Total Modal Nomor Job</th>
+                                <th class="text-center" scope="col">Upah Operator</th>
+                                @role('admin')
+                                    <th class="text-center" scope="col">Modal Per Jenis</th>
+                                    <th class="text-center" scope="col">Total Modal Per Jenis</th>
+                                    <th class="text-center" scope="col">Modal Nomor Job</th>
+                                    <th class="text-center" scope="col">Total Modal Nomor Job</th>
+                                @endrole
                                 <th class="text-center" scope="col">Status</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">Action</th>
@@ -81,10 +84,13 @@
                                     <td class="text-center">{!! $item->pcs_job !!}</td>
                                     <td class="text-center">{!! $item->nomor_job !!}</td>
                                     <td class="text-center">{!! $item->biaya_produksi !!}</td>
-                                    <td class="text-center">{!! $item->modal_per_jenis !!}</td>
-                                    <td class="text-center">{!! $item->total_modal_per_jenis !!}</td>
-                                    <td class="text-center">{!! $item->modal_nomor_job !!}</td>
-                                    <td class="text-center">{!! $item->total_modal_nomor_job !!}</td>
+                                    <td class="text-center">{!! $item->upah_operator !!}</td>
+                                    @role('admin')
+                                        <td class="text-center">{!! $item->modal_per_jenis !!}</td>
+                                        <td class="text-center">{!! $item->total_modal_per_jenis !!}</td>
+                                        <td class="text-center">{!! $item->modal_nomor_job !!}</td>
+                                        <td class="text-center">{!! $item->total_modal_nomor_job !!}</td>
+                                    @endrole
                                     <td class="text-center">{!! $item->status !!}</td>
                                     <td class="text-center">{!! $item->user_created !!}</td>
                                     <td class="text-center">

@@ -20,6 +20,7 @@ class MouldingPersiapan extends Model
         'nomor_job',
         'biaya_produksi',
         'upah_operator',
+        'upah_operator',
         'modal_per_jenis',
         'total_modal_per_jenis',
         'modal_nomor_job',

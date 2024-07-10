@@ -13,6 +13,7 @@ class MouldingStock extends Model
         'nomor_job',
         'nomor_batch',
         'tujuan_kirim',
+        'upah_operator',
         'job_order',
         'berat_job',
         'pcs_job',

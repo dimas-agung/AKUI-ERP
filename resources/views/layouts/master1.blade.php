@@ -684,8 +684,8 @@
                                             </li>
                                         </ul>
                                     </li>
-                                </ul>
-                                <ul class="submenu">
+                                    {{-- </ul> --}}
+                                    {{-- <ul class="submenu"> --}}
                                     <li
                                         class="submenu-item has-sub {{ Route::is('MouldingPersiapan*', 'GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>

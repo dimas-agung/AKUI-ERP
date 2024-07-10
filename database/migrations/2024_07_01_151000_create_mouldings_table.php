@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('nomor_job');
             $table->string('nomor_batch');
             $table->string('tujuan_kirim');
-            $table->float('job_order');
+            $table->string('job_order');
             $table->float('berat_job');
             $table->float('pcs_job')->nullable();
+            $table->float('upah_operator', 16, 4);
             $table->float('modal_nomor_job', 16, 4);
             $table->float('total_modal_nomor_job', 16, 4);
             $table->integer('status')->default(1);

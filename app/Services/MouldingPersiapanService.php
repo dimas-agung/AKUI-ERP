@@ -7,7 +7,9 @@ use App\Models\DryAGradingHancuranStock;
 use App\Models\DryAOutputHancuran;
 use App\Models\GradingWarna;
 use App\Models\GradingWarnaStock;
+use App\Models\Moulding;
 use App\Models\MouldingPersiapan;
+use App\Models\MouldingStock;
 use App\Models\TransitDryAHancuran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -90,6 +92,56 @@ class MouldingPersiapanService
                             $existingItem->update($dataToUpdate);
                         }
                     }
+
+                    // Creat Prm Raw Material Stock
+                    $itemObject = (object)$mergedData;
+                    $existingItem = Moulding::where('nomor_job', $itemObject->nomor_job)->first();
+
+                    if ($existingItem) {
+                        // Jika item dengan nomor_job yang sama ada, tambahkan berat_job dan pcs_job
+                        $existingItem->update([
+                            'berat_job' => $existingItem->berat_job + $itemObject->berat_job,
+                            'pcs_job' => $existingItem->pcs_job + $itemObject->pcs_job,
+                        ]);
+                    } else {
+                        // Jika item dengan nomor_job yang sama tidak ada, buat item baru dalam database
+                        Moulding::create([
+                            'nomor_job' => $itemObject->nomor_job,
+                            'job_order' => $itemObject->job_order,
+                            'tujuan_kirim' => $itemObject->tujuan_kirim,
+                            'nomor_batch' => $itemObject->nomor_batch,
+                            'upah_operator' => $itemObject->upah_operator,
+                            'modal_nomor_job' => $itemObject->modal_nomor_job,
+                            'total_modal_nomor_job' => $itemObject->total_modal_nomor_job,
+                            'user_created' => $itemObject->user_created,
+                            'berat_job' => $itemObject->berat_job,
+                            'pcs_job' => $itemObject->pcs_job,
+                        ]);
+                    }
+                    $MouldingStock = MouldingStock::where('nomor_job', $itemObject->nomor_job)->first();
+
+                    if ($MouldingStock) {
+                        // Jika item dengan nomor_job yang sama ada, tambahkan berat_job dan pcs_job
+                        $MouldingStock->update([
+                            'berat_job' => $MouldingStock->berat_job + $itemObject->berat_job,
+                            'pcs_job' => $MouldingStock->pcs_job + $itemObject->pcs_job,
+                        ]);
+                    } else {
+                        // Jika item dengan nomor_job yang sama tidak ada, buat item baru dalam database
+                        MouldingStock::create([
+                            'nomor_job' => $itemObject->nomor_job,
+                            'job_order' => $itemObject->job_order,
+                            'tujuan_kirim' => $itemObject->tujuan_kirim,
+                            'nomor_batch' => $itemObject->nomor_batch,
+                            'upah_operator' => $itemObject->upah_operator,
+                            'modal_nomor_job' => $itemObject->modal_nomor_job,
+                            'total_modal_nomor_job' => $itemObject->total_modal_nomor_job,
+                            'user_created' => $itemObject->user_created,
+                            'berat_job' => $itemObject->berat_job,
+                            'pcs_job' => $itemObject->pcs_job,
+                        ]);
+                    }
+
 
                     DB::commit();
                 } catch (\Exception $e) {
