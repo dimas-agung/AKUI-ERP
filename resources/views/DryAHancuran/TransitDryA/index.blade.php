@@ -38,6 +38,11 @@
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @forelse ($transit_pre_cleaning_stocks as $TPCS)
+                                        @if ($item->tujuan_kirim != Auth::user()->plant)
+                                            @php
+                                                continue;
+                                            @endphp
+                                        @endif
                                         @if ($TPCS->berat_job != 0)
                                             <tr>
                                                 <td class="text-center">{{ $i++ }}</td>

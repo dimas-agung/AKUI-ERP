@@ -65,7 +65,7 @@
                         </thead>
                         <tbody>
                             @forelse ($PreCleaningI as $item)
-                                @if ($item->tujuan_kirim, Auth::user()->plant)
+                                @if ($item->tujuan_kirim != Auth::user()->plant)
                                     @php
                                         continue;
                                     @endphp

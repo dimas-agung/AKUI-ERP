@@ -35,6 +35,11 @@
                             <?php $i = 1;
                             $dataFound = false; ?>
                             <?php foreach ($grading_halus_stocks as $item): ?>
+                            @if (!str_ends_with($item->nomor_job, Auth::user()->plant))
+                                @php
+                                    continue;
+                                @endphp
+                            @endif
                             <?php if($item->berat > 0): ?>
                             <?php $dataFound = true; ?>
                             <tr>

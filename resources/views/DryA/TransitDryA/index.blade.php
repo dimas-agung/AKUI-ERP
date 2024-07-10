@@ -43,6 +43,11 @@
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @forelse ($transit_pre_cleaning_stocks as $TPCS)
+                                        @if ($TPCS->tujuan_kirim != Auth::user()->plant)
+                                            @php
+                                                continue;
+                                            @endphp
+                                        @endif
                                         @if ($TPCS->berat_kotor != 0 || $TPCS->total_modal != 0)
                                             <tr>
                                                 <td class="text-center">{{ $i++ }}</td>

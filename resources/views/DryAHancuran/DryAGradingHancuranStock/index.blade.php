@@ -36,7 +36,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($dry_a_grading_hancuran_stock as $item)
-                                        @if ($item->plant, Auth::user()->plant)
+                                        @if ($item->plant != Auth::user()->plant)
                                             @php
                                                 continue;
                                             @endphp

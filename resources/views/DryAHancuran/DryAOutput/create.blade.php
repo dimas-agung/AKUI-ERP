@@ -42,7 +42,7 @@
                                             data-placeholder="Pilih Jenis Grading">
                                             <option value="">Pilih Jenis Grading</option>
                                             @foreach ($stockTGK as $post)
-                                                @if ($post->plant, Auth::user()->plant)
+                                                @if ($post->plant != Auth::user()->plant)
                                                     @php
                                                         continue;
                                                     @endphp
