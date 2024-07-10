@@ -146,7 +146,7 @@ class CabutBuluPengembalianService
                     return response()->json([
                         'success' => false,
                         'error' => 'Gagal menyimpan data. ' . $e->getMessage(),
-                        'redirectTo' => route('CabutBuluPenyebaran.create')
+                        'redirectTo' => route('CabutBuluPengembalian.create')
                     ], 504);
                 }
             }
