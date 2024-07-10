@@ -74,5 +74,6 @@ class DatabaseSeeder extends Seeder
         $this->call(GradingWarnaPenerimaanStockSeeder::class);
         $this->call(MasterJenisGradingWarnaSeeder::class);
         $this->call(MasterTujuanKirimMouldingSeeder::class);
+        $this->call(MouldingStockSeeder::class);
     }
 }

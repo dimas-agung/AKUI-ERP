@@ -646,7 +646,7 @@
 
                         @role('moulding|admin')
                             <li
-                                class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*', 'MouldingPenyebaran*', 'MouldingStock*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Moulding</span>
@@ -680,6 +680,25 @@
                                                 <a href="{{ route('GradingWarnaStock.index') }}"
                                                     class="submenu-link">Grading
                                                     <br>Warna Stock</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('MouldingPenyebaran*', 'MouldingStock*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Moulding</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li class="submenu-item {{ Route::is('MouldingStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingStock.index') }}"
+                                                    class="submenu-link">Moulding
+                                                    <br>Stock</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('MouldingPenyebaran*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingPenyebaran.index') }}"
+                                                    class="submenu-link">Moulding
+                                                    <br>Penyebaran</a>
                                             </li>
                                         </ul>
                                     </li>

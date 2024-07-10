@@ -627,6 +627,18 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaStockController::class)->group(function () {
                 Route::get('/grading_warna_stock', 'index')->name('GradingWarnaStock.index');
             });
+            Route::controller(App\Http\Controllers\Moulding\MouldingPenyebaranController::class)->group(function () {
+                Route::get('/moulding_penyebaran', 'index')->name('MouldingPenyebaran.index');
+                Route::get('/moulding_penyebaran/create', 'create')->name('MouldingPenyebaran.create');
+                Route::post('/moulding_penyebaran/store', 'store')->name('MouldingPenyebaran.store');
+                Route::post('/moulding_penyebaran/cek_data', 'CeksendData')->name('MouldingPenyebaran.CeksendData');
+                Route::delete('/moulding_penyebaran/destroy/{nomor_job}', 'destroy')->name('MouldingPenyebaran.destroy');
+                Route::get('/moulding_penyebaran/set_job', 'setJob')->name('MouldingPenyebaran.setJob');
+                Route::get('/moulding_penyebaran/set_nip', 'setNip')->name('MouldingPenyebaran.setNip');
+            });
+            Route::controller(App\Http\Controllers\Moulding\MouldingStockController::class)->group(function () {
+                Route::get('/moulding_stock', 'index')->name('MouldingStock.index');
+            });
         });
     });
 });
