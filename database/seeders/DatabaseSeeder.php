@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         // MASTER JENIS
         $this->call(MasterJenisRawMaterialSeeder::class);
         $this->call(MasterJenisGradingKasarSeeder::class);
-        $this->call(MasterJenisGradingHalusSeeder::class);
+        // $this->call(MasterJenisGradingHalusSeeder::class);
         $this->call(MasterJenisHcrKotorSeeder::class);
         $this->call(MasterJenisRambangSeeder::class);
         $this->call(MasterJenisWasteSeeder::class);
