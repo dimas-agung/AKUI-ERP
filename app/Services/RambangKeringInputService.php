@@ -79,8 +79,8 @@ class RambangKeringInputService
 
                         // Update data dengan nilai baru
                         $existingItem->update([
-                            'berat_keluar'      => $itemObject->berat_basah,
-                            'sisa_berat'        => 0,
+                            'berat_keluar'      => $existingItem->berat_keluar + $itemObject->berat_basah,
+                            'sisa_berat'        => $existingItem->sisa_berat - $itemObject->berat_basah,
                         ]);
                     }
 
@@ -158,10 +158,11 @@ class RambangKeringInputService
 
                     // Hitung total modal baru berdasarkan perbedaan berat
                     $perbedaanBerat = $beratSebelumnya - $rambangKeringInput->berat_basah;
-                    $sisaBerat = $existingItem->berat_keluar - $perbedaanBerat;
+                    $sisaBerat = $existingItem->berat_masuk - $perbedaanBerat;
 
                     $existingItem->update(['berat_keluar'   => $perbedaanBerat]);
                     $existingItem->update(['sisa_berat'     => $sisaBerat]);
+                    
                 }
 
                 // Ambil semua item yang sesuai dengan kriteria
@@ -171,10 +172,13 @@ class RambangKeringInputService
 
                 foreach ($RambangBasahInput as $item) {
 
-                    // Update data dengan nilai baru
-                    $item->update([
-                        'status'        => 1,
-                    ]);
+                    // Update data dengan nilai baru  
+                    if ($perbedaanBerat == 0) {
+                        
+                        $item->update([
+                            'status'        => 1,
+                        ]);
+                    }  
                 }
 
                 // Hapus record utama
