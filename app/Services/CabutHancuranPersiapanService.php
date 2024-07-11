@@ -126,42 +126,43 @@ class CabutHancuranPersiapanService
         ], 201);
     }
 
-    public function destroy($id_stock_hcr_kotor): RedirectResponse
+    public function destroy($nomor_job): RedirectResponse
     {
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
             // Ambil data PreCleaningInput berdasarkan id_box_grading$id_stock_hcr_kotor
-            $GradingHalusInputs = CabutHancuranPersiapan::where('id_stock_hcr_kotor', '=', $id_stock_hcr_kotor)->get();
+            $CabutHancuranPersiapan = CabutHancuranPersiapan::where('nomor_job', '=', $nomor_job)->get();
 
-            if ($GradingHalusInputs->isEmpty()) {
+            if ($CabutHancuranPersiapan->isEmpty()) {
                 // Redirect ke index dengan pesan error jika data tidak ditemukan
                 return redirect()->route('CabutHancuranPersiapan.index')->with(['error' => 'Data tidak ditemukan!']);
             }
 
-            foreach ($GradingHalusInputs as $PreCleaningI) {
+            $PreCleaningS = CabutHancuranPersiapanStock::where('nomor_job', '=', $nomor_job)
+                ->first();
+            foreach ($CabutHancuranPersiapan as $CabutHancuranPersiapanI) {
                 // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
-                $PreCleaningS = CabutHancuranPersiapanStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
-                    ->first();
 
                     if ($PreCleaningS) {
                         // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                        $stockPrmRawMaterial = RambangBasahStock::where('id_box_hcr_kotor', '=', $PreCleaningI->id_stock_hcr_kotor)
+                        $stockPrmRawMaterial = RambangBasahStock::where('id_box_hcr_kotor', '=', $CabutHancuranPersiapanI->id_stock_hcr_kotor)
                             ->first();
 
                         if ($stockPrmRawMaterial) {
                             // Simpan nilai sebelum dihapus
                             $beratSebelumnya = $stockPrmRawMaterial->berat_masuk;
                             $beratKeluar = $stockPrmRawMaterial->berat_keluar;
-
+                            
                             // Hitung perbedaan berat dan pcs
-                            $perbedaanBerat = $beratKeluar - $PreCleaningI->berat;
+                            $perbedaanBerat = $beratKeluar - $CabutHancuranPersiapanI->berat;
+                            $sisa_berat = $beratSebelumnya-($perbedaanBerat);
 
                             // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
                             $stockPrmRawMaterial->update([
                                 'berat_keluar' => max($perbedaanBerat, 0),
-                                'sisa_berat' => max($beratSebelumnya, 0),
+                                'sisa_berat' => max($sisa_berat, 0),
                             ]);
                         }
                     }
@@ -172,7 +173,7 @@ class CabutHancuranPersiapanService
                 }
 
                 // Hapus data GradingHalusInput
-                $PreCleaningI->delete();
+                $CabutHancuranPersiapanI->delete();
             }
 
             // Commit transaksi

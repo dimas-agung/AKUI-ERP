@@ -84,14 +84,14 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
-                                                <form style="display: flex" id="deleteForm{{ $item->id_stock_hcr_kotor }}"
-                                                    action="{{ route('CabutHancuranPersiapan.destroy', $item->id_stock_hcr_kotor) }}"
+                                                <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
+                                                    action="{{ route('CabutHancuranPersiapan.destroy', $item->nomor_job) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-link btn-danger"
                                                         data-original-title="Remove"
-                                                        onclick="confirmDelete('{{ $item->id_stock_hcr_kotor }}')">
+                                                        onclick="confirmDelete('{{ $item->nomor_job }}')">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
                                                 </form>

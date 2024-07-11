@@ -103,8 +103,8 @@ class CabutHancuranPersiapanController extends Controller
         return $this->CabutHancuranPersiapanService->store($request);
     }
 
-    public function destroy($id_stock_hcr_kotor): RedirectResponse
+    public function destroy($nomor_job): RedirectResponse
     {
-        return $this->CabutHancuranPersiapanService->destroy($id_stock_hcr_kotor);
+        return $this->CabutHancuranPersiapanService->destroy($nomor_job);
     }
 }
