@@ -209,7 +209,7 @@
                 start_date: start_date,
                 end_date: end_date,
             };
-            var url = '{{ route('PreCleaningInput.index') }}';
+            var url = '{{ route('CabutHancuranPengembalian.index') }}';
 
             // url = url.replace(':slug', slug);
             url = url + '?start_date=' + start_date + '&end_date=' + end_date;
