@@ -14,32 +14,32 @@ class MasterJenisRawMaterialSeeder extends Seeder
     public function run(): void
     {
         MasterJenisRawMaterial::create([
-            'jenis' => 'Celestial Angel Wings',
-            'kategori_susut' => 'A',
+            'jenis' => 'PTH A',
+            'kategori_susut' => 'SD',
             'upah_operator' => 5000,
             'pengurangan_harga' => 10,
             'harga_estimasi' => 20000,
             'status' => 1,
         ]);
         MasterJenisRawMaterial::create([
-            'jenis' => 'Celestial Crown Special',
-            'kategori_susut' => 'B',
+            'jenis' => 'PTH B',
+            'kategori_susut' => 'SB',
             'upah_operator' => 6000,
             'pengurangan_harga' => 20,
             'harga_estimasi' => 30000,
             'status' => 1,
         ]);
         MasterJenisRawMaterial::create([
-            'jenis' => 'Crystal Snow',
-            'kategori_susut' => 'C',
+            'jenis' => 'PTH C',
+            'kategori_susut' => 'SD',
             'upah_operator' => 7000,
             'pengurangan_harga' => 30,
             'harga_estimasi' => 40000,
             'status' => 1,
         ]);
         MasterJenisRawMaterial::create([
-            'jenis' => 'Royal Cloud',
-            'kategori_susut' => 'C',
+            'jenis' => 'PTH BULU',
+            'kategori_susut' => 'SB',
             'upah_operator' => 7000,
             'pengurangan_harga' => 10,
             'harga_estimasi' => 40000,

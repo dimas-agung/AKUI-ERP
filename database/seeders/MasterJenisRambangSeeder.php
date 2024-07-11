@@ -2,20 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\MasterJenisGradingHalus;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\MasterJenisRambang;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class MasterJenisGradingHalusSeeder extends Seeder
+class MasterJenisRambangSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        MasterJenisGradingHalus::create([
-            'jenis' => 'CHONG',
-            'Kategori_susut' => 'SD',
+        //
+        MasterJenisRambang::create([
+            'jenis' => 'HCR Kotor PK',
+            'Kategori_susut' => '2',
             'upah_operator' => '5000',
             'pengurangan_harga' => '5',
             'harga_estimasi' => '55000',
@@ -23,8 +24,18 @@ class MasterJenisGradingHalusSeeder extends Seeder
             'user_updated' => 'Admin123',
             'status' => 1,
         ]);
-        MasterJenisGradingHalus::create([
-            'jenis' => 'G2-0-0-0',
+        MasterJenisRambang::create([
+            'jenis' => 'HCR Kotor PB',
+            'Kategori_susut' => 'SB',
+            'upah_operator' => '3000',
+            'pengurangan_harga' => '2',
+            'harga_estimasi' => '27000',
+            'user_created' => 'Admin123',
+            'user_updated' => 'Admin123',
+            'status' => 1,
+        ]);
+        MasterJenisRambang::create([
+            'jenis' => 'HCR Kotor KR',
             'Kategori_susut' => 'SD',
             'upah_operator' => '3000',
             'pengurangan_harga' => '2',
@@ -33,52 +44,42 @@ class MasterJenisGradingHalusSeeder extends Seeder
             'user_updated' => 'Admin123',
             'status' => 1,
         ]);
-        MasterJenisGradingHalus::create([
-            'jenis' => 'HCR',
+        MasterJenisRambang::create([
+            'jenis' => 'HCR Kotor KN',
             'Kategori_susut' => 'SB',
-            'upah_operator' => '7000',
+            'upah_operator' => '3000',
             'pengurangan_harga' => '2',
-            'harga_estimasi' => '97000',
+            'harga_estimasi' => '27000',
             'user_created' => 'Admin123',
             'user_updated' => 'Admin123',
             'status' => 1,
         ]);
-        MasterJenisGradingHalus::create([
-            'jenis' => 'PTH-1-VIP-PK',
-            'Kategori_susut' => 'SD',
-            'upah_operator' => '8000',
+        MasterJenisRambang::create([
+            'jenis' => 'Bulu',
+            'Kategori_susut' => '2',
+            'upah_operator' => '2',
             'pengurangan_harga' => '2',
-            'harga_estimasi' => '97000',
+            'harga_estimasi' => '27000',
             'user_created' => 'Admin123',
             'user_updated' => 'Admin123',
             'status' => 1,
         ]);
-        MasterJenisGradingHalus::create([
-            'jenis' => 'PTH-1-BSA-PK',
-            'Kategori_susut' => 'SD',
-            'upah_operator' => '9000',
+        MasterJenisRambang::create([
+            'jenis' => 'Hcr Halus',
+            'Kategori_susut' => '2',
+            'upah_operator' => '2',
             'pengurangan_harga' => '2',
-            'harga_estimasi' => '98000',
+            'harga_estimasi' => '2000',
             'user_created' => 'Admin123',
             'user_updated' => 'Admin123',
             'status' => 1,
         ]);
-        MasterJenisGradingHalus::create([
-            'jenis' => 'PTH-1-BSB-PK',
-            'Kategori_susut' => 'SD',
-            'upah_operator' => '7000',
+        MasterJenisRambang::create([
+            'jenis' => 'Titilan',
+            'Kategori_susut' => '2',
+            'upah_operator' => '2',
             'pengurangan_harga' => '2',
-            'harga_estimasi' => '78000',
-            'user_created' => 'Admin123',
-            'user_updated' => 'Admin123',
-            'status' => 1,
-        ]);
-        MasterJenisGradingHalus::create([
-            'jenis' => 'PTH-1-BSC-PK',
-            'Kategori_susut' => 'SD',
-            'upah_operator' => '6000',
-            'pengurangan_harga' => '2',
-            'harga_estimasi' => '92000',
+            'harga_estimasi' => '7000',
             'user_created' => 'Admin123',
             'user_updated' => 'Admin123',
             'status' => 1,

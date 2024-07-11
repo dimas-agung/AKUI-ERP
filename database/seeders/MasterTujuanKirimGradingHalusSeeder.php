@@ -14,21 +14,21 @@ class MasterTujuanKirimGradingHalusSeeder extends Seeder
     public function run(): void
     {
         MasterTujuanKirimGradingHalus::create([
-            'tujuan_kirim' => 'Surabaya',
-            'letak_tujuan' => 'Gudang 1',
-            'inisial_tujuan' => 'K001',
+            'tujuan_kirim' => 'AKUI',
+            'letak_tujuan' => 'INTERNAL',
+            'inisial_tujuan' => 'AKI',
             'status' => 1,
         ]);
         MasterTujuanKirimGradingHalus::create([
-            'tujuan_kirim' => 'Singapura',
-            'letak_tujuan' => 'Gudang 2',
-            'inisial_tujuan' => 'K002',
+            'tujuan_kirim' => 'ORIGINAL BERKAH',
+            'letak_tujuan' => 'INTERNAL',
+            'inisial_tujuan' => 'OBI',
             'status' => 1,
         ]);
         MasterTujuanKirimGradingHalus::create([
-            'tujuan_kirim' => 'Malaysia',
-            'letak_tujuan' => 'Gudang 3',
-            'inisial_tujuan' => 'K003',
+            'tujuan_kirim' => 'LOGISTIK',
+            'letak_tujuan' => 'EKSTERNAL',
+            'inisial_tujuan' => 'LOG',
             'status' => 1,
         ]);
     }

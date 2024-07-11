@@ -4,18 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-// use App\Models\GradingKasarInput;
-
-use App\Models\GradingHalusStock;
-use App\Models\GradingWarnaPenerimaanStock;
-use App\Models\MasterJenisDryA;
-use App\Models\MasterJenisGradingHalus;
 use App\Models\MasterJenisGradingKasar;
-use App\Models\MasterOperator;
-use App\Models\PrmRawMaterialStock;
-use App\Models\RambangBasahStock;
-use App\Models\TransitGradingKasar;
-use App\Models\User;
+use App\Models\MasterJenisHcrKotor;
+use App\Models\MasterJenisRambang;
+use App\Models\MasterOngkosCuci;
+use App\Models\MasterTujuanKirimGradingKasar;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -32,48 +25,61 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // $this->call(UsersSeeder::class);
-        $this->call(PerusahaanSeeder::class);
-        $this->call(WorkstationSeeder::class);
-        $this->call(UnitSeeder::class);
-        $this->call(BiayaHppSeeder::class);
-        $this->call(MasterSupplierRawMaterialSeeder::class);
-        $this->call(MasterJenisRawMaterialSeeder::class);
-        $this->call(MasterJenisGradingHalusSeeder::class);
-        $this->call(MasterTujuanKirimRawMaterialSeeder::class);
-        $this->call(MasterTujuanKirimGradingHalusSeeder::class);
-        $this->call(MasterOperatorSeeder::class);
-        $this->call(MsterJenisGradingKasarSeeder::class);
-        $this->call(PrmRawMaterialStockSeeder::class);
-        $this->call(PrmRawMaterialOutputSeeder::class);
-        $this->call(StockTransitRawMaterialSeeder::class);
-        $this->call(TestSeeder::class);
-        $this->call(MasterOngkosCuciSeeder::class);
-        // $this->call(TransitPreCleaningStockSeeder::class);
-        // $this->call(PrmRawMaterialStockSeeder::class);
-        $this->call(GradingKasarInputSeeder::class);
-        $this->call(PreCleaningStockSeeder::class);
-        $this->call(PreGradingHalusStockSeeder::class);
-        $this->call(GradingHalusStockSeeder::class);
-        $this->call(MasterOngkosCuciSeeder::class);
-        // $this->call(TransitGradingHalusSeeder::class);
-        $this->call(RambangBasahStockSeeder::class);
-        // $this->call(MasterJenisGradingHalusSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UsersSeeder::class);
-        $this->call(CabutBuluPenerimaanSeeder::class);
-        $this->call(CabutBuluStockSeeder::class);
-        $this->call(CabutHancuranPersiapanStockSeeder::class);
-        $this->call(DryAPenerimaanCabutStockSeeder::class);
-        $this->call(MasterJenisDryASeeder::class);
-        $this->call(MasterTujuanKirimDryASeeder::class);
-        $this->call(DryAPenerimaanHancuranSeeder::class);
-        $this->call(DryAPenerimaanHancuranStockSeeder::class);
+        // MASTER LAIN LAIN
+        $this->call(PerusahaanSeeder::class);
+        // $this->call(WorkstationSeeder::class);
+        // $this->call(UnitSeeder::class);
+        // $this->call(BiayaHppSeeder::class);
+        $this->call(MasterOperatorSeeder::class);
+        $this->call(MasterOngkosCuciSeeder::class);
+        $this->call(MasterSupplierRawMaterialSeeder::class);
+        // MASTER JENIS
+        $this->call(MasterJenisRawMaterialSeeder::class);
+        $this->call(MasterJenisGradingKasarSeeder::class);
+        $this->call(MasterJenisGradingHalusSeeder::class);
+        $this->call(MasterJenisHcrKotorSeeder::class);
+        $this->call(MasterJenisRambangSeeder::class);
         $this->call(MasterJenisWasteSeeder::class);
-        // $this->call(DryAWasteInputSeeder::class);
-        $this->call(GradingWarnaPenerimaanStockSeeder::class);
+        $this->call(MasterJenisDryASeeder::class);
         $this->call(MasterJenisGradingWarnaSeeder::class);
+        // MASTER TUJUAN
+        $this->call(MasterTujuanKirimRawMaterialSeeder::class);
+        $this->call(MasterTujuanKirimGradingKasarSeeder::class);
+        $this->call(MasterTujuanKirimGradingHalusSeeder::class);
+        $this->call(MasterTujuanKirimWasteSeeder::class);
+        $this->call(MasterTujuanKirimDryASeeder::class);
         $this->call(MasterTujuanKirimMouldingSeeder::class);
-        $this->call(MouldingStockSeeder::class);
+        // Purchasing Raw Material
+        // $this->call(PrmRawMaterialStockSeeder::class);
+        // $this->call(PrmRawMaterialOutputSeeder::class);
+        // $this->call(StockTransitRawMaterialSeeder::class);
+
+        // $this->call(TransitPreCleaningStockSeeder::class);
+        // $this->call(PrmRawMaterialStockSeeder::class);
+        // $this->call(GradingKasarInputSeeder::class);
+        // $this->call(PreCleaningStockSeeder::class);
+        // $this->call(PreGradingHalusStockSeeder::class);
+        // $this->call(GradingHalusStockSeeder::class);
+        // $this->call(MasterOngkosCuciSeeder::class);
+        // $this->call(TransitGradingHalusSeeder::class);
+        // $this->call(RambangBasahStockSeeder::class);
+        // $this->call(MasterJenisGradingHalusSeeder::class);
+
+        // $this->call(CabutBuluPenerimaanSeeder::class);
+        // $this->call(CabutBuluStockSeeder::class);
+        // $this->call(CabutHancuranPersiapanStockSeeder::class);
+        // $this->call(DryAPenerimaanCabutStockSeeder::class);
+        // $this->call(MasterJenisDryASeeder::class);
+        // $this->call(MasterTujuanKirimDryASeeder::class);
+        // $this->call(DryAPenerimaanHancuranSeeder::class);
+        // $this->call(DryAPenerimaanHancuranStockSeeder::class);
+        // $this->call(MasterJenisWasteSeeder::class);
+        // $this->call(DryAWasteInputSeeder::class);
+        // $this->call(GradingWarnaPenerimaanStockSeeder::class);
+        // $this->call(MasterJenisGradingWarnaSeeder::class);
+        // $this->call(MasterTujuanKirimMouldingSeeder::class);
+        // $this->call(MouldingStockSeeder::class);
     }
 }

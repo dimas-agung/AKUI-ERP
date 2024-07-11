@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\MasterTujuanKirimDryA;
+use App\Models\MasterTujuanKirimWaste;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class MasterTujuanKirimDryASeeder extends Seeder
+class MasterTujuanKirimWasteSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class MasterTujuanKirimDryASeeder extends Seeder
     public function run(): void
     {
         //
-        MasterTujuanKirimDryA::create([
+        MasterTujuanKirimWaste::create([
             'tujuan_kirim' => 'AKUI',
             'letak_tujuan' => 'INTERNAL',
             'inisial_tujuan' => 'AKI',
@@ -22,7 +22,7 @@ class MasterTujuanKirimDryASeeder extends Seeder
             'user_created' => 'Admin123',
             'user_updated' => '',
         ]);
-        MasterTujuanKirimDryA::create([
+        MasterTujuanKirimWaste::create([
             'tujuan_kirim' => 'ORIGINAL BERKAH',
             'letak_tujuan' => 'INTERNAL',
             'inisial_tujuan' => 'OBI',
@@ -30,7 +30,7 @@ class MasterTujuanKirimDryASeeder extends Seeder
             'user_created' => 'Admin123',
             'user_updated' => '',
         ]);
-        MasterTujuanKirimDryA::create([
+        MasterTujuanKirimWaste::create([
             'tujuan_kirim' => 'LOGISTIK',
             'letak_tujuan' => 'EKSTERNAL',
             'inisial_tujuan' => 'LOG',

@@ -15,8 +15,7 @@
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
                                 Data Master Tujuan Kirim Waste
-                                <button href="{{ route('MasterTujuanKirimWaste.create') }}" type="button"
-                                    class="btn btn-outline-success rounded-pill" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-outline-success rounded-pill" data-bs-toggle="modal"
                                     data-bs-target="#inlineForm">
                                     <strong><i class="bi bi-plus-circle"></i> Add Data <i
                                             class="bi bi-plus-circle"></i></strong>
