@@ -22,6 +22,9 @@ class DryAWasteInputSeeder extends Seeder
                 'pcs' => 5,
                 'keterangan' => 'Tes Seeder',
                 'status' => 1,
+                'harga_estimasi' => 5000,
+                'modal' => 7500,
+                'total_modal' => 30000,
                 'user_created' => 'Admin',
                 'user_updated' => '',
             ]);
