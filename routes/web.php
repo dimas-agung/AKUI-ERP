@@ -593,9 +593,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/cabut_bulu_pengembalian/destroy/{nomor_bstb}', 'destroy')->name('CabutBuluPengembalian.destroy');
             });
 
-            Route::controller(App\Http\Controllers\CabutBulu\TransitCabutBuluController::class)->group(function () {
-                Route::get('/transit_cabut_bulu', 'index')->name('TransitCabutBulu.index');
-            });
+          
         });
 
         Route::prefix('Rambang')->middleware('role:cleaning|admin')->group(function (){
@@ -637,9 +635,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/rambang_pengiriman_waste/destroy/{nomor_bstb}', 'destroy')->name('RambangPengirimanWaste.destroy');
             });
 
-            Route::controller(App\Http\Controllers\Rambang\TransitRambangWasteController::class)->group(function () {
-                Route::get('/transit_rambang_waste', 'index')->name('TransitRambangWaste.index');
-            });
+         
 
             Route::controller(App\Http\Controllers\Rambang\RambangBasahInputController::class)->group(function () {
                 Route::get('/input_rambang_basah', 'index')->name('InputRambangBasah.index');
@@ -700,9 +696,17 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/cabut_hancuran_pengembalian/destroy/{nomor_bstb}', 'destroy')->name('CabutHancuranPengembalian.destroy');
             });
 
-            Route::controller(App\Http\Controllers\CabutHancuran\TransitCabutBuluHancuranController::class)->group(function () {
-                Route::get('/transit_cabut_hancuran', 'index')->name('TransitCabutHancuran.index');
-            });
+        });
+    });
+    Route::prefix('transit_cleaning')->middleware(['role:cleaning|admin|dry_a'])->group(function () {
+        Route::controller(App\Http\Controllers\CabutHancuran\TransitCabutBuluHancuranController::class)->group(function () {
+            Route::get('/transit_cabut_hancuran', 'index')->name('TransitCabutHancuran.index');
+        });
+        Route::controller(App\Http\Controllers\Rambang\TransitRambangWasteController::class)->group(function () {
+            Route::get('/transit_rambang_waste', 'index')->name('TransitRambangWaste.index');
+        });
+        Route::controller(App\Http\Controllers\CabutBulu\TransitCabutBuluController::class)->group(function () {
+            Route::get('/transit_cabut_bulu', 'index')->name('TransitCabutBulu.index');
         });
     });
     // Route::prefix('dry_a')->middleware(['role:dry_a|admin'])->group(function (){
