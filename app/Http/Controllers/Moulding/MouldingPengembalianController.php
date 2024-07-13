@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Moulding;
 
 use Illuminate\Http\Request;
+use App\Models\MouldingStock;
 use App\Models\MouldingPenyebaran;
 use App\Http\Controllers\Controller;
 use App\Models\MouldingPengembalian;
@@ -46,9 +47,9 @@ class MouldingPengembalianController extends Controller
     // create
     public function create()
     {
-        $MouldingPenyebaran = MouldingPenyebaran::where('status', 2)->get();
+        $MouldingStock = MouldingStock::where('status', 2)->get();
         return response()->view('Moulding.MouldingPengembalian.create', [
-            'moulding_penyebaran' => $MouldingPenyebaran,
+            'moulding_stock' => $MouldingStock,
         ]);
     }
     public function setJob(Request $request)

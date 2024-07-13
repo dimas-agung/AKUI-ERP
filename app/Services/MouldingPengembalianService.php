@@ -133,6 +133,7 @@ class MouldingPengembalianService
 
                         // Update data dengan nilai baru
                         $item->update([
+                            'user_updated'       => $MouldingPengembalian->user_created,
                             'status'             => MouldingPengembalian::STATUS_FINISHED,
                         ]);
                     }
@@ -203,7 +204,10 @@ class MouldingPengembalianService
             if ($MouldingPenyebaran->isNotEmpty()) {
                 foreach ($MouldingPenyebaran as $item) {
                     // Perbarui data untuk setiap item yang ada
-                    $item->update(['status' => MouldingPengembalian::STATUS_ON_PROSES]);
+                    $item->update([
+                        'user_updated'       => $mouldingPengembalian->user_created,
+                        'status'             => MouldingPengembalian::STATUS_ON_PROSES
+                    ]);
                 }
             }
 

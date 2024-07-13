@@ -19,7 +19,7 @@
                         <select class="select2 form-select" style="width: 100%;" name="nomor_job" id="nomor_job"
                             data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
-                            @foreach ($moulding_penyebaran as $item)
+                            @foreach ($moulding_stock as $item)
                                 <option value="{{ $item->nomor_job }}">
                                     {{ $item->nomor_job }}</option>
                             @endforeach
@@ -111,8 +111,8 @@
                                 <th scope="col" class="text-center">Job Order</th>
                                 <th scope="col" class="text-center">Berat Job</th>
                                 <th scope="col" class="text-center">Pcs Job</th>
-                                <th scope="col" class="text-center">Modal Nomor Job</th>
-                                <th scope="col" class="text-center">Total Modal Nomor Job</th>
+                                {{-- <th scope="col" class="text-center">Modal Nomor Job</th>
+                                <th scope="col" class="text-center">Total Modal Nomor Job</th> --}}
                                 <th scope="col" class="text-center">Upah Operator</th>
                                 <th scope="col" class="text-center">Nama Operator</th>
                                 <th scope="col" class="text-center">NIP Operator</th>
@@ -269,8 +269,8 @@
                     `<td class="text-center">${job_order}</td>` +
                     `<td class="text-center">${berat_job}</td>` +
                     `<td class="text-center">${pcs_job}</td>` +
-                    `<td class="text-center">${modal_nomor_job}</td>` +
-                    `<td class="text-center">${total_modal_nomor_job}</td>` +
+                    // `<td class="text-center">${modal_nomor_job}</td>` +
+                    // `<td class="text-center">${total_modal_nomor_job}</td>` +
                     `<td class="text-center">${upah_operator}</td>` +
                     `<td class="text-center">${nama_operator}</td>` +
                     `<td class="text-center">${nip_operator}</td>` +
