@@ -43,7 +43,7 @@ class DryAGradingCabutController extends Controller
     public function create()
     {
         $DryAPenerimaanCabutStock = DryAPenerimaanCabutStock::withCount('DryAGradingCabut')->get();
-        $MasterJenisDryA = MasterJenisDryA::all();
+        $MasterJenisDryA = MasterJenisDryA::where('status', 1)->get();
         // return $DryAPenerimaanCabutStock;
         return response()->view('DryA.DryAGradingCabut.create', [
             'dry_a_penerimaan_cabut_stock' => $DryAPenerimaanCabutStock,

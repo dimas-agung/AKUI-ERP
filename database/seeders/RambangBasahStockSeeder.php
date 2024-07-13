@@ -20,8 +20,8 @@ class RambangBasahStockSeeder extends Seeder
             'id_box_hcr_kotor'      => '230424_HCR Kotor PB',
             'jenis_rambang'         => 'Bulu',
             'berat_masuk'           => 200,
-            'berat_keluar'          => 0,
-            'sisa_berat'            => 200,
+            'berat_keluar'          => 200,
+            'sisa_berat'            => 0,
         ]);
         RambangBasahStock::create([
             'workstation'           => 'Cleaning',
