@@ -14,6 +14,7 @@ class Moulding extends Model
         'nomor_batch',
         'tujuan_kirim',
         'job_order',
+        'upah_operator',
         'berat_job',
         'pcs_job',
         'modal_nomor_job',

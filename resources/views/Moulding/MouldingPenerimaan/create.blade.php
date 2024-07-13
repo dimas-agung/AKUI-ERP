@@ -148,7 +148,8 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-primary" onclick="addRow()">Add</button>
+                                <button type="button" id="tombol_add" class="btn btn-primary"
+                                    onclick="addRow()">Add</button>
                                 <a href="{{ Route('MouldingPersiapan.index') }}" type="button" class="btn btn-danger"
                                     data-dismiss="modal">Close</a>
                             </div>
@@ -204,6 +205,15 @@
 @endsection
 @section('script')
     <script>
+        // Variabel penanda untuk menandai apakah tombol "add" sudah diklik atau belum
+        let tombolAddDiklik = false;
+
+        // Ketika tombol "add" diklik
+        $('#tombol_add').on('click', function() {
+            // Set variabel penanda menjadi true
+            tombolAddDiklik = true;
+        });
+
         $(document).ready(function() {
             let initialSisaBerat;
 
@@ -227,8 +237,11 @@
 
                             // Generate nomor job
                             const inisial = selectedJenisGrading.charAt(0).toUpperCase();
-                            const nomor_job = generateNomorJob(inisial);
-                            $('#nomor_job').val(nomor_job);
+                            // Memeriksa apakah nomor_bstb sudah terisi, jika belum maka diisi
+                            if (!tombolAddDiklik) {
+                                const nomor_job = generateNomorJob(inisial);
+                                $('#nomor_job').val(nomor_job);
+                            }
                         }
                     },
                     error: function(error) {

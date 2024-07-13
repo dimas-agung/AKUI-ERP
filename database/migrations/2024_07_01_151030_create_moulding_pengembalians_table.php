@@ -13,6 +13,27 @@ return new class extends Migration
     {
         Schema::create('moulding_pengembalians', function (Blueprint $table) {
             $table->id();
+            $table->string('nomor_job');
+            $table->string('nomor_batch');
+            $table->string('tujuan_kirim');
+            $table->float('job_order');
+            $table->float('berat_job');
+            $table->float('pcs_job');
+            $table->float('modal_nomor_job', 16, 4);
+            $table->float('total_modal_nomor_job', 16, 4);
+            $table->string('upah_operator');
+            $table->timestamp('waktu_penyebaran');
+            $table->timestamp('waktu_pengembalian');
+            $table->timestamp('lama_pengerjaan');
+            $table->string('nama_operator');
+            $table->string('nip_operator');
+            $table->string('grade_operator');
+            $table->string('nama_team_leader');
+            $table->string('keterangan')->nullable();
+            $table->string('user_created');
+            $table->string('user_updated')->nullable();
+            $table->integer('status')->default(3);
+            $table->timestamps();
             $table->timestamps();
         });
     }
