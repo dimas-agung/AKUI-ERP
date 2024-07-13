@@ -6,7 +6,7 @@ use App\Models\PreGradingHalusAddingStock;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TestSeeder extends Seeder
+class PreGradingHalusAddingSeeder extends Seeder
 {
     /**
      * Run the database seeds.

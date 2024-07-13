@@ -151,7 +151,7 @@
                         @role('master|admin')
                             <li class="sidebar-title">Menu</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterJobMoulding*', 'MasterTujuanKirimWaste*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterJobMoulding*', 'MasterTujuanKirimWaste*', 'MasterJenisGradingWarna*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-stack"></i>
                                     <span>Master</span>
@@ -218,6 +218,11 @@
                                     <li class="submenu-item {{ Route::is('MasterJenisRambang*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterJenisRambang.index') }}" class="submenu-link">Master
                                             Jenis<br>Rambang</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterJenisGradingWarna*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterJenisGradingWarna.index') }}"
+                                            class="submenu-link">Master
+                                            Jenis<br>Grading Warna</a>
                                     </li>
                                     <li class="submenu-item {{ Route::is('MasterJobMoulding*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterJobMoulding.index') }}" class="submenu-link">Master
@@ -654,7 +659,7 @@
                         @endrole
                         @role('moulding|admin')
                             <li
-                                class="sidebar-item has-sub {{ Route::is('TransitDryAHancuran*', 'GradingWarnaPenerimaan*', 'GradingWarnaPenerimaanStock*', 'MouldingPersiapan*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('TransitDryAHancuran*', 'GradingWarnaPenerimaan*', 'GradingWarnaPenerimaanStock*', 'MouldingPersiapan*', 'MouldingWasteInput*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Moulding</span>
@@ -684,8 +689,6 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    {{-- </ul> --}}
-                                    {{-- <ul class="submenu"> --}}
                                     <li
                                         class="submenu-item has-sub {{ Route::is('MouldingPersiapan*', 'GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
@@ -701,6 +704,19 @@
                                                 class="submenu-item {{ Route::is('MouldingPersiapan*') ? 'active' : '' }}">
                                                 <a href="{{ route('MouldingPersiapan.index') }}"
                                                     class="submenu-link">Moulding Persiapan</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('MouldingWasteInput*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Moulding Waste</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('MouldingWasteInput*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingWasteInput.index') }}"
+                                                    class="submenu-link">Moulding Waste Input</a>
                                             </li>
                                         </ul>
                                     </li>

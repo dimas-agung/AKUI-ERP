@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'fullname',
         'username',
+        'plant',
         'nip',
         'phone_number',
         'birth_date',

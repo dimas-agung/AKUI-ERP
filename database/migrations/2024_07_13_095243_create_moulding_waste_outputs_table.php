@@ -11,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grading_kasar_inputs', function (Blueprint $table) {
+        Schema::create('moulding_waste_outputs', function (Blueprint $table) {
             $table->id();
-            $table->string('doc_no');
-            $table->string('nomor_bstb');
+            $table->string('asal_stock');
             $table->string('id_box');
-            $table->string('nomor_batch');
-            $table->string('nama_supplier');
-            $table->string('jenis_raw_material');
-            $table->string('nomor_nota_internal');
+            $table->string('jenis');
             $table->float('berat');
-            $table->string('kadar_air');
-            $table->string('nomor_grading');
+            $table->float('pcs');
+            $table->string('tujuan_kirim');
+            $table->string('nomor_job');
+            $table->string('nomor_bstb');
+            $table->string('keterangan')->nullable();
+            $table->integer('status')->default(1)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_AKTIF');
+            $table->float('harga_estimasi', 16, 4);
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->text('keterangan')->nullable();
             $table->string('user_created');
             $table->string('user_updated')->nullable();
             $table->timestamps();
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grading_kasar_inputs');
+        Schema::dropIfExists('moulding_waste_outputs');
     }
 };

@@ -33,8 +33,9 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterTujuanKirimRawMaterialSeeder::class);
         $this->call(MasterTujuanKirimGradingHalusSeeder::class);
         $this->call(MasterOperatorSeeder::class);
+        $this->call(MasterJenisGradingWarnaSeeder::class);
         $this->call(MsterJenisGradingKasarSeeder::class);
-        $this->call(TestSeeder::class);
+        $this->call(PreGradingHalusAddingSeeder::class);
         $this->call(MasterOngkosCuciSeeder::class);
         // $this->call(TransitPreCleaningStockSeeder::class);
         $this->call(PreWashStockSeeder::class);
@@ -61,6 +62,14 @@ class DatabaseSeeder extends Seeder
         $this->call(TransitDryACabutSeeder::class);
         $this->call(MasterJobMouldingSeeder::class);
         $this->call(GradingWarnaStockSeeder::class);
+        $this->call(GradingKasarInputSeeder::class);
+        $this->call(GradingkasarOutputSeeder::class);
+        $this->call(PreCleaningInputSeeder::class);
+        $this->call(PreGradingHalusStockSeeder::class);
+        $this->call(GradingHalusInputSeeder::class);
+        $this->call(GradingHalusStockSeeder::class);
+        $this->call(GradingHalusOutputSeeder::class);
+        $this->call(PreWashOutputSeeder::class);
         $this->call(roleSeeders::class);
         $this->call(userSeeders::class);
 
