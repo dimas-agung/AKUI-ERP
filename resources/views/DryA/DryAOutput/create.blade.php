@@ -47,7 +47,7 @@
                                                 @foreach ($DryAGradingCabutStock as $nomor_job)
                                                     @if (!str_contains($nomor_job,Auth::user()->plant))
                                                         @php
-                                                            
+
                                                             continue;
                                                         @endphp
                                                     @endif
@@ -107,6 +107,30 @@
                                                             <th class="text-center">Total Modal</th>
                                                         </tr>
                                                     </thead>
+                                                    <tbody id="tableBodyTemp">
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-md-12">
+                                                    <a class="btn btn-primary"
+                                                        onclick="addRow()">Add</a>
+
+                                                </div>
+                                                <table class="table table-striped mt-3" id="dataTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">Nomor Job</th>
+                                                            <th class="text-center">Nomor Batch</th>
+                                                            <th class="text-center">Tujuan Kirim</th>
+                                                            <th class="text-center">Keterangan</th>
+                                                            <th class="text-center">Berat Kotor</th>
+                                                            <th class="text-center">Jenis Grading</th>
+                                                            <th class="text-center">Berat 1 Grading</th>
+                                                            <th class="text-center">Pcs 1 Grading</th>
+                                                            <th class="text-center">Berat 2 Grading</th>
+                                                            <th class="text-center">Modal</th>
+                                                            <th class="text-center">Total Modal</th>
+                                                        </tr>
+                                                    </thead>
                                                     <tbody id="tableBody">
                                                     </tbody>
                                                 </table>
@@ -133,15 +157,29 @@
     <script>
         // Inisialisasi dataArray
         var dataArray = [];
+        var dataArrayTemp = [];
         let selectedNomorBSTB = ''; // Variabel untuk menyimpan nomor BSTB yang dipilih sebelumnya
 
         $('#nomor_job').on('change', function() {
             let selectedIdBox = $(this).val();
-
+            if (selectedIdBox == "") {
+                $('#total_berat').val(null);
+                $('#total_pcs').val(null);
+                return;
+            }
+            dataArray.forEach(e => {
+                if (e.nomor_job == selectedIdBox) {
+                    Swal.fire({
+                    title: 'Warning!',
+                    text: "Nomor Job Sudah pernah ditambahkan sebelumnya.",
+                    icon: 'warning'
+                });
+                }
+            });
             // Hanya lakukan permintaan AJAX jika nomor BSTB yang baru dipilih tidak sama dengan yang sebelumnya
             if (selectedNomorBSTB !== selectedIdBox) {
                 selectedNomorBSTB = selectedIdBox; // Perbarui nomor BSTB yang dipilih sebelumnya
-
+                dataArrayTemp = [];
                 $.ajax({
                     url: `{{ route('DryAOutput.set') }}`,
                     method: 'GET',
@@ -150,11 +188,11 @@
                     },
                     success: function(response) {
                         if (response.length > 0 && response[0].berat_kotor > 0) {
-                            var tableBody = $('#tableBody');
+                            var tableBody = $('#tableBodyTemp');
                             tableBody.empty();
 
                             // Menghapus dataArray sebelum menambahkan data baru
-                            dataArray = [];
+                            dataArrayTemp = [];
 
                             // Inisialisasi variabel untuk menjumlahkan berat dan pcs
                             let totalBerat1Grading = 0;
@@ -181,7 +219,7 @@
                                 tableBody.append(newRow);
 
                                 // Menambahkan data ke dalam dataArray
-                                dataArray.push({
+                                dataArrayTemp.push({
                                     nomor_batch: rowData.nomor_batch,
                                     nomor_job: rowData.nomor_job,
                                     tujuan_kirim: rowData.tujuan_kirim,
@@ -213,11 +251,7 @@
                                 title: 'Warning!',
                                 text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
                                 icon: 'error'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    location.reload();
-                                }
-                            });
+                            })
                             $('#nomor_job').val('');
                         }
                     },
@@ -227,7 +261,73 @@
                 });
             }
         });
+        function addRow() {
 
+            // Mengubah atribut readonly menggunakan jQuery
+            // $('#nomor_adjustment').prop('readonly', true);
+            // $('#tanggal_adjustment').prop('readonly', true); // Jika ingin menjadikan select readonly
+
+            var tableBodyTemp = $('#tableBodyTemp');
+            tableBodyTemp.empty();
+            var tableBody = $('#tableBody');
+            if (dataArrayTemp === undefined || dataArrayTemp.length == 0) {
+                 // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
+                 Swal.fire({
+                                title: 'Warning!',
+                                text: 'Data Tidak boleh Kosong.',
+                                icon: 'error'
+                            })
+                return;
+            }
+
+                // Menambahkan data ke dalam tabel
+            dataArrayTemp.forEach(function(rowData) {
+
+                                // // Tambahkan baris ke dalam tabel
+                                var newRow = `<tr>` +
+                                `<td class="text-center">${rowData.nomor_job}</td>` +
+                                `<td class="text-center">${rowData.nomor_batch}</td>` +
+                                `<td class="text-center">${rowData.tujuan_kirim}</td>` +
+                                `<td class="text-center">${rowData.keterangan}</td>` +
+                                `<td class="text-center">${rowData.berat_kotor}</td>` +
+                                `<td class="text-center">${rowData.jenis_grading}</td>` +
+                                `<td class="text-center">${rowData.berat_1_grading}</td>` +
+                                `<td class="text-center">${rowData.pcs_1_grading}</td>` +
+                                `<td class="text-center">${rowData.berat_2_grading}</td>` +
+                                `<td class="text-center">${rowData.modal}</td>` +
+                                `<td class="text-center">${rowData.total_modal}</td>` +
+                                // `<td class="text-center">${fix_harga_deal.toFixed(4)}</td>` +
+                                `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
+                                `</tr>`
+                                // tableBody.append(row);
+
+                                $('#dataTable tbody').append(newRow);
+                                dataArray.push({
+                                    nomor_batch: rowData.nomor_batch,
+                                    nomor_job: rowData.nomor_job,
+                                    tujuan_kirim: rowData.tujuan_kirim,
+                                    keterangan: rowData.keterangan,
+                                    berat_kotor: rowData.berat_kotor,
+                                    jenis_grading: rowData.jenis_grading,
+                                    berat_1_grading: rowData.berat_1_grading,
+                                    pcs_1_grading: rowData.pcs_1_grading,
+                                    berat_2_grading: rowData.berat_2_grading,
+                                    modal: rowData.modal,
+                                    total_modal: rowData.total_modal,
+                                });
+            });
+            dataArrayTemp = [];
+            console.log(dataArray);
+            // $('#nomor_job option:first').prop('selected',true);
+            // $('#nomor_job').prop('selectedIndex',0);
+
+            $('#nomor_job').val("").trigger( "change" );
+            // $('#nomor_job').val(null).trigger('change');
+                // $('#dataTable tbody').append(newRow);
+
+
+            // Menambahkan data ke dalam array
+        }
 
 
         $(document).ready(function() {
@@ -342,8 +442,8 @@
                         }).then((result) => {
                             // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
                             if (result.isConfirmed) {
-                                window.location.href = response
-                                    .redirectTo; // Ganti dengan URL tujuan redirect Anda
+                                // window.location.href = response
+                                //     .redirectTo; // Ganti dengan URL tujuan redirect Anda
                             }
                         });
                     },
