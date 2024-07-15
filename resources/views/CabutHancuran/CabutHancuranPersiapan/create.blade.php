@@ -87,7 +87,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="form-label">Nomor Job</label>
-                                            <input type="text" class="form-control" id="nomor_job" readonly>
+                                            <input type="text" class="form-control" id="nomor_job" >
                                         </div>
                                     </div>
                                     <div class="col-md-6">

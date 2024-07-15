@@ -120,7 +120,7 @@
                                                 <input id="id_box" type="text"
                                                     class="form-control @error('nama') is-invalid @enderror" name="id_box"
                                                     value="{{ old('id_box') }}" placeholder="Masukkan Id Box Hcr Kotor"
-                                                    readonly>
+                                                    >
 
                                                 <!-- error message untuk title -->
                                                 @error('id_box')
