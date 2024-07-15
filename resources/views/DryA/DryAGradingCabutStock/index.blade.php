@@ -62,7 +62,7 @@
                                         @endrole
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
-                                        <th scope="col" class="text-center">Action</th>
+                                        {{-- <th scope="col" class="text-center">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -81,7 +81,6 @@
                                             <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                             <td class="text-center">{{ $item->keterangan }}</td>
                                             <td class="text-center">{{ $item->berat_kotor }}</td>
-                                            <td class="text-center">{{ $item->nip_operator }}</td>
                                             <td class="text-center">{{ $item->jenis_grading }}</td>
                                             <td class="text-center">{{ $item->berat_1_grading }}</td>
                                             <td class="text-center">{{ $item->pcs_1_grading }}</td>

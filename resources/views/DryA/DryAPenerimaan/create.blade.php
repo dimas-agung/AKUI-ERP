@@ -202,6 +202,16 @@
         let selectedNomorBSTB = ''; // Variabel untuk menyimpan nomor BSTB yang dipilih sebelumnya
         $('#nomor_job').on('change', function() {
             let selectedIdBox = $(this).val();
+            dataArray.forEach(e => {
+                if (e.nomor_job == selectedIdBox) {
+                    Swal.fire({
+                    title: 'Warning!',
+                    text: "Nomor Job Sudah pernah ditambahkan sebelumnya.",
+                    icon: 'warning'
+                    });
+                    return;
+                }
+            });
             if (selectedNomorBSTB !== selectedIdBox) {
                 selectedNomorBSTB = selectedIdBox;
                 $.ajax({

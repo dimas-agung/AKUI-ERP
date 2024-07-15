@@ -16,6 +16,7 @@ class DryAGradingHancuranStock extends Model
         'berat_keluar',
         'sisa_berat',
         'modal',
+        'plant',
         'total_modal',
     ];
 }

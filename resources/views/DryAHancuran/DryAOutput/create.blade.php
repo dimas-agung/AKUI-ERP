@@ -69,7 +69,7 @@
                                                 @foreach ($MasTujKir as $innerPost)
                                                     @if ($innerPost->tujuan_kirim == $post->tujuan_kirim && $innerPost->status > 0)
                                                         @if (!$beratMasukShown)
-                                                            <option value="{{ $innerPost->tujuan_kirim }}">
+                                                            <option value="{{ $innerPost->inisial_tujuan }}">
                                                                 {{ old('tujuan_kirim', $innerPost->tujuan_kirim) }}
                                                             </option>
                                                             @php

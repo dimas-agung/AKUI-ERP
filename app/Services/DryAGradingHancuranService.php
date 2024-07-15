@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
 use App\Models\DryAPenerimaanHancuran;
 use App\Models\DryAGradingHancuranStock;
+use App\Models\DryAOutputHancuran;
 use Illuminate\Support\Facades\Validator;
 use App\Models\DryAPenerimaanHancuranStock;
 use Illuminate\Support\Facades\Auth;
@@ -93,6 +94,7 @@ class DryAGradingHancuranService
                     }
 
                     if (!$found) {
+                        // return 123;
                         DryAGradingHancuranStock::create([
                             'unit'                  => $mergedData['unit'] ?? 'Dry A',
                             'jenis_grading'         => $mergedData['jenis_grading'],
@@ -171,20 +173,31 @@ class DryAGradingHancuranService
                 // Log::info('Found job: ' . $DryAGradingHancuran->nomor_job);
 
                 // Hapus semua item terkait
-                $stockDry = DryAGradingHancuranStock::where(['jenis_grading'=>$DryAGradingHancuran->jenis_grading,'plant'=> $plant])
+              
+                    $existDryAOutput = DryAOutputHancuran::where(['created_at'=>$DryAGradingHancuran->created_at,'tujuan_kirim'=> $plant])
                     // ->where('created_at', $DryAGradingHancuran->created_at)
                     ->first();
-
+                if($existDryAOutput){
+                        DB::rollBack();
+                        // Simpan pesan peringatan dalam session
+                        session()->flash('warning', 'Data tidak bisa dihapus karena ada data output yang sudah dibuat .');
+                        // Kembali ke halaman sebelumnya
+                        return back();
+                }
+    
+                $stockDry = DryAGradingHancuranStock::where(['jenis_grading'=>$DryAGradingHancuran->jenis_grading,'plant'=> $plant])
+                // ->where('created_at', $DryAGradingHancuran->created_at)
+                ->first();
                 if ($stockDry) {
                     // Log::info('Found related stock: ' . $stockDry->id);
 
                     if ($DryAGradingHancuran->berat_grading >= $stockDry->berat_keluar) {
                         // Hitung sisa berat
                         $beratMasuk = $stockDry->berat_masuk - ($DryAGradingHancuran->berat_grading ?? 0);
-                        $sisaBerat = $beratMasuk;
+                        $sisaBerat = $beratMasuk - $stockDry->berat_keluar;
                         $totalModal = $stockDry->modal * $sisaBerat;
                         // Log::info('Found related stock: ' . $stockDry->id);
-                        if ($stockDry->sisa_berat === 0) {
+                        if ($sisaBerat == 0) {
                             $stockDry->delete();
                         } else {
 
