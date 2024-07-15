@@ -22,6 +22,7 @@ class GradingKasarStock extends Model
         'berat_keluar',
         'pcs_masuk',
         'pcs_keluar',
+        'berat_adjustment',
         'avg_kadar_air',
         'nomor_grading',
         'modal',

@@ -327,6 +327,16 @@ Route::middleware('auth')->group(function () {
                 Route::get('/grading_kasar_output/get_pcc', 'setpcc')->name('GradingKasarOutput.setpcc');
                 Route::post('/grading_kasar_output/cek_data', 'CeksendData')->name('GradingKasarOutput.CeksendData');
             });
+            Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarAdjustmentController::class)->group(function () {
+                Route::get('/GradingKasarAdjustment', 'index')->name('GradingKasarAdjustment.index');
+                Route::get('/GradingKasarAdjustment/create', 'create')->name('GradingKasarAdjustment.create');
+                Route::post('/GradingKasarAdjustment/store', 'store')->name('GradingKasarAdjustment.store');
+
+                Route::delete('/GradingKasarAdjustment/destroy/{id}', 'destroy')->name('GradingKasarAdjustment.destroy');
+
+                Route::get('/GradingKasarAdjustment/get_data_id_box', 'getDataStock')->name('GradingKasarAdjustment.getDataStock');
+
+            });
             // Route::controller(App\Http\Controllers\TransitGradingKasar\StockTransitGradingKasarController::class)->group(function () {
             //     Route::get('/stock_transit_grading_kasar', 'index')->name('StockTransitGradingKasar.index');
             // });
@@ -593,7 +603,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/cabut_bulu_pengembalian/destroy/{nomor_bstb}', 'destroy')->name('CabutBuluPengembalian.destroy');
             });
 
-          
+
         });
 
         Route::prefix('Rambang')->middleware('role:cleaning|admin')->group(function (){
@@ -635,7 +645,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/rambang_pengiriman_waste/destroy/{nomor_bstb}', 'destroy')->name('RambangPengirimanWaste.destroy');
             });
 
-         
+
 
             Route::controller(App\Http\Controllers\Rambang\RambangBasahInputController::class)->group(function () {
                 Route::get('/input_rambang_basah', 'index')->name('InputRambangBasah.index');
