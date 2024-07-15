@@ -126,15 +126,26 @@ class UsersSeeder extends Seeder
         // ]);
         // $user->syncRoles(['dry_a']);
         $user = User::create([
-            'email' => 'DryAObi@gmail.com',
-            'password' => Hash::make('ADM011212'),
-            'fullname' => 'Very Nur Ramadhani',
-            'nip' => '223070658',
-            'unit_id' => '52',
-            'username' => 'Very Nur Ramadhani',
-            'phone_number' => '01111211112311',
+            'email' => 'ManagerProductionAkui@gmail.com',
+            'password' => Hash::make('41M3CC4H'),
+            'fullname' => 'Masoed',
+            'nip' => '223100662A',
+            'plant' => 'A',
+            'username' => 'Masoed',
+            'phone_number' => '0111121111212311',
             'birth_date' => '2000-04-09',
         ]);
-        $user->syncRoles(['dry_a']);
+        $user->syncRoles(['production']);
+        $user = User::create([
+            'email' => 'ManagerProductionObi@gmail.com',
+            'password' => Hash::make('41M3CC4H'),
+            'fullname' => 'Masoed',
+            'nip' => '223100662O',
+            'plant' => 'O',
+            'username' => 'Masoed',
+            'phone_number' => '01112112121111212311',
+            'birth_date' => '2000-04-09',
+        ]);
+        $user->syncRoles(['production']);
     }
 }

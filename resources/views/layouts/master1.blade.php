@@ -298,7 +298,7 @@
                             </li>
                         @endrole
 
-                        @role('bahan_baku|admin')
+                        @role('bahan_baku|admin|production')
                             <li class="sidebar-title">Production</li>
                             <li
                                 class="sidebar-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock', 'GradingHalusAdjustmentAdding*', 'GradingHalusAdjustmentStock*', 'GradingHalusAdjustmentInput*', 'GradingHalusOutput*', 'TransitGradingHalus*', 'PreWashOutput*', 'PreWashInput*', 'PreWashStock*', 'PreCleaningReport*') ? 'active' : '' }}">
@@ -307,7 +307,7 @@
                                     <span>Bahan Baku</span>
                                 </a>
                                 <ul class="submenu">
-                                    @role('grading_kasar|admin')
+                                    @role('grading_kasar|admin|production')
                                     <li
                                         class="submenu-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'ReportGradingKasar*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
@@ -352,7 +352,7 @@
                                         </ul>
                                     </li>
                                     @endrole
-                                    @role('pre_cleaning|admin')
+                                    @role('pre_cleaning|admin|production')
                                     <li
                                         class="submenu-item has-sub {{ Route::is('StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreCleaningReport*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
@@ -391,7 +391,7 @@
                                         </ul>
                                     </li>
                                     @endrole
-                                    @role('grading_halus|admin')
+                                    @role('grading_halus|admin|production')
                                     <li
                                         class="submenu-item has-sub {{ Route::is('TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock*', 'GradingHalusAdjustmentAdding*', 'GradingHalusAdjustmentStock*', 'GradingHalusAdjustmentInput*', 'GradingHalusOutput*', 'TransitGradingHalus*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
@@ -465,7 +465,7 @@
                                         </ul>
                                     </li>
                                     @endrole
-                                    @role('pre_wash|admin')
+                                    @role('pre_wash|admin|production')
                                     <li
                                         class="submenu-item has-sub {{ Route::is('TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
@@ -501,7 +501,7 @@
                                 </ul>
                             </li>
                         @endrole
-                        @role('cleaning|admin')
+                        @role('cleaning|admin|production')
                             <li
                                 class="sidebar-item has-sub {{ Route::is('CabutBuluPenyebaran*', 'CabutBuluStock*', 'RambangKeringInput*', 'RambangKeringStock*', 'RambangPengirimanWaste*', 'TransitRambangWaste*', 'CabutHancuranPenyebaran*', 'CabutHancuranPengembalian*', 'CabutHancuranStock*', 'TransitCabutHancuran*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
@@ -695,7 +695,7 @@
                             </li>
                         @endrole
 
-                        @role('dry_a|admin')
+                        @role('dry_a|admin|production')
                             {{-- <li class="sidebar-title">Dry A</li> --}}
                             <li
                                 class="sidebar-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*', 'DryAOutput*', 'TransitDryA*', 'TransitDryAHancuran*', 'TransitCabutHancuran*', 'DryAPenerimaanHancuran*', 'DryAPenerimaanHancuranStock*', 'DryAOutputHancuran*', 'DryAWasteOutput*', 'DryAWasteStock*', 'TransitDryAWaste*') ? 'active' : '' }}">
@@ -834,7 +834,7 @@
                             </li>
                         @endrole
 
-                        @role('moulding|admin')
+                        @role('moulding|admin|production')
                             <li
                                 class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*','TransitDryAHancuran*', 'GradingWarnaPenerimaan*', 'GradingWarnaPenerimaanStock*', 'MouldingPersiapan*', 'MouldingPenyebaran*', 'MouldingStock*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
