@@ -68,7 +68,8 @@ class PrmRawMaterialAdjustmentController extends Controller
             foreach($dataArray as $item){
                 // calculate modal
                 $total_modal_saldo_terakhir = $item->berat_saldo_terakhir * $item->modal;
-                $modal_saldo_awal =  $total_modal_saldo_terakhir /$item->berat_saldo_awal;
+                $modal_saldo_awal =  $item->berat_saldo_awal == 0? 0:$total_modal_saldo_terakhir /$item->berat_saldo_awal;
+
                 $PrmRawMaterialAdjustment = PrmRawMaterialAdjustment::create([
                     'id_box_raw_material' =>  $item->id_box_raw_material,
                     'nomor_adjustment' =>  $item->nomor_adjustment,
@@ -127,10 +128,11 @@ class PrmRawMaterialAdjustmentController extends Controller
             $PrmRawMaterialAdjustment = PrmRawMaterialAdjustment::findOrFail($id);
             $PrmRawMaterialStock = PrmRawMaterialStock::where('id_box', $PrmRawMaterialAdjustment->id_box_raw_material)->first();
                 $sisa_berat_stock =  $PrmRawMaterialStock->berat_masuk - $PrmRawMaterialStock->berat_keluar - ($PrmRawMaterialStock->berat_adjustment - $PrmRawMaterialAdjustment->berat_adjustment);
+                $modal = $sisa_berat_stock == 0 ? 0 :$PrmRawMaterialStock->total_modal / $sisa_berat_stock;
                 $PrmRawMaterialStock->update([
                     'sisa_berat' => $sisa_berat_stock,
                     'berat_adjustment' =>  ($PrmRawMaterialStock->berat_adjustment - $PrmRawMaterialAdjustment->berat_adjustment),
-                    'modal' =>  $PrmRawMaterialStock->total_modal / $sisa_berat_stock,
+                    'modal' =>  $modal,
                     // 'total_modal' =>  $PrmRawMaterialStock->modal * $sisa_berat_stock,
                 ]);
             // Simpan id_box dari input yang akan dihapus
