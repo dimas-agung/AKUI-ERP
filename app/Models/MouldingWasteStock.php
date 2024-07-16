@@ -12,6 +12,7 @@ class MouldingWasteStock extends Model
     const STATUS_AKTIF = 1;
     protected $table = 'moulding_waste_stocks';
     protected $fillable = [
+        'plant',
         'unit',
         'id_box_waste_moulding',
         'jenis_waste',

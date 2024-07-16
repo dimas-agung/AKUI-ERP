@@ -666,7 +666,7 @@
 
                         @role('moulding|admin')
                             <li
-                                class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*', 'MouldingPenyebaran*', 'MouldingStock*', 'MouldingPengembalian*', 'TransitMoulding*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*', 'MouldingPenyebaran*', 'MouldingStock*', 'MouldingPengembalian*', 'TransitMoulding*', 'MouldingWasteInput*', 'MouldingWasteStock*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Moulding</span>
@@ -730,6 +730,26 @@
                                                 <a href="{{ route('TransitMoulding.index') }}"
                                                     class="submenu-link">Transit
                                                     <br>Moulding</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('MouldingWasteInput*', 'MouldingWasteStock*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Moulding Waste</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('MouldingWasteInput*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingWasteInput.index') }}"
+                                                    class="submenu-link">Moulding
+                                                    <br>Waste Input</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('MouldingWasteStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingWasteStock.index') }}"
+                                                    class="submenu-link">Moulding
+                                                    <br>Waste Stock</a>
                                             </li>
                                         </ul>
                                     </li>

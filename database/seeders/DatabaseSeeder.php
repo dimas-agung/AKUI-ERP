@@ -90,5 +90,6 @@ class DatabaseSeeder extends Seeder
         // // Mooulding
         $this->call(GradingWarnaPenerimaanStockSeeder::class);
         $this->call(MouldingStockSeeder::class);
+        $this->call(MouldingWasteStockSeeder::class);
     }
 }
