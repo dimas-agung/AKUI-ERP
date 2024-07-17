@@ -69,7 +69,7 @@
                                                 @foreach ($MasTujKir as $innerPost)
                                                     @if ($innerPost->tujuan_kirim == $post->tujuan_kirim && $innerPost->status > 0)
                                                         @if (!$beratMasukShown)
-                                                            <option value="{{ $innerPost->inisial_tujuan }}">
+                                                            <option value="{{ $innerPost->tujuan_kirim }}">
                                                                 {{ old('tujuan_kirim', $innerPost->tujuan_kirim) }}
                                                             </option>
                                                             @php
@@ -106,12 +106,17 @@
                                             placeholder="Masukkan Nomer Job" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Modal</label>
-                                        <input type="text" id="modal" class="form-control" name="modal" readonly>
+                                @role('admin')
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Modal</label>
+                                            <input type="text" id="modal" class="form-control" name="modal" readonly>
+                                        </div>
                                     </div>
-                                </div>
+                                        @else
+                                        <input type="hidden" id="modal" class="form-control" name="modal" readonly>
+                                @endrole
+                                <input type="hidden" class="form-control" id="inisial_tujuan" readonly>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Berat Masuk</label>
@@ -168,8 +173,10 @@
                                 <th class="text-center">Nomor BSTB</th>
                                 <th class="text-center">Berat Job</th>
                                 <th class="text-center">Tujuan Kirim</th>
+                                @role('admin')
                                 <th class="text-center">Modal</th>
                                 <th class="text-center">Total Modal</th>
+                                @endrole
                                 <th class="text-center">User Created</th>
                                 <th class="text-center">Action</th>
                             </tr>
@@ -195,24 +202,45 @@
         $(document).ready(function() {
             $('#jenis_grading').on('change', function() {
                 let selectedJenisGrading = $(this).val();
-                $.ajax({
-                    url: `{{ route('DryAOutputHancuran.set') }}`,
-                    method: 'GET',
-                    data: {
-                        jenis_grading: selectedJenisGrading
-                    },
-                    success: function(response) {
-                        if (response.length > 0) {
-                            $('#berat_masuk').val(response[0].berat_masuk);
-                            $('#modal').val(response[0].modal);
-                        } else {
-                            $('#berat_masuk').val('');
-                        }
-                    },
-                    error: function(error) {
-                        console.error('Error:', error);
+                let countjenisAlreadyTake = 0;
+                dataArray.forEach(e => {
+                    if (e.jenis_grading == selectedJenisGrading) {
+                        Swal.fire({
+                            title: 'Warning!',
+                            text: "Jenis Grading Sudah pernah ditambahkan sebelumnya.",
+                            icon: 'warning'
+                        });
+                        countjenisAlreadyTake = 1
+                        $('#berat_masuk').val('');
+                        $('#modal').val('');
+                        // $('#jenis_grading').val('');
+                        $('#jenis_grading').val(null).trigger('change');
+                                // $('#modal').val('');
+                        return false;
                     }
                 });
+                if (countjenisAlreadyTake == 0) {
+                    
+                    $.ajax({
+                        url: `{{ route('DryAOutputHancuran.set') }}`,
+                        method: 'GET',
+                        data: {
+                            jenis_grading: selectedJenisGrading
+                        },
+                        success: function(response) {
+                            if (response.length > 0) {
+                                $('#berat_masuk').val(response[0].berat_masuk);
+                                $('#modal').val(response[0].modal);
+                            } else {
+                                $('#berat_masuk').val('');
+                                $('#modal').val('');
+                            }
+                        },
+                        error: function(error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                }
             });
         });
 
@@ -268,7 +296,7 @@
                 const detik = ('0' + now.getSeconds()).slice(-2);
 
                 // Menambahkan prefix yang sesuai
-                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_UDA`;
+                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_UDA_${inisial_tujuan}`;
                 if (prefix === 'BSTB') {
                     nomor = `BSTB_${nomor}`;
                 }
@@ -349,21 +377,33 @@
             var berat_masuk = $('#berat_masuk').val();
             var nomor_bstb = $('#nomor_bstb').val();
             var tujuan_kirim = $('#tujuan_kirim').val();
+            // var tujuan_kirim = $('#inisial_tujuan').val()
             var modal = $('#modal').val();
             var user_created = $('#user_created').val();
+            dataArray.forEach(e => {
+                    if (e.jenis_grading == jenis_grading) {
+                        Swal.fire({
+                            title: 'Warning!',
+                            text: "Jenis Grading Sudah pernah ditambahkan sebelumnya.",
+                            icon: 'warning'
+                        });
+                    }
 
+                    return false;
+            });
             // Inisialisasi array untuk menyimpan field yang belum terisi
             let fieldsNotFilled = [];
             // Periksa setiap field
             if (!jenis_grading) fieldsNotFilled.push('Jenis Grading');
             if (!tujuan_kirim) fieldsNotFilled.push('Tujuan Kirim');
             if (!berat_job) fieldsNotFilled.push('Berat Keluar');
-
+            
+            var tujuan_kirim = $('#inisial_tujuan').val()
             // Cek apakah ada field yang belum terisi
             if (fieldsNotFilled.length > 0) {
                 // Membuat pesan teks yang mencantumkan field yang belum terisi
                 let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
-
+                
                 Swal.fire({
                     title: 'Warning!',
                     text: message,
@@ -381,8 +421,10 @@
                 '<td>' + nomor_bstb + '</td>' +
                 '<td>' + berat_job + '</td>' +
                 '<td>' + tujuan_kirim + '</td>' +
+                @role('admin')
                 '<td>' + modal + '</td>' +
                 '<td>' + total_modal + '</td>' +
+                @endrole
                 '<td>' + user_created + '</td>' +
                 '</td><td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
 

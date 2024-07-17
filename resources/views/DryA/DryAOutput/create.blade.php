@@ -167,6 +167,7 @@
                 $('#total_pcs').val(null);
                 return;
             }
+            let  countjenisAlreadyTake =0
             dataArray.forEach(e => {
                 if (e.nomor_job == selectedIdBox) {
                     Swal.fire({
@@ -174,91 +175,96 @@
                     text: "Nomor Job Sudah pernah ditambahkan sebelumnya.",
                     icon: 'warning'
                 });
+                countjenisAlreadyTake =1;
+                 $('#nomor_job').val(null).trigger('change');
+                return;
                 }
             });
-            // Hanya lakukan permintaan AJAX jika nomor BSTB yang baru dipilih tidak sama dengan yang sebelumnya
-            if (selectedNomorBSTB !== selectedIdBox) {
-                selectedNomorBSTB = selectedIdBox; // Perbarui nomor BSTB yang dipilih sebelumnya
-                dataArrayTemp = [];
-                $.ajax({
-                    url: `{{ route('DryAOutput.set') }}`,
-                    method: 'GET',
-                    data: {
-                        nomor_job: selectedIdBox
-                    },
-                    success: function(response) {
-                        if (response.length > 0 && response[0].berat_kotor > 0) {
-                            var tableBody = $('#tableBodyTemp');
-                            tableBody.empty();
+            if (countjenisAlreadyTake == 0) {
+                // Hanya lakukan permintaan AJAX jika nomor BSTB yang baru dipilih tidak sama dengan yang sebelumnya
+                if (selectedNomorBSTB !== selectedIdBox) {
+                    selectedNomorBSTB = selectedIdBox; // Perbarui nomor BSTB yang dipilih sebelumnya
+                    dataArrayTemp = [];
+                    $.ajax({
+                        url: `{{ route('DryAOutput.set') }}`,
+                        method: 'GET',
+                        data: {
+                            nomor_job: selectedIdBox
+                        },
+                        success: function(response) {
+                            if (response.length > 0 && response[0].berat_kotor > 0) {
+                                var tableBody = $('#tableBodyTemp');
+                                tableBody.empty();
 
-                            // Menghapus dataArray sebelum menambahkan data baru
-                            dataArrayTemp = [];
+                                // Menghapus dataArray sebelum menambahkan data baru
+                                dataArrayTemp = [];
 
-                            // Inisialisasi variabel untuk menjumlahkan berat dan pcs
-                            let totalBerat1Grading = 0;
-                            let totalBerat2Grading = 0;
-                            let totalPcs1Grading = 0;
+                                // Inisialisasi variabel untuk menjumlahkan berat dan pcs
+                                let totalBerat1Grading = 0;
+                                let totalBerat2Grading = 0;
+                                let totalPcs1Grading = 0;
 
-                            // Iterasi melalui setiap data yang diterima
-                            response.forEach(function(rowData) {
-                                var newRow = $('<tr>');
-                                // Tambahkan kolom-kolom sesuai kebutuhan
-                                newRow.append('<td>' + rowData.nomor_job + '</td>');
-                                newRow.append('<td>' + rowData.nomor_batch + '</td>');
-                                newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
-                                newRow.append('<td>' + rowData.keterangan + '</td>');
-                                newRow.append('<td>' + rowData.berat_kotor + '</td>');
-                                newRow.append('<td>' + rowData.jenis_grading + '</td>');
-                                newRow.append('<td>' + rowData.berat_1_grading + '</td>');
-                                newRow.append('<td>' + rowData.pcs_1_grading + '</td>');
-                                newRow.append('<td>' + rowData.berat_2_grading + '</td>');
-                                newRow.append('<td>' + rowData.modal + '</td>');
-                                newRow.append('<td>' + rowData.total_modal + '</td>');
+                                // Iterasi melalui setiap data yang diterima
+                                response.forEach(function(rowData) {
+                                    var newRow = $('<tr>');
+                                    // Tambahkan kolom-kolom sesuai kebutuhan
+                                    newRow.append('<td>' + rowData.nomor_job + '</td>');
+                                    newRow.append('<td>' + rowData.nomor_batch + '</td>');
+                                    newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
+                                    newRow.append('<td>' + rowData.keterangan + '</td>');
+                                    newRow.append('<td>' + rowData.berat_kotor + '</td>');
+                                    newRow.append('<td>' + rowData.jenis_grading + '</td>');
+                                    newRow.append('<td>' + rowData.berat_1_grading + '</td>');
+                                    newRow.append('<td>' + rowData.pcs_1_grading + '</td>');
+                                    newRow.append('<td>' + rowData.berat_2_grading + '</td>');
+                                    newRow.append('<td>' + rowData.modal + '</td>');
+                                    newRow.append('<td>' + rowData.total_modal + '</td>');
 
-                                // Tambahkan baris ke dalam tabel
-                                tableBody.append(newRow);
+                                    // Tambahkan baris ke dalam tabel
+                                    tableBody.append(newRow);
 
-                                // Menambahkan data ke dalam dataArray
-                                dataArrayTemp.push({
-                                    nomor_batch: rowData.nomor_batch,
-                                    nomor_job: rowData.nomor_job,
-                                    tujuan_kirim: rowData.tujuan_kirim,
-                                    keterangan: rowData.keterangan,
-                                    berat_kotor: rowData.berat_kotor,
-                                    jenis_grading: rowData.jenis_grading,
-                                    berat_1_grading: rowData.berat_1_grading,
-                                    pcs_1_grading: rowData.pcs_1_grading,
-                                    berat_2_grading: rowData.berat_2_grading,
-                                    modal: rowData.modal,
-                                    total_modal: rowData.total_modal,
+                                    // Menambahkan data ke dalam dataArray
+                                    dataArrayTemp.push({
+                                        nomor_batch: rowData.nomor_batch,
+                                        nomor_job: rowData.nomor_job,
+                                        tujuan_kirim: rowData.tujuan_kirim,
+                                        keterangan: rowData.keterangan,
+                                        berat_kotor: rowData.berat_kotor,
+                                        jenis_grading: rowData.jenis_grading,
+                                        berat_1_grading: rowData.berat_1_grading,
+                                        pcs_1_grading: rowData.pcs_1_grading,
+                                        berat_2_grading: rowData.berat_2_grading,
+                                        modal: rowData.modal,
+                                        total_modal: rowData.total_modal,
+                                    });
+
+                                    // Tambahkan berat dan pcs grading ke total
+                                    totalBerat1Grading += parseFloat(rowData.berat_1_grading);
+                                    totalBerat2Grading += parseFloat(rowData.berat_2_grading);
+                                    totalPcs1Grading += parseFloat(rowData.pcs_1_grading);
                                 });
 
-                                // Tambahkan berat dan pcs grading ke total
-                                totalBerat1Grading += parseFloat(rowData.berat_1_grading);
-                                totalBerat2Grading += parseFloat(rowData.berat_2_grading);
-                                totalPcs1Grading += parseFloat(rowData.pcs_1_grading);
-                            });
+                                // Update nilai total berat di inputan #total_berat
+                                let totalBerat = totalBerat1Grading + totalBerat2Grading;
+                                $('#total_berat').val(totalBerat);
 
-                            // Update nilai total berat di inputan #total_berat
-                            let totalBerat = totalBerat1Grading + totalBerat2Grading;
-                            $('#total_berat').val(totalBerat);
-
-                            // Update nilai total pcs di inputan #total_pcs
-                            $('#total_pcs').val(totalPcs1Grading);
-                        } else {
-                            // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
-                            Swal.fire({
-                                title: 'Warning!',
-                                text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
-                                icon: 'error'
-                            })
-                            $('#nomor_job').val('');
+                                // Update nilai total pcs di inputan #total_pcs
+                                $('#total_pcs').val(totalPcs1Grading);
+                            } else {
+                                // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
+                                Swal.fire({
+                                    title: 'Warning!',
+                                    text: 'Berat tidak boleh 0. Pilih nomor BSTB lain.',
+                                    icon: 'error'
+                                })
+                                $('#nomor_job').val('');
+                            }
+                        },
+                        error: function(error) {
+                            console.error('Error:', error);
                         }
-                    },
-                    error: function(error) {
-                        console.error('Error:', error);
-                    }
-                });
+                    });
+                }
             }
         });
         function addRow() {
