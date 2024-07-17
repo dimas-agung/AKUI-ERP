@@ -96,7 +96,16 @@ class PreWashInputController extends Controller
         foreach ($dataArray as $data) {
             // Gabungkan data dari $validatedData dan $data
             $mergedData = array_merge($validatedData, $data);
-
+            // $stockTrans = PreWashStock::where('nomor_job', '=', $mergedData['nomor_job'])->first();
+            // // $stockTrans->delete();
+            // if ($stockTrans) {
+            //     // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
+            //     // if ($stockTrans->status === 1) {
+            //         $stockTrans->delete();
+            //     // } else {
+                    
+            //     // }
+            // }
             // Validasi untuk setiap item dalam dataArray
             $validator = Validator::make($mergedData, [
                 'nomor_bstb' => 'required', // Ganti dengan nama field yang sesuai
@@ -212,10 +221,11 @@ class PreWashInputController extends Controller
                 // $stockTrans->delete();
                 if ($stockTrans) {
                     // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
-                    if ($stockTrans->status === 1) {
-                        $stockTrans->delete();
-                    } else {
-                    }
+                    $stockTrans->delete();
+                    // if ($stockTrans->status === 1) {
+                    // } else {
+
+                    // }
                 }
 
                 // Temukan semua item terkait di RambangKeringStock
