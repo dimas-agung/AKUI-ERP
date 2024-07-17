@@ -58,12 +58,9 @@
                                     <td>
                                         @if ($item->status == 1)
                                             On Transit
-                                            {{-- @elseif ($item->status == 2)
-                                            On Process
-                                        @elseif ($item->status == 3)
-                                            Finished --}}
+                              
                                         @else
-                                            Unknown Status
+                                           Nonactive
                                         @endif
                                     </td>
                                 </tr>

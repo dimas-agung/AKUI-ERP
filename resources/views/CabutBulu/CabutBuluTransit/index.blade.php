@@ -64,8 +64,16 @@
                                         @endrole
                                         {{-- <td class="text-center">{{ $TPCS->status }}</td> --}}
                                         <td class="text-center">
-                                            @if ($TPCS->status == 1)
-                                                Aktif
+                                            @if ($TPCS->status == 0)
+                                                Non-Aktif
+                                            @elseif ($TPCS->status == 1)
+                                                On Stock
+                                            @elseif ($TPCS->status == 2)
+                                                On Process
+                                            @elseif ($TPCS->status == 3)
+                                                Finished
+                                            @else
+                                                Unknown Status
                                             @endif
                                         </td>
                                     </tr>

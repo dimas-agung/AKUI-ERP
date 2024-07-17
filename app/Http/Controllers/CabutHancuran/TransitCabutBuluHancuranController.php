@@ -11,7 +11,7 @@ class TransitCabutBuluHancuranController extends Controller
     // index
     public function index()
     {
-        $TransitCabutBuluHancuran = TransitCabutBuluHancuran::all();
+        $TransitCabutBuluHancuran = TransitCabutBuluHancuran::where('status',1)->get();
         return response()->view('CabutHancuran.TransitCabutBuluHancuran.index', [
             'transit_cabut_bulu_hancuran' => $TransitCabutBuluHancuran,
         ]);

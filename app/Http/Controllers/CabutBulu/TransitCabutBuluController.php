@@ -13,7 +13,7 @@ class TransitCabutBuluController extends Controller
     public function index()
     {
         $i = 1;
-        $TransitPreCleaningStock = TransitCabutBulu::with('CabutBuluPengembalian');
+        $TransitPreCleaningStock = TransitCabutBulu::with('CabutBuluPengembalian')->where('status',1);
         // return $PrmRawMOI;
         if(Auth::user()->plant){
             $TransitPreCleaningStock->where('tujuan_kirim',Auth::user()->plant);
