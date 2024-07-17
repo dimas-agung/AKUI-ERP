@@ -344,6 +344,9 @@
                                                 <a href="{{ route('StockTransitGradingKasar.index') }}"
                                                     class="submenu-link">Transit Grading Kasar Stock</a>
                                             </li>
+                                            <li class="submenu-item {{ Route::is('GradingKasarAdjustment.*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingKasarAdjustment.index') }}" class="submenu-link">Grading Kasar Adjustment</a>
+                                            </li>
                                             <li
                                                 class="submenu-item {{ Route::is('ReportGradingKasar*') ? 'active' : '' }}">
                                                 <a href="{{ route('ReportGradingKasar.index') }}"
