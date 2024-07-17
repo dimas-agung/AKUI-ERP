@@ -24,6 +24,7 @@
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Unit</th>
+                                        <th scope="col" class="text-center">Plant</th>
                                         <th scope="col" class="text-center">Jenis Grading</th>
                                         <th scope="col" class="text-center">Berat Masuk</th>
                                         <th scope="col" class="text-center">Berat Keluar</th>
@@ -44,6 +45,7 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->unit }}</td>
+                                            <td class="text-center">{{ $item->plant }}</td>
                                             <td class="text-center">{{ $item->jenis_grading }}</td>
                                             <td class="text-center">{{ $item->berat_masuk }}</td>
                                             <td class="text-center">{{ $item->berat_keluar }}</td>
