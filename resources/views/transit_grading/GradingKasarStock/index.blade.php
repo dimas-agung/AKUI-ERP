@@ -29,6 +29,7 @@
                                 <th class="text-center">Id Box Raw Material</th>
                                 <th class="text-center">Berat Masuk</th>
                                 <th class="text-center">Berat Keluar</th>
+                                <th class="text-center">Berat Adjustment</th>
                                 <th class="text-center">Sisa Berat</th>
                                 <th class="text-center">Pcs Masuk</th>
                                 <th class="text-center">Pcs Keluar</th>
@@ -59,7 +60,8 @@
                                     <td class="text-center">{{ $GradingKS->id_box_raw_material }}</td>
                                     <td class="text-center">{{ $GradingKS->berat_masuk }}</td>
                                     <td class="text-center">{{ $GradingKS->berat_keluar }}</td>
-                                    <td class="text-center">{{ $GradingKS->berat_masuk - $GradingKS->berat_keluar }}</td>
+                                    <td class="text-center">{{ $GradingKS->berat_adjustment }}</td>
+                                    <td class="text-center">{{ $GradingKS->berat_masuk - $GradingKS->berat_keluar - $GradingKS->berat_adjustment }}</td>
                                     <td class="text-center">{{ $GradingKS->pcs_masuk }}</td>
                                     <td class="text-center">{{ $GradingKS->pcs_keluar }}</td>
                                     <td class="text-center">{{ $GradingKS->pcs_masuk - $GradingKS->pcs_keluar }}</td>
