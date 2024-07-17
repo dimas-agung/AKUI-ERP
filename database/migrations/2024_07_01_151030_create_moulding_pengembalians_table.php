@@ -34,7 +34,6 @@ return new class extends Migration
             $table->string('user_updated')->nullable();
             $table->integer('status')->default(3);
             $table->timestamps();
-            $table->timestamps();
         });
     }
 

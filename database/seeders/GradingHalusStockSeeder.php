@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\GradingHalusInput;
 use App\Models\GradingHalusStock;
+use App\Models\PreGradingHalusAddingStock;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,34 +15,48 @@ class GradingHalusStockSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        // \App\Models\PreGradingHalusAddingStock::factory(5)->create();
         GradingHalusStock::create([
-            'unit' => "Grading Halus",
-            'id_box_grading_halus' => "P202311.006.1012_CHONG",
-            'nomor_batch' => "P202311.006.1012",
-            'jenis' => "CHONG",
-            'berat_masuk' => 300,
-            'pcs_masuk' => 23,
-            'berat_keluar' => 89,
-            'pcs_keluar' => 8,
-            'sisa_berat' => 211,
-            'sisa_pcs' => 15,
-            'modal' => 5457,
-            'total_modal' => 1637152,
+            'unit' => 'Grading Halus',
+            'id_box_grading_halus' => 'OB_010324-093525',
+            'nomor_batch' => '093513',
+            'jenis' => 'K001',
+            'berat_masuk' => '50',
+            'pcs_masuk' => '25',
+            'berat_keluar' => '0',
+            'pcs_keluar' => '0',
+            'sisa_berat' => '50',
+            'sisa_pcs' => '25',
+            'modal' => '5000',
+            'total_modal' => '55000',
         ]);
         GradingHalusStock::create([
-            'unit' => "Grading Halus",
-            'id_box_grading_halus' => "P202311.006.1012_HCR",
-            'nomor_batch' => "P202311.006.1012",
-            'jenis' => "HCR",
-            'berat_masuk' => 200,
-            'pcs_masuk' => 15,
-            'berat_keluar' => 0,
-            'pcs_keluar' => 0,
-            'sisa_berat' => 200,
-            'sisa_pcs' => 15,
-            'modal' => 3028,
-            'total_modal' => 605728,
+            'unit' => 'Grading Halus',
+            'id_box_grading_halus' => 'OB_010324-093550',
+            'nomor_batch' => '093513',
+            'jenis' => 'K002',
+            'berat_masuk' => '50',
+            'pcs_masuk' => '25',
+            'berat_keluar' => '0',
+            'pcs_keluar' => '0',
+            'sisa_berat' => '50',
+            'sisa_pcs' => '25',
+            'modal' => '5000',
+            'total_modal' => '55000',
+        ]);
+        GradingHalusStock::create([
+            'unit' => 'Grading Halus',
+            'id_box_grading_halus' => 'OB_010324-093100',
+            'nomor_batch' => '093513',
+            'jenis' => 'K002',
+            'berat_masuk' => '50',
+            'pcs_masuk' => '25',
+            'berat_keluar' => '0',
+            'pcs_keluar' => '0',
+            'sisa_berat' => '50',
+            'sisa_pcs' => '25',
+            'modal' => '5000',
+            'total_modal' => '55000',
         ]);
     }
 }

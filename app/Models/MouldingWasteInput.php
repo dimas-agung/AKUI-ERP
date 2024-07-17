@@ -32,4 +32,8 @@ class MouldingWasteInput extends Model
         }
         return false;
     }
+    public function MasterJenisGradingWarna()
+    {
+    	return $this->belongsTo(MasterJenisGradingWarna::class, 'jenis', 'jenis_waste');
+    }
 }

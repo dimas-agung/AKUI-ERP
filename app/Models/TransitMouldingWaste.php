@@ -10,7 +10,7 @@ class TransitMouldingWaste extends Model
     use HasFactory;
     const STATUS_NON_AKTIF = 0;
     const STATUS_AKTIF = 1;
-    protected $table = 'moulding_waste_outputs';
+    protected $table = 'transit_moulding_wastes';
     protected $fillable = [
         'unit',
         'id_box_waste_moulding',
@@ -20,8 +20,12 @@ class TransitMouldingWaste extends Model
         'tujuan_kirim',
         'nomor_job',
         'nomor_bstb',
+        'status',
         'modal',
         'total_modal',
-        'status',
     ];
+    // public function DryAWasteOutput()
+    // {
+    //     return $this->hasOne(DryAWasteOutput::class, 'jenis_waste', 'jenis_waste');
+    // }
 }

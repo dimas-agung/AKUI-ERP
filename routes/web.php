@@ -274,11 +274,11 @@ Route::middleware('auth')->group(function () {
 
         });
     });
-    Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->middleware(['role:purchasing|grading_kasar|admin|production'])->group(function () {
+    Route::controller(App\Http\Controllers\PurchasingExim\StockTransitRawMaterialController::class)->middleware(['role:purchasing|grading_kasar|admin'])->group(function () {
         Route::get('/stock_transit_raw_material', 'index')->name('StockTransitRawMaterial.index');
     });
     Route::prefix('bahan_baku')->group(function () {
-        Route::prefix('grading_kasar')->middleware(['role:grading_kasar|admin|production'])->group(function () {
+        Route::prefix('grading_kasar')->middleware(['role:grading_kasar|admin'])->group(function () {
             Route::controller(App\Http\Controllers\TransitGradingKasar\GradingKasarInputController::class)->group(function () {
                 Route::get('/grading_kasar_input', 'index')->name('GradingKasarInput.index');
                 Route::get('/grading_kasar_input/create', 'create')->name('GradingKasarInput.create');
@@ -362,8 +362,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/stock_transit_grading_kasar/edit/{id}', 'edit')->name('StockTransitGradingKasar.edit');
             Route::put('/stock_transit_grading_kasar/update/{id}', 'update')->name('StockTransitGradingKasar.update');
             Route::delete('/stock_transit_grading_kasar/destroy/{id}', 'destroy')->name('StockTransitGradingKasar.destroy');
-        })->middleware(['role:grading_kasar|pre_cleaning|admin|production']);
-        Route::prefix('pre_cleaning')->middleware(['role:pre_cleaning|admin|production'])->group(function () {
+        })->middleware(['role:grading_kasar|pre_cleaning|admin']);
+        Route::prefix('pre_cleaning')->middleware(['role:pre_cleaning|admin'])->group(function () {
             Route::controller(App\Http\Controllers\PreCleaning\PreCleaningInputController::class)->group(function () {
                 Route::get('/pre_cleaning_input', 'index')->name('PreCleaningInput.index');
                 Route::get('/pre_cleaning_input/create', 'create')->name('PreCleaningInput.create');
@@ -413,7 +413,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/transit_pre_cleaning_stock/destroy/{id}', 'destroy')->name('TransitPreCleaningStock.destroy');
             });
         });
-        Route::prefix('grading_halus')->middleware(['role:grading_halus|admin|production'])->group(function () {
+        Route::prefix('grading_halus')->middleware(['role:grading_halus|admin'])->group(function () {
             Route::controller(App\Http\Controllers\PreGradingHalus\PreGradingHalusInputController::class)->group(function () {
                 Route::get('/pre_grading_halus_input', 'index')->name('PreGradingHalusInput.index');
                 Route::get('/pre_grading_halus_input/create', 'create')->name('PreGradingHalusInput.create');
@@ -519,7 +519,7 @@ Route::middleware('auth')->group(function () {
             });
 
         });
-        Route::prefix('pre_wash')->middleware(['role:pre_wash|admin|production'])->group(function (){
+        Route::prefix('pre_wash')->middleware(['role:pre_wash|admin'])->group(function (){
             Route::controller(App\Http\Controllers\PreWash\PreWashInputController::class)->group(function () {
                 Route::get('/pre_wash_input', 'index')->name('PreWashInput.index');
                 Route::get('/pre_wash_input/create', 'create')->name('PreWashInput.create');
@@ -563,8 +563,8 @@ Route::middleware('auth')->group(function () {
             // });
         });
     });
-    Route::prefix('cleaning')->middleware(['role:cleaning|admin|production'])->group(function () {
-        Route::prefix('cabut_bulu')->middleware(['role:cleaning|admin|production'])->group(function () {
+    Route::prefix('cleaning')->middleware(['role:cleaning|admin'])->group(function () {
+        Route::prefix('cabut_bulu')->middleware(['role:cleaning|admin'])->group(function () {
             Route::controller(App\Http\Controllers\CabutBulu\CabutBuluPenerimaanController::class)->group(function () {
                 Route::get('/cabut_bulu_penerimaan', 'index')->name('CabutBuluPenerimaan.index');
                 Route::get('/cabut_bulu_penerimaan/create', 'create')->name('CabutBuluPenerimaan.create');
@@ -606,7 +606,7 @@ Route::middleware('auth')->group(function () {
 
         });
 
-        Route::prefix('Rambang')->middleware('role:cleaning|admin|production')->group(function (){
+        Route::prefix('Rambang')->middleware('role:cleaning|admin')->group(function (){
             Route::controller(App\Http\Controllers\Rambang\HcrKotorInputController::class)->group(function () {
                 Route::get('/input_hcr_kotor', 'index')->name('InputHcrKotor.index');
                 Route::get('/input_hcr_kotor/create', 'create')->name('InputHcrKotor.create');
@@ -664,7 +664,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/stock_rambang_basah', 'index')->name('StockRambangBasah.index');
             });
         });
-        Route::prefix('cabut_hancuran')->middleware(['role:cleaning|admin|production'])->group(function () {
+        Route::prefix('cabut_hancuran')->middleware(['role:cleaning|admin'])->group(function () {
             Route::controller(App\Http\Controllers\CabutHancuran\CabutHancuranPersiapanController::class)->group(function () {
                 Route::get('/cabut_hancuran_persiapan', 'index')->name('CabutHancuranPersiapan.index');
                 Route::get('/cabut_hancuran_persiapan/create', 'create')->name('CabutHancuranPersiapan.create');
@@ -708,7 +708,7 @@ Route::middleware('auth')->group(function () {
 
         });
     });
-    Route::prefix('transit_cleaning')->middleware(['role:cleaning|admin|production|dry_a'])->group(function () {
+    Route::prefix('transit_cleaning')->middleware(['role:cleaning|admin|dry_a'])->group(function () {
         Route::controller(App\Http\Controllers\CabutHancuran\TransitCabutBuluHancuranController::class)->group(function () {
             Route::get('/transit_cabut_hancuran', 'index')->name('TransitCabutHancuran.index');
         });
@@ -719,9 +719,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/transit_cabut_bulu', 'index')->name('TransitCabutBulu.index');
         });
     });
-    // Route::prefix('dry_a')->middleware(['role:dry_a|admin|production'])->group(function (){
+    // Route::prefix('dry_a')->middleware(['role:dry_a|admin'])->group(function (){
     // });
-    Route::prefix('dry_a')->middleware(['role:dry_a|admin|production'])->group(function (){
+    Route::prefix('dry_a')->middleware(['role:dry_a|admin'])->group(function (){
         Route::controller(App\Http\Controllers\DryA\DryAGradingCabutController::class)->group(function () {
             Route::get('/dry_a_grading_cabut', 'index')->name('DryAGradingCabut.index');
             Route::get('/dry_a_grading_cabut/create', 'create')->name('DryAGradingCabut.create');
@@ -765,7 +765,7 @@ Route::middleware('auth')->group(function () {
         Route::controller(App\Http\Controllers\DryA\TransitDryAController::class)->group(function () {
             Route::get('/transit_dry_a', 'index')->name('TransitDryA.index');
         });
-        Route::prefix('dry_a_hancuran')->middleware('role:dry_a|admin|production')->group(function () {
+        Route::prefix('dry_a_hancuran')->middleware('role:dry_a|admin')->group(function () {
             Route::controller(App\Http\Controllers\DryAHancuran\DryAGradingHancuranController::class)->group(function () {
                 Route::get('/dry_a_grading_hancuran', 'index')->name('DryAGradingHancuran.index');
                 Route::get('/dry_a_grading_hancuran/create', 'create')->name('DryAGradingHancuran.create');
@@ -780,7 +780,7 @@ Route::middleware('auth')->group(function () {
             });
         });
 
-        Route::prefix('dry_a_hancuran')->middleware('role:dry_a|admin|production')->group(function (){
+        Route::prefix('dry_a_hancuran')->middleware('role:dry_a|admin')->group(function (){
             Route::controller(App\Http\Controllers\DryAHancuran\DryAPenerimaanHancuranController::class)->group(function () {
                 Route::get('/dry_a_penerimaan_hancuran', 'index')->name('DryAPenerimaanHancuran.index');
                 Route::get('/dry_a_penerimaan_hancuran/create', 'create')->name('DryAPenerimaanHancuran.create');
@@ -813,7 +813,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/transit_dry_a_hancuran', 'index')->name('TransitDryAHancuran.index');
             });
         });
-        Route::prefix('dry_a_waste')->middleware('role:dry_a|admin|production')->group(function () {
+        Route::prefix('dry_a_waste')->middleware('role:dry_a|admin')->group(function () {
             Route::controller(App\Http\Controllers\DryAWaste\DryAWasteInputController::class)->group(function () {
                 Route::get('/dry_a_waste_input', 'index')->name('DryAWasteInput.index');
                 Route::get('/dry_a_waste_input/create', 'create')->name('DryAWasteInput.create');
@@ -840,8 +840,8 @@ Route::middleware('auth')->group(function () {
             });
         });
     });
-    Route::prefix('moulding')->middleware(['role:moulding|admin|production'])->group(function () {
-        Route::prefix('grading_warna')->middleware('role:moulding|admin|production')->group(function () {
+    Route::prefix('moulding')->middleware(['role:moulding|admin'])->group(function () {
+        Route::prefix('grading_warna')->middleware('role:moulding|admin')->group(function () {
             Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaAddingController::class)->group(function () {
                 Route::get('/grading_warna_adding', 'index')->name('GradingWarnaAdding.index');
                 Route::get('/grading_warna_adding/create', 'create')->name('GradingWarnaAdding.create');
@@ -884,7 +884,7 @@ Route::middleware('auth')->group(function () {
             });
         });
 
-        Route::prefix('moulding')->middleware('role:moulding|admin|production')->group(function (){
+        Route::prefix('moulding')->middleware('role:moulding|admin')->group(function (){
             Route::controller(App\Http\Controllers\MasterJobMouldingController::class)->group(function () {
                 Route::get('/master_job_moulding', 'index')->name('MasterJobMoulding.index');
                 Route::post('/master_job_moulding/store', 'store')->name('MasterJobMoulding.store');
@@ -914,29 +914,6 @@ Route::middleware('auth')->group(function () {
             });
             Route::controller(App\Http\Controllers\Moulding\MouldingStockController::class)->group(function () {
                 Route::get('/moulding_stock', 'index')->name('MouldingStock.index');
-            });
-            Route::controller(App\Http\Controllers\Moulding\MouldingPengembalianController::class)->group(function () {
-                Route::get('/moulding_pengembalian', 'index')->name('MouldingPengembalian.index');
-                Route::get('/moulding_pengembalian/create', 'create')->name('MouldingPengembalian.create');
-                Route::post('/moulding_pengembalian/store', 'store')->name('MouldingPengembalian.store');
-                Route::post('/moulding_pengembalian/cek_data', 'CeksendData')->name('MouldingPengembalian.CeksendData');
-                Route::delete('/moulding_pengembalian/destroy/{nomor_job}', 'destroy')->name('MouldingPengembalian.destroy');
-                Route::get('/moulding_pengembalian/set_job', 'setJob')->name('MouldingPengembalian.setJob');
-                Route::get('/moulding_pengembalian/set_nip', 'setNip')->name('MouldingPengembalian.setNip');
-            });
-            Route::controller(App\Http\Controllers\Moulding\TransitMouldingController::class)->group(function () {
-                Route::get('/transit_moulding', 'index')->name('TransitMoulding.index');
-            });
-            Route::controller(App\Http\Controllers\Moulding\MouldingWasteInputController::class)->group(function () {
-                Route::get('/moulding_waste_input', 'index')->name('MouldingWasteInput.index');
-                Route::get('/moulding_waste_input/create', 'create')->name('MouldingWasteInput.create');
-                Route::post('/moulding_waste_input/store', 'store')->name('MouldingWasteInput.store');
-                Route::post('/moulding_waste_input/cek_data', 'CeksendData')->name('MouldingWasteInput.CeksendData');
-                Route::delete('/moulding_waste_input/destroy/{id}', 'destroy')->name('MouldingWasteInput.destroy');
-                Route::get('/moulding_waste_input/set_jenis', 'setJenis')->name('MouldingWasteInput.setJenis');
-            });
-            Route::controller(App\Http\Controllers\Moulding\MouldingWasteStockController::class)->group(function () {
-                Route::get('/moulding_waste_stock', 'index')->name('MouldingWasteStock.index');
             });
         });
     });

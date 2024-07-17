@@ -216,9 +216,29 @@
                                         <a href="{{ route('MasterJenisHcrKotor.index') }}" class="submenu-link">Master
                                             Jenis<br>Hancuran Kotor</a>
                                     </li>
+                                    <li class="submenu-item {{ Route::is('MasterTujuanKirimWaste*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterTujuanKirimWaste.index') }}" class="submenu-link">Master
+                                            Tujuan<br>Kirim Waste</a>
+                                    </li>
                                     <li class="submenu-item {{ Route::is('MasterJenisRambang*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterJenisRambang.index') }}" class="submenu-link">Master
                                             Jenis<br>Rambang</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterJobMoulding*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterJobMoulding.index') }}" class="submenu-link">Master
+                                            Job<br>Moulding</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterTujuanKirimWaste*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterTujuanKirimWaste.index') }}" class="submenu-link">Master
+                                            Tujuan<br>Kirim Waste</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterJenisDryA*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterJenisDryA.index') }}" class="submenu-link">Master
+                                            Jenis<br>Dry A</a>
+                                    </li>
+                                    <li class="submenu-item {{ Route::is('MasterTujuanKirimDryA*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterTujuanKirimDryA.index') }}" class="submenu-link">Master
+                                            Tujuan<br>Kirim Dry A</a>
                                     </li>
                                     <li class="submenu-item {{ Route::is('MasterJenisWaste*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterJenisWaste.index') }}" class="submenu-link">Master
@@ -793,6 +813,8 @@
                                                     Grading
                                                     <br>Cabut</a>
                                             </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('DryAGradingCabutStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAGradingCabutStock.index') }}"
                                                     class="submenu-link">Dry A
                                                     Grading
@@ -847,7 +869,7 @@
 
                         @role('moulding|admin|production')
                             <li
-                                class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*','TransitDryAHancuran*', 'GradingWarnaPenerimaan*', 'GradingWarnaPenerimaanStock*', 'MouldingPersiapan*', 'MouldingPenyebaran*', 'MouldingStock*','MouldingPenyebaran*', 'MouldingStock*', 'MouldingPengembalian*', 'TransitMoulding*', 'MouldingWasteInput*', 'MouldingWasteStock*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*','TransitDryAHancuran*', 'GradingWarnaPenerimaan*', 'GradingWarnaPenerimaanStock*', 'MouldingPersiapan*', 'MouldingPenyebaran*', 'MouldingStock*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Moulding</span>
