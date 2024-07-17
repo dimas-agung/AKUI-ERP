@@ -69,7 +69,9 @@ class DatabaseSeeder extends Seeder
         $this->call(GradingHalusInputSeeder::class);
         $this->call(GradingHalusStockSeeder::class);
         $this->call(GradingHalusOutputSeeder::class);
+        $this->call(MasterTujuanKirimMouldingSeeder::class);
         $this->call(PreWashOutputSeeder::class);
+        $this->call(MouldingWasteStockSeeder::class);
         $this->call(roleSeeders::class);
         $this->call(userSeeders::class);
 

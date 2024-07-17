@@ -14,7 +14,7 @@ class MouldingWasteInput extends Model
         'jenis_waste',
         'berat',
         'pcs',
-        'id_box_wate_moulding',
+        'id_box_waste_moulding',
         'keterangan',
         'status',
         'harga_estimasi',

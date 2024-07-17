@@ -11,22 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('moulding_waste_outputs', function (Blueprint $table) {
+        Schema::create('transit_moulding_wastes', function (Blueprint $table) {
             $table->id();
-            $table->string('asal_stock');
-            $table->string('id_box');
-            $table->string('jenis');
+            $table->string('unit');
+            $table->string('id_box_waste_moulding');
+            $table->string('jenis_waste');
             $table->float('berat');
             $table->float('pcs');
             $table->string('tujuan_kirim');
             $table->string('nomor_job');
             $table->string('nomor_bstb');
-            $table->string('keterangan')->nullable();
-            $table->integer('status')->default(1)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_AKTIF');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->string('user_created');
-            $table->string('user_updated')->nullable();
+            $table->integer('status')->default(1)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_AKTIF');
             $table->timestamps();
         });
     }
@@ -36,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('moulding_waste_outputs');
+        Schema::dropIfExists('transit_moulding_wastes');
     }
 };

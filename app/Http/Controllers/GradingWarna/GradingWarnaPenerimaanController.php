@@ -17,16 +17,6 @@ use Illuminate\View\View;
 
 class GradingWarnaPenerimaanController extends Controller
 {
-    // public function index(){
-    //     $i =1;
-    //     $PreGHI = GradingWarnaPenerimaan::get();
-    //     // return $GradingKI;
-
-    //     return response()->view('GradingWarna.GradingWarnaPenerimaan.index', [
-    //         'PreGHI' => $PreGHI,
-    //         'i' => $i,
-    //     ]);
-    // }
     public function index(Request $request){
         $i = 1;
         $startDate = $request->input('start_date');

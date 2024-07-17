@@ -10,14 +10,14 @@ class MouldingWasteOutput extends Model
     use HasFactory;
     protected $table = 'moulding_waste_outputs';
     protected $fillable = [
-        'asal_stok',
+        'asal_stock',
         'id_box',
         'jenis',
-        'berat',
-        'pcs',
         'tujuan_kirim',
         'nomor_job',
         'nomor_bstb',
+        'berat',
+        'pcs',
         'keterangan',
         'status',
         'modal',

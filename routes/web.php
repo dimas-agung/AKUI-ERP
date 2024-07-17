@@ -164,6 +164,13 @@ Route::middleware('auth')->group(function (){
             Route::put('/master_jenis_grading_warna/update/{id}', 'update')->name('MasterJenisGradingWarna.update');
             Route::delete('/master_jenis_grading_warna/destroy/{id}', 'destroy')->name('MasterJenisGradingWarna.destroy');
         });
+        Route::controller(App\Http\Controllers\MasterTujuanKirimMouldingController::class)->group(function () {
+            Route::get('/master_tujuan_kirim_moulding', 'index')->name('MasterTujuanKirimMoulding.index');
+            Route::post('/master_tujuan_kirim_moulding/store', 'store')->name('MasterTujuanKirimMoulding.store');
+            Route::get('/master_tujuan_kirim_moulding/edit/{id}', 'edit')->name('MasterTujuanKirimMoulding.edit');
+            Route::put('/master_tujuan_kirim_moulding/update/{id}', 'update')->name('MasterTujuanKirimMoulding.update');
+            Route::delete('/master_tujuan_kirim_moulding/destroy/{id}', 'destroy')->name('MasterTujuanKirimMoulding.destroy');
+        });
     });
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function (){
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
@@ -664,6 +671,29 @@ Route::middleware('auth')->group(function (){
                 Route::post('/moulding_waste_input/store', 'store')->name('MouldingWasteInput.store');
                 Route::get('/moulding_waste_input/setjenis', 'setJenis')->name('MouldingWasteInput.setJenis');
                 Route::delete('/moulding_waste_input/destroy/{id}', 'destroy')->name('MouldingWasteInput.destroy');
+            });
+
+            Route::controller(App\Http\Controllers\MouldingWaste\MouldingWasteStockController::class)->group(function () {
+                Route::get('/moulding_waste_stock', 'index')->name('MouldingWasteStock.index');
+            });
+
+            Route::controller(App\Http\Controllers\MouldingWaste\MouldingWasteOutputController::class)->group(function () {
+                Route::get('/moulding_waste_output', 'index')->name('MouldingWasteOutput.index');
+                Route::get('/moulding_waste_output/create', 'create')->name('MouldingWasteOutput.create');
+                Route::get('/moulding_waste_output/get_pcc', 'setpcc')->name('MouldingWasteOutput.setpcc');
+                Route::get('/moulding_waste_output/getdataidboxwaste', 'getWaste')->name('MouldingWasteOutput.getWaste');
+                Route::get('/moulding_waste_output/getdataidbox', 'getGrading')->name('MouldingWasteOutput.getGrading');
+                Route::get('/moulding_waste_output/get_data_id_box_waste', 'setWaste')->name('MouldingWasteOutput.setWaste');
+                Route::get('/moulding_waste_output/get_data_id_box', 'setGrading')->name('MouldingWasteOutput.setGrading');
+                Route::post('/moulding_waste_output/sendData', 'sendData')->name('MouldingWasteOutput.sendData');
+                Route::post('/moulding_waste_output/store', 'store')->name('MouldingWasteOutput.store');
+                Route::get('/moulding_waste_output/setjenis', 'setJenis')->name('MouldingWasteOutput.setJenis');
+                Route::delete('/moulding_waste_output/destroy/{id_box}', 'destroy')->name('MouldingWasteOutput.destroy');
+            });
+
+
+            Route::controller(App\Http\Controllers\MouldingWaste\TransitMouldingWasteController::class)->group(function () {
+                Route::get('/transit_moulding_waste', 'index')->name('TransitMouldingWaste.index');
             });
         });
     });

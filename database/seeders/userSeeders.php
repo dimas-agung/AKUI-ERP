@@ -21,7 +21,7 @@ class userSeeders extends Seeder
             'fullname' => 'Example',
             'nip' => '2002050703',
             'unit_id' => '1',
-            'plant' => 'OBI',
+            'plant' => 'O',
             'username' => 'Example',
             'phone_number' => '0111111111',
             'birth_date' => '2000-04-09',
@@ -34,11 +34,21 @@ class userSeeders extends Seeder
             'fullname' => 'superadmin',
             'nip' => '2002050693',
             'unit_id' => '2',
-            'plant' => 'Akui',
+            'plant' => 'A',
             'username' => 'admin',
             'phone_number' => '0222222222',
             'birth_date' => '2000-04-09',
-
+        ]);
+        User::create([
+            'email' => 'OBI@gmail.com',
+            'password' => Hash::make('1234567890'),
+            'fullname' => 'superadmin',
+            'nip' => '2000',
+            'unit_id' => '2',
+            'plant' => 'O',
+            'username' => 'OBI',
+            'phone_number' => '08139000000',
+            'birth_date' => '2000-04-09',
         ]);
         $superdmin->assignRole(['admin']);
     }

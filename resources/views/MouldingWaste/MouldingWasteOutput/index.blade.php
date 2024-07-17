@@ -3,19 +3,19 @@
     Moulding Waste
 @endsection
 @section('title')
-    Moulding Waste Input
+    Moulding Waste Output
 @endsection
 @section('content')
     <div class="section">
         <div class="card border border-primary border-3">
             <div class="card-header">
                 <div class="col-sm-12 d-flex justify-content-between">
-                    <h4 class="card-title">Data Moulding Waste Input</h4>
+                    <h4 class="card-title">Data Moulding Waste Output</h4>
                     <div style="position: absolute;right: 25px;">
                         <a class="btn btn-outline-warning rounded-pill" style="margin-right: 10px" onclick="toggleFilter()">
                             <strong>Filter</strong>
                         </a>
-                        <a href="{{ route('MouldingWasteInput.create') }}" class="btn btn-outline-success rounded-pill">
+                        <a href="{{ route('MouldingWasteOutput.create') }}" class="btn btn-outline-success rounded-pill">
                             <i class="fa fa-plus"></i>
                             Add Data
                         </a>
@@ -50,11 +50,14 @@
                         <thead>
                             <tr>
                                 <th class="text-center" scope="col">No</th>
-                                <th class="text-center" scope="col">Tanggal Moulding</th>
-                                <th class="text-center" scope="col">Jenis Waste</th>
-                                <th class="text-center" scope="col">Id Box waste Moulding</th>
+                                <th class="text-center" scope="col">Asal Stock</th>
+                                <th class="text-center" scope="col">Id Box</th>
+                                <th class="text-center" scope="col">Jenis</th>
                                 <th class="text-center" scope="col">Berat</th>
                                 <th class="text-center" scope="col">Pcs</th>
+                                <th class="text-center" scope="col">Tujuan Kirim</th>
+                                <th class="text-center" scope="col">Nomor Job</th>
+                                <th class="text-center" scope="col">Nomor BSTB</th>
                                 <th class="text-center" scope="col">Keterangan</th>
                                 <th class="text-center" scope="col">Modal</th>
                                 <th class="text-center" scope="col">Total Modal</th>
@@ -66,11 +69,20 @@
                             @forelse ($PreGHI as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
-                                    <td class="text-center">{{ $item->tanggal_moulding }}</td>
-                                    <td class="text-center">{{ $item->jenis_waste }}</td>
-                                    <td class="text-center">{{ $item->id_box_waste_moulding }}</td>
+                                    <td class="text-center">
+                                        @if ($item->asal_stock == 'warna')
+                                            Grading Warna Stock
+                                        @else
+                                            Moulding Waste Stock
+                                        @endif
+                                    </td>
+                                    <td class="text-center">{{ $item->id_box }}</td>
+                                    <td class="text-center">{{ $item->jenis }}</td>
                                     <td class="text-center">{{ $item->berat }}</td>
                                     <td class="text-center">{{ $item->pcs }}</td>
+                                    <td class="text-center">{{ $item->tujuan_kirim }}</td>
+                                    <td class="text-center">{{ $item->nomor_job }}</td>
+                                    <td class="text-center">{{ $item->nomor_bstb }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
                                     <td class="text-center">{{ $item->modal }}</td>
                                     <td class="text-center">{{ $item->total_modal }}</td>
@@ -78,14 +90,13 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
-                                                <form style="display: flex"
-                                                    id="deleteForm{{ $item->id_box_waste_moulding }}"
-                                                    action="{{ route('MouldingWasteInput.destroy', $item->id_box_waste_moulding) }}"
+                                                <form style="display: flex" id="deleteForm{{ $item->id_box }}"
+                                                    action="{{ route('MouldingWasteOutput.destroy', $item->id_box) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-link" data-original-title="Remove"
-                                                        onclick="confirmDelete('{{ $item->id }}')">
+                                                        onclick="confirmDelete('{{ $item->id_box }}')">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
                                                 </form>
@@ -95,7 +106,7 @@
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Data Moulding Waste Input belum Tersedia.
+                                    Data Dry A Waste Output belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>
@@ -144,7 +155,7 @@
                 start_date: start_date,
                 end_date: end_date,
             };
-            var url = '{{ route('PreCleaningInput.index') }}';
+            var url = '{{ route('MouldingWasteOutput.index') }}';
 
             // url = url.replace(':slug', slug);
             url = url + '?start_date=' + start_date + '&end_date=' + end_date;

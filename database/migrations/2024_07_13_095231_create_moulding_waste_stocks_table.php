@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('moulding_waste_stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('id_box_wate_moulding');
+            $table->string('id_box_waste_moulding');
             $table->string('jenis_waste');
             $table->float('berat_masuk');
             $table->float('pcs_masuk');

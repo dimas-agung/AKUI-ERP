@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('jenis_waste');
             $table->float('berat');
             $table->float('pcs');
-            $table->string('id_box_wate_moulding');
+            $table->string('id_box_waste_moulding');
             $table->string('keterangan')->nullable();
             $table->integer('status')->default(1)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_AKTIF');
             $table->float('harga_estimasi', 16, 4);

@@ -10,7 +10,7 @@ class MouldingWasteStock extends Model
     use HasFactory;
     protected $table = 'moulding_waste_stocks';
     protected $fillable = [
-        'id_box_wate_moulding',
+        'id_box_waste_moulding',
         'jenis_waste',
         'berat_masuk',
         'pcs_masuk',
@@ -20,5 +20,6 @@ class MouldingWasteStock extends Model
         'sisa_pcs',
         'modal',
         'total_modal',
+        'user_created',
     ];
 }
