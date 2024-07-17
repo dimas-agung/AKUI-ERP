@@ -18,9 +18,9 @@ class CabutHancuranPersiapanStockSeeder extends Seeder
             'jenis_rambang' => "HCR Rambang PK",
             'upah_operator' => 6000,
             'berat_masuk' => 100,
-            'berat_keluar' => 0,
-            'sisa_berat' => 100,
-            'status' => 1,
+            'berat_keluar' => 100,
+            'sisa_berat' => 0,
+            'status' => 3,
         ]);
         CabutHancuranPersiapanStock::create([
             'nomor_job' => "040524-111602_A_uch",

@@ -13,7 +13,7 @@ class GradingHalusAdjustmentStockController extends Controller
     public function getGradingHalusAdjustmentStock()
     {
         if ($this->GradingHalusAdjustmentStock === null) {
-            $this->GradingHalusAdjustmentStock = GradingHalusAdjustmentStock::where('status', 1);
+            $this->GradingHalusAdjustmentStock = GradingHalusAdjustmentStock::where('status', 1)->get();
         }
         return $this->GradingHalusAdjustmentStock;
     }

@@ -34,10 +34,10 @@ class GradingKasarInputSeeder extends Seeder
         GradingKasarInput::create([
             'doc_no'                => 1,
             'nomor_bstb'            => 'BSTB002',
-            'id_box'                => 'AB_ABEL/280680-251123_CHONG_8325',
+            'id_box'                => 'AB_ABEL/280680-251123_PTH A_8325',
             'nomor_batch'           => 'P202311.006.1012',
             'nama_supplier'         => 'Abel',
-            'jenis_raw_material'    => 'Chong',
+            'jenis_raw_material'    => 'PTH A',
             'nomor_nota_internal'   => 'AB_ABEL/280680-251123',
             'berat'                 => 350,
             'kadar_air'             => 14,

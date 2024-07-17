@@ -14,18 +14,23 @@ class MasterSupplierRawMaterialSeeder extends Seeder
     public function run(): void
     {
         MasterSupplierRawMaterial::create([
-            'nama_supplier' => 'SupplierA',
-            'inisial_supplier' => 'SPA',
+            'nama_supplier' => 'Abel',
+            'inisial_supplier' => 'AB_ABEL',
             'status' => 1,
         ]);
         MasterSupplierRawMaterial::create([
-            'nama_supplier' => 'SupplierB',
-            'inisial_supplier' => 'SPB',
+            'nama_supplier' => 'Dhofin',
+            'inisial_supplier' => 'DH_DHOFIN',
             'status' => 1,
         ]);
         MasterSupplierRawMaterial::create([
-            'nama_supplier' => 'SupplierC',
-            'inisial_supplier' => 'SPC',
+            'nama_supplier' => 'JONY',
+            'inisial_supplier' => 'JN_JONY',
+            'status' => 1,
+        ]);
+        MasterSupplierRawMaterial::create([
+            'nama_supplier' => 'PAK SALEH',
+            'inisial_supplier' => 'PS_SALEH',
             'status' => 1,
         ]);
     }

@@ -22,7 +22,7 @@ class MasterJenisWasteSeeder extends Seeder
             'harga_estimasi' => 15000,
             'status' => 1,
             'user_created' => 'Admin123',
-            'user_updated' => 'Admin123',
+            'user_updated' => '',
         ]);
         MasterJenisWaste::create([
             'jenis' => 'PT-1-PB-G',
@@ -32,7 +32,7 @@ class MasterJenisWasteSeeder extends Seeder
             'harga_estimasi' => 30000,
             'status' => 1,
             'user_created' => 'Admin123',
-            'user_updated' => 'Admin123',
+            'user_updated' => '',
         ]);
     }
 }

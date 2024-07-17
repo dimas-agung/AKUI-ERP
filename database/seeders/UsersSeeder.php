@@ -14,6 +14,7 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
+<<<<<<< HEAD
         // $user = User::create([
         //     'email' => 'admin@gmail.com',
         //     'password' => Hash::make('admin123'),
@@ -61,6 +62,20 @@ class UsersSeeder extends Seeder
 
         // ]);
         // $user->assignRole(['pre_cleaning']);
+=======
+        $user = User::create([
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin123'),
+            'fullname' => 'admin',
+            'nip' => '12345678',
+            'unit_id' => '1',
+            'username' => 'admin',
+            'phone_number' => '0111111111',
+            'birth_date' => '2000-04-09',
+            'plant' => 'A',
+        ]);
+        $user->syncRoles(['master', 'admin']);
+>>>>>>> dev-helmi
         // foreach ($request->input('role') as $key => $value) {
         //     # code...
         //     $user->assignRole([$value]);

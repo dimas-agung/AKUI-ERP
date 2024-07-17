@@ -915,6 +915,29 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\Moulding\MouldingStockController::class)->group(function () {
                 Route::get('/moulding_stock', 'index')->name('MouldingStock.index');
             });
+            Route::controller(App\Http\Controllers\Moulding\MouldingPengembalianController::class)->group(function () {
+                Route::get('/moulding_pengembalian', 'index')->name('MouldingPengembalian.index');
+                Route::get('/moulding_pengembalian/create', 'create')->name('MouldingPengembalian.create');
+                Route::post('/moulding_pengembalian/store', 'store')->name('MouldingPengembalian.store');
+                Route::post('/moulding_pengembalian/cek_data', 'CeksendData')->name('MouldingPengembalian.CeksendData');
+                Route::delete('/moulding_pengembalian/destroy/{nomor_job}', 'destroy')->name('MouldingPengembalian.destroy');
+                Route::get('/moulding_pengembalian/set_job', 'setJob')->name('MouldingPengembalian.setJob');
+                Route::get('/moulding_pengembalian/set_nip', 'setNip')->name('MouldingPengembalian.setNip');
+            });
+            Route::controller(App\Http\Controllers\Moulding\TransitMouldingController::class)->group(function () {
+                Route::get('/transit_moulding', 'index')->name('TransitMoulding.index');
+            });
+            Route::controller(App\Http\Controllers\Moulding\MouldingWasteInputController::class)->group(function () {
+                Route::get('/moulding_waste_input', 'index')->name('MouldingWasteInput.index');
+                Route::get('/moulding_waste_input/create', 'create')->name('MouldingWasteInput.create');
+                Route::post('/moulding_waste_input/store', 'store')->name('MouldingWasteInput.store');
+                Route::post('/moulding_waste_input/cek_data', 'CeksendData')->name('MouldingWasteInput.CeksendData');
+                Route::delete('/moulding_waste_input/destroy/{id}', 'destroy')->name('MouldingWasteInput.destroy');
+                Route::get('/moulding_waste_input/set_jenis', 'setJenis')->name('MouldingWasteInput.setJenis');
+            });
+            Route::controller(App\Http\Controllers\Moulding\MouldingWasteStockController::class)->group(function () {
+                Route::get('/moulding_waste_stock', 'index')->name('MouldingWasteStock.index');
+            });
         });
     });
 });

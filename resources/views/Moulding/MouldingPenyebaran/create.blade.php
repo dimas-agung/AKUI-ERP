@@ -119,8 +119,8 @@
                                 <th scope="col" class="text-center">Nomor Batch</th>
                                 <th scope="col" class="text-center">Tujuan Kirim</th>
                                 <th scope="col" class="text-center">Job Order</th>
-                                <th scope="col" class="text-center">Modal Nomor Job</th>
-                                <th scope="col" class="text-center">Total Modal Nomor Job</th>
+                                {{-- <th scope="col" class="text-center">Modal Nomor Job</th>
+                                <th scope="col" class="text-center">Total Modal Nomor Job</th> --}}
                                 <th scope="col" class="text-center">Upah Operator</th>
                                 <th scope="col" class="text-center">Berat Job</th>
                                 <th scope="col" class="text-center">Pcs Job</th>
@@ -297,8 +297,8 @@
                     `<td class="text-center">${nomor_batch}</td>` +
                     `<td class="text-center">${tujuan_kirim}</td>` +
                     `<td class="text-center">${job_order}</td>` +
-                    `<td class="text-center">${modal_nomor_job}</td>` +
-                    `<td class="text-center">${total_modal_nomor_job}</td>` +
+                    // `<td class="text-center">${modal_nomor_job}</td>` +
+                    // `<td class="text-center">${total_modal_nomor_job}</td>` +
                     `<td class="text-center">${upah_operator}</td>` +
                     `<td class="text-center">${berat_job}</td>` +
                     `<td class="text-center">${pcs_job}</td>` +

@@ -3,19 +3,6 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-// use App\Models\GradingKasarInput;
-
-use App\Models\GradingHalusStock;
-use App\Models\GradingWarnaPenerimaanStock;
-use App\Models\MasterJenisDryA;
-use App\Models\MasterJenisGradingHalus;
-use App\Models\MasterJenisGradingKasar;
-use App\Models\MasterOperator;
-use App\Models\PrmRawMaterialStock;
-use App\Models\RambangBasahStock;
-use App\Models\TransitGradingKasar;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,7 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

@@ -27,7 +27,8 @@ class User extends Authenticatable
         'nip',
         'phone_number',
         'birth_date',
-        'unit_id',
+        'roles_id',
+        'plant',
     ];
 
     /**

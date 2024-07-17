@@ -14,7 +14,7 @@ class DryAWasteInputSeeder extends Seeder
     public function run(): void
     {
         //
-        for ($i = 0; $i < 10000; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             DryAWasteInput::create([
                 'tanggal_cabut' => '2024-06-26',
                 'jenis_waste' => 'ABC123',
@@ -22,6 +22,9 @@ class DryAWasteInputSeeder extends Seeder
                 'pcs' => 5,
                 'keterangan' => 'Tes Seeder',
                 'status' => 1,
+                'harga_estimasi' => 5000,
+                'modal' => 7500,
+                'total_modal' => 30000,
                 'user_created' => 'Admin',
                 'user_updated' => '',
             ]);
