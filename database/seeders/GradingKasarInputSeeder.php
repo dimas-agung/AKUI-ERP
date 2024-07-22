@@ -16,7 +16,6 @@ class GradingKasarInputSeeder extends Seeder
         //
         // \App\Models\StockTransitRawMaterial::factory(5)->create();
         GradingKasarInput::create([
-            'doc_no' => 01,
             'nomor_bstb' => 'BSTB_173621-275671_UGK',
             'nomor_batch' => '173621-275671_UGK',
             'id_box' => 'K001',
@@ -32,7 +31,6 @@ class GradingKasarInputSeeder extends Seeder
             'user_created' => 'Asd-134',
         ]);
         GradingKasarInput::create([
-            'doc_no' => 02,
             'nomor_bstb' => 'BSTB_173621-275672_UGK',
             'nomor_batch' => '173621-275671_UGK',
             'id_box' => 'K002',
@@ -48,7 +46,6 @@ class GradingKasarInputSeeder extends Seeder
             'user_created' => 'Asd-134',
         ]);
         GradingKasarInput::create([
-            'doc_no' => 03,
             'nomor_bstb' => 'BSTB_173621-275673_UGK',
             'nomor_batch' => '173621-275671_UGK',
             'id_box' => 'K003',

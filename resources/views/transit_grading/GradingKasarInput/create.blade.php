@@ -320,6 +320,126 @@
         var dataArray = [];
         var dataStock = [];
 
+
+        // function addRow() {
+        //     // Mengambil nilai dari input
+        //     var tgl_add = $('#tgl_add').val();
+        //     var plant = $('#plant').val();
+        //     var nomor_bstb = $('#nomor_bstb').val();
+        //     var nomor_batch = $('#nomor_batch').val();
+        //     var id_box = $('#id_box').val();
+        //     var nama_supplier = $('#nama_supplier').val();
+        //     var jenis = $('#jenis').val();
+        //     var berat_masuk = $('#berat').val();
+        //     var berat = $('#berat').val(); // Perbaikan: Menggunakan berat_keluar
+        //     var kadar_air = $('#kadar_air').val();
+        //     var modal = $('#modal').val();
+        //     var total_modal = $('#total_modal').val();
+        //     var keterangan = $('#keterangan').val();
+        //     var user_created = $('#user_created').val();
+        //     var nomor_nota_internal = $('#no_nota').val();
+        //     var nomor_grading = $('#nomor_grading').val();
+
+
+        //     // Inisialisasi array untuk menyimpan field yang belum terisi
+        //     let fieldsNotFilled = [];
+        //     // Periksa setiap field
+        //     if (!nomor_bstb) fieldsNotFilled.push('Nomor BSTB');
+        //     if (!nama_supplier) fieldsNotFilled.push('Nama Supllier');
+        //     if (!tgl_add) fieldsNotFilled.push('Tanggal Add');
+        //     if (!plant) fieldsNotFilled.push('Plant');
+        //     if (!user_created) fieldsNotFilled.push('NIP Admin');
+
+        //     // Cek apakah ada field yang belum terisi
+        //     if (fieldsNotFilled.length > 0) {
+        //         // Membuat pesan teks yang mencantumkan field yang belum terisi
+        //         let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
+
+        //         Swal.fire({
+        //             title: 'Warning!',
+        //             text: message,
+        //             icon: 'warning'
+        //         });
+        //         return;
+        //     }
+
+        //     // Hapus Nomor Job
+        //     $('#nomor_bstb option[value="' + nomor_bstb + '"]').remove();
+
+        //     // Menambahkan data ke dalam tabel
+        //     var newRow = '<tr><td>' + nomor_bstb + '</td><td>' + nomor_batch + '</td><td>' + id_box +
+        //         '</td><td>' + nama_supplier + '</td><td>' + jenis + '</td><td>' +
+        //         berat_masuk + '</td><td>' +
+        //         berat + '</td><td>' + kadar_air + '</td><td id="nomor_grading">' +
+        //         nomor_grading + '</td><td>' + modal + '</td><td>' + total_modal + '</td><td>' + keterangan +
+        //         '</td><td>' +
+        //         user_created + '</td><td><button onclick="deleteRow(' + currentRowIndex +
+        //         ')" class="btn btn-danger" data-dismiss="modal">Hapus</button></td></tr>';
+
+        //     $('#tableBody').append(newRow);
+
+        //     // Menambahkan data ke dalam array
+        //     dataArray.push({
+        //         nomor_bstb: nomor_bstb,
+        //         nomor_batch: nomor_batch,
+        //         id_box: id_box,
+        //         nama_supplier: nama_supplier,
+        //         jenis: jenis,
+        //         no_nota: no_nota,
+        //         berat: berat,
+        //         kadar_air: kadar_air,
+        //         nomor_grading: nomor_grading,
+        //         modal: modal,
+        //         total_modal: total_modal,
+        //         keterangan: keterangan,
+        //         user_created: user_created,
+        //         nomor_nota_internal: nomor_nota_internal,
+        //     });
+        //     // Membersihkan nilai input setelah ditambahkan
+        //     $('#id_box').val('');
+        //     $('#nomor_batch').val('');
+        //     // $('#nomor_bstb').val($('#nomor_bstb option:first').val()).trigger('change');
+        //     $('#nomor_bstb').val('').trigger('change');
+        //     $('#nama_supplier').val('');
+        //     $('#jenis').val('');
+        //     $('#berat_masuk').val('');
+        //     $('#berat').val('');
+        //     $('#selisih_berat').val('');
+        //     $('#kadar_air').val('');
+        //     $('#no_nota').val('');
+        //     $('#nomor_grading').val('');
+        //     $('#modal').val('');
+        //     $('#total_modal').val('');
+        //     $('#keterangan').val('');
+
+        //     // Update indeks baris terakhir
+        //     currentRowIndex++;
+        // }
+
+        // // Ambil indeks terakhir sebelum menghapus baris
+        // var lastRowIndex = currentRowIndex;
+
+        // function deleteRow(rowIndex) {
+        //     // Hapus baris dari tabel
+        //     $('#tableBody tr').eq(rowIndex).remove();
+
+        //     // Periksa apakah dataArray adalah variabel global yang didefinisikan di tempat lain
+        //     if (typeof dataArray !== 'undefined') {
+        //         // Periksa apakah rowIndex valid
+        //         if (rowIndex < dataArray.length) {
+        //             // Hapus data yang sesuai dari array
+        //             dataArray.splice(rowIndex, 1);
+
+        //             // Update indeks baris terakhir setelah menghapus data
+        //             currentRowIndex = lastRowIndex;
+        //         } else {
+        //             console.error("Error: Index baris tidak valid.");
+        //         }
+        //     } else {
+        //         console.error("Error: Variabel dataArray tidak didefinisikan atau tidak dapat diakses.");
+        //     }
+        // }
+
         function addRow() {
             // Mengambil nilai dari input
             var tgl_add = $('#tgl_add').val();
@@ -330,7 +450,7 @@
             var nama_supplier = $('#nama_supplier').val();
             var jenis = $('#jenis').val();
             var berat_masuk = $('#berat').val();
-            var berat = $('#berat').val(); // Perbaikan: Menggunakan berat_keluar
+            var berat = $('#berat').val();
             var kadar_air = $('#kadar_air').val();
             var modal = $('#modal').val();
             var total_modal = $('#total_modal').val();
@@ -338,7 +458,6 @@
             var user_created = $('#user_created').val();
             var nomor_nota_internal = $('#no_nota').val();
             var nomor_grading = $('#nomor_grading').val();
-
 
             // Inisialisasi array untuk menyimpan field yang belum terisi
             let fieldsNotFilled = [];
@@ -351,7 +470,6 @@
 
             // Cek apakah ada field yang belum terisi
             if (fieldsNotFilled.length > 0) {
-                // Membuat pesan teks yang mencantumkan field yang belum terisi
                 let message = `Data belum diinputkan untuk: ${fieldsNotFilled.join(', ')}. Silakan lengkapi form.`;
 
                 Swal.fire({
@@ -362,6 +480,8 @@
                 return;
             }
 
+            // Hapus Nomor Job
+            $('#nomor_bstb option[value="' + nomor_bstb + '"]').remove();
 
             // Menambahkan data ke dalam tabel
             var newRow = '<tr><td>' + nomor_bstb + '</td><td>' + nomor_batch + '</td><td>' + id_box +
@@ -370,8 +490,8 @@
                 berat + '</td><td>' + kadar_air + '</td><td id="nomor_grading">' +
                 nomor_grading + '</td><td>' + modal + '</td><td>' + total_modal + '</td><td>' + keterangan +
                 '</td><td>' +
-                user_created + '</td><td><button onclick="deleteRow(' + currentRowIndex +
-                ')" class="btn btn-danger" data-dismiss="modal">Hapus</button></td></tr>';
+                user_created +
+                '</td><td><button onclick="deleteRow(this)" class="btn btn-danger" data-dismiss="modal">Hapus</button></td></tr>';
 
             $('#tableBody').append(newRow);
 
@@ -383,19 +503,19 @@
                 nama_supplier: nama_supplier,
                 jenis: jenis,
                 no_nota: no_nota,
+                nomor_nota_internal: nomor_nota_internal,
                 berat: berat,
                 kadar_air: kadar_air,
                 nomor_grading: nomor_grading,
                 modal: modal,
                 total_modal: total_modal,
                 keterangan: keterangan,
-                user_created: user_created,
-                nomor_nota_internal: nomor_nota_internal,
+                user_created: user_created
             });
+
             // Membersihkan nilai input setelah ditambahkan
             $('#id_box').val('');
             $('#nomor_batch').val('');
-            // $('#nomor_bstb').val($('#nomor_bstb option:first').val()).trigger('change');
             $('#nomor_bstb').val('').trigger('change');
             $('#nama_supplier').val('');
             $('#jenis').val('');
@@ -413,27 +533,34 @@
             currentRowIndex++;
         }
 
-        // Ambil indeks terakhir sebelum menghapus baris
-        var lastRowIndex = currentRowIndex;
+        function deleteRow(button) {
+            // Dapatkan baris yang dihapus
+            let row = $(button).closest('tr');
+            let rowIndex = row.index();
 
-        function deleteRow(rowIndex) {
+            // Dapatkan nomor_bstb dari baris yang dihapus
+            let nomor_bstb = row.find('td:eq(0)').text();
+
+            // Buat kembali opsi nomor_bstb yang dihapus dan tambahkan ke dalam dropdown
+            $('#nomor_bstb').append('<option value="' + nomor_bstb + '">' + nomor_bstb + '</option>');
+
+            // Urutkan opsi nomor_bstb dalam dropdown
+            let options = $('#nomor_bstb option');
+            options.detach().sort(function(a, b) {
+                let at = $(a).text();
+                let bt = $(b).text();
+                return (at > bt) ? 1 : ((at < bt) ? -1 : 0);
+            });
+            $('#nomor_bstb').append(options);
+
             // Hapus baris dari tabel
-            $('#tableBody tr').eq(rowIndex).remove();
+            row.remove();
 
-            // Periksa apakah dataArray adalah variabel global yang didefinisikan di tempat lain
-            if (typeof dataArray !== 'undefined') {
-                // Periksa apakah rowIndex valid
-                if (rowIndex < dataArray.length) {
-                    // Hapus data yang sesuai dari array
-                    dataArray.splice(rowIndex, 1);
-
-                    // Update indeks baris terakhir setelah menghapus data
-                    currentRowIndex = lastRowIndex;
-                } else {
-                    console.error("Error: Index baris tidak valid.");
-                }
+            // Hapus data yang sesuai dari array
+            if (rowIndex < dataArray.length) {
+                dataArray.splice(rowIndex, 1);
             } else {
-                console.error("Error: Variabel dataArray tidak didefinisikan atau tidak dapat diakses.");
+                console.error("Error: Index baris tidak valid.");
             }
         }
 
