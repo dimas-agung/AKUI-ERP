@@ -22,11 +22,7 @@ class CabutBuluStockSeeder extends Seeder
             'jenis_job' => "PT-1-VIP-PK",
             'berat_job' => 200,
             'pcs_job' => 31,
-<<<<<<< HEAD
-            'upah_operator' => 5000,
-=======
             'upah_operator' => '5000',
->>>>>>> dev-al
             'tujuan_kirim' => "Akui",
             'keterangan' => "SP-K",
             'modal' => 1375,
@@ -42,11 +38,7 @@ class CabutBuluStockSeeder extends Seeder
             'jenis_job' => "PT-1-BSC-PK",
             'berat_job' => 60,
             'pcs_job' => 7,
-<<<<<<< HEAD
-            'upah_operator' => 6000,
-=======
             'upah_operator' => '15000',
->>>>>>> dev-al
             'tujuan_kirim' => "Akui",
             'keterangan' => "SP-K",
             'modal' => 12671,

@@ -50,7 +50,7 @@ class userSeeders extends Seeder
             'birth_date' => '2000-04-09',
 
         ]);
-        $grading_kasar_user->assignRole(['grading_kasar']);
+        $grading_kasar_user->assignRole(['admin']);
         $pre_cleaning_user = User::create([
             'email' => 'precleaning@akuibirdnest.com',
             'password' => Hash::make('samsulaja123'),
@@ -62,7 +62,7 @@ class userSeeders extends Seeder
             'birth_date' => '2000-04-09',
 
         ]);
-        $pre_cleaning_user->assignRole(['pre_cleaning']);
+        $pre_cleaning_user->assignRole(['purchasing']);
         // 221050218
     }
 }

@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('nomor_bstb');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
-            $table->string('status');
             $table->string('user_created');
             $table->string('user_updated')->nullable();
             $table->timestamps();

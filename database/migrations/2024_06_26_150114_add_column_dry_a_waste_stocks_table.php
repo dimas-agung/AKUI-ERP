@@ -13,8 +13,8 @@ return new class extends Migration
     {
         //
         Schema::table('dry_a_waste_stocks', function (Blueprint $table) {
-            $table->float('modal', 16, 4);
-            $table->float('total_modal', 16, 4);
+            // $table->float('modal', 16, 4);
+            // $table->float('total_modal', 16, 4);
         });
     }
 
