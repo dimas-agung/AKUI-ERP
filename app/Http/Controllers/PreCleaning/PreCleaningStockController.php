@@ -13,7 +13,6 @@ class PreCleaningStockController extends Controller
     {
         $i = 1;
         $PCStock = PreCleaningStock::where('sisa_berat','>',0)->get();
-        // $PCStock = PreCleaningStock::get();
         // return ($PCStock);
         return response()->view('PreCleaning.PreCleaningStock.index', [
             'PCStock'       => $PCStock,

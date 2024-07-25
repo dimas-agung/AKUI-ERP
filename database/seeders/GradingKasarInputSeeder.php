@@ -15,7 +15,6 @@ class GradingKasarInputSeeder extends Seeder
     {
         //
         GradingKasarInput::create([
-            'doc_no'                => 1,
             'nomor_bstb'            => 'BSTB001',
             'id_box'                => 'DH_DHOFIN/102570-231123_PTH BULU_7400',
             'nomor_batch'           => 'P202311.006.1012',
@@ -32,7 +31,6 @@ class GradingKasarInputSeeder extends Seeder
             'user_updated'          => 'Admin123',
         ]);
         GradingKasarInput::create([
-            'doc_no'                => 1,
             'nomor_bstb'            => 'BSTB002',
             'id_box'                => 'AB_ABEL/280680-251123_CHONG_8325',
             'nomor_batch'           => 'P202311.006.1012',

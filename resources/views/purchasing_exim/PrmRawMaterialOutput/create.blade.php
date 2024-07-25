@@ -7,9 +7,9 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="card border border-primary border-3 mt-2">
-            <form action="{{ route('PrmRawMaterialOutput.store') }}" method="POST">
-                @csrf
+        <form action="{{ route('PrmRawMaterialOutput.store') }}" method="POST">
+            @csrf
+            <div class="card border border-primary border-3 mt-2">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card border-0 shadow-sm rounded">
@@ -185,47 +185,47 @@
                         </div>
                     </div>
                 </div>
-        </div>
+            </div>
 
 
-        <div class="col-md-12">
-            <div class="card mt-2">
-                <div class="card-header">
-                    <div class="card-title">Validasi Data Input</div>
-                    <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
-                        <table class="table table-striped mt-3">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">No Document</th>
-                                    <th class="text-center">No BSTB</th>
-                                    <th class="text-center">Nomor Batch</th>
-                                    <th class="text-center">ID</th>
-                                    <th class="text-center">Nama Supplier</th>
-                                    <th class="text-center">Jenis</th>
-                                    <th class="text-center">Berat Masuk</th>
-                                    <th class="text-center">Berat</th>
-                                    <th class="text-center">Berat sisa</th>
-                                    <th class="text-center">Kadar Air</th>
-                                    <th class="text-center">Tujuan Kirim</th>
-                                    <th class="text-center">Letak Tujuan</th>
-                                    <th class="text-center">Inisial Tujuan</th>
-                                    <th class="text-center">Modal</th>
-                                    <th class="text-center">Total Modal</th>
-                                    <th class="text-center">Keterangan</th>
-                                    <th class="text-center">NIP Admin</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableBody">
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-12 mt-2 text-end">
-                        <a href="#" class="btn btn-primary" onclick="CeksendData()">Submit</a>
+            <div class="col-md-12">
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <div class="card-title">Validasi Data Input</div>
+                        <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
+                            <table class="table table-striped mt-3">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">No Document</th>
+                                        <th class="text-center">No BSTB</th>
+                                        <th class="text-center">Nomor Batch</th>
+                                        <th class="text-center">ID</th>
+                                        <th class="text-center">Nama Supplier</th>
+                                        <th class="text-center">Jenis</th>
+                                        <th class="text-center">Berat Masuk</th>
+                                        <th class="text-center">Berat</th>
+                                        <th class="text-center">Berat sisa</th>
+                                        <th class="text-center">Kadar Air</th>
+                                        <th class="text-center">Tujuan Kirim</th>
+                                        <th class="text-center">Letak Tujuan</th>
+                                        <th class="text-center">Inisial Tujuan</th>
+                                        <th class="text-center">Modal</th>
+                                        <th class="text-center">Total Modal</th>
+                                        <th class="text-center">Keterangan</th>
+                                        <th class="text-center">NIP Admin</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-12 mt-2 text-end">
+                            <a href="#" class="btn btn-primary" onclick="CeksendData()">Submit</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </form>
         <div class="me-1 mb-1 d-inline-block">
             <!-- full size modal-->

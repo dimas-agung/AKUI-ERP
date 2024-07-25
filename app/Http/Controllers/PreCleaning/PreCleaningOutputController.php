@@ -68,7 +68,6 @@ class PreCleaningOutputController extends Controller
         }
     }
 
-
     public function destroy($nomor_job)
     {
         try {
@@ -169,42 +168,4 @@ class PreCleaningOutputController extends Controller
             return redirect()->route('PreCleaningOutput.index')->with('error', 'Gagal menghapus data');
         }
     }
-
-    // public function destroy($nomor_job)
-    // {
-    //     // Hapus data dari PreCleaningOutput
-    //     PreCleaningOutput::where('nomor_job', $nomor_job->nomor_job)
-    //         ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
-    //         ->delete();
-
-    //     // Hitung ulang PreCleaningStock
-    //     $preCleaningStockItems = PreCleaningStock::where('nomor_job', $nomor_job->nomor_job)
-    //         ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
-    //         ->get();
-
-    //     foreach ($preCleaningStockItems as $preCleaningStockItem) {
-    //         $totalBeratKeluar = PreCleaningOutput::where('nomor_job', $nomor_job->nomor_job)
-    //             ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
-    //             ->sum('berat_kirim');
-
-    //         $totalPcsKeluar = PreCleaningOutput::where('nomor_job', $nomor_job->nomor_job)
-    //             ->where('id_box_grading_kasar', $nomor_job->id_box_grading_kasar)
-    //             ->sum('pcs_kirim');
-
-    //         $sisaBerat = $preCleaningStockItem->berat_masuk - $totalBeratKeluar;
-    //         $sisaPcs = $preCleaningStockItem->pcs_masuk - $totalPcsKeluar;
-
-    //         $preCleaningStockItem->update([
-    //             'berat_keluar' => $totalBeratKeluar,
-    //             'pcs_keluar' => $totalPcsKeluar,
-    //             'sisa_berat' => $sisaBerat,
-    //             'sisa_pcs' => $sisaPcs,
-    //         ]);
-    //     }
-
-    //     // Hapus data dari TransitPreCleaningStock
-    //     TransitPreCleaningStock::where('nomor_job', $nomor_job->nomor_job)
-    //         ->where('nomor_bstb', $nomor_job->nomor_bstb)
-    //         ->delete();
-    // }
 }

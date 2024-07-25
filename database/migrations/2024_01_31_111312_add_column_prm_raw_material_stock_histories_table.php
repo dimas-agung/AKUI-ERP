@@ -14,7 +14,7 @@ return new class extends Migration
         //
         Schema::table('prm_raw_material_stock_histories', function (Blueprint $table) {
             //
-            $table->float('fix_harga_deal', 16, 4);
+            $table->float('fix_harga_deal', 16, 4)->default(0);
         });
     }
 

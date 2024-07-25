@@ -49,8 +49,7 @@
                                         <select id="plant" class="select2 form-select" name="plant">
                                             <option value="">Pilih Plant</option>
                                             @foreach ($Plant as $item)
-                                            <option value="{{$item->plant}}">{{$item->nama}}</option>
-                                                
+                                                <option value="{{ $item->plant }}">{{ $item->nama }}</option>
                                             @endforeach
                                             {{-- <option>B</option> --}}
                                         </select>
@@ -415,8 +414,6 @@
 
             // Update indeks baris terakhir
             currentRowIndex++;
-
-
         }
 
         // Ambil indeks terakhir sebelum menghapus baris
@@ -538,4 +535,3 @@
         }
     </script>
 @endsection
-

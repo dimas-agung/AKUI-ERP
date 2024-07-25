@@ -35,6 +35,7 @@ class PreWashInputController extends Controller
         }
         return response()->view('PreWash.PreWashInput.index', [
             'pre_wash_inputs' => $PreWashInput,
+            'i' => $i,
         ]);
     }
     // create

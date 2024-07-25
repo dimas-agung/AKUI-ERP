@@ -73,7 +73,7 @@ class GradingKasarInputController extends Controller
     // Contoh controller
     public function sendData(
         GradingKasarInputRequest $request,
-        GradingKasarInputService $prmRawMaterialOutputService)
+        GradingKasarInputService $GradingKasarInputService)
     { try {
         $dataArray = json_decode($request->input('data'));
 
@@ -82,7 +82,7 @@ class GradingKasarInputController extends Controller
             throw new \InvalidArgumentException('Invalid JSON data.');
         }
 
-        $result = $prmRawMaterialOutputService->sendData($dataArray);
+        $result = $GradingKasarInputService->sendData($dataArray);
 
         // Periksa apakah pemrosesan berhasil
         if ($result['success']) {
@@ -114,10 +114,10 @@ class GradingKasarInputController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $prmRawMaterialOutputService = app(GradingKasarInputService::class);
+        $GradingKasarInputService = app(GradingKasarInputService::class);
 
         // Lakukan sesuatu dengan layanan
-        $result = $prmRawMaterialOutputService->updateItem($request, $id);
+        $result = $GradingKasarInputService->updateItem($request, $id);
 
         // Lakukan sesuatu dengan hasil
         return $result;
