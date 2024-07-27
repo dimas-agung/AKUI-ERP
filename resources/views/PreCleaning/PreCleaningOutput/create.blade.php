@@ -100,10 +100,10 @@
                         <select class="select2 form-select" style="width: 100%;" name="operator_flex_dan_poles"
                             id="operator_flex_dan_poles" data-placeholder="Pilih Operator Flex & Poles">
                             <option value="">Pilih Operator Flex & Poles</option>
-                            @foreach ($master_operators->sortBy('nama') as $MasterSPRM)
-                                @if ($MasterSPRM->job == 'Flex + Poles' && $MasterSPRM->status == 1)
-                                    <option value="{{ $MasterSPRM->nama }}">
-                                        {{ $MasterSPRM->nama }}
+                            @foreach ($master_operators->sortBy('nama') as $item)
+                                @if (strpos(strtolower($item->job), 'flek') !== false && strpos(strtolower($item->job), 'poles') !== false)
+                                    <option value="{{ $item->nama }}">
+                                        {{ $item->nama }}
                                     </option>
                                 @endif
                             @endforeach

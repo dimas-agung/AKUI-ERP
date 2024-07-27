@@ -12,11 +12,11 @@ class PreGradingHalusStockController extends Controller
     //
     public function index(){
         $i =1;
-        $TransitPre = PreGradingHalusStock::where('sisa_berat','>',0)->get();
-        // return $TransitPre;
+        $PGHS = PreGradingHalusStock::where('sisa_berat','>',0)->get();
+        // return $PGHS;
 
         return response()->view('PreGradingHalus.PreGradingHalusStock.index', [
-            'TransitPre' => $TransitPre,
+            'PGHS' => $PGHS,
             'i' => $i,
         ]);
     }
