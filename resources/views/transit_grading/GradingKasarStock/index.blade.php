@@ -48,6 +48,13 @@
                         </thead>
                         <tbody>
                             @forelse ($grading_kasar_stocks as $GradingKS)
+                                @php
+                                    $sisa_berat = $GradingKS->berat_masuk - $GradingKS->berat_keluar - $GradingKS->berat_adjustment;
+                                    
+                                @endphp
+                                @if ($sisa_berat == 0)
+                                    @continue
+                                @endif
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{{ $GradingKS->doc_no }}</td>
@@ -61,7 +68,7 @@
                                     <td class="text-center">{{ $GradingKS->berat_masuk }}</td>
                                     <td class="text-center">{{ $GradingKS->berat_keluar }}</td>
                                     <td class="text-center">{{ $GradingKS->berat_adjustment }}</td>
-                                    <td class="text-center">{{ $GradingKS->berat_masuk - $GradingKS->berat_keluar - $GradingKS->berat_adjustment }}</td>
+                                    <td class="text-center">{{ $sisa_berat }}</td>
                                     <td class="text-center">{{ $GradingKS->pcs_masuk }}</td>
                                     <td class="text-center">{{ $GradingKS->pcs_keluar }}</td>
                                     <td class="text-center">{{ $GradingKS->pcs_masuk - $GradingKS->pcs_keluar }}</td>
