@@ -585,7 +585,8 @@
                             icon: 'success'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href = response.redirectTo;
+                                location.reload();
+                                // window.location.href = response.redirectTo;
                             }
                         });
                     },
