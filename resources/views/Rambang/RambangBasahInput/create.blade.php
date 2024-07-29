@@ -91,8 +91,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Berat</label>
-                                        <input type="text" id="berat" pattern="[0-9]*" inputmode="numeric"
-                                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                        <input type="number" id="berat" pattern="[0-9]*" inputmode="numeric"
+                                            onkeypress=""
                                             class="form-control" name="berat" value="{{ old('berat') }}"
                                             placeholder="Masukkan berat" data-parsley-required="true">
                                     </div>
