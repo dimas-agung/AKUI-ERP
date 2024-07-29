@@ -96,7 +96,7 @@ class GradingKasarAdjustmentController extends Controller
                 $modal = $sisa_berat_stock == 0 ? 0 :$GradingKasarStock->total_modal / $sisa_berat_stock;
                 $GradingKasarStock->update([
                     // 'sisa_berat' => $sisa_berat_stock,
-                    'berat_adjustment' =>   $GradingKasarStock->berat_adjustment - $GradingKasarAdjustment->berat_adjustment ,
+                    'berat_adjustment' =>   $GradingKasarStock->berat_adjustment + $GradingKasarAdjustment->berat_adjustment ,
                     'modal' => $modal,
                     'total_modal' => $modal * (int)$sisa_berat_stock,
                 ]);
@@ -131,10 +131,12 @@ class GradingKasarAdjustmentController extends Controller
             $GradingKasarAdjustment = GradingKasarAdjustment::findOrFail($id);
             $GradingKasarStock = GradingKasarStock::where('id_box_grading_kasar', $GradingKasarAdjustment->id_box_grading_kasar)->first();
                 $sisa_berat_stock =  $GradingKasarStock->berat_masuk - $GradingKasarStock->berat_keluar - ($GradingKasarStock->berat_adjustment - $GradingKasarAdjustment->berat_adjustment);
+                $modal = $sisa_berat_stock == 0 ? 0 :$GradingKasarStock->total_modal / $sisa_berat_stock;
+
                 $GradingKasarStock->update([
                     // 'sisa_berat' => $sisa_berat_stock,
                     'berat_adjustment' =>  ($GradingKasarStock->berat_adjustment - $GradingKasarAdjustment->berat_adjustment),
-                    'modal' =>  $GradingKasarStock->total_modal / $sisa_berat_stock,
+                    'modal' =>  $modal,
                     // 'total_modal' =>  $GradingKasarStock->modal * $sisa_berat_stock,
                 ]);
             // Simpan id_box dari input yang akan dihapus
