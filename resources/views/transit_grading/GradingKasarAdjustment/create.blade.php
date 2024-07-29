@@ -161,7 +161,7 @@
                     $('#jenis_raw_material').val(response.jenis_raw_material)
                     $('#kadar_air').val(response.avg_kadar_air)
                     $('#modal').val(response.modal)
-                    let sisa_berat = parseInt(response.berat_masuk) - parseInt(response.berat_keluar);
+                    let sisa_berat = parseFloat(response.berat_masuk) - parseFloat(response.berat_keluar);
                     console.log(sisa_berat);
                     $('#berat_saldo_terakhir').val(sisa_berat)
                 },
@@ -374,7 +374,7 @@
                     });
 
                     // Redirect atau lakukan tindakan lain setelah berhasil
-                    // window.location.href = `{{ route('GradingKasarAdjustment.index') }}`;
+                    window.location.href = `{{ route('GradingKasarAdjustment.index') }}`;
                 },
                 error: function(error) {
                     console.error('Error sending data:', error);
