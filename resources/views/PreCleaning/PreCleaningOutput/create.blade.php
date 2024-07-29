@@ -101,7 +101,8 @@
                             id="operator_flex_dan_poles" data-placeholder="Pilih Operator Flex & Poles">
                             <option value="">Pilih Operator Flex & Poles</option>
                             @foreach ($master_operators->sortBy('nama') as $item)
-                                @if (strpos(strtolower($item->job), 'flek') !== false && strpos(strtolower($item->job), 'poles') !== false)
+                                @if ($item->job == 'Flex + Poles' && $item->status == 1)
+                                {{-- @if (strpos(strtolower($item->job), 'flek') !== false && strpos(strtolower($item->job), 'poles') !== false) --}}
                                     <option value="{{ $item->nama }}">
                                         {{ $item->nama }}
                                     </option>
