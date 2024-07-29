@@ -334,8 +334,8 @@
                     console.log(selectedIdBox);
                     console.log(idBoxGradingKasarSelected);
                     if (idBoxGradingKasarSelected == selectedIdBox) {
-
-                        calculateSisaBeratSisaPcs(beratMasuk, pcsMasuk)
+                        
+                        calculateSisaBeratSisaPcs(beratMasuk,pcsMasuk)
                     }
                     idBoxGradingKasarSelected = selectedIdBox;
                 },
@@ -467,30 +467,7 @@
             var pcsMasuk = parseFloat(document.getElementById('sisa_pcs').value);
             var pcsKeluarInput = parseFloat(document.getElementById('pcs_keluar').value);
 
-            if (beratKeluarInput > beratMasuk || pcsKeluarInput > pcsMasuk) {
-                if (beratKeluarInput > beratMasuk && pcsKeluarInput > pcsMasuk) {
-                    Swal.fire({
-                        title: 'Warning!',
-                        text: "Berat keluar tidak boleh melebihi sisa berat dan pcs.",
-                        icon: 'warning'
-                    });
-                } else if (beratKeluarInput > beratMasuk) {
-                    document.getElementById('berat_keluar').value = ''; // Mengosongkan input berat keluar
-                    Swal.fire({
-                        title: 'Warning!',
-                        text: "Berat keluar tidak boleh melebihi sisa berat.",
-                        icon: 'warning'
-                    });
-                } else {
-                    document.getElementById('pcs_keluar').value = ''; // Mengosongkan input berat keluar
-                    Swal.fire({
-                        title: 'Warning!',
-                        text: "Berat keluar tidak boleh melebihi sisa pcs.",
-                        icon: 'warning'
-                    });
-                }
-                return;
-            }
+           
         }
 
 
@@ -547,16 +524,6 @@
                 return;
             }
 
-            // Cek apakah berat_keluar lebih besar dari berat_masuk
-            if (berat_keluar > berat_masuk) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Berat keluar tidak boleh lebih besar dari berat masuk. Silakan periksa kembali nilai yang diinput.',
-                    icon: 'error'
-                });
-                return;
-            }
-
             // Memeriksa apakah nomor job sudah ada dalam dataArray
             if (dataArray.some(data => data.nomor_job === nomor_job)) {
                 Swal.fire({
@@ -573,6 +540,7 @@
             $('#cetak_jenis').html(jenis_grading)
             $('#cetak_gramasi').html(berat_keluar)
             $('#cetak_pcs').html(pcs_keluar)
+            $('#cetak_keterangan').html('('+keterangan+')')
             window.print();
 
             // Memanggil fungsi generateNomorBSTB untuk mendapatkan nomor_bstb
@@ -630,7 +598,7 @@
             // Membersihkan nilai input setelah ditambahkan
             $('#id_box_grading_kasar').trigger('change');
             $('#tujuan_kirim').trigger('change');
-            $("#tujuan_kirim").attr('disabled', 'disabled');
+            $("#tujuan_kirim").attr('disabled','disabled');
             // $('#tujuan_kirim').attr('disabled')
             $('#id_box_raw_material').val('');
             $('#nomor_batch').val('');
@@ -654,7 +622,7 @@
             $('#user_created').prop('readonly', true);
             // Update indeks baris terakhir
             currentRowIndex++;
-
+            
         }
 
         // Ambil indeks terakhir sebelum menghapus baris
@@ -765,67 +733,59 @@
                     }
                 });
             }
-
+            
         }
-
-        function calculateSisaBeratSisaPcs(berat_masuk, pcs_masuk) {
-            // Perhitungan sisa berat
-            let beratKeluar = 0;
-            let pcsKeluar = 0;
-            if (typeof dataArray != "undefined" && dataArray != null && dataArray.length != null && dataArray.length > 0) {
-                // array exists and is not empty
-                dataArray.forEach(function(item) {
-                    beratKeluar += parseInt(item.berat_keluar);
-                    pcsKeluar += parseInt(item.pcs_keluar)
-
-                });
-                console.log(beratKeluar);
-                let sisaBerat = berat_masuk - beratKeluar;
-                let sisaPcs = pcs_masuk - pcsKeluar;
-                $('#berat_masuk').val(sisaBerat);
-                $('#sisa_pcs').val(sisaPcs);
+        function calculateSisaBeratSisaPcs(berat_masuk,pcs_masuk) {
+                    // Perhitungan sisa berat
+                    let beratKeluar = 0;
+                    let pcsKeluar = 0;
+                    if (typeof dataArray != "undefined" && dataArray != null && dataArray.length != null && dataArray.length > 0) {
+                        // array exists and is not empty
+                        dataArray.forEach(function(item) {
+                            beratKeluar += parseInt(item.berat_keluar);
+                            pcsKeluar += parseInt(item.pcs_keluar)
+                           
+                        });
+                        console.log(beratKeluar);
+                        let sisaBerat = berat_masuk - beratKeluar;
+                        let sisaPcs = pcs_masuk - pcsKeluar;
+                        $('#berat_masuk').val(sisaBerat);
+                        $('#sisa_pcs').val(sisaPcs);
+                    }
             }
-        }
     </script>
 @endsection
 @section('printArea')
     <style>
         @media print {
             body {
-                visibility: hidden;
-                /* display: none; */
-                /* position: relative; */
+            visibility: hidden;
+            /* display: none; */
+            /* position: relative; */
             }
-
             #printableArea1 {
-                visibility: visible;
-                /* display: inline; */
-                position: absolute;
-                left: 0;
-                top: 0;
-                /* bottom: 0; */
-                /* right: 0; */
+            visibility: visible;
+            /* display: inline; */
+            position: absolute;
+            left: 0;
+            top: 0;
+            /* bottom: 0; */
+            /* right: 0; */
             }
-
             .no-print {
-                display: none;
-                /* Menyembunyikan elemen dengan class "no-print" saat mencetak */
+                display: none; /* Menyembunyikan elemen dengan class "no-print" saat mencetak */
             }
         }
     </style>
     <div class="row" id="printableArea1" style="max-width: 200px;margin: 10px;">
 
         <div id="qrcode" class="col" style="max-width: 70px;padding-right:0;padding-left:0;"></div>
-        <div class="col" style="font-size: 9px;width: 220px;padding-right:0;padding-left:0;">
-            <span style="text-align: center;font-weight: bold;;font-size:10px;"
-                id="cetak_nomor_batch">1234567890</span><br>
+        <div class="col" style="font-size: 9px;width: 220px;padding-right:0;padding-left:0;" >
+            <span style="text-align: center;font-weight: bold;;font-size:10px;" id="cetak_nomor_batch">1234567890</span><br>
             <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_jenis">PT12</span><br>
-            <span style="font-family:Calibri;font-weight: bold;font-size:10px;"
-                id="cetak_nomor_job">010324-083609_AKI_ugk</span><br>
-            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_gramasi">100</span><span
-                style="font-family:Calibri;font-weight: bold;font-size:10px;">gr / </span><span
-                style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_pcs">20</span><span
-                style="font-family:Calibri;font-weight: bold;font-size:10px;">pcs</span>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;"  id="cetak_nomor_job">010324-083609_AKI_ugk</span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_gramasi">100</span><span style="font-family:Calibri;font-weight: bold;font-size:10px;" >gr / </span><span style="font-family:Calibri;font-weight: bold;font-size:10px;"   id="cetak_pcs">20</span><span style="font-family:Calibri;font-weight: bold;font-size:10px;" >pcs </span>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_keterangan"></span>
         </div>
     </div>
 @endsection

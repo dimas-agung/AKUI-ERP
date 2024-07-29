@@ -7,9 +7,9 @@
 @endsection
 @section('content')
     <div class="container">
-        <form action="{{ route('PrmRawMaterialOutput.store') }}" method="POST">
-            @csrf
-            <div class="card border border-primary border-3 mt-2">
+        <div class="card border border-primary border-3 mt-2">
+            <form action="{{ route('PrmRawMaterialOutput.store') }}" method="POST">
+                @csrf
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card border-0 shadow-sm rounded">
@@ -185,47 +185,47 @@
                         </div>
                     </div>
                 </div>
-            </div>
+        </div>
 
 
-            <div class="col-md-12">
-                <div class="card mt-2">
-                    <div class="card-header">
-                        <div class="card-title">Validasi Data Input</div>
-                        <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
-                            <table class="table table-striped mt-3">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">No Document</th>
-                                        <th class="text-center">No BSTB</th>
-                                        <th class="text-center">Nomor Batch</th>
-                                        <th class="text-center">ID</th>
-                                        <th class="text-center">Nama Supplier</th>
-                                        <th class="text-center">Jenis</th>
-                                        <th class="text-center">Berat Masuk</th>
-                                        <th class="text-center">Berat</th>
-                                        <th class="text-center">Berat sisa</th>
-                                        <th class="text-center">Kadar Air</th>
-                                        <th class="text-center">Tujuan Kirim</th>
-                                        <th class="text-center">Letak Tujuan</th>
-                                        <th class="text-center">Inisial Tujuan</th>
-                                        <th class="text-center">Modal</th>
-                                        <th class="text-center">Total Modal</th>
-                                        <th class="text-center">Keterangan</th>
-                                        <th class="text-center">NIP Admin</th>
-                                        <th class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableBody">
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-12 mt-2 text-end">
-                            <a href="#" class="btn btn-primary" onclick="CeksendData()">Submit</a>
-                        </div>
+        <div class="col-md-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <div class="card-title">Validasi Data Input</div>
+                    <div class="card-body" style="overflow: scroll" content="{{ csrf_token() }}">
+                        <table class="table table-striped mt-3">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No Document</th>
+                                    <th class="text-center">No BSTB</th>
+                                    <th class="text-center">Nomor Batch</th>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Nama Supplier</th>
+                                    <th class="text-center">Jenis</th>
+                                    <th class="text-center">Berat Masuk</th>
+                                    <th class="text-center">Berat</th>
+                                    <th class="text-center">Berat sisa</th>
+                                    <th class="text-center">Kadar Air</th>
+                                    <th class="text-center">Tujuan Kirim</th>
+                                    <th class="text-center">Letak Tujuan</th>
+                                    <th class="text-center">Inisial Tujuan</th>
+                                    <th class="text-center">Modal</th>
+                                    <th class="text-center">Total Modal</th>
+                                    <th class="text-center">Keterangan</th>
+                                    <th class="text-center">NIP Admin</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 mt-2 text-end">
+                        <a href="#" class="btn btn-primary" onclick="CeksendData()">Submit</a>
                     </div>
                 </div>
             </div>
+        </div>
         </form>
         <div class="me-1 mb-1 d-inline-block">
             <!-- full size modal-->
@@ -427,7 +427,7 @@
                     id_box: selectedIdBox
                 },
                 success: function(response) {
-                    if (response.sisa_berat > 0) {
+                    // if (response.sisa_berat > 0) {
                         console.log(response);
                         // Mengatur nilai Nomor Batch sesuai dengan respons dari server
                         $('#nomor_batch').val(response.nomor_batch);
@@ -457,16 +457,16 @@
                         $('#berat_masuk_edit').val(response.sisa_berat);
                         $('#modal_edit').val(response.modal);
                         $('#nomor_nota_internal_edit').val(response.nomor_nota_internal);
-                    } else {
-                        // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
-                        Swal.fire({
-                            title: 'Warning!',
-                            text: 'Berat ID Box tidak boleh 0. Pilih ID Box lain.',
-                            icon: 'warning'
-                        });
-                        // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
-                        $('#nomor_bstb').val('');
-                    }
+                    // } else {
+                    //     // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
+                    //     Swal.fire({
+                    //         title: 'Warning!',
+                    //         text: 'Berat ID Box tidak boleh 0. Pilih ID Box lain.',
+                    //         icon: 'warning'
+                    //     });
+                    //     // Reset nilai dropdown ke default atau sesuaikan dengan kebutuhan Anda
+                    //     $('#nomor_bstb').val('');
+                    // }
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -551,11 +551,11 @@
             const selisihBerate = berat_masuk_edit - berat_edit;
 
             // Melakukan perhitungan selisih berat stock
-            const totalmodalstk = selisihBerat * modal;
+            const totalmodalstk = parseFloat(selisihBerat) * parseFloat(modal);
             const totalmodalestk = selisihBerate * modal_e;
 
             // Melakukan perhitungan selisih berat
-            const totalmodal = berat * modal;
+            const totalmodal = parseFloat(berat) * parseFloat(modal);
             const totalmodale = berat_edit * modal_e;
 
             // Memasukkan hasil perhitungan ke dalam input selisih berat
@@ -576,16 +576,16 @@
             var beratKeluarInput = parseFloat(document.getElementById('berat').value);
             var beratKeluarEdit = parseFloat(document.getElementById('berat_edit').value);
 
-            if (beratKeluarInput > beratMasuk || beratKeluarEdit > beratMasuk) {
-                Swal.fire({
-                    title: 'Warning!',
-                    text: "Berat keluar tidak boleh melebihi sisa berat.",
-                    icon: 'warning'
-                });
-                document.getElementById('berat').value = ''; // Mengosongkan input berat keluar
-                document.getElementById('berat_edit').value = ''; // Mengosongkan input berat edit
-                return;
-            }
+            // if (beratKeluarInput > beratMasuk || beratKeluarEdit > beratMasuk) {
+            //     Swal.fire({
+            //         title: 'Warning!',
+            //         text: "Berat keluar tidak boleh melebihi sisa berat.",
+            //         icon: 'warning'
+            //     });
+            //     document.getElementById('berat').value = ''; // Mengosongkan input berat keluar
+            //     document.getElementById('berat_edit').value = ''; // Mengosongkan input berat edit
+            //     return;
+            // }
         }
 
 
@@ -661,8 +661,8 @@
                 '<td class="d-none">' + total_modal_stock + '</td>' +
                 '<td>' + keterangan_item + '</td>' +
                 '<td>' + user_created + '</td>' +
-                '<td><button onclick="editRow(' + currentRowIndex +
-                ')" class="btn btn-warning" data-toggle="modal" data-target="#editModal">Edit</button></td>' +
+                // '<td><button onclick="editRow(' + currentRowIndex +
+                // ')" class="btn btn-warning" data-toggle="modal" data-target="#editModal">Edit</button></td>' +
                 '<td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>' +
                 '</tr>';
 
