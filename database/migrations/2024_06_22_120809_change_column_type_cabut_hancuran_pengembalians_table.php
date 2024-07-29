@@ -13,8 +13,8 @@ return new class extends Migration
     {
         //
         Schema::table('cabut_hancuran_pengembalians', function (Blueprint $table) {
-            $table->timestamp('waktu_penyebaran')->change();
-            $table->timestamp('waktu_pengembalian')->change();
+            $table->timestamp('waktu_penyebaran')->change()->nullable();
+            $table->timestamp('waktu_pengembalian')->change()->nullable();
             $table->integer('lama_pengerjaan')->change();
         });
     }
