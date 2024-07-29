@@ -10,7 +10,6 @@ class GradingKasarInput extends Model
     use HasFactory;
     protected $table = 'grading_kasar_inputs';
     protected $fillable = [
-        'doc_no',
         'nomor_bstb',
         'id_box',
         'nomor_batch',

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('jenis_rambang');
             $table->float('berat_basah');
             $table->float('berat_kering');
-            $table->float('susut');
+            $table->float('susut')->nullable();
             $table->integer('status')->default(1);
             $table->string('keterangan')->nullable();
             $table->string('user_created')->nullable();

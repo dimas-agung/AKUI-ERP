@@ -202,7 +202,6 @@ class PreCleaningInputController extends Controller
         ], 201);
     }
 
-
     public function destroy($nomor_bstb): RedirectResponse
     {
         try {

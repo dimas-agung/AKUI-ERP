@@ -22,6 +22,7 @@ return new class extends Migration
             $table->float('pcs_job');
             $table->string('tujuan_kirim');
             $table->string('keterangan')->nullable();
+            $table->string('upah_operator');
             $table->string('nama_operator');
             $table->string('nip_operator');
             $table->string('grade_operator');

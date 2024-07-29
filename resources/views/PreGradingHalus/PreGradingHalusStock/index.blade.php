@@ -3,7 +3,7 @@
     Pre Grading Halus
 @endsection
 @section('title')
-    Transit Pre Grading Halus Stock
+    Pre Grading Halus Stock
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Transit Pre Grading Halus Stock
+                                Data Pre Grading Halus Stock
                             </div>
                         </h5>
                     </div>
@@ -47,33 +47,35 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($TransitPre as $TPCS)
+                                    @forelse ($PGHS as $PreGradingHalusStock)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_job }}</td>
-                                            <td class="text-center">{{ $TPCS->id_box_grading_kasar }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_bstb }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_batch }}</td>
-                                            <td class="text-center">{{ $TPCS->nama_supplier }}</td>
-                                            <td class="text-center">{{ $TPCS->nomor_nota_internal }}</td>
-                                            <td class="text-center">{{ $TPCS->id_box_raw_material }}</td>
-                                            <td class="text-center">{{ $TPCS->jenis_raw_material }}</td>
-                                            <td class="text-center">{{ $TPCS->jenis_kirim }}</td>
-                                            <td class="text-center">{{ $TPCS->berat_masuk }}
+                                            <td class="text-center">{{ $PreGradingHalusStock->nomor_job }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->id_box_grading_kasar }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->nomor_bstb }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->nomor_batch }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->nama_supplier }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->nomor_nota_internal }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->id_box_raw_material }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->jenis_raw_material }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->jenis_kirim }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->berat_masuk }}
                                             </td>
-                                            <td class="text-center">{{ $TPCS->pcs_masuk }}</td>
-                                            <td class="text-center">{{ $TPCS->berat_keluar }}
+                                            <td class="text-center">{{ $PreGradingHalusStock->pcs_masuk }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->berat_keluar }}
                                             </td>
-                                            <td class="text-center">{{ $TPCS->pcs_keluar }}
+                                            <td class="text-center">{{ $PreGradingHalusStock->pcs_keluar }}
                                             </td>
-                                            <td class="text-center">{{ $TPCS->sisa_berat }}
+                                            <td class="text-center">{{ $PreGradingHalusStock->sisa_berat }}
                                             </td>
-                                            <td class="text-center">{{ $TPCS->sisa_pcs }}</td>
-                                            <td class="text-center">{{ $TPCS->kadar_air }}</td>
-                                            <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->sisa_pcs }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->kadar_air }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->tujuan_kirim }}</td>
                                             @role('admin')
-                                                <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
-                                                <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}
+                                                <td class="text-center">
+                                                    {{ number_format($PreGradingHalusStock->modal, 2, ',', '.') }}</td>
+                                                <td class="text-center">
+                                                    {{ number_format($PreGradingHalusStock->total_modal, 2, ',', '.') }}
                                                 </td>
                                             @endrole
                                         </tr>

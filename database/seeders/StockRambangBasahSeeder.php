@@ -15,6 +15,7 @@ class StockRambangBasahSeeder extends Seeder
     {
         //
         RambangBasahStock::create([
+            'workstation' => 'Cleaning',
             'unit' => 'Rambang',
             'id_box_hcr_kotor' => '200525_Putih Rambang',
             'jenis_rambang' => 'Putih Rambang',
@@ -23,6 +24,7 @@ class StockRambangBasahSeeder extends Seeder
             'sisa_berat' => 150,
         ]);
         RambangBasahStock::create([
+            'workstation' => 'Cleaning',
             'unit' => 'Rambang',
             'id_box_hcr_kotor' => '200524_Hcr Rambang',
             'jenis_rambang' => 'Hcr Rambang',
@@ -31,6 +33,7 @@ class StockRambangBasahSeeder extends Seeder
             'sisa_berat' => 50,
         ]);
         RambangBasahStock::create([
+            'workstation' => 'Cleaning',
             'unit' => 'Rambang',
             'id_box_hcr_kotor' => '200525_Hcr Rambang',
             'jenis_rambang' => 'Putih Rambang',
@@ -39,6 +42,7 @@ class StockRambangBasahSeeder extends Seeder
             'sisa_berat' => 200,
         ]);
         RambangBasahStock::create([
+            'workstation' => 'Cleaning',
             'unit' => 'Rambang',
             'id_box_hcr_kotor' => '200524_Putih Rambang',
             'jenis_rambang' => 'Hcr Rambang',

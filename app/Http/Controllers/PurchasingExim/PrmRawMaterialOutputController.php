@@ -23,11 +23,6 @@ class PrmRawMaterialOutputController extends Controller
     {
         $i = 1;
         $PrmRawMOIC = PrmRawMaterialOutputItem::all();
-        // $jumlahKadarAir = PrmRawMaterialOutputItem::groupBy('id_box')
-        //             ->selectRaw('id_box, sum(kadar_air) as total_kadar_air')
-        //             ->get()
-        //             ->pluck('total_kadar_air');
-
 
         // return $jumlahKadarAir;
         return response()->view('purchasing_exim.PrmRawMaterialOutput.index', [

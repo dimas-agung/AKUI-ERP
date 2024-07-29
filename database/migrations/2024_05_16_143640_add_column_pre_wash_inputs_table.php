@@ -14,6 +14,7 @@ return new class extends Migration
         //
         Schema::table('pre_wash_inputs', function (Blueprint $table) {
             $table->string('upah_operator');
+            $table->string('status')->default('1');
         });
     }
 
