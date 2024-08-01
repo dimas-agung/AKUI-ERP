@@ -73,6 +73,14 @@ class DatabaseSeeder extends Seeder
         $this->call(PreWashOutputSeeder::class);
         $this->call(TransitPreWashSeeder::class);
         $this->call(MouldingWasteStockSeeder::class);
+        $this->call(FinalGradingSeeder::class);
+        $this->call(TransitFinalGradingSeeder::class);
+        $this->call(TransitFinalGradingReworkSeeder::class);
+        $this->call(MouldingPersiapanReworkSeeder::class);
+        $this->call(MouldingPersiapanReworkStockSeeder::class);
+        $this->call(MouldingPenyebaranReworkSeeder::class);
+        $this->call(MouldingPengembalianReworkSeeder::class);
+        $this->call(TransitMouldingReworkSeeder::class);
         $this->call(roleSeeders::class);
         $this->call(userSeeders::class);
 

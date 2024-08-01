@@ -691,9 +691,19 @@ Route::middleware('auth')->group(function (){
                 Route::delete('/moulding_waste_output/destroy/{id_box}', 'destroy')->name('MouldingWasteOutput.destroy');
             });
 
-
             Route::controller(App\Http\Controllers\MouldingWaste\TransitMouldingWasteController::class)->group(function () {
                 Route::get('/transit_moulding_waste', 'index')->name('TransitMouldingWaste.index');
+            });
+
+            Route::controller(App\Http\Controllers\MouldingRework\MouldingPersiapanReworkController::class)->group(function () {
+                Route::get('/moulding_rework_persiapan', 'index')->name('MouldingReworkPersiapan.index');
+                Route::get('/moulding_rework_persiapan/create', 'create')->name('MouldingReworkPersiapan.create');
+                Route::post('/moulding_rework_persiapan/store', 'store')->name('MouldingReworkPersiapan.store');
+                Route::post('/moulding_rework_persiapan/sendData', 'sendData')->name('MouldingReworkPersiapan.sendData');
+                Route::delete('/moulding_rework_persiapan/destroy/{nomor_job_rework}', 'destroy')->name('MouldingReworkPersiapan.destroy');
+                Route::get('/moulding_rework_persiapan/get_data_id_box', 'set')->name('MouldingReworkPersiapan.set');
+                Route::get('/moulding_rework_persiapan/get_pcc', 'setpcc')->name('MouldingReworkPersiapan.setpcc');
+                Route::post('/moulding_rework_persiapan/cek_data', 'CeksendData')->name('MouldingReworkPersiapan.CeksendData');
             });
         });
     });

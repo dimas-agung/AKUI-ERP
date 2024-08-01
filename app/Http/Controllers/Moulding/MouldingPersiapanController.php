@@ -17,7 +17,6 @@ use Illuminate\View\View;
 
 class MouldingPersiapanController extends Controller
 {
-
         protected $MouldingPersiapanService;
 
         public function __construct(MouldingPersiapanService $MouldingPersiapanService)
@@ -25,17 +24,6 @@ class MouldingPersiapanController extends Controller
             $this->MouldingPersiapanService = $MouldingPersiapanService;
         }
 
-        //Index
-        // public function index(){
-        //     $i =1;
-        //     $PreCleaningI = MouldingPersiapan::get();
-        //     // return $existingItem;
-
-        //     return response()->view('Moulding.MouldingPenerimaan.index', [
-        //         'PreCleaningI' => $PreCleaningI,
-        //         'i' => $i,
-        //     ]);
-        // }
         public function index(Request $request){
             $i = 1;
             $startDate = $request->input('start_date');
