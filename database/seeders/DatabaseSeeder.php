@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(WorkstationSeeder::class);
         // $this->call(UnitSeeder::class);
         // $this->call(BiayaHppSeeder::class);
+        $this->call(MasterBatchSeeder::class);
         $this->call(MasterOperatorSeeder::class);
         $this->call(MasterOngkosCuciSeeder::class);
         $this->call(MasterSupplierRawMaterialSeeder::class);
@@ -32,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterJenisWasteSeeder::class);
         $this->call(MasterJenisDryASeeder::class);
         $this->call(MasterJenisGradingWarnaSeeder::class);
+        $this->call(MasterJenisKedatanganSeeder::class);
         // MASTER TUJUAN
         $this->call(MasterTujuanKirimRawMaterialSeeder::class);
         $this->call(MasterTujuanKirimGradingKasarSeeder::class);
@@ -39,6 +41,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterTujuanKirimWasteSeeder::class);
         $this->call(MasterTujuanKirimDryASeeder::class);
         $this->call(MasterTujuanKirimMouldingSeeder::class);
+        $this->call(MasterTujuanKirimKedatanganSeeder::class);
         // Purchasing Raw Material
         $this->call(PrmRawMaterialInputSeeder::class);
         $this->call(PrmRawMaterialInputItemSeeder::class);
