@@ -12,7 +12,7 @@ class DryAGradingCabutStockController extends Controller
     //index
     public function index()
     {
-        $DryAGradingCabutStock = DryAGradingCabutStock::all();
+        $DryAGradingCabutStock = DryAGradingCabutStock::where('status',1)->get();
         return response()->view('DryA.DryAGradingCabutStock.index', [
             'dry_a_grading_cabut_stock' => $DryAGradingCabutStock,
         ]);

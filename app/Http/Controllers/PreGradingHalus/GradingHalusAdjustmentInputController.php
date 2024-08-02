@@ -76,7 +76,7 @@ class GradingHalusAdjustmentInputController extends Controller
     public function create()
     {
         // $MasterJenisGradingHalus = MasterJenisGradingHalus::with('AdjustmentInput')->get();
-        $MasterJenisGradingHalus = MasterJenisGradingHalus::all();
+        $MasterJenisGradingHalus = MasterJenisGradingHalus::where('status',1)->get();
         $GradingHalusAdjustmentStock = GradingHalusAdjustmentStock::with('GradingHalusAdjustmentInput')->where('status',1)->get();
         return view('PreGradingHalus.AdjustmentInput.create', [
             'grading_halus_adjustment_inputs' => $GradingHalusAdjustmentStock,

@@ -13,7 +13,7 @@ class DryAPenerimaanStockController extends Controller
     public function index()
     {
         $i = 1;
-        $GradigHalusStock = DryAPenerimaanCabutStock::all();
+        $GradigHalusStock = DryAPenerimaanCabutStock::where('status','!=',0)->get();
         // return $GradigHalusStock;
         return response()->view('DryA.DryAPenerimaanStock.index', [
             'grading_halus_stocks'          => $GradigHalusStock,
