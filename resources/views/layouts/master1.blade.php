@@ -682,14 +682,15 @@
                         @endrole
 
                         @role('kedatangan|admin')
-                            <li class="sidebar-item has-sub {{ Route::is('KedatanganOutput*') ? 'active' : '' }}">
+                            <li
+                                class="sidebar-item has-sub {{ Route::is('KedatanganOutput*', 'TransitKedatangan*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Kedatangan</span>
                                 </a>
                                 <ul class="submenu">
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('KedatanganOutput*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('KedatanganOutput*', 'TransitKedatangan*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Kedatangan</span>
                                         </a>
@@ -698,6 +699,11 @@
                                                 class="submenu-item {{ Route::is('KedatanganOutput*') ? 'active' : '' }}">
                                                 <a href="{{ route('KedatanganOutput.index') }}"
                                                     class="submenu-link">Kedatangan Output</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitKedatangan*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitKedatangan.index') }}"
+                                                    class="submenu-link">Transit Kedatangan</a>
                                             </li>
                                         </ul>
                                     </li>

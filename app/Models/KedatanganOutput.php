@@ -34,4 +34,9 @@ class KedatanganOutput extends Model
         }
         return false;
     }
+
+    public function TransitKedatangan()
+    {
+        return $this->hasMany(TransitKedatangan::class, 'nomor_batch', 'nomor_batch');
+    }
 }

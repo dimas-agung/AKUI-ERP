@@ -633,9 +633,14 @@ Route::middleware('auth')->group(function () {
                 Route::get('/kedatangan_output/create', 'create')->name('KedatanganOutput.create');
                 Route::post('/kedatangan_output/store', 'store')->name('KedatanganOutput.store');
                 Route::delete('/kedatangan_output/destroy/{nomor_bstb}', 'destroy')->name('KedatanganOutput.destroy');
-                Route::get('/kedatangan_output/set_batch', 'set_batch')->name('KedatanganOutput.setBatch');
+                Route::get('/kedatangan_output/set_batch', 'setBatch')->name('KedatanganOutput.setBatch');
                 Route::get('/kedatangan_output/set_jenis', 'setJenis')->name('KedatanganOutput.setJenis');
                 Route::get('/kedatangan_output/set_tujuan_kirim', 'setTujuanKirim')->name('KedatanganOutput.setTujuanKirim');
+            });
+        });
+        Route::prefix('transit_kedatangan')->middleware('role:kedatangan|admin')->group(function () {
+            Route::controller(App\Http\Controllers\Kedatangan\TransitKedatanganController::class)->group(function () {
+                Route::get('/transit_kedatangan', 'index')->name('TransitKedatangan.index');
             });
         });
     });

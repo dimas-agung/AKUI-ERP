@@ -36,6 +36,7 @@
                                     {{ $item->tujuan_kirim }}</option>
                             @endforeach
                         </select>
+                        <input type="hidden" id="inisial_tujuan">
                     </div>
 
                     <div class="col-md-4">
@@ -48,25 +49,31 @@
                                     {{ $item->jenis }}</option>
                             @endforeach
                         </select>
+                        <input type="hidden" id="harga_estimasi">
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="berat" class="form-label">Berat</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="berat">
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="pcs" class="form-label">Pcs</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="pcs">
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <input type="text" class="form-control" id="keterangan">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="total_berat" class="form-label">Total Berat</label>
+                        <input type="text" class="form-control" id="total_berat" readonly>
                     </div>
 
                     <div class="col-md-4">
@@ -110,6 +117,8 @@
                                 <th scope="col" class="text-center">Pcs</th>
                                 <th scope="col" class="text-center">Nomor Job</th>
                                 <th scope="col" class="text-center">Nomor BSTB</th>
+                                <th scope="col" class="text-center">Modal</th>
+                                <th scope="col" class="text-center">Total Modal</th>
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">Nip Admin</th>
                                 <th scope="col" class="text-center">Action</th>
@@ -130,9 +139,6 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            let selectedTujuanKirim = '';
-            let selectedInisialTujuan = '';
-            let berat = '';
             // Get Batch
             $('#nomor_batch').on('change', function() {
                 selectedNomorBatch = $(this).val();
@@ -162,7 +168,7 @@
                     url: '{{ route('KedatanganOutput.setJenis') }}',
                     method: 'GET',
                     data: {
-                        jenis_grading: selectedJenis
+                        jenis: selectedJenis
                     },
                     success: function(response) {
                         console.log(response);
@@ -179,50 +185,9 @@
                 });
             });
             // Get Tujuan Kirim
-            // $('#tujuan_kirim').on('change', function() {
-            //     selectedTujuanKirim = $(this).val();
-
-            //     $.ajax({
-            //         url: '{{ route('KedatanganOutput.setTujuanKirim') }}',
-            //         method: 'GET',
-            //         data: {
-            //             tujuan_kirim: selectedTujuanKirim
-            //         },
-            //         success: function(response) {
-            //             console.log(response);
-
-            //             // Mengatur nilai sesuai dengan respons dari server
-            //             $('#tujuan_kirim').val(response.tujuan_kirim);
-            //             let selectedInisialTujuan = response.inisial_tujuan;
-
-            //             generateNomorBSTB(selectedInisialTujuan);
-            //             generateNomorJob(selectedInisialTujuan);
-            //         },
-            //         error: function(error) {
-            //             console.error('Error:', error);
-            //         }
-            //     });
-            // });
-
             $('#tujuan_kirim').on('change', function() {
                 selectedTujuanKirim = $(this).val();
-                if (selectedTujuanKirim && berat) {
-                    generate();
-                } else {
-                    $('#nomor_bstb').val('');
-                }
-            });
 
-            $('#berat').on('input', function() {
-                berat = $(this).val();
-                if (selectedTujuanKirim && berat) {
-                    generate();
-                } else {
-                    $('#nomor_bstb').val('');
-                }
-            });
-
-            function generate() {
                 $.ajax({
                     url: '{{ route('KedatanganOutput.setTujuanKirim') }}',
                     method: 'GET',
@@ -230,18 +195,28 @@
                         tujuan_kirim: selectedTujuanKirim
                     },
                     success: function(response) {
-                        selectedInisialTujuan = response.inisial_tujuan;
-                        generateNomorBSTB(selectedInisialTujuan);
-                        generateNomorJob(selectedInisialTujuan);
+                        console.log(response);
+
+                        // Mengatur nilai sesuai dengan respons dari server
+                        $('#tujuan_kirim').val(response.tujuan_kirim);
+                        $('#inisial_tujuan').val(response.inisial_tujuan);
+
+                        // Memanggil fungsi generateNomorBSTB dengan nilai baru
+                        generateNomorBSTB(response.inisial_tujuan);
+                        generateNomorJob(response.inisial_tujuan);
                     },
                     error: function(error) {
                         console.error('Error:', error);
                     }
                 });
-            }
-
+            });
             // Generate Nomor BSTB
             function generateNomorBSTB(selectedInisialTujuan) {
+                if (!selectedInisialTujuan) {
+                    // Jika tidak ada nilai untuk inisial tujuan, kosongkan nomor_bstb
+                    $('#nomor_bstb').val('');
+                    return '';
+                }
                 const now = new Date();
                 const tahun = now.getFullYear().toString().substr(-2);
                 const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
@@ -252,11 +227,23 @@
 
                 const nomorBSTB =
                     `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_UKD_${selectedInisialTujuan}`;
+                console.log(nomorBSTB);
+
                 $('#nomor_bstb').val(nomorBSTB);
                 return nomorBSTB;
             }
             // Generate Nomor Job
-            function generateNomorJob(selectedInisialTujuan) {
+            function generateNomorJob() {
+                // Ambil nilai berat, inisial
+                const berat = $('#berat').val();
+                const inisialTujuan = $('#inisial_tujuan').val();
+
+                if (!inisialTujuan) {
+                    $('#nomor_job').val('');
+                    return '';
+                }
+
+                // Mendapatkan tanggal dan waktu saat ini
                 const now = new Date();
                 const tahun = now.getFullYear().toString().substr(-2);
                 const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
@@ -265,11 +252,18 @@
                 const menit = ('0' + now.getMinutes()).slice(-2);
                 const detik = ('0' + now.getSeconds()).slice(-2);
 
+                // Membuat nomor pekerjaan
                 const nomorJob =
-                    `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_UKD_${selectedInisialTujuan}`;
+                    `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_UKD_${inisialTujuan}`;
+                console.log(nomorJob);
+
+                // Menetapkan nomor pekerjaan ke elemen input
                 $('#nomor_job').val(nomorJob);
-                return nomorJob;
             }
+            // Listener #berat
+            $('#berat').on('input', function() {
+                generateNomorJob();
+            });
         });
 
         // Hitung Total Berat
@@ -278,8 +272,8 @@
             // Iterasi melalui setiap baris dalam tabel
             $('#dataTable tbody tr').each(function() {
                 // Mendapatkan nilai berat adding dari baris saat ini dan menambahkannya ke totalBerat
-                let beratGrading = parseFloat($(this).find('td:eq(10)').text()) || 0;
-                totalBerat += beratGrading;
+                let berat = parseFloat($(this).find('td:eq(3)').text()) || 0;
+                totalBerat += berat;
             });
             // Menampilkan total berat di input #total_berat
             $('#total_berat').val(totalBerat);
@@ -291,27 +285,23 @@
             let emptyFields = [];
 
             // Mendapatkan nilai dari semua input
-            let nomor_lot = $('#nomor_lot').val();
             let nomor_batch = $('#nomor_batch').val();
             let tujuan_kirim = $('#tujuan_kirim').val();
-            let berat_lot = $('#berat_lot').val();
-            let pcs_lot = $('#pcs_lot').val();
-            let jenis_grading = $('#jenis_grading').val();
-            let berat_grading = $('#berat_grading').val();
-            let pcs_grading = $('#pcs_grading').val();
-            let id_box_grading_warna = $('#id_box_grading_warna').val();
+            let berat = $('#berat').val();
+            let pcs = $('#pcs').val();
+            let jenis = $('#jenis').val();
+            let nomor_job = $('#nomor_job').val();
+            let nomor_bstb = $('#nomor_bstb').val();
             let user_created = $('#user_created').val();
 
             // Memeriksa setiap input, dan jika kosong, tambahkan ke daftar kolom yang belum diisi
-            if (!nomor_lot) emptyFields.push('Nomor Lot');
             if (!nomor_batch) emptyFields.push('Nomor Batch');
+            if (!jenis) emptyFields.push('Jenis');
             if (!tujuan_kirim) emptyFields.push('Tujuan Kirim');
-            if (!berat_lot) emptyFields.push('Berat Lot');
-            if (!pcs_lot) emptyFields.push('Pcs Lot');
-            if (!jenis_grading) emptyFields.push('Jenis Grading');
-            if (!berat_grading) emptyFields.push('Berat Grading');
-            if (!pcs_grading) emptyFields.push('Pcs Grading');
-            if (!id_box_grading_warna) emptyFields.push('ID Box Kedatangan Output');
+            if (!berat) emptyFields.push('Berat');
+            if (!pcs) emptyFields.push('Pcs');
+            if (!nomor_job) emptyFields.push('Nomor Job');
+            if (!nomor_bstb) emptyFields.push('Nomor BSTB');
             if (!user_created) emptyFields.push('NIP Admin');
 
             // Jika daftar kolom yang belum diisi tidak kosong, tampilkan pesan peringatan
@@ -332,68 +322,46 @@
 
         function addRow() {
             if (validateForm()) {
-                let nomor_lot = $('#nomor_lot').val();
                 let nomor_batch = $('#nomor_batch').val();
                 let tujuan_kirim = $('#tujuan_kirim').val();
-                let berat_lot = $('#berat_lot').val();
-                let pcs_lot = $('#pcs_lot').val();
-                let modal = $('#modal').val();
-                let total_modal = $('#total_modal').val();
-                let jenis_grading = $('#jenis_grading').val();
-                let kategori_susut = $('#kategori_susut').val();
-                let berat_grading = $('#berat_grading').val();
-                let pcs_grading = $('#pcs_grading').val();
+                let jenis = $('#jenis').val();
+                let berat = parseFloat($('#berat').val());
+                let pcs = $('#pcs').val();
                 let keterangan = $('#keterangan').val();
-                let susut_depan = $('#susut_depan').val();
-                let susut_belakang = $('#susut_belakang').val();
-                let kontribusi = $('#kontribusi').val();
-                let harga_estimasi = $('#harga_estimasi').val();
-                let id_box_grading_warna = $('#id_box_grading_warna').val();
+                let nomor_job = $('#nomor_job').val();
+                let nomor_bstb = $('#nomor_bstb').val();
+                let modal = parseFloat($('#harga_estimasi').val());
+                let total_modal = berat * modal;
                 let user_created = $('#user_created').val();
 
                 let newRow = `<tr>` +
-                    `<td class="text-center">${nomor_lot}</td>` +
                     `<td class="text-center">${nomor_batch}</td>` +
+                    `<td class="text-center">${jenis}</td>` +
                     `<td class="text-center">${tujuan_kirim}</td>` +
-                    `<td class="text-center">${berat_lot}</td>` +
-                    `<td class="text-center">${pcs_lot}</td>` +
+                    `<td class="text-center">${berat}</td>` +
+                    `<td class="text-center">${pcs}</td>` +
+                    `<td class="text-center">${nomor_job}</td>` +
+                    `<td class="text-center">${nomor_bstb}</td>` +
                     `<td class="text-center">${modal}</td>` +
                     `<td class="text-center">${total_modal}</td>` +
-                    `<td class="text-center">${jenis_grading}</td>` +
-                    `<td class="text-center">${id_box_grading_warna}</td>` +
-                    `<td class="text-center">${kategori_susut}</td>` +
-                    `<td class="text-center">${berat_grading}</td>` +
-                    `<td class="text-center">${pcs_grading}</td>` +
-                    `<td class="text-center">${susut_depan}</td>` +
-                    `<td class="text-center">${susut_belakang}</td>` +
-                    `<td class="text-center">${harga_estimasi}</td>` +
-                    `<td class="text-center">${kontribusi}</td>` +
                     `<td class="text-center">${keterangan}</td>` +
                     `<td class="text-center">${user_created}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
                     `</tr>`;
                 // Tambahkan Kedalam Tabel
                 $('#dataTable tbody').append(newRow);
-                // disable nomor lot
-                $('#nomor_lot').prop('disabled', true);
+                // disable input
+                $('#nomor_batch').prop('disabled', true);
+                $('#tujuan_kirim').prop('disabled', true);
 
-                // Mengosongkan nilai dropdown nomor_job
-                $('#jenis_grading').val(null).trigger('change');
-                $('#berat_grading').val('');
-                $('#pcs_grading').val('');
+                // Mengosongkan nilai dropdown
+                $('#jenis').val(null).trigger('change');
+                $('#berat').val('');
+                $('#pcs').val('');
                 $('#keterangan').val('');
-                $('#id_box_grading_warna').val('');
+                $('#nomor_job').val('');
 
                 hitungTotalBerat();
-                hitungSusutDepan();
-                hitungSusutBelakang();
-                hitungKontribusi();
-
-                // Update nilai sisa berat dan pcs
-                initialSisaBeratLot -= parseFloat(berat_grading);
-                initialSisaPcsLot -= parseFloat(pcs_grading);
-                $('#sisa_berat_lot').val(initialSisaBeratLot);
-                $('#sisa_pcs_lot').val(initialSisaPcsLot);
             }
         }
 
@@ -401,51 +369,34 @@
         function hapusBaris(button) {
             // Dapatkan elemen baris terkait dengan tombol delete yang diklik
             let row = $(button).closest('tr');
-            // cari berat_grading dan pcs_grading
-            let berat_grading = parseFloat(row.find('td:eq(10)').text()) || 0;
-            let pcs_grading = parseFloat(row.find('td:eq(11)').text()) || 0;
 
             row.remove();
-            // hitung ulang sisa_lot
-            initialSisaBeratLot += berat_grading;
-            initialSisaPcsLot += pcs_grading;
-            $('#sisa_berat_lot').val(initialSisaBeratLot);
-            $('#sisa_pcs_lot').val(initialSisaPcsLot);
 
             let rowIndex = row.index();
             dataArray.splice(rowIndex, 1);
 
             // Cek apakah tabel tidak memiliki baris data lagi
             if ($('#dataTable tbody tr').length === 0) {
-                $('#nomor_lot').prop('disabled', false).val(null).trigger('change');
-                $('#nomor_batch').val('');
-                $('#tujuan_kirim').val('');
-                $('#berat_lot').val('');
-                $('#pcs_lot').val('');
-                $('#jenis_grading').val(null).trigger('change');
-                $('#berat_grading').val('');
-                $('#pcs_grading').val('');
+                $('#nomor_batch').prop('disabled', false).val(null).trigger('change');
+                $('#tujuan_kirim').prop('disabled', false).val(null).trigger('change');
+                $('#nomor_bstb').val('');
+                $('#inisial_tujuan').val('');
+                $('#jenis').val(null).trigger('change');
+                $('#nomor_job').val('');
+                $('#berat').val('');
+                $('#pcs').val('');
                 $('#keterangan').val('');
-                $('#id_box_grading_warna').val('');
-                $('#susut_depan').val('0');
-                $('#susut_belakang').val('0');
 
                 hitungTotalBerat();
-                hitungKontribusi();
 
             } else {
-                $('#jenis_grading').val(null).trigger('change');
-                $('#berat_grading').val('');
-                $('#pcs_grading').val('');
+                $('#jenis').val(null).trigger('change');
+                $('#nomor_job').val('');
+                $('#berat').val('');
+                $('#pcs').val('');
                 $('#keterangan').val('');
-                $('#id_box_grading_warna').val('');
-                $('#susut_depan').val('');
-                $('#susut_belakang').val('');
 
                 hitungTotalBerat();
-                hitungSusutDepan();
-                hitungSusutBelakang();
-                hitungKontribusi();
             }
         }
 
@@ -457,24 +408,17 @@
                 let row = $(this).find('td');
 
                 let data = {
-                    nomor_lot: row.eq(0).text(),
-                    nomor_batch: row.eq(1).text(),
+                    nomor_batch: row.eq(0).text(),
+                    jenis: row.eq(1).text(),
                     tujuan_kirim: row.eq(2).text(),
-                    berat_lot: row.eq(3).text(),
-                    pcs_lot: row.eq(4).text(),
-                    modal: row.eq(5).text(),
-                    total_modal: row.eq(6).text(),
-                    jenis_grading: row.eq(7).text(),
-                    id_box_grading_warna: row.eq(8).text(),
-                    kategori_susut: row.eq(9).text(),
-                    berat_grading: row.eq(10).text(),
-                    pcs_grading: row.eq(11).text(),
-                    susut_depan: row.eq(12).text(),
-                    susut_belakang: row.eq(13).text(),
-                    harga_estimasi: row.eq(14).text(),
-                    kontribusi: row.eq(15).text().replace('%', ''),
-                    keterangan: row.eq(16).text(),
-                    user_created: row.eq(17).text(),
+                    berat: row.eq(3).text(),
+                    pcs: row.eq(4).text(),
+                    nomor_job: row.eq(5).text(),
+                    nomor_bstb: row.eq(6).text(),
+                    modal: row.eq(7).text(),
+                    total_modal: row.eq(8).text(),
+                    keterangan: row.eq(9).text(),
+                    user_created: row.eq(10).text(),
                 };
 
                 dataArray.push(data);
@@ -483,7 +427,7 @@
             console.log(dataArray);
             // Mengirim data ke server menggunakan AJAX
             $.ajax({
-                url: '{{ route('GradingWarna.store') }}',
+                url: '{{ route('KedatanganOutput.store') }}',
                 method: 'POST',
                 beforeSend: function() {
                     Swal.fire({

@@ -62,7 +62,7 @@
                                         <th scope="col" class="text-center">Pcs</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
                                         <th scope="col" class="text-center">Nomor Job</th>
-                                        <th scope="col" class="text-center">Nomor Batch</th>
+                                        <th scope="col" class="text-center">Nomor BSTB</th>
                                         <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">User Created</th>
@@ -82,7 +82,7 @@
                                             <td class="text-center">{{ $item->pcs }}</td>
                                             <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                             <td class="text-center">{{ $item->nomor_job }}</td>
-                                            <td class="text-center">{{ $item->nomor_batch }}</td>
+                                            <td class="text-center">{{ $item->nomor_bstb }}</td>
                                             <td class="text-center">{{ $item->keterangan }}</td>
                                             <td class="text-center">{{ $item->status }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
