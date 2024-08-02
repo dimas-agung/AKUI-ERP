@@ -10,6 +10,7 @@ use Yajra\DataTables\DataTables;
 use App\Models\MasterJenisWaste;
 use App\Http\Controllers\Controller;
 use App\Services\DryAWasteInputService;
+use Illuminate\Support\Facades\Auth;
 
 class DryAWasteInputController extends Controller
 {
@@ -50,7 +51,7 @@ class DryAWasteInputController extends Controller
     public function getdryAWasteInputs()
     {
         if ($this->dryAWasteInputs === null) {
-            $this->dryAWasteInputs = DryAWasteInput::all();
+            $this->dryAWasteInputs = DryAWasteInput::where('plant',Auth::user()->plant);
         }
         return $this->dryAWasteInputs;
     }

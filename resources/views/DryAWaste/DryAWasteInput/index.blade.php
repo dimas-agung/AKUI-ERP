@@ -76,6 +76,9 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($dry_a_waste_input as $item)
+                                    @if ($item->plant != Auth::user()->plant)
+                                        @continue
+                                    @endif
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->tanggal_cabut }}</td>

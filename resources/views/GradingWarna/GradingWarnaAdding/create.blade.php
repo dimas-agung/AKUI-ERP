@@ -28,7 +28,8 @@
 
                     <div class="col-md-4">
                         <label class="form-label">Tujuan Kirim</label>
-                        <select class="select2 form-select" style="width: 100%;" name="tujuan_kirim" id="tujuan_kirim"
+                        <input type="text" class="form-control" name="tujuan_kirim" id="tujuan_kirim" readonly>
+                        {{-- <select class="select2 form-select" style="width: 100%;" name="tujuan_kirim" id="tujuan_kirim"
                             data-placeholder="Pilih Tujuan Kirim">
                             <option value="">Pilih Tujuan Kirim</option>
                             @foreach ($master_tujuan_kirim_moulding as $item)
@@ -36,7 +37,7 @@
                                     {{ $item->tujuan_kirim }}
                                 </option>
                             @endforeach
-                        </select>
+                        </select> --}}
                     </div>
 
                     <div class="col-md-4">
@@ -213,6 +214,8 @@
                                 // tujuanKirim = data[0].tujuan_kirim;
                                 beratKotor = data[0].berat_kotor;
                             }
+                            $('#tujuan_kirim').val(data[0].tujuan_kirim).trigger('change')
+                        
 
                             $.each(data, function(index, item) {
                                 var row = `
@@ -263,19 +266,19 @@
                 var beratKotor = parseFloat($('#berat_kotor').val()) || 0;
                 var beratKotorAdding = parseFloat($(this).val()) || 0;
 
-                if (beratKotorAdding > beratKotor) {
-                    // Tampilkan pesan peringatan jika berat_kotor_adding lebih besar atau sama dengan berat_kotor
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Berat Kotor Adding tidak boleh lebih besar dari Berat Kotor.',
-                    });
+                // if (beratKotorAdding > beratKotor) {
+                //     // Tampilkan pesan peringatan jika berat_kotor_adding lebih besar atau sama dengan berat_kotor
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Oops...',
+                //         text: 'Berat Kotor Adding tidak boleh lebih besar dari Berat Kotor.',
+                //     });
 
-                    // Kosongkan input berat_kotor_adding
-                    $(this).val('');
-                    // Kosongkan nilai prosentase_susut
-                    $('#prosentase_susut').val('');
-                } else {
+                //     // Kosongkan input berat_kotor_adding
+                //     $(this).val('');
+                //     // Kosongkan nilai prosentase_susut
+                //     $('#prosentase_susut').val('');
+                // } else {
                     // Hitung prosentase susut
                     if (!isNaN(beratKotor) && !isNaN(beratKotorAdding) && beratKotor != 0) {
                         var presentaseSusut = 100 - ((beratKotorAdding / beratKotor) * 100);
@@ -283,7 +286,7 @@
                     } else {
                         $('#prosentase_susut').val('');
                     }
-                }
+                // }
             });
         });
 

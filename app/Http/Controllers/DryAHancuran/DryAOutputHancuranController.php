@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class DryAOutputHancuranController extends Controller
@@ -62,7 +63,7 @@ class DryAOutputHancuranController extends Controller
     public function set(Request $request)
     {
         $jenis_grading = $request->jenis_grading;
-        $data = DryAGradingHancuranStock::where('jenis_grading', $jenis_grading)->get();
+        $data = DryAGradingHancuranStock::where(['jenis_grading'=> $jenis_grading,'plant' => Auth::user()->plant])->get();
 
         // Kembalikan data sebagai respons JSON
         return response()->json($data);

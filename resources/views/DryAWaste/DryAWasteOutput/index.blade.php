@@ -67,6 +67,9 @@
                         </thead>
                         <tbody>
                             @forelse ($PreGHI as $item)
+                                @if ($item->plant != Auth::user()->plant)
+                                        @continue
+                                @endif
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{{ $item->jenis_waste }}</td>
