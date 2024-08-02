@@ -59,7 +59,7 @@ class GradingHalusInputController extends Controller
     public function create()
     {
         $TransitPre = PreGradingHalusAddingStock::get();
-        $Unit = MasterJenisGradingHalus::get();
+        $Unit = MasterJenisGradingHalus::where('status',1)->get();
         // return $TransitPre;
         return view('PreGradingHalus.GradingHalusInput.create', compact('TransitPre', 'Unit'));
     }
