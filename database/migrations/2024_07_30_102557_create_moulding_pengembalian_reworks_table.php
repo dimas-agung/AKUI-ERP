@@ -23,7 +23,7 @@ return new class extends Migration
             $table->float('total_modal', 16, 4);
             $table->timestamp('waktu_penyebaran');
             $table->timestamp('waktu_pengembalian');
-            $table->timestamp('lama_pengerjaan');
+            $table->integer('lama_pengerjaan');
             $table->string('nama_operator');
             $table->string('nip_operator');
             $table->string('grade_operator');

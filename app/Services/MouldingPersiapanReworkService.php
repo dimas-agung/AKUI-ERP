@@ -104,7 +104,7 @@ class MouldingPersiapanReworkService
                     return response()->json([
                         'success' => false,
                         'error' => 'Failed to save data. ' . $e->getMessage(),
-                        'redirectTo' => route('MouldingPersiapanRework.create')
+                        'redirectTo' => route('MouldingReworkPersiapan.create')
                     ], 504);
                 }
             }
@@ -113,7 +113,7 @@ class MouldingPersiapanReworkService
         return response()->json([
             'success' => true,
             'message' => 'Data berhasil disimpan.',
-            'redirectTo' => route('MouldingPersiapanRework.index')
+            'redirectTo' => route('MouldingReworkPersiapan.index')
         ], 200);
     }
 
@@ -126,47 +126,24 @@ class MouldingPersiapanReworkService
             DB::beginTransaction();
 
             // Ambil data DryAOutputHancuran berdasarkan jenis_grading
-            $DryAOutputHancuranRecords = MouldingPersiapanRework::where('nomor_job_rework', '=', $nomor_job_rework)->get();
+            $MouldingPR = MouldingPersiapanRework::where('nomor_job_rework', '=', $nomor_job_rework)->get();
 
-            if ($DryAOutputHancuranRecords->isEmpty()) {
+            if ($MouldingPR->isEmpty()) {
                 // Redirect ke index dengan pesan error jika data tidak ditemukan
-                return redirect()->route('MouldingPersiapanRework.index')->with(['error' => 'Data tidak ditemukan!']);
+                return redirect()->route('MouldingReworkPersiapan.index')->with(['error' => 'Data tidak ditemukan!']);
             }
 
-            foreach ($DryAOutputHancuranRecords as $outputRecord) {
+            foreach ($MouldingPR as $outputRecord) {
                 // Ambil data TransitDryAHancuran berdasarkan jenis_grading
-                $transitDryAHancuranRecords = GradingWarnaStock::where('nomor_job_rework', '=', $outputRecord->nomor_job_rework)->get();
-
-                foreach ($transitDryAHancuranRecords as $transitRecord) {
-                        // Simpan nilai sebelum dihapus
-                        $beratSebelumnya = $transitRecord->berat_masuk;
-                        $pcsSebelumnya = $transitRecord->pcs_masuk;
-
-                        // Hitung perbedaan berat dan pcs
-                        $perbedaanBerat = $outputRecord->berat_job;
-                        $perbedaanPcs = $outputRecord->pcs_job;
-
-                        // Hitung total modal baru
-                        $beratKeluar = $transitRecord->berat_keluar - $perbedaanBerat;
-                        $beratSisa = $beratSebelumnya - $beratKeluar;
-                        $pcsKeluar = $transitRecord->pcs_keluar - $perbedaanPcs;
-                        $pcsSisa = $pcsSebelumnya - $pcsKeluar;
-                        $totalModal = $transitRecord->modal * $beratSisa;
-
-                        // Update data DryAGradingHancuranStock
-                        $transitRecord->update([
-                            'berat_keluar' => max($beratKeluar, 0),
-                            'sisa_berat' => max($beratSisa, 0),
-                            'pcs_keluar' => max($pcsKeluar, 0),
-                            'sisa_pcs' => max($pcsSisa, 0),
-                            'total_modal' => max($totalModal, 0),
-                            'status' => max($outputRecord->statuss, 1)
-                        ]);
+                $MouldingPRS = MouldingPersiapanReworkStock::where('nomor_job_rework', '=', $outputRecord->nomor_job_rework)->get();
+                // $MouldingPRS->delete();
+                foreach ($MouldingPRS as $MouldingStock) {
+                    $MouldingStock->delete();
                 }
 
                 // Update data DryAGradingHancuran
-                $gradingRecords = GradingWarna::where('id_box_grading_warna', $outputRecord->id_box_grading_warna)->get();
-                foreach ($gradingRecords as $gradingRecord) {
+                $TransitFGR = TransitFinalGradingRework::where('nomor_job_rework', $outputRecord->nomor_job_rework)->get();
+                foreach ($TransitFGR as $gradingRecord) {
                     $gradingRecord->update(['status' => $outputRecord->status ?? 1]);
                 }
 
@@ -178,13 +155,13 @@ class MouldingPersiapanReworkService
             DB::commit();
 
             // Redirect ke index dengan pesan sukses
-            return redirect()->route('MouldingPersiapanRework.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            return redirect()->route('MouldingReworkPersiapan.index')->with(['success' => 'Data Berhasil Dihapus!']);
         } catch (\Exception $e) {
             // Rollback transaksi jika terjadi kesalahan
             DB::rollback();
 
             // Redirect ke index dengan pesan error
-            return redirect()->route('MouldingPersiapanRework.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return redirect()->route('MouldingReworkPersiapan.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
 

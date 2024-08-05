@@ -39,7 +39,7 @@ class userSeeders extends Seeder
             'phone_number' => '0222222222',
             'birth_date' => '2000-04-09',
         ]);
-        User::create([
+        $superdmin1 = User::create([
             'email' => 'OBI@gmail.com',
             'password' => Hash::make('1234567890'),
             'fullname' => 'superadmin',
@@ -50,6 +50,7 @@ class userSeeders extends Seeder
             'phone_number' => '08139000000',
             'birth_date' => '2000-04-09',
         ]);
+        $superdmin1->assignRole(['admin']);
         $superdmin->assignRole(['admin']);
     }
 }

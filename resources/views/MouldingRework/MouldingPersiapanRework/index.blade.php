@@ -87,7 +87,15 @@
                                     <td class="text-center">{!! $item->nip_operator !!}</td>
                                     <td class="text-center">{!! $item->grade_operator !!}</td>
                                     <td class="text-center">{!! $item->nama_team_leader !!}</td>
-                                    <td class="text-center">{!! $item->status !!}</td>
+                                    <td>
+                                        @if ($item->status == 0)
+                                            Non-Aktif
+                                        @elseif ($item->status == 1)
+                                            Aktif
+                                        @else
+                                            Unknown Status
+                                        @endif
+                                    </td>
                                     <td class="text-center">{!! $item->user_created !!}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
