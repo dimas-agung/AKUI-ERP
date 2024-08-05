@@ -150,18 +150,18 @@ class GradingHalusInputService
                         ]);
                     }
 
-                    $existingItems = MasterJenisGradingHalus::where('jenis', $itemObject->jenis_grading)
-                    ->get();
+                    // $existingItems = MasterJenisGradingHalus::where('jenis', $itemObject->jenis_grading)
+                    // ->get();
 
-                    $dataToUpdate = [
-                        'status'                => $itemObject->status ?? 0,
-                    ];
+                    // $dataToUpdate = [
+                    //     'status'                => $itemObject->status ?? 0,
+                    // ];
 
-                    if ($existingItems) {
-                        foreach ($existingItems as $existingItem) {
-                            $existingItem->update($dataToUpdate);
-                        }
-                    }
+                    // if ($existingItems) {
+                    //     foreach ($existingItems as $existingItem) {
+                    //         $existingItem->update($dataToUpdate);
+                    //     }
+                    // }
 
                     DB::commit();
                 } catch (\Exception $e) {
