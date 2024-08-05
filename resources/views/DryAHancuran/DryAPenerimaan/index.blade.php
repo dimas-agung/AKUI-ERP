@@ -61,6 +61,7 @@
                                 <th class="text-center" scope="col">Waktu Penyebaran</th>
                                 <th class="text-center" scope="col">Waktu Pengembalian</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
+                                <td class="text-center" scope="col">Created At</td>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
                         </thead>
@@ -84,6 +85,7 @@
                                     <td class="text-center">{{ $item->waktu_penyebaran }}</td>
                                     <td class="text-center">{{ $item->waktu_pengembalian }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
+                                    <td class="text-center">{{ $item->created_at }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)

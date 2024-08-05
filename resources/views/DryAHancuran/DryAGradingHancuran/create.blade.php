@@ -86,9 +86,12 @@
                             name="jenis_grading" id="jenis_grading" data-placeholder="Pilih Jenis Grading">
                             <option value="">Jenis Grading</option>
                             @foreach ($master_jenis_dry_a as $MasterSPRM)
-                                <option value="{{ $MasterSPRM->jenis }}">
-                                    {{ $MasterSPRM->jenis }}
-                                </option>
+                            @if (str_contains($MasterSPRM->jenis,'HCR-' ))
+                                
+                            <option value="{{ $MasterSPRM->jenis }}">
+                                {{ $MasterSPRM->jenis }}
+                            </option>
+                            @endif
                             @endforeach
                         </select>
                         <input type="hidden" id="harga_estimasi" name="harga_estimasi" readonly>
@@ -156,9 +159,11 @@
                                 <th scope="col" class="text-center">Berat Grading</th>
                                 <th scope="col" class="text-center">Susut Belakang</th>
                                 <th scope="col" class="text-center">Kontribusi</th>
+                                @role('admin')
                                 <th scope="col" class="text-center">Harga Estimasi</th>
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
+                                @endrole
                                 <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
@@ -429,9 +434,11 @@
                     `<td class="text-center">${berat_grading}</td>` +
                     `<td class="text-center">${susut_belakang}</td>` +
                     `<td class="text-center">${kontribusi}</td>` +
+                    @role('admin')
                     `<td class="text-center">${harga_estimasi}</td>` +
                     `<td class="text-center">${modal}</td>` +
                     `<td class="text-center">${total_modal}</td>` +
+                    @endrole
                     `<td class="text-center">${user_created}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
                     `</tr>`;

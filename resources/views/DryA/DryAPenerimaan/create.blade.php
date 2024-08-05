@@ -43,6 +43,11 @@
                                             <option value="">Pilih Nomor Job</option>
                                             @foreach ($TransitPre->sortBy('nomor_job') as $post)
                                                 @if ($post->berat_job > 0)
+                                                    @if ($post->tujuan_kirim != Auth::user()->plant)
+                                                        @php
+                                                            continue;
+                                                        @endphp
+                                                    @endif
                                                     <option value="{{ $post->nomor_job }}">
                                                         {{ old('nomor_job', $post->nomor_job) }}
                                                     </option>

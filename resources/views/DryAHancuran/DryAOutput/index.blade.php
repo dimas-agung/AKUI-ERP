@@ -55,11 +55,13 @@
                                 <th class="text-center" scope="col">Nomor Job</th>
                                 <th class="text-center" scope="col">Nomor BTSB</th>
                                 <th class="text-center" scope="col">Tujuan Kirim</th>
+                                
                                 @role('admin')
                                 <th class="text-center" scope="col">Modal</th>
                                 <th class="text-center" scope="col">Total Modal</th>
                                 @endrole
                                 <th class="text-center" scope="col">NIP Admin</th>
+                                <th class="text-center" scope="col">Created At</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
                         </thead>
@@ -82,6 +84,7 @@
                                     <td class="text-center">{!! $item->total_modal !!}</td>
                                     @endrole
                                     <td class="text-center">{!! $item->user_created !!}</td>
+                                    <th class="text-center">{!! $item->created_at !!}</th>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)

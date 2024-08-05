@@ -66,6 +66,7 @@
                                 @endrole
                                 <th class="text-center" scope="col">Upah Operator</th>
                                 <th class="text-center" scope="col">NIP Admin</th>
+                                <th class="text-center" scope="col">Created At</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
                         </thead>
@@ -94,6 +95,7 @@
                                     @endrole
                                     <td class="text-center">{{ $item->upah_operator }}</td>
                                     <td class="text-center">{{ $item->user_created }}</td>
+                                    <td class="text-center">{{ $item->created_at }}</td>
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
@@ -162,7 +164,7 @@
                 start_date: start_date,
                 end_date: end_date,
             };
-            var url = '{{ route('PreCleaningInput.index') }}';
+            var url = '{{ route('DryAPenerimaan.index') }}';
 
             // url = url.replace(':slug', slug);
             url = url + '?start_date=' + start_date + '&end_date=' + end_date;

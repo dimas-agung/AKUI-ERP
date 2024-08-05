@@ -42,6 +42,9 @@
                                             data-placeholder="Pilih Jenis Waste" name="jenis_waste">
                                             <option value="">Pilih Jenis Waste</option>
                                             @foreach ($TransitPre->sortBy('jenis_waste') as $post)
+                                                @if ($post->plant != Auth::user()->plant)
+                                                    @continue
+                                                @endif
                                                 <option value="{{ $post->jenis_waste }}">
                                                     {{ old('jenis_waste', $post->jenis_waste) }}</option>
                                             @endforeach
@@ -59,6 +62,13 @@
                                                     {{ old('tujuan_kirim', $post->tujuan_kirim) }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Plant</label>
+                                        <input type="text" id="plant" class="form-control" name="plant"
+                                            value="{{ auth()->user()->plant }}" readonly data-parsley-required="true">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -245,7 +255,7 @@
 
         function generateNomorBSTB(prefix, inisial_tujuan) {
             let nomor;
-
+            let plant = $('#plant').val();
             const now = new Date();
             const tahun = now.getFullYear().toString().substr(-2);
             const bulan = ('0' + (now.getMonth() + 1)).slice(-2);
@@ -255,9 +265,9 @@
             const detik = ('0' + now.getSeconds()).slice(-2);
 
             if (prefix === 'BSTB') {
-                nomor = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_UDA`;
+                nomor = `BSTB_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_UDA_${plant}`;
             } else {
-                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_UDA`;
+                nomor = `${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}_UDA_${plant}`;
             }
 
             return nomor;
@@ -329,6 +339,7 @@
             var keterangan = $('#keterangan').val();
             var modal = $('#modal').val();
             var user_created = $('#user_created').val();
+            var plant = $('#plant').val();
             // Inisialisasi array untuk menyimpan field yang belum terisi
             let fieldsNotFilled = [];
             // Periksa setiap field
@@ -383,6 +394,7 @@
                 modal: modal,
                 total_modal: total_modal,
                 user_created: user_created,
+                plant:plant
             });
             // Membersihkan nilai input setelah ditambahkan
             $('#berat').val('');

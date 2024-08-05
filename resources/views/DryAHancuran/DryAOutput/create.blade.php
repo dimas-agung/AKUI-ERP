@@ -59,30 +59,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tujuan Kirim</label>
-                                        <select id="tujuan_kirim" class="select2 form-select" name="tujuan_kirim"
-                                            data-placeholder="Pilih Tujuan Kirim">
-                                            <option value="">Pilih Tujuan Kirim</option>
-                                            @foreach ($MasTujKir as $post)
-                                                @php
-                                                    $beratMasukShown = false; // Inisialisasi variabel untuk menandai apakah berat_masuk sudah ditampilkan atau belum
-                                                @endphp
-                                                @foreach ($MasTujKir as $innerPost)
-                                                    @if ($innerPost->tujuan_kirim == $post->tujuan_kirim && $innerPost->status > 0)
-                                                        @if (!$beratMasukShown)
-                                                            <option value="{{ $innerPost->tujuan_kirim }}">
-                                                                {{ old('tujuan_kirim', $innerPost->tujuan_kirim) }}
-                                                            </option>
-                                                            @php
-                                                                $beratMasukShown = true; // Set nilai variabel untuk menandai bahwa berat_masuk sudah ditampilkan
-                                                            @endphp
-                                                        @endif
-                                                    @endif
-                                                @endforeach
-                                                @php
-                                                    $selectedNomorBSTB = $post->tujuan_kirim; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
-                                                @endphp
-                                            @endforeach
-                                        </select>
+                                        <input type="text" id="tujuan_kirim" class="form-control" value="{{Auth::user()->plant}}" readonly>
+                                       
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -96,7 +74,7 @@
                                     <div class="form-group">
                                         <label>Nomer BSTB</label>
                                         <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
-                                            placeholder="Masukkan Nomer BSTB" readonly>
+                                            placeholder="Masukkan Nomer BSTB">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -200,6 +178,7 @@
 @section('script')
     <script>
         $(document).ready(function() {
+            generateNomorBSTB_Job();
             $('#jenis_grading').on('change', function() {
                 let selectedJenisGrading = $(this).val();
                 let countjenisAlreadyTake = 0;
@@ -246,40 +225,19 @@
 
 
         // Ketika terjadi perubahan pada elemen dengan id 'tujuan_kirim'
-        $('#tujuan_kirim').on('change', function() {
+        function generateNomorBSTB_Job(){
             // Mengambil nilai tujuan_kirim yang dipilih
-            let selectedPcc = $(this).val();
+            let tujuan_kirim = $('#tujuan_kirim').val();
 
-            // Melakukan permintaan AJAX ke controller untuk mendapatkan data
-            $.ajax({
-                url: '{{ route('DryAOutputHancuran.setpcc') }}',
-                method: 'GET',
-                data: {
-                    tujuan_kirim: selectedPcc
-                },
-                success: function(response) {
-                    if (response.status > 0) {
-                        // Mengatur nilai elemen-elemen sesuai dengan respons dari server
-                        $('#inisial_tujuan').val(response.inisial_tujuan);
+            $('#inisial_tujuan').val(tujuan_kirim);
 
-                        // Memeriksa apakah nomor_bstb sudah terisi, jika belum maka diisi
-                        if (!tombolAddDiklik) {
-                            const nomor_bstb = generateNomorBSTB(response.inisial_tujuan, 'BSTB');
+                     
+                            const nomor_bstb = generateNomorBSTB(tujuan_kirim, 'BSTB');
                             $('#nomor_bstb').val(nomor_bstb);
-                        }
-
-                        // Memeriksa apakah nomor_job sudah terisi, jika belum maka diisi
-                        // if (!tombolAddDiklik) {
-                        const nomor_job = generateNomorBSTB(response.inisial_tujuan, 'JOB');
+                       
+                        const nomor_job = generateNomorBSTB(tujuan_kirim, 'JOB');
                         $('#nomor_job').val(nomor_job);
-                        // }
-                    }
-                },
-                error: function(error) {
-                    console.error('Error:', error);
-                }
-            });
-        });
+        };
 
         function generateNomorBSTB(inisial_tujuan, prefix) {
             let nomor;
@@ -452,6 +410,9 @@
             $('#modal').val('');
             $('#jenis_grading').val(null).trigger('change');
             $('#tujuan_kirim').prop('disabled', true);
+            $('#nomor_bstb').prop('readonly', true);
+            let nomor_job_baru = generateNomorBSTB(tujuan_kirim,'JOB');
+            $('#nomor_job').val(nomor_job_baru);
 
             // Update indeks baris terakhir
             currentRowIndex++;

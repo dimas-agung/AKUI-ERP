@@ -123,7 +123,9 @@
 
                 // Clear the options before making the AJAX call
                 targetSelect.empty();
-
+                targetSelect.append(
+                                            `<option value="">-- Pilih BSTB --</option>`
+                );
                 switch (typeTransit) {
                     case 'hancuran':
                         $.ajax({

@@ -36,6 +36,11 @@
                     </div>
 
                     <div class="col-md-4">
+                        <label for="user_created" class="form-label">Plant</label>
+                        <input type="text" class="form-control" id="plant" readonly
+                            value="{{ auth()->user()->plant }}">
+                    </div>
+                    <div class="col-md-4">
                         <label for="user_created" class="form-label">NIP Admin</label>
                         <input type="text" class="form-control" id="user_created" readonly
                             value="{{ auth()->user()->nip }}">
@@ -226,6 +231,7 @@
                 let total_modal = $('#total_modal').val();
                 let keterangan = $('#keterangan').val();
                 let user_created = $('#user_created').val();
+                let plant = $('#plant').val();
 
                 let newRow = `<tr>` +
                     `<td class="text-center">${tanggal_cabut}</td>` +
@@ -256,6 +262,7 @@
                     total_modal: total_modal,
                     keterangan: keterangan,
                     user_created: user_created,
+                    plant:plant,
                 });
                 console.log(dataArray);
 

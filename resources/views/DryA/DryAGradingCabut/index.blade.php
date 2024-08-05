@@ -72,6 +72,7 @@
                                             <th scope="col" class="text-center">Upah Operator</th>
                                         @endrole
                                         <th scope="col" class="text-center">Jenis Grading</th>
+                                        <th scope="col" class="text-center">Berat Kotor</th>
                                         <th scope="col" class="text-center">Berat 1 Grading</th>
                                         <th scope="col" class="text-center">Pcs 1 Grading</th>
                                         <th scope="col" class="text-center">Berat 2 Grading</th>
@@ -130,6 +131,7 @@
                                                 </td>
                                             @endrole
                                             <td class="text-center">{{ $item->jenis_grading }}</td>
+                                            <td class="text-center">{{ $item->berat_kotor }}</td>
                                             <td class="text-center">{{ $item->berat_1_grading }}</td>
                                             <td class="text-center">{{ $item->pcs_1_grading }}</td>
                                             <td class="text-center">{{ $item->berat_2_grading }}</td>
