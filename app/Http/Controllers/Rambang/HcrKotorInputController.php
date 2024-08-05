@@ -117,9 +117,9 @@ class HcrKotorInputController extends Controller
         //     'sisa_berat'   => $request->berat,
         // ]);
 
-        MasterJenisHcrKotor::where('jenis', $request->jenis)->update([
-            'status' => $request->status ?? 0,
-        ]);
+        // MasterJenisHcrKotor::where('jenis', $request->jenis)->update([
+        //     'status' => $request->status ?? 0,
+        // ]);
         // MasterJenisHcrKotor::update([
         //     'status'   => $request->status ?? 0,
         // ]);

@@ -50,7 +50,7 @@ class DryAGradingCabutService
             $totalModal[] = $value['total_modal']; // Mengubah akses menjadi array asosiatif
             $jenisGradings[] = $value['jenis_grading']; // Mengubah akses menjadi array asosiatif
         };
-
+        // return $dataArray;
         // Calculate HPP values using HppService
         $dataHpp = $this->HppService->calculate($berat_gradings, $harga_estimasi, $totalModal, $jenisGradings);
 
@@ -58,7 +58,7 @@ class DryAGradingCabutService
         foreach ($dataArray as $key => $data) {
             // Merge data from $dataArray and $tableDataArray
             $mergedData = array_merge($data, $tableDataArray[$key]);
-
+            // return $mergedData;
             // Update data with HPP values
             $mergedData['total_harga'] = $dataHpp[$key]['total_harga'];
             $mergedData['nilai_laba_rugi'] = $dataHpp[$key]['nilai_laba_rugi'];
@@ -92,8 +92,8 @@ class DryAGradingCabutService
 
                     // Create instance of GradingHalusInput
                     // GradingHalusInput::create($mergedData);
-                    DryAGradingCabut::create($mergedData);
-
+                    $DryAGradingCabut = DryAGradingCabut::create($mergedData);
+                    // $DryAGradingCabut->updated('berat_kotor',$mergedData['berat_kotor']);
                     DryAGradingCabutStock::create([
                         'unit'                  => $mergedData['unit'] ?? 'Dry A',
                         'nomor_job'             => $mergedData['nomor_job'],
@@ -157,17 +157,19 @@ class DryAGradingCabutService
                     // $existingItems = PreGradingHalusAddingStock::where('nomor_grading', $itemObject->nomor_grading)
                     //     ->where('nomor_batch', $itemObject->nomor_batch)
                     //     ->get();
-                    $existingItems = DryAPenerimaanCabutStock::where('nomor_job', $itemObject->nomor_job)
-                        ->get();
-
-                    foreach ($existingItems as $existingItem) {
-
-                        // Update data dengan nilai baru
-                        $existingItem->update([
+                    $existingItems = DryAPenerimaanCabut::where('nomor_job', $itemObject->nomor_job)
+                        ->update([
                             // Update data PreGradingHalusAddingStock
-                            'status'         => $itemObject->status ?? 0,
+                            'status'         => 0,
                         ]);
-                    }
+
+                    $existingItems = DryAPenerimaanCabutStock::where('nomor_job', $itemObject->nomor_job)
+                        ->update([
+                            // Update data PreGradingHalusAddingStock
+                            'status'         => 0,
+                        ]);
+
+
 
                     // $existingItems = MasterJenisGradingHalus::where('jenis', $itemObject->jenis_grading)
                     //     ->get();
@@ -195,7 +197,7 @@ class DryAGradingCabutService
             }
         }
 
-        // Return newly created data as response
+        // // Return newly created data as response
         return response()->json([
             'success' => true,
             'message' => 'Data successfully saved!',

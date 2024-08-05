@@ -149,18 +149,18 @@ class InputRambangBasahService
                         }
                     }
 
-                    $existingItems = MasterJenisRambang::where('jenis', $itemObject->jenis_rambang)
-                    ->get();
+                    // $existingItems = MasterJenisRambang::where('jenis', $itemObject->jenis_rambang)
+                    // ->get();
 
-                    $dataToUpdate = [
-                        'status'                => $itemObject->status ?? 0,
-                    ];
+                    // $dataToUpdate = [
+                    //     'status'                => $itemObject->status ?? 0,
+                    // ];
 
-                    if ($existingItems) {
-                        foreach ($existingItems as $existingItem) {
-                            $existingItem->update($dataToUpdate);
-                        }
-                    }
+                    // if ($existingItems) {
+                    //     foreach ($existingItems as $existingItem) {
+                    //         $existingItem->update($dataToUpdate);
+                    //     }
+                    // }
 
                     DB::commit();
                 } catch (\Exception $e) {

@@ -9,13 +9,14 @@ use App\Models\MasterJenisGradingHalus;
 use App\Models\PreCleaningOutput;
 use App\Models\TransitGradingHalus;
 use Illuminate\Http\Request;
-use App\Models\GradingHalusInput;
+// use App\Models\DryAWasteOutput;
 use App\Models\GradingHalusStock;
 use App\Models\TransitDryAWaste;
-use App\Models\TransitPreCleaningStock;
+use App\Models\TransitTransitDryAWaste;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class DryAWasteOutputService
 {
@@ -56,7 +57,7 @@ class DryAWasteOutputService
                 try {
                     DB::beginTransaction();
 
-                    // Create instance of GradingHalusInput
+                    // Create instance of DryAWasteOutput
                     DryAWasteOutput::create($mergedData);
 
                     $berat = $mergedData['berat'];
@@ -81,7 +82,7 @@ class DryAWasteOutputService
                     $itemObject = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $existingItems = DryAWasteStock::where('jenis_waste', $itemObject->jenis_waste)
+                    $existingItems = DryAWasteStock::where(['jenis_waste' => $itemObject->jenis_waste,'plant' => Auth::user()->plant])
                     ->get();
 
                     foreach ($existingItems as $existingItem) {
@@ -144,14 +145,14 @@ class DryAWasteOutputService
             DB::beginTransaction();
 
             // Ambil data DryAWasteOutput berdasarkan id
-            $gradingHalusInput = DryAWasteOutput::findOrFail($id);
+            $DryAWasteOutput = DryAWasteOutput::findOrFail($id);
 
             // Ambil data TransitDryAWaste berdasarkan nomor job
-            $preCleaningStock = TransitDryAWaste::where('nomor_job', $gradingHalusInput->nomor_job)->first();
+            $TransitDryAWaste = TransitDryAWaste::where('nomor_job', $DryAWasteOutput->nomor_job)->first();
 
-            if ($preCleaningStock) {
+            if ($TransitDryAWaste) {
                 // Ambil data DryAWasteStock berdasarkan jenis_waste dan create_at
-                $stockPrmRawMaterial = DryAWasteStock::where('jenis_waste', $gradingHalusInput->jenis_waste)
+                $stockPrmRawMaterial = DryAWasteStock::where(['jenis_waste' => $DryAWasteOutput->jenis_waste,'plant' => $DryAWasteOutput->plant])
                     ->first();
 
                 if ($stockPrmRawMaterial) {
@@ -160,8 +161,8 @@ class DryAWasteOutputService
                     $pcsSebelumnya = $stockPrmRawMaterial->pcs_masuk;
 
                     // Hitung perbedaan berat dan pcs
-                    $perbedaanBerat = $gradingHalusInput->berat;
-                    $perbedaanPcs = $gradingHalusInput->pcs;
+                    $perbedaanBerat = $DryAWasteOutput->berat;
+                    $perbedaanPcs = $DryAWasteOutput->pcs;
 
                     // Hitung total modal baru
                     $beratKeluar = $stockPrmRawMaterial->berat_keluar - $perbedaanBerat;
@@ -180,16 +181,16 @@ class DryAWasteOutputService
                     ]);
                 }
 
-                    $existingItems = DryAWasteInput::where('jenis_waste', '=', $gradingHalusInput->jenis_waste)
+                    $existingItems = DryAWasteInput::where('jenis_waste', '=', $DryAWasteOutput->jenis_waste)
                     ->first();
 
                     $dataToUpdate = [
-                        'status'                => $gradingHalusInput->status ?? 1,
+                        'status'                => $DryAWasteOutput->status ?? 1,
                     ];
 
                     if ($existingItems) {
                         $dataToUpdate = [
-                            'status' => $gradingHalusInput->status ?? 1,
+                            'status' => $DryAWasteOutput->status ?? 1,
                         ];
 
                         if ($stockPrmRawMaterial->berat_keluar == 0) {
@@ -198,11 +199,11 @@ class DryAWasteOutputService
                     }
 
                 // Hapus data TransitDryAWaste
-                $preCleaningStock->delete();
+                $TransitDryAWaste->delete();
             }
 
             // Hapus data DryAWasteOutput
-            $gradingHalusInput->delete();
+            $DryAWasteOutput->delete();
 
             // Commit transaksi
             DB::commit();

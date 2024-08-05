@@ -143,72 +143,63 @@ class DryAPenerimaanService
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
-            // Ambil data PreCleaningInput berdasarkan nomor_job
-            $GradingHalusInputs = DryAPenerimaanCabut::where('nomor_job', '=', $nomor_job)->get();
+            // Ambil data DryAPenerimaanCabutnput berdasarkan nomor_job
+            $DryAPenerimaanCabuts = DryAPenerimaanCabut::where('nomor_job', '=', $nomor_job)->get();
 
-            if ($GradingHalusInputs->isEmpty()) {
+            if ($DryAPenerimaanCabuts->isEmpty()) {
                 // Redirect ke index dengan pesan error jika data tidak ditemukan
                 return redirect()->route('DryAPenerimaan.index')->with(['error' => 'Data tidak ditemukan!']);
             }
 
-            foreach ($GradingHalusInputs as $PreCleaningI) {
-                // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
-                $PreCleaningS = DryAPenerimaanCabutStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
+            foreach ($DryAPenerimaanCabuts as $DryAPenerimaanCabut) {
+                // Ambil data DryAPenerimaanCabutStocktock berdasarkan nomor job dan nomor bstb
+                $DryAPenerimaanCabutStock = DryAPenerimaanCabutStock::where('nomor_job', '=', $DryAPenerimaanCabut->$nomor_job)
                     ->first();
-
-                    if ($PreCleaningS) {
+                    
+                    if ($DryAPenerimaanCabutStock) {
                         // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                        $stockPrmRawMaterial = TransitCabutBulu::where('nomor_job', '=', $PreCleaningI->nomor_job)
-                            ->first();
-
-                        if ($stockPrmRawMaterial) {
-                            // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
-                            $stockPrmRawMaterial->update([
-                                'berat_job' => max($PreCleaningI->berat_job, 0),
-                                'pcs_job' => max($PreCleaningI->pcs_job, 0),
+                        $TransitCabutBulu = TransitCabutBulu::where('nomor_job', '=', $DryAPenerimaanCabut->nomor_job)
+                            ->update([
+                                'berat_job' => max($DryAPenerimaanCabut->berat_job, 0),
+                                'pcs_job' => max($DryAPenerimaanCabut->pcs_job, 0),
                                 'status' => 1,
                             ]);
-                        }
-
-                        $existingItems = CabutBuluPengembalian::where('nomor_job', $PreCleaningI->nomor_job)
-                        ->get();
 
                         $dataToUpdate = [
-                            'status'                => $PreCleaningI->status ?? 0,
+                            'status'                => $DryAPenerimaanCabut->status ?? 0,
                         ];
-
-                        if ($existingItems) {
-                            foreach ($existingItems as $existingItem) {
-                                $existingItem->update($dataToUpdate);
-                            }
-                        }
+                        $existingItems = CabutBuluPengembalian::where('nomor_job', $DryAPenerimaanCabut->nomor_job)
+                        ->update($dataToUpdate);
+                       
                     }
 
-                    // if ($PreCleaningI->berat_grading >= $PreCleaningS->berat_masuk) {
-                    //     $PreCleaningS->delete();
+                    // if ($DryAPenerimaanCabut->berat_grading >= $DryAPenerimaanCabutStock->berat_masuk) {
+                    //     $DryAPenerimaanCabutStock->delete();
                     // } else {
                     //     // Simpan nilai sebelum dihapus
-                    //     $beratSebelumnya = $PreCleaningS->berat_masuk;
-                    //     $pcsSebelumnya = $PreCleaningS->pcs_masuk;
+                    //     $beratSebelumnya = $DryAPenerimaanCabutStock->berat_masuk;
+                    //     $pcsSebelumnya = $DryAPenerimaanCabutStock->pcs_masuk;
 
                     //     // Hitung total modal baru
-                    //     $totalBeratBaru = $beratSebelumnya - $PreCleaningI->berat_grading;
-                    //     $totalPcsBaru = $pcsSebelumnya - $PreCleaningI->pcs_grading;
+                    //     $totalBeratBaru = $beratSebelumnya - $DryAPenerimaanCabut->berat_grading;
+                    //     $totalPcsBaru = $pcsSebelumnya - $DryAPenerimaanCabut->pcs_grading;
 
                     //     // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
-                    //     $PreCleaningS->update([
+                    //     $DryAPenerimaanCabutStock->update([
                     //         'berat_masuk' => $totalBeratBaru,
                     //         'sisa_berat' => $totalBeratBaru,
                     //         'pcs_masuk' => $totalPcsBaru,
                     //         'sisa_pcs' => $totalPcsBaru,
                     //         'modal' => $totalPcsBaru,
-                    //         'total_modal' => $totalPcsBaru * ($PreCleaningS->sisa_berat + $PreCleaningI['berat_grading']),
+                    //         'total_modal' => $totalPcsBaru * ($DryAPenerimaanCabutStock->sisa_berat + $DryAPenerimaanCabut['berat_grading']),
                     //     ]);
                     // }
 
                     // Hapus data GradingHalusInput
-                    $PreCleaningS->delete();
-                $PreCleaningI->delete();
+                    DryAPenerimaanCabutStock::where('nomor_job', '=', $DryAPenerimaanCabut->nomor_job)
+                    ->delete();
+              
+                $DryAPenerimaanCabut->delete();
 
             }
 
