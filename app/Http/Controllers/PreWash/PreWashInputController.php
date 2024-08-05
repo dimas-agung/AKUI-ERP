@@ -104,7 +104,7 @@ class PreWashInputController extends Controller
             //     // if ($stockTrans->status === 1) {
             //         $stockTrans->delete();
             //     // } else {
-                    
+
             //     // }
             // }
             // Validasi untuk setiap item dalam dataArray
@@ -203,14 +203,14 @@ class PreWashInputController extends Controller
         ], 201);
     }
 
-    public function destroy($nomor_bstb)
+    public function destroy($nomor_job)
     {
         try {
             // Begin transaction
             DB::beginTransaction();
 
             // Temukan semua record berdasarkan nomor_bstb
-            $PreWashInput = PreWashInput::where('nomor_bstb', $nomor_bstb)->get();
+            $PreWashInput = PreWashInput::where('nomor_job', $nomor_job)->get();
 
             if ($PreWashInput->isEmpty()) {
                 throw new \Exception('Data tidak ditemukan');
@@ -230,7 +230,7 @@ class PreWashInputController extends Controller
                 }
 
                 // Temukan semua item terkait di RambangKeringStock
-                $existingItems = TransitGradingHalus::where('nomor_bstb', $preWashInput->nomor_bstb)->update(['status' => 1]);
+                $existingItems = TransitGradingHalus::where('nomor_job', $preWashInput->nomor_job)->update(['status' => 1]);
                     // ->get();
 
                 // Logika Update Status
@@ -241,7 +241,7 @@ class PreWashInputController extends Controller
                 //     }
                 // }
 
-                $GradingHalusOutput = GradingHalusOutput::where('nomor_bstb', $preWashInput->nomor_bstb)->update(['status' => 1]);
+                $GradingHalusOutput = GradingHalusOutput::where('nomor_job', $preWashInput->nomor_job)->update(['status' => 1]);
                     // ->get();
 
                 // Logika Update Status
@@ -255,9 +255,9 @@ class PreWashInputController extends Controller
                 // Hapus record utama
                 $preWashInput->delete();
             }
-            $existingItems = TransitGradingHalus::where('nomor_bstb', $nomor_bstb)->update(['status' => 1]);
+            $existingItems = TransitGradingHalus::where('nomor_job', $nomor_job)->update(['status' => 1]);
 
-            $GradingHalusOutput = GradingHalusOutput::where('nomor_bstb', $nomor_bstb)->update(['status' => 1]);
+            $GradingHalusOutput = GradingHalusOutput::where('nomor_job', $nomor_job)->update(['status' => 1]);
 
             // Jika tidak ada kesalahan, komit transaksi
             DB::commit();
