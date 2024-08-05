@@ -27,6 +27,7 @@ return new class extends Migration
             $table->float('total_modal');
             $table->float('upah_operator');
             $table->string('jenis_grading');
+            $table->float('berat_kotor');
             $table->float('berat_1_grading');
             $table->float('pcs_1_grading');
             $table->float('berat_2_grading');
