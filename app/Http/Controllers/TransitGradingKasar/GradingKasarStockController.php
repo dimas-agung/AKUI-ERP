@@ -13,7 +13,7 @@ class GradingKasarStockController extends Controller
     public function index()
     {
         $i = 1;
-        $GradigKasarStock = GradingKasarStock::all();
+        $GradigKasarStock = GradingKasarStock::Aktif()->get();
         return response()->view('transit_grading.GradingKasarStock.index', [
             'grading_kasar_stocks'          => $GradigKasarStock,
             'i'                             => $i

@@ -47,11 +47,11 @@ class RambangBasahInputController extends Controller
 
     public function create()
     {
-        $PreGHI = RambangBasahInput::with('HcrKotorStock')->get();
-        $TransitPre = HcrKotorStock::with('RambangBasahInput')->get();
+        // $PreGHI = RambangBasahInput::with('HcrKotorStock')->where('status',1)->get();
+        $TransitPre = HcrKotorStock::with('RambangBasahInput')->where('sisa_berat','<>',0)->get();
         $Unit = MasterJenisRambang::with('RambangBasahInput')->get();
         // return $TransitPre;
-        return view('Rambang.RambangBasahInput.create', compact('PreGHI', 'TransitPre', 'Unit'));
+        return view('Rambang.RambangBasahInput.create', compact( 'TransitPre', 'Unit'));
     }
 
     public function set(Request $request)

@@ -37,10 +37,10 @@ class DryAPenerimaanController extends Controller
 
     public function create()
     {
-        $PreGHI = DryAPenerimaanCabut::with('TransitCabutBulu')->get();
-        $TransitPre = TransitCabutBulu::with('DryAPenerimaanCabut')->get();
+        // $PreGHI = DryAPenerimaanCabut::with('TransitCabutBulu')->get();
+        $TransitPre = TransitCabutBulu::with('DryAPenerimaanCabut')->where('status',1)->get();
         // return $TransitPre;
-        return view('DryA.DryAPenerimaan.create', compact('PreGHI', 'TransitPre'));
+        return view('DryA.DryAPenerimaan.create', compact('TransitPre'));
     }
 
     public function set(Request $request)
@@ -78,7 +78,7 @@ class DryAPenerimaanController extends Controller
     {
         return $this->DryAPenerimaanService->store($request);
     }
-    public function destroy($nomor_job): RedirectResponse
+    public function destroy($nomor_job)
     {
         return $this->DryAPenerimaanService->destroy($nomor_job);
     }

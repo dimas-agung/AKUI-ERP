@@ -22,7 +22,8 @@ class GradingKasarOutputController extends Controller
     //Index
     public function index(){
         $i =1;
-        $GradingKO = GradingKasarOutput::all();
+        $GradingKO = GradingKasarOutput::limit(1000)
+        ->latest()->get();
         // return $GradingKO;
         return response()->view('transit_grading.GradingKasarOutput.index', [
             'GradingKO' => $GradingKO,
@@ -35,12 +36,13 @@ class GradingKasarOutputController extends Controller
      */
     public function create()
     {
-        $GradingKO = GradingKasarOutput::with('GradingKasarStock')->get();
+        // $GradingKO = GradingKasarOutput::with('GradingKasarStock')->get();
         $MasTujKir = MasterTujuanKirimGradingKasar::all();
-        $GradingKS = GradingKasarStock::with('GradingKasarOutput')->get();
+        $GradingKS = GradingKasarStock::with('GradingKasarOutput')->Aktif()->get();;
+
         // return $data;
 
-        return view('transit_grading.GradingKasarOutput.create', compact('GradingKO', 'GradingKS', 'MasTujKir'));
+        return view('transit_grading.GradingKasarOutput.create', compact( 'GradingKS', 'MasTujKir'));
     }
 
 

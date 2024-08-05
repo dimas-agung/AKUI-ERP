@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\CabutHancuranPersiapanStock;
 use App\Models\DryAWasteInput;
 use App\Models\DryAWasteStock;
+use Illuminate\Support\Facades\Auth;
 
 class DryAWasteInputService
 {
@@ -58,7 +59,7 @@ class DryAWasteInputService
                     $DryAWasteInput = (object) $mergedData;
 
                     // Ambil semua item yang sesuai dengan kriteria
-                    $DryAWasteStock = DryAWasteStock::where('jenis_waste', $DryAWasteInput->jenis_waste)
+                    $DryAWasteStock = DryAWasteStock::where(['jenis_waste' => $DryAWasteInput->jenis_waste,'plant' => $DryAWasteInput->plant])
                         ->get();
 
                     $found = false;
@@ -96,6 +97,7 @@ class DryAWasteInputService
                             'sisa_pcs'          => $mergedData['pcs'] ?? 0,
                             'modal'             => $mergedData['modal'] ?? 0,
                             'total_modal'       => $mergedData['total_modal'] ?? 0,
+                            'plant' => Auth::user()->plant,
                         ]);
                     }
 
@@ -135,7 +137,7 @@ class DryAWasteInputService
             }
 
             // Ambil data DryAWasteStock berdasarkan jenis_waste dan tanggal pembuatan yang sesuai
-            $DryAWasteStock = DryAWasteStock::where('jenis_waste', '=', $DryAWasteInput->jenis_waste)
+            $DryAWasteStock = DryAWasteStock::where(['jenis_waste' => $DryAWasteInput->jenis_waste,'plant' => $DryAWasteInput->plant])
                 ->where('created_at', '<=', $DryAWasteInput->created_at)
                 ->first();
 

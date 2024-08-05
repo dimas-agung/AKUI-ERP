@@ -21,9 +21,10 @@ class HcrKotorStockController extends Controller
 
         if ($startDate && $endDate) {
             $query->whereBetween(HcrKotorStock::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
-            $CBPenerimaan = $query->get();
+            $CBPenerimaan = $query->where('sisa_berat','<>',0)->get();
         }else{
             $CBPenerimaan = HcrKotorStock::limit(1000)
+            ->where('sisa_berat','<>',0)
             ->latest()
             ->get();
         }
