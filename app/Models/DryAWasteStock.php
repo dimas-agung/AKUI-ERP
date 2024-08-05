@@ -22,6 +22,7 @@ class DryAWasteStock extends Model
         'sisa_pcs',
         'modal',
         'total_modal',
+        'plant',
         'status',
     ];
     public function DryAWasteOutput()

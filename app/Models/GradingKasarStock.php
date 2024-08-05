@@ -39,4 +39,8 @@ class GradingKasarStock extends Model
     {
         return $this->hasMany(GradingKasarOutput::class, 'id_box_grading_kasar', 'id_box_grading_kasar');
     }
+    public function scopeAktif($query)
+    {
+        return $query->whereRaw('berat_masuk - berat_keluar - berat_adjustment <> 0');
+    }
 }

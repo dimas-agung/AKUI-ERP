@@ -21,6 +21,7 @@ class DryAWasteInput extends Model
         'harga_estimasi',
         'modal',
         'total_modal',
+        'plant',
         'user_created',
         'user_updated',
     ];

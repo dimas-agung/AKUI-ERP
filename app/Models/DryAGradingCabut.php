@@ -14,6 +14,7 @@ class DryAGradingCabut extends Model
         'nomor_batch',
         'jenis_job',
         'berat_job',
+        'berat_kotor',
         'pcs_job',
         'tujuan_kirim',
         'nama_operator',

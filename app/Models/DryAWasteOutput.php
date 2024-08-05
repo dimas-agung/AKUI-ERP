@@ -23,6 +23,7 @@ class DryAWasteOutput extends Model
         'modal',
         'total_modal',
         'user_created',
+        'plant',
         'user_updated',
     ];
     public function can_delete()
