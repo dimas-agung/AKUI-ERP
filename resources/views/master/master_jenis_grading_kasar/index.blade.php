@@ -135,7 +135,7 @@ is-invalid
                                             <td class="text-center">
                                                 @if ($MasterJGK->presentase_pengurangan_harga == '')
                                                 @else
-                                                    {{ $MasterJGK->presentase_pengurangan_harga }} %
+                                                    {{ $MasterJGK->presentase_pengurangan_harga*100 }} %
                                                 @endif
                                             </td>
                                             {{-- <td>{{ $MasterJGK->presentase_pengurangan_harga }}</td> --}}
