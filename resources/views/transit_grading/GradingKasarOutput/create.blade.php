@@ -320,14 +320,16 @@
                     $('#avg_kadar_air').val(response.avg_kadar_air);
                     $('#nomor_grading').val(response.nomor_grading);
                     $('#modal, #fix_total_modal').val(response.modal);
+                    $('#fix_total_modal').val(response.total_modal);
                     $('#nomor_nota_internal').val(response.nomor_nota_internal);
 
                     // Perhitungan sisa berat
                     let beratMasuk = parseFloat(response.berat_masuk);
                     let beratKeluar = parseFloat(response.berat_keluar);
+                    let berat_adjustment = parseFloat(response.berat_adjustment);
                     let pcsMasuk = parseFloat(response.pcs_masuk);
                     let pcsKeluar = parseFloat(response.pcs_keluar);
-                    let sisaBerat = beratMasuk - beratKeluar;
+                    let sisaBerat = beratMasuk - beratKeluar - berat_adjustment;
                     let sisaPcs = pcsMasuk - pcsKeluar;
                     $('#berat_masuk').val(sisaBerat);
                     $('#sisa_pcs').val(sisaPcs);
@@ -335,7 +337,7 @@
                     console.log(idBoxGradingKasarSelected);
                     if (idBoxGradingKasarSelected == selectedIdBox) {
                         
-                        calculateSisaBeratSisaPcs(beratMasuk,pcsMasuk)
+                        calculateSisaBeratSisaPcs(selectedIdBox,beratMasuk,pcsMasuk,berat_adjustment)
                     }
                     idBoxGradingKasarSelected = selectedIdBox;
                 },
@@ -735,19 +737,22 @@
             }
             
         }
-        function calculateSisaBeratSisaPcs(berat_masuk,pcs_masuk) {
+        function calculateSisaBeratSisaPcs(id_box,berat_masuk,pcs_masuk,berat_adjustment) {
                     // Perhitungan sisa berat
                     let beratKeluar = 0;
                     let pcsKeluar = 0;
                     if (typeof dataArray != "undefined" && dataArray != null && dataArray.length != null && dataArray.length > 0) {
                         // array exists and is not empty
                         dataArray.forEach(function(item) {
-                            beratKeluar += parseInt(item.berat_keluar);
-                            pcsKeluar += parseInt(item.pcs_keluar)
+                            if (id_box == item.id_box_grading_kasar) {
+                                
+                                beratKeluar += parseInt(item.berat_keluar);
+                                pcsKeluar += parseInt(item.pcs_keluar)
+                            }
                            
                         });
                         console.log(beratKeluar);
-                        let sisaBerat = berat_masuk - beratKeluar;
+                        let sisaBerat = berat_masuk - beratKeluar - berat_adjustment;
                         let sisaPcs = pcs_masuk - pcsKeluar;
                         $('#berat_masuk').val(sisaBerat);
                         $('#sisa_pcs').val(sisaPcs);
