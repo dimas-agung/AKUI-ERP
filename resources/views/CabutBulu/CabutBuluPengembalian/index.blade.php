@@ -98,7 +98,7 @@
                                             <td class="text-center">{{ $item->pcs_job }}</td>
                                             <td class="text-center">{{ $item->upah_operator }}</td>
                                             <td class="text-center">{!! $berat_bersih !!}</td>
-                                            <td class="text-center">{!! $upah_bersih !!}</td>
+                                            <td class="text-center">{!! $upah_bersih  !!} </td>
                                             <td class="text-center">{{ $item->tujuan_kirim }}</td>
                                             <td class="text-center">{{ $item->keterangan }}</td>
                                             @role('admin')
@@ -107,7 +107,8 @@
                                                 </td>
                                             @endrole
                                             <td class="text-center">{{ $item->waktu_penyebaran }}</td>
-                                            <td class="text-center">{{ $item->waktu_pengembalian }}</td>
+                                            {{-- <td class="text-center">{{ $item->waktu_penyebaran  }}</td> --}}
+                                            <td>{{date("Y-m-d H:i:s", (strtotime(date($item->waktu_penyebaran)) + $item->lama_pengerjaan    )) }}    </td>
                                             <td class="text-center">
                                                 {{ sprintf('%02d:%02d:%02d', floor($item->lama_pengerjaan / 3600), floor(($item->lama_pengerjaan % 3600) / 60), $item->lama_pengerjaan % 60) }}
                                             </td>
