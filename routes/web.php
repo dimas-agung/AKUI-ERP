@@ -646,6 +646,14 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('moulding')->middleware(['role:moulding|admin'])->group(function () {
         Route::prefix('grading_warna')->middleware('role:moulding|admin')->group(function () {
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaPenerimaanKedatanganController::class)->group(function () {
+                Route::get('/grading_warna_penerimaan_kedatangan', 'index')->name('GradingWarnaPenerimaanKedatangan.index');
+                Route::get('/grading_warna_penerimaan_kedatangan/create', 'create')->name('GradingWarnaPenerimaanKedatangan.create');
+                Route::post('/grading_warna_penerimaan_kedatangan/store', 'store')->name('GradingWarnaPenerimaanKedatangan.store');
+                Route::post('/grading_warna_penerimaan_kedatangan/cek_data', 'CeksendData')->name('GradingWarnaPenerimaanKedatangan.CeksendData');
+                Route::get('/grading_warna_penerimaan_kedatangan/set_bstb', 'setBSTB')->name('GradingWarnaPenerimaanKedatangan.setBSTB');
+                Route::delete('/grading_warna_penerimaan_kedatangan/destroy/{nomor_job}', 'destroy')->name('GradingWarnaPenerimaanKedatangan.destroy');
+            });
             Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaAddingController::class)->group(function () {
                 Route::get('/grading_warna_adding', 'index')->name('GradingWarnaAdding.index');
                 Route::get('/grading_warna_adding/create', 'create')->name('GradingWarnaAdding.create');

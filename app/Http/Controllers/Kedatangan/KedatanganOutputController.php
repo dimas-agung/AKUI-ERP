@@ -21,6 +21,7 @@ class KedatanganOutputController extends Controller
     //index
     public function index(Request $request)
     {
+        // $user = auth()->user()->plant;
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
@@ -31,7 +32,8 @@ class KedatanganOutputController extends Controller
             $query->whereBetween(KedatanganOutput::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
             $KedatanganOutput = $query->with('TransitKedatangan')->get();
         } else {
-            $KedatanganOutput = KedatanganOutput::where('status', 1)
+            $KedatanganOutput = KedatanganOutput::where('status', KedatanganOutput::STATUS_AKTIF)
+                // ->where('plant', '=', $user)
                 // ->where('created_at','>=', Carbon::now()->subDays(2))
                 ->limit(1000)
                 ->latest()
@@ -43,13 +45,15 @@ class KedatanganOutputController extends Controller
         ]);
     }
 
-
     //create
     public function create()
     {
+        $user = auth()->user()->plant;
         $MasterBatch = MasterBatch::where('status', MasterBatch::STATUS_AKTIF)->get();
         $MasterJenisKedatangan = MasterJenisKedatangan::where('status', MasterJenisKedatangan::STATUS_AKTIF)->get();
-        $MasterTujuanKirimKedatangan = MasterTujuanKirimKedatangan::where('status', MasterTujuanKirimKedatangan::STATUS_AKTIF)->get();
+        $MasterTujuanKirimKedatangan = MasterTujuanKirimKedatangan::where('status', MasterTujuanKirimKedatangan::STATUS_AKTIF)
+            ->where('inisial_tujuan', '=', $user)
+            ->get();
         return response()->view('Kedatangan.KedatanganOutput.create', [
             'master_batch'                      => $MasterBatch,
             'master_jenis_kedatangan'           => $MasterJenisKedatangan,

@@ -720,11 +720,17 @@
                                 </a>
                                 <ul class="submenu">
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('GradingWarnaPenerimaanKedatangan*', 'GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Grading Warna</span>
                                         </a>
                                         <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarnaPenerimaanKedatangan*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarnaPenerimaanKedatangan.index') }}"
+                                                    class="submenu-link">Grading
+                                                    <br>Warna <br>Penerimaan Kedatangan</a>
+                                            </li>
                                             <li
                                                 class="submenu-item {{ Route::is('GradingWarnaAdding*') && !Route::is('GradingWarnaAddingStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('GradingWarnaAdding.index') }}"

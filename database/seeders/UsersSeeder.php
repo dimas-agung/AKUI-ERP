@@ -14,51 +14,29 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::create([
+        $akui = User::create([
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin123'),
-            'fullname' => 'admin',
+            'fullname' => 'superadmin',
             'nip' => '12345678',
-            'unit_id' => '1',
-            'username' => 'admin',
-            'phone_number' => '0111111111',
-            'birth_date' => '2000-04-09',
+            'unit_id' => '2',
             'plant' => 'A',
+            'username' => 'AKUI',
+            'phone_number' => '0222222222',
+            'birth_date' => '2000-04-09',
         ]);
-        $user->syncRoles(['master', 'admin']);
-        // foreach ($request->input('role') as $key => $value) {
-        //     # code...
-        //     $user->assignRole([$value]);
-        // }
-        // $user->assignRole(['bahan_baku']);
-        // $user->assignRole(['purchasing']);
-
-        //
-        // $data = [
-        //     [
-        //         'username' => 'Admin',
-        //         'fullname' => 'Admin',
-        //         'email' => 'admin@gmail',
-        //         'phone_number' => '081334105643',
-        //         'birth_date' => '2023-01-01',
-        //         'roles_id' => 1,
-        //         'password' => 'admin123',
-        //     ],
-
-        // ];
-
-        // foreach ($data as $key => $value) {
-        //     $hashPassword = Hash::make($value['password']);
-        //     $user = User::create([
-        //         'username' => $value['username'],
-        //         'fullname' => $value['fullname'],
-        //         'phone_number' => $value['phone_number'],
-        //         'email' => $value['email'],
-        //         'birth_date' => $value['birth_date'],
-        //         'roles_id' => $value['roles_id'],
-        //         'password' => $hashPassword,
-        //     ]);
-        //     $users[] = $user;
-        // }
+        $obi = User::create([
+            'email' => 'OBI@gmail.com',
+            'password' => Hash::make('123admin'),
+            'fullname' => 'superadmin',
+            'nip' => '87654321',
+            'unit_id' => '2',
+            'plant' => 'O',
+            'username' => 'OBI',
+            'phone_number' => '08139000000',
+            'birth_date' => '2000-04-09',
+        ]);
+        $akui->assignRole(['admin']);
+        $obi->assignRole(['admin']);
     }
 }

@@ -36,4 +36,9 @@ class GradingWarnaPenerimaanKedatangan extends Model
         }
         return false;
     }
+
+    public function GradingWarnaPenerimaanStock()
+    {
+        return $this->hasMany(GradingWarnaPenerimaanStock::class, 'nomor_bstb', 'nomor_bstb');
+    }
 }
