@@ -17,7 +17,16 @@ class GradingWarnaAddingService
     {
         // Decode JSON string to associative array
         $dataArray = json_decode($request->input('dataArray'), true);
-
+        $sumTotalModal = 0;
+        $sumTotalBerat = 0;
+        foreach ($dataArray as $key => $value) {
+            # code...
+            $value = (object)$value;
+            $berat = $value->berat_1_grading;
+            $sumTotalModal += $value->total_modal;
+            $sumTotalBerat += $berat;
+        }
+        $modalakhir = $sumTotalModal / $sumTotalBerat;
         // Check if $dataArray or $tableDataArray is empty
         if (empty($dataArray)) {
             return response()->json([
@@ -64,6 +73,7 @@ class GradingWarnaAddingService
                         $pcsMasuk = $item->pcs_masuk + ($GradingWarnaAdding->pcs_1_grading ?? 0);
                         $sisaBerat = $beratMasuk;
                         $sisaPcs = $pcsMasuk;
+                     
                         $totalModal = $item->modal * $sisaBerat;
 
                         // Update data dengan nilai baru
@@ -72,7 +82,8 @@ class GradingWarnaAddingService
                             'pcs_masuk'    => $pcsMasuk,
                             'sisa_berat'   => $sisaBerat,
                             'sisa_pcs'     => $sisaPcs,
-                            'total_modal'  => $totalModal,
+                            'modal' => $modalakhir,
+                            'total_modal'  => $sumTotalModal,
                             'user_updated' => $GradingWarnaAdding->user_created ?? "There isn't any",
                         ]);
                     }
@@ -95,8 +106,8 @@ class GradingWarnaAddingService
                             'pcs_masuk'         => $data['pcs_1_grading'],
                             'pcs_keluar'        => $data['pcs_keluar'] ?? 0,
                             'sisa_pcs'          => $data['pcs_1_grading'] ?? 0,
-                            'modal'             => $data['modal'] ?? 0,
-                            'total_modal'       => $data['total_modal'] ?? 0,
+                            'modal'             => $modalakhir ?? 0,
+                            'total_modal'       => $sumTotalModal ?? 0,
                         ]);
                     }
 
@@ -137,7 +148,7 @@ class GradingWarnaAddingService
         ], 201);
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy($id)
     {
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
@@ -150,50 +161,59 @@ class GradingWarnaAddingService
                 // Redirect ke index dengan pesan error jika data tidak ditemukan
                 return redirect()->route('GradingWarnaAdding.index')->with(['error' => 'Data tidak ditemukan!']);
             }
-
-            // Ambil semua data dengan nomor_job yang sama
-            $GradingWarnaAddings = GradingWarnaAdding::where('nomor_job', $GradingWarnaAdding->nomor_job)->get();
-
-            foreach ($GradingWarnaAddings as $item) {
-                # code...
-                // Ambil data GradingWarnaAddingStock berdasarkan jenis_waste dan tanggal pembuatan yang sesuai
-                $GradingWarnaAddingStock = GradingWarnaAddingStock::where('nomor_lot', '=', $GradingWarnaAdding->nomor_lot)
+             // delete grading warna addding
+             $GradingWarnaAddings = GradingWarnaAdding::where('nomor_job', $GradingWarnaAdding->nomor_job)->delete();
+             // Ambil semua data dengan nomor_lot yang sama
+             $GradingWarnaAddingLot = GradingWarnaAdding::where('nomor_lot', $GradingWarnaAdding->nomor_lot)->get();
+             $sumTotalBerat = 0;
+             $sumTotalBeratAll = 0;
+             $sumTotalPcs = 0;
+             $sumTotalModal = 0;
+             foreach ($GradingWarnaAddingLot as $key => $value) {
+                if ($value->nomor_job == $GradingWarnaAdding->nomor_job) {
+                    continue;
+                }
+                $sumTotalPcs += $value->pcs_1_grading;
+                $sumTotalBeratAll += $value->berat_1_grading;
+                $sumTotalBeratAll += $value->berat_2_grading;
+                 $sumTotalBerat +=  $value->berat_1_grading;
+                 $sumTotalModal += $value->total_modal;
+             }
+             //generate modal baru di stock
+             $modalStockAkhir =   $sumTotalBerat == 0 ? 0 : $sumTotalModal / $sumTotalBerat;
+             $GradingWarnaAddingStock = GradingWarnaAddingStock::where('nomor_lot', '=', $GradingWarnaAdding->nomor_lot)
                     ->first();
 
                 if ($GradingWarnaAddingStock) {
                     // Tentukan berat yang akan dikurangi berdasarkan berat_1_grading atau berat_2_grading
-                    $beratDikurangi = ($GradingWarnaAdding->berat_1_grading == 0) ? ($GradingWarnaAdding->berat_2_grading ?? 0) : ($GradingWarnaAdding->berat_1_grading ?? 0);
+                   
+                    $beratBaru =$sumTotalBeratAll;
+                    $pcsBaru = $sumTotalPcs;
+                    $sisaBeratBaru = $beratBaru - $GradingWarnaAddingStock->berat_keluar;
+                    $sisaPcsBaru = $sumTotalPcs - $GradingWarnaAddingStock->pcs_keluar;
+                    
+                    
 
-                    // Simpan nilai sebelum dihapus
-                    $beratSebelumnya = $GradingWarnaAddingStock->berat_masuk;
-                    $pcsSebelumnya = $GradingWarnaAddingStock->pcs_masuk;
-
-                    // Hitung perbedaan berat dan pcs
-                    // $beratBaru = $beratSebelumnya - $GradingWarnaAdding->berat_2_grading;
-                    $beratBaru = $beratSebelumnya - $beratDikurangi;
-                    $pcsBaru = $pcsSebelumnya - $GradingWarnaAdding->pcs_1_grading;
-                    $sisaBeratBaru = $GradingWarnaAddingStock->sisa_berat - $beratDikurangi;
-                    $sisaPcsBaru = $GradingWarnaAddingStock->sisa_pcs - $GradingWarnaAdding->pcs_1_grading;
-                    $totalModal = $GradingWarnaAddingStock->modal * $sisaBeratBaru;
-
-                    if ($sisaBeratBaru <= 0 && $sisaPcsBaru <= 0) {
+                    if (($sisaBeratBaru <= 0 && $sisaPcsBaru <= 0) || $beratBaru ==0) {
+                        // return $sisaBeratBaru.' - '.$sisaPcsBaru;
                         // Hapus data GradingWarnaAddingStock jika sisa_berat dan sisa_pcs baru <= 0
                         $GradingWarnaAddingStock->delete();
                     } else {
+                        
                         // Update data GradingWarnaAddingStock dengan berat, pcs, dan sisa yang baru
                         $GradingWarnaAddingStock->update([
                             'berat_masuk'   => $beratBaru,
                             'pcs_masuk'     => $pcsBaru,
                             'sisa_berat'    => $sisaBeratBaru,
                             'sisa_pcs'      => $sisaPcsBaru,
-                            'total_modal'   => $totalModal,
+                            'modal' => $modalStockAkhir,
+                            'total_modal'   => $sumTotalModal,
                         ]);
+                        // return $sisaBeratBaru;
                     }
                 }
-                // Hapus Item GradingWarnaAdding
-                $item->delete();
-            }
-
+            //  return $modalStockAkhir;
+          
             // Update Status PenerimaanStock
             $GradingWarnaPenerimaanStock = GradingWarnaPenerimaanStock::where('nomor_job', '=', $GradingWarnaAdding->nomor_job)
                 ->get();
