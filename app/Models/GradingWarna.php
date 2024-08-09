@@ -16,6 +16,7 @@ class GradingWarna extends Model
         'nomor_batch',
         'berat_lot',
         'pcs_lot',
+        'tujuan_kirim',
         'jenis_grading',
         'berat_grading',
         'pcs_grading',
