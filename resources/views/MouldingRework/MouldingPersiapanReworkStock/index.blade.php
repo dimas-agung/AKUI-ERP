@@ -1,6 +1,6 @@
 @extends('layouts.master1')
 @section('menu')
-    Moulding
+    Moulding Rework
 @endsection
 @section('title')
     Moulding Rework Persiapan Stock

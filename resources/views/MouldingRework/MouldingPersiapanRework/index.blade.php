@@ -1,6 +1,6 @@
 @extends('layouts.master1')
 @section('menu')
-    Moulding
+    Moulding Rework
 @endsection
 @section('title')
     Moulding Rework Persiapan
@@ -166,7 +166,7 @@
                 start_date: start_date,
                 end_date: end_date,
             };
-            var url = '{{ route('PreCleaningInput.index') }}';
+            var url = '{{ route('MouldingReworkPersiapan.index') }}';
 
             // url = url.replace(':slug', slug);
             url = url + '?start_date=' + start_date + '&end_date=' + end_date;

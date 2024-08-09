@@ -80,10 +80,6 @@ class CabutBuluPenyebaranContoller extends Controller
         return response()->json($data);
     }
 
-    // public function simpanData()
-    // {
-    // }
-
     public function CeksendData(Request $request)
     {
         // Ambil id box dari request dan konversi ke dalam array

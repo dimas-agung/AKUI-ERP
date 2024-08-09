@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\MouldingRework;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\MouldingPenyebaranRework;
 use App\Models\MouldingPersiapanReworkStock;
 use App\Services\MouldingPenyebaranReworkService;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class MouldingPenyebaranReworkController extends Controller
 {
@@ -58,6 +60,7 @@ class MouldingPenyebaranReworkController extends Controller
         // Kembalikan nomor job sebagai respons
         return response()->json($data);
     }
+
     public function CeksendData(Request $request)
     {
         // Ambil id box dari request dan konversi ke dalam array
@@ -75,6 +78,12 @@ class MouldingPenyebaranReworkController extends Controller
 
     public function store(Request $request)
     {
+        // return $request;
         return $this->MouldingPenyebaranReworkService->store($request);
+    }
+
+    public function destroy($nomor_job_rework): RedirectResponse
+    {
+        return $this->MouldingPenyebaranReworkService->destroy($nomor_job_rework);
     }
 }

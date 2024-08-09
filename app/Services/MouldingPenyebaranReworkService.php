@@ -2,151 +2,162 @@
 
 namespace App\Services;
 
-use App\Models\MouldingPenyebaranRework;
-use App\Models\MouldingPersiapanRework;
-use App\Models\MouldingPersiapanReworkStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Models\MouldingPersiapanRework;
+use App\Models\MouldingPenyebaranRework;
 use Illuminate\Support\Facades\Validator;
-use App\Models\MouldingPenyebaran;
-use App\Models\MouldingStock;
+use App\Models\MouldingPersiapanReworkStock;
+use Illuminate\Support\Facades\Auth;
+
 
 class MouldingPenyebaranReworkService
 {
     public function store(Request $request)
     {
+        // Log received data
+        Log::info('Received Data:', ['data' => $request->all()]);
+
         // Decode JSON string to associative array
         $dataArray = json_decode($request->input('dataArray'), true);
 
-        // Validate other form fields
-        $validatedData = $request->validate([
-            'keterangan' => 'nullable|string',
-            'user_created' => 'required',
-            'waktu_penyebaran' => 'required'
-        ]);
-
+        // Log decoded dataArray
+        Log::info('Decoded Data Array:', ['dataArray' => $dataArray]);
+        // var_dump($request->input('dataArray'));
+        // return;
         // Check if $dataArray is empty
         if (empty($dataArray)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Data array kosong. Tidak ada data untuk disimpan.',
+                'receivedData' => $request->all() // Include received data in response
             ], 400);
         }
 
-        // Loop melalui setiap item dalam dataArray
         foreach ($dataArray as $data) {
-            // Gabungkan data dari $validatedData dan $data
-            $mergedData = array_merge($validatedData, $data);
+            // Log each item in dataArray
+            Log::info('Processing Data Item:', ['data' => $data]);
 
-            // Validasi untuk setiap item dalam dataArray
+            // Merge data from $dataArray
+            $mergedData = array_merge($data);
+
+            // Validate each item in dataArray
             $validator = Validator::make($mergedData, [
-                'nomor_job_rework' => 'required', // Ganti dengan nama field yang sesuai
-                // ... tambahkan validasi lain sesuai kebutuhan
+                'nomor_job_rework' => 'required',
+                'user_created' => 'required',
             ]);
 
-            // Jika validasi gagal, kembalikan pesan error
+            // If validation fails, log the error and return response
             if ($validator->fails()) {
+                Log::error('Validation failed:', ['errors' => $validator->errors()->toArray()]);
                 return response()->json([
                     'success' => false,
-                    'message' => 'Validasi gagal: ' . $validator->errors()->first(),
+                    'message' => 'Validation failed: ' . $validator->errors()->first(),
                 ], 400);
             } else {
                 try {
                     DB::beginTransaction();
+                    // Create instance of MouldingPenyebaranRework
+                    MouldingPenyebaranRework::create($mergedData);
 
-                    // Buat instansi PreCleaningInput
-                    MouldingPenyebaranRework::create(array_merge($mergedData, [
-                        'waktu_penyebaran' => $validatedData['waktu_penyebaran'],
-                        'keterangan'       => $validatedData['keterangan'],
-                        'user_created'       => $validatedData['user_created'],
-                    ]));
+                    $MouldingPenyebaranRework = (object) $mergedData;
 
-                    // $MouldingPenyebaranRework = (object) $mergedData;
+                    // Ambil semua item yang sesuai dengan kriteria
+                    $MouldingPersiapanStock = MouldingPersiapanReworkStock::where('nomor_job_rework', $MouldingPenyebaranRework->nomor_job_rework)
+                        ->get();
 
-                    // // Ambil semua item yang sesuai dengan kriteria
-                    // $MouldingPersiapanStock = MouldingPersiapanReworkStock::where('nomor_job_rework', $MouldingPenyebaranRework->nomor_job_rework)
-                    //     ->get();
+                    foreach ($MouldingPersiapanStock as $item) {
 
-                    // foreach ($MouldingPersiapanStock as $item) {
+                        // Update data dengan nilai baru
+                        $item->update([
+                            'status'       => MouldingPenyebaranRework::STATUS_ON_PROSES,
+                        ]);
+                    }
 
-                    //     // Update data dengan nilai baru
-                    //     $item->update([
-                    //         'status'       => MouldingPenyebaranRework::STATUS_ON_PROSES,
-                    //     ]);
-                    // }
+                    // Ambil semua item yang sesuai dengan kriteria
+                    $MouldingPersiapan = MouldingPersiapanRework::where('nomor_job_rework', $MouldingPenyebaranRework->nomor_job_rework)
+                        ->get();
 
-                    // // Ambil semua item yang sesuai dengan kriteria
-                    // $MouldingPersiapan = MouldingPersiapanRework::where('nomor_job_rework', $MouldingPenyebaranRework->nomor_job_rework)
-                    //     ->get();
+                    foreach ($MouldingPersiapan as $items) {
 
-                    // foreach ($MouldingPersiapan as $item) {
-
-                    //     // Update data dengan nilai baru
-                    //     $item->update([
-                    //         'status'       => $item->status ?? 0,
-                    //     ]);
-                    // }
-
+                        // Update data dengan nilai baru
+                        $items->update([
+                            'status'       => MouldingPenyebaranRework::STATUS_NON_AKTIF,
+                        ]);
+                    }
 
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollBack();
-
+                    // Log the exception message
+                    Log::error('Failed to save data:', ['error' => $e->getMessage()]);
                     return response()->json([
                         'success' => false,
-                        'error' => 'Gagal menyimpan data. ' . $e->getMessage(),
+                        'error' => 'Failed to save data. ' . $e->getMessage(),
                         'redirectTo' => route('MouldingReworkPenyebaran.create')
                     ], 504);
                 }
             }
         }
 
-        // Kembalikan data yang baru dibuat sebagai respons
         return response()->json([
             'success' => true,
-            'message' => 'Data berhasil disimpan!',
+            'message' => 'Data successfully saved!',
             'redirectTo' => route('MouldingReworkPenyebaran.index')
         ], 201);
     }
 
-    // public function destroy($nomor_job)
-    // {
-    //     try {
-    //         // Gunakan transaksi database untuk memastikan konsistensi
-    //         DB::beginTransaction();
+    public function destroy($nomor_job_rework)
+    {
+        try {
+            // Gunakan transaksi database untuk memastikan konsistensi
+            DB::beginTransaction();
 
-    //         // Ambil data PreCleaningInput berdasarkan nomor_job
-    //         $MouldingPenyebaran = MouldingPenyebaran::where('nomor_job', '=', $nomor_job)->get();
+            // Ambil data PreCleaningInput berdasarkan nomor_job_rework
+            $MouldingPenyebaranRework = MouldingPenyebaranRework::where('nomor_job_rework', '=', $nomor_job_rework)->get();
 
-    //         if ($MouldingPenyebaran->isEmpty()) {
-    //             // Redirect ke index dengan pesan error jika data tidak ditemukan
-    //             return redirect()->route('MouldingPenyebaran.index')->with(['error' => 'Data tidak ditemukan!']);
-    //         }
+            if ($MouldingPenyebaranRework->isEmpty()) {
+                // Redirect ke index dengan pesan error jika data tidak ditemukan
+                return redirect()->route('MouldingReworkPenyebaran.index')->with(['error' => 'Data tidak ditemukan!']);
+            }
 
-    //         foreach ($MouldingPenyebaran as $mouldingPenyebaran) {
-    //             // Hapus data PreGradingHalusInput
-    //             $mouldingPenyebaran->delete();
+            foreach ($MouldingPenyebaranRework as $mouldingPenyebaran) {
+                // Hapus data PreGradingHalusInput
+                $mouldingPenyebaran->delete();
 
-    //             // Perbarui status PreCleaningOutput jika ada
-    //             $MouldingStock = MouldingStock::where('nomor_job', '=', $nomor_job)->get();
+                // Perbarui status PreCleaningOutput jika ada
+                $MouldingStock = MouldingPersiapanReworkStock::where('nomor_job_rework', '=', $nomor_job_rework)->get();
 
-    //             foreach ($MouldingStock as $mouldingStock) {
-    //                 // Update status menjadi 1 pada MouldingStock
-    //                 $mouldingStock->update(['status' => MouldingStock::STATUS_ON_STOCK]);
-    //             }
-    //         }
+                foreach ($MouldingStock as $mouldingStock) {
+                    // Update status menjadi 1 pada MouldingStock
+                    $mouldingStock->update(['status' => MouldingPenyebaranRework::STATUS_ON_STOCK]);
+                }
 
-    //         // Commit transaksi
-    //         DB::commit();
+                // Ambil semua item yang sesuai dengan kriteria
+                $MouldingPersiapan = MouldingPersiapanRework::where('nomor_job_rework', $mouldingPenyebaran->nomor_job_rework)
+                    ->get();
 
-    //         // Redirect ke index dengan pesan sukses
-    //         return redirect()->route('MouldingPenyebaran.index')->with(['success' => 'Data Berhasil Dihapus!']);
-    //     } catch (\Exception $e) {
-    //         // Rollback transaksi jika terjadi kesalahan
-    //         DB::rollback();
+                foreach ($MouldingPersiapan as $items) {
 
-    //         // Redirect ke index dengan pesan error
-    //         return redirect()->route('MouldingPenyebaran.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
-    //     }
-    // }
+                    // Update data dengan nilai baru
+                    $items->update([
+                        'status'       => MouldingPenyebaranRework::STATUS_ON_STOCK,
+                    ]);
+                }
+            }
+
+            // Commit transaksi
+            DB::commit();
+
+            // Redirect ke index dengan pesan sukses
+            return redirect()->route('MouldingReworkPenyebaran.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::rollback();
+
+            // Redirect ke index dengan pesan error
+            return redirect()->route('MouldingReworkPenyebaran.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+    }
 }

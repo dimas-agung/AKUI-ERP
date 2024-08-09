@@ -716,9 +716,19 @@ Route::middleware('auth')->group(function (){
                 Route::get('/moulding_rework_penyebaran/create', 'create')->name('MouldingReworkPenyebaran.create');
                 Route::post('/moulding_rework_penyebaran/store', 'store')->name('MouldingReworkPenyebaran.store');
                 Route::post('/moulding_rework_penyebaran/cek_data', 'CeksendData')->name('MouldingReworkPenyebaran.CeksendData');
-                Route::delete('/moulding_rework_penyebaran/destroy/{nomor_job}', 'destroy')->name('MouldingReworkPenyebaran.destroy');
+                Route::delete('/moulding_rework_penyebaran/destroy/{nomor_job_rework}', 'destroy')->name('MouldingReworkPenyebaran.destroy');
                 Route::get('/moulding_rework_penyebaran/set_job', 'setJob')->name('MouldingReworkPenyebaran.setJob');
                 Route::get('/moulding_rework_penyebaran/set_nip', 'setNip')->name('MouldingReworkPenyebaran.setNip');
+            });
+
+            Route::controller(App\Http\Controllers\MouldingRework\MouldingPengembalianReworkController::class)->group(function () {
+                Route::get('/moulding_rework_pengembalian', 'index')->name('MouldingReworkPengembalian.index');
+                Route::get('/moulding_rework_pengembalian/create', 'create')->name('MouldingReworkPengembalian.create');
+                Route::post('/moulding_rework_pengembalian/store', 'store')->name('MouldingReworkPengembalian.store');
+                Route::post('/moulding_rework_pengembalian/cek_data', 'CeksendData')->name('MouldingReworkPengembalian.CeksendData');
+                Route::delete('/moulding_rework_pengembalian/destroy/{nomor_job_rework}', 'destroy')->name('MouldingReworkPengembalian.destroy');
+                Route::get('/moulding_rework_pengembalian/set_job', 'setJob')->name('MouldingReworkPengembalian.setJob');
+                Route::get('/moulding_rework_pengembalian/set_nip', 'setNip')->name('MouldingReworkPengembalian.setNip');
             });
         });
     });

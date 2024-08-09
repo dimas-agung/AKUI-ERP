@@ -3,7 +3,7 @@
     Moulding Rework
 @endsection
 @section('title')
-    Moulding Rework Penyebaran
+    Moulding Rework Pengemblian
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h5 class="card-title">
                             <div class="col-sm-12 d-flex justify-content-between">
-                                Data Moulding Rework Penyebaran
+                                Data Moulding Rework Pengemblian
                                 <div style="position: absolute;right: 0px;">
                                     <a class="btn btn-outline-warning rounded-pill" style="margin-right: 10px"
                                         onclick="toggleFilter()">
@@ -66,6 +66,8 @@
                                             <th scope="col" class="text-center">Total Modal</th>
                                         @endrole
                                         <th scope="col" class="text-center">Waktu Penyebaran</th>
+                                        <th scope="col" class="text-center">Waktu Pengemblian</th>
+                                        <th scope="col" class="text-center">Lama Pengerjaan</th>
                                         <th scope="col" class="text-center">Nama Operator</th>
                                         <th scope="col" class="text-center">Nip Operator</th>
                                         <th scope="col" class="text-center">Grade Operator</th>
@@ -76,7 +78,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($moulding_penyebaran_rework as $item)
+                                    @forelse ($moulding_pengembalian_rework as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->nomor_job_rework }}</td>
@@ -93,7 +95,9 @@
                                                     {{ number_format($item->total_modal, 2, ',', '.') }}
                                                 </td>
                                             @endrole
-                                            <td class="text-center">{{ $item->waktu_penyebaran }}</td>
+                                            <td class="text-center">{{ $item->waktu_Penyebaran }}</td>
+                                            <td class="text-center">{{ $item->waktu_Pengemblian }}</td>
+                                            <td class="text-center">{{ $item->lama_pengerjaan }}</td>
                                             <td class="text-center">{{ $item->nama_operator }}</td>
                                             <td class="text-center">{{ $item->nip_operator }}</td>
                                             <td class="text-center">{{ $item->grade_operator }}</td>
@@ -113,7 +117,7 @@
                                                     @if ($item->can_delete())
                                                         <form style="display: flex"
                                                             id="deleteForm{{ $item->nomor_job_rework }}"
-                                                            action="{{ route('MouldingReworkPenyebaran.destroy', $item->nomor_job_rework) }}"
+                                                            action="{{ route('MouldingReworkPengembalian.destroy', $item->nomor_job_rework) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -129,7 +133,7 @@
                                         </tr>
                                     @empty
                                         <div class="alert alert-danger">
-                                            Data Moulding Rework Penyebaran belum Tersedia.
+                                            Data Moulding Rework Pengemblian belum Tersedia.
                                         </div>
                                     @endforelse
                                 </tbody>
@@ -161,7 +165,7 @@
                 start_date: start_date,
                 end_date: end_date,
             };
-            var url = '{{ route('MouldingReworkPenyebaran.index') }}';
+            var url = '{{ route('MouldingReworkPengembalian.index') }}';
 
             // url = url.replace(':slug', slug);
             url = url + '?start_date=' + start_date + '&end_date=' + end_date;
@@ -170,7 +174,7 @@
         }
 
         function redirectToPage() {
-            window.location.href = "{{ route('MouldingReworkPenyebaran.create') }}";
+            window.location.href = "{{ route('MouldingReworkPengembalian.create') }}";
         }
 
         function confirmDelete(id) {

@@ -15,7 +15,7 @@ class MouldingPersiapanReworkStockSeeder extends Seeder
     {
         MouldingPersiapanReworkStock::create([
             'unit' => 'Moulding Rework',
-            'nomor_job_rework' => 'ufg_310724-093123',
+            'nomor_job_rework' => 'ufg_310724-123456',
             'nomor_batch' => '093513',
             'tujuan_kirim' => 'Malang',
             'job_order' => 'SD',
@@ -31,7 +31,7 @@ class MouldingPersiapanReworkStockSeeder extends Seeder
         ]);
         MouldingPersiapanReworkStock::create([
             'unit' => 'Moulding Rework',
-            'nomor_job_rework' => 'ufg_310724-103987',
+            'nomor_job_rework' => 'ufg_310724-654321',
             'nomor_batch' => '093513',
             'tujuan_kirim' => 'Jombang',
             'job_order' => 'MII',
