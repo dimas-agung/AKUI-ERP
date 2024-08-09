@@ -12,7 +12,7 @@ class TransitDryAController extends Controller
     public function index()
     {
         $i = 1;
-        $TransitPreCleaningStock = TransitDryACabut::get();
+        $TransitPreCleaningStock = TransitDryACabut::where('status',1)->get();
         // return $PrmRawMOI;
         return response()->view('DryA.TransitDryA.index', [
             'transit_pre_cleaning_stocks' => $TransitPreCleaningStock,
