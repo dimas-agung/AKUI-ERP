@@ -212,8 +212,11 @@
                                 <th scope="col" class="text-center">Nip Operator</th>
                                 <th scope="col" class="text-center">Grade Operator</th>
                                 <th scope="col" class="text-center">Nama Team Leader</th>
+                                @role('admin')
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
+                                <th scope="col" class="text-center">Harga Estimasi</th>
+                                @endrole
                                 <th scope="col" class="text-center">Upah Operator</th>
                                 <th scope="col" class="text-center">Berat Kotor</th>
                                 <th scope="col" class="text-center">JenisGrading</th>
@@ -223,7 +226,6 @@
                                 <th scope="col" class="text-center">Berat 2 Grading</th>
                                 <th scope="col" class="text-center">Susut Depan</th>
                                 <th scope="col" class="text-center">Susut Belakang</th>
-                                <th scope="col" class="text-center">Harga Estimasi</th>
                                 <th scope="col" class="text-center">Kontribusi</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
@@ -310,12 +312,13 @@
                         $('#berat_2_grading').val('').prop('readonly', false);
 
                         // Menambahkan logika untuk mengatur readonly dan nilai
-                        const kategoriSusut = response.kategori_susut.toLowerCase();
-                        if (kategoriSusut === 'sd') {
+                        const kategoriSusut = response.kategori_susut;
+                        if (kategoriSusut === 'SD') {
                             $('#berat_2_grading').val(0).prop('readonly', true);
                             $('#berat_1_grading').prop('readonly', false);
-                        } else if (kategoriSusut !== 'sd') {
+                        } else if (kategoriSusut !== 'SD') {
                             $('#berat_1_grading').val(0).prop('readonly', true);
+                            $('#pcs_1_grading').val(0)
                             $('#berat_2_grading').prop('readonly', false);
                         } else {
                             $('#berat_1_grading, #berat_2_grading').prop('readonly', false);
@@ -362,8 +365,15 @@
 
             // Iterasi melalui setiap baris tabel
             $('#dataTable tbody tr').each(function() {
-                let kategoriSusut = $(this).find('td:eq(16)').text();
-                let beratGrading = parseFloat($(this).find('td:eq(17)').text()) || 0; // Default ke 0 jika NaN
+                @role('admin')
+                    let kategoriSusut = $(this).find('td:eq(16)').text();
+                    // Menampilkan hasil perhitungan pada kolom yang sesuai
+                    let beratGrading = parseFloat($(this).find('td:eq(17)').text()) || 0; // Default ke 0 jika NaN
+                @else
+                    let kategoriSusut = $(this).find('td:eq(14)').text();
+                    let beratGrading = parseFloat($(this).find('td:eq(15)').text()) || 0; // Default ke 0 jika NaN
+                @endrole
+                
                 let beratAdding = parseFloat($(this).find('td:eq(3)').text()) || 0; // Default ke 0 jika NaN
 
                 // Menambahkan berat grading jika kategori susut adalah "SD"
@@ -379,11 +389,19 @@
             // let susutDepan = totalBeratAdding !== 0 ? beratGradingSD / totalBeratAdding : 0;
 
             $('#dataTable tbody tr').each(function() {
-                let currentKategoriSusut = $(this).find('td:eq(16)').text();
+               
                 let row = $(this);
-                row.find('td:eq(20)').text(susutDepan.toFixed(4)); // Update nilai di tabel
+                @role('admin')
+                    let currentKategoriSusut = $(this).find('td:eq(16)').text();
+                    // Menampilkan hasil perhitungan pada kolom yang sesuai
+                    row.find('td:eq(21)').text(susutDepan.toFixed(4)); // Update nilai di tabel
+                @else
+                    let currentKategoriSusut = $(this).find('td:eq(14)').text();
+                    row.find('td:eq(18)').text(susutDepan.toFixed(4)); // Update nilai di tabel
+                @endrole
+               
+                console.log('berat_grading = '+$(this).find('td:eq(14)').text());
             });
-
             console.log("Susut Depan = " + susutDepan);
             $('#susut_depan').val(susutDepan.toFixed(4));
         }
@@ -395,14 +413,25 @@
 
             // Menghitung total berat adjustment dari setiap baris tabel
             $('#dataTable tbody tr').each(function() {
-                // Default ke 0 jika NaN atau 0
-                let beratGrading = parseFloat($(this).find('td:eq(19)').text()) || 0;
+                @role('admin')
+                    // Default ke 0 jika NaN atau 0
+                    let beratGrading = parseFloat($(this).find('td:eq(19)').text()) || 0;
 
-                // Jika beratGrading bernilai 0, ambil nilai dari kolom 17
-                if (beratGrading === 0) {
-                    // Default ke 0 jika NaN
-                    beratGrading = parseFloat($(this).find('td:eq(17)').text()) || 0;
-                }
+                    // Jika beratGrading bernilai 0, ambil nilai dari kolom 17
+                    if (beratGrading === 0) {
+                        // Default ke 0 jika NaN
+                        beratGrading = parseFloat($(this).find('td:eq(17)').text()) || 0;
+                    }
+                @else
+                    let beratGrading = parseFloat($(this).find('td:eq(17)').text()) || 0;
+
+                    // Jika beratGrading bernilai 0, ambil nilai dari kolom 17
+                    if (beratGrading === 0) {
+                        // Default ke 0 jika NaN
+                        beratGrading = parseFloat($(this).find('td:eq(15)').text()) || 0;
+                    }
+                @endrole
+               
 
                 totalBeratGrading += beratGrading;
             });
@@ -411,7 +440,13 @@
             let susutBelakang = totalBeratAdding !== 0 ? 1 - (totalBeratGrading / totalBeratAdding) : 0;
 
             $('#dataTable tbody tr').each(function() {
-                $(this).find('td:eq(21)').text(susutBelakang.toFixed(4));
+                @role('admin')
+                    // Menampilkan hasil perhitungan pada kolom yang sesuai
+                    $(this).find('td:eq(22)').text(susutBelakang.toFixed(4));
+                @else
+                  
+                    $(this).find('td:eq(19)').text(susutBelakang.toFixed(4));
+                @endrole
             });
 
             console.log("Susut Belakang = " + susutBelakang);
@@ -426,28 +461,7 @@
 
             // Iterasi melalui setiap baris tabel
             $('#dataTable tbody tr').each(function() {
-                // Mendapatkan berat grading dari kolom yang sesuai
-                // Kolom 10 berisi berat grading
-                let beratGrading = parseFloat($(this).find('td:eq(17)').text()) || 0;
-
-                if (beratGrading === 0) {
-                    // Default ke 0 jika NaN
-                    beratGrading = parseFloat($(this).find('td:eq(19)').text()) || 0;
-                }
-
-                // Pastikan beratGrading adalah angka yang valid
-                if (!isNaN(beratGrading)) {
-                    // Menambahkan berat grading ke total
-                    totalBeratGrading += beratGrading;
-                    // Menambah jumlah data berat grading yang valid
-                    jumlahData++;
-                }
-            });
-
-            // Menghindari pembagian oleh nol dan pastikan ada data berat grading yang valid
-            if (totalBeratGrading !== 0 && jumlahData > 0) {
-                // Iterasi melalui setiap baris tabel
-                $('#dataTable tbody tr').each(function() {
+                @role('admin')
                     // Mendapatkan berat grading dari kolom yang sesuai
                     // Kolom 10 berisi berat grading
                     let beratGrading = parseFloat($(this).find('td:eq(17)').text()) || 0;
@@ -456,11 +470,59 @@
                         // Default ke 0 jika NaN
                         beratGrading = parseFloat($(this).find('td:eq(19)').text()) || 0;
                     }
-                    // Menghitung presentase berat grading berdasarkan total berat grading
-                    let presentaseBeratGrading = (beratGrading / totalBeratGrading) * 100;
+                @else
+                    let beratGrading = parseFloat($(this).find('td:eq(15)').text()) || 0;
 
-                    // Menampilkan hasil perhitungan pada kolom yang sesuai
-                    $(this).find('td:eq(23)').text(Math.round(presentaseBeratGrading) + '%');
+                    if (beratGrading === 0) {
+                        // Default ke 0 jika NaN
+                        beratGrading = parseFloat($(this).find('td:eq(17)').text()) || 0;
+                    }
+                @endrole
+
+                    // Pastikan beratGrading adalah angka yang valid
+                    if (!isNaN(beratGrading)) {
+                        // Menambahkan berat grading ke total
+                        totalBeratGrading += beratGrading;
+                        // Menambah jumlah data berat grading yang valid
+                        jumlahData++;
+                    }
+            //         console.log('BERAT GRADING = '+$(this).find('td:eq(18)').text());
+            // console.log('totalBeratGrading GRADING = '+totalBeratGrading);
+                
+            });
+
+            // Menghindari pembagian oleh nol dan pastikan ada data berat grading yang valid
+            if (totalBeratGrading !== 0 && jumlahData > 0) {
+                // Iterasi melalui setiap baris tabel
+                $('#dataTable tbody tr').each(function() {
+                    @role('admin')
+                        // Mendapatkan berat grading dari kolom yang sesuai
+                        // Kolom 10 berisi berat grading
+                        let beratGrading = parseFloat($(this).find('td:eq(17)').text()) || 0;
+
+                        if (beratGrading === 0) {
+                            // Default ke 0 jika NaN
+                            beratGrading = parseFloat($(this).find('td:eq(19)').text()) || 0;
+                        }
+                        // Menghitung presentase berat grading berdasarkan total berat grading
+                        let presentaseBeratGrading = (beratGrading / totalBeratGrading) * 100;
+                        // Menampilkan hasil perhitungan pada kolom yang sesuai
+                        $(this).find('td:eq(23)').text(Math.round(presentaseBeratGrading) + '%');
+                    @else
+                        // Mendapatkan berat grading dari kolom yang sesuai
+                        // Kolom 10 berisi berat grading
+                        let beratGrading = parseFloat($(this).find('td:eq(15)').text()) || 0;
+
+                        if (beratGrading === 0) {
+                            // Default ke 0 jika NaN
+                            beratGrading = parseFloat($(this).find('td:eq(17)').text()) || 0;
+                        }
+                        // Menghitung presentase berat grading berdasarkan total berat grading
+                        let presentaseBeratGrading = (beratGrading / totalBeratGrading) * 100;
+                        $(this).find('td:eq(20)').text(Math.round(presentaseBeratGrading) + '%');
+                    @endrole
+                    console.log('BERAT GRADING = '+beratGrading);
+            console.log('totalBeratGrading GRADING = '+totalBeratGrading);
                 });
             } else {
                 // Jika tidak ada data berat grading yang valid atau total berat grading adalah nol, set semua nilai pada kolom hasil perhitungan ke 0
@@ -468,6 +530,7 @@
                     $(this).find('td:eq(23)').text('0%');
                 });
             }
+            
         }
 
         // Validasi
@@ -562,7 +625,7 @@
                 let harga_estimasi = $('#harga_estimasi').val();
                 let kontribusi = $('#kontribusi').val();
                 let user_created = $('#user_created').val();
-
+                console.log(user_created+ ' - '+kontribusi);
                 let newRow = `<tr>` +
                     `<td class="text-center">${nomor_job}</td>` +
                     `<td class="text-center">${nomor_batch}</td>` +
@@ -571,12 +634,15 @@
                     `<td class="text-center">${pcs_job}</td>` +
                     `<td class="text-center">${tujuan_kirim}</td>` +
                     `<td class="text-center">${keterangan}</td>` +
-                    `<td class="text-center">${nip_operator}</td>` +
                     `<td class="text-center">${nama_operator}</td>` +
+                    `<td class="text-center">${nip_operator}</td>` +
                     `<td class="text-center">${grade_operator}</td>` +
                     `<td class="text-center">${nama_team_leader}</td>` +
+                    @role('admin')
                     `<td class="text-center">${modal}</td>` +
                     `<td class="text-center">${total_modal}</td>` +
+                    `<td class="text-center">${harga_estimasi}</td>` +
+                    @endrole
                     `<td class="text-center">${upah_operator}</td>` +
                     `<td class="text-center">${berat_kotor}</td>` +
                     `<td class="text-center">${jenis_grading}</td>` +
@@ -586,8 +652,7 @@
                     `<td class="text-center">${berat_2_grading}</td>` +
                     `<td class="text-center">${susut_depan}</td>` +
                     `<td class="text-center">${susut_belakang}</td>` +
-                    `<td class="text-center">${harga_estimasi}</td>` +
-                    `<td class="text-center">${kontribusi}</td>` +
+                    `<td class="text-center"><span id="kontribusi">${kontribusi}</span></td>` +
                     `<td class="text-center">${user_created}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
                     `</tr>`;
@@ -870,9 +935,15 @@
                         // Iterasi melalui setiap baris tabel
                         $('#dataTable tbody tr').each(function() {
                             // Mengambil nilai susut_depan dan susut_belakang dari tiap baris
+                            @role('admin')
                             var susutDepan = parseFloat($(this).find('td:eq(20)').text());
                             var susutBelakang = parseFloat($(this).find('td:eq(21)').text());
                             var kontribusi = parseFloat($(this).find('td:eq(23)').text());
+                            @else
+                            var susutDepan = parseFloat($(this).find('td:eq(18)').text());
+                            var susutBelakang = parseFloat($(this).find('td:eq(19)').text());
+                            var kontribusi = parseFloat($(this).find('td:eq(21)').text());
+                            @endrole
 
                             // Debugging: Cetak nilai susut_depan, susut_belakang, dan kontribusi ke konsol
                             console.log("Nilai susut_depan:", susutDepan);
