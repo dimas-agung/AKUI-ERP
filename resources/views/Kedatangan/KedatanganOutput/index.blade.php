@@ -64,6 +64,10 @@
                                         <th scope="col" class="text-center">Nomor Job</th>
                                         <th scope="col" class="text-center">Nomor BSTB</th>
                                         <th scope="col" class="text-center">Keterangan</th>
+                                        @role('admin')
+                                            <th scope="col" class="text-center">Modal</th>
+                                            <th scope="col" class="text-center">Total Modal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
@@ -84,6 +88,10 @@
                                             <td class="text-center">{{ $item->nomor_job }}</td>
                                             <td class="text-center">{{ $item->nomor_bstb }}</td>
                                             <td class="text-center">{{ $item->keterangan }}</td>
+                                            @role('admin')
+                                                <td class="text-center">{{ $item->modal }}</td>
+                                                <td class="text-center">{{ $item->total_modal }}</td>
+                                            @endrole
                                             <td class="text-center">{{ $item->status }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>

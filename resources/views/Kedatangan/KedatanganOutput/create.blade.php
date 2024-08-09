@@ -36,7 +36,7 @@
                                     {{ $item->tujuan_kirim }}</option>
                             @endforeach
                         </select>
-                        <input type="hidden" id="inisial_tujuan">
+                        <input type="text" id="inisial_tujuan">
                     </div>
 
                     <div class="col-md-4">
@@ -49,7 +49,7 @@
                                     {{ $item->jenis }}</option>
                             @endforeach
                         </select>
-                        <input type="hidden" id="harga_estimasi">
+                        <input type="text" id="harga_estimasi">
                     </div>
 
                     <div class="col-md-3">
@@ -117,8 +117,10 @@
                                 <th scope="col" class="text-center">Pcs</th>
                                 <th scope="col" class="text-center">Nomor Job</th>
                                 <th scope="col" class="text-center">Nomor BSTB</th>
-                                <th scope="col" class="text-center">Modal</th>
-                                <th scope="col" class="text-center">Total Modal</th>
+                                @role('admin')
+                                    <th scope="col" class="text-center">Modal</th>
+                                    <th scope="col" class="text-center">Total Modal</th>
+                                @endrole
                                 <th scope="col" class="text-center">Keterangan</th>
                                 <th scope="col" class="text-center">Nip Admin</th>
                                 <th scope="col" class="text-center">Action</th>
@@ -269,12 +271,10 @@
         // Hitung Total Berat
         function hitungTotalBerat() {
             let totalBerat = 0;
-            // Iterasi melalui setiap baris dalam tabel
-            $('#dataTable tbody tr').each(function() {
-                // Mendapatkan nilai berat adding dari baris saat ini dan menambahkannya ke totalBerat
-                let berat = parseFloat($(this).find('td:eq(3)').text()) || 0;
-                totalBerat += berat;
+            dataArray.forEach(element => {
+                totalBerat += parseFloat(element.berat)
             });
+
             // Menampilkan total berat di input #total_berat
             $('#total_berat').val(totalBerat);
         }
@@ -331,25 +331,27 @@
                 let nomor_job = $('#nomor_job').val();
                 let nomor_bstb = $('#nomor_bstb').val();
                 let modal = parseFloat($('#harga_estimasi').val());
+                console.log("Modal = " + modal);
                 let total_modal = berat * modal;
                 let user_created = $('#user_created').val();
+                // dataArray[] = [
 
-                let newRow = `<tr>` +
-                    `<td class="text-center">${nomor_batch}</td>` +
-                    `<td class="text-center">${jenis}</td>` +
-                    `<td class="text-center">${tujuan_kirim}</td>` +
-                    `<td class="text-center">${berat}</td>` +
-                    `<td class="text-center">${pcs}</td>` +
-                    `<td class="text-center">${nomor_job}</td>` +
-                    `<td class="text-center">${nomor_bstb}</td>` +
-                    `<td class="text-center">${modal}</td>` +
-                    `<td class="text-center">${total_modal}</td>` +
-                    `<td class="text-center">${keterangan}</td>` +
-                    `<td class="text-center">${user_created}</td>` +
-                    `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
-                    `</tr>`;
-                // Tambahkan Kedalam Tabel
-                $('#dataTable tbody').append(newRow);
+                // ];
+                // Tambahkan data ke dataArray
+                dataArray.push({
+                    nomor_batch,
+                    tujuan_kirim,
+                    jenis,
+                    berat,
+                    pcs,
+                    nomor_job,
+                    nomor_bstb,
+                    modal,
+                    total_modal,
+                    keterangan,
+                    user_created
+                });
+                renderTable();
                 // disable input
                 $('#nomor_batch').prop('disabled', true);
                 $('#tujuan_kirim').prop('disabled', true);
@@ -400,29 +402,32 @@
             }
         }
 
-        function sendData() {
-
-            // dataArray = []; // Kosongkan dataArray terlebih dahulu
-
-            $('#dataTable tbody tr').each(function() {
-                let row = $(this).find('td');
-
-                let data = {
-                    nomor_batch: row.eq(0).text(),
-                    jenis: row.eq(1).text(),
-                    tujuan_kirim: row.eq(2).text(),
-                    berat: row.eq(3).text(),
-                    pcs: row.eq(4).text(),
-                    nomor_job: row.eq(5).text(),
-                    nomor_bstb: row.eq(6).text(),
-                    modal: row.eq(7).text(),
-                    total_modal: row.eq(8).text(),
-                    keterangan: row.eq(9).text(),
-                    user_created: row.eq(10).text(),
-                };
-
-                dataArray.push(data);
+        function renderTable() {
+            let newRow = '';
+            $('#dataTable tbody').empty();
+            dataArray.forEach(v => {
+                newRow += `<tr>` +
+                    `<td class="text-center">${v.nomor_batch}</td>` +
+                    `<td class="text-center">${v.jenis}</td>` +
+                    `<td class="text-center">${v.tujuan_kirim}</td>` +
+                    `<td class="text-center">${v.berat}</td>` +
+                    `<td class="text-center">${v.pcs}</td>` +
+                    `<td class="text-center">${v.nomor_job}</td>` +
+                    `<td class="text-center">${v.nomor_bstb}</td>` +
+                    @role('admin')
+                        `<td class="text-center">${v.modal}</td>` +
+                        `<td class="text-center">${v.total_modal}</td>` +
+                    @endrole
+                `<td class="text-center">${v.keterangan}</td>` +
+                `<td class="text-center">${v.user_created}</td>` +
+                `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
+                `</tr>`;
             });
+            // Tambahkan Kedalam Tabel
+            $('#dataTable tbody').append(newRow);
+        }
+
+        function sendData() {
 
             console.log(dataArray);
             // Mengirim data ke server menggunakan AJAX
