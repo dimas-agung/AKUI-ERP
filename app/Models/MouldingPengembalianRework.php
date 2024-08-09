@@ -36,7 +36,7 @@ class MouldingPengembalianRework extends Model
     ];
     public function can_delete()
     {
-        if ($this->status == self::STATUS_FINISHED) {
+        if ($this->status == self::STATUS_ON_STOCK) {
             return true;
         }
         return false;

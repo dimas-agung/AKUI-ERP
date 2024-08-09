@@ -95,9 +95,11 @@
                                                     {{ number_format($item->total_modal, 2, ',', '.') }}
                                                 </td>
                                             @endrole
-                                            <td class="text-center">{{ $item->waktu_Penyebaran }}</td>
-                                            <td class="text-center">{{ $item->waktu_Pengemblian }}</td>
-                                            <td class="text-center">{{ $item->lama_pengerjaan }}</td>
+                                            <td class="text-center">{{ $item->waktu_penyebaran }}</td>
+                                            <td class="text-center">{{ $item->waktu_pengembalian }}</td>
+                                            <td class="text-center">
+                                                {{ sprintf('%02d:%02d:%02d', floor($item->lama_pengerjaan / 3600), floor(($item->lama_pengerjaan % 3600) / 60), $item->lama_pengerjaan % 60) }}
+                                            </td>
                                             <td class="text-center">{{ $item->nama_operator }}</td>
                                             <td class="text-center">{{ $item->nip_operator }}</td>
                                             <td class="text-center">{{ $item->grade_operator }}</td>

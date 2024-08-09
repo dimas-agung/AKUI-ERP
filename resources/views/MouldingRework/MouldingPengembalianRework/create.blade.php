@@ -3,14 +3,14 @@
     Moulding Rework
 @endsection
 @section('title')
-    Moulding Rework Penyebaran
+    Moulding Rework Pengembalian
 @endsection
 @section('content')
     <div class="col-md-12">
         <div class="card mt-2 border border-primary border-3">
             <div class="card-header">
                 <div class="d-flex align-items-center mb-3">
-                    <h4 class="card-title">Moulding Rework Penyebaran</h4>
+                    <h4 class="card-title">Moulding Rework Pengembalian</h4>
                 </div>
                 <hr>
                 @csrf
@@ -68,14 +68,12 @@
                         <input type="text" class="form-control" id="nama_team_leader" readonly>
                     </div>
 
-                    <div class="col-md-4">
-                        <label for="modal" class="form-label">Modal</label>
-                        <input type="text" class="form-control" id="modal" readonly>
-                    </div>
+                    <input type="hidden" class="form-control" id="modal" readonly>
+                    <input type="hidden" class="form-control" id="total_modal" readonly>
 
                     <div class="col-md-4">
-                        <label for="total_modal" class="form-label">Total Modal</label>
-                        <input type="text" class="form-control" id="total_modal" readonly>
+                        <label for="waktu_penyebaran" class="form-label">Waktu Penyebaran</label>
+                        <input type="text" class="form-control" id="waktu_penyebaran" readonly>
                     </div>
 
                     <div class="col-md-4">
@@ -83,20 +81,20 @@
                         <input type="text" class="form-control" id="nip_operator" readonly>
                     </div>
 
-                    <div class="col-md-6">
-                        <label for="keterangan" class="form-label">Keterangan</label>
-                        <input type="text" class="form-control" id="keterangan">
-                    </div>
-
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="user_created" class="form-label">NIP Admin</label>
                         <input type="text" class="form-control" id="user_created" readonly
                             value="{{ auth()->user()->nip }}">
                     </div>
 
+                    <div class="col-md-12">
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <input type="text" class="form-control" id="keterangan">
+                    </div>
+
                     <div class="col-12 mt-3">
                         <button type="submit" class="btn btn-success" onclick="CeksendData()">Simpan</button>
-                        <a href="{{ Route('MouldingReworkPenyebaran.index') }}" type="button"
+                        <a href="{{ Route('MouldingReworkPengembalian.index') }}" type="button"
                             class="btn btn-danger">Close</a>
                     </div>
                 </div>
@@ -115,7 +113,7 @@
                 selectedNomorJob = $(this).val();
 
                 $.ajax({
-                    url: '{{ route('MouldingReworkPenyebaran.setJob') }}',
+                    url: '{{ route('MouldingReworkPengembalian.setJob') }}',
                     method: 'GET',
                     data: {
                         nomor_job_rework: selectedNomorJob
@@ -130,6 +128,7 @@
                         $('#pcs_job').val(response.pcs_job);
                         $('#modal').val(response.modal);
                         $('#total_modal').val(response.total_modal);
+                        $('#waktu_penyebaran').val(response.waktu_penyebaran);
                         $('#nip_operator').val(response.nip_operator);
                         $('#nama_operator').val(response.nama_operator);
                         $('#grade_operator').val(response.grade_operator);
@@ -143,10 +142,10 @@
                         const menit = ('0' + now.getMinutes()).slice(-2);
                         const detik = ('0' + now.getSeconds()).slice(-2);
 
-                        const waktu_penyebaran =
+                        const waktu_pengembalian =
                             `${tahun}/${bulan}/${tanggal} ${jam}:${menit}:${detik}`;
 
-                        console.log("Waktu =" + waktu_penyebaran);
+                        console.log("Waktu =" + waktu_pengembalian);
 
                         let nomor_job_rework = $('#nomor_job_rework').val();
                         let nomor_batch = $('#nomor_batch').val();
@@ -156,6 +155,7 @@
                         let pcs_job = $('#pcs_job').val();
                         let modal = $('#modal').val();
                         let total_modal = $('#total_modal').val();
+                        let waktu_penyebaran = $('#waktu_penyebaran').val();
                         let nip_operator = $('#nip_operator').val();
                         let nama_operator = $('#nama_operator').val();
                         let grade_operator = $('#grade_operator').val();
@@ -178,6 +178,7 @@
                             grade_operator: grade_operator,
                             nama_team_leader: nama_team_leader,
                             waktu_penyebaran: waktu_penyebaran,
+                            waktu_pengembalian: waktu_pengembalian,
                             keterangan: keterangan,
                             user_created: user_created,
                         }];
@@ -219,7 +220,7 @@
 
             // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
             $.ajax({
-                url: `{{ route('MouldingReworkPenyebaran.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
+                url: `{{ route('MouldingReworkPengembalian.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
                 method: 'POST',
                 data: {
                     idBoxes: JSON.stringify(idBoxes),
@@ -270,7 +271,7 @@
                 return;
             }
             $.ajax({
-                url: '{{ route('MouldingReworkPenyebaran.store') }}',
+                url: '{{ route('MouldingReworkPengembalian.store') }}',
                 method: 'POST',
                 data: {
                     dataArray: JSON.stringify(dataArray),
@@ -314,104 +315,5 @@
                 }
             });
         }
-
-
-        // function CeksendData() {
-        //     let i = 0;
-        //     let idBoxes = []; // Array untuk menyimpan id box yang akan dicek
-
-        //     // Mengumpulkan id box dari dataArray
-        //     dataArray.forEach(function(item) {
-        //         idBoxes.push(item.nomor_job_rework);
-        //     });
-
-        //     // Mengirimkan permintaan AJAX untuk memeriksa ketersediaan id box
-        //     $.ajax({
-        //         url: `{{ route('MouldingReworkPenyebaran.CeksendData') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
-        //         method: 'POST',
-        //         data: {
-        //             idBoxes: JSON.stringify(idBoxes),
-        //             _token: '{{ csrf_token() }}'
-        //         },
-        //         dataType: 'json',
-        //         success: function(response) {
-        //             let unavailableBoxes = response.unavailableBoxes;
-
-        //             if (unavailableBoxes.length > 0) {
-        //                 // Ada id box yang tidak tersedia, tampilkan pesan kesalahan
-        //                 Swal.fire({
-        //                     title: 'Error!',
-        //                     text: 'Beberapa nomor bstb sudah tidak tersedia.',
-        //                     icon: 'error',
-        //                     showCancelButton: false, // Sembunyikan tombol cancel
-        //                     confirmButtonText: 'OK' // Ganti teks tombol konfirmasi
-        //                 }).then((result) => {
-        //                     // Jika pengguna menekan tombol "OK", refresh halaman
-        //                     if (result.isConfirmed) {
-        //                         location.reload(); // Refresh halaman
-        //                     }
-        //                 });
-        //             } else {
-        //                 // Semua id box tersedia, kirim data ke server
-        //                 // let waktu_penyebaran = new Date().getTime(); // Ambil waktu saat ini
-
-        //             }
-        //         },
-        //         error: function(error) {
-        //             Swal.fire({
-        //                 title: 'Failed!',
-        //                 text: 'Terjadi kesalahan saat memeriksa ketersediaan nomor job rework. Silakan coba lagi.',
-        //                 icon: 'error'
-        //             });
-        //             console.log('Error:', error);
-        //         }
-        //     });
-
-        //     function sendData(waktu_penyebaran) {
-        //         // Mengirim data ke server menggunakan AJAX
-        //         $.ajax({
-        //             url: '{{ route('MouldingReworkPenyebaran.store') }}',
-        //             method: 'POST',
-        //             beforeSend: function() {
-        //                 Swal.fire({
-        //                     title: 'Loading...',
-        //                     allowOutsideClick: false,
-        //                     showConfirmButton: false,
-        //                     onBeforeOpen: () => {
-        //                         Swal.showLoading();
-        //                     }
-        //                 });
-        //             },
-        //             data: {
-        //                 dataArray: JSON.stringify(dataArray), // Mengirim dataArray sebagai string JSON
-        //                 user_created: $('#user_created').val() || '',
-        //                 keterangan: $('#keterangan').val() || '',
-        //                 waktu_penyebaran: waktu_penyebaran, // Mengirim waktu_penyebaran
-        //                 _token: '{{ csrf_token() }}'
-        //             },
-        //             success: function(response) {
-        //                 Swal.fire({
-        //                     title: 'Success!',
-        //                     text: 'Data berhasil disimpan.',
-        //                     icon: 'success'
-        //                 }).then((result) => {
-        //                     // Redirect ke halaman lain setelah menekan tombol "OK" pada SweetAlert
-        //                     if (result.isConfirmed) {
-        //                         window.location.href = response.redirectTo;
-        //                     }
-        //                 });
-        //             },
-        //             error: function(error) {
-        //                 Swal.fire({
-        //                     title: 'Failed!',
-        //                     text: 'Terjadi kesalahan. Silakan coba cek data kembali.',
-        //                     icon: 'error'
-        //                 });
-        //                 console.log('Error:', error);
-        //             }
-        //         });
-        //     }
-
-        // }
     </script>
 @endsection

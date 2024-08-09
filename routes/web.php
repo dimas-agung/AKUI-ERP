@@ -695,7 +695,7 @@ Route::middleware('auth')->group(function (){
                 Route::get('/transit_moulding_waste', 'index')->name('TransitMouldingWaste.index');
             });
         });
-        Route::prefix('moulding_rework')->middleware('role:moulding_rework|admin')->group(function (){
+        Route::prefix('moulding')->middleware('role:moulding|admin')->group(function (){
             Route::controller(App\Http\Controllers\MouldingRework\MouldingPersiapanReworkController::class)->group(function () {
                 Route::get('/moulding_rework_persiapan', 'index')->name('MouldingReworkPersiapan.index');
                 Route::get('/moulding_rework_persiapan/create', 'create')->name('MouldingReworkPersiapan.create');
@@ -729,6 +729,10 @@ Route::middleware('auth')->group(function (){
                 Route::delete('/moulding_rework_pengembalian/destroy/{nomor_job_rework}', 'destroy')->name('MouldingReworkPengembalian.destroy');
                 Route::get('/moulding_rework_pengembalian/set_job', 'setJob')->name('MouldingReworkPengembalian.setJob');
                 Route::get('/moulding_rework_pengembalian/set_nip', 'setNip')->name('MouldingReworkPengembalian.setNip');
+            });
+
+            Route::controller(App\Http\Controllers\MouldingRework\TransitMouldingReworkController::class)->group(function () {
+                Route::get('/transit_moulding_rework', 'index')->name('TransitMouldingRework.index');
             });
         });
     });

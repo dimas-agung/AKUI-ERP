@@ -68,14 +68,12 @@
                         <input type="text" class="form-control" id="nama_team_leader" readonly>
                     </div>
 
-                    <div class="col-md-4">
-                        <label for="modal" class="form-label">Modal</label>
-                        <input type="text" class="form-control" id="modal" readonly>
-                    </div>
+                    <input type="hidden" class="form-control" id="modal" readonly>
+                    <input type="hidden" class="form-control" id="total_modal" readonly>
 
                     <div class="col-md-4">
-                        <label for="total_modal" class="form-label">Total Modal</label>
-                        <input type="text" class="form-control" id="total_modal" readonly>
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <input type="text" class="form-control" id="keterangan">
                     </div>
 
                     <div class="col-md-4">
@@ -83,12 +81,7 @@
                         <input type="text" class="form-control" id="nip_operator" readonly>
                     </div>
 
-                    <div class="col-md-6">
-                        <label for="keterangan" class="form-label">Keterangan</label>
-                        <input type="text" class="form-control" id="keterangan">
-                    </div>
-
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="user_created" class="form-label">NIP Admin</label>
                         <input type="text" class="form-control" id="user_created" readonly
                             value="{{ auth()->user()->nip }}">

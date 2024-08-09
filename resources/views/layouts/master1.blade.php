@@ -661,7 +661,7 @@
                         @endrole
                         @role('moulding|admin')
                             <li
-                                class="sidebar-item has-sub {{ Route::is('TransitDryAHancuran*', 'GradingWarnaPenerimaan*', 'GradingWarnaPenerimaanStock*', 'MouldingPersiapan*', 'MouldingWasteInput*', 'MouldingWasteStock*', 'MouldingWasteOutput*', 'TransitMouldingWaste*', 'MouldingReworkPersiapan*', 'MouldingReworkPersiapanStock*', 'MouldingReworkPenyebaran*', 'MouldingReworkPengembalian*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('TransitDryAHancuran*', 'GradingWarnaPenerimaan*', 'GradingWarnaPenerimaanStock*', 'MouldingPersiapan*', 'MouldingWasteInput*', 'MouldingWasteStock*', 'MouldingWasteOutput*', 'TransitMouldingWaste*', 'MouldingReworkPersiapan*', 'MouldingReworkPersiapanStock*', 'MouldingReworkPenyebaran*', 'MouldingReworkPengembalian*', 'TransitMouldingRework*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-three-dots"></i>
                                     <span>Moulding</span>
@@ -738,7 +738,7 @@
                                         </ul>
                                     </li>
                                     <li
-                                        class="submenu-item has-sub {{ Route::is('MouldingReworkPersiapan*', 'MouldingReworkPenyebaran*', 'MouldingReworkPersiapanStock*', 'MouldingReworkPengembalian*') ? 'active' : '' }}">
+                                        class="submenu-item has-sub {{ Route::is('MouldingReworkPersiapan*', 'MouldingReworkPenyebaran*', 'MouldingReworkPersiapanStock*', 'MouldingReworkPengembalian*', 'TransitMouldingRework*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
                                             <span>Moulding Rework</span>
                                         </a>
@@ -762,6 +762,11 @@
                                                 class="submenu-item {{ Route::is('MouldingReworkPengembalian*') ? 'active' : '' }}">
                                                 <a href="{{ route('MouldingReworkPengembalian.index') }}"
                                                     class="submenu-link">Moulding Rework Pengembalian</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitMouldingRework*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitMouldingRework.index') }}"
+                                                    class="submenu-link">Transit Moulding Rework</a>
                                             </li>
                                         </ul>
                                     </li>

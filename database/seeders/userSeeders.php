@@ -52,5 +52,18 @@ class userSeeders extends Seeder
         ]);
         $superdmin1->assignRole(['admin']);
         $superdmin->assignRole(['admin']);
+
+        $superdmin2 = User::create([
+            'email' => 'OBI1@gmail.com',
+            'password' => Hash::make('123'),
+            'fullname' => 'superadmin',
+            'nip' => '111',
+            'unit_id' => '2',
+            'plant' => 'A',
+            'username' => 'AKUI',
+            'phone_number' => '08139000',
+            'birth_date' => '2000-04-09',
+        ]);
+        $superdmin2->assignRole(['moulding']);
     }
 }

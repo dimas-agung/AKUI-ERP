@@ -28,7 +28,7 @@ return new class extends Migration
             $table->float('berat_grading');
             $table->float('pcs_grading')->nullable();
             $table->string('rework');
-            $table->integer('nomor_job_rework');
+            $table->string('nomor_job_rework');
             $table->string('kategori_susut');
             $table->float('susut_depan', 16, 4)->nullable();
             $table->float('susut_belakang', 16, 4)->nullable();
