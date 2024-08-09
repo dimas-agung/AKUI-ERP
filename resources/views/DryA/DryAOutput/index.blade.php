@@ -65,7 +65,7 @@
                                     <th class="text-center" scope="col">Total Modal</th>
                                 @endrole
                                 <th class="text-center" scope="col">NIP Admin</th>
-                                <td class="text-center">Create At</td>
+                                <td class="text-center" scope="col">Create At</td>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
                         </thead>
@@ -164,7 +164,7 @@
                 start_date: start_date,
                 end_date: end_date,
             };
-            var url = '{{ route('PreCleaningInput.index') }}';
+            var url = '{{ route('DryAOutput.index') }}';
 
             // url = url.replace(':slug', slug);
             url = url + '?start_date=' + start_date + '&end_date=' + end_date;
