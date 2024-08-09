@@ -200,107 +200,111 @@ class GradingWarnaService
         ], 201);
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy($nomor_lot): RedirectResponse
     {
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
-            // Ambil data item berdasarkan id
-            $GradingWarna = GradingWarna::find($id);
-
-            if (!$GradingWarna) {
-                // Redirect ke index dengan pesan error jika data tidak ditemukan
+          
+            //get data all  by bstb
+            $GradingWarnas = GradingWarna::where('nomor_lot',$nomor_lot)->get();
+            
+            if (!$GradingWarnas) {
+                 // Redirect ke index dengan pesan error jika data tidak ditemukan
                 return redirect()->route('GradingWarna.index')->with(['error' => 'Data tidak ditemukan!']);
             }
-            // Grading Warna Stock
-            $GradingWarnaStock = GradingWarnaStock::where('id_box_grading_warna', '=', $GradingWarna->id_box_grading_warna)
-                ->first();
-
-            if ($GradingWarnaStock) {
-
-                // Simpan nilai sebelum dihapus
-                $beratSebelumnya = $GradingWarnaStock->berat_masuk;
-                $pcsSebelumnya = $GradingWarnaStock->pcs_masuk;
-
-                // Hitung perbedaan berat dan pcs
-                $beratBaru = $beratSebelumnya - $GradingWarna->berat_grading;
-                $pcsBaru = $pcsSebelumnya - $GradingWarna->pcs_grading;
-                $sisaBeratBaru = $beratBaru;
-                $sisaPcsBaru = $pcsBaru;
-                $totalModal = $GradingWarnaStock->modal * $sisaBeratBaru;
-
-                if ($sisaBeratBaru <= 0 && $sisaPcsBaru <= 0) {
-                    // Hapus data GradingWarnaStock jika sisa_berat dan sisa_pcs baru <= 0
-                    $GradingWarnaStock->delete();
-                } else {
-                    // Update data GradingWarnaStock dengan berat, pcs, dan sisa yang baru
-                    $GradingWarnaStock->update([
-                        'berat_masuk'   => $beratBaru,
-                        'pcs_masuk'     => $pcsBaru,
+            foreach ($GradingWarnas as $key => $GradingWarna) {
+                # code...
+                // Grading Warna Stock
+                $GradingWarnaStock = GradingWarnaStock::where('id_box_grading_warna', '=', $GradingWarna->id_box_grading_warna)
+                    ->first();
+    
+                if ($GradingWarnaStock) {
+    
+                    // Simpan nilai sebelum dihapus
+                    $beratSebelumnya = $GradingWarnaStock->berat_masuk;
+                    $pcsSebelumnya = $GradingWarnaStock->pcs_masuk;
+    
+                    // Hitung perbedaan berat dan pcs
+                    $beratBaru = $beratSebelumnya - $GradingWarna->berat_grading;
+                    $pcsBaru = $pcsSebelumnya - $GradingWarna->pcs_grading;
+                    $sisaBeratBaru = $beratBaru;
+                    $sisaPcsBaru = $pcsBaru;
+                    $totalModal = $GradingWarnaStock->modal * $sisaBeratBaru;
+    
+                    if ($sisaBeratBaru <= 0 && $sisaPcsBaru <= 0) {
+                        // Hapus data GradingWarnaStock jika sisa_berat dan sisa_pcs baru <= 0
+                        $GradingWarnaStock->delete();
+                    } else {
+                        // Update data GradingWarnaStock dengan berat, pcs, dan sisa yang baru
+                        $GradingWarnaStock->update([
+                            'berat_masuk'   => $beratBaru,
+                            'pcs_masuk'     => $pcsBaru,
+                            'sisa_berat'    => $sisaBeratBaru,
+                            'sisa_pcs'      => $sisaPcsBaru,
+                            'total_modal'   => $totalModal,
+                        ]);
+                    }
+                }
+    
+                // Grading Warna Adding Stock
+                $GradingWarnaAddingStock = GradingWarnaAddingStock::where('nomor_lot', '=', $GradingWarna->nomor_lot)
+                    ->first();
+    
+                if ($GradingWarnaAddingStock) {
+    
+                    // Simpan nilai sebelum dihapus
+                    $beratSebelumnya = $GradingWarnaAddingStock->berat_keluar;
+                    $pcsSebelumnya = $GradingWarnaAddingStock->pcs_keluar;
+    
+                    // Hitung perbedaan berat dan pcs
+                    $beratBaru = $beratSebelumnya - $GradingWarna->berat_grading;
+                    $pcsBaru = $pcsSebelumnya - $GradingWarna->pcs_grading;
+                    $sisaBeratBaru = $GradingWarnaAddingStock->berat_masuk - $beratBaru;
+                    $sisaPcsBaru = $GradingWarnaAddingStock->pcs_masuk - $pcsBaru;
+                    $totalModal = $GradingWarnaAddingStock->modal * $sisaBeratBaru;
+    
+                    // Update data GradingWarnaAddingStock dengan berat, pcs, dan sisa yang baru
+                    $GradingWarnaAddingStock->update([
+                        'berat_keluar'  => $beratBaru,
+                        'pcs_keluar'    => $pcsBaru,
                         'sisa_berat'    => $sisaBeratBaru,
                         'sisa_pcs'      => $sisaPcsBaru,
                         'total_modal'   => $totalModal,
                     ]);
+                    // }
                 }
-            }
-
-            // Grading Warna Adding Stock
-            $GradingWarnaAddingStock = GradingWarnaAddingStock::where('nomor_lot', '=', $GradingWarna->nomor_lot)
-                ->first();
-
-            if ($GradingWarnaAddingStock) {
-
-                // Simpan nilai sebelum dihapus
-                $beratSebelumnya = $GradingWarnaAddingStock->berat_keluar;
-                $pcsSebelumnya = $GradingWarnaAddingStock->pcs_keluar;
-
-                // Hitung perbedaan berat dan pcs
-                $beratBaru = $beratSebelumnya - $GradingWarna->berat_grading;
-                $pcsBaru = $pcsSebelumnya - $GradingWarna->pcs_grading;
-                $sisaBeratBaru = $GradingWarnaAddingStock->berat_masuk - $beratBaru;
-                $sisaPcsBaru = $GradingWarnaAddingStock->pcs_masuk - $pcsBaru;
-                $totalModal = $GradingWarnaAddingStock->modal * $sisaBeratBaru;
-
-                // Update data GradingWarnaAddingStock dengan berat, pcs, dan sisa yang baru
-                $GradingWarnaAddingStock->update([
-                    'berat_keluar'  => $beratBaru,
-                    'pcs_keluar'    => $pcsBaru,
-                    'sisa_berat'    => $sisaBeratBaru,
-                    'sisa_pcs'      => $sisaPcsBaru,
-                    'total_modal'   => $totalModal,
-                ]);
-                // }
-            }
-
-            $GradingWarna->delete();
-
-
-            // Ambil nomor_lot dari GradingWarna yang ingin diperiksa
-            $nomor_lot = $GradingWarna->nomor_lot;
-
-            // Periksa apakah nomor_lot sudah tidak ada di tabel GradingWarna
-            $exists = GradingWarna::where('nomor_lot', '=', $nomor_lot)->exists();
-
-            // Update Status Grading Adding Stock
-            if (!$exists) {
-                $GradingWarnaAddingStock = GradingWarnaAddingStock::where('nomor_lot', '=', $GradingWarna->nomor_lot)
-                    ->get();
-                foreach ($GradingWarnaAddingStock as $item) {
-                    $item->update([
-                        'status'       => GradingWarna::STATUS_AKTIF,
-                    ]);
+    
+                $GradingWarna->delete();
+    
+    
+                // Ambil nomor_lot dari GradingWarna yang ingin diperiksa
+                $nomor_lot = $GradingWarna->nomor_lot;
+    
+                // Periksa apakah nomor_lot sudah tidak ada di tabel GradingWarna
+                $exists = GradingWarna::where('nomor_lot', '=', $nomor_lot)->exists();
+    
+                // Update Status Grading Adding Stock
+                if (!$exists) {
+                    $GradingWarnaAddingStock = GradingWarnaAddingStock::where('nomor_lot', '=', $GradingWarna->nomor_lot)
+                        ->get();
+                    foreach ($GradingWarnaAddingStock as $item) {
+                        $item->update([
+                            'status'       => GradingWarna::STATUS_AKTIF,
+                        ]);
+                    }
                 }
-            }
-
-            // Update Status Grading Warna Adding
-            if (!$exists) {
-                // Jika nomor_lot tidak ada, update status di GradingWarnaAdding
-                $GradingWarnaAdding = GradingWarnaAdding::where('nomor_lot', '=', $nomor_lot)->get();
-                foreach ($GradingWarnaAdding as $item) {
-                    $item->update([
-                        'status' => GradingWarna::STATUS_AKTIF,
-                    ]);
+    
+                // Update Status Grading Warna Adding
+                if (!$exists) {
+                    // Jika nomor_lot tidak ada, update status di GradingWarnaAdding
+                    $GradingWarnaAdding = GradingWarnaAdding::where('nomor_lot', '=', $nomor_lot)->get();
+                    foreach ($GradingWarnaAdding as $item) {
+                        $item->update([
+                            'status' => GradingWarna::STATUS_AKTIF,
+                        ]);
+                    }
                 }
             }
 

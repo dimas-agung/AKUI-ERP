@@ -92,8 +92,8 @@ class GradingWarnaController extends Controller
         return $this->GradingWarnaService->store($request);
     }
 
-    public function destroy($id)
+    public function destroy($nomor_lot)
     {
-        return $this->GradingWarnaService->destroy($id);
+        return $this->GradingWarnaService->destroy($nomor_lot);
     }
 }

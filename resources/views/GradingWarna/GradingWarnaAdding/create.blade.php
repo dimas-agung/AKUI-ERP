@@ -28,7 +28,7 @@
 
                     <div class="col-md-4">
                         <label class="form-label">Tujuan Kirim</label>
-                        <input type="text" class="form-control" name="tujuan_kirim" id="tujuan_kirim" readonly>
+                        <input type="text" class="form-control" name="tujuan_kirim" id="tujuan_kirim" value="{{Auth::user()->plant}}" readonly>
                         {{-- <select class="select2 form-select" style="width: 100%;" name="tujuan_kirim" id="tujuan_kirim"
                             data-placeholder="Pilih Tujuan Kirim">
                             <option value="">Pilih Tujuan Kirim</option>
@@ -112,8 +112,10 @@
                                 <th scope="col" class="text-center">Berat 1 Grading</th>
                                 <th scope="col" class="text-center">Pcs 1 Grading</th>
                                 <th scope="col" class="text-center">Berat 2 Grading</th>
+                                @role('admin')
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
+                                @endrole
                             </tr>
                         </thead>
                         <tbody>
@@ -142,8 +144,10 @@
                                 <th scope="col" class="text-center">Berat 1 Grading</th>
                                 <th scope="col" class="text-center">Pcs 1 Grading</th>
                                 <th scope="col" class="text-center">Berat 2 Grading</th>
+                                @role('admin')
                                 <th scope="col" class="text-center">Modal</th>
                                 <th scope="col" class="text-center">Total Modal</th>
+                                @endrole
                                 <th scope="col" class="text-center">Nomor Lot</th>
                                 <th scope="col" class="text-center">Nomor Kotor Adding</th>
                                 <th scope="col" class="text-center">Prosentase Susut</th>
@@ -166,17 +170,21 @@
 @endsection
 @section('script')
     <script>
+        let dataArrayTemp = [];
         $(document).ready(function() {
+            // $('#tujuan_kirim').on('change', function() {
+            //     const selectedPlant = $(this).val();
+            //     if (selectedPlant) { // Check if selectedPlant is not empty
+            //         const nomorLOT = generateNomorLot(selectedPlant);
+            //         $('#nomor_lot').val(nomorLOT);
+            //     } else {
+            //         $('#nomor_lot').val(''); // Clear nomor_grading if plant is empty
+            //     }
+            // });
+            let selectedPlant =   $('#tujuan_kirim').val();
+            let nomorLOT = generateNomorLot(selectedPlant);
+            $('#nomor_lot').val(nomorLOT);
 
-            $('#tujuan_kirim').on('change', function() {
-                const selectedPlant = $(this).val();
-                if (selectedPlant) { // Check if selectedPlant is not empty
-                    const nomorLOT = generateNomorLot(selectedPlant);
-                    $('#nomor_lot').val(nomorLOT);
-                } else {
-                    $('#nomor_lot').val(''); // Clear nomor_grading if plant is empty
-                }
-            });
             // Generate Nomor LOT
             function generateNomorLot(selectedPlant) {
                 const now = new Date();
@@ -191,6 +199,7 @@
 
                 return nomorLOT;
             }
+
             // Get Nomor JOB
             $('#nomor_job').change(function() {
                 var nomorJob = $(this).val();
@@ -235,8 +244,24 @@
                                 </tr>
                             `;
                                 dataTableBody.append(row);
+                                let dataPush = {
+                                    nomor_job : item.nomor_job,
+                                    nomor_bstb : item.nomor_bstb,
+                                    nomor_batch : item.nomor_batch,
+                                    tujuan_kirim : item.tujuan_kirim,
+                                    keterangan : item.keterangan,
+                                    berat_kotor : item.berat_kotor,
+                                    jenis_grading : item.jenis_grading,
+                                    pcs_1_grading : item.pcs_1_grading,
+                                    berat_1_grading : item.berat_1_grading,
+                                    berat_2_grading : item.berat_2_grading,
+                                    modal : item.modal,
+                                    total_modal : item.total_modal,
+                                }
+                              dataArrayTemp.push(dataPush)
+                                
                             });
-
+                           
                             $('#berat_kotor').val(beratKotor);
                             // $('#tujuan_kirim').val(tujuanKirim);
 
@@ -292,6 +317,16 @@
 
         // Hitung Total Berat
         function hitungTotalBerat() {
+            let totalBerat = 0;
+            dataArray.forEach(v => {
+                let beratGrading = v.berat_1_grading !== 0 ? v.berat_1_grading : v.berat_2_grading;
+                totalBerat += beratGrading;
+            });
+
+            $('#total_berat').val(totalBerat);
+        }
+        // Hitung Total Berat
+        function hitungTotalModal() {
             let totalBerat = 0;
 
             $('#dataTableSend tbody tr').each(function() {
@@ -353,19 +388,19 @@
                 let dataTableSendBody = $('#dataTableSend tbody');
 
                 // Loop through each row in dataTable
-                dataTableBody.find('tr').each(function() {
-                    let row = $(this).find('td');
-                    let nomor_job = row.eq(0).text();
-                    let nomor_bstb = row.eq(1).text();
-                    let nomor_batch = row.eq(2).text();
-                    let tujuan_kirim = row.eq(3).text();
-                    let berat_kotor = row.eq(5).text();
-                    let jenis_grading = row.eq(6).text();
-                    let berat_1_grading = row.eq(7).text();
-                    let pcs_1_grading = row.eq(8).text();
-                    let berat_2_grading = row.eq(9).text();
-                    let modal = row.eq(10).text();
-                    let total_modal = row.eq(11).text();
+                dataArrayTemp.forEach(v => {
+
+                    let nomor_job = v.nomor_job
+                    let nomor_bstb = v.nomor_bstb;
+                    let nomor_batch = v.nomor_batch;
+                    let tujuan_kirim = v.tujuan_kirim;
+                    let berat_kotor = v.berat_kotor;
+                    let jenis_grading = v.jenis_grading;
+                    let berat_1_grading = v.berat_1_grading;
+                    let pcs_1_grading =  v.pcs_1_grading;
+                    let berat_2_grading =  v.berat_2_grading;
+                    let modal =v.modal;
+                    let total_modal =v.total_modal;
                     let nomor_lot = $('#nomor_lot').val();
                     let berat_kotor_adding = $('#berat_kotor_adding').val();
                     let prosentase_susut = $('#prosentase_susut').val();
@@ -376,30 +411,54 @@
                     $('#nomor_job option[value="' + nomor_job + '"]').remove();
 
                     let newRow = `
-            <tr>
-                <td class="text-center">${nomor_job}</td>
-                <td class="text-center">${nomor_bstb}</td>
-                <td class="text-center">${nomor_batch}</td>
-                <td class="text-center">${tujuan_kirim}</td>
-                <td class="text-center">${berat_kotor}</td>
-                <td class="text-center">${jenis_grading}</td>
-                <td class="text-center">${berat_1_grading}</td>
-                <td class="text-center">${pcs_1_grading}</td>
-                <td class="text-center">${berat_2_grading}</td>
-                <td class="text-center">${modal}</td>
-                <td class="text-center">${total_modal}</td>
-                <td class="text-center">${nomor_lot}</td>
-                <td class="text-center">${berat_kotor_adding}</td>
-                <td class="text-center">${prosentase_susut}</td>
-                <td class="text-center">${keterangan}</td>
-                <td class="text-center">${user_created}</td>
-                <td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>
-            </tr>
-        `;
+                        <tr>
+                            <td class="text-center">${nomor_job}</td>
+                            <td class="text-center">${nomor_bstb}</td>
+                            <td class="text-center">${nomor_batch}</td>
+                            <td class="text-center">${tujuan_kirim}</td>
+                            <td class="text-center">${berat_kotor}</td>
+                            <td class="text-center">${jenis_grading}</td>
+                            <td class="text-center">${berat_1_grading}</td>
+                            <td class="text-center">${pcs_1_grading}</td>
+                            <td class="text-center">${berat_2_grading}</td>
+                            <td class="text-center">${modal}</td>
+                            <td class="text-center">${total_modal}</td>
+                            <td class="text-center">${nomor_lot}</td>
+                            <td class="text-center">${berat_kotor_adding}</td>
+                            <td class="text-center">${prosentase_susut}</td>
+                            <td class="text-center">${keterangan}</td>
+                            <td class="text-center">${user_created}</td>
+                            <td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>
+                        </tr>
+                    `;
 
                     dataTableSendBody.append(newRow);
+                   
+                    let dataPush = {
+                        nomor_job : v.nomor_job,
+                        nomor_bstb : v.nomor_bstb,
+                        nomor_batch : v.nomor_batch,
+                        tujuan_kirim : v.tujuan_kirim,
+                        keterangan : v.keterangan,
+                        berat_kotor : v.berat_kotor,
+                        jenis_grading : v.jenis_grading,
+                        pcs_1_grading :v.pcs_1_grading,
+                        berat_1_grading : v.berat_1_grading,
+                        berat_2_grading : v.berat_2_grading,
+                        modal : v.modal,
+                        total_modal : v.total_modal,
+                        berat_kotor_adding : berat_kotor_adding,
+                        nomor_lot : nomor_lot,
+                        prosentase_susut : prosentase_susut.replace('%', ''),
+                        keterangan : keterangan,
+                        user_created : user_created
+
+                    };
+                    dataArray.push(dataPush);
+                    
 
                 });
+                dataArrayTemp = [];
                 hitungTotalBerat();
 
                 // Kosongkan nilai dropdown nomor_job dan input lainnya setelah data ditambahkan
@@ -409,6 +468,7 @@
                 $('#berat_kotor').val('');
                 $('#berat_kotor_adding').val('');
                 $('#prosentase_susut').val('');
+                $('#keterangan_2').val('');
             }
         }
 
@@ -447,7 +507,7 @@
             // Cek apakah tabel tidak memiliki baris data lagi
             if ($('#dataTableSend tbody tr').length === 0) {
                 $('#nomor_job').val(null).trigger('change');
-                $('#tujuan_kirim').prop('disabled', false).val(null).trigger('change');
+                // $('#tujuan_kirim').prop('disabled', false).val(null).trigger('change');
                 $('#nomor_lot').val('');
                 $('#berat_kotor').val('');
                 $('#berat_kotor_adding').val('');
@@ -506,32 +566,14 @@
 
                 // dataArray = []; // Kosongkan dataArray terlebih dahulu
 
-                $('#dataTableSend tbody tr').each(function() {
-                    let row = $(this).find('td');
 
-                    let data = {
-                        nomor_job: row.eq(0).text(),
-                        nomor_bstb: row.eq(1).text(),
-                        nomor_batch: row.eq(2).text(),
-                        tujuan_kirim: row.eq(3).text(),
-                        berat_kotor: row.eq(4).text(),
-                        jenis_grading: row.eq(5).text(),
-                        berat_1_grading: row.eq(6).text(),
-                        pcs_1_grading: row.eq(7).text(),
-                        berat_2_grading: row.eq(8).text(),
-                        modal: row.eq(9).text(),
-                        total_modal: row.eq(10).text(),
-                        nomor_lot: row.eq(11).text(),
-                        berat_kotor_adding: row.eq(12).text(),
-                        prosentase_susut: row.eq(13).text().replace('%', ''),
-                        keterangan: row.eq(14).text(),
-                        user_created: row.eq(15).text(),
-                    };
-
-                    dataArray.push(data);
-                });
-
+    //modal =  total modal / total berat
+                        // total modal = sum total modal adding
                 console.log(dataArray);
+                let SumTotalModal = 0;
+                dataArray.forEach(element => {
+                    SumTotalModal+= element.total_modal
+                });
                 // Mengirim data ke server menggunakan AJAX
                 $.ajax({
                     url: '{{ route('GradingWarnaAdding.store') }}',
@@ -548,6 +590,7 @@
                     },
                     data: {
                         dataArray: JSON.stringify(dataArray),
+                        SumTotalModal : SumTotalModal,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
