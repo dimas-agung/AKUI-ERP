@@ -74,13 +74,14 @@ class PreCleaningOutputController extends Controller
         }
     }
 
-    public function destroy($nomor_job)
+    public function destroy($id)
     {
         try {
             // Begin transaction
             DB::beginTransaction();
             // Temukan record berdasarkan ID
-            $PreCleaningOutput = PreCleaningOutput::findOrFail($nomor_job);
+            $PreCleaningOutput = PreCleaningOutput::where('id',$id)->first();
+            // return $PreCleaningOutput;
             // Hapus semua item terkait
             $stockPRM = TransitPreCleaningStock::where('id_box_raw_material', '=', $PreCleaningOutput->id_box_raw_material)
                 ->where('nomor_job', $PreCleaningOutput->nomor_job)
@@ -143,7 +144,7 @@ class PreCleaningOutputController extends Controller
                     $existingItem->update(['pcs_keluar'     => $perbedaanPcs]);
                     $existingItem->update(['sisa_pcs'       => $sisaPcs]);
                     $existingItem->update(['total_modal'    => $totalModalBaru]);
-                    $existingItem->update(['status' => 1]);
+                    // $existingItem->update(['status' => 1]);
                 }
             }
 
@@ -161,7 +162,8 @@ class PreCleaningOutputController extends Controller
             }
 
             // Hapus record utama
-            $PreCleaningOutput->delete();
+            $PreCleaningOutput = PreCleaningOutput::where('id',$id)->delete();
+            // $PreCleaningOutput->delete();
 
             // Jika tidak ada kesalahan, komit transaksi
             DB::commit();

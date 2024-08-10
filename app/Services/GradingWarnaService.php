@@ -101,7 +101,9 @@ class GradingWarnaService
                         $pcsMasuk = $item->pcs_masuk + ($GradingWarna->pcs_grading ?? 0);
                         $sisaBerat = $beratMasuk;
                         $sisaPcs = $pcsMasuk;
-                        $totalModal = $item->modal * $sisaBerat;
+                        // $totalModal = $item->modal * $sisaBerat;
+                        $totalModalbaru = $item->total_modal + $GradingWarna->fix_total_hpp;
+                        $modal = $totalModalbaru/$sisaBerat;
 
                         // Update data dengan nilai baru
                         $item->update([
@@ -109,7 +111,8 @@ class GradingWarnaService
                             'pcs_masuk'    => $pcsMasuk,
                             'sisa_berat'   => $sisaBerat,
                             'sisa_pcs'     => $sisaPcs,
-                            'total_modal'  => $totalModal,
+                            'modal' => $modal,
+                            'total_modal'  => $totalModalbaru,
                             'user_updated' => $GradingWarna->user_created ?? "There isn't any",
                         ]);
                     }
@@ -156,6 +159,7 @@ class GradingWarnaService
                             'sisa_berat'    => $sisaBerat,
                             'sisa_pcs'      => $sisaPcs,
                             'total_modal'   => $totalModal,
+                            'status' => 0,
                             'user_updated'  => $GradingWarna->user_created ?? "There isn't any",
                         ]);
                     }
@@ -200,7 +204,7 @@ class GradingWarnaService
         ], 201);
     }
 
-    public function destroy($nomor_lot): RedirectResponse
+    public function destroy($nomor_lot)
     {
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
@@ -219,7 +223,7 @@ class GradingWarnaService
                 // Grading Warna Stock
                 $GradingWarnaStock = GradingWarnaStock::where('id_box_grading_warna', '=', $GradingWarna->id_box_grading_warna)
                     ->first();
-    
+                
                 if ($GradingWarnaStock) {
     
                     // Simpan nilai sebelum dihapus
@@ -231,8 +235,10 @@ class GradingWarnaService
                     $pcsBaru = $pcsSebelumnya - $GradingWarna->pcs_grading;
                     $sisaBeratBaru = $beratBaru;
                     $sisaPcsBaru = $pcsBaru;
-                    $totalModal = $GradingWarnaStock->modal * $sisaBeratBaru;
-    
+                    $totalModalBaru = $GradingWarnaStock->total_modal - $GradingWarna->fix_total_hpp;
+                    $modalBaru = $sisaBeratBaru == 0 ? 0 : $totalModalBaru / $sisaBeratBaru;
+                    // $response = 'TOTAL MODAL STOCK = '. $GradingWarnaStock->total_modal.', total_modal_hapus ='. $GradingWarna->fix_total_hpp.', id_box_hapus= '.$GradingWarna->id_box_grading_warna;
+                    // return $response;
                     if ($sisaBeratBaru <= 0 && $sisaPcsBaru <= 0) {
                         // Hapus data GradingWarnaStock jika sisa_berat dan sisa_pcs baru <= 0
                         $GradingWarnaStock->delete();
@@ -243,7 +249,8 @@ class GradingWarnaService
                             'pcs_masuk'     => $pcsBaru,
                             'sisa_berat'    => $sisaBeratBaru,
                             'sisa_pcs'      => $sisaPcsBaru,
-                            'total_modal'   => $totalModal,
+                            'modal' => $modalBaru,
+                            'total_modal'   => $totalModalBaru,
                         ]);
                     }
                 }
@@ -272,7 +279,7 @@ class GradingWarnaService
                         'sisa_berat'    => $sisaBeratBaru,
                         'sisa_pcs'      => $sisaPcsBaru,
                         'total_modal'   => $totalModal,
-                        'status' => 0,
+                        'status' => 1,
                     ]);
                     // }
                 }
