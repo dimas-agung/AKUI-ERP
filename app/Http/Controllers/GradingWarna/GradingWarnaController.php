@@ -45,7 +45,7 @@ class GradingWarnaController extends Controller
     // create
     public function create()
     {
-        $GradingWarnaAddingStock = GradingWarnaAddingStock::where('sisa_berat', '!=', 0)->get();
+        $GradingWarnaAddingStock = GradingWarnaAddingStock::where('status', 1)->get();
         $MasterJenisGradingWarna = MasterJenisGradingWarna::where('status', 1)->get();
         // return $GradingWarnaAddingStock;
         return view('GradingWarna.GradingWarna.create', [
