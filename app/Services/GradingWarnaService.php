@@ -272,6 +272,7 @@ class GradingWarnaService
                         'sisa_berat'    => $sisaBeratBaru,
                         'sisa_pcs'      => $sisaPcsBaru,
                         'total_modal'   => $totalModal,
+                        'status' => 0,
                     ]);
                     // }
                 }
