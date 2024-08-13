@@ -8,6 +8,7 @@ use App\Models\MasterOperator;
 use App\Models\MouldingPenyebaran;
 use App\Http\Controllers\Controller;
 use App\Services\MouldingPenyebaranService;
+use Illuminate\Support\Facades\Auth;
 
 class MouldingPenyebaranController extends Controller
 {
@@ -30,10 +31,11 @@ class MouldingPenyebaranController extends Controller
 
         if ($startDate && $endDate) {
             $query->whereBetween(MouldingPenyebaran::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
-            $MouldingPenyebaran = $query->with('MouldingStock')->get();
+            $MouldingPenyebaran = $query->with('MouldingStock')->where('tujuan_kirim',Auth::user()->plant)->get();
         } else {
             $MouldingPenyebaran = MouldingPenyebaran::with('MouldingStock')
                 // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->where('tujuan_kirim',Auth::user()->plant)
                 ->limit(1000)
                 ->latest()
                 ->get();
@@ -47,7 +49,7 @@ class MouldingPenyebaranController extends Controller
     // create
     public function create()
     {
-        $MouldingStock = MouldingStock::where('status', 1)->get();
+        $MouldingStock = MouldingStock::where('status', 1)->where('tujuan_kirim',Auth::user()->plant)->get();
         $MasterOperator = MasterOperator::where('status', 1)->get();
         return response()->view('Moulding.MouldingPenyebaran.create', [
             'moulding_stock' => $MouldingStock,

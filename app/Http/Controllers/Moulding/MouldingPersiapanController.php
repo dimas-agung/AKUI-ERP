@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class MouldingPersiapanController extends Controller
@@ -46,9 +47,9 @@ class MouldingPersiapanController extends Controller
 
             if ($startDate && $endDate) {
                 $query->whereBetween(MouldingPersiapan::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
-                $PreCleaningI = $query->get();
+                $PreCleaningI = $query->where('tujuan_kirim',Auth::user()->plant)->get();
             }else{
-                $PreCleaningI = MouldingPersiapan::limit(1000)
+                $PreCleaningI = MouldingPersiapan::limit(1000)->where('tujuan_kirim',Auth::user()->plant)
                 ->latest()
                 ->get();
             }
@@ -63,11 +64,11 @@ class MouldingPersiapanController extends Controller
          */
         public function create(): View
         {
-            $PreCleaningI = MouldingPersiapan::get();
+            // $PreCleaningI = MouldingPersiapan::get();
             $MasTujKir = MasterJobMoulding::get();
-            $stockTGK = GradingWarnaStock::get();
+            $stockTGK = GradingWarnaStock::where('tujuan_kirim',Auth::user()->plant)->get();
             // return $stockTGK;
-            return view('Moulding.MouldingPenerimaan.create', compact('stockTGK', 'PreCleaningI', 'MasTujKir'));
+            return view('Moulding.MouldingPenerimaan.create', compact('stockTGK', 'MasTujKir'));
         }
         public function set(Request $request)
         {

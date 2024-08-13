@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Services\GradingWarnaService;
 use App\Models\GradingWarnaAddingStock;
 use App\Models\MasterJenisGradingWarna;
+use Illuminate\Support\Facades\Auth;
 
 class GradingWarnaController extends Controller
 {
@@ -28,10 +29,11 @@ class GradingWarnaController extends Controller
 
         if ($startDate && $endDate) {
             $query->whereBetween(GradingWarna::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
-            $GradingWarna = $query->with('GradingWarnaAddingStock')->get();
+            $GradingWarna = $query->with('GradingWarnaAddingStock')->where('tujuan_kirim',Auth::user()->plant)->get();
         } else {
             $GradingWarna = GradingWarna::with('GradingWarnaAddingStock')
                 // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->where('tujuan_kirim',Auth::user()->plant)
                 ->limit(1000)
                 ->latest()
                 ->get();
@@ -45,7 +47,7 @@ class GradingWarnaController extends Controller
     // create
     public function create()
     {
-        $GradingWarnaAddingStock = GradingWarnaAddingStock::where('status', 1)->get();
+        $GradingWarnaAddingStock = GradingWarnaAddingStock::where('status', 1)->where('tujuan_kirim',Auth::user()->plant)->get();
         $MasterJenisGradingWarna = MasterJenisGradingWarna::where('status', 1)->get();
         // return $GradingWarnaAddingStock;
         return view('GradingWarna.GradingWarna.create', [

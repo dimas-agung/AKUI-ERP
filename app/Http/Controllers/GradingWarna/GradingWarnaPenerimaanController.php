@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\TransitDryACabut;
 use App\Models\TransitDryAHancuran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -27,9 +28,10 @@ class GradingWarnaPenerimaanController extends Controller
 
         if ($startDate && $endDate) {
             $query->whereBetween(GradingWarnaPenerimaan::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
-            $PreGHI = $query->get();
+            $PreGHI = $query->where('tujuan_kirim',Auth::user()->plant)->get();
         }else{
             $PreGHI = GradingWarnaPenerimaan::limit(1000)
+            ->where('tujuan_kirim',Auth::user()->plant)
             ->latest()
             ->get();
         }
@@ -41,8 +43,8 @@ class GradingWarnaPenerimaanController extends Controller
 
     public function create(): View
     {
-        $stockTGK = TransitDryAHancuran::get();
-        $stockT = TransitDryACabut::get();
+        $stockTGK = TransitDryAHancuran::where('tujuan_kirim',Auth::user()->plant)->where('status',1)->get();
+        $stockT = TransitDryACabut::where('tujuan_kirim',Auth::user()->plant)->where('status',1)->get();
         // return $PrmRawMOIC;
         return view('GradingWarna.GradingWarnaPenerimaan.create', compact('stockTGK', 'stockT'));
     }

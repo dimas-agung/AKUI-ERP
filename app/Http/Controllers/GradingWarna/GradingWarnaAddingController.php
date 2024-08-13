@@ -10,6 +10,7 @@ use App\Models\GradingWarnaPenerimaanStock;
 use App\Models\MasterTujuanKirimMoulding;
 use App\Models\Perusahaan;
 use App\Services\GradingWarnaAddingService;
+use Illuminate\Support\Facades\Auth;
 
 class GradingWarnaAddingController extends Controller
 {
@@ -30,10 +31,11 @@ class GradingWarnaAddingController extends Controller
 
         if ($startDate && $endDate) {
             $query->whereBetween(GradingWarnaAdding::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
-            $GradingWarnaAdding = $query->with('GradingWarnaPenerimaanStock')->get();
+            $GradingWarnaAdding = $query->with('GradingWarnaPenerimaanStock')->where('tujuan_kirim',Auth::user()->plant)->get();
         } else {
             $GradingWarnaAdding = GradingWarnaAdding::with('GradingWarnaPenerimaanStock')
                 // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->where('tujuan_kirim',Auth::user()->plant)
                 ->limit(1000)
                 ->latest()
                 ->get();
@@ -47,7 +49,7 @@ class GradingWarnaAddingController extends Controller
     public function create()
     {
         $GradingWarnaPenerimaanStock = GradingWarnaPenerimaanStock::select('nomor_job')->distinct()
-            ->where('status', 1)->get();
+            ->where('status', 1)->where('tujuan_kirim',Auth::user()->plant)->get();
         $MasterTujuanKirimMoulding = MasterTujuanKirimMoulding::where('status', 1)->get();
         // return $GradingWarnaPenerimaanStock;
         return view('GradingWarna.GradingWarnaAdding.create', [

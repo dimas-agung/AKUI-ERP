@@ -8,6 +8,7 @@ use App\Models\MouldingPenyebaran;
 use App\Http\Controllers\Controller;
 use App\Models\MouldingPengembalian;
 use App\Services\MouldingPengembalianService;
+use Illuminate\Support\Facades\Auth;
 
 class MouldingPengembalianController extends Controller
 {
@@ -30,10 +31,11 @@ class MouldingPengembalianController extends Controller
 
         if ($startDate && $endDate) {
             $query->whereBetween(MouldingPengembalian::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
-            $MouldingPengembalian = $query->with('MouldingPenyebaran')->get();
+            $MouldingPengembalian = $query->with('MouldingPenyebaran')->where('tujuan_kirim',Auth::user()->plant)->get();
         } else {
             $MouldingPengembalian = MouldingPengembalian::with('MouldingPenyebaran')
                 // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->where('tujuan_kirim',Auth::user()->plant)
                 ->limit(1000)
                 ->latest()
                 ->get();
