@@ -714,6 +714,31 @@ Route::middleware('auth')->group(function () {
             });
         });
     });
+    Route::prefix('final_grading')->middleware(['role:final_grading|admin'])->group(function () {
+        Route::prefix('final_grading')->middleware('role:final_grading|admin')->group(function () {
+            Route::controller(App\Http\Controllers\FinalGrading\FinalGradingController::class)->group(function () {
+                Route::get('/final_grading', 'index')->name('FinalGrading.index');
+                Route::get('/final_grading/create', 'create')->name('FinalGrading.create');
+                Route::post('/final_grading/store', 'store')->name('FinalGrading.store');
+                Route::delete('/final_grading/destroy/{nomor_bstb}', 'destroy')->name('FinalGrading.destroy');
+                Route::get('/final_grading/get_moulding', 'getMoulding')->name('FinalGrading.getMoulding');
+                Route::get('/final_grading/get_rework', 'getRework')->name('FinalGrading.getRework');
+                Route::get('/final_grading/set_moulding', 'setMoulding')->name('FinalGrading.setMoulding');
+                Route::get('/final_grading/set_rework', 'setRework')->name('FinalGrading.setRework');
+                Route::get('/final_grading/set_jenis', 'setJenis')->name('FinalGrading.setJenis');
+            });
+        });
+        Route::prefix('transit_moulding')->middleware('role:final_grading|admin')->group(function () {
+            Route::controller(App\Http\Controllers\FinalGrading\TransitFinalGradingController::class)->group(function () {
+                Route::get('/transit_moulding', 'index')->name('TransitFinalGrading.index');
+            });
+        });
+        Route::prefix('transit_moulding_rework')->middleware('role:final_grading|admin')->group(function () {
+            Route::controller(App\Http\Controllers\FinalGrading\TransitFinalGradingReworkController::class)->group(function () {
+                Route::get('/transit_moulding_rework', 'index')->name('TransitFinalGradingRework.index');
+            });
+        });
+    });
 });
 
 Auth::routes();

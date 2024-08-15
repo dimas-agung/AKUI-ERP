@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterJenisDryASeeder::class);
         $this->call(MasterJenisGradingWarnaSeeder::class);
         $this->call(MasterJenisKedatanganSeeder::class);
+        $this->call(MasterJenisFinalGradingSeeder::class);
         // MASTER TUJUAN
         $this->call(MasterTujuanKirimRawMaterialSeeder::class);
         $this->call(MasterTujuanKirimGradingKasarSeeder::class);
@@ -94,5 +95,8 @@ class DatabaseSeeder extends Seeder
         $this->call(GradingWarnaPenerimaanStockSeeder::class);
         $this->call(MouldingStockSeeder::class);
         $this->call(MouldingWasteStockSeeder::class);
+        // Final Grading
+        $this->call(TransitMouldingSeeder::class);
+        $this->call(TransitMouldingReworkSeeder::class);
     }
 }

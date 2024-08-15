@@ -810,6 +810,39 @@
                             </li>
                         @endrole
 
+                        @role('final_grading|admin')
+                            <li
+                                class="sidebar-item has-sub {{ Route::is('FinalGrading*', 'TransitFinalGrading*', 'TransitFinalGradingRework*') ? 'active' : '' }}">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-three-dots"></i>
+                                    <span>Final Grading</span>
+                                </a>
+                                <ul class="submenu">
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('FinalGrading*', 'TransitFinalGrading*', 'TransitFinalGradingRework*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Final Grading</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li class="submenu-item {{ Route::is('FinalGrading*') ? 'active' : '' }}">
+                                                <a href="{{ route('FinalGrading.index') }}" class="submenu-link">Final
+                                                    Grading</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitFinalGrading*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitFinalGrading.index') }}"
+                                                    class="submenu-link">Transit Final Grading</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitFinalGradingRework*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitFinalGradingRework.index') }}"
+                                                    class="submenu-link">Transit Final Grading Rework</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endrole
 
                     </ul>
                 </div>

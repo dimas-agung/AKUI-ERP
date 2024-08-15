@@ -21,7 +21,7 @@ class KedatanganOutputController extends Controller
     //index
     public function index(Request $request)
     {
-        $user = auth()->user()->plant;
+        // $user = auth()->user()->plant;
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
@@ -33,7 +33,7 @@ class KedatanganOutputController extends Controller
             $KedatanganOutput = $query->with('TransitKedatangan')->get();
         } else {
             $KedatanganOutput = KedatanganOutput::where('status', KedatanganOutput::STATUS_AKTIF)
-                ->where('plant', '=', $user)
+                // ->where('plant', '=', $user)
                 // ->where('created_at','>=', Carbon::now()->subDays(2))
                 ->limit(1000)
                 ->latest()
