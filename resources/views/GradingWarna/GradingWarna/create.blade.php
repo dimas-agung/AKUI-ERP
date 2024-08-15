@@ -270,7 +270,7 @@
             });
 
             function generateIDBoxGradingWarna(tujuanKirim, jenisGrading) {
-                const IDBoxGradingWarna = `${tujuanKirim}_${jenisGrading}`;
+                const IDBoxGradingWarna = `${jenisGrading}_${tujuanKirim}`;
 
                 return IDBoxGradingWarna;
             }
