@@ -166,7 +166,7 @@ class FinalGradingService
                     // }
                 }
 
-                // Update Status Adding Stock
+                // Update Transit Moulding
                 $TransitMoulding = TransitMoulding::where('nomor_job', '=', $FinalGrading->nomor_job)
                     ->get();
                 foreach ($TransitMoulding as $item) {
@@ -174,7 +174,7 @@ class FinalGradingService
                         'status' => FinalGrading::STATUS_NON_AKTIF,
                     ]);
                 }
-
+                // Update Transit Moulding Rework
                 $TransitMouldingRework = TransitMouldingRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job)
                     ->get();
                 foreach ($TransitMouldingRework as $item) {
@@ -201,123 +201,95 @@ class FinalGradingService
         ], 201);
     }
 
-    // public function destroy($id): RedirectResponse
-    // {
-    //     try {
-    //         // Gunakan transaksi database untuk memastikan konsistensi
-    //         DB::beginTransaction();
+    public function destroy($id): RedirectResponse
+    {
+        try {
+            // Gunakan transaksi database untuk memastikan konsistensi
+            DB::beginTransaction();
 
-    //         // Ambil data item berdasarkan id
-    //         $FinalGrading = FinalGrading::find($id);
+            // Ambil data item berdasarkan id
+            $FinalGrading = FinalGrading::find($id);
 
-    //         if (!$FinalGrading) {
-    //             // Redirect ke index dengan pesan error jika data tidak ditemukan
-    //             return redirect()->route('FinalGrading.index')->with(['error' => 'Data tidak ditemukan!']);
-    //         }
-    //         // Grading Warna Stock
-    //         $TransitFinalGrading = TransitFinalGrading::where('nomor_job', '=', $FinalGrading->nomor_job)
-    //             ->where('')
-    //             ->first();
+            if (!$FinalGrading) {
+                // Redirect ke index dengan pesan error jika data tidak ditemukan
+                return redirect()->route('FinalGrading.index')->with(['error' => 'Data tidak ditemukan!']);
+            }
+            // Transit Final Grading
+            $TransitFinalGrading = TransitFinalGrading::where('nomor_job', '=', $FinalGrading->nomor_job)
+                ->where('jenis_grading', '=', $FinalGrading->jenis_grading)
+                ->first();
 
-    //         if ($TransitFinalGrading) {
+            if ($TransitFinalGrading) {
 
-    //             // Simpan nilai sebelum dihapus
-    //             $beratSebelumnya = $GradingWarnaStock->berat_masuk;
-    //             $pcsSebelumnya = $GradingWarnaStock->pcs_masuk;
+                $TransitFinalGrading->delete();
+            }
 
-    //             // Hitung perbedaan berat dan pcs
-    //             $beratBaru = $beratSebelumnya - $GradingWarna->berat_grading;
-    //             $pcsBaru = $pcsSebelumnya - $GradingWarna->pcs_grading;
-    //             $sisaBeratBaru = $beratBaru;
-    //             $sisaPcsBaru = $pcsBaru;
-    //             $totalModal = $GradingWarnaStock->modal * $sisaBeratBaru;
+            // Transit Final Grading
+            $TransitFinalGradingRework = TransitFinalGradingRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job_rework)
+                ->where('job_order', '=', $FinalGrading->jenis_grading)
+                ->first();
 
-    //             if ($sisaBeratBaru <= 0 && $sisaPcsBaru <= 0) {
-    //                 // Hapus data GradingWarnaStock jika sisa_berat dan sisa_pcs baru <= 0
-    //                 $GradingWarnaStock->delete();
-    //             } else {
-    //                 // Update data GradingWarnaStock dengan berat, pcs, dan sisa yang baru
-    //                 $GradingWarnaStock->update([
-    //                     'berat_masuk'   => $beratBaru,
-    //                     'pcs_masuk'     => $pcsBaru,
-    //                     'sisa_berat'    => $sisaBeratBaru,
-    //                     'sisa_pcs'      => $sisaPcsBaru,
-    //                     'total_modal'   => $totalModal,
-    //                 ]);
-    //             }
-    //         }
+            if ($TransitFinalGradingRework) {
 
-    //         // Grading Warna Adding Stock
-    //         $TransitFinalGrading = TransitFinalGrading::where('nomor_job', '=', $FinalGrading->nomor_job)
-    //             ->where('jenis_grading', '=', $FinalGrading->jenis_grading)
-    //             ->first();
+                // Simpan nilai sebelum dihapus
+                $beratSebelumnya = $TransitFinalGradingRework->berat_job;
+                $pcsSebelumnya = $TransitFinalGradingRework->pcs_job;
 
-    //         if ($TransitFinalGrading) {
+                // Hitung perbedaan berat dan pcs
+                $beratBaru = $beratSebelumnya - $FinalGrading->berat_grading;
+                $pcsBaru = $pcsSebelumnya - $FinalGrading->pcs_grading;
 
-    //             // Simpan nilai sebelum dihapus
-    //             $beratSebelumnya = $GradingWarnaAddingStock->berat_keluar;
-    //             $pcsSebelumnya = $GradingWarnaAddingStock->pcs_keluar;
+                if ($beratBaru <= 0 && $pcsBaru <= 0) {
+                    // Hapus data TransitFinalGradingRework jika sisa_berat dan sisa_pcs baru <= 0
+                    $TransitFinalGradingRework->delete();
+                } else {
+                    // Update data TransitFinalGradingRework dengan berat, pcs, dan sisa yang baru
+                    $TransitFinalGradingRework->update([
+                        'berat_job'   => $beratBaru,
+                        'pcs_job'     => $pcsBaru,
+                    ]);
+                }
+            }
 
-    //             // Hitung perbedaan berat dan pcs
-    //             $beratBaru = $beratSebelumnya - $GradingWarna->berat_grading;
-    //             $pcsBaru = $pcsSebelumnya - $GradingWarna->pcs_grading;
-    //             $sisaBeratBaru = $GradingWarnaAddingStock->berat_masuk - $beratBaru;
-    //             $sisaPcsBaru = $GradingWarnaAddingStock->pcs_masuk - $pcsBaru;
-    //             $totalModal = $GradingWarnaAddingStock->modal * $sisaBeratBaru;
+            $FinalGrading->delete();
 
-    //             // Update data GradingWarnaAddingStock dengan berat, pcs, dan sisa yang baru
-    //             $GradingWarnaAddingStock->update([
-    //                 'berat_keluar'  => $beratBaru,
-    //                 'pcs_keluar'    => $pcsBaru,
-    //                 'sisa_berat'    => $sisaBeratBaru,
-    //                 'sisa_pcs'      => $sisaPcsBaru,
-    //                 'total_modal'   => $totalModal,
-    //             ]);
-    //             // }
-    //         }
+            // Ambil nomor_job dari FinalGrading yang ingin diperiksa
+            $nomor_job = $FinalGrading->nomor_job;
 
-    //         $FinalGrading->delete();
+            // Periksa apakah nomor_job sudah tidak ada di tabel FinalGrading
+            $exists = FinalGrading::where('nomor_job', '=', $nomor_job)->exists();
+            // Update Transit Moulding
+            if (!$exists) {
+                $TransitMoulding = TransitMoulding::where('nomor_job', '=', $FinalGrading->nomor_job)
+                    ->get();
+                foreach ($TransitMoulding as $item) {
+                    $item->update([
+                        'status' => FinalGrading::STATUS_AKTIF,
+                    ]);
+                }
+            }
+            // Update Transit Moulding Rework
+            if (!$exists) {
+                $TransitMouldingRework = TransitMouldingRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job)
+                    ->get();
+                foreach ($TransitMouldingRework as $item) {
+                    $item->update([
+                        'status' => FinalGrading::STATUS_AKTIF,
+                    ]);
+                }
+            }
 
+            // Commit transaksi
+            DB::commit();
 
-    //         // // Ambil nomor_job dari GradingWarna yang ingin diperiksa
-    //         // $nomor_job = $FinalGrading->nomor_job;
+            // Redirect ke index dengan pesan sukses
+            return redirect()->route('FinalGrading.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::rollback();
 
-    //         // // Periksa apakah nomor_job sudah tidak ada di tabel GradingWarna
-    //         // $exists = GradingWarna::where('nomor_job', '=', $nomor_job)->exists();
-
-    //         // // Update Status Grading Adding Stock
-    //         // if (!$exists) {
-    //         //     $GradingWarnaAddingStock = GradingWarnaAddingStock::where('nomor_lot', '=', $GradingWarna->nomor_lot)
-    //         //         ->get();
-    //         //     foreach ($GradingWarnaAddingStock as $item) {
-    //         //         $item->update([
-    //         //             'status'       => GradingWarna::STATUS_AKTIF,
-    //         //         ]);
-    //         //     }
-    //         // }
-
-    //         // // Update Status Grading Warna Adding
-    //         // if (!$exists) {
-    //         //     // Jika nomor_lot tidak ada, update status di GradingWarnaAdding
-    //         //     $GradingWarnaAdding = GradingWarnaAdding::where('nomor_lot', '=', $nomor_lot)->get();
-    //         //     foreach ($GradingWarnaAdding as $item) {
-    //         //         $item->update([
-    //         //             'status' => GradingWarna::STATUS_AKTIF,
-    //         //         ]);
-    //         //     }
-    //         // }
-
-    //         // Commit transaksi
-    //         DB::commit();
-
-    //         // Redirect ke index dengan pesan sukses
-    //         return redirect()->route('GradingWarna.index')->with(['success' => 'Data Berhasil Dihapus!']);
-    //     } catch (\Exception $e) {
-    //         // Rollback transaksi jika terjadi kesalahan
-    //         DB::rollback();
-
-    //         // Redirect ke index dengan pesan error
-    //         return redirect()->route('GradingWarna.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
-    //     }
-    // }
+            // Redirect ke index dengan pesan error
+            return redirect()->route('FinalGrading.index')->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+    }
 }
