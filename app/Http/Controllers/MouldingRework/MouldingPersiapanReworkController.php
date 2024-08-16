@@ -19,22 +19,49 @@ class MouldingPersiapanReworkController extends Controller
         $this->MouldingPersiapanReworkService = $MouldingPersiapanReworkService;
     }
 
-    public function index(Request $request){
+    // public function index(Request $request){
+    //     $i = 1;
+    //     $startDate = $request->input('start_date');
+    //     $endDate = $request->input('end_date');
+
+    //     $query = MouldingPersiapanRework::query();
+
+
+    //     if ($startDate && $endDate) {
+    //         $query->whereBetween(MouldingPersiapanRework::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+    //         $MouldingPR = $query->get();
+    //     }else{
+    //         $MouldingPR = MouldingPersiapanRework::limit(1000)
+    //         ->latest()
+    //         ->get();
+    //     }
+    //     return response()->view('MouldingRework.MouldingPersiapanRework.index', [
+    //         'MouldingPR' => $MouldingPR,
+    //         'i' => $i,
+    //     ]);
+    // }
+
+    public function index(Request $request) {
         $i = 1;
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
+        $plant = auth()->user()->plant; // Ambil input plant dari user
 
         $query = MouldingPersiapanRework::query();
 
-
         if ($startDate && $endDate) {
             $query->whereBetween(MouldingPersiapanRework::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
-            $MouldingPR = $query->get();
-        }else{
+            $MouldingPR = $query->where('tujuan_kirim',  $plant)
+            ->get();
+        } else {
             $MouldingPR = MouldingPersiapanRework::limit(1000)
+            ->where('tujuan_kirim',  $plant)
             ->latest()
             ->get();
         }
+
+        $MouldingPR = $query->latest()->limit(1000)->get();
+
         return response()->view('MouldingRework.MouldingPersiapanRework.index', [
             'MouldingPR' => $MouldingPR,
             'i' => $i,

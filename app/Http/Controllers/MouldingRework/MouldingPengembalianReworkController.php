@@ -24,15 +24,17 @@ class MouldingPengembalianReworkController extends Controller
         // $PreGHI = GradingHalusInput::with('PreGradingHalusAddingStock')->get();
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
+        $plant = auth()->user()->plant;
 
         $query = MouldingPengembalianRework::query();
 
-
         if ($startDate && $endDate) {
             $query->whereBetween(MouldingPengembalianRework::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
-            $MouldingPengembalianRework = $query->get();
+            $MouldingPengembalianRework = $query->where('tujuan_kirim',  $plant)
+                ->get();
         } else {
             $MouldingPengembalianRework = MouldingPengembalianRework::limit(1000)
+                ->where('tujuan_kirim',  $plant)
                 ->latest()
                 ->get();
         }
