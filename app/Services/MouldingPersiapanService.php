@@ -172,52 +172,57 @@ class MouldingPersiapanService
             DB::beginTransaction();
 
             // Ambil data DryAOutputHancuran berdasarkan jenis_grading
-            $DryAOutputHancuranRecords = MouldingPersiapan::where('nomor_job', '=', $nomor_job)->get();
+            $MouldingPersiapans = MouldingPersiapan::where('nomor_job', '=', $nomor_job)->get();
 
-            if ($DryAOutputHancuranRecords->isEmpty()) {
+            if ($MouldingPersiapans->isEmpty()) {
                 // Redirect ke index dengan pesan error jika data tidak ditemukan
                 return redirect()->route('MouldingPersiapan.index')->with(['error' => 'Data tidak ditemukan!']);
             }
 
-            foreach ($DryAOutputHancuranRecords as $outputRecord) {
-                // Ambil data TransitDryAHancuran berdasarkan jenis_grading
-                $transitDryAHancuranRecords = GradingWarnaStock::where('id_box_grading_warna', '=', $outputRecord->id_box_grading_warna)->get();
+            foreach ($MouldingPersiapans as $MouldingPersiapan) {
+                // Ambil data GradingWarnaStock berdasarkan id_box
+                $GradingWarnaStocks = GradingWarnaStock::where('id_box_grading_warna', '=', $MouldingPersiapan->id_box_grading_warna)->get();
 
-                foreach ($transitDryAHancuranRecords as $transitRecord) {
+                foreach ($GradingWarnaStocks as $GradingWarnaStock) {
                         // Simpan nilai sebelum dihapus
-                        $beratSebelumnya = $transitRecord->berat_masuk;
-                        $pcsSebelumnya = $transitRecord->pcs_masuk;
+                        $beratSebelumnya = $GradingWarnaStock->berat_masuk;
+                        $pcsSebelumnya = $GradingWarnaStock->pcs_masuk;
 
                         // Hitung perbedaan berat dan pcs
-                        $perbedaanBerat = $outputRecord->berat_job;
-                        $perbedaanPcs = $outputRecord->pcs_job;
+                        $perbedaanBerat = $MouldingPersiapan->berat_job;
+                        $perbedaanPcs = $MouldingPersiapan->pcs_job;
 
                         // Hitung total modal baru
-                        $beratKeluar = $transitRecord->berat_keluar - $perbedaanBerat;
+                        $beratKeluar = $GradingWarnaStock->berat_keluar - $perbedaanBerat;
                         $beratSisa = $beratSebelumnya - $beratKeluar;
-                        $pcsKeluar = $transitRecord->pcs_keluar - $perbedaanPcs;
+                        $pcsKeluar = $GradingWarnaStock->pcs_keluar - $perbedaanPcs;
                         $pcsSisa = $pcsSebelumnya - $pcsKeluar;
-                        $totalModal = $transitRecord->modal * $beratSisa;
+                        $totalModal = $GradingWarnaStock->modal * $beratSisa;
 
                         // Update data DryAGradingHancuranStock
-                        $transitRecord->update([
+                        $GradingWarnaStock->update([
                             'berat_keluar' => max($beratKeluar, 0),
                             'sisa_berat' => max($beratSisa, 0),
                             'pcs_keluar' => max($pcsKeluar, 0),
                             'sisa_pcs' => max($pcsSisa, 0),
                             'total_modal' => max($totalModal, 0),
-                            'status' => max($outputRecord->statuss, 1)
+                            'status' => max($MouldingPersiapan->statuss, 1)
                         ]);
                 }
 
-                // Update data DryAGradingHancuran
-                $gradingRecords = GradingWarna::where('id_box_grading_warna', $outputRecord->id_box_grading_warna)->get();
-                foreach ($gradingRecords as $gradingRecord) {
-                    $gradingRecord->update(['status' => $outputRecord->status ?? 1]);
+                // Update data Gradinwarna
+                $GradingWarnas = GradingWarna::where('id_box_grading_warna', $MouldingPersiapan->id_box_grading_warna)->get();
+                foreach ($GradingWarnas as $gradingRecord) {
+                    $gradingRecord->update(['status' => $MouldingPersiapan->status ?? 1]);
+                }
+                $MouldingStocks = MouldingStock::where('nomor_job', $MouldingPersiapan->nomor_job)->get();
+                foreach ($MouldingStocks as $MouldingStock) {
+                    $MouldingStock->delete();
                 }
 
+
                 // Hapus data DryAOutputHancuran
-                $outputRecord->delete();
+                $MouldingPersiapan->delete();
             }
 
             // Commit transaksi

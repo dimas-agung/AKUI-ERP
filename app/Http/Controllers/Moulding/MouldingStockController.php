@@ -12,7 +12,7 @@ class MouldingStockController extends Controller
     //index
     public function index()
     {
-        $MouldingStock = MouldingStock::where(['tujuan_kirim' => Auth::user()->plant,'status'=>1])->get();
+        $MouldingStock = MouldingStock::where(['tujuan_kirim' => Auth::user()->plant])->where('status', '!=', 3)->get();
         return response()->view('Moulding.MouldingStock.index', [
             'moulding_stock' => $MouldingStock
         ]);

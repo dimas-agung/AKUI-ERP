@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\MouldingPenyebaran;
+use App\Models\MouldingPersiapan;
 use App\Models\MouldingStock;
 
 class MouldingPenyebaranService
@@ -66,6 +67,12 @@ class MouldingPenyebaranService
                             'status'       => MouldingPenyebaran::STATUS_ON_PROSES,
                         ]);
                     }
+                    $MouldingPersiapans = MouldingPersiapan::where('nomor_job', '=', $MouldingPenyebaran->nomor_job)->get();
+
+                    foreach ($MouldingPersiapans as $MouldingPersiapan) {
+                        // Update status menjadi 1 pada MouldingStock
+                        $MouldingPersiapan->update(['status' => 0]);
+                    }
 
 
                     DB::commit();
@@ -113,6 +120,12 @@ class MouldingPenyebaranService
                 foreach ($MouldingStock as $mouldingStock) {
                     // Update status menjadi 1 pada MouldingStock
                     $mouldingStock->update(['status' => MouldingStock::STATUS_ON_STOCK]);
+                }
+                $MouldingPersiapans = MouldingPersiapan::where('nomor_job', '=', $nomor_job)->get();
+
+                foreach ($MouldingPersiapans as $MouldingPersiapan) {
+                    // Update status menjadi 1 pada MouldingStock
+                    $MouldingPersiapan->update(['status' => 1]);
                 }
             }
 

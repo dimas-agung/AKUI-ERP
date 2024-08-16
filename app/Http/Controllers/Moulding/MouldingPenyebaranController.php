@@ -50,7 +50,7 @@ class MouldingPenyebaranController extends Controller
     public function create()
     {
         $MouldingStock = MouldingStock::where('status', 1)->where('tujuan_kirim',Auth::user()->plant)->get();
-        $MasterOperator = MasterOperator::where('status', 1)->get();
+        $MasterOperator = MasterOperator::where('status', 1)->where('workstation','Moulding')->where('plant',Auth::user()->plant)->get();
         return response()->view('Moulding.MouldingPenyebaran.create', [
             'moulding_stock' => $MouldingStock,
             'master_operator' => $MasterOperator,
