@@ -730,11 +730,11 @@
                                             <span>Moulding</span>
                                         </a>
                                             <ul class="submenu submenu-level-2">
-                                                <li
+                                            {{-- <li
                                                 class="submenu-item {{ Route::is('GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('GradingWarnaPenerimaanStock.index') }}"
                                                     class="submenu-link">Grading Warna Penerimaan Stock</a>
-                                            </li>
+                                            </li> --}}
                                            
                                             <li class="submenu-item {{ Route::is('MouldingStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('MouldingStock.index') }}"
@@ -1260,6 +1260,13 @@
                                                     <br>Cabut</a>
                                             </li>
                                             <li
+                                                class="submenu-item {{ Route::is('DryAGradingCabut*') && !Route::is('DryAGradingCabutStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('DryAGradingCabut.create_trial') }}" class="submenu-link">FORM Dry
+                                                    A
+                                                    Grading
+                                                    <br>Cabut (TRIAL)</a> 
+                                            </li>
+                                            <li
                                                 class="submenu-item {{ Route::is('DryAGradingCabutStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAGradingCabutStock.index') }}"
                                                     class="submenu-link">Dry A
@@ -1328,6 +1335,17 @@
                                         </a>
                                         <ul class="submenu submenu-level-2">
                                             <li
+                                                class="submenu-item {{ Route::is('GradingWarnaPenerimaan*') && !Route::is('GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarnaPenerimaan.index') }}"
+                                                    class="submenu-link">Grading Warna
+                                                    Penerimaan</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarnaPenerimaanStock.index') }}"
+                                                    class="submenu-link">Grading Warna Penerimaan Stock</a>
+                                            </li>
+                                            <li
                                                 class="submenu-item {{ Route::is('GradingWarnaAdding*') && !Route::is('GradingWarnaAddingStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('GradingWarnaAdding.index') }}"
                                                     class="submenu-link">Grading
@@ -1349,21 +1367,13 @@
                                                 <a href="{{ route('GradingWarnaStock.index') }}"
                                                     class="submenu-link">Grading
                                                     <br>Warna Stock</a>
+                                            </li>
+                                            {{-- <li
                                                 class="submenu-item {{ Route::is('TransitDryAHancuran*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitDryAHancuran.index') }}"
                                                     class="submenu-link">Transit Dry A Hancuran</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('GradingWarnaPenerimaan*') && !Route::is('GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('GradingWarnaPenerimaan.index') }}"
-                                                    class="submenu-link">Grading Warna
-                                                    Penerimaan</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('GradingWarnaPenerimaanStock.index') }}"
-                                                    class="submenu-link">Grading Warna Penerimaan Stock</a>
-                                            </li>
+                                            </li> --}}
+                                           
                                         </ul>
                                     </li>
                                     {{-- </ul> --}}
@@ -1375,11 +1385,11 @@
                                             <span>Moulding</span>
                                         </a>
                                             <ul class="submenu submenu-level-2">
-                                                <li
+                                                {{-- <li
                                                 class="submenu-item {{ Route::is('GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('GradingWarnaPenerimaanStock.index') }}"
                                                     class="submenu-link">Grading Warna Penerimaan Stock</a>
-                                            </li>
+                                            </li> --}}
                                             <li
                                                 class="submenu-item {{ Route::is('MouldingPersiapan*') ? 'active' : '' }}">
                                                 <a href="{{ route('MouldingPersiapan.index') }}"
@@ -1668,6 +1678,27 @@
 
 
     <script>
+        // document.addEventListener('contextmenu', function(e) {
+        //     e.preventDefault();
+        // });
+
+        // document.onkeydown = (e) => {
+        //     if (e.key == 123) {
+        //         e.preventDefault();
+        //     }
+        //     if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+        //         e.preventDefault();
+        //     }
+        //     if (e.ctrlKey && e.shiftKey && e.key == 'C') {
+        //         e.preventDefault();
+        //     }
+        //     if (e.ctrlKey && e.shiftKey && e.key == 'J') {
+        //         e.preventDefault();
+        //     }
+        //     if (e.ctrlKey && e.key == 'U') {
+        //         e.preventDefault();
+        //     }
+        // };
          function toggleFilter() {
             var filterRow = document.getElementById('filterRow');
             if (filterRow.style.display === 'none' || filterRow.style.display === '') {

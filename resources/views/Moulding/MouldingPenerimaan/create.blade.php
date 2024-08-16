@@ -65,7 +65,7 @@
                                                 @endif
                                             @endforeach
                                             @php
-                                                $selectedNomorBSTB = $post->jenis; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
+                                                $selectedNomorBSTB = $innerPost->jenis; // Set nilai variabel dengan nomor_bstb yang baru ditampilkan
                                             @endphp
                                         </select>
                                     </div>
@@ -302,6 +302,7 @@
                     if (response.status > 0) {
                         // Mengatur nilai elemen-elemen sesuai dengan respons dari server
                         $('#upahmasuk').val(response.upah_operator);
+                        $('#upah_operator').val(response.upah_operator);
                     }
                 },
                 error: function(error) {

@@ -188,6 +188,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/master_jenis_dry_a/edit/{id}', 'edit')->name('MasterJenisDryA.edit');
             Route::put('/master_jenis_dry_a/update/{id}', 'update')->name('MasterJenisDryA.update');
             Route::delete('/master_jenis_dry_a/destroy/{id}', 'destroy')->name('MasterJenisDryA.destroy');
+            Route::get('/master_jenis_dry_a_a/getDataByJenis', 'getDataByJenis')->name('MasterJenisDryA.getDataByJenis');
         });
 
         Route::controller(App\Http\Controllers\MasterTujuanKirimDryAController::class)->group(function () {
@@ -725,6 +726,7 @@ Route::middleware('auth')->group(function () {
         Route::controller(App\Http\Controllers\DryA\DryAGradingCabutController::class)->group(function () {
             Route::get('/dry_a_grading_cabut', 'index')->name('DryAGradingCabut.index');
             Route::get('/dry_a_grading_cabut/create', 'create')->name('DryAGradingCabut.create');
+            Route::get('/dry_a_grading_cabut/create_trial', 'create_trial')->name('DryAGradingCabut.create_trial');
             Route::post('/dry_a_grading_cabut/store', 'store')->name('DryAGradingCabut.store');
             Route::post('/dry_a_grading_cabut/cek_data', 'CeksendData')->name('DryAGradingCabut.CeksendData');
             Route::get('/dry_a_grading_cabut/set', 'set')->name('DryAGradingCabut.set');
@@ -840,8 +842,8 @@ Route::middleware('auth')->group(function () {
             });
         });
     });
-    Route::prefix('moulding')->middleware(['role:moulding|admin|production|ppic'])->group(function () {
-        Route::prefix('grading_warna')->middleware('role:moulding|admin|production|ppic')->group(function () {
+    Route::prefix('moulding')->middleware(['role:moulding|admin|production'])->group(function () {
+        Route::prefix('grading_warna')->middleware('role:moulding|admin|production')->group(function () {
             Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaAddingController::class)->group(function () {
                 Route::get('/grading_warna_adding', 'index')->name('GradingWarnaAdding.index');
                 Route::get('/grading_warna_adding/create', 'create')->name('GradingWarnaAdding.create');
@@ -884,7 +886,7 @@ Route::middleware('auth')->group(function () {
             });
         });
 
-        Route::prefix('moulding')->middleware('role:moulding|admin|production|ppic')->group(function (){
+        Route::prefix('moulding')->middleware('role:moulding|admin|production')->group(function (){
             Route::controller(App\Http\Controllers\MasterJobMouldingController::class)->group(function () {
                 Route::get('/master_job_moulding', 'index')->name('MasterJobMoulding.index');
                 Route::post('/master_job_moulding/store', 'store')->name('MasterJobMoulding.store');

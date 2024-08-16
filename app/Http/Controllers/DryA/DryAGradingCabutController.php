@@ -11,6 +11,7 @@ use App\Models\DryAGradingCabutStock;
 use Illuminate\Http\RedirectResponse;
 use App\Models\DryAPenerimaanCabutStock;
 use App\Services\DryAGradingCabutService;
+use Illuminate\Support\Facades\Auth;
 
 class DryAGradingCabutController extends Controller
 {
@@ -42,10 +43,20 @@ class DryAGradingCabutController extends Controller
     // create
     public function create()
     {
-        $DryAPenerimaanCabutStock = DryAPenerimaanCabutStock::withCount('DryAGradingCabut')->get();
+        $DryAPenerimaanCabutStock = DryAPenerimaanCabutStock::withCount('DryAGradingCabut')->where('tujuan_kirim',Auth::user()->plant)->get();
         $MasterJenisDryA = MasterJenisDryA::where('status', 1)->get();
         // return $DryAPenerimaanCabutStock;
         return response()->view('DryA.DryAGradingCabut.create', [
+            'dry_a_penerimaan_cabut_stock' => $DryAPenerimaanCabutStock,
+            'master_jenis_dry_a' => $MasterJenisDryA,
+        ]);
+    }
+    public function create_trial()
+    {
+        $DryAPenerimaanCabutStock = DryAPenerimaanCabutStock::withCount('DryAGradingCabut')->where('tujuan_kirim',Auth::user()->plant)->get();
+        $MasterJenisDryA = MasterJenisDryA::where('status', 1)->get();
+        // return $DryAPenerimaanCabutStock;
+        return response()->view('DryA.DryAGradingCabut.create_trial', [
             'dry_a_penerimaan_cabut_stock' => $DryAPenerimaanCabutStock,
             'master_jenis_dry_a' => $MasterJenisDryA,
         ]);

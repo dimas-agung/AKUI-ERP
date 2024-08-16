@@ -102,4 +102,14 @@ class MasterJenisDryAController extends Controller
         //redirect to index
         return redirect()->route('MasterJenisDryA.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
+    public function getDataByJenis(Request $request)
+    {
+        $jenis = $request->input('jenis');
+
+        if (is_array($jenis)) {
+
+            return  MasterJenisDryA::whereIn('jenis',$jenis)->get();
+        }
+        return  MasterJenisDryA::where('jenis',$jenis)->first();
+    }
 }
