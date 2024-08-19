@@ -1259,13 +1259,13 @@
                                                     Grading
                                                     <br>Cabut</a>
                                             </li>
-                                            <li
+                                            {{-- <li
                                                 class="submenu-item {{ Route::is('DryAGradingCabut*') && !Route::is('DryAGradingCabutStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAGradingCabut.create_trial') }}" class="submenu-link">FORM Dry
                                                     A
                                                     Grading
                                                     <br>Cabut (TRIAL)</a> 
-                                            </li>
+                                            </li> --}}
                                             <li
                                                 class="submenu-item {{ Route::is('DryAGradingCabutStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAGradingCabutStock.index') }}"
