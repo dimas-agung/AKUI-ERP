@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('moulding_waste_outputs', function (Blueprint $table) {
             $table->id();
             $table->string('asal_stock');
-            $table->string('id_box');
+            $table->string('id_box_waste_moulding');
             $table->string('jenis');
             $table->float('berat');
             $table->float('pcs');

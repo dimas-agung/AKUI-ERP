@@ -161,7 +161,7 @@ class MouldingWasteOutputController extends Controller
                     // GradingWarnaPenerimaan::create($mergedData);
                     MouldingWasteOutput::create([
                         'asal_stock'             => $mergedData['asal_stock'],
-                        'id_box'                => $mergedData['id_box'],
+                        'id_box_waste_moulding'                => $mergedData['id_box'],
                         'nomor_job'             => $mergedData['nomor_job'],
                         'nomor_bstb'            => $mergedData['nomor_bstb'],
                         'jenis'                 => $mergedData['jenis'],
@@ -275,7 +275,7 @@ class MouldingWasteOutputController extends Controller
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
-            $gradingWarnaPenerimaans = MouldingWasteOutput::where('id_box', '=', $id_box)->get();
+            $gradingWarnaPenerimaans = MouldingWasteOutput::where('id_box_waste_moulding', '=', $id_box)->get();
 
             if ($gradingWarnaPenerimaans->isEmpty()) {
                 // Redirect ke index dengan pesan error jika data tidak ditemukan

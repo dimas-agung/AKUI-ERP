@@ -90,13 +90,13 @@
                                     <td class="text-center">
                                         <div class="form-button-action">
                                             @if ($item->status == 1)
-                                                <form style="display: flex" id="deleteForm{{ $item->id_box }}"
-                                                    action="{{ route('MouldingWasteOutput.destroy', $item->id_box) }}"
+                                                <form style="display: flex" id="deleteForm{{ $item->id_box_waste_moulding }}"
+                                                    action="{{ route('MouldingWasteOutput.destroy', $item->id_box_waste_moulding) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-link" data-original-title="Remove"
-                                                        onclick="confirmDelete('{{ $item->id_box }}')">
+                                                        onclick="confirmDelete('{{ $item->id_box_waste_moulding }}')">
                                                         <i class="bi bi-trash3 text-danger"></i>
                                                     </button>
                                                 </form>
