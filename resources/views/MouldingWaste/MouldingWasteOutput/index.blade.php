@@ -67,6 +67,9 @@
                         </thead>
                         <tbody>
                             @forelse ($PreGHI as $item)
+                            @if (!str_contains($item->id_box_waste_moulding,'_'.Auth::user()->plant))
+                                @continue
+                            @endif
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">
@@ -76,7 +79,7 @@
                                             Moulding Waste Stock
                                         @endif
                                     </td>
-                                    <td class="text-center">{{ $item->id_box }}</td>
+                                    <td class="text-center">{{ $item->id_box_waste_moulding }}</td>
                                     <td class="text-center">{{ $item->jenis }}</td>
                                     <td class="text-center">{{ $item->berat }}</td>
                                     <td class="text-center">{{ $item->pcs }}</td>

@@ -46,6 +46,9 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($transit_moulding as $item)
+                                        @if (!str_contains($item->id_box_waste_moulding,'_'.Auth::user()->plant))
+                                            @continue
+                                        @endif
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->unit }}</td>

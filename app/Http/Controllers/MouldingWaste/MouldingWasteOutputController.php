@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class MouldingWasteOutputController extends Controller
 {
@@ -52,14 +53,14 @@ class MouldingWasteOutputController extends Controller
 
     public function getWaste(Request $request)
     {
-        $data = MouldingWasteStock::where('sisa_berat','!=','0')->get();
+        $data = MouldingWasteStock::where('sisa_berat','!=','0')->where('plant',Auth::user()->plant)->get();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
     }
     public function getGrading(Request $request)
     {
-        $data = GradingWarnaStock::where('status','=','1')->get();
+        $data = GradingWarnaStock::where('sisa_berat','!=','0')->where('tujuan_kirim',Auth::user()->plant)->get();
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);
@@ -68,7 +69,7 @@ class MouldingWasteOutputController extends Controller
     public function setWaste(Request $request)
     {
         $id_box = $request->id_box;
-        $data = MouldingWasteStock::where('id_box_waste_moulding',$id_box)->first();
+        $data = MouldingWasteStock::where('id_box_waste_moulding',$id_box)->where('plant',Auth::user()->plant)->first();
         // $data = MouldingWasteStock::where('id_box_waste_moulding',$id_box)->get();
 
         // Kembalikan nomor batch sebagai respons
@@ -77,7 +78,7 @@ class MouldingWasteOutputController extends Controller
     public function setGrading(Request $request)
     {
         $id_box = $request->id_box;
-        $data = GradingWarnaStock::where('id_box_grading_warna',$id_box)->first();
+        $data = GradingWarnaStock::where('id_box_grading_warna',$id_box)->where('tujuan_kirim',Auth::user()->plant)->first();
         // $data = GradingWarnaStock::where('id_box_grading_warna',$id_box)->get();
 
         // Kembalikan nomor batch sebagai respons
@@ -187,7 +188,7 @@ class MouldingWasteOutputController extends Controller
                         'berat'                 => $mergedData['berat'] ?? 0,
                         'modal'                 => $mergedData['modal'],
                         'total_modal'           => $mergedData['total_modal'],
-                        'status'                => $mergedData['user_updated'] ?? 1,
+                        'status'                =>  1,
                     ]);
 
                     $itemObject = (object) $mergedData;
@@ -238,7 +239,7 @@ class MouldingWasteOutputController extends Controller
                         'sisa_pcs'     => $sisaPcs,
                         'total_modal'  => $totalModal,
                         'user_updated' => $itemObject->user_created ?? "",
-                        'status'   => $itemObject->status ?? 0,
+                        'status'   => $sisaBerat <= 0 ? 0 :1,
                         ]);
 
                         $GradingWarna = GradingWarna::where('id_box_grading_warna', $itemObject->id_box)->get();
@@ -284,12 +285,12 @@ class MouldingWasteOutputController extends Controller
 
             foreach ($gradingWarnaPenerimaans as $gradingWarnaPenerimaan) {
                 // Ambil data GradingWarnaPenerimaanStock berdasarkan id_box
-                $gradingWarnaPenerimaanStock = TransitMouldingWaste::where('id_box_waste_moulding', '=', $gradingWarnaPenerimaan->id_box)->first();
+                $gradingWarnaPenerimaanStock = TransitMouldingWaste::where('id_box_waste_moulding', '=', $gradingWarnaPenerimaan->id_box_waste_moulding)->first();
 
                 if ($gradingWarnaPenerimaanStock) {
                     // Ambil data TransitDryAHancuran dan TransitDryACabut berdasarkan id_box
-                    $transitDryAHancuran = GradingWarnaStock::where('id_box_grading_warna', '=', $gradingWarnaPenerimaan->id_box)->first();
-                    $transitDryACabut = MouldingWasteStock::where('id_box_waste_moulding', '=', $gradingWarnaPenerimaan->id_box)->first();
+                    $transitDryAHancuran = GradingWarnaStock::where('id_box_grading_warna', '=', $gradingWarnaPenerimaan->id_box_waste_moulding)->first();
+                    $transitDryACabut = MouldingWasteStock::where('id_box_waste_moulding', '=', $gradingWarnaPenerimaan->id_box_waste_moulding)->first();
 
                     // Update atau hapus TransitDryAHancuran berdasarkan sisa_berat
                     if ($transitDryAHancuran) {
@@ -309,7 +310,7 @@ class MouldingWasteOutputController extends Controller
                             'status' => max($gradingWarnaPenerimaan->status, 0),
                         ]);
 
-                        $GradingWarna = GradingWarna::where('id_box_grading_warna', $gradingWarnaPenerimaan->id_box)->get();
+                        $GradingWarna = GradingWarna::where('id_box_grading_warna', $gradingWarnaPenerimaan->id_box_waste_moulding)->get();
                         foreach ($GradingWarna as $GradingWarnas) {
                             $GradingWarnas->update(['status' => 1]);
                         }
@@ -333,7 +334,7 @@ class MouldingWasteOutputController extends Controller
                         ]);
 
 
-                        $MouldingWasteInput = MouldingWasteInput::where('id_box_waste_moulding', $gradingWarnaPenerimaan->id_box)->get();
+                        $MouldingWasteInput = MouldingWasteInput::where('id_box_waste_moulding', $gradingWarnaPenerimaan->id_box_waste_moulding)->get();
                         foreach ($MouldingWasteInput as $MouldingWasteInputs) {
                             $MouldingWasteInputs->update(['status' => 1]);
                         }

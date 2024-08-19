@@ -99,7 +99,7 @@ class GradingWarnaService
                         // Hitung sisa berat dan sisa pcs
                         $beratMasuk = $item->berat_masuk + ($GradingWarna->berat_grading ?? 0);
                         $pcsMasuk = $item->pcs_masuk + ($GradingWarna->pcs_grading ?? 0);
-                        $sisaBerat = $beratMasuk;
+                        $sisaBerat = $beratMasuk - $item->berat_keluar;
                         $sisaPcs = $pcsMasuk;
                         // $totalModal = $item->modal * $sisaBerat;
                         $totalModalbaru = $item->total_modal + $GradingWarna->fix_total_hpp;
@@ -233,8 +233,8 @@ class GradingWarnaService
                     // Hitung perbedaan berat dan pcs
                     $beratBaru = $beratSebelumnya - $GradingWarna->berat_grading;
                     $pcsBaru = $pcsSebelumnya - $GradingWarna->pcs_grading;
-                    $sisaBeratBaru = $beratBaru;
-                    $sisaPcsBaru = $pcsBaru;
+                    $sisaBeratBaru = $beratBaru - $GradingWarnaStock->berat_keluar;
+                    $sisaPcsBaru = $pcsBaru- $GradingWarnaStock->pcs_keluar;
                     $totalModalBaru = $GradingWarnaStock->total_modal - $GradingWarna->fix_total_hpp;
                     $modalBaru = $sisaBeratBaru == 0 ? 0 : $totalModalBaru / $sisaBeratBaru;
                     // $response = 'TOTAL MODAL STOCK = '. $GradingWarnaStock->total_modal.', total_modal_hapus ='. $GradingWarna->fix_total_hpp.', id_box_hapus= '.$GradingWarna->id_box_grading_warna;
@@ -269,7 +269,7 @@ class GradingWarnaService
                     $beratBaru = $beratSebelumnya - $GradingWarna->berat_grading;
                     $pcsBaru = $pcsSebelumnya - $GradingWarna->pcs_grading;
                     $sisaBeratBaru = $GradingWarnaAddingStock->berat_masuk - $beratBaru;
-                    $sisaPcsBaru = $GradingWarnaAddingStock->pcs_masuk - $pcsBaru;
+                    $sisaPcsBaru = $GradingWarnaAddingStock->pcs_masuk -$pcsBaru ;
                     $totalModal = $GradingWarnaAddingStock->modal * $sisaBeratBaru;
     
                     // Update data GradingWarnaAddingStock dengan berat, pcs, dan sisa yang baru
