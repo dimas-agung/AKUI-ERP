@@ -61,7 +61,7 @@ class userSeeders extends Seeder
             'phone_number' => '012381203123',
             'birth_date' => '2000-04-09',
         ]);
-        User::create([
+        $superdmin1 = User::create([
             'email' => 'OBI@gmail.com',
             'password' => Hash::make('1234567890'),
             'fullname' => 'superadmin',

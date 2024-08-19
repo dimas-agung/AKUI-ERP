@@ -337,7 +337,7 @@
                                     <span>Bahan Baku</span>
                                 </a>
                                 <ul class="submenu">
-                                
+
                                     <li
                                         class="submenu-item has-sub {{ Route::is('StockTransitRawMaterial*', 'GradingKasarInput*', 'GradingKasarHasil*', 'GradingKasarStock*', 'GradingKasarOutput*', 'StockTransitGradingKasar*', 'ReportGradingKasar*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
@@ -359,11 +359,11 @@
                                                 <a href="{{ route('StockTransitGradingKasar.index') }}"
                                                     class="submenu-link">Transit Grading Kasar Stock</a>
                                             </li>
-                                            
+
 
                                         </ul>
                                     </li>
-                                
+
                                     <li
                                         class="submenu-item has-sub {{ Route::is('StockTransitGradingKasar*', 'PreCleaningInput*', 'PreCleaningStock*', 'PreCleaningOutput*', 'TransitPreCleaningStock*', 'PreCleaningReport*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
@@ -375,22 +375,22 @@
                                                 <a href="{{ route('StockTransitGradingKasar.index') }}"
                                                     class="submenu-link">Transit Grading Kasar Stock</a>
                                             </li>
-                                            
+
 
                                             <li class="submenu-item {{ Route::is('PreCleaningStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('PreCleaningStock.index') }}"
                                                     class="submenu-link">Pre-Cleaning Stock</a>
                                             </li>
-                                            
+
                                             <li
                                                 class="submenu-item {{ Route::is('TransitPreCleaningStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitPreCleaningStock.index') }}"
                                                     class="submenu-link">Transit Pre Cleaning Stock</a>
                                             </li>
-                                            
+
                                         </ul>
                                     </li>
-                                
+
                                     <li
                                         class="submenu-item has-sub {{ Route::is('TransitPreCleaningStock*', 'PreGradingHalusInput*', 'PreGradingHalusStock*', 'PreGradingHalusAdding*', 'PreGradingHalusAddingStock*', 'GradingHalusInput*', 'GradingHalusStock*', 'GradingHalusAdjustmentAdding*', 'GradingHalusAdjustmentStock*', 'GradingHalusAdjustmentInput*', 'GradingHalusOutput*', 'TransitGradingHalus*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
@@ -463,7 +463,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                
+
                                     <li
                                         class="submenu-item has-sub {{ Route::is('TransitGradingHalus*', 'PreWashOutput*', 'PreWashStock*', 'TransitPreWash*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
@@ -475,23 +475,23 @@
                                                 <a href="{{ route('TransitGradingHalus.index') }}"
                                                     class="submenu-link">Transit Grading Halus</a>
                                             </li>
-                                        
+
                                             <li class="submenu-item {{ Route::is('PreWashStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('PreWashStock.index') }}"
                                                     class="submenu-link">Pre-Wash
                                                     Stock</a>
                                             </li>
-                                            
+
                                             <li class="submenu-item {{ Route::is('TransitPreWash*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitPreWash.index') }}"
                                                     class="submenu-link">Transit Pre-Wash</a>
                                             </li>
                                         </ul>
                                     </li>
-                                    
+
                                 </ul>
                             </li>
-                    
+
                             <li
                                 class="sidebar-item has-sub {{ Route::is('CabutBuluPenyebaran*', 'CabutBuluStock*', 'RambangKeringInput*', 'RambangKeringStock*', 'RambangPengirimanWaste*', 'TransitRambangWaste*', 'CabutHancuranPenyebaran*', 'CabutHancuranPengembalian*', 'CabutHancuranStock*', 'TransitCabutHancuran*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
@@ -510,7 +510,7 @@
                                                     class="submenu-link">Transit Pre-Wash</a>
                                             </li>
 
-                                            
+
                                             <li class="submenu-item {{ Route::is('CabutBuluStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('CabutBuluStock.index') }}" class="submenu-link">Cabut
                                                     Bulu Stock</a>
@@ -539,7 +539,7 @@
                                                 <a href="{{ route('StockRambangBasah.index') }}"
                                                     class="submenu-link">Rembang Basah <br>Stock</a>
                                             </li>
-                                            
+
                                             <li
                                                 class="submenu-item {{ Route::is('RambangKeringStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('RambangKeringStock.index') }}"
@@ -547,7 +547,7 @@
                                                     Kering
                                                     <br>Stock</a>
                                             </li>
-                                        
+
                                             <li
                                                 class="submenu-item {{ Route::is('TransitRambangWaste*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitRambangWaste.index') }}"
@@ -563,14 +563,14 @@
                                             <span>Cabut Hancuran</span>
                                         </a>
                                         <ul class="submenu submenu-level-2">
-                                        
+
                                             <li
                                                 class="submenu-item {{ Route::is('CabutHancuranPersiapanStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('CabutHancuranPersiapanStock.index') }}"
                                                     class="submenu-link">Cabut
                                                     Hancuran Persiapan Stock</a>
                                             </li>
-                                        
+
                                             <li
                                                 class="submenu-item {{ Route::is('TransitCabutHancuran*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitCabutHancuran.index') }}"
@@ -583,7 +583,7 @@
 
                                 </ul>
                             </li>
-                      
+
                             <li
                                 class="sidebar-item has-sub {{ Route::is('TransitCabutBulu*', 'DryAPenerimaan*', 'DryAPenerimaanStock*', 'DryAOutput*', 'TransitDryA*', 'TransitDryAHancuran*', 'TransitCabutHancuran*', 'DryAPenerimaanHancuran*', 'DryAPenerimaanHancuranStock*', 'DryAOutputHancuran*', 'DryAWasteOutput*', 'DryAWasteStock*', 'TransitDryAWaste*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
@@ -602,13 +602,13 @@
                                                 <a href="{{ route('TransitCabutHancuran.index') }}"
                                                     class="submenu-link">Transit Cabut Bulu Hancuran</a>
                                             </li>
-                                           
+
                                             <li
                                                 class="submenu-item {{ Route::is('DryAPenerimaanHancuranStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAPenerimaanHancuranStock.index') }}"
                                                     class="submenu-link">Dry A Penerimaan Hancuran Stock</a>
                                             </li>
-                                            
+
                                             <li
                                                 class="submenu-item {{ Route::is('DryAGradingHancuranStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAGradingHancuranStock.index') }}"
@@ -616,7 +616,7 @@
                                                     Grading
                                                     <br>Hancuran<br>Stock</a>
                                             </li>
-                                            
+
                                             <li
                                                 class="submenu-item {{ Route::is('TransitDryAHancuran*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitDryAHancuran.index') }}"
@@ -635,13 +635,13 @@
                                                 <a href="{{ route('TransitCabutBulu.index') }}"
                                                     class="submenu-link">Transit Cabut Bulu</a>
                                             </li>
-                                        
+
                                             <li
                                                 class="submenu-item {{ Route::is('DryAPenerimaanStock*') && !Route::is('DryAPenerimaanHancuranStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAPenerimaanStock.index') }}"
                                                     class="submenu-link">Dry A Penerimaan Stock Cabut</a>
                                             </li>
-                                            
+
                                             <li
                                                 class="submenu-item {{ Route::is('DryAGradingCabutStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAGradingCabutStock.index') }}"
@@ -649,7 +649,7 @@
                                                     Grading
                                                     <br>Cabut Stock</a>
                                             </li>
-                                        
+
                                             <li
                                                 class="submenu-item {{ Route::is('TransitDryA*') && !Route::is('TransitDryAHancuran*') && !Route::is('TransitDryAWaste*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitDryA.index') }}" class="submenu-link">Transit
@@ -667,12 +667,12 @@
                                             <span>Dry A Waste</span>
                                         </a>
                                         <ul class="submenu submenu-level-2">
-                                        
+
                                             <li class="submenu-item {{ Route::is('DryAWasteStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('DryAWasteStock.index') }}" class="submenu-link">Dry A
                                                     Waste<br>Stock</a>
                                             </li>
-                                            
+
                                             <li
                                                 class="submenu-item {{ Route::is('TransitDryAWaste*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitDryAWaste.index') }}"
@@ -697,14 +697,14 @@
                                             <span>Grading Warna</span>
                                         </a>
                                         <ul class="submenu submenu-level-2">
-                                           
+
                                             <li
                                                 class="submenu-item {{ Route::is('GradingWarnaAddingStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('GradingWarnaAddingStock.index') }}"
                                                     class="submenu-link">Grading
                                                     <br>Warna Adding<br>Stock</a>
                                             </li>
-                                            
+
                                             <li
                                                 class="submenu-item {{ Route::is('GradingWarnaStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('GradingWarnaStock.index') }}"
@@ -715,7 +715,7 @@
                                                 <a href="{{ route('TransitDryAHancuran.index') }}"
                                                     class="submenu-link">Transit Dry A Hancuran</a>
                                             </li>
-                                           
+
                                             <li
                                                 class="submenu-item {{ Route::is('GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('GradingWarnaPenerimaanStock.index') }}"
@@ -735,13 +735,13 @@
                                                 <a href="{{ route('GradingWarnaPenerimaanStock.index') }}"
                                                     class="submenu-link">Grading Warna Penerimaan Stock</a>
                                             </li> --}}
-                                           
+
                                             <li class="submenu-item {{ Route::is('MouldingStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('MouldingStock.index') }}"
                                                     class="submenu-link">Moulding
                                                     <br>Stock</a>
                                             </li>
-                                          
+
                                             <li class="submenu-item {{ Route::is('TransitMoulding*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitMoulding.index') }}"
                                                     class="submenu-link">Transit
@@ -755,14 +755,14 @@
                                             <span>Moulding Waste</span>
                                         </a>
                                         <ul class="submenu submenu-level-2">
-                                           
-                                           
+
+
                                             <li
                                                 class="submenu-item {{ Route::is('MouldingWasteStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('MouldingWasteStock.index') }}"
                                                     class="submenu-link">Moulding Waste Stock</a>
                                             </li>
-                                           
+
                                             <li
                                                 class="submenu-item {{ Route::is('TransitMouldingWaste*') ? 'active' : '' }}">
                                                 <a href="{{ route('TransitMouldingWaste.index') }}"
@@ -1264,7 +1264,7 @@
                                                 <a href="{{ route('DryAGradingCabut.create_trial') }}" class="submenu-link">FORM Dry
                                                     A
                                                     Grading
-                                                    <br>Cabut (TRIAL)</a> 
+                                                    <br>Cabut (TRIAL)</a>
                                             </li> --}}
                                             <li
                                                 class="submenu-item {{ Route::is('DryAGradingCabutStock*') ? 'active' : '' }}">
@@ -1373,12 +1373,12 @@
                                                 <a href="{{ route('TransitDryAHancuran.index') }}"
                                                     class="submenu-link">Transit Dry A Hancuran</a>
                                             </li> --}}
-                                           
+
                                         </ul>
                                     </li>
                                     {{-- </ul> --}}
                                     {{-- <ul class="submenu"> --}}
-                                    
+
                                     <li
                                         class="submenu-item has-sub {{ Route::is('MouldingPersiapan*', 'GradingWarnaPenerimaanStock*','MouldingPenyebaran*', 'MouldingStock*', 'MouldingPengembalian*', 'TransitMoulding*') ? 'active' : '' }}">
                                         <a href="#" class='submenu-link'>
@@ -1459,12 +1459,79 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('MouldingReworkPersiapan*', 'MouldingReworkPenyebaran*', 'MouldingReworkPersiapanStock*', 'MouldingReworkPengembalian*', 'TransitMouldingRework*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Moulding Rework</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('MouldingReworkPersiapan*') && !Route::is('MouldingReworkPersiapanStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingReworkPersiapan.index') }}"
+                                                    class="submenu-link">Moulding Rework Persiapan</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('MouldingReworkPersiapanStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingReworkPersiapanStock.index') }}"
+                                                    class="submenu-link">Moulding Rework Stock</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('MouldingReworkPenyebaran*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingReworkPenyebaran.index') }}"
+                                                    class="submenu-link">Moulding Rework Penyebaran</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('MouldingReworkPengembalian*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingReworkPengembalian.index') }}"
+                                                    class="submenu-link">Moulding Rework Pengembalian</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitMouldingRework*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitMouldingRework.index') }}"
+                                                    class="submenu-link">Transit Moulding Rework</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
                         @endrole
-                        
+                        @role('final_grading_and_wip_steam|admin')
+                            <li
+                                class="sidebar-item has-sub {{ Route::is('GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-three-dots"></i>
+                                    <span>Final Grading & WIP Steam</span>
+                                </a>
+                                <ul class="submenu">
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('TransitFinalGradingRework*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Final Grading</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitFinalGradingRework*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitFinalGradingRework.index') }}"
+                                                    class="submenu-link">Transit Final Grading Rework</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('MouldingReworkPersiapan*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingReworkPersiapan.index') }}"
+                                                    class="submenu-link">Moulding Rework Persiapan</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('MouldingReworkPersiapanStock*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingReworkPersiapanStock.index') }}"
+                                                    class="submenu-link">Moulding Rework Stock</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endrole
 
-                      
+
+
 
 
                     </ul>
