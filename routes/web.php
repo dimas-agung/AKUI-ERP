@@ -732,6 +732,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/dry_a_grading_cabut/set', 'set')->name('DryAGradingCabut.set');
             Route::get('/dry_a_grading_cabut/setjenis', 'setJenis')->name('DryAGradingCabut.setJenis');
             Route::delete('/dry_a_grading_cabut/destroy/{nomor_bstb}', 'destroy')->name('DryAGradingCabut.destroy');
+            Route::get('/dry_a_grading_cabuts/getJenisGradings', 'getJenisGradings')->name('DryAGradingCabut.getJenisGrading');
         });
         Route::controller(App\Http\Controllers\DryA\DryAGradingCabutStockController::class)->group(function () {
             Route::get('/dry_a_grading_cabut_stock', 'index')->name('DryAGradingCabutStock.index');
