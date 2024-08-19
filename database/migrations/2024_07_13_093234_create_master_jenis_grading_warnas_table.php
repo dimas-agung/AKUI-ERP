@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_jenis_grading_warnas', function (Blueprint $table) {
-            $table->id();
-            $table->string('jenis');
-            $table->string('kategori_susut');
-            $table->float('upah_operator');
-            $table->float('pengurangan_harga');
-            $table->float('harga_estimasi');
-            $table->integer('status')->default(1)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_AKTIF');
-            $table->string('user_created');
-            $table->string('user_updated')->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('master_jenis_grading_warnas', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('jenis');
+        //     $table->string('kategori_susut');
+        //     $table->float('upah_operator');
+        //     $table->float('pengurangan_harga');
+        //     $table->float('harga_estimasi');
+        //     $table->integer('status')->default(1)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_AKTIF');
+        //     $table->string('user_created');
+        //     $table->string('user_updated')->nullable();
+        //     $table->timestamps();
+        // });
     }
 
     /**

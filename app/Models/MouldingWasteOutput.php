@@ -14,7 +14,7 @@ class MouldingWasteOutput extends Model
     protected $fillable = [
         'asal_stock',
         'id_box_waste_moulding',
-        'jenis_waste',
+        'jenis',
         'berat',
         'pcs',
         'tujuan_kirim',
