@@ -588,14 +588,15 @@
                 let kontribusi = $('#kontribusi').val();
                 let user_created = $('#user_created').val();
 
-                var jenis_grading = $("[name='jenis_grading[]']").map(function(){return $(this).val();}).get();
+                var jenis_gradings = $("[name='jenis_grading[]']").map(function(){return $(this).val();}).get();
                 // console.log(jenis_grading);
                 var pcs_grading = $("input[name='pcs_grading[]']").map(function(){return $(this).val();}).get();
                 var berat_1_gradings = $("input[name='berat_1_grading[]']").map(function(){return $(this).val();}).get();
                 var berat_2_gradings = $("input[name='berat_2_grading[]']").map(function(){return $(this).val();}).get();
                 var jenis_susuts = $("input[name='jenis_susut[]']").map(function(){return $(this).val();}).get();
                 var harga_estimasis = $("input[name='harga_estimasi[]']").map(function(){return $(this).val();}).get();
-                jenis_grading.forEach((v,i) => {
+                jenis_gradings.forEach((v,i) => {
+                    let jenis_grading = v;
                     let berat_1_grading = berat_1_gradings[i];
                     let berat_2_grading = berat_2_gradings[i];
                     let pcs_1_grading = pcs_grading[i];
@@ -620,7 +621,7 @@
                         `<td class="text-center">${v}</td>` +
                         `<td class="text-center">${jenis_susut}</td>` +
                         `<td class="text-center">${berat_1_grading}</td>` +
-                        `<td class="text-center">${pcs_grading[i]}</td>` +
+                        `<td class="text-center">${pcs_1_grading}</td>` +
                         `<td class="text-center">${berat_2_grading}</td>` +
                         `<td class="text-center">${susut_depan}</td>` +
                         `<td class="text-center">${susut_belakang}</td>` +

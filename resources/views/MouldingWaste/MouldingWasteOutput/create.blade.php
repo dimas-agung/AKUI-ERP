@@ -38,7 +38,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="asal_stock">Asal Stock</label>
-                                        <select id="asal_stock" class="select2 form-select" name="asal_stock"
+                                        <select id="asal_stock" class="select2 form-select" name="asal_stock" 
                                             data-placeholder="Pilih Asal Stock">
                                             <option value="">Pilih Asal Stock</option>
                                             <option value="warna" {{ old('asal_stock') == 'warna' ? 'selected' : '' }}>
@@ -192,21 +192,29 @@
     <script>
         $('#asal_stock').on('change', function() {
             let typeTransit = $(this).val();
+            console.log(typeTransit);
             let targetSelect = $('#id_box');
             let userPlant =
                 '{{ auth()->user()->plant }}'; // Ganti ini dengan nilai plant dari user yang sebenarnya
-
+               
             // Clear the options before making the AJAX call
             targetSelect.empty();
             targetSelect.append('<option value="">Pilih Id Box</option>'); // Tambahkan opsi default
-
             let processResponse = function(response, idBoxKey) {
                 let dataTransit = response;
                 let lastCharMap = new Map();
 
                 dataTransit.forEach(v => {
+                    // console.log(v.id_box_grading_warna);
                     let idBox = v[idBoxKey];
-                    if (idBox && idBox.endsWith(userPlant)) {
+                    // console.log('- '+idBox);
+                    let filter = '';
+                    if (typeTransit == 'warna') {
+                         filter = 'v.tujuan_kirim == userPlant';
+                    }else{
+                        filter = 'v.plant == userPlant';
+                    }
+                    if (idBox && filter) {
                         let lastChar = idBox.slice(-1);
                         // if (!lastCharMap.has(lastChar)) {
                         lastCharMap.set(lastChar, idBox);
@@ -217,7 +225,7 @@
                     }
                 });
             };
-
+           
             switch (typeTransit) {
                 case 'warna':
                     $.ajax({
@@ -253,6 +261,8 @@
                     break;
             }
         });
+       
+
 
         // Variabel global
         let inisialTujuanGlobal = ''; // Variabel global untuk menyimpan inisial_tujuan

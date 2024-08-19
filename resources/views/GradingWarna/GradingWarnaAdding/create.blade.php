@@ -62,7 +62,7 @@
 
                     <div class="col-md-4">
                         <label for="nomor_lot" class="form-label">Nomor Lot</label>
-                        <input type="text" class="form-control" id="nomor_lot" readonly>
+                        <input type="text" class="form-control" id="nomor_lot" >
                     </div>
 
                     <div class="col-md-4">
@@ -282,7 +282,7 @@
                     $('#berat_kotor').val('');
                     // $('#tujuan_kirim').val('');
                     $('#prosentase_susut').val('');
-                    $('#nomor_lot').prop('readonly', true);
+                    // $('#nomor_lot').prop('readonly', true);
                 }
             });
 

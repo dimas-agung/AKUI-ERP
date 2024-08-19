@@ -62,7 +62,7 @@
                                         <div class="form-group">
                                             <label>Nomer BSTB</label>
                                             <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
-                                                placeholder="Masukkan Nomer BSTB" readonly>
+                                                placeholder="Masukkan Nomer BSTB" >
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -127,8 +127,10 @@
                                                             <th class="text-center">Berat 1 Grading</th>
                                                             <th class="text-center">Pcs 1 Grading</th>
                                                             <th class="text-center">Berat 2 Grading</th>
+                                                            @role('admin')
                                                             <th class="text-center">Modal</th>
                                                             <th class="text-center">Total Modal</th>
+                                                            @endrole
                                                         </tr>
                                                     </thead>
                                                     <tbody id="tableBody">
@@ -162,11 +164,19 @@
 
         $('#nomor_job').on('change', function() {
             let selectedIdBox = $(this).val();
-            if (selectedIdBox == "") {
+            if (selectedIdBox == '') {
                 $('#total_berat').val(null);
-                $('#total_pcs').val(null);
+                    $('#total_pcs').val(null);
                 return;
             }
+            // dataArray.forEach(e => {
+            //     if (e.nomor_job == selectedIdBox) {
+            //         $('#total_berat').val(null);
+            //         $('#total_pcs').val(null);
+            //         return;
+                    
+            //     }
+            // });
             let  countjenisAlreadyTake =0
             dataArray.forEach(e => {
                 if (e.nomor_job == selectedIdBox) {
@@ -176,7 +186,9 @@
                     icon: 'warning'
                 });
                 countjenisAlreadyTake =1;
-                 $('#nomor_job').val(null).trigger('change');
+                $('#total_berat').val(null);
+                    $('#total_pcs').val(null);
+                 $('#nomor_job').val('');
                 return;
                 }
             });
@@ -191,6 +203,7 @@
                         data: {
                             nomor_job: selectedIdBox
                         },
+                        async:false,
                         success: function(response) {
                             if (response.length > 0 && response[0].berat_kotor > 0) {
                                 var tableBody = $('#tableBodyTemp');
@@ -273,9 +286,7 @@
             // $('#nomor_adjustment').prop('readonly', true);
             // $('#tanggal_adjustment').prop('readonly', true); // Jika ingin menjadikan select readonly
 
-            var tableBodyTemp = $('#tableBodyTemp');
-            tableBodyTemp.empty();
-            var tableBody = $('#tableBody');
+           
             if (dataArrayTemp === undefined || dataArrayTemp.length == 0) {
                  // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
                  Swal.fire({
@@ -285,29 +296,14 @@
                             })
                 return;
             }
-
+            var tableBodyTemp = $('#tableBodyTemp');
+            tableBodyTemp.empty();
+            var tableBody = $('#tableBody');
                 // Menambahkan data ke dalam tabel
-            dataArrayTemp.forEach(function(rowData) {
+            dataArrayTemp.forEach(function(rowData,i) {
 
                                 // // Tambahkan baris ke dalam tabel
-                                var newRow = `<tr>` +
-                                `<td class="text-center">${rowData.nomor_job}</td>` +
-                                `<td class="text-center">${rowData.nomor_batch}</td>` +
-                                `<td class="text-center">${rowData.tujuan_kirim}</td>` +
-                                `<td class="text-center">${rowData.keterangan}</td>` +
-                                `<td class="text-center">${rowData.berat_kotor}</td>` +
-                                `<td class="text-center">${rowData.jenis_grading}</td>` +
-                                `<td class="text-center">${rowData.berat_1_grading}</td>` +
-                                `<td class="text-center">${rowData.pcs_1_grading}</td>` +
-                                `<td class="text-center">${rowData.berat_2_grading}</td>` +
-                                `<td class="text-center">${rowData.modal}</td>` +
-                                `<td class="text-center">${rowData.total_modal}</td>` +
-                                // `<td class="text-center">${fix_harga_deal.toFixed(4)}</td>` +
-                                `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
-                                `</tr>`
-                                // tableBody.append(row);
-
-                                $('#dataTable tbody').append(newRow);
+                                
                                 dataArray.push({
                                     nomor_batch: rowData.nomor_batch,
                                     nomor_job: rowData.nomor_job,
@@ -323,11 +319,13 @@
                                 });
             });
             dataArrayTemp = [];
+            renderDataView()
             console.log(dataArray);
             // $('#nomor_job option:first').prop('selected',true);
             // $('#nomor_job').prop('selectedIndex',0);
 
             $('#nomor_job').val("").trigger( "change" );
+            $('#nomor_bstb').prop('readonly',true);
             // $('#nomor_job').val(null).trigger('change');
                 // $('#dataTable tbody').append(newRow);
 
@@ -335,12 +333,55 @@
             // Menambahkan data ke dalam array
         }
 
+        function hapusBaris(nomor_job) {
+            dataArray = dataArray.filter(function (data) {
+                return data.nomor_job !== nomor_job;
+            });
+            console.log(dataArray);
+            renderDataView()
+        }
+        function renderDataView(){
+            var tableBodyTemp = $('#tableBodyTemp');
+            tableBodyTemp.empty();
+            var tableBody = $('#tableBody');
+            tableBody.empty();
+            dataArray.forEach(function(rowData,i) {
 
+                // // Tambahkan baris ke dalam tabel
+                var newRow = `<tr>` +
+                `<td class="text-center">${rowData.nomor_job}</td>` +
+                `<td class="text-center">${rowData.nomor_batch}</td>` +
+                `<td class="text-center">${rowData.tujuan_kirim}</td>` +
+                `<td class="text-center">${rowData.keterangan}</td>` +
+                `<td class="text-center">${rowData.berat_kotor}</td>` +
+                `<td class="text-center">${rowData.jenis_grading}</td>` +
+                `<td class="text-center">${rowData.berat_1_grading}</td>` +
+                `<td class="text-center">${rowData.pcs_1_grading}</td>` +
+                `<td class="text-center">${rowData.berat_2_grading}</td>` +
+                @role('admin')
+                `<td class="text-center">${rowData.modal}</td>` +
+                `<td class="text-center">${rowData.total_modal}</td>` +
+                @endrole
+                // `<td class="text-center">${fix_harga_deal.toFixed(4)}</td>` +
+                `<td class="text-center"><a class="btn btn-danger" onclick="hapusBaris('${rowData.nomor_job}')">Delete</a></td>` +
+                `</tr>`
+                // tableBody.append(row);
+
+                $('#dataTable tbody').append(newRow);
+ 
+            });
+
+        }
         $(document).ready(function() {
             // Menangani perubahan pada dropdown nomor_job
             $('#nomor_job').on('change', function() {
-                // Memanggil fungsi generateNomorBSTB ketika nomor_job berubah
-                generateNomorBSTB();
+                let nomor_bstb = $('#nomor_bstb').val();
+                
+                // Memanggil fungsi generateNomorBSTB ketika nomor_job berubah dan bstb belum digenerate sebelumnya
+                if (nomor_bstb == '' || nomor_bstb == null) {
+                    
+                    generateNomorBSTB();
+                }
             });
 
             // Fungsi untuk generate nomor_bstb
