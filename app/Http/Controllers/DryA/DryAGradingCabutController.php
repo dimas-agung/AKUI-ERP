@@ -43,7 +43,7 @@ class DryAGradingCabutController extends Controller
     // create
     public function create()
     {
-        $DryAPenerimaanCabutStock = DryAPenerimaanCabutStock::withCount('DryAGradingCabut')->where('tujuan_kirim',Auth::user()->plant)->get();
+        $DryAPenerimaanCabutStock = DryAPenerimaanCabutStock::withCount('DryAGradingCabut')->where('tujuan_kirim',Auth::user()->plant)->where('status',1)->get();
         $MasterJenisDryA = MasterJenisDryA::where('status', 1)->get();
         // return $DryAPenerimaanCabutStock;
         return response()->view('DryA.DryAGradingCabut.create', [
@@ -53,7 +53,7 @@ class DryAGradingCabutController extends Controller
     }
     public function create_trial()
     {
-        $DryAPenerimaanCabutStock = DryAPenerimaanCabutStock::withCount('DryAGradingCabut')->where('tujuan_kirim',Auth::user()->plant)->get();
+        $DryAPenerimaanCabutStock = DryAPenerimaanCabutStock::withCount('DryAGradingCabut')->where('tujuan_kirim',Auth::user()->plant)->where('status',1)->get();
         $MasterJenisDryA = MasterJenisDryA::where('status', 1)->get();
         // return $DryAPenerimaanCabutStock;
         return response()->view('DryA.DryAGradingCabut.create_trial', [
@@ -108,5 +108,15 @@ class DryAGradingCabutController extends Controller
     public function destroy($nomor_job): RedirectResponse
     {
         return $this->DryAGradingCabutService->destroy($nomor_job);
+    }
+
+    public function getJenisGradings(Request $request){
+        $jenis = $request->input('jenis');
+
+        if (is_array($jenis)) {
+
+            return  MasterJenisDryA::whereIn('jenis',$jenis)->get();
+        }
+        return  MasterJenisDryA::where('jenis',$jenis)->first();
     }
 }
