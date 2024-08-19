@@ -14,7 +14,6 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-<<<<<<< HEAD
         // $user = User::create([
         //     'email' => 'admin@gmail.com',
         //     'password' => Hash::make('admin123'),
@@ -62,20 +61,6 @@ class UsersSeeder extends Seeder
 
         // ]);
         // $user->assignRole(['pre_cleaning']);
-=======
-        $user = User::create([
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin123'),
-            'fullname' => 'admin',
-            'nip' => '12345678',
-            'unit_id' => '1',
-            'username' => 'admin',
-            'phone_number' => '0111111111',
-            'birth_date' => '2000-04-09',
-            'plant' => 'A',
-        ]);
-        $user->syncRoles(['master', 'admin']);
->>>>>>> dev-helmi
         // foreach ($request->input('role') as $key => $value) {
         //     # code...
         //     $user->assignRole([$value]);
@@ -140,27 +125,52 @@ class UsersSeeder extends Seeder
         //     'birth_date' => '2000-04-09',
         // ]);
         // $user->syncRoles(['dry_a']);
+        // $user = User::create([
+        //     'email' => 'ManagerProductionAkui@gmail.com',
+        //     'password' => Hash::make('41M3CC4H'),
+        //     'fullname' => 'Masoed',
+        //     'nip' => '223100662A',
+        //     'plant' => 'A',
+        //     'username' => 'Masoed',
+        //     'phone_number' => '0111121111212311',
+        //     'birth_date' => '2000-04-09',
+        // ]);
+        // $user->syncRoles(['production']);
+        // $user = User::create([
+        //     'email' => 'ManagerProductionObi@gmail.com',
+        //     'password' => Hash::make('41M3CC4H'),
+        //     'fullname' => 'Masoed',
+        //     'nip' => '223100662O',
+        //     'plant' => 'O',
+        //     'username' => 'Masoed',
+        //     'phone_number' => '01112112121111212311',
+        //     'birth_date' => '2000-04-09',
+        // ]);
+        // $user->syncRoles(['production']);
+
+        // $user = User::create([
+        //     'email' => 'AdminMouldingOBI@gmail.com',
+        //     'password' => Hash::make('indonesia97'),
+        //     'fullname' => 'Alen Novanto',
+        //     'nip' => '222100442',
+        //     'plant' => 'O',
+        //     'username' => 'Alen Novanto',
+        //     'phone_number' => '01112112121111212311123',
+        //     'birth_date' => '2000-04-09',
+        // ]);
+        // $user->syncRoles(['moulding']);
+
         $user = User::create([
-            'email' => 'ManagerProductionAkui@gmail.com',
-            'password' => Hash::make('41M3CC4H'),
-            'fullname' => 'Masoed',
-            'nip' => '223100662A',
-            'plant' => 'A',
-            'username' => 'Masoed',
-            'phone_number' => '0111121111212311',
-            'birth_date' => '2000-04-09',
-        ]);
-        $user->syncRoles(['production']);
-        $user = User::create([
-            'email' => 'ManagerProductionObi@gmail.com',
-            'password' => Hash::make('41M3CC4H'),
-            'fullname' => 'Masoed',
-            'nip' => '223100662O',
+            'email' => 'AdminMouldingAKUI@gmail.com',
+            'password' => Hash::make('indomie2'),
+            'fullname' => 'Mochammad Asnan Rusdy',
+            'nip' => '224020767',
             'plant' => 'O',
-            'username' => 'Masoed',
-            'phone_number' => '01112112121111212311',
+            'username' => 'Mochammad Asnan Rusdy',
+            'phone_number' => '0111211212111121122311123',
             'birth_date' => '2000-04-09',
         ]);
-        $user->syncRoles(['production']);
+        $user->syncRoles(['moulding']);
+
     }
 }
