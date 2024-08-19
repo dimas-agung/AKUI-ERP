@@ -84,6 +84,7 @@
         </div>
     </div>
 @endsection
+<<<<<<< HEAD
 @section('script')
     <script>
         function confirmDelete(id) {
@@ -105,3 +106,5 @@
         }
     </script>
 @endsection
+=======
+>>>>>>> dev-helmi

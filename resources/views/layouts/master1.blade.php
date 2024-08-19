@@ -156,7 +156,7 @@
                         @role('master|admin')
                             <li class="sidebar-title">Menu</li>
                             <li
-                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*', 'MasterTujuanKirimDryA*', 'MasterJenisWaste*', 'MasterJenisGradingWarna*', 'MasterTujuanKirimMoulding*') ? 'active' : '' }}">
+                                class="sidebar-item has-sub {{ Route::is('Perusahaan.*', 'Workstation.*', 'Unit.*', 'BiayaHpp.*', 'MasterSupplierRawMaterial.*', 'MasterJenisRawMaterial.*', 'MasterTujuanKirimRawMaterial.*', 'MasterTujuanKirimGradingHalus.*', 'MasterTujuanKirimGradingKasar*', 'MasterJenisGradingKasar.*', 'MasterJenisGradingHalus.*', 'MasterOperator.*', 'MasterOngkosCuci.*', 'MasterJenisHcrKotor*', 'MasterJenisRambang*', 'MasterTujuanKirimWaste*', 'MasterJenisDryA*', 'MasterTujuanKirimDryA*', 'MasterJenisWaste*', 'MasterJenisGradingWarna*', 'MasterTujuanKirimMoulding*', 'MasterBatch*', 'MasterJenisKedatangan*', 'MasterTujuanKirimKedatangan*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-stack"></i>
                                     <span>Master</span>
@@ -178,6 +178,11 @@
 
                                     <li class="submenu-item {{ Route::is('BiayaHpp.*') ? 'active' : '' }}">
                                         <a href="{{ route('BiayaHpp.index') }}" class="submenu-link">Master Biaya HPP</a>
+                                    </li>
+
+                                    <li class="submenu-item {{ Route::is('MasterBatch*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterBatch.index') }}" class="submenu-link">Master
+                                            Batch</a>
                                     </li>
 
                                     <li class="submenu-item {{ Route::is('MasterOperator*') ? 'active' : '' }}">
@@ -256,6 +261,11 @@
                                             Jenis<br>Grading Warna</a>
                                     </li>
 
+                                    <li class="submenu-item {{ Route::is('MasterJenisKedatangan*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterJenisKedatangan.index') }}" class="submenu-link">Master
+                                            Jenis<br>Kedatangan</a>
+                                    </li>
+
                                     <li
                                         class="submenu-item {{ Route::is('MasterTujuanKirimRawMaterial*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterTujuanKirimRawMaterial.index') }}"
@@ -289,6 +299,13 @@
                                         <a href="{{ route('MasterTujuanKirimMoulding.index') }}"
                                             class="submenu-link">Master
                                             Tujuan<br>Kirim Moulding</a>
+                                    </li>
+
+                                    <li
+                                        class="submenu-item {{ Route::is('MasterTujuanKirimKedatangan*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterTujuanKirimKedatangan.index') }}"
+                                            class="submenu-link">Master
+                                            Tujuan<br>Kirim Kedatangan</a>
                                     </li>
                                 </ul>
                             </li>
@@ -1320,6 +1337,36 @@
                             </li>
                         @endrole
 
+                        @role('kedatangan|admin')
+                            <li
+                                class="sidebar-item has-sub {{ Route::is('KedatanganOutput*', 'TransitKedatangan*') ? 'active' : '' }}">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-three-dots"></i>
+                                    <span>Kedatangan</span>
+                                </a>
+                                <ul class="submenu">
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('KedatanganOutput*', 'TransitKedatangan*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Kedatangan</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li
+                                                class="submenu-item {{ Route::is('KedatanganOutput*') ? 'active' : '' }}">
+                                                <a href="{{ route('KedatanganOutput.index') }}"
+                                                    class="submenu-link">Kedatangan Output</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitKedatangan*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitKedatangan.index') }}"
+                                                    class="submenu-link">Transit Kedatangan</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endrole
+
                         @role('moulding|admin|production')
                             <li
                                 class="sidebar-item has-sub {{ Route::is('GradingWarnaAdding*', 'GradingWarnaAddingStock*', 'GradingWarna*', 'GradingWarnaStock*','TransitDryAHancuran*', 'GradingWarnaPenerimaan*', 'GradingWarnaPenerimaanStock*', 'MouldingPersiapan*', 'MouldingPenyebaran*', 'MouldingStock*') ? 'active' : '' }}">
@@ -1344,6 +1391,12 @@
                                                 class="submenu-item {{ Route::is('GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('GradingWarnaPenerimaanStock.index') }}"
                                                     class="submenu-link">Grading Warna Penerimaan Stock</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('GradingWarnaPenerimaanKedatangan*') ? 'active' : '' }}">
+                                                <a href="{{ route('GradingWarnaPenerimaanKedatangan.index') }}"
+                                                    class="submenu-link">Grading
+                                                    <br>Warna <br>Penerimaan Kedatangan</a>
                                             </li>
                                             <li
                                                 class="submenu-item {{ Route::is('GradingWarnaAdding*') && !Route::is('GradingWarnaAddingStock*') ? 'active' : '' }}">
@@ -1533,6 +1586,39 @@
 
 
 
+                        @role('final_grading|admin')
+                            <li
+                                class="sidebar-item has-sub {{ Route::is('FinalGrading*', 'TransitFinalGrading*', 'TransitFinalGradingRework*') ? 'active' : '' }}">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-three-dots"></i>
+                                    <span>Final Grading</span>
+                                </a>
+                                <ul class="submenu">
+                                    <li
+                                        class="submenu-item has-sub {{ Route::is('FinalGrading*', 'TransitFinalGrading*', 'TransitFinalGradingRework*') ? 'active' : '' }}">
+                                        <a href="#" class='submenu-link'>
+                                            <span>Final Grading</span>
+                                        </a>
+                                        <ul class="submenu submenu-level-2">
+                                            <li class="submenu-item {{ Route::is('FinalGrading*') ? 'active' : '' }}">
+                                                <a href="{{ route('FinalGrading.index') }}" class="submenu-link">Final
+                                                    Grading</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitFinalGrading*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitFinalGrading.index') }}"
+                                                    class="submenu-link">Transit Final Grading</a>
+                                            </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('TransitFinalGradingRework*') ? 'active' : '' }}">
+                                                <a href="{{ route('TransitFinalGradingRework.index') }}"
+                                                    class="submenu-link">Transit Final Grading Rework</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endrole
 
                     </ul>
                 </div>

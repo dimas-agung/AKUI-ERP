@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers\FinalGrading;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\TransitFinalGradingRework;
-use Illuminate\Http\Request;
 
 class TransitFinalGradingReworkController extends Controller
 {
     //
     public function index()
     {
-        $i = 1;
-        $TransitFGR = TransitFinalGradingRework::where('status','>',0)->get();
-        // $TransitFGR = PreCleaningStock::get();
-        // return ($TransitFGR);
+        $TransitFinalGradingRework = TransitFinalGradingRework::where('status', TransitFinalGradingRework::STATUS_AKTIF)->get();
         return response()->view('FinalGrading.TransitFinalGradingRework.index', [
-            'TransitFGR'       => $TransitFGR,
-            'i'             => $i
+            'transit_final_grading_rework' => $TransitFinalGradingRework
         ]);
     }
 }

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class FinalGrading extends Model
 {
     use HasFactory;
+    const   STATUS_NON_AKTIF = 0;
+    const   STATUS_AKTIF = 1;
     protected $table = 'final_gradings';
     protected $fillable = [
         'nomor_job',
@@ -49,4 +51,11 @@ class FinalGrading extends Model
         'user_updated',
         'status',
     ];
+    public function can_delete()
+    {
+        if ($this->status ==  self::STATUS_AKTIF) {
+            return true;
+        }
+        return false;
+    }
 }

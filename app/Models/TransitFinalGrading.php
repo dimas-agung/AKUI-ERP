@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TransitFinalGrading extends Model
 {
     use HasFactory;
+    const STATUS_NON_AKTIF = 0;
+    const STATUS_AKTIF = 1;
     protected $table = 'transit_final_gradings';
     protected $fillable = [
         'unit',

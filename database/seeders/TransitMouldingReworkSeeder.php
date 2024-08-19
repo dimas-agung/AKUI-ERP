@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\TransitMouldingRework;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\TransitMouldingRework;
+use App\Models\TransitFinalGradingRework;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class TransitMouldingReworkSeeder extends Seeder
 {
@@ -13,37 +14,51 @@ class TransitMouldingReworkSeeder extends Seeder
      */
     public function run(): void
     {
+        //
         TransitMouldingRework::create([
-            'unit' => 'Transit Mouldig Rework',
-            'nomor_job_rework' => 'ufg_310724-093533',
-            'nomor_batch' => '093513',
-            'tujuan_kirim' => 'Malang',
-            'job_order' => 'SD',
-            'berat_job' => 150,
-            'pcs_job' => 15,
-            'modal' => '5000',
-            'total_modal' => '250000',
-            'nama_operator' => 'Son Haji',
-            'nip_operator' => '20002050693',
-            'grade_operator' => 'Ahli',
-            'nama_team_leader' => 'Tukinem',
-            'status' => 1,
+            'unit'                      => 'Moulding',
+            'nomor_job_rework'          => '290624_140303_A_UMD_R',
+            'nomor_batch'               => 'P202401.001.1902',
+            'tujuan_kirim'              => 'Akui',
+            'job_order'                 => 'A-MK-KT',
+            'berat_job'                 => 3,
+            'pcs_job'                   => 5,
+            'modal_per_jenis'           => 3000,
+            'total_modal_per_jenis'     => 4000,
+            'nama_operator'             => 'budi',
+            'nip_operator'              => '2002050623',
+            'grade_operator'            => 'SS',
+            'nama_team_leader'          => 'Anton',
         ]);
         TransitMouldingRework::create([
-            'unit' => 'Transit Mouldig Rework',
-            'nomor_job_rework' => 'ufg_310724-103525',
-            'nomor_batch' => '093513',
-            'tujuan_kirim' => 'Jombang',
-            'job_order' => 'MII',
-            'berat_job' => 100,
-            'pcs_job' => 10,
-            'modal' => '5000',
-            'total_modal' => '250000',
-            'nama_operator' => 'Son Haji',
-            'nip_operator' => '20002050693',
-            'grade_operator' => 'Ahli',
-            'nama_team_leader' => 'Tukinem',
-            'status' => 1,
+            'unit'                      => 'Moulding',
+            'nomor_job_rework'          => '290624_140303_O_UMD_R',
+            'nomor_batch'               => 'P202401.001.1902',
+            'tujuan_kirim'              => 'Obi',
+            'job_order'                 => 'A-KT',
+            'berat_job'                 => 5,
+            'pcs_job'                   => 5,
+            'modal_per_jenis'           => 5000,
+            'total_modal_per_jenis'     => 9000,
+            'nama_operator'             => 'Yono',
+            'nip_operator'              => '2002050623',
+            'grade_operator'            => 'SB',
+            'nama_team_leader'          => 'Bakri',
+        ]);
+        TransitMouldingRework::create([
+            'unit'                      => 'Moulding',
+            'nomor_job_rework'          => '300624_140303_A_UMD_R',
+            'nomor_batch'               => 'P202401.001.1902',
+            'tujuan_kirim'              => 'Akui',
+            'job_order'                 => 'B-KT',
+            'berat_job'                 => 5,
+            'pcs_job'                   => 5,
+            'modal_per_jenis'           => 5000,
+            'total_modal_per_jenis'     => 9000,
+            'nama_operator'             => 'Yono',
+            'nip_operator'              => '2002050623',
+            'grade_operator'            => 'SB',
+            'nama_team_leader'          => 'Bakri',
         ]);
     }
 }

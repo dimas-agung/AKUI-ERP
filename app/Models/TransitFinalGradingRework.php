@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TransitFinalGradingRework extends Model
 {
     use HasFactory;
+    const STATUS_NON_AKTIF = 0;
+    const STATUS_AKTIF = 1;
     protected $table = 'transit_final_grading_reworks';
     protected $fillable = [
         'unit',
