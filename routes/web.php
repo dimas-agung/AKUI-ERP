@@ -1082,11 +1082,11 @@ Route::middleware('auth')->group(function () {
                 Route::get('/transit_moulding', 'index')->name('TransitFinalGrading.index');
             });
         });
-        Route::prefix('transit_moulding_rework')->middleware('role:final_grading|admin')->group(function () {
-            Route::controller(App\Http\Controllers\FinalGrading\TransitFinalGradingReworkController::class)->group(function () {
-                Route::get('/transit_moulding_rework', 'index')->name('TransitFinalGradingRework.index');
-            });
-        });
+        // Route::prefix('transit_moulding_rework')->middleware('role:final_grading|admin')->group(function () {
+        //     Route::controller(App\Http\Controllers\FinalGrading\TransitFinalGradingReworkController::class)->group(function () {
+        //         Route::get('/transit_moulding_rework', 'index')->name('TransitFinalGradingRework.index');
+        //     });
+        // });
     });
 });
 

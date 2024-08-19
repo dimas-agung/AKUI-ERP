@@ -11,48 +11,48 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('final_gradings', function (Blueprint $table) {
-            $table->id();
-            $table->string('nomor_job');
-            $table->string('nomor_batch');
-            $table->string('tujuan_kirim');
-            $table->string('job_order');
-            $table->float('berat_job');
-            $table->float('pcs_job')->nullable();
-            $table->float('upah_operator');
-            $table->string('nama_operator');
-            $table->string('nip_operator');
-            $table->string('grade_operator');
-            $table->string('nama_team_leader');
-            $table->string('jenis_grading');
-            $table->float('berat_grading');
-            $table->float('pcs_grading')->nullable();
-            $table->string('rework');
-            $table->string('nomor_job_rework');
-            $table->string('kategori_susut');
-            $table->float('susut_depan', 16, 4)->nullable();
-            $table->float('susut_belakang', 16, 4)->nullable();
-            $table->float('modal', 16, 4);
-            $table->float('total_modal', 16, 4);
-            $table->float('biaya_produksi', 16, 4)->nullable();
-            $table->float('kontribusi', 16, 4);
-            $table->float('harga_estimasi', 16, 4);
-            $table->float('total_harga', 16, 4);
-            $table->float('nilai_laba_rugi', 16, 4);
-            $table->float('nilai_prosentase_total_keuntungan', 16, 4);
-            $table->float('nilai_dikurangi_keuntungan', 16, 4);
-            $table->float('prosentase_harga_gramasi', 16, 4);
-            $table->float('selisih_laba_rugi_kg', 16, 4);
-            $table->float('selisih_laba_rugi_per_gram', 16, 4);
-            $table->float('hpp', 16, 4);
-            $table->float('total_hpp', 16, 4);
-            $table->float('fix_hpp', 16, 4);
-            $table->float('fix_total_hpp', 16, 4);
-            $table->integer('status')->default(1)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_AKTIF');
-            $table->string('user_created');
-            $table->string('user_updated')->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('final_gradings', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('nomor_job');
+        //     $table->string('nomor_batch');
+        //     $table->string('tujuan_kirim');
+        //     $table->string('job_order');
+        //     $table->float('berat_job');
+        //     $table->float('pcs_job')->nullable();
+        //     $table->float('upah_operator');
+        //     $table->string('nama_operator');
+        //     $table->string('nip_operator');
+        //     $table->string('grade_operator');
+        //     $table->string('nama_team_leader');
+        //     $table->string('jenis_grading');
+        //     $table->float('berat_grading');
+        //     $table->float('pcs_grading')->nullable();
+        //     $table->string('rework');
+        //     $table->string('nomor_job_rework');
+        //     $table->string('kategori_susut');
+        //     $table->float('susut_depan', 16, 4)->nullable();
+        //     $table->float('susut_belakang', 16, 4)->nullable();
+        //     $table->float('modal', 16, 4);
+        //     $table->float('total_modal', 16, 4);
+        //     $table->float('biaya_produksi', 16, 4)->nullable();
+        //     $table->float('kontribusi', 16, 4);
+        //     $table->float('harga_estimasi', 16, 4);
+        //     $table->float('total_harga', 16, 4);
+        //     $table->float('nilai_laba_rugi', 16, 4);
+        //     $table->float('nilai_prosentase_total_keuntungan', 16, 4);
+        //     $table->float('nilai_dikurangi_keuntungan', 16, 4);
+        //     $table->float('prosentase_harga_gramasi', 16, 4);
+        //     $table->float('selisih_laba_rugi_kg', 16, 4);
+        //     $table->float('selisih_laba_rugi_per_gram', 16, 4);
+        //     $table->float('hpp', 16, 4);
+        //     $table->float('total_hpp', 16, 4);
+        //     $table->float('fix_hpp', 16, 4);
+        //     $table->float('fix_total_hpp', 16, 4);
+        //     $table->integer('status')->default(1)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_AKTIF');
+        //     $table->string('user_created');
+        //     $table->string('user_updated')->nullable();
+        //     $table->timestamps();
+        // });
     }
 
     /**

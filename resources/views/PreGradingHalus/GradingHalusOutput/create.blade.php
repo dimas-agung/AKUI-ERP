@@ -278,6 +278,7 @@
         $('#id_box_grading_halus').on('change', function() {
             let selectedIdBox = $(this).val();
             generateAfterIdboxChange(selectedIdBox)
+          
         });
         function generateAfterIdboxChange(selectedIdBox) {
             if (selectedNomorBSTB !== selectedIdBox) {
@@ -314,7 +315,8 @@
                         beratMasukAwal += totalBeratMasuk;
                         $('#pcs_masuk').val(totalPcsMasuk);
                         pcsMasukAwal += totalPcsMasuk;
-
+                        generateUpah();
+                        calculateUpah();
                         // Memanggil generateNomorBSTB dan mengatur nilai sesuai dengan respons dari server
                         // let generatedNomorBSTB = generateNomorBSTB(
                         //     'BSTB'); // Memanggil generateNomorBSTB dengan prefix 'BSTB'
@@ -328,7 +330,9 @@
                     }
                 });
             }
-            generateUpah()
+            console.log('yeesadhjnkjadj');
+            generateUpah();
+            calculateUpah();
 
         }
         $('#tujuan_kirim').on('change', function() {
@@ -352,6 +356,7 @@
             $.ajax({
                 url: `{{ route('GradingHalusOutput.setUpah') }}`,
                 method: 'GET',
+                async:false,
                 data: {
                     jenis: jenis_job
                 },
@@ -374,7 +379,7 @@
                 let hasil_upah = upah_operator * berat_job;
                 $('#upah_oprator').val(hasil_upah.toFixed(2)); // Menampilkan hasil dengan 2 desimal
             } else {
-                $('#upah_oprator').val('');
+                $('#upah_oprator').val(upah_operator);
             }
 
 
