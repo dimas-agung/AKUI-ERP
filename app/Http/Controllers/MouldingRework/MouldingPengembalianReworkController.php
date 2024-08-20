@@ -48,7 +48,10 @@ class MouldingPengembalianReworkController extends Controller
     // create
     public function create()
     {
-        $MouldingStockRework = MouldingPenyebaranRework::where('status', 1)->get();
+        $plant = auth()->user()->plant;
+        $MouldingStockRework = MouldingPenyebaranRework::where('tujuan_kirim', $plant)
+            ->where('status', 1)
+            ->get();
         return response()->view('MouldingRework.MouldingPengembalianRework.create', [
             'moulding_stock_rework' => $MouldingStockRework,
         ]);

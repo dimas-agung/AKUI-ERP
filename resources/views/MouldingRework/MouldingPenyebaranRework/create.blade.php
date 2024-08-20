@@ -73,7 +73,7 @@
 
                     <div class="col-md-4">
                         <label for="keterangan" class="form-label">Keterangan</label>
-                        <input type="text" class="form-control" id="keterangan">
+                        <input type="text" class="form-control" id="keterangan" placeholder="Masukan keterangan">
                     </div>
 
                     <div class="col-md-4">

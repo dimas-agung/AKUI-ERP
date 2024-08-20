@@ -73,8 +73,12 @@ class MouldingPersiapanReworkController extends Controller
      */
     public function create(): View
     {
+        $plant = auth()->user()->plant; // Ambil input plant dari user
+
         $MouldingPR = MouldingPersiapanRework::get();
-        $TransitFGR = TransitFinalGradingRework::get();
+        $TransitFGR = TransitFinalGradingRework::where('tujuan_kirim', $plant)
+            ->where('status', 1)
+            ->get();
         // return $TransitFGR;
         return view('MouldingRework.MouldingPersiapanRework.create', compact('TransitFGR', 'MouldingPR'));
     }
