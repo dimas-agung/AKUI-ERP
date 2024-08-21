@@ -16,7 +16,7 @@ class MouldingPenyebaranReworkSeeder extends Seeder
         MouldingPenyebaranRework::create([
             'nomor_job_rework' => 'ufg_310724-093533',
             'nomor_batch' => '093513',
-            'tujuan_kirim' => 'Malang',
+            'tujuan_kirim' => 'A',
             'job_order' => 'SD',
             'berat_job' => 150,
             'pcs_job' => 15,
@@ -34,7 +34,7 @@ class MouldingPenyebaranReworkSeeder extends Seeder
         MouldingPenyebaranRework::create([
             'nomor_job_rework' => 'ufg_310724-103525',
             'nomor_batch' => '093513',
-            'tujuan_kirim' => 'Jombang',
+            'tujuan_kirim' => 'O',
             'job_order' => 'MII',
             'berat_job' => 100,
             'pcs_job' => 10,

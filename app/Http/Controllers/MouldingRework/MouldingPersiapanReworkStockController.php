@@ -12,7 +12,10 @@ class MouldingPersiapanReworkStockController extends Controller
     public function index()
     {
         $i = 1;
-        $MouldingPRS = MouldingPersiapanReworkStock::where('status','>',0)->get();
+        $plant = auth()->user()->plant; // Ambil input plant dari user
+        $MouldingPRS = MouldingPersiapanReworkStock::where('status','>',0)
+            ->where('tujuan_kirim',  $plant)
+            ->get();
         // $MouldingPRS = PreCleaningStock::get();
         // return ($MouldingPRS);
         return response()->view('MouldingRework.MouldingPersiapanReworkStock.index', [

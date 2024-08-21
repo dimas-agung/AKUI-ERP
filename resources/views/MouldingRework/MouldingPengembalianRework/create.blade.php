@@ -89,7 +89,7 @@
 
                     <div class="col-md-12">
                         <label for="keterangan" class="form-label">Keterangan</label>
-                        <input type="text" class="form-control" id="keterangan">
+                        <input type="text" class="form-control" id="keterangan" placeholder="Masukan keterangan">
                     </div>
 
                     <div class="col-12 mt-3">
