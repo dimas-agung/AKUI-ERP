@@ -52,7 +52,7 @@ class KedatanganOutputController extends Controller
         $MasterBatch = MasterBatch::where('status', MasterBatch::STATUS_AKTIF)->get();
         $MasterJenisKedatangan = MasterJenisKedatangan::where('status', MasterJenisKedatangan::STATUS_AKTIF)->get();
         $MasterTujuanKirimKedatangan = MasterTujuanKirimKedatangan::where('status', MasterTujuanKirimKedatangan::STATUS_AKTIF)
-            ->where('inisial_tujuan', '=', $user)
+            // ->where('inisial_tujuan', '=', $user)
             ->get();
         return response()->view('Kedatangan.KedatanganOutput.create', [
             'master_batch'                      => $MasterBatch,

@@ -1548,44 +1548,6 @@
                                 </ul>
                             </li>
                         @endrole
-                        @role('final_grading_and_wip_steam|admin')
-                            <li
-                                class="sidebar-item has-sub {{ Route::is('GradingWarnaPenerimaanStock*') ? 'active' : '' }}">
-                                <a href="#" class='sidebar-link'>
-                                    <i class="bi bi-three-dots"></i>
-                                    <span>Final Grading & WIP Steam</span>
-                                </a>
-                                <ul class="submenu">
-                                    <li
-                                        class="submenu-item has-sub {{ Route::is('TransitFinalGradingRework*') ? 'active' : '' }}">
-                                        <a href="#" class='submenu-link'>
-                                            <span>Final Grading</span>
-                                        </a>
-                                        <ul class="submenu submenu-level-2">
-                                            <li
-                                                class="submenu-item {{ Route::is('TransitFinalGradingRework*') ? 'active' : '' }}">
-                                                <a href="{{ route('TransitFinalGradingRework.index') }}"
-                                                    class="submenu-link">Transit Final Grading Rework</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('MouldingReworkPersiapan*') ? 'active' : '' }}">
-                                                <a href="{{ route('MouldingReworkPersiapan.index') }}"
-                                                    class="submenu-link">Moulding Rework Persiapan</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('MouldingReworkPersiapanStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('MouldingReworkPersiapanStock.index') }}"
-                                                    class="submenu-link">Moulding Rework Stock</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endrole
-
-
-
-
                         @role('final_grading|admin')
                             <li
                                 class="sidebar-item has-sub {{ Route::is('FinalGrading*', 'TransitFinalGrading*', 'TransitFinalGradingRework*') ? 'active' : '' }}">
@@ -1618,7 +1580,13 @@
                                     </li>
                                 </ul>
                             </li>
+                            
                         @endrole
+
+
+
+
+                       
 
                     </ul>
                 </div>

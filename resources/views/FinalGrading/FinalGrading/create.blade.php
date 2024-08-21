@@ -102,10 +102,10 @@
                                     {{ $item->jenis }}</option>
                             @endforeach
                         </select>
-                        <input type="text" id="harga_estimasi">
-                        <input type="text" id="kontribusi">
-                        <input type="text" id="modal">
-                        <input type="text" id="total_modal">
+                        <input type="hidden" id="harga_estimasi">
+                        <input type="hidden" id="kontribusi">
+                        <input type="hidden" id="modal">
+                        <input type="hidden" id="total_modal">
                     </div>
 
                     <div class="col-md-3">
@@ -258,23 +258,14 @@
                         if (nomorJob) {
                             // Split string berdasarkan '_'
                             let parts = nomorJob.split('_');
-
-                            // Pastikan ada cukup bagian setelah split
-                            if (parts.length >= 4) {
-                                // Ambil karakter ketiga dari belakang
-                                let targetChar = parts[2];
-                                console.log(
-                                    `Processing nomorJob: ${nomorJob}`); // Debugging line
-                                console.log(
-                                    `Extracted character: ${targetChar}`); // Debugging line
-
+                            
                                 // Tambahkan nomorJob ke dalam dropdown jika karakter sesuai dengan userPlant
-                                if (targetChar === userPlant) {
+                                if (nomorJob.includes("_"+userPlant)) {
                                     targetSelect.append(
                                         `<option value="${nomorJob}">${nomorJob}</option>`
                                     );
                                 }
-                            }
+                            
                         }
                     });
                 };

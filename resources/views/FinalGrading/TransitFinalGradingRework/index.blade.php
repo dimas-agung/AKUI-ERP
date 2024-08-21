@@ -39,7 +39,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($TransitFGR as $item)
+                            @forelse ($transit_final_grading_rework as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>
                                     <td class="text-center">{{ $item->unit }}</td>
