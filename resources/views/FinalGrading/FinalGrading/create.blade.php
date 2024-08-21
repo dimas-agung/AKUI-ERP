@@ -258,14 +258,23 @@
                         if (nomorJob) {
                             // Split string berdasarkan '_'
                             let parts = nomorJob.split('_');
-                            
-                                // Tambahkan nomorJob ke dalam dropdown jika karakter sesuai dengan userPlant
-                                if (nomorJob.includes("_"+userPlant)) {
-                                    targetSelect.append(
-                                        `<option value="${nomorJob}">${nomorJob}</option>`
-                                    );
-                                }
-                            
+                            // nomorJob.include('_' + userPlant);
+                            // Pastikan ada cukup bagian setelah split
+                            // if (parts.length >= 4) {
+                            //     // Ambil karakter ketiga dari belakang
+                            //     let targetChar = parts[2];
+                            //     console.log(
+                            //         `Processing nomorJob: ${nomorJob}`); // Debugging line
+                            //     console.log(
+                            //         `Extracted character: ${targetChar}`); // Debugging line
+
+                            // Tambahkan nomorJob ke dalam dropdown jika karakter sesuai dengan userPlant
+                            if (nomorJob.includes('_' + userPlant)) {
+                                targetSelect.append(
+                                    `<option value="${nomorJob}">${nomorJob}</option>`
+                                );
+                            }
+                            // }
                         }
                     });
                 };

@@ -36,7 +36,7 @@
                                     {{ $item->tujuan_kirim }}</option>
                             @endforeach
                         </select>
-                        <input type="text" id="inisial_tujuan">
+                        <input type="hidden" id="inisial_tujuan">
                     </div>
 
                     <div class="col-md-4">
@@ -49,7 +49,7 @@
                                     {{ $item->jenis }}</option>
                             @endforeach
                         </select>
-                        <input type="text" id="harga_estimasi">
+                        <input type="hidden" id="harga_estimasi">
                     </div>
 
                     <div class="col-md-3">
