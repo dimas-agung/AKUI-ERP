@@ -11,7 +11,10 @@ class TransitFinalGradingController extends Controller
     //
     public function index()
     {
-        $TransitFinalGrading = TransitFinalGrading::where('status', TransitFinalGrading::STATUS_AKTIF)->get();
+        $user = auth()->user()->plant;
+        $TransitFinalGrading = TransitFinalGrading::where('status', TransitFinalGrading::STATUS_AKTIF)
+            ->where('tujuan_kirim', '=', $user)
+            ->get();
         return response()->view('FinalGrading.TransitFinalGrading.index', [
             'transit_final_grading' => $TransitFinalGrading
         ]);

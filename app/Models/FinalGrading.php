@@ -58,4 +58,8 @@ class FinalGrading extends Model
         }
         return false;
     }
+    public function TransitFinalGrading()
+    {
+        return $this->hasMany(TransitFinalGrading::class, 'nomor_job', 'nomor_job');
+    }
 }

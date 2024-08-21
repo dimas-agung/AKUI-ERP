@@ -11,7 +11,10 @@ class TransitFinalGradingReworkController extends Controller
     //
     public function index()
     {
-        $TransitFinalGradingRework = TransitFinalGradingRework::where('status', TransitFinalGradingRework::STATUS_AKTIF)->get();
+        $user = auth()->user()->plant;
+        $TransitFinalGradingRework = TransitFinalGradingRework::where('status', TransitFinalGradingRework::STATUS_AKTIF)
+            ->where('tujuan_kirim', '=', $user)
+            ->get();
         return response()->view('FinalGrading.TransitFinalGradingRework.index', [
             'transit_final_grading_rework' => $TransitFinalGradingRework
         ]);

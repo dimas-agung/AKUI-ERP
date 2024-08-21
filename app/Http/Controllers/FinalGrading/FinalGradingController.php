@@ -19,9 +19,26 @@ class FinalGradingController extends Controller
         $this->FinalGradingService = $FinalGradingService;
     }
     //index
-    public function index()
+    public function index(Request $request)
     {
-        $FinalGrading = FinalGrading::where('status', FinalGrading::STATUS_AKTIF)->get();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $user = auth()->user()->plant;
+
+        $query = FinalGrading::query();
+
+        if ($startDate && $endDate) {
+            $query->whereBetween(FinalGrading::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
+            $FinalGrading = $query->with('TransitFinalGrading')->get();
+        } else {
+            $FinalGrading = FinalGrading::with('TransitFinalGrading')
+                // ->where('created_at','>=', Carbon::now()->subDays(2))
+                ->where('tujuan_kirim', '=', $user)
+                ->limit(1000)
+                ->latest()
+                ->get();
+        }
+
         return response()->view('FinalGrading.FinalGrading.index', [
             'final_grading' => $FinalGrading,
         ]);
@@ -29,26 +46,32 @@ class FinalGradingController extends Controller
     // create
     public function create()
     {
-        $TransitMoulding =  TransitMoulding::where('status', TransitMoulding::STATUS_AKTIF)->get();
-        $TransitMouldingRework =  TransitMouldingRework::where('status', TransitMouldingRework::STATUS_AKTIF)->get();
+        // $TransitMoulding =  TransitMoulding::where('status', TransitMoulding::STATUS_AKTIF)->get();
+        // $TransitMouldingRework =  TransitMouldingRework::where('status', TransitMouldingRework::STATUS_AKTIF)->get();
         $MasterJenisFinalGrading =  MasterJenisFinalGrading::where('status', MasterJenisFinalGrading::STATUS_AKTIF)->get();
         // return $TransitMouldingRework;
         return view('FinalGrading.FinalGrading.create', [
-            'transit_moulding'              => $TransitMoulding,
-            'transit_moulding_rework'       => $TransitMouldingRework,
+            // 'transit_moulding'              => $TransitMoulding,
+            // 'transit_moulding_rework'       => $TransitMouldingRework,
             'master_jenis_final_grading'    => $MasterJenisFinalGrading,
         ]);
     }
     // get data transit moulding
     public function getMoulding()
     {
-        $data = TransitMoulding::where('status', TransitMoulding::STATUS_AKTIF)->get();
+        $user = auth()->user()->plant;
+        $data = TransitMoulding::where('status', TransitMoulding::STATUS_AKTIF)
+            ->where('tujuan_kirim', '=', $user)
+            ->get();
         return response()->json($data);
     }
     // get data transit moulding rework
     public function getRework()
     {
-        $data = TransitMouldingRework::where('status', TransitMouldingRework::STATUS_AKTIF)->get();
+        $user = auth()->user()->plant;
+        $data = TransitMouldingRework::where('status', TransitMouldingRework::STATUS_AKTIF)
+            ->where('tujuan_kirim', '=', $user)
+            ->get();
         return response()->json($data);
     }
     // set transit moulding
