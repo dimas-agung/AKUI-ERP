@@ -266,6 +266,12 @@
                                             Jenis<br>Kedatangan</a>
                                     </li>
 
+                                    <li class="submenu-item {{ Route::is('MasterJenisFinalGrading*') ? 'active' : '' }}">
+                                        <a href="{{ route('MasterJenisFinalGrading.index') }}"
+                                            class="submenu-link">Master
+                                            Jenis<br>Final Grading</a>
+                                    </li>
+
                                     <li
                                         class="submenu-item {{ Route::is('MasterTujuanKirimRawMaterial*') ? 'active' : '' }}">
                                         <a href="{{ route('MasterTujuanKirimRawMaterial.index') }}"
@@ -881,7 +887,8 @@
                                             </li>
                                             <li
                                                 class="submenu-item {{ Route::is('PreCleaningReport*') ? 'active' : '' }}">
-                                                <a href="{{ route('PreCleaningReport.index') }}" class="submenu-link">Pre
+                                                <a href="{{ route('PreCleaningReport.index') }}"
+                                                    class="submenu-link">Pre
                                                     Cleaning <br>Report</a>
                                             </li>
                                         </ul>
