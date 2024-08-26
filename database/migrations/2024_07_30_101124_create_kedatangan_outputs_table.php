@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('keterangan')->nullable();
             $table->string('nomor_job');
             $table->string('nomor_bstb');
-            $table->float('modal');
-            $table->float('total_modal');
+            $table->float('modal',16, 4);
+            $table->float('total_modal',16, 4);
             $table->string('user_created');
             $table->string('user_updated')->nullable();
             $table->integer('status')->default(1)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_AKTIF');

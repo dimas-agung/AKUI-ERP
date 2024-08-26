@@ -7,6 +7,7 @@ use App\Models\TransitKedatangan;
 use App\Http\Controllers\Controller;
 use App\Models\GradingWarnaPenerimaanKedatangan;
 use App\Services\GradingWarnaPenerimaanKedatanganService;
+use Illuminate\Support\Facades\Auth;
 
 class GradingWarnaPenerimaanKedatanganController extends Controller
 {
@@ -28,12 +29,9 @@ class GradingWarnaPenerimaanKedatanganController extends Controller
 
         if ($startDate && $endDate) {
             $query->whereBetween(GradingWarnaPenerimaanKedatangan::raw('DATE_FORMAT(created_at, "%Y-%m-%d")'), [$startDate, $endDate]);
-            $GradingWarnaPenerimaanKedatangan = $query->with('GradingWarnaPenerimaanStock')->get();
+            $GradingWarnaPenerimaanKedatangan = $query->with('GradingWarnaPenerimaanStock') ->latest()->get();
         } else {
-            $GradingWarnaPenerimaanKedatangan = GradingWarnaPenerimaanKedatangan::where('status', GradingWarnaPenerimaanKedatangan::STATUS_AKTIF)
-                // ->where('plant', '=', $user)
-                // ->where('created_at','>=', Carbon::now()->subDays(2))
-                ->limit(1000)
+            $GradingWarnaPenerimaanKedatangan = GradingWarnaPenerimaanKedatangan::limit(1000)
                 ->latest()
                 ->get();
         }
@@ -45,7 +43,7 @@ class GradingWarnaPenerimaanKedatanganController extends Controller
     // create
     public function create()
     {
-        $TransitKedatangan = TransitKedatangan::where('status', TransitKedatangan::STATUS_AKTIF)
+        $TransitKedatangan = TransitKedatangan::where('status', TransitKedatangan::STATUS_AKTIF)->where('tujuan_kirim','UMD_'.Auth::user()->plant)
             ->distinct('nomor_bstb')
             ->pluck('nomor_bstb');
         // return $TransitKedatangan;

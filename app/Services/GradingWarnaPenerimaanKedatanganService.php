@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
 use App\Models\GradingWarnaPenerimaanStock;
 use App\Models\GradingWarnaPenerimaanKedatangan;
+use Illuminate\Support\Facades\Auth;
 
 class GradingWarnaPenerimaanKedatanganService
 {
@@ -109,7 +110,7 @@ class GradingWarnaPenerimaanKedatanganService
                         'nomor_job'             => $mergedData['nomor_job'],
                         'nomor_bstb'            => $mergedData['nomor_bstb'],
                         'nomor_batch'           => $mergedData['nomor_batch'],
-                        'tujuan_kirim'          => $mergedData['tujuan_kirim'],
+                        'tujuan_kirim'          => Auth::user()->plant,
                         'keterangan'            => $mergedData['keterangan'],
                         'berat_kotor'           => $mergedData['berat_kotor'] ?? 0,
                         'jenis_grading'         => $mergedData['jenis_grading'],

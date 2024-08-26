@@ -305,11 +305,11 @@
                 //     $('#prosentase_susut').val('');
                 // } else {
                     // Hitung prosentase susut
-                    if (!isNaN(beratKotor) && !isNaN(beratKotorAdding) && beratKotor != 0) {
+                    if (beratKotor != 0 && !isNaN(beratKotor) && !isNaN(beratKotorAdding) && beratKotor != 0) {
                         var presentaseSusut = 100 - ((beratKotorAdding / beratKotor) * 100);
                         $('#prosentase_susut').val(presentaseSusut.toFixed(2) + '%');
                     } else {
-                        $('#prosentase_susut').val('');
+                        $('#prosentase_susut').val(0);
                     }
                 // }
             });
@@ -404,7 +404,7 @@
                     let nomor_lot = $('#nomor_lot').val();
                     let berat_kotor_adding = $('#berat_kotor_adding').val();
                     let prosentase_susut = $('#prosentase_susut').val();
-                    let keterangan = $('#keterangan_2').val();
+                    let keterangan = $('#keterangan_2').val() ?? '';
                     let user_created = $('#user_created').val();
 
                     // Hapus Nomor Job
