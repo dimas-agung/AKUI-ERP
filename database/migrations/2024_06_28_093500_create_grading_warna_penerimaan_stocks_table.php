@@ -18,12 +18,12 @@ return new class extends Migration
             $table->string('nomor_bstb');
             $table->string('nomor_batch');
             $table->string('tujuan_kirim');
-            $table->string('keterangan');
-            $table->float('berat_kotor');
+            $table->string('keterangan')->nullable();
+            $table->float('berat_kotor')->default(0);
             $table->string('jenis_grading');
             $table->float('berat_1_grading');
             $table->float('pcs_1_grading');
-            $table->float('berat_2_grading');
+            $table->float('berat_2_grading')->default(0);
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
             $table->integer('status')->default(1);

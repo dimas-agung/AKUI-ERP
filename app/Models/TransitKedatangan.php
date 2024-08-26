@@ -24,6 +24,7 @@ class TransitKedatangan extends Model
         'modal',
         'total_modal',
         'status',
+        'plant'
     ];
 
     public function can_delete()

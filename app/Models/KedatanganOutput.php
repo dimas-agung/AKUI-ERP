@@ -25,6 +25,7 @@ class KedatanganOutput extends Model
         'user_created',
         'user_updated',
         'status',
+        'plant',
     ];
 
     public function can_delete()

@@ -7,6 +7,7 @@ use App\Models\TransitKedatangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class KedatanganOutputService
@@ -42,7 +43,7 @@ class KedatanganOutputService
                 try {
                     DB::beginTransaction();
 
-                    KedatanganOutput::create($data);
+                    $KedatanganOutput = KedatanganOutput::create($data);
 
                     TransitKedatangan::create([
                         'unit'              => $data['unit'] ?? 'Kedatangan',
@@ -55,6 +56,7 @@ class KedatanganOutputService
                         'nomor_job'         => $data['nomor_job'],
                         'nomor_bstb'        => $data['nomor_bstb'],
                         'modal'             => $data['modal'] ?? 0,
+                        'plant' => $KedatanganOutput->plant,
                         'total_modal'       => $data['total_modal'] ?? 0,
                     ]);
 

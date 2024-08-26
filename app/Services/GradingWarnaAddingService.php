@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use App\Models\GradingWarnaPenerimaan;
 use App\Models\GradingWarnaAddingStock;
+use App\Models\GradingWarnaPenerimaanKedatangan;
 use Illuminate\Support\Facades\Validator;
 use App\Models\GradingWarnaPenerimaanStock;
 
@@ -119,10 +120,18 @@ class GradingWarnaAddingService
                             'status'       => GradingWarnaAdding::STATUS_NON_AKTIF,
                         ]);
                     }
+                    
                     // Update Status Penerimaan
                     $GradingWarnaPenerimaan = GradingWarnaPenerimaan::where('nomor_job', '=', $GradingWarnaAdding->nomor_job)
                         ->get();
                     foreach ($GradingWarnaPenerimaan as $item) {
+                        $item->update([
+                            'status'       => GradingWarnaAdding::STATUS_NON_AKTIF,
+                        ]);
+                    }
+                    $GradingWarnaPenerimaanKedatangan = GradingWarnaPenerimaanKedatangan::where('nomor_job', '=', $GradingWarnaAdding->nomor_job)
+                        ->get();
+                    foreach ($GradingWarnaPenerimaanKedatangan as $item) {
                         $item->update([
                             'status'       => GradingWarnaAdding::STATUS_NON_AKTIF,
                         ]);
@@ -226,6 +235,13 @@ class GradingWarnaAddingService
             $GradingWarnaPenerimaan = GradingWarnaPenerimaan::where('nomor_job', '=', $GradingWarnaAdding->nomor_job)
                 ->get();
             foreach ($GradingWarnaPenerimaan as $item) {
+                $item->update([
+                    'status'       => GradingWarnaAdding::STATUS_AKTIF,
+                ]);
+            }
+            $GradingWarnaPenerimaanKedatangan = GradingWarnaPenerimaanKedatangan::where('nomor_job', '=', $GradingWarnaAdding->nomor_job)
+            ->get();
+            foreach ($GradingWarnaPenerimaanKedatangan as $item) {
                 $item->update([
                     'status'       => GradingWarnaAdding::STATUS_AKTIF,
                 ]);

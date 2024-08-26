@@ -32,7 +32,7 @@
                             data-placeholder="Pilih Tujuan Kirim">
                             <option value="">Pilih Tujuan Kirim</option>
                             @foreach ($master_tujuan_kirim_kedatangan as $item)
-                                <option value="{{ $item->tujuan_kirim }}">
+                                <option value="{{ $item->inisial_tujuan }}">
                                     {{ $item->tujuan_kirim }}</option>
                             @endforeach
                         </select>
@@ -190,27 +190,11 @@
             $('#tujuan_kirim').on('change', function() {
                 selectedTujuanKirim = $(this).val();
 
-                $.ajax({
-                    url: '{{ route('KedatanganOutput.setTujuanKirim') }}',
-                    method: 'GET',
-                    data: {
-                        tujuan_kirim: selectedTujuanKirim
-                    },
-                    success: function(response) {
-                        console.log(response);
+                // Memanggil fungsi generateNomorBSTB dengan nilai baru
+                generateNomorBSTB(selectedTujuanKirim);
+                generateNomorJob(selectedTujuanKirim);
 
-                        // Mengatur nilai sesuai dengan respons dari server
-                        $('#tujuan_kirim').val(response.tujuan_kirim);
-                        $('#inisial_tujuan').val(response.inisial_tujuan);
 
-                        // Memanggil fungsi generateNomorBSTB dengan nilai baru
-                        generateNomorBSTB(response.inisial_tujuan);
-                        generateNomorJob(response.inisial_tujuan);
-                    },
-                    error: function(error) {
-                        console.error('Error:', error);
-                    }
-                });
             });
             // Generate Nomor BSTB
             function generateNomorBSTB(selectedInisialTujuan) {
@@ -238,7 +222,7 @@
             function generateNomorJob() {
                 // Ambil nilai berat, inisial
                 const berat = $('#berat').val();
-                const inisialTujuan = $('#inisial_tujuan').val();
+                const inisialTujuan = $('#tujuan_kirim').val();
 
                 if (!inisialTujuan) {
                     $('#nomor_job').val('');
@@ -334,6 +318,7 @@
                 console.log("Modal = " + modal);
                 let total_modal = berat * modal;
                 let user_created = $('#user_created').val();
+                let plant = tujuan_kirim.substr(-1)
                 // dataArray[] = [
 
                 // ];
@@ -349,7 +334,8 @@
                     modal,
                     total_modal,
                     keterangan,
-                    user_created
+                    user_created,
+                    plant
                 });
                 renderTable();
                 // disable input
