@@ -222,6 +222,30 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_tujuan_kirim_moulding/update/{id}', 'update')->name('MasterTujuanKirimMoulding.update');
             Route::delete('/master_tujuan_kirim_moulding/destroy/{id}', 'destroy')->name('MasterTujuanKirimMoulding.destroy');
         });
+
+        Route::controller(App\Http\Controllers\MasterBatchController::class)->group(function () {
+            Route::get('/master_batch', 'index')->name('MasterBatch.index');
+            Route::post('/master_batch/store', 'store')->name('MasterBatch.store');
+            Route::get('/master_batch/edit/{id}', 'edit')->name('MasterBatch.edit');
+            Route::put('/master_batch/update/{id}', 'update')->name('MasterBatch.update');
+            Route::delete('/master_batch/destroy/{id}', 'destroy')->name('MasterBatch.destroy');
+        });
+
+        Route::controller(App\Http\Controllers\MasterJenisKedatanganController::class)->group(function () {
+            Route::get('/master_jenis_kedatangan', 'index')->name('MasterJenisKedatangan.index');
+            Route::post('/master_jenis_kedatangan/store', 'store')->name('MasterJenisKedatangan.store');
+            Route::get('/master_jenis_kedatangan/edit/{id}', 'edit')->name('MasterJenisKedatangan.edit');
+            Route::put('/master_jenis_kedatangan/update/{id}', 'update')->name('MasterJenisKedatangan.update');
+            Route::delete('/master_jenis_kedatangan/destroy/{id}', 'destroy')->name('MasterJenisKedatangan.destroy');
+        });
+
+        Route::controller(App\Http\Controllers\MasterTujuanKirimKedatanganController::class)->group(function () {
+            Route::get('/master_tujuan_kirim_kedatangan', 'index')->name('MasterTujuanKirimKedatangan.index');
+            Route::post('/master_tujuan_kirim_kedatangan/store', 'store')->name('MasterTujuanKirimKedatangan.store');
+            Route::get('/master_tujuan_kirim_kedatangan/edit/{id}', 'edit')->name('MasterTujuanKirimKedatangan.edit');
+            Route::put('/master_tujuan_kirim_kedatangan/update/{id}', 'update')->name('MasterTujuanKirimKedatangan.update');
+            Route::delete('/master_tujuan_kirim_kedatangan/destroy/{id}', 'destroy')->name('MasterTujuanKirimKedatangan.destroy');
+        });
     });
    
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
@@ -844,8 +868,34 @@ Route::middleware('auth')->group(function () {
             });
         });
     });
-    Route::prefix('moulding')->middleware(['role:moulding|admin|production'])->group(function () {
-        Route::prefix('grading_warna')->middleware('role:moulding|admin|production')->group(function () {
+    Route::prefix('kedatangan')->middleware(['role:kedatangan|admin'])->group(function () {
+        Route::prefix('kedatangan_output')->middleware('role:kedatangan|admin')->group(function () {
+            Route::controller(App\Http\Controllers\Kedatangan\KedatanganOutputController::class)->group(function () {
+                Route::get('/kedatangan_output', 'index')->name('KedatanganOutput.index');
+                Route::get('/kedatangan_output/create', 'create')->name('KedatanganOutput.create');
+                Route::post('/kedatangan_output/store', 'store')->name('KedatanganOutput.store');
+                Route::delete('/kedatangan_output/destroy/{nomor_bstb}', 'destroy')->name('KedatanganOutput.destroy');
+                Route::get('/kedatangan_output/set_batch', 'setBatch')->name('KedatanganOutput.setBatch');
+                Route::get('/kedatangan_output/set_jenis', 'setJenis')->name('KedatanganOutput.setJenis');
+                Route::get('/kedatangan_output/set_tujuan_kirim', 'setTujuanKirim')->name('KedatanganOutput.setTujuanKirim');
+            });
+        });
+        Route::prefix('transit_kedatangan')->middleware('role:kedatangan|admin')->group(function () {
+            Route::controller(App\Http\Controllers\Kedatangan\TransitKedatanganController::class)->group(function () {
+                Route::get('/transit_kedatangan', 'index')->name('TransitKedatangan.index');
+            });
+        });
+    });
+    Route::prefix('moulding')->middleware(['role:moulding|admin'])->group(function () {
+        Route::prefix('grading_warna')->middleware('role:moulding|admin')->group(function () {
+            Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaPenerimaanKedatanganController::class)->group(function () {
+                Route::get('/grading_warna_penerimaan_kedatangan', 'index')->name('GradingWarnaPenerimaanKedatangan.index');
+                Route::get('/grading_warna_penerimaan_kedatangan/create', 'create')->name('GradingWarnaPenerimaanKedatangan.create');
+                Route::post('/grading_warna_penerimaan_kedatangan/store', 'store')->name('GradingWarnaPenerimaanKedatangan.store');
+                Route::post('/grading_warna_penerimaan_kedatangan/cek_data', 'CeksendData')->name('GradingWarnaPenerimaanKedatangan.CeksendData');
+                Route::get('/grading_warna_penerimaan_kedatangan/set_bstb', 'setBSTB')->name('GradingWarnaPenerimaanKedatangan.setBSTB');
+                Route::delete('/grading_warna_penerimaan_kedatangan/destroy/{nomor_job}', 'destroy')->name('GradingWarnaPenerimaanKedatangan.destroy');
+            });
             Route::controller(App\Http\Controllers\GradingWarna\GradingWarnaAddingController::class)->group(function () {
                 Route::get('/grading_warna_adding', 'index')->name('GradingWarnaAdding.index');
                 Route::get('/grading_warna_adding/create', 'create')->name('GradingWarnaAdding.create');
@@ -916,7 +966,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/moulding_penyebaran/set_job', 'setJob')->name('MouldingPenyebaran.setJob');
                 Route::get('/moulding_penyebaran/set_nip', 'setNip')->name('MouldingPenyebaran.setNip');
             });
-            
+
             Route::controller(App\Http\Controllers\Moulding\MouldingStockController::class)->group(function () {
                 Route::get('/moulding_stock', 'index')->name('MouldingStock.index');
             });
@@ -961,7 +1011,6 @@ Route::middleware('auth')->group(function () {
                 Route::get('/moulding_waste_output/setjenis', 'setJenis')->name('MouldingWasteOutput.setJenis');
                 Route::delete('/moulding_waste_output/destroy/{id_box}', 'destroy')->name('MouldingWasteOutput.destroy');
             });
-
 
             Route::controller(App\Http\Controllers\MouldingWaste\TransitMouldingWasteController::class)->group(function () {
                 Route::get('/transit_moulding_waste', 'index')->name('TransitMouldingWaste.index');

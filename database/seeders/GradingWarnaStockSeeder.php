@@ -16,7 +16,7 @@ class GradingWarnaStockSeeder extends Seeder
         //
         GradingWarnaStock::create([
             'unit'                  => 'Grading Warna',
-            'id_box_grading_warna'  => '228792_0123456-A',
+            'id_box_grading_warna'  => '228792_0123456_A',
             'nomor_batch'           => '228721',
             'tujuan_kirim'          => 'Jombang',
             'jenis_grading'         => 'SD',
@@ -32,7 +32,7 @@ class GradingWarnaStockSeeder extends Seeder
         ]);
         GradingWarnaStock::create([
             'unit'                  => 'Grading Warna',
-            'id_box_grading_warna'  => '228752_0123456-A',
+            'id_box_grading_warna'  => '228752_0123456_A',
             'nomor_batch'           => '228721',
             'tujuan_kirim'          => 'Jombang',
             'jenis_grading'         => 'SD',
@@ -48,7 +48,7 @@ class GradingWarnaStockSeeder extends Seeder
         ]);
         GradingWarnaStock::create([
             'unit'                  => 'Grading Warna',
-            'id_box_grading_warna'  => '228722_0123956-A',
+            'id_box_grading_warna'  => '228722_0123956_A',
             'nomor_batch'           => '228721',
             'tujuan_kirim'          => 'Jombang',
             'jenis_grading'         => 'SD',

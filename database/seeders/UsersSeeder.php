@@ -62,7 +62,6 @@ class UsersSeeder extends Seeder
 
         // ]);
         // $user->assignRole(['pre_cleaning']);
-
         // foreach ($request->input('role') as $key => $value) {
         //     # code...
         //     $user->assignRole([$value]);

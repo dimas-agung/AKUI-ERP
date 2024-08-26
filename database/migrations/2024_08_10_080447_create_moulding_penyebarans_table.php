@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('moulding_pengembalians', function (Blueprint $table) {
+        Schema::create('moulding_penyebarans', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_job');
             $table->string('nomor_batch');
@@ -23,14 +23,12 @@ return new class extends Migration
             $table->float('total_modal_nomor_job', 16, 4);
             $table->float('upah_operator', 16, 4);
             $table->timestamp('waktu_penyebaran');
-            $table->timestamp('waktu_pengembalian');
-            $table->integer('lama_pengerjaan');
             $table->string('nama_operator');
             $table->string('nip_operator');
             $table->string('grade_operator');
             $table->string('nama_team_leader');
+            $table->integer('status')->default(2)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_ON_STOCK, 2 => STATUS_ON_PROSES, 3 => STATUS_FINISHED');
             $table->string('keterangan')->nullable();
-            $table->integer('status')->default(3)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_ON_STOCK, 2 => STATUS_ON_PROSES, 3 => STATUS_FINISHED');
             $table->string('user_created');
             $table->string('user_updated')->nullable();
             $table->timestamps();
@@ -42,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('moulding_pengembalians');
+        Schema::dropIfExists('moulding_penyebarans');
     }
 };

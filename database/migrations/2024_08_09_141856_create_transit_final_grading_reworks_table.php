@@ -11,26 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('moulding_penyebarans', function (Blueprint $table) {
+        // Schema::create('transit_final_grading_reworks', function (Blueprint $table) {
         //     $table->id();
-        //     $table->string('nomor_job');
+        //     $table->string('unit');
+        //     $table->string('nomor_job_rework');
         //     $table->string('nomor_batch');
         //     $table->string('tujuan_kirim');
         //     $table->string('job_order');
         //     $table->float('berat_job');
-        //     $table->float('pcs_job');
-        //     $table->float('modal_nomor_job', 16, 4);
-        //     $table->float('total_modal_nomor_job', 16, 4);
-        //     $table->float('upah_operator', 16, 4);
-        //     $table->timestamp('waktu_penyebaran');
+        //     $table->float('pcs_job')->nullable();
+        //     $table->float('modal_per_jenis', 16, 4);
+        //     $table->float('total_modal_per_jenis', 16, 4);
         //     $table->string('nama_operator');
         //     $table->string('nip_operator');
         //     $table->string('grade_operator');
         //     $table->string('nama_team_leader');
-        //     $table->integer('status')->default(2)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_ON_STOCK, 2 => STATUS_ON_PROSES, 3 => STATUS_FINISHED');
-        //     $table->string('keterangan')->nullable();
-        //     $table->string('user_created');
-        //     $table->string('user_updated')->nullable();
+        //     $table->integer('status')->default(1)->comment('0 => STATUS_NON_AKTIF, 1 => STATUS_AKTIF');
         //     $table->timestamps();
         // });
     }
@@ -40,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('moulding_penyebarans');
+        Schema::dropIfExists('transit_final_grading_reworks');
     }
 };

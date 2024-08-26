@@ -13,6 +13,7 @@ return new class extends Migration
     {
         //
         Schema::table('moulding_waste_stocks', function (Blueprint $table) {
+            $table->string('unit')->nullable();
             $table->string('plant');
         });
     }
