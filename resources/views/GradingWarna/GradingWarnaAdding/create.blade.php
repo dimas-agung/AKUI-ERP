@@ -62,7 +62,7 @@
 
                     <div class="col-md-4">
                         <label for="nomor_lot" class="form-label">Nomor Lot</label>
-                        <input type="text" class="form-control" id="nomor_lot" >
+                        <input type="text" class="form-control" id="nomor_lot" readonly>
                     </div>
 
                     <div class="col-md-4">

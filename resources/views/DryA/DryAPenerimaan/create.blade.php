@@ -152,7 +152,7 @@
                             </div>
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-primary" onclick="addRow()">Add</button>
-                                <a href="{{ Route('DryAPenerimaan.index') }}" type="button" class="btn btn-danger"
+                                <a href="{{ Route('DryAPenerimaan.index') }}" style="margin-left: 20px" type="button" class="btn btn-danger"
                                     data-dismiss="modal">Close</a>
                             </div>
                         </div>

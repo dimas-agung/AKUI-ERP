@@ -223,6 +223,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/master_tujuan_kirim_moulding/destroy/{id}', 'destroy')->name('MasterTujuanKirimMoulding.destroy');
         });
     });
+   
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
             Route::get('/prm_raw_material_input', 'index')->name('PrmRawMaterialInput.index');
@@ -966,7 +967,25 @@ Route::middleware('auth')->group(function () {
                 Route::get('/transit_moulding_waste', 'index')->name('TransitMouldingWaste.index');
             });
         });
+
+
     });
+    Route::prefix('produktivitas')->middleware(['role:hr|admin|production'])->group(function () {
+        Route::prefix('cabut_bulu')->group(function () {
+            Route::controller(App\Http\Controllers\Produktivitas\ProduktivitasCabutBuluController::class)->group(function () {
+                Route::get('/produktivitas', 'index')->name('ProduktivitasCabutBulu.index');
+                
+            });
+        });
+        Route::prefix('cabut_bulu_hancuran')->group(function () {
+            Route::controller(App\Http\Controllers\Produktivitas\ProduktivitasCabutBuluHancuranController::class)->group(function () {
+                Route::get('/produktivitas_cabut_hancuran', 'index')->name('ProduktivitasCabutBuluHancuran.index');
+                
+            });
+        });
+
+    });
+
 });
 
 Auth::routes();

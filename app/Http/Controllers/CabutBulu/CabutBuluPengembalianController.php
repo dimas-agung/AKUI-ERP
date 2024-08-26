@@ -49,14 +49,14 @@ class CabutBuluPengembalianController extends Controller
     // create
     public function create()
     {
-        $CabutBuluPenyebaran = CabutBuluPengembalian::all();
-        $CabutBuluStock = CabutBuluPenyebaran::all();
+        // $CabutBuluPenyebaran = CabutBuluPengembalian::all();
+        // $CabutBuluStock = CabutBuluPenyebaran::all();
         // $getUnusedNomorJob = CabutBuluPenyebaran::withCount('CabutBuluPenyebaran')->get();
-        $getUnusedNomorJob = CabutBuluPenyebaran::withCount('CabutBuluPengembalian')->get();
+        $getUnusedNomorJob = CabutBuluPenyebaran::withCount('CabutBuluPengembalian')->where('tujuan_kirim',Auth::user()->plant)->where('status',CabutBuluPenyebaran::STATUS_ON_PROSES)->get();
         // return $getUnusedNomorJob;
         return view('CabutBulu.CabutBuluPengembalian.create', [
-            'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
-            'cabut_bulu_stocks' => $CabutBuluStock,
+            // 'cabut_bulu_penyebarans' => $CabutBuluPenyebaran,
+            // 'cabut_bulu_stocks' => $CabutBuluStock,
             'get_unused_nomor_job' => $getUnusedNomorJob,
         ]);
     }

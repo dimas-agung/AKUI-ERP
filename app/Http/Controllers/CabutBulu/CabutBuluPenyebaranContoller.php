@@ -48,15 +48,17 @@ class CabutBuluPenyebaranContoller extends Controller
     // create
     public function create()
     {
+        // return 123;
         $MasterOperator = MasterOperator::where('unit','Cabut Bulu')->get();
-        $CabutBuluPenyebaran = CabutBuluPenyebaran::all();
-        $CabutBuluStock = CabutBuluStock::all();
+        // $CabutBuluPenyebaran = CabutBuluPenyebaran::all();
+        // $CabutBuluStock = CabutBuluStock::all();
         // $getUnusedNomorJob = CabutBuluPenyebaran::withCount('CabutBuluStock')->get();
-        $getUnusedNomorJob = CabutBuluStock::withCount('CabutBuluPenyebaran')->get();
+        $getUnusedNomorJob = CabutBuluStock::withCount('CabutBuluPenyebaran')->where('tujuan_kirim',Auth::user()->plant)->where('status',1)->get();
+        // return 123;
         // return $getUnusedNomorJob;
         return view('CabutBulu.CabutBuluPenyebaran.create', [
             'master_operators' => $MasterOperator,
-            'cabut_bulu_stocks' => $CabutBuluStock,
+            // 'cabut_bulu_stocks' => $CabutBuluStock,
             'get_unused_nomor_job' => $getUnusedNomorJob,
         ]);
     }
