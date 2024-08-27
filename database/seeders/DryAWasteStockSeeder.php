@@ -24,6 +24,7 @@ class DryAWasteStockSeeder extends Seeder
             'sisa_pcs' => '10',
             'modal' => '1000',
             'total_modal' => '50000',
+            'plant' => 'A',
             'status' => 1,
         ]);
         DryAWasteStock::create([
@@ -37,6 +38,7 @@ class DryAWasteStockSeeder extends Seeder
             'sisa_pcs' => '20',
             'modal' => '1000',
             'total_modal' => '100000',
+            'plant' => 'A',
             'status' => 1,
         ]);
         DryAWasteStock::create([
@@ -50,6 +52,7 @@ class DryAWasteStockSeeder extends Seeder
             'sisa_pcs' => '30',
             'modal' => '1000',
             'total_modal' => '300000',
+            'plant' => 'A',
             'status' => 1,
         ]);
     }

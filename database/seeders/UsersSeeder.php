@@ -161,16 +161,16 @@ class UsersSeeder extends Seeder
         // $user->syncRoles(['moulding']);
 
         $user = User::create([
-            'email' => 'AdminMouldingAKUI@gmail.com',
-            'password' => Hash::make('indomie2'),
+            'email' => 'adminAkui@gmail.com',
+            'password' => Hash::make('admin123'),
             'fullname' => 'Mochammad Asnan Rusdy',
-            'nip' => '224020767',
-            'plant' => 'O',
-            'username' => 'Mochammad Asnan Rusdy',
+            'nip' => '12345678',
+            'plant' => 'A',
+            'username' => 'admin',
             'phone_number' => '0111211212111121122311123',
             'birth_date' => '2000-04-09',
         ]);
-        $user->syncRoles(['moulding']);
+        $user->syncRoles(['admin']);
 
     }
 }

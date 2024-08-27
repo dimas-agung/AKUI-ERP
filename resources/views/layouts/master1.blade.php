@@ -1588,35 +1588,7 @@
                         @endrole
 
 
-                        @role('hr|admin|production')
-                        <li
-                            class="sidebar-item has-sub {{ Route::is('ProduktivitasCabutBulu*') ? 'active' : '' }}">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-three-dots"></i>
-                                <span>Report</span>
-                            </a>
-                            <ul class="submenu">
-                                <li
-                                    class="submenu-item has-sub {{ Route::is('ProduktivitasCabutBulu*') ? 'active' : '' }}">
-                                    <a href="#" class='submenu-link'>
-                                        <span>Produktivitas</span>
-                                    </a>
-                                    <ul class="submenu submenu-level-2">
-                                        <li class="submenu-item {{ Route::is('ProduktivitasCabutBulu*') ? 'active' : '' }}">
-                                            <a href="{{ route('ProduktivitasCabutBulu.index') }}"
-                                                class="submenu-link">Produktivitas Cabut Bulu</a>
-                                        </li>
-                                        <li class="submenu-item {{ Route::is('ProduktivitasCabutBuluHancuran*') ? 'active' : '' }}">
-                                            <a href="{{ route('ProduktivitasCabutBuluHancuran.index') }}"
-                                                class="submenu-link">Produktivitas Cabut Bulu Hancuran</a>
-                                        </li>
 
-                                    </ul>
-                                </li>
-
-                            </ul>
-                        </li>
-                    @endrole
                     </ul>
                 </div>
             </div>
