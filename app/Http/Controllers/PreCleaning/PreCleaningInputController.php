@@ -44,7 +44,7 @@ class PreCleaningInputController extends Controller
      */
     public function create(): View
     {
-        $stockTGK = StockTransitGradingKasar::with('PreCleaningInput')->where('berat_keluar','>',0)->get();
+        $stockTGK = StockTransitGradingKasar::with('PreCleaningInput')->get();
         // return $PrmRawMOIC;
         return view('PreCleaning.PreCleaningInput.create', compact('stockTGK'));
     }

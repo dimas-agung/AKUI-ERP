@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\AvaillableBeratKeluarStockScope;
+use App\Models\Scopes\AvaillableStockScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,6 +34,10 @@ class StockTransitGradingKasar extends Model
         'user_created',
         'user_updated',
     ];
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new AvaillableBeratKeluarStockScope);
+    }
 
     public function GradingKasarOutput()
     {
