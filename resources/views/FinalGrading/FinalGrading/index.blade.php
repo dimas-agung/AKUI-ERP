@@ -148,14 +148,14 @@
                                             <td class="text-center">
                                                 <div class="form-button-action">
                                                     @if ($item->can_delete())
-                                                        <form style="display: flex" id="deleteForm{{ $item->id }}"
-                                                            action="{{ route('FinalGrading.destroy', $item->id) }}"
+                                                        <form style="display: flex" id="deleteForm{{ $item->nomor_job }}"
+                                                            action="{{ route('FinalGrading.destroy', $item->nomor_job) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="button" class="btn btn-link"
                                                                 data-original-title="Remove"
-                                                                onclick="confirmDelete('{{ $item->id }}')">
+                                                                onclick="confirmDelete('{{ $item->nomor_job }}')">
                                                                 <i class="bi bi-trash3 text-danger"></i>
                                                             </button>
                                                         </form>
@@ -209,7 +209,7 @@
             window.location.href = "{{ route('FinalGrading.create') }}";
         }
 
-        function confirmDelete(id) {
+        function confirmDelete(nomor_job) {
             Swal.fire({
                 title: 'Konfirmasi',
                 text: 'Anda yakin ingin menghapus data ini?',
@@ -222,7 +222,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Jika dikonfirmasi, submit form
-                    document.getElementById('deleteForm' + id).submit();
+                    document.getElementById('deleteForm' + nomor_job).submit();
                 }
             });
         }

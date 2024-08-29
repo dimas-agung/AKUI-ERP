@@ -246,8 +246,16 @@ Route::middleware('auth')->group(function () {
             Route::put('/master_tujuan_kirim_kedatangan/update/{id}', 'update')->name('MasterTujuanKirimKedatangan.update');
             Route::delete('/master_tujuan_kirim_kedatangan/destroy/{id}', 'destroy')->name('MasterTujuanKirimKedatangan.destroy');
         });
+
+        Route::controller(App\Http\Controllers\MasterJenisFinalGradingController::class)->group(function () {
+            Route::get('/master_jenis_final_grading', 'index')->name('MasterJenisFinalGrading.index');
+            Route::post('/master_jenis_final_grading/store', 'store')->name('MasterJenisFinalGrading.store');
+            Route::get('/master_jenis_final_grading/edit/{id}', 'edit')->name('MasterJenisFinalGrading.edit');
+            Route::put('/master_jenis_final_grading/update/{id}', 'update')->name('MasterJenisFinalGrading.update');
+            Route::delete('/master_jenis_final_grading/destroy/{id}', 'destroy')->name('MasterJenisFinalGrading.destroy');
+        });
     });
-   
+
     Route::prefix('purchasing')->middleware(['role:purchasing|admin'])->group(function () {
         Route::controller(App\Http\Controllers\PurchasingExim\PrmRawMaterialInputController::class)->group(function () {
             Route::get('/prm_raw_material_input', 'index')->name('PrmRawMaterialInput.index');
@@ -1023,18 +1031,49 @@ Route::middleware('auth')->group(function () {
         Route::prefix('cabut_bulu')->group(function () {
             Route::controller(App\Http\Controllers\Produktivitas\ProduktivitasCabutBuluController::class)->group(function () {
                 Route::get('/produktivitas', 'index')->name('ProduktivitasCabutBulu.index');
-                
+
             });
         });
         Route::prefix('cabut_bulu_hancuran')->group(function () {
             Route::controller(App\Http\Controllers\Produktivitas\ProduktivitasCabutBuluHancuranController::class)->group(function () {
                 Route::get('/produktivitas_cabut_hancuran', 'index')->name('ProduktivitasCabutBuluHancuran.index');
-                
+
             });
         });
 
     });
-
+    Route::prefix('final_grading')->middleware(['role:final_grading|admin'])->group(function (){
+        Route::prefix('final_grading')->middleware('role:final_grading|admin')->group(function (){
+            Route::controller(App\Http\Controllers\FinalGrading\TransitFinalGradingReworkController::class)->group(function () {
+                Route::get('/transit_final_grading_rework', 'index')->name('TransitFinalGradingRework.index');
+            });
+        });
+    });
+    Route::prefix('final_grading')->middleware(['role:final_grading|admin'])->group(function () {
+        Route::prefix('final_grading')->middleware('role:final_grading|admin')->group(function () {
+            Route::controller(App\Http\Controllers\FinalGrading\FinalGradingController::class)->group(function () {
+                Route::get('/final_grading', 'index')->name('FinalGrading.index');
+                Route::get('/final_grading/create', 'create')->name('FinalGrading.create');
+                Route::post('/final_grading/store', 'store')->name('FinalGrading.store');
+                Route::delete('/final_grading/destroy/{nomor_bstb}', 'destroy')->name('FinalGrading.destroy');
+                Route::get('/final_grading/get_moulding', 'getMoulding')->name('FinalGrading.getMoulding');
+                Route::get('/final_grading/get_rework', 'getRework')->name('FinalGrading.getRework');
+                Route::get('/final_grading/set_moulding', 'setMoulding')->name('FinalGrading.setMoulding');
+                Route::get('/final_grading/set_rework', 'setRework')->name('FinalGrading.setRework');
+                Route::get('/final_grading/set_jenis', 'setJenis')->name('FinalGrading.setJenis');
+            });
+        });
+        Route::prefix('transit_moulding')->middleware('role:final_grading|admin')->group(function () {
+            Route::controller(App\Http\Controllers\FinalGrading\TransitFinalGradingController::class)->group(function () {
+                Route::get('/transit_moulding', 'index')->name('TransitFinalGrading.index');
+            });
+        });
+        // Route::prefix('transit_moulding_rework')->middleware('role:final_grading|admin')->group(function () {
+        //     Route::controller(App\Http\Controllers\FinalGrading\TransitFinalGradingReworkController::class)->group(function () {
+        //         Route::get('/transit_moulding_rework', 'index')->name('TransitFinalGradingRework.index');
+        //     });
+        // });
+    });
 });
 
 Auth::routes();

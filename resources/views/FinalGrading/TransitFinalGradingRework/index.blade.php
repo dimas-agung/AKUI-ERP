@@ -39,6 +39,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $i=1;
+                            @endphp
                             @forelse ($transit_final_grading_rework as $item)
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td>

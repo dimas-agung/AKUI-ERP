@@ -13,6 +13,6 @@ class MsterJenisGradingKasarSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\MasterJenisGradingKasar::factory(5)->create();
+        // \App\Models\MasterJenisGradingKasar::factory(5)->create();
     }
 }
