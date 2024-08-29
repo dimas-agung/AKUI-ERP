@@ -100,8 +100,8 @@ class FinalGradingController extends Controller
         return $this->FinalGradingService->store($request);
     }
 
-    public function destroy($id)
+    public function destroy($nomor_job)
     {
-        return $this->FinalGradingService->destroy($id);
+        return $this->FinalGradingService->destroy($nomor_job);
     }
 }

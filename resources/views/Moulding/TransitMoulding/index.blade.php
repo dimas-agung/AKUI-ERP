@@ -46,7 +46,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($transit_moulding as $item)
-                                        @if (!str_contains($item->id_box_waste_moulding,'_'.Auth::user()->plant))
+                                        @if (!str_contains($item->nomor_job,'_'.Auth::user()->plant))
                                             @continue
                                         @endif
                                         <tr>

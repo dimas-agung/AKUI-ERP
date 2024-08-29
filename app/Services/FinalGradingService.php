@@ -14,6 +14,8 @@ use App\Models\TransitFinalGrading;
 use App\Models\TransitMouldingRework;
 use Illuminate\Http\RedirectResponse;
 use App\Models\GradingWarnaAddingStock;
+use App\Models\MouldingPengembalian;
+use App\Models\MouldingPengembalianRework;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\TransitFinalGradingRework;
 use Illuminate\Support\Facades\Validator;
@@ -122,6 +124,22 @@ class FinalGradingService
                             'nama_team_leader'      => $data['nama_team_leader'],
                         ]);
                     }
+                     // Update Pengembalian Moulding Rework
+                     $MouldingPengembalianRework = MouldingPengembalianRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job_rework)
+                     ->get();
+                    foreach ($MouldingPengembalianRework as $item) {
+                        $item->update([
+                            'status' => MouldingPengembalianRework::STATUS_NON_AKTIF,
+                        ]);
+                    }
+                     // Update Transit Moulding Rework
+                    $TransitMouldingRework = TransitMouldingRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job_rework)
+                        ->get();
+                    foreach ($TransitMouldingRework as $item) {
+                        $item->update([
+                            'status' => FinalGrading::STATUS_NON_AKTIF,
+                        ]);
+                    }
                 } else {
                     // Handle TransitFinalGrading
                     $TransitFinalGrading = TransitFinalGrading::where('nomor_job', '=', $FinalGrading->nomor_job)
@@ -164,24 +182,25 @@ class FinalGradingService
                         'total_modal_per_jenis'     => $data['fix_total_hpp'],
                     ]);
                     // }
+                    
+                    // Update Pengembalian Moulding
+                    $MouldingPengembalian = MouldingPengembalian::where('nomor_job', '=', $FinalGrading->nomor_job)
+                        ->get();
+                    foreach ($MouldingPengembalian as $item) {
+                        $item->update([
+                            'status' => MouldingPengembalian::STATUS_NON_AKTIF,
+                        ]);
+                    }
+                    // Update Transit Moulding
+                    $TransitMoulding = TransitMoulding::where('nomor_job', '=', $FinalGrading->nomor_job)
+                        ->get();
+                    foreach ($TransitMoulding as $item) {
+                        $item->update([
+                            'status' => FinalGrading::STATUS_NON_AKTIF,
+                        ]);
+                    }
                 }
-
-                // Update Transit Moulding
-                $TransitMoulding = TransitMoulding::where('nomor_job', '=', $FinalGrading->nomor_job)
-                    ->get();
-                foreach ($TransitMoulding as $item) {
-                    $item->update([
-                        'status' => FinalGrading::STATUS_NON_AKTIF,
-                    ]);
-                }
-                // Update Transit Moulding Rework
-                $TransitMouldingRework = TransitMouldingRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job)
-                    ->get();
-                foreach ($TransitMouldingRework as $item) {
-                    $item->update([
-                        'status' => FinalGrading::STATUS_NON_AKTIF,
-                    ]);
-                }
+               
 
                 DB::commit();
             } catch (\Exception $e) {
@@ -201,65 +220,75 @@ class FinalGradingService
         ], 201);
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy($nomor_job): RedirectResponse
     {
         try {
             // Gunakan transaksi database untuk memastikan konsistensi
             DB::beginTransaction();
 
             // Ambil data item berdasarkan id
-            $FinalGrading = FinalGrading::find($id);
+            $FinalGradings = FinalGrading::where('nomor_job',$nomor_job)->get();
 
-            if (!$FinalGrading) {
+            if (!$FinalGradings) {
                 // Redirect ke index dengan pesan error jika data tidak ditemukan
                 return redirect()->route('FinalGrading.index')->with(['error' => 'Data tidak ditemukan!']);
             }
-            // Transit Final Grading
-            $TransitFinalGrading = TransitFinalGrading::where('nomor_job', '=', $FinalGrading->nomor_job)
-                ->where('jenis_grading', '=', $FinalGrading->jenis_grading)
-                ->first();
-
-            if ($TransitFinalGrading) {
-
-                $TransitFinalGrading->delete();
-            }
-
-            // Transit Final Grading
-            $TransitFinalGradingRework = TransitFinalGradingRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job_rework)
-                ->where('job_order', '=', $FinalGrading->jenis_grading)
-                ->first();
-
-            if ($TransitFinalGradingRework) {
-
-                // Simpan nilai sebelum dihapus
-                $beratSebelumnya = $TransitFinalGradingRework->berat_job;
-                $pcsSebelumnya = $TransitFinalGradingRework->pcs_job;
-
-                // Hitung perbedaan berat dan pcs
-                $beratBaru = $beratSebelumnya - $FinalGrading->berat_grading;
-                $pcsBaru = $pcsSebelumnya - $FinalGrading->pcs_grading;
-
-                if ($beratBaru <= 0 && $pcsBaru <= 0) {
-                    // Hapus data TransitFinalGradingRework jika sisa_berat dan sisa_pcs baru <= 0
-                    $TransitFinalGradingRework->delete();
-                } else {
-                    // Update data TransitFinalGradingRework dengan berat, pcs, dan sisa yang baru
-                    $TransitFinalGradingRework->update([
-                        'berat_job'   => $beratBaru,
-                        'pcs_job'     => $pcsBaru,
+            foreach ($FinalGradings as $key => $FinalGrading) {
+                # code...
+                // Transit Final Grading
+                $TransitFinalGrading = TransitFinalGrading::where('nomor_job', '=', $FinalGrading->nomor_job)
+                    ->where('jenis_grading', '=', $FinalGrading->jenis_grading)
+                    ->first();
+    
+                if ($TransitFinalGrading) {
+    
+                    $TransitFinalGrading->delete();
+                }
+    
+                // Transit Final Grading
+                $TransitFinalGradingRework = TransitFinalGradingRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job_rework)
+                    ->where('job_order', '=', $FinalGrading->jenis_grading)
+                    ->first();
+    
+                if ($TransitFinalGradingRework) {
+    
+                    // Simpan nilai sebelum dihapus
+                    $beratSebelumnya = $TransitFinalGradingRework->berat_job;
+                    $pcsSebelumnya = $TransitFinalGradingRework->pcs_job;
+    
+                    // Hitung perbedaan berat dan pcs
+                    $beratBaru = $beratSebelumnya - $FinalGrading->berat_grading;
+                    $pcsBaru = $pcsSebelumnya - $FinalGrading->pcs_grading;
+    
+                    if ($beratBaru <= 0 && $pcsBaru <= 0) {
+                        // Hapus data TransitFinalGradingRework jika sisa_berat dan sisa_pcs baru <= 0
+                        $TransitFinalGradingRework->delete();
+                    } else {
+                        // Update data TransitFinalGradingRework dengan berat, pcs, dan sisa yang baru
+                        $TransitFinalGradingRework->update([
+                            'berat_job'   => $beratBaru,
+                            'pcs_job'     => $pcsBaru,
+                        ]);
+                    }
+                }
+                // $FinalGrading->delete();
+               
+                // Update Pengembalian Moulding
+                $MouldingPengembalian = MouldingPengembalian::where('nomor_job', '=', $FinalGrading->nomor_job)
+                ->get();
+                foreach ($MouldingPengembalian as $item) {
+                    $item->update([
+                        'status' => MouldingPengembalian::STATUS_FINISHED,
                     ]);
                 }
-            }
-
-            $FinalGrading->delete();
-
-            // Ambil nomor_job dari FinalGrading yang ingin diperiksa
-            $nomor_job = $FinalGrading->nomor_job;
-
-            // Periksa apakah nomor_job sudah tidak ada di tabel FinalGrading
-            $exists = FinalGrading::where('nomor_job', '=', $nomor_job)->exists();
-            // Update Transit Moulding
-            if (!$exists) {
+                // Update Pengembalian Moulding Rework
+                $MouldingPengembalianRework = MouldingPengembalianRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job_rework)
+                ->get();
+                foreach ($MouldingPengembalianRework as $item) {
+                    $item->update([
+                        'status' => MouldingPengembalianRework::STATUS_FINISHED,
+                    ]);
+                }
                 $TransitMoulding = TransitMoulding::where('nomor_job', '=', $FinalGrading->nomor_job)
                     ->get();
                 foreach ($TransitMoulding as $item) {
@@ -267,17 +296,17 @@ class FinalGradingService
                         'status' => FinalGrading::STATUS_AKTIF,
                     ]);
                 }
-            }
-            // Update Transit Moulding Rework
-            if (!$exists) {
-                $TransitMouldingRework = TransitMouldingRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job)
+                $TransitMouldingRework = TransitMouldingRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job_rework)
                     ->get();
                 foreach ($TransitMouldingRework as $item) {
                     $item->update([
                         'status' => FinalGrading::STATUS_AKTIF,
                     ]);
                 }
+                $FinalGrading->delete();
             }
+
+
 
             // Commit transaksi
             DB::commit();
