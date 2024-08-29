@@ -32,8 +32,11 @@
                                         <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center">Nomor Job</th>
                                         <th scope="col" class="text-center">Nomor BSTB</th>
+                                        @role('admin')
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
+                                        @role
+                                        <th scope="col" class="text-center">Rasio</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
@@ -52,8 +55,11 @@
                                             <td class="text-center">{{ $item->keterangan }}</td>
                                             <td class="text-center">{{ $item->nomor_job }}</td>
                                             <td class="text-center">{{ $item->nomor_bstb }}</td>
+                                            @role('admin')
                                             <td class="text-center">{{ $item->modal }}</td>
                                             <td class="text-center">{{ $item->total_modal }}</td>
+                                            @endrole
+                                            <td class="text-center">{{ $item->rasio }}</td>
                                             <td class="text-center">{{ $item->status }}</td>
                                             <td class="text-center">{{ $item->created_at }}</td>
                                             <td class="text-center">

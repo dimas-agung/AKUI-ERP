@@ -91,7 +91,7 @@
                                     <td class="text-center">{{ $item->jenis_rambang }}</td>
                                     <td class="text-center">{{ $item->nomor_job }}</td>
                                     <td class="text-center">{!! 0 !!}</td>
-                                    <td class="text-center">{{ number_format($item->upah_operator, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ floor($item->upah_operator) }}</td>
                                     <td class="text-center">{{floor(($item->lama_pengerjaan) / 60)}}</td>
                                     <td class="text-center">{{ $plant_filter }}</td>
                                    

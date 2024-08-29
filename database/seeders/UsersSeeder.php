@@ -148,28 +148,64 @@ class UsersSeeder extends Seeder
         //     'birth_date' => '2000-04-09',
         // ]);
         // $user->syncRoles(['production']);
-        $role = Role::create(['name' => 'hr']);
+        // $role = Role::create(['name' => 'hr']);
+        // $user = User::create([
+        //     'email' => 'hr@gmail.com',
+        //     'password' => Hash::make('hr123'),
+        //     'fullname' => 'HR AKUI',
+        //     'nip' => '221070243A',
+        //     'plant' => 'A',
+        //     'username' => 'HR AKUI',
+        //     'phone_number' => '0111212112121111212311',
+        //     'birth_date' => '2000-04-09',
+        // ]);
+        // $user->syncRoles(['hr']);
+        // $user = User::create([
+        //     'email' => 'hrObi@gmail.com',
+        //     'password' => Hash::make('hr123'),
+        //     'fullname' => 'HR OBI',
+        //     'nip' => '221070243O',
+        //     'plant' => 'O',
+        //     'username' => 'HR OBI',
+        //     'phone_number' => '0111211212121111212311',
+        //     'birth_date' => '2000-04-09',
+        // ]);
+        // $user->syncRoles(['hr']);
+        // $role = Role::create(['name' => 'kedatangan']);
+        // $user = User::create([
+        //     'email' => 'kedatangan@gmail.com',
+        //     'password' => Hash::make('izaakui2004'),
+        //     'fullname' => 'Siti Khotijah',
+        //     'nip' => '222060395',
+        //     'plant' => '',
+        //     'username' => 'Siti Khotijah',
+        //     'phone_number' => '01112112121121111212311',
+        //     'birth_date' => '2000-04-09',
+        // ]);
+        // $user->syncRoles(['kedatangan']);
+
+        $role = Role::create(['name' => 'final_grading']);
         $user = User::create([
-            'email' => 'hr@gmail.com',
-            'password' => Hash::make('hr123'),
-            'fullname' => 'HR AKUI',
-            'nip' => '221070243A',
+            'email' => 'finalgradingakui@gmail.com',
+            'password' => Hash::make('10062001'),
+            'fullname' => 'AGHNINAA NUR IFTAHNAA',
+            'nip' => '222030331',
             'plant' => 'A',
-            'username' => 'HR AKUI',
-            'phone_number' => '0111212112121111212311',
+            'username' => 'AGHNINAA NUR IFTAHNAA',
+            'phone_number' => '121313131',
             'birth_date' => '2000-04-09',
         ]);
-        $user->syncRoles(['hr']);
+        $user->syncRoles(['kedatangan']);
         $user = User::create([
-            'email' => 'hrObi@gmail.com',
-            'password' => Hash::make('hr123'),
-            'fullname' => 'HR OBI',
-            'nip' => '221070243O',
+            'email' => 'finalgradingobi@gmail.com',
+            'password' => Hash::make('21081998'),
+            'fullname' => 'RENITA DWI RACHMAWATI',
+            'nip' => '223060602',
             'plant' => 'O',
-            'username' => 'HR OBI',
-            'phone_number' => '0111211212121111212311',
+            'username' => 'RENITA DWI RACHMAWATI',
+            'phone_number' => '1213131331321',
             'birth_date' => '2000-04-09',
         ]);
-        $user->syncRoles(['hr']);
+        $user->syncRoles(['kedatangan']);
     }
 }

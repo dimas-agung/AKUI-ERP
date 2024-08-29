@@ -311,13 +311,14 @@
                             </li>
                         @endrole
 
-                        @role('purchasing|admin')
+                        @role('purchasing|admin|kedatangan')
                             <li class="sidebar-title">Purchasing & EXIM</li>
+                            @role('purchasing|admin')
                             <li
                                 class="sidebar-item  has-sub {{ Route::is('PrmRawMaterialInput.*', 'PrmRawMaterialStock.*', 'PrmRawMaterialOutput.*', 'StockTransitRawMaterial.*','PrmRawMaterialAdjustment.*') ? 'active' : '' }}">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-collection-fill"></i>
-                                    <span>Purchasing & EXIM</span>
+                                    <span>Purchasing Raw Material</span>
                                 </a>
                                 <ul class="submenu ">
                                     <li class="submenu-item {{ Route::is('PrmRawMaterialInput.*') ? 'active' : '' }}">
@@ -343,6 +344,36 @@
                                     </li>
                                 </ul>
                             </li>
+                            @endrole
+                            @role('kedatangan|admin')
+                                <li
+                                    class="sidebar-item has-sub {{ Route::is('KedatanganOutput*', 'TransitKedatangan*') ? 'active' : '' }}">
+                                    <a href="#" class='sidebar-link'>
+                                        <i class="bi bi-three-dots"></i>
+                                        <span>Kedatangan</span>
+                                    </a>
+                                    <ul class="submenu">
+                                        <li
+                                            class="submenu-item has-sub {{ Route::is('KedatanganOutput*', 'TransitKedatangan*') ? 'active' : '' }}">
+                                            <a href="#" class='submenu-link'>
+                                                <span>Kedatangan</span>
+                                            </a>
+                                            <ul class="submenu submenu-level-2">
+                                                <li
+                                                    class="submenu-item {{ Route::is('KedatanganOutput*') ? 'active' : '' }}">
+                                                    <a href="{{ route('KedatanganOutput.index') }}"
+                                                        class="submenu-link">Kedatangan Output</a>
+                                                </li>
+                                                <li
+                                                    class="submenu-item {{ Route::is('TransitKedatangan*') ? 'active' : '' }}">
+                                                    <a href="{{ route('TransitKedatangan.index') }}"
+                                                        class="submenu-link">Transit Kedatangan</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endrole
                         @endrole
                         {{-- PPIC --}}
                         @role('ppic')
@@ -1337,35 +1368,7 @@
                             </li>
                         @endrole
 
-                        @role('kedatangan|admin')
-                            <li
-                                class="sidebar-item has-sub {{ Route::is('KedatanganOutput*', 'TransitKedatangan*') ? 'active' : '' }}">
-                                <a href="#" class='sidebar-link'>
-                                    <i class="bi bi-three-dots"></i>
-                                    <span>Kedatangan</span>
-                                </a>
-                                <ul class="submenu">
-                                    <li
-                                        class="submenu-item has-sub {{ Route::is('KedatanganOutput*', 'TransitKedatangan*') ? 'active' : '' }}">
-                                        <a href="#" class='submenu-link'>
-                                            <span>Kedatangan</span>
-                                        </a>
-                                        <ul class="submenu submenu-level-2">
-                                            <li
-                                                class="submenu-item {{ Route::is('KedatanganOutput*') ? 'active' : '' }}">
-                                                <a href="{{ route('KedatanganOutput.index') }}"
-                                                    class="submenu-link">Kedatangan Output</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('TransitKedatangan*') ? 'active' : '' }}">
-                                                <a href="{{ route('TransitKedatangan.index') }}"
-                                                    class="submenu-link">Transit Kedatangan</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endrole
+                      
 
                         @role('moulding|admin|production')
                             <li
@@ -1512,76 +1515,11 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li
-                                        class="submenu-item has-sub {{ Route::is('MouldingReworkPersiapan*', 'MouldingReworkPenyebaran*', 'MouldingReworkPersiapanStock*', 'MouldingReworkPengembalian*', 'TransitMouldingRework*') ? 'active' : '' }}">
-                                        <a href="#" class='submenu-link'>
-                                            <span>Moulding Rework</span>
-                                        </a>
-                                        <ul class="submenu submenu-level-2">
-                                            <li
-                                                class="submenu-item {{ Route::is('MouldingReworkPersiapan*') && !Route::is('MouldingReworkPersiapanStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('MouldingReworkPersiapan.index') }}"
-                                                    class="submenu-link">Moulding Rework Persiapan</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('MouldingReworkPersiapanStock*') ? 'active' : '' }}">
-                                                <a href="{{ route('MouldingReworkPersiapanStock.index') }}"
-                                                    class="submenu-link">Moulding Rework Stock</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('MouldingReworkPenyebaran*') ? 'active' : '' }}">
-                                                <a href="{{ route('MouldingReworkPenyebaran.index') }}"
-                                                    class="submenu-link">Moulding Rework Penyebaran</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('MouldingReworkPengembalian*') ? 'active' : '' }}">
-                                                <a href="{{ route('MouldingReworkPengembalian.index') }}"
-                                                    class="submenu-link">Moulding Rework Pengembalian</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('TransitMouldingRework*') ? 'active' : '' }}">
-                                                <a href="{{ route('TransitMouldingRework.index') }}"
-                                                    class="submenu-link">Transit Moulding Rework</a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                   
                                 </ul>
                             </li>
                         @endrole
-                        @role('final_grading|admin')
-                            <li
-                                class="sidebar-item has-sub {{ Route::is('FinalGrading*', 'TransitFinalGrading*', 'TransitFinalGradingRework*') ? 'active' : '' }}">
-                                <a href="#" class='sidebar-link'>
-                                    <i class="bi bi-three-dots"></i>
-                                    <span>Final Grading</span>
-                                </a>
-                                <ul class="submenu">
-                                    <li
-                                        class="submenu-item has-sub {{ Route::is('FinalGrading*', 'TransitFinalGrading*', 'TransitFinalGradingRework*') ? 'active' : '' }}">
-                                        <a href="#" class='submenu-link'>
-                                            <span>Final Grading</span>
-                                        </a>
-                                        <ul class="submenu submenu-level-2">
-                                            <li class="submenu-item {{ Route::is('FinalGrading*') ? 'active' : '' }}">
-                                                <a href="{{ route('FinalGrading.index') }}" class="submenu-link">Final
-                                                    Grading</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('TransitFinalGrading*') ? 'active' : '' }}">
-                                                <a href="{{ route('TransitFinalGrading.index') }}"
-                                                    class="submenu-link">Transit Final Grading</a>
-                                            </li>
-                                            <li
-                                                class="submenu-item {{ Route::is('TransitFinalGradingRework*') ? 'active' : '' }}">
-                                                <a href="{{ route('TransitFinalGradingRework.index') }}"
-                                                    class="submenu-link">Transit Final Grading Rework</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            
-                        @endrole
+                        
 
 
                         @role('hr|admin|production')

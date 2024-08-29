@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,5 +40,12 @@ class KedatanganOutput extends Model
     public function TransitKedatangan()
     {
         return $this->hasMany(TransitKedatangan::class, 'nomor_batch', 'nomor_batch');
+    }
+    public function rasio(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->modal * 0.0000196841305522212,
+            // set:fn () => $this->modal * 0.0000196841305522212,
+        );
     }
 }

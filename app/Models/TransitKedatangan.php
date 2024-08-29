@@ -34,4 +34,11 @@ class TransitKedatangan extends Model
         }
         return false;
     }
+    public function rasio(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->modal * 0.0000196841305522212,
+            // set:fn () => $this->modal * 0.0000196841305522212,
+        );
+    }
 }

@@ -617,9 +617,22 @@
                 var jenis_susuts = $("input[name='jenis_susut[]']").map(function(){return $(this).val();}).get();
                 var harga_estimasis = $("input[name='harga_estimasi[]']").map(function(){return $(this).val();}).get();
                 jenis_gradings.forEach((v,i) => {
+
                     let jenis_grading = v;
                     let berat_1_grading = parseFloat(berat_1_gradings[i]);
                     let berat_2_grading = parseFloat(berat_2_gradings[i]);
+                    if (jenis_job.includes("0-0-0") && i == 0) {
+                        if (jenis_job.includes("G2")) {
+                            berat_1_grading = parseFloat(berat_1_gradings[i]);
+                            jenis_susuts = "SD";
+                        }else{
+                            berat_1_grading = 0;
+                            berat_2_grading = parseFloat(berat_1_gradings[i]);
+                            jenis_susuts = "SB";
+                        }
+                       
+                    }
+                   
                     let pcs_1_grading = parseFloat(pcs_grading[i]);
                     let jenis_susut = jenis_susuts[i];
                     let harga_estimasi = parseFloat(harga_estimasis[i]);

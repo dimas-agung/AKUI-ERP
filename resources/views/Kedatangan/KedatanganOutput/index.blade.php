@@ -68,6 +68,7 @@
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
                                         @endrole
+                                        <th scope="col" class="text-center">Rasio</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
@@ -92,6 +93,7 @@
                                                 <td class="text-center">{{ $item->modal }}</td>
                                                 <td class="text-center">{{ $item->total_modal }}</td>
                                             @endrole
+                                            <td class="text-center">{{ $item->rasio }}</td>
                                             <td class="text-center">{{ $item->status }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>
