@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Scopes\AvaillableBeratKeluarStockScope;
 use App\Models\Scopes\AvaillableStockScope;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,7 +37,8 @@ class StockTransitGradingKasar extends Model
     ];
     protected static function booted(): void
     {
-        static::addGlobalScope(new AvaillableBeratKeluarStockScope);
+        // call global scope
+        // static::addGlobalScope(new AvaillableBeratKeluarStockScope);
     }
 
     public function GradingKasarOutput()
@@ -46,5 +48,16 @@ class StockTransitGradingKasar extends Model
     public function PreCleaningInput()
     {
         return $this->hasMany(PreCleaningInput::class, 'nomor_job', 'nomor_job');
+    }
+    protected function status(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->berat_keluar <> 0 ? 1:0,
+            // set:  fn () => $this->berat_keluar <> 0 ? 1:0,
+        );
+    }
+    public function getFullNameAttribute()
+    {
+        return "{$this->berat_keluar}1121";
     }
 }
