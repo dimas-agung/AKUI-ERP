@@ -31,8 +31,10 @@
                                         <th scope="col" class="text-center">Jenis Grading</th>
                                         <th scope="col" class="text-center">Berat Grading</th>
                                         <th scope="col" class="text-center">Pcs Grading</th>
+                                        @role('admin')
                                         <th scope="col" class="text-center">Modal Per Jenis</th>
                                         <th scope="col" class="text-center">Total Modal Per Jenis</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">Created At</th>
                                         <th scope="col" class="text-center">Updated At</th>
