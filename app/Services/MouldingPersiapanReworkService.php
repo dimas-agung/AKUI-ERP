@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\FinalGrading;
 use App\Models\GradingWarna;
 use App\Models\GradingWarnaStock;
 use App\Models\Moulding;
@@ -83,7 +84,12 @@ class MouldingPersiapanReworkService
                             'nama_team_leader' => $itemObject->nama_team_leader
                         ]);
                     }
+                    // Check if FinalGrading table contains nomor_job_rework
+                    $existingItems = FinalGrading::where('nomor_job_rework', $itemObject->nomor_job_rework)->get();
 
+                    $dataToUpdate = [
+                        'status' => $itemObject->status ?? 0,
+                    ];
                     // Check if TransitFinal table contains nomor_job_rework
                     $existingItems = TransitFinalGradingRework::where('nomor_job_rework', $itemObject->nomor_job_rework)->get();
 
@@ -141,7 +147,13 @@ class MouldingPersiapanReworkService
                     $MouldingStock->delete();
                 }
 
-                // Update data DryAGradingHancuran
+                // Update data 
+                 // Check if FinalGrading table contains nomor_job_rework
+                 $existingItems = FinalGrading::where('nomor_job_rework', $outputRecord->nomor_job_rework)->get();
+
+                 $dataToUpdate = [
+                     'status' => $itemObject->status ?? 0,
+                 ];
                 $TransitFGR = TransitFinalGradingRework::where('nomor_job_rework', $outputRecord->nomor_job_rework)->get();
                 foreach ($TransitFGR as $gradingRecord) {
                     $gradingRecord->update(['status' => $outputRecord->status ?? 1]);

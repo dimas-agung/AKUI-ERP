@@ -13,7 +13,7 @@ class MouldingPersiapanReworkStockController extends Controller
     {
         $i = 1;
         $plant = auth()->user()->plant; // Ambil input plant dari user
-        $MouldingPRS = MouldingPersiapanReworkStock::where('status','>',0)
+        $MouldingPRS = MouldingPersiapanReworkStock::where('status','<>',3)
             ->where('tujuan_kirim',  $plant)
             ->get();
         // $MouldingPRS = PreCleaningStock::get();

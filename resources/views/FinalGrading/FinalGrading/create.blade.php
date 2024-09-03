@@ -810,6 +810,8 @@
                 let row = $(this).find('td');
 
                 let data = {
+                    asal_stock: $('#asal_stock').val(),
+                    nomor_job_asal: $('#nomor_job').val(),
                     nomor_job: row.eq(0).text(),
                     nomor_batch: row.eq(1).text(),
                     tujuan_kirim: row.eq(2).text(),
@@ -856,6 +858,8 @@
                 },
                 data: {
                     dataArray: JSON.stringify(dataArray),
+                    nomor_job_asal : $('#nomor_job').val(),
+                    asal_stock : $('#asal_stock').val(),
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {

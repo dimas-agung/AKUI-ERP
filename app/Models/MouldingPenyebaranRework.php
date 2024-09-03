@@ -34,7 +34,7 @@ class MouldingPenyebaranRework extends Model
     ];
     public function can_delete()
     {
-        if ($this->status == self::STATUS_ON_STOCK) {
+        if ($this->status != self::STATUS_NON_AKTIF) {
             return true;
         }
         return false;

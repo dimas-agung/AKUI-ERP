@@ -189,7 +189,7 @@ class MouldingPengembalianReworkService
                 if ($MouldingStock->isNotEmpty()) {
                     foreach ($MouldingStock as $item) {
                         // Perbarui data untuk setiap item yang ada
-                        $item->update(['status' => MouldingPengembalianRework::STATUS_ON_PROSES]);
+                        $item->update(['status' => MouldingPengembalianRework::STATUS_ON_STOCK]);
                     }
                 }
             }
@@ -204,7 +204,7 @@ class MouldingPengembalianReworkService
                     // Perbarui data untuk setiap item yang ada
                     $item->update([
                         'user_updated'       => $mouldingPengembalian->user_created,
-                        'status'             => MouldingPengembalianRework::STATUS_ON_PROSES
+                        'status'             => MouldingPengembalianRework::STATUS_ON_STOCK
                     ]);
                 }
             }

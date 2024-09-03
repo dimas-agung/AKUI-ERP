@@ -12,6 +12,8 @@ class FinalGrading extends Model
     const   STATUS_AKTIF = 1;
     protected $table = 'final_gradings';
     protected $fillable = [
+        'asal_stock',
+        'nomor_job_asal',
         'nomor_job',
         'nomor_batch',
         'tujuan_kirim',

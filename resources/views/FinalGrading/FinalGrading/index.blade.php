@@ -75,6 +75,7 @@
                                         <th scope="col" class="text-center">Kategori Susut</th>
                                         <th scope="col" class="text-center">Susut Depan</th>
                                         <th scope="col" class="text-center">Susut Belakang</th>
+                                        @role('admin')
                                         <th scope="col" class="text-center">Modal</th>
                                         <th scope="col" class="text-center">Total Modal</th>
                                         <th scope="col" class="text-center">Biaya Produksi</th>
@@ -91,6 +92,7 @@
                                         <th scope="col" class="text-center">Total Hpp</th>
                                         <th scope="col" class="text-center">Fix Hpp</th>
                                         <th scope="col" class="text-center">Fix Total Hpp</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
@@ -122,6 +124,7 @@
                                             <td class="text-center">{{ $item->kategori_susut }}</td>
                                             <td class="text-center">{{ $item->susut_depan }}</td>
                                             <td class="text-center">{{ $item->susut_belakang }}</td>
+                                            @role('admin')
                                             <td class="text-center">{{ $item->modal }}</td>
                                             <td class="text-center">{{ $item->total_modal }}</td>
                                             <td class="text-center">{{ $item->biaya_produksi }}</td>
@@ -138,6 +141,7 @@
                                             <td class="text-center">{{ $item->total_hpp }}</td>
                                             <td class="text-center">{{ $item->fix_hpp }}</td>
                                             <td class="text-center">{{ $item->fix_total_hpp }}</td>
+                                            @endrole
                                             <td class="text-center">{{ $item->status }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>
