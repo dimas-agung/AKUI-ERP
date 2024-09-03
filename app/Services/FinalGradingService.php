@@ -33,6 +33,8 @@ class FinalGradingService
     {
         // Decode JSON string to associative array
         $dataArray = json_decode($request->input('dataArray'), true);
+        $asal_stock = $request->input('asal_stock');
+        $nomor_job_asal = $request->input('nomor_job_asal');
 
         // Validate if dataArray is empty
         if (empty($dataArray)) {
@@ -53,6 +55,8 @@ class FinalGradingService
 
         foreach ($dataArray as $key => $data) {
             // Update data with HPP values
+            $data['asal_stock'] = $asal_stock;
+            $data['nomor_job_asal'] = $nomor_job_asal;
             $data['total_harga'] = $dataHpp[$key]['total_harga'];
             $data['nilai_laba_rugi'] = $dataHpp[$key]['nilai_laba_rugi'];
             $data['nilai_prosentase_total_keuntungan'] = $dataHpp[$key]['nilai_prosentase_total_keuntungan'];
@@ -86,7 +90,7 @@ class FinalGradingService
                 $FinalGrading = (object) $data;
 
                 // Check for rework and nomor_job_rework
-                if (!empty($FinalGrading->rework) && !empty($FinalGrading->nomor_job_rework)) {
+                if ((!empty($FinalGrading->rework) && !empty($FinalGrading->nomor_job_rework))) {
                     // Handle TransitFinalGradingRework
                     $TransitFinalGradingRework = TransitFinalGradingRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job_rework)
                         ->where('job_order', '=', $FinalGrading->jenis_grading)
@@ -124,22 +128,7 @@ class FinalGradingService
                             'nama_team_leader'      => $data['nama_team_leader'],
                         ]);
                     }
-                     // Update Pengembalian Moulding Rework
-                     $MouldingPengembalianRework = MouldingPengembalianRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job_rework)
-                     ->get();
-                    foreach ($MouldingPengembalianRework as $item) {
-                        $item->update([
-                            'status' => MouldingPengembalianRework::STATUS_NON_AKTIF,
-                        ]);
-                    }
-                     // Update Transit Moulding Rework
-                    $TransitMouldingRework = TransitMouldingRework::where('nomor_job_rework', '=', $FinalGrading->nomor_job_rework)
-                        ->get();
-                    foreach ($TransitMouldingRework as $item) {
-                        $item->update([
-                            'status' => FinalGrading::STATUS_NON_AKTIF,
-                        ]);
-                    }
+                    
                 } else {
                     // Handle TransitFinalGrading
                     $TransitFinalGrading = TransitFinalGrading::where('nomor_job', '=', $FinalGrading->nomor_job)
@@ -183,8 +172,28 @@ class FinalGradingService
                     ]);
                     // }
                     
+                    
+                }
+                if ($asal_stock == 'rework') {
+                     // Update Pengembalian Moulding Rework
+                     $MouldingPengembalianRework = MouldingPengembalianRework::where('nomor_job_rework', '=', $nomor_job_asal)
+                     ->get();
+                    foreach ($MouldingPengembalianRework as $item) {
+                        $item->update([
+                            'status' => FinalGrading::STATUS_NON_AKTIF,
+                        ]);
+                    }
+                     // Update Transit Moulding Rework
+                    $TransitMouldingRework = TransitMouldingRework::where('nomor_job_rework', '=', $nomor_job_asal)
+                        ->get();
+                    foreach ($TransitMouldingRework as $item) {
+                        $item->update([
+                            'status' => FinalGrading::STATUS_NON_AKTIF,
+                        ]);
+                    }
+                }else{
                     // Update Pengembalian Moulding
-                    $MouldingPengembalian = MouldingPengembalian::where('nomor_job', '=', $FinalGrading->nomor_job)
+                    $MouldingPengembalian = MouldingPengembalian::where('nomor_job', '=', $nomor_job_asal)
                         ->get();
                     foreach ($MouldingPengembalian as $item) {
                         $item->update([
@@ -192,7 +201,7 @@ class FinalGradingService
                         ]);
                     }
                     // Update Transit Moulding
-                    $TransitMoulding = TransitMoulding::where('nomor_job', '=', $FinalGrading->nomor_job)
+                    $TransitMoulding = TransitMoulding::where('nomor_job', '=', $nomor_job_asal)
                         ->get();
                     foreach ($TransitMoulding as $item) {
                         $item->update([
@@ -201,7 +210,7 @@ class FinalGradingService
                     }
                 }
                
-
+              
                 DB::commit();
             } catch (\Exception $e) {
                 DB::rollBack();
@@ -212,7 +221,7 @@ class FinalGradingService
                 ], 504);
             }
         }
-
+        // return $dataArray[0];
         return response()->json([
             'success' => true,
             'message' => 'Data successfully saved!',

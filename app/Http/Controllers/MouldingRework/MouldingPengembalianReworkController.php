@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Models\MouldingPenyebaranRework;
 use App\Models\MouldingPengembalianRework;
+use App\Models\MouldingPenyebaran;
 use App\Services\MouldingPengembalianReworkService;
 
 class MouldingPengembalianReworkController extends Controller
@@ -50,7 +51,7 @@ class MouldingPengembalianReworkController extends Controller
     {
         $plant = auth()->user()->plant;
         $MouldingStockRework = MouldingPenyebaranRework::where('tujuan_kirim', $plant)
-            ->where('status', 1)
+            ->where('status', '!=', MouldingPenyebaran::STATUS_NON_AKTIF)
             ->get();
         return response()->view('MouldingRework.MouldingPengembalianRework.create', [
             'moulding_stock_rework' => $MouldingStockRework,

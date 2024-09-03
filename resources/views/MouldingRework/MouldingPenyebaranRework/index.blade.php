@@ -104,8 +104,8 @@
                                                     Non-Aktif
                                                 @elseif ($item->status == 1)
                                                     Aktif
-                                                @else
-                                                    Unknown Status
+                                                @elseif ($item->status == 2)
+                                                    On Prosess
                                                 @endif
                                             </td>
                                             <td class="text-center">

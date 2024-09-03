@@ -88,15 +88,8 @@ class MouldingPersiapanReworkService
                     $existingItems = FinalGrading::where('nomor_job_rework', $itemObject->nomor_job_rework)->get();
 
                     $dataToUpdate = [
-                        'status' =>  0,
+                        'status' => $itemObject->status ?? 0,
                     ];
-                    if ($existingItems->count() > 0) {
-                        foreach ($existingItems as $existingItem) {
-                            $existingItem->update($dataToUpdate);
-                            FinalGrading::where('nomor_job', $existingItem->nomor_job)->update('status',0);
-
-                        }
-                    }
                     // Check if TransitFinal table contains nomor_job_rework
                     $existingItems = TransitFinalGradingRework::where('nomor_job_rework', $itemObject->nomor_job_rework)->get();
 
@@ -159,12 +152,8 @@ class MouldingPersiapanReworkService
                  $existingItems = FinalGrading::where('nomor_job_rework', $outputRecord->nomor_job_rework)->get();
 
                  $dataToUpdate = [
-                     'status' => 1,
+                     'status' => $itemObject->status ?? 0,
                  ];
-                 foreach ($existingItems as $gradingRecord) {
-                    $gradingRecord->update(['status' => $outputRecord->status ?? 1]);
-                    FinalGrading::where('nomor_job', $gradingRecord->nomor_job)->update('status',1);
-                }
                 $TransitFGR = TransitFinalGradingRework::where('nomor_job_rework', $outputRecord->nomor_job_rework)->get();
                 foreach ($TransitFGR as $gradingRecord) {
                     $gradingRecord->update(['status' => $outputRecord->status ?? 1]);
