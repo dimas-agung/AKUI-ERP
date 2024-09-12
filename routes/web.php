@@ -965,6 +965,18 @@ Route::middleware('auth')->group(function () {
                 Route::get('/moulding_persiapan/get_pcc', 'setpcc')->name('MouldingPersiapan.setpcc');
                 Route::post('/moulding_persiapan/cek_data', 'CeksendData')->name('MouldingPersiapan.CeksendData');
             });
+            Route::controller(App\Http\Controllers\Moulding\MouldingPersiapanExtraController::class)->group(function () {
+                Route::get('/moulding_persiapan_extra', 'index')->name('MouldingPersiapanExtra.index');
+                Route::get('/moulding_persiapan_extra/create', 'create')->name('MouldingPersiapanExtra.create');
+                Route::post('/moulding_persiapan_extra/store', 'store')->name('MouldingPersiapanExtra.store');
+                Route::post('/moulding_persiapan_extra/sendData', 'sendData')->name('MouldingPersiapanExtra.sendData');
+                Route::delete('/moulding_persiapan_extra/destroy/{nomor_job}', 'destroy')->name('MouldingPersiapanExtra.destroy');
+                Route::get('/moulding_persiapan_extra/get_data_id_box', 'set')->name('MouldingPersiapanExtra.set');
+                Route::get('/moulding_persiapan_extra/get_pcc', 'setpcc')->name('MouldingPersiapanExtra.setpcc');
+                Route::post('/moulding_persiapan_extra/cek_data', 'CeksendData')->name('MouldingPersiapanExtra.CeksendData');
+            });
+            
+
             Route::controller(App\Http\Controllers\Moulding\MouldingPenyebaranController::class)->group(function () {
                 Route::get('/moulding_penyebaran', 'index')->name('MouldingPenyebaran.index');
                 Route::get('/moulding_penyebaran/create', 'create')->name('MouldingPenyebaran.create');
@@ -1026,6 +1038,46 @@ Route::middleware('auth')->group(function () {
         });
 
 
+    });
+    Route::prefix('moulding_rework')->middleware('role:moulding|admin')->group(function (){
+        Route::controller(App\Http\Controllers\MouldingRework\MouldingPersiapanReworkController::class)->group(function () {
+            Route::get('/moulding_rework_persiapan', 'index')->name('MouldingReworkPersiapan.index');
+            Route::get('/moulding_rework_persiapan/create', 'create')->name('MouldingReworkPersiapan.create');
+            Route::post('/moulding_rework_persiapan/store', 'store')->name('MouldingReworkPersiapan.store');
+            Route::post('/moulding_rework_persiapan/sendData', 'sendData')->name('MouldingReworkPersiapan.sendData');
+            Route::delete('/moulding_rework_persiapan/destroy/{nomor_job_rework}', 'destroy')->name('MouldingReworkPersiapan.destroy');
+            Route::get('/moulding_rework_persiapan/get_data_id_box', 'set')->name('MouldingReworkPersiapan.set');
+            Route::get('/moulding_rework_persiapan/get_pcc', 'setpcc')->name('MouldingReworkPersiapan.setpcc');
+            Route::post('/moulding_rework_persiapan/cek_data', 'CeksendData')->name('MouldingReworkPersiapan.CeksendData');
+        });
+
+        Route::controller(App\Http\Controllers\MouldingRework\MouldingPersiapanReworkStockController::class)->group(function () {
+            Route::get('/moulding_rework_stock', 'index')->name('MouldingReworkPersiapanStock.index');
+        });
+
+        Route::controller(App\Http\Controllers\MouldingRework\MouldingPenyebaranReworkController::class)->group(function () {
+            Route::get('/moulding_rework_penyebaran', 'index')->name('MouldingReworkPenyebaran.index');
+            Route::get('/moulding_rework_penyebaran/create', 'create')->name('MouldingReworkPenyebaran.create');
+            Route::post('/moulding_rework_penyebaran/store', 'store')->name('MouldingReworkPenyebaran.store');
+            Route::post('/moulding_rework_penyebaran/cek_data', 'CeksendData')->name('MouldingReworkPenyebaran.CeksendData');
+            Route::delete('/moulding_rework_penyebaran/destroy/{nomor_job_rework}', 'destroy')->name('MouldingReworkPenyebaran.destroy');
+            Route::get('/moulding_rework_penyebaran/set_job', 'setJob')->name('MouldingReworkPenyebaran.setJob');
+            Route::get('/moulding_rework_penyebaran/set_nip', 'setNip')->name('MouldingReworkPenyebaran.setNip');
+        });
+
+        Route::controller(App\Http\Controllers\MouldingRework\MouldingPengembalianReworkController::class)->group(function () {
+            Route::get('/moulding_rework_pengembalian', 'index')->name('MouldingReworkPengembalian.index');
+            Route::get('/moulding_rework_pengembalian/create', 'create')->name('MouldingReworkPengembalian.create');
+            Route::post('/moulding_rework_pengembalian/store', 'store')->name('MouldingReworkPengembalian.store');
+            Route::post('/moulding_rework_pengembalian/cek_data', 'CeksendData')->name('MouldingReworkPengembalian.CeksendData');
+            Route::delete('/moulding_rework_pengembalian/destroy/{nomor_job_rework}', 'destroy')->name('MouldingReworkPengembalian.destroy');
+            Route::get('/moulding_rework_pengembalian/set_job', 'setJob')->name('MouldingReworkPengembalian.setJob');
+            Route::get('/moulding_rework_pengembalian/set_nip', 'setNip')->name('MouldingReworkPengembalian.setNip');
+        });
+
+        Route::controller(App\Http\Controllers\MouldingRework\TransitMouldingReworkController::class)->group(function () {
+            Route::get('/transit_moulding_rework', 'index')->name('TransitMouldingRework.index');
+        });
     });
     Route::prefix('produktivitas')->middleware(['role:hr|admin|production'])->group(function () {
         Route::prefix('cabut_bulu')->group(function () {

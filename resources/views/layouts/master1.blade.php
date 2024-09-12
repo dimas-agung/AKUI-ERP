@@ -1455,6 +1455,11 @@
                                                 <a href="{{ route('MouldingPersiapan.index') }}"
                                                     class="submenu-link">Moulding Persiapan</a>
                                             </li>
+                                            <li
+                                                class="submenu-item {{ Route::is('MouldingPersiapanExtra*') ? 'active' : '' }}">
+                                                <a href="{{ route('MouldingPersiapanExtra.index') }}"
+                                                    class="submenu-link">Moulding Persiapan Extra</a>
+                                            </li>
                                             <li class="submenu-item {{ Route::is('MouldingStock*') ? 'active' : '' }}">
                                                 <a href="{{ route('MouldingStock.index') }}"
                                                     class="submenu-link">Moulding
@@ -1520,6 +1525,39 @@
                                         </ul>
                                     </li>
 
+                                    <li
+                                                class="submenu-item has-sub {{ Route::is('MouldingReworkPersiapan*', 'MouldingReworkPenyebaran*', 'MouldingReworkPersiapanStock*', 'MouldingReworkPengembalian*', 'TransitMouldingRework*') ? 'active' : '' }}">
+                                                <a href="#" class='submenu-link'>
+                                                    <span>Moulding Rework</span>
+                                                </a>
+                                                <ul class="submenu submenu-level-2">
+                                                    <li
+                                                        class="submenu-item {{ Route::is('MouldingReworkPersiapan*') && !Route::is('MouldingReworkPersiapanStock*') ? 'active' : '' }}">
+                                                        <a href="{{ route('MouldingReworkPersiapan.index') }}"
+                                                            class="submenu-link">Moulding Rework Persiapan</a>
+                                                    </li>
+                                                    <li
+                                                        class="submenu-item {{ Route::is('MouldingReworkPersiapanStock*') ? 'active' : '' }}">
+                                                        <a href="{{ route('MouldingReworkPersiapanStock.index') }}"
+                                                            class="submenu-link">Moulding Rework Stock</a>
+                                                    </li>
+                                                    <li
+                                                        class="submenu-item {{ Route::is('MouldingReworkPenyebaran*') ? 'active' : '' }}">
+                                                        <a href="{{ route('MouldingReworkPenyebaran.index') }}"
+                                                            class="submenu-link">Moulding Rework Penyebaran</a>
+                                                    </li>
+                                                    <li
+                                                        class="submenu-item {{ Route::is('MouldingReworkPengembalian*') ? 'active' : '' }}">
+                                                        <a href="{{ route('MouldingReworkPengembalian.index') }}"
+                                                            class="submenu-link">Moulding Rework Pengembalian</a>
+                                                    </li>
+                                                    <li
+                                                        class="submenu-item {{ Route::is('TransitMouldingRework*') ? 'active' : '' }}">
+                                                        <a href="{{ route('TransitMouldingRework.index') }}"
+                                                            class="submenu-link">Transit Moulding Rework</a>
+                                                    </li>
+                                                </ul>
+                                    </li>
                                 </ul>
                             </li>
                         @endrole
