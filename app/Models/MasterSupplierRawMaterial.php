@@ -12,6 +12,7 @@ class MasterSupplierRawMaterial extends Model
     protected $fillable = [
         'nama_supplier',
         'inisial_supplier',
+        'pph',
         'status',
     ];
     public function PrmRawMaterialInput()

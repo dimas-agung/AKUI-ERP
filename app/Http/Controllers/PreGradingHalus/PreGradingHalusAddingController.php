@@ -62,7 +62,7 @@ class PreGradingHalusAddingController extends Controller
             ->get();
         }
         return response()->view('PreGradingHalus.PreGradingHalusAdding.index', [
-            'pre_grading_halus_addings' => $this->getPreGradingHalusAdding(),
+            'pre_grading_halus_addings' =>$PreGradingHalusAdding,
         ]);
     }
     // create

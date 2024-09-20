@@ -40,6 +40,7 @@ class CabutBuluPengembalianController extends Controller
             $CabutBuluPengembalian = $CabutBuluPengembalian->limit(1000)->latest()->get();
         }
         // return $CabutBuluPengembalian;
+        // return $CabutBuluPengembalian;
         return response()->view('CabutBulu.CabutBuluPengembalian.index', [
             'cabut_bulu_penyebarans' => $CabutBuluPengembalian,
             'i' => $i,

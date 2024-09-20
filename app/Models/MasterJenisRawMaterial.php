@@ -16,6 +16,7 @@ class MasterJenisRawMaterial extends Model
         'pengurangan_harga',
         'harga_estimasi',
         'status',
+        'pph',
     ];
     public function PrmRawMaterialInputItem()
     {
