@@ -146,7 +146,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Berat Masuk</label>
+                                            <label>Berat Stock</label>
                                             <input type="text" class="form-control" id="berat_masuk"
                                                 name="berat_masuk" onchange="handleChange(this)" readonly>
                                         </div>
@@ -429,12 +429,13 @@
                 success: function(response) {
                     // if (response.sisa_berat > 0) {
                         console.log(response);
+                        let sisa_berat = response.berat_masuk - response.berat_adjustment - response.berat_keluar
                         // Mengatur nilai Nomor Batch sesuai dengan respons dari server
                         $('#nomor_batch').val(response.nomor_batch);
                         $('#nama_supplier').val(response.nama_supplier);
                         $('#jenis').val(response.jenis);
                         $('#kadar_air').val(response.avg_kadar_air);
-                        $('#berat_masuk').val(response.sisa_berat);
+                        $('#berat_masuk').val(sisa_berat);
                         $('#modal').val(response.modal);
                         $('#nomor_nota_internal').val(response.nomor_nota_internal);
 
@@ -449,12 +450,12 @@
                         handleChange(document.getElementById('berat_masuk_edit'))
                         handleChange(document.getElementById('modal_edit'))
                         handleChange(document.getElementById('nomor_nota_internal_edit'))
-
+                       
                         $('#nomor_batch_edit').val(response.nomor_batch);
                         $('#nama_supplier_edit').val(response.nama_supplier);
                         $('#jenis_edit').val(response.jenis);
                         $('#kadar_air_edit').val(response.avg_kadar_air);
-                        $('#berat_masuk_edit').val(response.sisa_berat);
+                        $('#berat_masuk_edit').val(sisa_berat);
                         $('#modal_edit').val(response.modal);
                         $('#nomor_nota_internal_edit').val(response.nomor_nota_internal);
                     // } else {

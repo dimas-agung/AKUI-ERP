@@ -40,7 +40,8 @@ class MasterSupplierRawMaterialController extends Controller
         //create MasterSupplier
         MasterSupplierRawMaterial::create([
             'nama_supplier'             => $request->nama_supplier,
-            'inisial_supplier'          => $request->inisial_supplier
+            'inisial_supplier'          => $request->inisial_supplier,
+            'pph'          => $request->pph ?? 1,
         ]);
 
         //redirect to index
@@ -89,6 +90,7 @@ class MasterSupplierRawMaterialController extends Controller
             'nama_supplier'     => $request->nama_supplier,
             'inisial_supplier'  => $request->inisial_supplier,
             'status'            => $request->status,
+            'pph'          => $request->pph ?? 1,
         ]);
 
         //redirect to index

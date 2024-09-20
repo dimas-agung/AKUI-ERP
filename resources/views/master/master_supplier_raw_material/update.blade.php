@@ -43,6 +43,19 @@
                                     </div>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold">PPH</label>
+                                <input type="number" class="form-control @error('pph') is-invalid @enderror"
+                                    name="pph"  step="0.0001"
+                                    value="{{ old('pph', $MasterSPR->pph) }}">
+
+                                <!-- error message untuk title -->
+                                @error('pph')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
 
                             <div class="form-group">
                                 <label class="font-weight-bold">Status</label>

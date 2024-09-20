@@ -54,6 +54,14 @@
                                                 required oninvalid="this.setCustomValidity('Mohon isi Inisial Supplier')"
                                                 oninput="this.setCustomValidity('')">
                                         </div>
+                                        <label><strong>PPH</strong></label>
+                                        <div class="form-group">
+                                            <input type="number" name="pph" step="0.0001"
+                                                placeholder="Masukan PPH Supplier"
+                                                class="form-control @error('pph') is-invalid @enderror"
+                                                required
+                                              >
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
@@ -100,6 +108,13 @@
                                             <input type="text" id="editInisialSupplier" name="inisial_supplier"
                                                 class="form-control @error('inisial_supplier') is-invalid @enderror">
                                         </div>
+                                        <label><strong>PPH</strong></label>
+                                        <div class="form-group">
+                                            <input type="number" name="pph" id="editPPHSupplier"
+                                                placeholder="Masukan PPH Supplier" step="0.0001"
+                                                class="form-control @error('pph') is-invalid @enderror"
+                                                required >
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
@@ -119,6 +134,7 @@
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Nama Supplier</th>
                                         <th scope="col" class="text-center">Inisial supplier</th>
+                                        <th scope="col" class="text-center">PPH supplier</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">Tanggal Buat</th>
                                         <th scope="col" class="text-center">Tanggal Update</th>
@@ -131,6 +147,7 @@
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $MasterSPR->nama_supplier }}</td>
                                             <td class="text-center">{{ $MasterSPR->inisial_supplier }}</td>
+                                            <td class="text-center">{{ $MasterSPR->pph }}</td>
                                             <td class="text-center">
                                                 @if ($MasterSPR->status == 1)
                                                     Aktif
@@ -188,6 +205,8 @@
             $.get(`/master_supplier_raw_material/edit/${id}`, function(data) {
                 $('#editNamaSupplier').val(data.nama_supplier);
                 $('#editInisialSupplier').val(data.inisial_supplier);
+                $('#editPPHSupplier').val(data.pph);
+                
                 $('#editForm').attr('action', `/master_supplier_raw_material/edit/${id}`);
                 $('#editPostModal').modal('show');
             });

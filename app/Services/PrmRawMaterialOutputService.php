@@ -162,12 +162,12 @@ class PrmRawMaterialOutputService
             ->where('nomor_batch', $itemObject->nomor_batch)
             ->first();
             // return $existingItem
-
+        $sisaBerat =  $existingItem->berat_masuk - $existingItem->berat_adjustment - ($itemObject->berat + $existingItem->berat_keluar);
         $dataToUpdate = [
             // 'berat_masuk'   => $itemObject->berat_masuk,
-            'berat_keluar'  => $itemObject->berat,
-            'sisa_berat'    => $itemObject->selisih_berat,
-            'total_modal'   => $itemObject->total_modal_stock,
+            'berat_keluar'  => $itemObject->berat + $existingItem->berat_keluar,
+            'sisa_berat'    => $sisaBerat,
+            'total_modal'   => $existingItem->modal*$sisaBerat,
             'keterangan'    => $itemObject->keterangan_item,
             'user_updated'  => $itemObject->user_created ?? "There isn't any",
             // Sesuaikan dengan kolom-kolom lain di tabel item Anda
@@ -180,11 +180,11 @@ class PrmRawMaterialOutputService
             $beratSebelumnya = $existingItem->berat_masuk;
 
             $tambahBeratKeluar = $lastBeratKeluar + $itemObject->berat;
-            $perbedaanBerat = $beratSebelumnya - $tambahBeratKeluar;
-            $totalModalBaru = $perbedaanBerat * $itemObject->modal;
+            $sisaBerat =  $existingItem->berat_masuk - $existingItem->berat_adjustment - ($itemObject->berat + $existingItem->berat_keluar);
+            $totalModalBaru = $sisaBerat * $itemObject->modal;
 
             $dataToUpdate['berat_keluar'] = $tambahBeratKeluar;
-            $dataToUpdate['sisa_berat'] = $perbedaanBerat;
+            $dataToUpdate['sisa_berat'] = $sisaBerat;
             $dataToUpdate['total_modal'] = $totalModalBaru;
             $existingItem->update($dataToUpdate);
         } else {

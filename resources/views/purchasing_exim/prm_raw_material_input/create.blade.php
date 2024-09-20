@@ -101,10 +101,22 @@
                             class="form-control" id="kadar_air">
                     </div>
                     <div class="col-md-3">
+                        <label for="pph" class="form-label">PPH</label>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="pph" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="harga_nota_pph" class="form-label">Harga Nota + PPH</label>
+                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
+                            class="form-control" id="harga_nota_pph">
+                    </div>
+                    <div class="col-md-3">
                         <label for="harga_nota" class="form-label">Harga Nota</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="harga_nota">
+                            class="form-control" id="harga_nota" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="id_box" class="form-label">ID Box</label>
@@ -200,6 +212,7 @@
         // Event listener untuk perubahan nilai pada berat nota atau berat bersih
         $('#berat_nota').on('input', updateSelisihBerat);
         $('#berat_bersih').on('input', updateSelisihBerat);
+        $('#harga_nota_pph').on('input', updateHargaNota);
 
         // Event listener untuk perubahan nilai pada total harga nota atau berat bersih
         $('#total_harga_nota').on('change', updateHargaDeal);
@@ -228,6 +241,32 @@
                 }
             });
         });
+        $('#nama_supplier').on('change', function() {
+            // Mengambil nilai id_box yang dipilih
+            let nama_supplier = $(this).val();
+            // Melakukan permintaan AJAX ke controller untuk mendapatkan nomor batch
+            $.ajax({
+                url: `{{ route('PrmRawMaterialInput.getDataSupplier') }}`,
+                method: 'GET',
+                data: {
+                    nama_supplier: nama_supplier
+                },
+                success: function(response) {
+                    $('#pph').val(response.pph);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+        function updateHargaNota() {
+            let harga_nota_pph = $('#harga_nota_pph').val();
+            let pph = $('#pph').val();
+            let harga_nota = harga_nota_pph - (harga_nota_pph* pph);
+            $('#harga_nota').val(Math.floor(harga_nota))
+            generateIdBox()
+            updateTotalHarga()
+        }
 
         // generate nomor internal
         function generateNomorNotaInternal() {
@@ -260,6 +299,7 @@
 
                         // Menampilkan nomor nota internal pada input nomor nota internal
                         $('#nomor_nota_internal').val(nomorNotaInternal);
+                       
                         // Panggil generateIdBox setelah nomor nota internal diperbarui
                         generateIdBox();
                     },
@@ -496,6 +536,8 @@
             $('#selisih_berat').val('');
             $('#kadar_air').val('');
             $('#id_box').val('');
+            // $('#pph').val('');
+            $('#harga_nota_pph').val('');
             $('#harga_nota').val('');
             $('#total_harga_nota').val('');
             $('#harga_deal').val('');
