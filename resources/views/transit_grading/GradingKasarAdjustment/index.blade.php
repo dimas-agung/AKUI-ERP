@@ -44,6 +44,7 @@
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">No Adjustment</th>
                                         <th scope="col" class="text-center">Id Box Raw Material</th>
+                                        <th scope="col" class="text-center">Id Box Grading Kasar</th>
                                         <th scope="col" class="text-center">Tanggal Adjustment</th>
                                         <th scope="col" class="text-center">Nomor Batch</th>
                                         <th scope="col" class="text-center">Nama Supplier</th>
@@ -70,6 +71,7 @@
                                         <td class="text-center">{{ $i++ }}</td>
                                         <td class="text-center">{{ $MasterPRIM->nomor_adjustment }}</td>
                                         <td class="text-center">{{ $MasterPRIM->id_box_raw_material }}</td>
+                                        <td class="text-center">{{ $MasterPRIM->id_box_grading_kasar }}</td>
                                         <td class="text-center">{{ $MasterPRIM->tanggal_adjustment }}</td>
                                         <td class="text-center">{{ $MasterPRIM->nomor_batch }}</td>
                                         <td class="text-center">{{ $MasterPRIM->nama_supplier }}</td>

@@ -147,20 +147,20 @@ class CabutHancuranPersiapanService
 
                     if ($PreCleaningS) {
                         // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                        $stockPrmRawMaterial = RambangBasahStock::where('id_box_hcr_kotor', '=', $CabutHancuranPersiapanI->id_stock_hcr_kotor)
+                        $RambangBasahStock = RambangBasahStock::where('id_box_hcr_kotor', '=', $CabutHancuranPersiapanI->id_stock_hcr_kotor)
                             ->first();
 
-                        if ($stockPrmRawMaterial) {
+                        if ($RambangBasahStock) {
                             // Simpan nilai sebelum dihapus
-                            $beratSebelumnya = $stockPrmRawMaterial->berat_masuk;
-                            $beratKeluar = $stockPrmRawMaterial->berat_keluar;
+                            $beratSebelumnya = $RambangBasahStock->berat_masuk;
+                            $beratKeluar = $RambangBasahStock->berat_keluar;
                             
                             // Hitung perbedaan berat dan pcs
                             $perbedaanBerat = $beratKeluar - $CabutHancuranPersiapanI->berat;
                             $sisa_berat = $beratSebelumnya-($perbedaanBerat);
 
                             // Update data StockTransitGradingKasar dengan berat, pcs, dan total modal yang baru
-                            $stockPrmRawMaterial->update([
+                            $RambangBasahStock->update([
                                 'berat_keluar' => max($perbedaanBerat, 0),
                                 'sisa_berat' => max($sisa_berat, 0),
                             ]);

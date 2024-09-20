@@ -139,11 +139,11 @@ class GradingKasarOutputController extends Controller
                     $beratSebelumnya = $stockGradingKasar->berat_keluar;
                     $PcsTadi = $GradingKO->pcs_keluar;
                     $PcsSebelumnya = $stockGradingKasar->pcs_keluar;
-                    $Modal = $GradingKO->modal;
+                    $Modal = $stockGradingKasar->modal;
 
                     $Beratkeluar = $beratSebelumnya - $beratTadi;
                     $PcsKeluar = $PcsSebelumnya - $PcsTadi;
-                    $sisaBerat = $stockGradingKasar->berat_masuk - $Beratkeluar;
+                    $sisaBerat = $stockGradingKasar->berat_masuk - $Beratkeluar - $stockGradingKasar->berat_adjustment;
                     $TotalModal = $sisaBerat * $Modal;
 
                     // Update data pada PrmRawMaterialStock

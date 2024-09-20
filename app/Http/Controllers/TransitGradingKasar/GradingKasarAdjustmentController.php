@@ -92,13 +92,13 @@ class GradingKasarAdjustmentController extends Controller
                 // return $dataInsert;
                 $GradingKasarAdjustment = GradingKasarAdjustment::create($dataInsert);
                 $GradingKasarStock = GradingKasarStock::where('id_box_grading_kasar', $GradingKasarAdjustment->id_box_grading_kasar)->first();
-                $sisa_berat_stock =  $GradingKasarStock->sisa_berat -  $GradingKasarAdjustment->berat_adjustment;
-                $modal = $sisa_berat_stock == 0 ? 0 :$GradingKasarStock->total_modal / $sisa_berat_stock;
+                $sisa_berat_stock =  $GradingKasarStock->berat_masuk -  $GradingKasarAdjustment->berat_adjustment - $GradingKasarStock->berat_keluar;
+                $modal = $sisa_berat_stock == 0 ? 0 :$GradingKasarAdjustment->total_modal_saldo_terakhir / $sisa_berat_stock;
                 $GradingKasarStock->update([
                     // 'sisa_berat' => $sisa_berat_stock,
                     'berat_adjustment' =>   $GradingKasarStock->berat_adjustment + $GradingKasarAdjustment->berat_adjustment ,
                     'modal' => $modal,
-                    'total_modal' => $modal * (int)$sisa_berat_stock,
+                    'total_modal' => $GradingKasarAdjustment->total_modal_saldo_terakhir,
                 ]);
             }
             DB::commit();

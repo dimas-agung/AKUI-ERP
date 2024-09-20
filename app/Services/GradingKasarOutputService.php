@@ -127,6 +127,8 @@ class GradingKasarOutputService
         $existingItem = GradingKasarStock::where('id_box_grading_kasar', $itemObject->id_box_grading_kasar)
             ->where('id_box_raw_material', $itemObject->id_box_raw_material)
             ->first();
+        $sisa_berat = $existingItem->berat_masuk - $existingItem->berat_adjustment - $itemObject->berat_keluar;
+        // $totalModalBaru =
             // return $existingItem
 
         $dataToUpdate = [
@@ -146,12 +148,13 @@ class GradingKasarOutputService
 
             $tambahBeratKeluar = $lastBeratKeluar + $itemObject->berat_keluar;
             $perbedaanBerat = $lastPcsKeluar + $itemObject->pcs_keluar;
-            $sisaBerat = $existingItem->berat_masuk - $tambahBeratKeluar;
+            $sisaBerat = $existingItem->berat_masuk - $tambahBeratKeluar -  $existingItem->berat_adjustment;
             $totalModalBaru = $sisaBerat * $itemObject->modal;
 
             $dataToUpdate['berat_keluar'] = $tambahBeratKeluar;
             $dataToUpdate['pcs_keluar'] = $perbedaanBerat;
             $dataToUpdate['total_modal'] = $totalModalBaru;
+            $dataToUpdate['sisa_berat'] = $sisa_berat;
             $existingItem->update($dataToUpdate);
         } else {
             // Jika item tidak ada, buat item baru dalam database

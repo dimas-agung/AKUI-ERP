@@ -218,19 +218,19 @@
             $('#pcs_adding').on('input', function() {
                 let pcsAdding = parseFloat($(this).val());
                 if (!isNaN(pcsAdding)) {
-                    if (pcsAdding > sisaPcsAwal) {
-                        Swal.fire({
-                            title: 'Warning!',
-                            text: "Pcs Adding tidak boleh melebihi Sisa Pcs.",
-                            icon: 'warning'
-                        });
-                        $(this).val(''); // Mengosongkan nilai input
-                        return;
-                    }
-                    let sisaPcs = sisaPcsAwal - pcsAdding;
-                    if (sisaPcs < 0) {
-                        sisaPcs = 0; // Menghindari stok negatif
-                    }
+                    // if (pcsAdding > sisaPcsAwal) {
+                    //     Swal.fire({
+                    //         title: 'Warning!',
+                    //         text: "Pcs Adding tidak boleh melebihi Sisa Pcs.",
+                    //         icon: 'warning'
+                    //     });
+                    //     $(this).val(''); // Mengosongkan nilai input
+                    //     return;
+                    // }
+                    // let sisaPcs = sisaPcsAwal - pcsAdding;
+                    // if (sisaPcs < 0) {
+                    //     sisaPcs = 0; // Menghindari stok negatif
+                    // }
                     $('#sisa_pcs').val(sisaPcs);
                 } else {
                     $('#sisa_pcs').val(sisaPcsAwal);

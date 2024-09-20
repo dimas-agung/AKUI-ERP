@@ -86,35 +86,18 @@ class DryAPenerimaanService
                     }
 
                     $itemObject = (object) $mergedData;
-
+                    $dataUpdate = [
+                        'status' => 0
+                    ];
                     // Ambil semua item yang sesuai dengan kriteria
                     $existingItems = TransitCabutBulu::where('nomor_job', $itemObject->nomor_job)
                         ->where('jenis_job', $itemObject->jenis_job)
-                        ->get();
+                        ->update($dataUpdate);
 
-                    foreach ($existingItems as $existingItem) {
-
-                        // Update data dengan nilai baru
-                        $existingItem->update([
-                            // Update data PreGradingHalusAddingStock
-                            'status'    => $itemObject->statuss ?? 0,
-                            'berat_job' => $itemObject->berat_jobs ?? 0,
-                            'pcs_job'   => $itemObject->pcs_addings ?? 0,
-                        ]);
-                    }
-
+                    
                     $existingItems = CabutBuluPengembalian::where('nomor_job', $itemObject->nomor_job)
-                    ->get();
+                    ->update($dataUpdate);
 
-                    $dataToUpdate = [
-                        'status'                => $itemObject->status ?? 0,
-                    ];
-
-                    if ($existingItems) {
-                        foreach ($existingItems as $existingItem) {
-                            $existingItem->update($dataToUpdate);
-                        }
-                    }
 
                     DB::commit();
                 } catch (\Exception $e) {
@@ -158,20 +141,20 @@ class DryAPenerimaanService
                     
                     if ($DryAPenerimaanCabutStock) {
                         // Ambil data StockTransitGradingKasar berdasarkan id_box_grading_kasar dan id_box_raw_material
-                        $TransitCabutBulu = TransitCabutBulu::where('nomor_job', '=', $DryAPenerimaanCabut->nomor_job)
-                            ->update([
-                                'berat_job' => max($DryAPenerimaanCabut->berat_job, 0),
-                                'pcs_job' => max($DryAPenerimaanCabut->pcs_job, 0),
-                                'status' => 1,
-                            ]);
-
-                        $dataToUpdate = [
-                            'status'                => $DryAPenerimaanCabut->status ?? 0,
-                        ];
-                        $existingItems = CabutBuluPengembalian::where('nomor_job', $DryAPenerimaanCabut->nomor_job)
-                        ->update($dataToUpdate);
-                       
+                        
                     }
+                    $TransitCabutBulu = TransitCabutBulu::where('nomor_job', '=', $DryAPenerimaanCabut->nomor_job)
+                        ->update([
+                            // 'berat_job' => max($DryAPenerimaanCabut->berat_job, 0),
+                            // 'pcs_job' => max($DryAPenerimaanCabut->pcs_job, 0),
+                            'status' => 1,
+                        ]);
+
+                    $dataToUpdate = [
+                        'status'                =>3,
+                    ];
+                    $existingItems = CabutBuluPengembalian::where('nomor_job', $DryAPenerimaanCabut->nomor_job)
+                    ->update($dataToUpdate);
 
                     // if ($DryAPenerimaanCabut->berat_grading >= $DryAPenerimaanCabutStock->berat_masuk) {
                     //     $DryAPenerimaanCabutStock->delete();
