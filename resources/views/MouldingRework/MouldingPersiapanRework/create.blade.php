@@ -114,6 +114,39 @@
     </form>
     {{-- </div> --}}
 @endsection
+@section('printArea')
+    <style>
+        @media print {
+            body {
+            visibility: hidden;
+            /* display: none; */
+            /* position: relative; */
+            }
+            #printableArea1 {
+            visibility: visible;
+            /* display: inline; */
+            position: absolute;
+            left: 0;
+            top: 0;
+            /* bottom: 0; */
+            /* right: 0; */
+            }
+            .no-print {
+                display: none; /* Menyembunyikan elemen dengan class "no-print" saat mencetak */
+            }
+        }
+    </style>
+    <div class="row" id="printableArea1" style="max-width: 200px;margin: 10px;">
+
+        <div id="qrcode" class="col" style="max-width: 70px;padding-right:0;padding-left:0;"></div>
+        <div class="col" style="font-size: 9px;width: 220px;padding-right:0;padding-left:0;" >
+            <span style="text-align: center;font-weight: bold;;font-size:10px;" id="cetak_nomor_batch"></span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;"  id="cetak_nomor_job"></span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_jenis"></span><br>
+            <span style="font-family:Calibri;font-weight: bold;font-size:10px;" id="cetak_gramasi"></span><span style="font-family:Calibri;font-weight: bold;font-size:10px;" >gr 
+        </div>
+    </div>
+@endsection
 @section('script')
     <script>
         // Variabel penanda untuk menandai apakah tombol "add" sudah diklik atau belum
@@ -208,6 +241,13 @@
                             nama_team_leader: nama_team_leader,
                             user_created: user_created,
                         });
+                        generateQrCode(nomor_job_rework)
+                        
+                        $('#cetak_nomor_batch').html(nomor_batch)
+                        $('#cetak_nomor_job').html(nomor_job_rework)
+                        $('#cetak_jenis').html(job_order)
+                        $('#cetak_gramasi').html(Math.floor(berat_job))
+                        window.print();
 
                         // Membersihkan nilai input setelah ditambahkan
                         $('#nomor_job_rework').val(null).trigger('change');
@@ -296,7 +336,7 @@
                     console.log('Error:', error);
                 }
             });
-
+            
             function sendData() {
                 var nomor_job_rework = $('#nomor_job_rework').val() || '';
 

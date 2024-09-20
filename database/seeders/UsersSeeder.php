@@ -184,7 +184,7 @@ class UsersSeeder extends Seeder
         // ]);
         // $user->syncRoles(['kedatangan']);
 
-        $role = Role::create(['name' => 'final_grading']);
+        // $role = Role::create(['name' => 'final_grading']);
         $user = User::create([
             'email' => 'finalgradingakui@gmail.com',
             'password' => Hash::make('10062001'),
@@ -195,7 +195,7 @@ class UsersSeeder extends Seeder
             'phone_number' => '121313131',
             'birth_date' => '2000-04-09',
         ]);
-        $user->syncRoles(['kedatangan']);
+        $user->syncRoles(['final_grading']);
         $user = User::create([
             'email' => 'finalgradingobi@gmail.com',
             'password' => Hash::make('21081998'),
@@ -206,6 +206,6 @@ class UsersSeeder extends Seeder
             'phone_number' => '1213131331321',
             'birth_date' => '2000-04-09',
         ]);
-        $user->syncRoles(['kedatangan']);
+        $user->syncRoles(['final_grading']);
     }
 }
