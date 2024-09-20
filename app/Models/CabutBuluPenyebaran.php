@@ -34,6 +34,7 @@ class CabutBuluPenyebaran extends Model
         'user_created',
         'user_updated',
         'status',
+        'is_trial'
     ];
     public function CabutBuluStock()
     {

@@ -27,6 +27,7 @@ class CabutBuluStock extends Model
         'modal',
         'total_modal',
         'status',
+        'is_trial'
     ];
     public function CabutBuluPenyebaran()
     {

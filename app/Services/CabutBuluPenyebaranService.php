@@ -53,7 +53,7 @@ class CabutBuluPenyebaranService
                     DB::beginTransaction();
 
                     // Buat instansi PreCleaningInput
-                    CabutBuluPenyebaran::create(array_merge($mergedData, ['waktu_penyebaran' => $validatedData['waktu_penyebaran']]));
+                    $CabutBuluPenyebaran =CabutBuluPenyebaran::create(array_merge($mergedData, ['waktu_penyebaran' => $validatedData['waktu_penyebaran']]));
 
                     $itemObject = (object) $mergedData;
 
@@ -66,6 +66,7 @@ class CabutBuluPenyebaranService
                         // Update data dengan nilai baru
                         $existingItem->update([
                             'status'       => CabutBuluPenyebaran::STATUS_ON_PROSES,
+                            'is_trial' => $CabutBuluPenyebaran->is_trial
                         ]);
                     }
 

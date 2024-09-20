@@ -36,6 +36,7 @@
                                     <th class="text-center" scope="col">Total Modal</th>
                                     <th class="text-center" scope="col">Upah Operator</th>
                                 @endrole
+                                <th scope="col" class="text-center">Trial</th>
                                 <th class="text-center" scope="col">Status</th>
                                 <th class="text-center" scope="col">Created At</th>
                                 <th class="text-center" scope="col">Updated At</th>
@@ -66,6 +67,7 @@
                                         <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
                                         <td class="text-center">{{ number_format($item->upah_operator, 2, ',', '.') }}</td>
                                     @endrole
+                                    <td class="text-center">{{ $item->is_trial == 1 ?'Ya':'Tidak' }}</td>
                                     <td>
                                         @if ($item->status == 0)
                                             Non-Aktif

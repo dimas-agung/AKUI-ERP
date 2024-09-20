@@ -110,6 +110,16 @@
                         <label for="user_created" class="form-label">NIP Admin</label>
                         <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}">
                     </div>
+                    <div class="col-md-6">
+                        <label for="is_trial" class="form-label">TRIAL</label>
+                        <select class="select2 form-select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                            name="is_trial" id="is_trial">
+                            <option value="0" selected>TIDAK</option>
+                            <option value="1">YA</option>
+                            
+                        </select>
+                      
+                    </div>
 
 
                     <div class="col-12">
@@ -145,6 +155,7 @@
                                 <th scope="col" class="text-center">Grade Operator</th>
                                 <th scope="col" class="text-center">Nama Team Leader</th>
                                 <th scope="col" class="text-center">Keterangan 2</th>
+                                <th scope="col" class="text-center"> Trial</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
@@ -287,6 +298,7 @@
                 let nama_team_leader = $('#nama_team_leader').val();
                 let keterangan_2 = $('#keterangan_2').val();
                 let user_created = $('#user_created').val();
+                let is_trial = $('#is_trial').val();
 
                 let newRow = `<tr>` +
                     `<td class="text-center">${nomor_job}</td>` +
@@ -303,6 +315,7 @@
                     `<td class="text-center">${grade_operator}</td>` +
                     `<td class="text-center">${nama_team_leader}</td>` +
                     `<td class="text-center">${keterangan_2}</td>` +
+                    `<td class="text-center">${is_trial == 1 ?'Ya': 'Tidak'}</td>` +
                     `<td class="text-center">${user_created}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
                     `</tr>`;
@@ -326,6 +339,7 @@
                     nama_team_leader: nama_team_leader,
                     keterangan_2: keterangan_2,
                     user_created: user_created,
+                    is_trial:is_trial
                 });
                 console.log(dataArray);
 

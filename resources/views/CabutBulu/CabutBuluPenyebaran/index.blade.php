@@ -75,6 +75,7 @@
                                         <th scope="col" class="text-center">Grade Operator</th>
                                         <th scope="col" class="text-center">Nama Team Leader</th>
                                         <th scope="col" class="text-center">Pcs 1</th>
+                                        <th scope="col" class="text-center">Trial</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">User Updated</th>
                                         <th scope="col" class="text-center">Created At</th>
@@ -113,6 +114,7 @@
                                             <td class="text-center">{{ $item->grade_operator }}</td>
                                             <td class="text-center">{{ $item->nama_team_leader }}</td>
                                             <td class="text-center">{{ $item->keterangan_2 }}</td>
+                                            <td class="text-center">{{ $item->is_trial == 1 ? 'Ya' : 'Tidak' }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>
                                             <td class="text-center">{{ $item->created_at }}</td>
