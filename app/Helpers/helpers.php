@@ -3,8 +3,18 @@
 if (!function_exists('generate_berat_bersih')) {
     function generate_berat_bersih($berat_kotor) {
         {
-            $berat_bersih = floor($berat_kotor/1.15);
-            return $berat_bersih;
+            $berat_bersih = (float)$berat_kotor/1.15;
+            return floor($berat_bersih);
+            // return number_format($berat_bersih,2);
+        }
+    }
+}
+if (!function_exists('generate_berat_bersih2')) {
+    function generate_berat_bersih2($berat_kotor) {
+        {
+            $berat_bersih = (float)$berat_kotor/1.15;
+            // return floor($berat_bersih,2);
+            return number_format($berat_bersih,2);
         }
     }
 }

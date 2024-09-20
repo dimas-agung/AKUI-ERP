@@ -70,13 +70,14 @@
                                 <th class="text-center">Upah Bersih</th>
                                 <th class="text-center"> Lama Pengerjaan (Menit)</th>
                                 <th class="text-center">Plant</th>
+                                <th class="text-center">Trial</th>
                                 
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($cabut_bulu_stock as $item)
                                 @php
-                                    $berat_bersih = generate_berat_bersih($item->berat_job);
+                                    $berat_bersih = generate_berat_bersih2($item->berat_job);
                                     $upah_bersih = $item->upah_operator /$item->berat_job * $berat_bersih;
                                     $date = $item->created_at;
 
@@ -87,13 +88,14 @@
                                   
                                     
                                     <td class="text-center">{!! $item->nip_operator !!}</td>
-                                    <td class="text-center">{!! $berat_bersih !!}</td>
+                                    <td class="text-center">{{ $berat_bersih }}</td>
                                     <td class="text-center">{{ $item->jenis_job }}</td>
                                     <td class="text-center">{{ $item->nomor_job }}</td>
                                     <td class="text-center">{!! 0 !!}</td>
                                     <td class="text-center">{!! $upah_bersih !!}</td>
                                     <td class="text-center">{{floor(($item->lama_pengerjaan) / 60)}}</td>
                                     <td class="text-center">{{ $item->tujuan_kirim }}</td>
+                                    <td class="text-center">{{ $item->is_trial ==1 ? 'Ya' : 'Tidak' }}</td>
                                    
                                     
                                    
