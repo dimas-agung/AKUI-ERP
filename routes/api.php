@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::controller(App\Http\Controllers\API\ProduktivitasKaryawanAPIController::class)->group(function () {
+    Route::get('/cleaning', 'getDataCleaning')->name('api.ProduktivitasCleaning.index');
+    Route::get('/cleaning_hancuran', 'getDataCleaningHancuran')->name('api.ProduktivitasCleaningHancuran.index');
+});
