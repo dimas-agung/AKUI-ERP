@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pre_grading_halus_inputs', function (Blueprint $table) {
+    Schema::create('pre_grading_halus_inputs', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_job');
             $table->string('id_box_grading_kasar');
@@ -25,11 +25,15 @@ return new class extends Migration
             $table->string('jenis_kirim');
             $table->float('berat_kirim');
             $table->float('pcs_kirim');
+            $table->string('jenis_pre_cleaning');
+            $table->float('berat_pre_cleaning');
+            $table->float('pcs_pre_cleaning');
             $table->string('tujuan_kirim');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
             $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

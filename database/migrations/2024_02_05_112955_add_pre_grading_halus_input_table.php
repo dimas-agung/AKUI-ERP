@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         //
-        Schema::table('pre_grading_halus_inputs', function (Blueprint $table) {
-            //
-            $table->integer('status')->default('1');
-        });
+        // Schema::table('pre_grading_halus_inputs', function (Blueprint $table) {
+        //     //
+        //     // $table->integer('status')->default('1');
+        // });
     }
 
     /**

@@ -24,15 +24,15 @@ return new class extends Migration
             $table->string('jenis_raw_material');
             $table->float('kadar_air');
             $table->string('jenis_kirim');
-            $table->float('berat_masuk');
-            $table->float('pcs_masuk');
-            $table->float('berat_keluar');
-            $table->float('pcs_keluar');
-            $table->float('sisa_berat');
-            $table->float('sisa_pcs');
+            $table->float('berat_kirim');
+            $table->float('pcs_kirim');
+            $table->string('jenis_pre_cleaning');
+            $table->float('berat_pre_cleaning');
+            $table->float('pcs_pre_cleaning');
             $table->string('tujuan_kirim');
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
