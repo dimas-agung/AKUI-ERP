@@ -76,8 +76,9 @@
                         <tbody>
                             @forelse ($cabut_bulu_stock as $item)
                                 @php
-                                    $berat_bersih = generate_berat_bersih2($item->berat_job);
-                                    // $upah_bersih = $item->upah_operator /$item->berat_job * $berat_bersih;
+                                    $berat_bersih = $item->berat*0.12;
+                                    $upah_bersih = $item->upah_operator /$item->berat * $berat_bersih;
+                                    // $upah_bersih = $item->upah_operator;
                                     $date = $item->created_at;
 
                                 @endphp
@@ -87,11 +88,11 @@
                                   
                                     
                                     <td class="text-center">{!! $item->nip_operator !!}</td>
-                                    <td class="text-center">{!! $berat_bersih !!}</td>
+                                    <td class="text-center">{{ number_format($berat_bersih,2) }}</td>
                                     <td class="text-center">{{ $item->jenis_rambang }}</td>
                                     <td class="text-center">{{ $item->nomor_job }}</td>
                                     <td class="text-center">{!! 0 !!}</td>
-                                    <td class="text-center">{{ floor($item->upah_operator) }}</td>
+                                    <td class="text-center">{{ floor($upah_bersih) }}</td>
                                     <td class="text-center">{{floor(($item->lama_pengerjaan) / 60)}}</td>
                                     <td class="text-center">{{ $plant_filter }}</td>
                                    
