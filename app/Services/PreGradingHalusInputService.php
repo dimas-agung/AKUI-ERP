@@ -68,12 +68,11 @@ class PreGradingHalusInputService
                         'kadar_air'     => $mergedData['kadar_air'],
                         'tujuan_kirim'      => $mergedData['tujuan_kirim'],
                         'jenis_kirim'       => $mergedData['jenis_kirim'],
-                        'berat_keluar'      => $mergedData['berat_keluar'] ?? 0,
-                        'berat_masuk'       => $mergedData['berat_kirim'] ?? 0,
-                        'pcs_keluar'        => $mergedData['pcs_keluar'] ?? 0,
-                        'pcs_masuk'         => $mergedData['pcs_kirim'] ?? 0,
-                        'sisa_berat'         => $mergedData['berat_kirim'] ?? 0,
-                        'sisa_pcs'         => $mergedData['pcs_kirim'] ?? 0,
+                        'berat_kirim'      => $mergedData['berat_kirim'] ?? 0,
+                        'pcs_kirim'        => $mergedData['pcs_kirim'] ?? 0,
+                        'jenis_pre_cleaning'       => $mergedData['jenis_pre_cleaning'],
+                        'berat_pre_cleaning'       => $mergedData['berat_pre_cleaning'] ?? 0,
+                        'pcs_pre_cleaning'         => $mergedData['pcs_pre_cleaning'] ?? 0,
                         'modal'             => $mergedData['modal'],
                         'total_modal'       => $mergedData['total_modal'],
                         'user_created'  => $mergedData['user_created'],
@@ -93,10 +92,7 @@ class PreGradingHalusInputService
                         // Update data dengan nilai baru
                         $existingItem->update([
                             // Update data TransitPreCleaningStock
-                            'berat_kirim' => $itemObject->berat_kirims ?? 0,
-                            'pcs_kirim'   => $itemObject->pcs_kirims ?? 0,
-                            'total_modal'  => $itemObject->total_modals ?? 0,
-                            'user_updated' => $itemObject->user_created ?? " ",
+                            'status' => 0,
                         ]);
                     }
 
@@ -143,64 +139,16 @@ class PreGradingHalusInputService
             DB::beginTransaction();
 
             // Ambil data PreCleaningInput berdasarkan nomor_bstb
-            $PreGradingHalusInputs = PreGradingHalusInput::where('nomor_bstb', '=', $nomor_bstb)->get();
+            $PreGradingHalusInputs = PreGradingHalusInput::where('nomor_bstb', '=', $nomor_bstb)->delete();
             // $PreGradingHalusInputs = PreGradingHalusInput::findOrFail($id);
 
-            if ($PreGradingHalusInputs->isEmpty()) {
-                // Redirect ke index dengan pesan error jika data tidak ditemukan
-                return redirect()->route('PreGradingHalusInput.index')->with(['error' => 'Data tidak ditemukan!']);
-            }
+            $PreGradingHalusStock = PreGradingHalusStock::where('nomor_bstb', '=', $nomor_bstb)
+            ->delete();
+            $TransitPreCleaningStock = TransitPreCleaningStock::where('nomor_bstb', '=', $nomor_bstb)
+                ->update(['status' => 1]);
+            $existingItems = PreCleaningOutput::where('nomor_bstb', $nomor_bstb)
+                ->update(['status' => 1]);
 
-            foreach ($PreGradingHalusInputs as $PreCleaningI) {
-                // Ambil data PreCleaningStock berdasarkan nomor job dan nomor bstb
-                $PreCleaningS = PreGradingHalusStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
-                    ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
-                    ->first();
-
-                if ($PreCleaningS) {
-                    // Ambil data TransitPreCleaningStock berdasarkan nomor job dan nomor bstb
-                    $stockPrmRawMaterial = TransitPreCleaningStock::where('nomor_job', '=', $PreCleaningI->nomor_job)
-                        ->where('nomor_bstb', '=', $PreCleaningI->nomor_bstb)
-                        ->first();
-
-                    if ($stockPrmRawMaterial) {
-                        // Simpan nilai sebelum dihapus
-                        $beratSebelumnya = $stockPrmRawMaterial->berat_kirim;
-                        $pcsSebelumnya = $stockPrmRawMaterial->pcs_kirim;
-
-                        // Hitung total modal baru berdasarkan perbedaan berats
-                        $perbedaanBerat = $beratSebelumnya + $PreCleaningI->berat_kirim;
-                        $perbedaanPcs = $pcsSebelumnya + $PreCleaningI->pcs_kirim;
-                        $totalModalBaru = $perbedaanBerat * $PreCleaningI->modal;
-
-                        // Update data TransitPreCleaningStock dengan berat, pcs, dan total modal yang baru
-                        $stockPrmRawMaterial->update([
-                            'berat_kirim' => max($perbedaanBerat, 0),
-                            'pcs_kirim' => max($perbedaanPcs, 0),
-                            'total_modal' => max($totalModalBaru, 0),
-                        ]);
-                    }
-                }
-
-                // Hapus data PreGradingHalusInput dan PreCleaningStock
-                $PreCleaningI->delete();
-                if ($PreCleaningS) {
-                    $PreCleaningS->delete();
-                }
-
-                // Perbarui status PreCleaningOutput jika ada
-                $existingItems = PreCleaningOutput::where('nama_supplier', $PreCleaningI->nama_supplier)
-                    ->where('nomor_bstb', $PreCleaningI->nomor_bstb)
-                    ->get();
-
-                // Logika Update Status
-                if ($existingItems->isNotEmpty()) {
-                    foreach ($existingItems as $existingItem) {
-                        // Perbarui data untuk setiap item yang ada
-                        $existingItem->update(['status' => 1]);
-                    }
-                }
-            }
 
             // Commit transaksi
             DB::commit();

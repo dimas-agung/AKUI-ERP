@@ -20,15 +20,9 @@
                             data-placeholder="Pilih Nomor Job">
                             <option value="">Pilih Nomor Job</option>
                             @foreach ($pre_grading_halus_stocks as $PreGHS)
-                                @php
-                                    // Menghitung sisa berat
-                                    $sisaBerat = $PreGHS->berat_masuk - $PreGHS->berat_keluar;
-                                @endphp
-                                @if ($sisaBerat != 0)
-                                    <option value="{{ $PreGHS->nomor_job }}">
-                                        {{ $PreGHS->nomor_job }}
-                                    </option>
-                                @endif
+                               <option value="{{ $PreGHS->nomor_job }}">
+                                   {{ $PreGHS->nomor_job }}
+                               </option>
                             @endforeach
                         </select>
                     </div>
@@ -106,7 +100,7 @@
                             class="form-control" id="modal" readonly>
                     </div>
                     <div class="col-md-3">
-                        <label for="total_modal" class="form-label">Total Modal</label>
+                            <label for="total_modal" class="form-label">Total Modal</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
                             class="form-control" id="total_modal" readonly>
@@ -211,10 +205,10 @@
                             }
                         }
                         // Menghitung berat_masuk - berat_keluar
-                        let sisaBerat = response.berat_masuk - response.berat_keluar;
+                        let sisaBerat = response.berat_kirim;
 
                         // Pemeriksaan jika sisaBerat tidak sama dengan 0
-                        if (sisaBerat !== 0) {
+                        
                             // Menyimpan sisaBerat dalam variabel baru
                             let sisaBeratFormatted = parseFloat(sisaBerat).toFixed(2);
                             // let sisaBeratFormatted = sisaBerat;
@@ -232,8 +226,8 @@
                             $('#modal').val(response.modal);
                             $('#total_modal').val(response.total_modal);
                             $('#kadar_air').val(response.kadar_air);
-                            $('#pcs_kirim').val(response.pcs_masuk);
-                            $('#berat_kirim').val(response.berat_masuk);
+                            $('#pcs_kirim').val(response.pcs_kirim);
+                            $('#berat_kirim').val(response.berat_kirim);
                             if (!isNaN(sisaBeratFormatted)) {
                                 $('#sisa_berat').val(sisaBeratFormatted);
                             } else {
@@ -245,20 +239,7 @@
                                 });
 
                             }
-                        } else {
-                            // Jika sisaBerat === 0, hapus opsi dan reset nilai input
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Berat masuk - berat keluar sama dengan 0. Pilih nomor job lain.',
-                            }).then(() => {
-                                // Hapus opsi nomor job yang sudah dipilih
-                                $('#nomor_job option[value="' + selectedNomorJob + '"]')
-                                    .remove();
-                                // Reset nilai input
-                                $('#nomor_job').val('').trigger('change');
-                            });
-                        }
+                       
                     },
                     error: function(error) {
                         console.error('Error:', error);

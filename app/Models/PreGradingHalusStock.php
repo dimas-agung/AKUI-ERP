@@ -21,15 +21,15 @@ class PreGradingHalusStock extends Model
         'jenis_raw_material',
         'kadar_air',
         'jenis_kirim',
-        'berat_masuk',
-        'pcs_masuk',
-        'berat_keluar',
-        'pcs_keluar',
-        'sisa_berat',
-        'sisa_pcs',
+        'berat_kirim',
+        'pcs_kirim',
+        'jenis_pre_cleaning',
+        'berat_pre_cleaning',
+        'pcs_pre_cleaning',
         'tujuan_kirim',
         'modal',
         'total_modal',
+        'status'
     ];
     public function PreGradingHalusInput()
     {

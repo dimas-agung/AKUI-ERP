@@ -12,7 +12,7 @@ class PreGradingHalusStockController extends Controller
     //
     public function index(){
         $i =1;
-        $PGHS = PreGradingHalusStock::where('sisa_berat','>',0)->get();
+        $PGHS = PreGradingHalusStock::where('status','<>',0)->get();
         // return $PGHS;
 
         return response()->view('PreGradingHalus.PreGradingHalusStock.index', [

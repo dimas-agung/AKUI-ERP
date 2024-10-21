@@ -30,7 +30,7 @@ class PreGradingHalusAddingController extends Controller
     public function getPreGradingHalusStock()
     {
         if ($this->PreGradingHalusStock === null) {
-            $this->PreGradingHalusStock = PreGradingHalusStock::where('sisa_berat', '!=', 0)->get();
+            $this->PreGradingHalusStock = PreGradingHalusStock::where('status', 1)->get();
         }
         return $this->PreGradingHalusStock;
     }
@@ -174,7 +174,7 @@ class PreGradingHalusAddingController extends Controller
                     $totalModalBaru = $sisaBerat * $PreGradingHalusAdding->modal;
 
                     $existingItem->update(['berat_keluar'   => $perbedaanBerat]);
-                    $existingItem->update(['sisa_berat'     => $sisaBerat]);
+                    $existingItem->update(['status'     => $sisaBerat]);
                     $existingItem->update(['pcs_keluar'     => $perbedaanPcs]);
                     $existingItem->update(['sisa_pcs'       => $sisaPcs]);
                     $existingItem->update(['total_modal'    => $totalModalBaru]);

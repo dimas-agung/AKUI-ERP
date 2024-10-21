@@ -31,13 +31,12 @@
                                         <th scope="col" class="text-center">Nomor Nota Internal</th>
                                         <th scope="col" class="text-center">ID Box Raw Material</th>
                                         <th scope="col" class="text-center">Jenis Raw Material</th>
-                                        <th scope="col" class="text-center">Jenis Kirim</th>
-                                        <th scope="col" class="text-center">Berat Masuk</th>
-                                        <th scope="col" class="text-center">Pcs Masuk</th>
-                                        <th scope="col" class="text-center">Berat Keluar</th>
-                                        <th scope="col" class="text-center">Pcs Keluar</th>
-                                        <th scope="col" class="text-center">Sisa Berat</th>
-                                        <th scope="col" class="text-center">Sisa Pcs</th>
+                                        <th class="text-center" scope="col">Jenis Kirim</th>
+                                        <th class="text-center" scope="col">Berat Kirim</th>
+                                        <th class="text-center" scope="col">Pcs Kirim</th>
+                                        <th class="text-center" scope="col">Jenis Pre Cleaning</th>
+                                        <th class="text-center" scope="col">Berat Pre Cleaning<</th>
+                                        <th class="text-center" scope="col">Pcs Pre Cleaning<</th>
                                         <th scope="col" class="text-center">Kadar Air</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
                                         @role('admin')
@@ -59,16 +58,11 @@
                                             <td class="text-center">{{ $PreGradingHalusStock->id_box_raw_material }}</td>
                                             <td class="text-center">{{ $PreGradingHalusStock->jenis_raw_material }}</td>
                                             <td class="text-center">{{ $PreGradingHalusStock->jenis_kirim }}</td>
-                                            <td class="text-center">{{ $PreGradingHalusStock->berat_masuk }}
-                                            </td>
-                                            <td class="text-center">{{ $PreGradingHalusStock->pcs_masuk }}</td>
-                                            <td class="text-center">{{ $PreGradingHalusStock->berat_keluar }}
-                                            </td>
-                                            <td class="text-center">{{ $PreGradingHalusStock->pcs_keluar }}
-                                            </td>
-                                            <td class="text-center">{{ $PreGradingHalusStock->sisa_berat }}
-                                            </td>
-                                            <td class="text-center">{{ $PreGradingHalusStock->sisa_pcs }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->berat_kirim }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->pcs_kirim }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->jenis_pre_cleaning }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->berat_pre_cleaning }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->pcs_pre_cleaning }}</td>
                                             <td class="text-center">{{ $PreGradingHalusStock->kadar_air }}</td>
                                             <td class="text-center">{{ $PreGradingHalusStock->tujuan_kirim }}</td>
                                             @role('admin')

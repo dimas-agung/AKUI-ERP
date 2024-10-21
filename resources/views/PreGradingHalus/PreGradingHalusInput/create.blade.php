@@ -137,6 +137,9 @@
                                 <th class="text-center">Berat Kirim</th>
                                 <th class="text-center">Pcs Kirim</th>
                                 <th class="text-center">Tujuan Kirim</th>
+                                <th class="text-center">Jenis Pre Cleaning</th>
+                                <th class="text-center">Berat Pre Cleaning</th>
+                                <th class="text-center">Pcs Pre Cleaning</th>
                                 <th class="text-center">Modal</th>
                                 <th class="text-center">Total Modal</th>
                             </tr>
@@ -225,6 +228,9 @@
                             newRow.append('<td>' + rowData.berat_kirim + '</td>');
                             newRow.append('<td>' + rowData.pcs_kirim + '</td>');
                             newRow.append('<td>' + rowData.tujuan_kirim + '</td>');
+                            newRow.append('<td>' + rowData.jenis_grading + '</td>');
+                            newRow.append('<td>' + rowData.berat_grading+ '</td>');
+                            newRow.append('<td>' + rowData.pcs_grading+ '</td>');
                             newRow.append('<td>' + rowData.modal + '</td>');
                             newRow.append('<td>' + rowData.total_modal + '</td>');
                             // Lanjutkan dengan kolom-kolom lain sesuai kebutuhan
@@ -246,6 +252,9 @@
                                 jenis_kirim: rowData.jenis_kirim,
                                 berat_kirim: rowData.berat_kirim,
                                 pcs_kirim: rowData.pcs_kirim,
+                                jenis_pre_cleaning: rowData.jenis_grading,
+                                berat_pre_cleaning: rowData.berat_grading,
+                                pcs_pre_cleaning: rowData.pcs_grading,
                                 tujuan_kirim: rowData.tujuan_kirim,
                                 kadar_air: rowData.kadar_air,
                                 modal: rowData.modal,
