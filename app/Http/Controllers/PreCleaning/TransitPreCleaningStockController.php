@@ -23,7 +23,7 @@ class TransitPreCleaningStockController extends Controller
     public function index()
     {
         $i = 1;
-        $TransitPreCleaningStock = TransitPreCleaningStock::where('berat_kirim', '>', 0)->get();
+        $TransitPreCleaningStock = TransitPreCleaningStock::where('status', '<>', 0)->get();
         // return $PrmRawMOI;
         return response()->view('PreCleaning.TransitPreCLeaningStock.index', [
             'transit_pre_cleaning_stocks' => $TransitPreCleaningStock,

@@ -28,20 +28,15 @@ class PreCleaningOutput extends Model
         'operator_sikat_n_kompresor',
         'operator_flek_n_poles',
         'operator_cutter',
-        'kuningan',
-        'sterofoam',
-        'karat',
-        'rontokan_flek',
-        'rontokan_bahan',
-        'rontokan_serabut',
-        'ws_0_0_0',
-        'berat_pre_cleaning',
-        'pcs_pre_cleaning',
+        'jenis_grading',
+        'berat_grading',
+        'pcs_grading',
         'susut',
         'keterangan',
         'nomor_grading',
         'user_created',
         'user_updated',
+        'status'
     ];
 
     public function PreCleaningStock()

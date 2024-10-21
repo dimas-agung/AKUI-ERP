@@ -23,6 +23,9 @@ class TransitPreCleaningStock extends Model
         'jenis_kirim',
         'berat_kirim',
         'pcs_kirim',
+        'jenis_grading',
+        'berat_grading',
+        'pcs_grading',
         'tujuan_kirim',
         'modal',
         'total_modal',
@@ -31,6 +34,7 @@ class TransitPreCleaningStock extends Model
         'nomor_grading',
         'user_created',
         'user_updated',
+        'status',
     ];
     public function PreCleaningOutput()
     {

@@ -15,8 +15,15 @@ class PreCleaningOutputService
     {
         try {
             DB::beginTransaction();
-
+            $dataTotalBerat = [];
             foreach ($dataArray as $item) {
+                $dataTotalBerat[$item->nomor_job] = 0;
+            }
+            foreach ($dataArray as $item) {
+                $dataTotalBerat[$item->nomor_job] += $item->berat_grading;
+            }
+            foreach ($dataArray as $item) {
+                $item->total_berat_grading = $dataTotalBerat[$item->nomor_job];
                 $this->createItem($item);
             }
 
@@ -52,22 +59,19 @@ class PreCleaningOutputService
             'jenis_kirim'                       => $item->jenis_kirim,
             'berat_kirim'                       => $item->berat_kirim,
             'pcs_kirim'                         => $item->pcs_kirim,
+            'jenis_kirim'                       => $item->jenis_kirim,
+            'berat_grading'                       => $item->berat_grading,
+            'pcs_grading'                         => $item->pcs_grading,
             'tujuan_kirim'                      => $item->tujuan_kirim,
             'modal'                             => $item->modal,
             'total_modal'                       => $item->total_modal,
             'operator_sikat_n_kompresor'        => $item->operator_sikat_n_kompresor,
             'operator_flek_n_poles'             => $item->operator_flek_n_poles,
             'operator_cutter'                   => $item->operator_cutter,
-            'kuningan'                          => $item->kuningan,
-            'sterofoam'                         => $item->sterofoam,
-            'karat'                             => $item->karat,
-            'rontokan_flek'                     => $item->rontokan_flek,
-            'rontokan_bahan'                    => $item->rontokan_bahan,
-            'rontokan_serabut'                  => $item->rontokan_serabut,
-            'ws_0_0_0'                          => $item->ws_0_0_0,
-            'berat_pre_cleaning'                => $item->berat_pre_cleaning,
-            'pcs_pre_cleaning'                  => $item->pcs_pre_cleaning,
-            'susut'                             => $item->susutTabel,
+            'jenis_grading'                => $item->jenis_grading,
+            'berat_grading'                => $item->berat_grading,
+            'pcs_grading'                  => $item->pcs_grading,
+            'susut'                             => (1 - ($item->total_berat_grading/$item->berat_kirim)),
             'keterangan'                        => $item->keterangan,
             'nomor_grading'                     => $item->nomor_grading ?? "UGK_TES",
             'user_created'                      => $item->user_created,
@@ -75,22 +79,22 @@ class PreCleaningOutputService
 
         $itemObject = (object)$item;
         $existingItem = TransitPreCleaningStock::where('nomor_job', $itemObject->nomor_job)
-            ->where('nomor_bstb', $itemObject->nomor_bstb)
+            ->where('jenis_grading', $itemObject->jenis_grading)
             ->first();
 
         $dataToUpdate = [
-            'berat_kirim'   => $itemObject->berat_kirim,
-            'pcs_kirim'     => $itemObject->pcs_kirim,
+            'berat_grading'   => $itemObject->berat_grading,
+            'pcs_grading'     => $itemObject->pcs_grading,
             'total_modal'   => $itemObject->total_modal,
             'keterangan'    => $itemObject->keterangan,
         ];
 
         if ($existingItem) {
-            $sisaBeratBaru = $existingItem->sisa_berat + $itemObject->berat_kirim;
-            $totalModalBaru = $existingItem->berat_kirim * $itemObject->modal;
+            $sisaBeratBaru = $existingItem->sisa_berat + $itemObject->berat_grading;
+            $totalModalBaru =  $sisaBeratBaru * $itemObject->modal;
 
-            $dataToUpdate['berat_kirim'] = $existingItem->berat_kirim + $itemObject->berat_kirim;
-            $dataToUpdate['pcs_kirim'] = $existingItem->pcs_kirim + $itemObject->pcs_kirim;
+            $dataToUpdate['berat_grading'] = $existingItem->berat_grading + $itemObject->berat_grading;
+            $dataToUpdate['pcs_grading'] = $existingItem->pcs_grading + $itemObject->pcs_grading;
             $dataToUpdate['total_modal'] = $totalModalBaru;
             $dataToUpdate['sisa_berat'] = $sisaBeratBaru;
 
@@ -110,10 +114,13 @@ class PreCleaningOutputService
                 'jenis_kirim'                       => $item->jenis_kirim,
                 'berat_kirim'                       => $item->berat_kirim,
                 'pcs_kirim'                         => $item->pcs_kirim,
+                'jenis_grading'                       => $item->jenis_grading,
+                'berat_grading'                       => $item->berat_grading,
+                'pcs_grading'                         => $item->pcs_grading,
                 'tujuan_kirim'                      => $item->tujuan_kirim,
                 'modal'                             => $item->modal,
                 'total_modal'                       => $item->total_modal,
-                'sisa_berat'                        => $item->berat_kirim, // Jika baru, maka sisa_berat sama dengan berat_kirim
+                'sisa_berat'                        => $item->berat_grading, // Jika baru, maka sisa_berat sama dengan berat_kirim
                 'keterangan'                        => $item->keterangan,
                 'nomor_grading'                     => $item->nomor_grading ?? "UGK_TES",
                 'user_created'                      => $item->user_created ?? "There isn't any",
@@ -124,7 +131,7 @@ class PreCleaningOutputService
         // test Pre Cleaning Stock
         $itemObject = (object)$item;
         $existingItem = PreCleaningStock::where('nomor_job', $itemObject->nomor_job)
-            ->where('id_box_grading_kasar', $itemObject->id_box_grading_kasar)
+            ->where('status',1)
             ->first();
 
         $dataToUpdate = [
@@ -139,39 +146,14 @@ class PreCleaningOutputService
             $sisaBerat = $existingItem->berat_masuk - $tambahBeratKeluar;
             $sisaPcs = $existingItem->pcs_masuk - $tambahPcsKeluar;
             $totalModalBaru = $sisaBerat * $itemObject->modal;
-
+            $dataToUpdate['status'] = 0;
             $dataToUpdate['berat_keluar'] = $tambahBeratKeluar;
             $dataToUpdate['pcs_keluar'] = $tambahPcsKeluar;
             $dataToUpdate['sisa_berat'] = $sisaBerat;
             $dataToUpdate['sisa_pcs'] = $sisaPcs;
             $dataToUpdate['total_modal'] = $totalModalBaru;
             $existingItem->update($dataToUpdate);
-        } else {
-            // Jika item tidak ada, buat item baru dalam database
-            PreCleaningStock::create(array_merge($dataToUpdate, [
-                'unit'                              => $item->unit ?? "Pre Cleaning",
-                'nomor_job'                         => $item->nomor_job,
-                'id_box_grading_kasar'              => $item->id_box_grading_kasar,
-                'nomor_bstb'                        => $item->nomor_bstb,
-                'id_box_raw_material'               => $item->id_box_raw_material,
-                'nomor_batch'                       => $item->nomor_batch,
-                'nomor_nota_internal'               => $item->nomor_nota_internal,
-                'nama_supplier'                     => $item->nama_supplier,
-                'jenis_raw_material'                => $item->jenis_raw_material,
-                'kadar_air'                         => $item->kadar_air,
-                'jenis_kirim'                       => $item->jenis_kirim,
-                'berat_masuk'                       => $item->berat_masuk ?? 0,
-                'pcs_masuk'                         => $item->pcs_masuk ?? 0,
-                'sisa_berat'                        => $item->berat_masuk - $item->berat_kirim,
-                'sisa_pcs'                          => $item->pcs_masuk - $item->pcs_kirim,
-                'tujuan_kirim'                      => $item->tujuan_kirim,
-                'modal'                             => $item->modal,
-                'keterangan'                        => $item->keterangan,
-                'nomor_grading'                     => $item->nomor_grading ?? "UGK_TES",
-                'user_created'                      => $item->user_created ?? "There isn't any",
-                // 'user_updated'                      => $item->user_updated ?? "There isn't any",
-            ]));
-        }
+        } 
 
 
         $itemObject = (object) $item;
@@ -234,7 +216,7 @@ class PreCleaningOutputService
 
             $totalPcsKeluar = PreCleaningOutput::where('nomor_job', $item->nomor_job)
                 ->where('id_box_grading_kasar', $item->id_box_grading_kasar)
-                ->sum('pcs_kirim');
+                ->sum('pcs_grading');
 
             $sisaBerat = $preCleaningStockItem->berat_masuk - $totalBeratKeluar;
             $sisaPcs = $preCleaningStockItem->pcs_masuk - $totalPcsKeluar;

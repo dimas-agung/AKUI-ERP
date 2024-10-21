@@ -31,20 +31,15 @@ return new class extends Migration
             $table->string('operator_sikat_n_kompresor');
             $table->string('operator_flek_n_poles');
             $table->string('operator_cutter');
-            $table->float('kuningan', 16, 4);
-            $table->float('sterofoam', 16, 4);
-            $table->float('karat', 16, 4);
-            $table->float('rontokan_flek', 16, 4);
-            $table->float('rontokan_bahan', 16, 4);
-            $table->float('rontokan_serabut', 16, 4);
-            $table->float('ws_0_0_0', 16, 4);
-            $table->float('berat_pre_cleaning', 16, 4);
-            $table->float('pcs_pre_cleaning', 16, 4);
+            $table->string('jenis_grading');
+            $table->float('berat_grading', 16, 4);
+            $table->float('pcs_grading', 16, 4);
             $table->float('susut', 16, 4);
             $table->text('keterangan')->nullable();
             $table->string('nomor_grading')->nullable();
             $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

@@ -74,14 +74,8 @@
                                         <th scope="col" class="text-center">Operator Sikat & Kompresor</th>
                                         <th scope="col" class="text-center">Operator Flek & Poles</th>
                                         <th scope="col" class="text-center">Operator Cutter</th>
-                                        <th scope="col" class="text-center">Kuningan</th>
-                                        <th scope="col" class="text-center">Sterofoam</th>
-                                        <th scope="col" class="text-center">Karat</th>
-                                        <th scope="col" class="text-center">Rontokan Fisik</th>
-                                        <th scope="col" class="text-center">Rontokan Bahan</th>
-                                        <th scope="col" class="text-center">Rontokan Serabut</th>
-                                        <th scope="col" class="text-center">WS-0-0-0</th>
-                                        <th scope="col" class="text-center">Berat Pre Cleaning</th>
+                                        <th scope="col" class="text-center">Jenis Grading</th>
+                                        <th scope="col" class="text-center">Berat Grading</th>
                                         <th scope="col" class="text-center">Pcs</th>
                                         <th scope="col" class="text-center">Susut</th>
                                         <th scope="col" class="text-center">User Created</th>
@@ -115,20 +109,12 @@
                                             <td class="text-center">{{ $item->operator_sikat_n_kompresor }}</td>
                                             <td class="text-center">{{ $item->operator_flek_n_poles }}</td>
                                             <td class="text-center">{{ $item->operator_cutter }}</td>
-                                            <td class="text-center">{{ $item->kuningan }}</td>
-                                            <td class="text-center">{{ $item->sterofoam }}</td>
-                                            <td class="text-center">{{ $item->karat }}</td>
-                                            <td class="text-center">{{ $item->rontokan_flek }}
-                                            </td>
-                                            <td class="text-center">{{ $item->rontokan_bahan }}
-                                            </td>
                                             <td class="text-center">
-                                                {{ $item->rontokan_serabut }}</td>
-                                            <td class="text-center">{{ $item->ws_0_0_0 }}</td>
+                                                {{ $item->jenis_grading }}</td>
                                             <td class="text-center">
-                                                {{ $item->berat_pre_cleaning }}</td>
+                                                {{ $item->berat_grading }}</td>
                                             <td class="text-center">
-                                                {{ $item->pcs_pre_cleaning }}</td>
+                                                {{ $item->pcs_grading }}</td>
                                             <td class="text-center">{{ $item->susut }}</td>
                                             <td class="text-center">{{ $item->user_created }}</td>
                                             <td class="text-center">{{ $item->user_updated }}</td>
@@ -137,6 +123,8 @@
                                                 {{ $item->created_at != $item->updated_at ? $item->updated_at : '' }}
                                             </td>
                                             <td class="text-center">
+                                                @if ($item->status == 1)
+                                                    
                                                 <div class="form-button-action">
                                                     <form style="display: flex" id="deleteForm{{ $item->id }}"
                                                         action="{{ route('PreCleaningOutput.destroy', $item->id) }}"
@@ -150,6 +138,7 @@
                                                         </button>
                                                     </form>
                                                 </div>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty

@@ -27,6 +27,9 @@ return new class extends Migration
             $table->float('berat_kirim');
             $table->float('pcs_kirim');
             $table->string('tujuan_kirim');
+            $table->string('jenis_grading');
+            $table->float('berat_grading', 16, 4);
+            $table->float('pcs_grading', 16, 4);
             $table->float('modal', 16, 4);
             $table->float('total_modal', 16, 4);
             $table->float('sisa_berat')->default(0);
@@ -34,6 +37,7 @@ return new class extends Migration
             $table->string('nomor_grading')->nullable();
             $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

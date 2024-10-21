@@ -37,6 +37,10 @@
                                         <th scope="col" class="text-center">Kadar Air</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
                                         <th scope="col" class="text-center">Nomor Grading</th>
+                                        <th scope="col" class="text-center">Jenis Grading</th>
+                                       
+                                        <th scope="col" class="text-center">Berat Grading</th>
+                                        <th scope="col" class="text-center">Pcs Grading</th>
                                         @role('admin')
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
@@ -68,6 +72,9 @@
                                         <td class="text-center">{{ $TPCS->kadar_air }}</td>
                                         <td class="text-center">{{ $TPCS->tujuan_kirim }}</td>
                                         <td class="text-center">{{ $TPCS->nomor_grading }}</td>
+                                        <td class="text-center">{{ $TPCS->jenis_grading }}</td>
+                                        <td class="text-center">{{ $TPCS->berat_grading }}</td>
+                                        <td class="text-center">{{ $TPCS->pcs_grading }}</td>
                                         <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
                                         <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}</td>
                                         <td class="text-center">{{ $TPCS->keterangan }}</td>

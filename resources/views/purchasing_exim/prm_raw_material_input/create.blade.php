@@ -263,7 +263,7 @@
             let harga_nota_pph = $('#harga_nota_pph').val();
             let pph = $('#pph').val();
             let harga_nota = harga_nota_pph - (harga_nota_pph* pph);
-            $('#harga_nota').val(Math.floor(harga_nota))
+            $('#harga_nota').val(harga_nota.toFixed(4))
             generateIdBox()
             updateTotalHarga()
         }
@@ -348,7 +348,7 @@
             let totalHargaNota = beratNota * hargaNota;
 
             // Memasukkan hasil perhitungan ke dalam input total harga nota menggunakan jQuery
-            $('#total_harga_nota').val(isFinite(totalHargaNota) ? totalHargaNota.toFixed(2) : '');
+            $('#total_harga_nota').val(isFinite(totalHargaNota) ? totalHargaNota.toFixed(4) : '');
 
             // Memanggil updateHargaDeal setiap kali updateTotalHarga terjadi
             updateHargaDeal();

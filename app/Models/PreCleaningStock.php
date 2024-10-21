@@ -35,6 +35,7 @@ class PreCleaningStock extends Model
         'status',
         'user_created',
         'user_updated',
+        'status',
     ];
     public function PreCleaningOutput()
     {

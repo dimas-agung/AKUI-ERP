@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('nomor_grading')->nullable();
             $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

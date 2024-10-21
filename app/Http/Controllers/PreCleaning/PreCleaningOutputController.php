@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PreCleaning;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PreCleaningOutputRequest;
+use App\Models\MasterJenisGradingHalus;
 use App\Models\MasterOperator;
 use App\Models\PreCleaningInput;
 use App\Models\Perusahaan;
@@ -36,15 +37,18 @@ class PreCleaningOutputController extends Controller
     // create
     public function create()
     {
-        $PreCleaningStock = PreCleaningStock::with('PreCleaningOutput')->get();
-        $PreCleaningOutput = PreCleaningOutput::with('PreCleaningStock')->whereRaw('berat_masuk - berat_keluar != 0');
+        $PreCleaningStock = PreCleaningStock::with('PreCleaningOutput')->where('sisa_berat','<>',0)->get();
+        // $PreCleaningOutput = PreCleaningOutput::with('PreCleaningStock')->whereRaw('berat_masuk - berat_keluar != 0');
+        $jenis_grading = MasterJenisGradingHalus::where('status',1)->get();
+        // return $jenis_grading;
         $MasterOperator = MasterOperator::all();
         $Perusahaan = Perusahaan::all();
         return view('PreCleaning.PreCleaningOutput.create', [
-            'pre_cleaning_outputs'      => $PreCleaningOutput,
+            // 'pre_cleaning_outputs'      => $PreCleaningOutput,
             'pre_cleaning_stocks'       => $PreCleaningStock,
             'master_operators'          => $MasterOperator,
             'perusahaan'                => $Perusahaan,
+            'jenis_grading'                => $jenis_grading,
         ]);
     }
     // set
@@ -83,40 +87,11 @@ class PreCleaningOutputController extends Controller
             $PreCleaningOutput = PreCleaningOutput::where('id',$id)->first();
             // return $PreCleaningOutput;
             // Hapus semua item terkait
-            $stockPRM = TransitPreCleaningStock::where('id_box_raw_material', '=', $PreCleaningOutput->id_box_raw_material)
-                ->where('nomor_job', $PreCleaningOutput->nomor_job)
-                ->first();
+            $TransitPreCleaningStock = TransitPreCleaningStock::where('nomor_job', $PreCleaningOutput->nomor_job)
+                ->where('status', 1)
+                ->delete();
 
-            if ($stockPRM) {
-                // Jika berat atau total modal dari StockTransitRawMaterial bernilai 0, maka hapus data
-                if ($stockPRM->berat_kirim === 0) {
-                    $stockPRM->delete();
-                } else {
-                    // Jika berat yang dimasukkan lebih besar atau sama dengan berat stock, hapus data
-                    if ($PreCleaningOutput->berat_kirim >= $stockPRM->berat_kirim) {
-                        $stockPRM->delete();
-                    } else {
-                        // Ambil berat sebelumnya
-                        $beratSebelumnya = $stockPRM->berat_kirim;
-                        $pcsSebelumnya = $stockPRM->pcs_kirim;
 
-                        // Hitung total modal baru berdasarkan perbedaan berat
-                        $perbedaanBerat = $beratSebelumnya - $PreCleaningOutput->berat_kirim;
-                        $perbedaanPcs = $pcsSebelumnya - $PreCleaningOutput->pcs_kirim;
-                        $totalModalBaru = $perbedaanBerat * $PreCleaningOutput->modal;
-
-                        // Update data dengan berat dan total modal yang baru
-                        $dataToUpdate = [
-                            'berat_kirim' => abs($perbedaanBerat),
-                            'pcs_kirim' => abs($perbedaanPcs),
-                            'total_modal' => abs($totalModalBaru),
-                        ];
-
-                        // Perbarui data
-                        $stockPRM->update($dataToUpdate);
-                    }
-                }
-            }
 
             $existingItems = PreCleaningStock::where('nomor_job', $PreCleaningOutput->nomor_job)
                 ->where('id_box_grading_kasar', $PreCleaningOutput->id_box_grading_kasar)
@@ -144,7 +119,7 @@ class PreCleaningOutputController extends Controller
                     $existingItem->update(['pcs_keluar'     => $perbedaanPcs]);
                     $existingItem->update(['sisa_pcs'       => $sisaPcs]);
                     $existingItem->update(['total_modal'    => $totalModalBaru]);
-                    // $existingItem->update(['status' => 1]);
+                    $existingItem->update(['status' => 1]);
                 }
             }
 
@@ -162,7 +137,7 @@ class PreCleaningOutputController extends Controller
             }
 
             // Hapus record utama
-            $PreCleaningOutput = PreCleaningOutput::where('id',$id)->delete();
+            $PreCleaningOutput = PreCleaningOutput::where('nomor_job',$PreCleaningOutput->nomor_job)->delete();
             // $PreCleaningOutput->delete();
 
             // Jika tidak ada kesalahan, komit transaksi

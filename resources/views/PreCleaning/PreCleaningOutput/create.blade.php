@@ -110,7 +110,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="col-md-4">
                         <label for="basic-usage" class="form-label">Operator Cutter</label>
                         <select class="select2 form-select" style="width: 100%;" name="operator_cutter"
@@ -126,58 +125,29 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label for="kuningan" class="form-label">Kuningan</label>
-                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
-                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="kuningan">
+                        <label for="basic-usage" class="form-label">Pilih Jenis Grading</label>
+                        <select class="select2 form-select" style="width: 100%;" name="jenis_grading"
+                            id="jenis_grading" data-placeholder="Pilih Jenis Grading">
+                            <option value="">Pilih Jenis Grading</option>
+                            @foreach ($jenis_grading->sortBy('jenis') as $item)
+                              
+                                    <option value="{{ $item->jenis }}">
+                                        {{ $item->jenis }}
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="col-md-4">
-                        <label for="Sterofoam" class="form-label">Sterofoam</label>
-                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
-                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="Sterofoam">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="karat" class="form-label">Karat</label>
-                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
-                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="karat">
-                    </div>
+
                     <div class="col-md-3">
-                        <label for="rontokan_flex" class="form-label">Rontokan Flex</label>
+                        <label for="berat_grading" class="form-label">Berat Grading</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="rontokan_flex">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="rontokan_bahan" class="form-label">Rontokan Bahan</label>
-                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
-                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="rontokan_bahan">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="rontokan_serabut" class="form-label">Rontokan Serabut</label>
-                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
-                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="rontokan_serabut">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="ws" class="form-label">WS-0-0-0</label>
-                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
-                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="ws">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="berat_precleaning" class="form-label">Berat Precleaning</label>
-                        <input type="text" pattern="[0-9.]*" inputmode="numeric"
-                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="berat_precleaning">
+                            class="form-control" id="berat_grading">
                     </div>
                     <div class="col-md-3">
                         <label for="pcs" class="form-label">Pcs</label>
                         <input type="text" pattern="[0-9.]*" inputmode="numeric"
                             onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key === '.'"
-                            class="form-control" id="pcs">
+                            class="form-control" id="pcs_grading">
                     </div>
                     <div class="col-md-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
@@ -188,14 +158,9 @@
                         <input type="text" class="form-control" id="user_created" value="{{ auth()->user()->nip }}"
                             readonly>
                     </div>
-                    <div class="col-md-3">
-                        <label for="susut" class="form-label">Susut</label>
-                        <input type="text" class="form-control" id="susut" readonly>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="total_box" class="form-label">Total Box</label>
-                        <input type="text" class="form-control" id="total_box" readonly>
-                    </div>
+                    
+                    <input type="hidden" class="form-control" id="susut" readonly>
+                   
                     <div class="col-md-3">
                         <label for="total_berat" class="form-label">Total Berat</label>
                         <input type="text" class="form-control" id="total_berat" readonly>
@@ -206,8 +171,10 @@
                     </div>
                     <div class="col-12">
                         <button type="button" class="btn btn-primary" id="tambah_data"
-                            onclick="addRow()">Tambah</button>
-                        <a href="{{ Route('PreCleaningOutput.index') }}" type="button" class="btn btn-danger">Close</a>
+                            onclick="addRow()" style="margin: 10px">Tambah</button>
+                        <button type="button" style="margin: 10px"  class="btn btn-info" onclick="confirmJob()">Confirm Job</button>
+                        <a href="{{ Route('PreCleaningOutput.index') }}"style="margin: 10px" type="button" class="btn btn-danger">Close</a>
+
                     </div>
                 </form>
             </div>
@@ -240,16 +207,9 @@
                                 <th scope="col" class="text-center">Operator Flek & Kompresor</th>
                                 <th scope="col" class="text-center">Operator Flek & Poles</th>
                                 <th scope="col" class="text-center">Operator Cutter</th>
-                                <th scope="col" class="text-center">Kuningan</th>
-                                <th scope="col" class="text-center">Sterofoam</th>
-                                <th scope="col" class="text-center">Karat</th>
-                                <th scope="col" class="text-center">Rontokan Flex</th>
-                                <th scope="col" class="text-center">Rontokan Bahan</th>
-                                <th scope="col" class="text-center">Rontokan Serabut</th>
-                                <th scope="col" class="text-center">WS-0-0-0</th>
-                                <th scope="col" class="text-center">Berat Pre Cleaning</th>
-                                <th scope="col" class="text-center">Pcs</th>
-                                <th scope="col" class="text-center">Susut</th>
+                                <th scope="col" class="text-center">Jenis Grading</th>
+                                <th scope="col" class="text-center">Berat Grading</th>
+                                <th scope="col" class="text-center">Pcs Grading</th>
                                 <th scope="col" class="text-center">NIP Admin</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
@@ -334,12 +294,12 @@
 
         });
         // Fungsi untuk menghitung persentase susut
-        function hitungPersentaseSusut(nilaiAwal, nilaiAkhir) {
+        function hitungPersentaseSusut(berat_kirim, berat_grading) {
             // Menghitung nilai susut
-            var nilaiSusut = nilaiAwal - nilaiAkhir;
+            var nilaiSusut = berat_kirim - berat_grading;
 
             // Menghitung persentase susut
-            var persentaseSusut = (nilaiSusut / nilaiAwal) * 100;
+            var persentaseSusut = (nilaiSusut / berat_kirim) * 100;
 
             // Mengembalikan hasil
             return persentaseSusut;
@@ -350,7 +310,7 @@
             // Iterasi melalui setiap baris dalam tabel
             $('#dataTable tbody tr').each(function() {
                 // Mendapatkan nilai berat adding dari baris saat ini dan menambahkannya ke totalBerat
-                let beratAdding = parseFloat($(this).find('td:eq(10)').text()) || 0;
+                let beratAdding = parseFloat($(this).find('td:eq(19)').text()) || 0;
                 totalBerat += beratAdding;
             });
             // Menampilkan total berat di input #total_berat
@@ -362,29 +322,29 @@
             // Iterasi melalui setiap baris dalam tabel
             $('#dataTable tbody tr').each(function() {
                 // Mendapatkan nilai pcs adding dari baris saat ini dan menambahkannya ke totalPcs
-                let pcsAdding = parseFloat($(this).find('td:eq(11)').text()) || 0;
+                let pcsAdding = parseFloat($(this).find('td:eq(20)').text()) || 0;
                 totalPcs += pcsAdding;
             });
             // Menampilkan total pcs di input #total_pcs
             $('#total_pcs').val(totalPcs);
         }
 
-        function calculateTotalBox() {
-            let jumlahBaris = $('#dataTable tbody tr').length;
-            // Tampilkan Jumlah Baris di Input dengan ID "total_box"
-            $('#total_box').val(jumlahBaris);
-        }
+        // function calculateTotalBox() {
+        //     let jumlahBaris = $('#dataTable tbody tr').length;
+        //     // Tampilkan Jumlah Baris di Input dengan ID "total_box"
+        //     $('#total_box').val(jumlahBaris);
+        // }
 
         // Event listener untuk menghitung persentase susut saat input berubah
-        $("#berat_precleaning").on("input", function() {
+        $("#berat_grading").on("input", function() {
             // Mendapatkan nilai awal dan nilai akhir dari input
-            let nilaiAwal = parseFloat($("#berat_kirim").val()) || 0; // Jika tidak valid, asumsi nilai 0
-            let nilaiAkhir = parseFloat($(this).val()) || 0; // Jika tidak valid, asumsi nilai 0
+            let berat_kirim = parseFloat($("#berat_kirim").val()) || 0; // Jika tidak valid, asumsi nilai 0
+            let berat_grading = parseFloat($(this).val()) || 0; // Jika tidak valid, asumsi nilai 0
 
             // Memastikan nilai akhir tidak nol untuk menghindari pembagian oleh nol
-            if (nilaiAkhir !== 0) {
+            if (berat_kirim !== 0) {
                 // Menghitung persentase susut
-                let persentaseSusut = hitungPersentaseSusut(nilaiAwal, nilaiAkhir);
+                let persentaseSusut = hitungPersentaseSusut(berat_kirim, berat_grading);
 
                 // Menampilkan hasil pada input susut
                 $("#susut").val(persentaseSusut.toFixed(2) + " %");
@@ -396,7 +356,31 @@
                 $("#susut").val("Tidak dapat melakukan pembagian oleh nol");
             }
         });
+        function confirmJob(){
+                let nomor_job = $('#nomor_job').val();
 
+                // // Periksa apakah nomor job sudah ada dalam tabel
+                // if ($('#dataTable tbody tr td:nth-child(1)').filter(function() {
+                //         return $(this).text() === nomor_job;
+                //     }).length > 0) {
+                //     // Nomor job sudah ada dalam tabel, tampilkan pesan dan hentikan proses
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Oops...',
+                //         text: 'Nomor job sudah ada dalam tabel.',
+                //     });
+                //     return;
+                // }
+                // Hapus opsi nomor_job yang sudah dipilih dari dropdown
+                $('#nomor_job option[value="' + nomor_job + '"]').remove();
+                $('#nomor_job').prop('disabled', false);
+                // $('#berat_kirim').val('');
+                // $('#pcs_kirim').val('');
+                // $('#susut').val('');
+                $('#keterangan').val('');
+                $('#nomor_job').val(null).trigger('change');
+
+        }
         function validateForm() {
             // Mendefinisikan variabel untuk menyimpan kolom yang belum diisi
             let emptyFields = [];
@@ -421,15 +405,9 @@
             let operator_sikat_n_kompresor = $('#operator_sikat_dan_kompresor').val();
             let operator_flek_n_poles = $('#operator_flex_dan_poles').val();
             let operator_cutter = $('#operator_cutter').val();
-            let kuningan = $('#kuningan').val();
-            let sterofoam = $('#Sterofoam').val();
-            let karat = $('#karat').val();
-            let rontokan_flek = $('#rontokan_flex').val();
-            let rontokan_bahan = $('#rontokan_bahan').val();
-            let rontokan_serabut = $('#rontokan_serabut').val();
-            let ws_0_0_0 = $('#ws').val();
-            let berat_pre_cleaning = $('#berat_precleaning').val();
-            let pcs_pre_cleaning = $('#pcs').val();
+            let jenis_grading = $('#jenis_grading').val();
+            let berat_grading = $('#berat_grading').val();
+            let pcs_grading = $('#pcs_grading').val();
             let susut = $('#susut').val();
             let user_created = $('#user_created').val();
 
@@ -439,15 +417,9 @@
             if (!operator_sikat_n_kompresor) emptyFields.push('Operator Sikat Kompresor');
             if (!operator_flek_n_poles) emptyFields.push('Operator Flek Poles');
             if (!operator_cutter) emptyFields.push('Operator Flek Cutter');
-            if (!kuningan) emptyFields.push('Kuningan');
-            if (!sterofoam) emptyFields.push('Sterofoam');
-            if (!karat) emptyFields.push('Karat');
-            if (!rontokan_flek) emptyFields.push('Rontokan Flek');
-            if (!rontokan_bahan) emptyFields.push('Rontokan Bahan');
-            if (!rontokan_serabut) emptyFields.push('Rontokan Serabut');
-            if (!ws_0_0_0) emptyFields.push('ws_0_0_0');
-            if (!berat_pre_cleaning) emptyFields.push('Berat Pre Cleaning');
-            if (!pcs_pre_cleaning) emptyFields.push('Pcs Pre Cleaning');
+            if (!jenis_grading) emptyFields.push('Jenis Grading');
+            if (!berat_grading) emptyFields.push('Berat Grading');
+            if (!pcs_grading) emptyFields.push('Pcs Grading');
             if (!user_created) emptyFields.push('NIP Admin');
 
             // Jika daftar kolom yang belum diisi tidak kosong, tampilkan pesan peringatan
@@ -467,22 +439,23 @@
         // ADD ROW
         function addRow() {
             if (validateForm()) {
+
                 let nomor_job = $('#nomor_job').val();
 
                 // Periksa apakah nomor job sudah ada dalam tabel
-                if ($('#dataTable tbody tr td:nth-child(1)').filter(function() {
-                        return $(this).text() === nomor_job;
-                    }).length > 0) {
-                    // Nomor job sudah ada dalam tabel, tampilkan pesan dan hentikan proses
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Nomor job sudah ada dalam tabel.',
-                    });
-                    return;
-                }
+                // if ($('#dataTable tbody tr td:nth-child(1)').filter(function() {
+                //         return $(this).text() === nomor_job;
+                //     }).length > 0) {
+                //     // Nomor job sudah ada dalam tabel, tampilkan pesan dan hentikan proses
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Oops...',
+                //         text: 'Nomor job sudah ada dalam tabel.',
+                //     });
+                //     return;
+                // }
                 // Hapus opsi nomor_job yang sudah dipilih dari dropdown
-                $('#nomor_job option[value="' + nomor_job + '"]').remove();
+                // $('#nomor_job option[value="' + nomor_job + '"]').remove();
 
                 let id_box_grading_kasar = $('#id_box_grading_kasar').val();
                 let nomor_bstb = $('#nomor_bstb').val();
@@ -501,15 +474,9 @@
                 let operator_sikat_n_kompresor = $('#operator_sikat_dan_kompresor').val();
                 let operator_flek_n_poles = $('#operator_flex_dan_poles').val();
                 let operator_cutter = $('#operator_cutter').val();
-                let kuningan = $('#kuningan').val();
-                let sterofoam = $('#Sterofoam').val();
-                let karat = $('#karat').val();
-                let rontokan_flek = $('#rontokan_flex').val();
-                let rontokan_bahan = $('#rontokan_bahan').val();
-                let rontokan_serabut = $('#rontokan_serabut').val();
-                let ws_0_0_0 = $('#ws').val();
-                let berat_pre_cleaning = $('#berat_precleaning').val();
-                let pcs_pre_cleaning = $('#pcs').val();
+                let jenis_grading = $('#jenis_grading').val();
+                let berat_grading = $('#berat_grading').val();
+                let pcs_grading = $('#pcs_grading').val();
                 let susut = $('#susut').val();
                 let user_created = $('#user_created').val();
                 let keterangan = $('#keterangan').val();
@@ -517,8 +484,10 @@
                 susutTabel = susutTabel.replace('.', '');
                 susutTabel = susutTabel.padStart(4, '0');
 
+               
                 $('#plant').prop('disabled', true);
                 $('#nomor_bstb').prop('readonly', true);
+                $('#nomor_job').prop('disabled', true);
 
                 let newRow = `<tr>` +
                     `<td class="text-center">${nomor_job}</td>` +
@@ -539,16 +508,10 @@
                     `<td class="text-center">${operator_sikat_n_kompresor}</td>` +
                     `<td class="text-center">${operator_flek_n_poles}</td>` +
                     `<td class="text-center">${operator_cutter}</td>` +
-                    `<td class="text-center">${kuningan}</td>` +
-                    `<td class="text-center">${sterofoam}</td>` +
-                    `<td class="text-center">${karat}</td>` +
-                    `<td class="text-center">${rontokan_flek}</td>` +
-                    `<td class="text-center">${rontokan_bahan}</td>` +
-                    `<td class="text-center">${rontokan_serabut}</td>` +
-                    `<td class="text-center">${ws_0_0_0}</td>` +
-                    `<td class="text-center">${berat_pre_cleaning}</td>` +
-                    `<td class="text-center">${pcs_pre_cleaning}</td>` +
-                    `<td class="text-center">${susutTabel}</td>` +
+                    `<td class="text-center">${jenis_grading}</td>` +
+                    `<td class="text-center">${berat_grading}</td>` +
+                    `<td class="text-center">${pcs_grading}</td>` +
+                    // `<td class="text-center">${susutTabel}</td>` +
                     `<td class="text-center">${user_created}</td>` +
                     `<td class="text-center"><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td>` +
                     `</tr>`;
@@ -557,7 +520,7 @@
 
                 calculateTotalBerat();
                 calculateTotalPcs();
-                calculateTotalBox();
+                // calculateTotalBox();
 
                 dataArray.push({
                     nomor_job: nomor_job,
@@ -578,31 +541,25 @@
                     operator_sikat_n_kompresor: operator_sikat_n_kompresor,
                     operator_flek_n_poles: operator_flek_n_poles,
                     operator_cutter: operator_cutter,
-                    kuningan: kuningan,
-                    sterofoam: sterofoam,
-                    karat: karat,
-                    rontokan_flek: rontokan_flek,
-                    rontokan_bahan: rontokan_bahan,
-                    rontokan_serabut: rontokan_serabut,
-                    ws_0_0_0: ws_0_0_0,
-                    berat_pre_cleaning: berat_pre_cleaning,
-                    pcs_pre_cleaning: pcs_pre_cleaning,
+                    jenis_grading: jenis_grading,
+                    berat_grading: berat_grading,
+                    pcs_grading: pcs_grading,
+                    total_berat_grading:0,
                     susutTabel: susutTabel,
                     keterangan: keterangan,
                     user_created: user_created,
                 });
-
+                // console.log(dataArray);
                 // Mengosongkan nilai dropdown nomor_job
-                $('#id_box_grading_kasar, #id_box_raw_material, #nomor_batch, #nomor_nota_internal, #nama_supplier, #jenis_raw_material, #jenis_kirim, #tujuan_kirim, #modal, #total_modal, #kadar_air, #operator_sikat_dan_kompresor, #operator_flex_dan_poles, #operator_cutter, #kuningan, #Sterofoam, #karat, #rontokan_flex, #rontokan_bahan,#rontokan_serabut, #ws, #berat_precleaning, #pcs')
+                $('#jenis_grading, #berat_grading, #pcs_grading')
                     .val('');
-                $('#berat_kirim').val('');
-                $('#pcs_kirim').val('');
-                $('#susut').val('');
-                $('#keterangan').val('');
-                $('#nomor_job').val(null).trigger('change');
-                $('#operator_sikat_dan_kompresor').val(null).trigger('change');
-                $('#operator_flex_dan_poles').val(null).trigger('change');
-                $('#operator_cutter').val(null).trigger('change');
+                // $('#berat_kirim').val('');
+                // $('#pcs_kirim').val('');
+                // $('#susut').val('');
+                // $('#keterangan').val('');
+                // $('#nomor_job').val(null).trigger('change');
+                $('#jenis_grading').val(null).trigger('change');
+           
 
             }
 
@@ -642,27 +599,11 @@
                 $('#nomor_bstb').val('').prop('readonly', false);
                 $('#nomor_bstb').val('');
 
-                let totalBeratKirim = 0;
-                $('#dataTable tbody tr').each(function() {
-                    let beratKirim = parseFloat($(this).find('td:eq(10)')
-                        .text()); // Ganti angka 10 dengan indeks kolom berat_kirim dalam tabel
-                    if (!isNaN(beratKirim)) {
-                        totalBeratKirim += beratKirim;
-                    }
-                });
-                $('#total_berat').val(totalBeratKirim);
-                // Total Pcs
-                let totalPcsKirim = 0;
-                $('#dataTable tbody tr').each(function() {
-                    let pcsKirim = parseFloat($(this).find('td:eq(11)')
-                        .text()); // Ganti angka 11 dengan indeks kolom pcs_kirim dalam tabel
-                    if (!isNaN(pcsKirim)) {
-                        totalPcsKirim += pcsKirim;
-                    }
-                });
-                $('#total_pcs').val(totalPcsKirim);
+               
+                calculateTotalBerat();
+                calculateTotalPcs();
 
-                $('#total_box').val(jumlahBaris);
+                // $('#total_box').val(jumlahBaris);
             } else {
                 // Total Berat
                 let totalBeratKirim = 0;
@@ -685,18 +626,19 @@
                 });
                 $('#total_pcs').val(totalPcsKirim);
 
-                $('#total_box').val(jumlahBaris);
+                // $('#total_box').val(jumlahBaris);
             }
         }
 
         function simpanData() {
-            console.log(dataArray);
+            // console.log(dataArray);
+            // return;
             // Cek apakah data kosong
             if (dataArray.length === 0) {
                 // Menampilkan SweetAlert untuk pesan error
                 Swal.fire({
                     icon: 'error',
-                    title: 'Astagfirullah',
+                    title: 'Error',
                     text: 'Data dalam tabel masih kosong. Silakan tambahkan data terlebih dahulu.'
                 });
                 return; // Menghentikan eksekusi fungsi jika data kosong
