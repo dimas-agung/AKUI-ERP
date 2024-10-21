@@ -18,6 +18,16 @@ if (!function_exists('generate_berat_bersih2')) {
         }
     }
 }
+if (!function_exists('generate_berat_bersih3')) {
+    function generate_berat_bersih3($berat_kotor) {
+        {
+            $berat_bersih = (float)$berat_kotor/1.15;
+            return $berat_bersih;
+            // return floor($berat_bersih,2);
+            return number_format($berat_bersih,2);
+        }
+    }
+}
 if (!function_exists('Rupiah')) {
     function Rupiah($value) {
         return "Rp. ". number_format($value,0,',','.');
