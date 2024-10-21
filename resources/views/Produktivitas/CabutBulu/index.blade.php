@@ -76,9 +76,12 @@
                         </thead>
                         <tbody>
                             @forelse ($cabut_bulu_stock as $item)
+                                @if ($item->upah_operator == 0 || $item->berat_job == 0)
+                                    @continue;
+                                @endif
                                 @php
                                     $berat_bersih = generate_berat_bersih2($item->berat_job);
-                                    $upah_bersih = $item->upah_operator /$item->berat_job * $berat_bersih;
+                                    $upah_bersih = $item->upah_operator /$item->berat_job * (float)$berat_bersih;
                                     $date = $item->created_at;
 
                                 @endphp
