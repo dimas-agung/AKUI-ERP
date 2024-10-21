@@ -10,6 +10,7 @@ use App\Models\MasterJenisGradingKasar;
 use App\Services\GradingKasarHasilService;
 use App\Services\HppService;
 use App\Http\Requests\GradingKasarHasilRequest;
+use App\Models\MasterJenisGradingHalus;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 
@@ -40,7 +41,8 @@ class GradingKasarHasilController extends Controller
     public function create()
     {
         $GradingKasarInput = GradingKasarInput::with('GradingKasarHasil')->get();
-        $MasterJenisGradingKasar = MasterJenisGradingKasar::with('GradingKasarHasil')->get();
+        $MasterJenisGradingKasar = MasterJenisGradingHalus::where('status',1)->get();
+        // $MasterJenisGradingKasar = MasterJenisGradingKasar::with('GradingKasarHasil')->get();
         $getUnusedNomorGrading = GradingKasarInput::withCount('GradingKasarHasil')->get();
 
         // return $getUnusedNomorGrading;
