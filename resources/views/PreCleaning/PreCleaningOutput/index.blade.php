@@ -67,10 +67,11 @@
                                         <th scope="col" class="text-center">Jenis Kirim</th>
                                         <th scope="col" class="text-center">Berat Kirim</th>
                                         <th scope="col" class="text-center">Pcs Kirim</th>
-                                        {{-- @role('admin') --}}
+                                        <th class="text-center" scope="col">Rasio</th>
+                                        @role('admin')
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
-                                        {{-- @endrole --}}
+                                        @endrole
                                         <th scope="col" class="text-center">Operator Sikat & Kompresor</th>
                                         <th scope="col" class="text-center">Operator Flek & Poles</th>
                                         <th scope="col" class="text-center">Operator Cutter</th>
@@ -101,11 +102,12 @@
                                             <td class="text-center">{{ $item->berat_kirim }}
                                             </td>
                                             <td class="text-center">{{ $item->pcs_kirim }}</td>
-                                            {{-- @role('admin') --}}
+                                            <td class="text-center">{{ $item->modal * 0.0000196841305522212 }}</td>
+                                            @role('admin')
                                                 <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
                                                 <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}
                                                 </td>
-                                            {{-- @endrole --}}
+                                            @endrole
                                             <td class="text-center">{{ $item->operator_sikat_n_kompresor }}</td>
                                             <td class="text-center">{{ $item->operator_flek_n_poles }}</td>
                                             <td class="text-center">{{ $item->operator_cutter }}</td>

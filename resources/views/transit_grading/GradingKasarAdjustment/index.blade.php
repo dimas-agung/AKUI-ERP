@@ -52,11 +52,14 @@
                                         <th scope="col" class="text-center">Nomor Batch Adjustment</th>
                                         <th scope="col" class="text-center">Berat Adjustment</th>
                                         <th scope="col" class="text-center">Berat Saldo Terakhir</th>
+                                        <th scope="col" class="text-center">Berat Saldo Awal</th>
+                                        <th scope="col" class="text-center">Rasio</th>
+                                        @role('admin')
                                         <th scope="col" class="text-center">Modal Saldo Terakhir</th>
                                         <th scope="col" class="text-center">Total Modal Saldo Terakhir</th>
-                                        <th scope="col" class="text-center">Berat Saldo Awal</th>
                                         <th scope="col" class="text-center">Modal Saldo Awal</th>
                                         <th scope="col" class="text-center">Total Modal Saldo Awal</th>
+                                        @endrole
                                         <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center">User Created</th>
                                         <th scope="col" class="text-center">Created At</th>
@@ -79,11 +82,14 @@
                                         <td class="text-center">{{ $MasterPRIM->nomor_batch_adjustment }}</td>
                                         <td class="text-center">{{ $MasterPRIM->berat_adjustment }}</td>
                                         <td class="text-center">{{ $MasterPRIM->berat_saldo_terakhir }}</td>
+                                        <td class="text-center">{{ $MasterPRIM->berat_saldo_awal }}</td>
+                                        <td class="text-center">{{ $item->modal * 0.0000196841305522212 }}</td>
+                                        @role('admin')
                                         <td class="text-center">{{ $MasterPRIM->modal_saldo_terakhir }}</td>
                                         <td class="text-center">{{ $MasterPRIM->total_modal_saldo_terakhir }}</td>
-                                        <td class="text-center">{{ $MasterPRIM->berat_saldo_awal }}</td>
                                         <td class="text-center">{{ $MasterPRIM->modal_saldo_awal }}</td>
                                         <td class="text-center">{{ $MasterPRIM->total_modal_saldo_awal }}</td>
+                                        @endrole
                                         <td class="text-center">{{ $MasterPRIM->keterangan }}</td>
                                         <td class="text-center">{{ $MasterPRIM->user_created }}</td>
                                         <td class="text-center">{{ $MasterPRIM->created_at }}</td>

@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="total_modal" class="form-label">Total Modal</label>
-                        <input type="text" class="form-control" id="total_modal" readonly>
+                    <input type="text" class="form-control" id="total_modal" readonly>
                     </div>
                     <div class="col-md-flex">
                         <hr>
@@ -78,8 +78,8 @@
                             <option value="">Pilih Jenis Grading</option>
                             @foreach ($MasterJenisGradingKasar as $MasterJGK)
                                 <option
-                                    value="{{ $MasterJGK->nama }},{{ $MasterJGK->harga_estimasi }},{{ $MasterJGK->presentase_pengurangan_harga }}">
-                                    {{ $MasterJGK->nama }}
+                                    value="{{ $MasterJGK->jenis }},{{ $MasterJGK->harga_estimasi }},{{ $MasterJGK->presentase_pengurangan_harga }}">
+                                    {{ $MasterJGK->jenis }}
                                 </option>
                             @endforeach
                         </select>
@@ -315,7 +315,7 @@
             let beratAdding = parseFloat($('#berat_adding').val());
 
             if (!isNaN(totalBeratGradingtest) && !isNaN(beratAdding)) {
-                let nilaiSusut = (1 - totalBeratGradingtest / beratAdding);
+                let nilaiSusut = parseFloat((1 - totalBeratGradingtest / beratAdding));
                 console.log("totalTest = " + totalBeratGradingtest);
                 console.log("Berat Adding = " + beratAdding);
                 console.log("Susut = " + nilaiSusut);
@@ -330,7 +330,7 @@
 
         // generate id box grading kasar
         function generateIdBoxGradingKasar() {
-            const nomorGrading = $('#nomor_grading').val();
+            const nama_supplier = $('#nama_supplier').val();
             const jenisGrading = $('#jenis_grading').val();
 
             // Memisahkan nilai-nilai jenisGrading menjadi array
@@ -338,9 +338,9 @@
 
             // Mengambil elemen pertama dari array jenisGradingArray
             const jenisGradingPertama = jenisGradingArray[0];
-
+            
             // Menggabungkan nilai-nilai tersebut untuk membentuk nomor grading
-            const id_box_grading_kasar = `${nomorGrading}_${jenisGradingPertama}`;
+            const id_box_grading_kasar = `${nama_supplier}_${jenisGradingPertama}`;
 
             // Menampilkan hasil di konsol (opsional)
             console.log("Id Box Grading Kasar = " + id_box_grading_kasar);
@@ -478,19 +478,21 @@
                 $('#total_pcs').val(totalPcsGrading);
 
                 let susut = hitungNilaiSusut() || 0; // Nilai susut diambil dari fungsi hitungNilaiSusut
+                // let total_susut = susut;
                 console.log("Susut = " + susut);
+                let totalSusutValue =susut;
 
                 $('#dataTable tbody tr').each(function() {
                     // Ganti koma dengan titik sebagai tanda desimal
-                    let totalSusutValue = parseFloat($(this).find('td:eq(12)').text().replace(',', '.')) || 0;
+                    totalSusutValue += parseFloat($(this).find('td:eq(12)').text().replace(',', '.')) || 0;
                     console.log('TotalSusut = ' + totalSusutValue);
 
-                    susut += totalSusutValue;
+                    // susut += totalSusutValue;
 
                     // Update nilai susut pada kolom susut di setiap baris tabel
                     $(this).find('td:eq(12)').text(susut.toFixed(4));
                 });
-                console.log('Total Susut= ' + susut);
+                console.log('Total Susut= ' + totalSusutValue);
                 $('#total_susut').val(susut.toFixed(4));
 
                 //

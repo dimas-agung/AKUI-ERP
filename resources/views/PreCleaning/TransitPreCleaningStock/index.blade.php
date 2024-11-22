@@ -41,6 +41,7 @@
                                        
                                         <th scope="col" class="text-center">Berat Grading</th>
                                         <th scope="col" class="text-center">Pcs Grading</th>
+                                        <th scope="col" class="text-center">Rasio</th>
                                         @role('admin')
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
@@ -75,8 +76,11 @@
                                         <td class="text-center">{{ $TPCS->jenis_grading }}</td>
                                         <td class="text-center">{{ $TPCS->berat_grading }}</td>
                                         <td class="text-center">{{ $TPCS->pcs_grading }}</td>
+                                        <td class="text-center">{{ $item->modal * 0.0000196841305522212 }}</td>
+                                        @role('admin')
                                         <td class="text-center">{{ number_format($TPCS->modal, 2, ',', '.') }}</td>
                                         <td class="text-center">{{ number_format($TPCS->total_modal, 2, ',', '.') }}</td>
+                                        @endrole
                                         <td class="text-center">{{ $TPCS->keterangan }}</td>
                                         <td class="text-center">{{ $TPCS->user_created }}</td>
                                         <td class="text-center">{{ $TPCS->user_updated }}</td>
