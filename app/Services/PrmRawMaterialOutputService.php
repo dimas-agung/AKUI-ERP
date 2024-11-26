@@ -48,6 +48,7 @@ class PrmRawMaterialOutputService
             'doc_no'        => $item->doc_no,
             'nomor_bstb'    => $item->nomor_bstb,
             'nomor_batch'   => $item->nomor_batch,
+            'nomor_nota_internal'   => $item->nomor_nota_internal,
             'id_box'        => $item->id_box,
             'nama_supplier' => $item->nama_supplier,
             'jenis'         => $item->jenis,

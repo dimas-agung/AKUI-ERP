@@ -37,4 +37,9 @@ class PreGradingHalusAdding extends Model
     {
         return $this->hasMany(Perusahaan::class, 'nomor_job', 'nama');
     }
+    public function PreGradingHalusInput()
+    {
+        return $this->hasMany(PreGradingHalusInput::class, 'nomor_job', 'nomor_job');
+    }
+
 }

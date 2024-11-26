@@ -52,124 +52,142 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Jenis Grading</label>
-                                        <select id="jenis_grading" class="select2 form-select" name="jenis_grading">
-                                            <option value="">Pilih Jenis Grading</option>
-                                            @foreach ($Unit->sortBy('jenis') as $post)
-                                                <option value="{{ $post->jenis }}">
-                                                    {{ old('jenis', $post->jenis) }}
-                                                </option>
-                                            @endforeach
+                                        <label>Grading Ulang</label>
+                                        <select id="is_grading" class="select2 form-select" name="is_grading" >
+                                            <option value="0">TIDAK</option>
+                                            <option value="1">YA</option>
+                                            
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-lg-12 ">
                                     <div class="form-group">
-                                        <label>Id Box Raw Material</label>
-                                        <input type="text" class="form-control" id="id_box_raw_material"
-                                            name="id_box_raw_material">
+                                        <label>Jenis Grading</label>
+                                        <div class="col-lg-12">
+
+                                            <select id="jenis_grading" class="select2 form-select" name="jenis_grading" disabled>
+                                                <option value="">Pilih Jenis Grading</option>
+                                                @foreach ($Unit->sortBy('jenis') as $post)
+                                                    <option value="{{ $post->jenis }}">
+                                                        {{ old('jenis', $post->jenis) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Id Box Grading Halus</label>
-                                        <input type="text" class="form-control" id="id_box_grading_halus"
-                                            name="id_box_grading_halus">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Nama Supplier</label>
-                                        <input type="text" class="form-control" id="nama_supplier" name="nama_supplier"
-                                            readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Nomor Batch</label>
-                                        <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
-                                            readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Jenis Raw Material</label>
-                                        <input type="text" class="form-control" id="jenis_raw_material"
-                                            name="jenis_raw_material" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Berta Adding</label>
-                                        <input type="text" id="berat_adding" class="form-control" name="berat_adding"
-                                            readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Pcs Adding</label>
-                                        <input type="text" id="pcs_adding" class="form-control" name="pcs_adding"
-                                            readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>No Nota</label>
-                                        <input type="text" id="nomor_nota_internal" class="form-control"
-                                            name="nomor_nota_internal" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Kadar Air</label>
-                                        <input type="text" class="form-control" id="kadar_air" name="kadar_air" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Modal</label>
-                                        <input type="text" id="modal" class="form-control" name="modal" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Total Modal</label>
-                                        <input type="text" id="total_modal" class="form-control" name="total_modal"
-                                            readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Kategori Susut</label>
-                                        <input type="text" id="kategori_susut" class="form-control" name="kategori_susut"
-                                            readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Harga Estimasi</label>
-                                        <input type="text" id="harga_estimasi" class="form-control"
-                                            name="harga_estimasi" readonly>
-                                        <input type="hidden" id="harga_esti" name="harga_esti">
-                                        <input type="hidden" id="pengurangan" name="pengurangan">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Berat Grading</label>
-                                        <input type="text" id="berat_grading" pattern="[0-9]*" inputmode="numeric"
-                                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                            class="form-control" name="berat_grading" value="{{ old('berat_grading') }}"
-                                            placeholder="Masukkan berat grading" data-parsley-required="true">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Pcs Grading</label>
-                                        <input type="text" id="pcs_grading" pattern="[0-9]*" inputmode="numeric"
-                                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                            class="form-control" name="pcs_grading" value="{{ old('pcs_grading') }}"
-                                            placeholder="Masukkan pcs grading" data-parsley-required="true">
+                                <div class="is_grading" style="display: none">
+                                    
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Id Box Raw Material</label>
+                                                <input type="text" class="form-control" id="id_box_raw_material"
+                                                    name="id_box_raw_material">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Id Box Grading Halus</label>
+                                                <input type="text" class="form-control" id="id_box_grading_halus"
+                                                    name="id_box_grading_halus">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Nama Supplier</label>
+                                                <input type="text" class="form-control" id="nama_supplier" name="nama_supplier"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Nomor Batch</label>
+                                                <input type="text" class="form-control" id="nomor_batch" name="nomor_batch"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Jenis Raw Material</label>
+                                                <input type="text" class="form-control" id="jenis_raw_material"
+                                                    name="jenis_raw_material" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Berta Adding</label>
+                                                <input type="text" id="berat_adding" class="form-control" name="berat_adding"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Pcs Adding</label>
+                                                <input type="text" id="pcs_adding" class="form-control" name="pcs_adding"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>No Nota</label>
+                                                <input type="text" id="nomor_nota_internal" class="form-control"
+                                                    name="nomor_nota_internal" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Kadar Air</label>
+                                                <input type="text" class="form-control" id="kadar_air" name="kadar_air" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Modal</label>
+                                                <input type="text" id="modal" class="form-control" name="modal" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Total Modal</label>
+                                                <input type="text" id="total_modal" class="form-control" name="total_modal"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Kategori Susut</label>
+                                                <input type="text" id="kategori_susut" class="form-control" name="kategori_susut"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Harga Estimasi</label>
+                                                <input type="text" id="harga_estimasi" class="form-control"
+                                                    name="harga_estimasi" readonly>
+                                                <input type="hidden" id="harga_esti" name="harga_esti">
+                                                <input type="hidden" id="pengurangan" name="pengurangan">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Berat Grading</label>
+                                                <input type="text" id="berat_grading" pattern="[0-9]*" inputmode="numeric"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                    class="form-control" name="berat_grading" value="{{ old('berat_grading') }}"
+                                                    placeholder="Masukkan berat grading" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Pcs Grading</label>
+                                                <input type="text" id="pcs_grading" pattern="[0-9]*" inputmode="numeric"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                    class="form-control" name="pcs_grading" value="{{ old('pcs_grading') }}"
+                                                    placeholder="Masukkan pcs grading" data-parsley-required="true">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -249,6 +267,7 @@
 @endsection
 @section('script')
     <script>
+        // $('.is_grading').hide();
         let selectedNomorBSTB = ''; // Variabel untuk menyimpan nomor BSTB yang dipilih sebelumnya
         $('#nomor_grading').on('change', function() {
             let selectedIdBox = $(this).val();
@@ -283,14 +302,22 @@
                 });
             }
         });
-
+        $('#is_grading').on('change', function() {
+            if ($(this).val() == 1) {
+                $('.is_grading').show();
+                $('#jenis_grading').prop('disabled',false);
+            }else{
+                $('.is_grading').hide();
+                $('#jenis_grading').prop('disabled',true);
+            }
+        });
         $('#jenis_grading').on('change', function() {
-            let selectedUnit = $(this).val();
+            let jenis_grading = $(this).val();
             $.ajax({
                 url: `{{ route('GradingHalusInput.setUnit') }}`,
                 method: 'GET',
                 data: {
-                    jenis: selectedUnit
+                    jenis: jenis_grading
                 },
                 success: function(response) {
                     console.log('pengurangan harga=' + response.pengurangan_harga);
@@ -306,22 +333,24 @@
                     console.error('Error:', error);
                 }
             });
+            
         });
 
+       
         function hargaEstimasi() {
             // Pastikan nilai modal adalah angka
-            const modal_number = parseFloat($('#modal').val());
+            let modal_number = parseFloat($('#modal').val());
 
             // Cek apakah nomor_grading dan jenis_grading sudah terisi
-            const nomorGradingTerisi = $('#nomor_grading').val() !== '';
-            const jenisGradingTerisi = $('#jenis_grading').val() !== '';
+            let nomorGradingTerisi = $('#nomor_grading').val() !== '';
+            let jenisGradingTerisi = $('#jenis_grading').val() !== '';
 
             // Pastikan nilai modal adalah angka dan nomor_grading serta jenis_grading sudah terisi
             if (!isNaN(modal_number) && nomorGradingTerisi && jenisGradingTerisi) {
                 // Pastikan nilai pengurangan_harga adalah angka
-                const pengurangan_harga_number = parseFloat($('#pengurangan').val());
+                let pengurangan_harga_number = parseFloat($('#pengurangan').val());
                 // Pastikan nilai harga_estimasi adalah angka
-                const harga_estimasi = parseFloat($('#harga_esti').val());
+                let harga_estimasi = parseFloat($('#harga_esti').val());
 
                 // Menghasilkan nomor BSTB baru
                 if (isNaN(pengurangan_harga_number) || pengurangan_harga_number === null || pengurangan_harga_number ===
@@ -337,11 +366,11 @@
         }
 
         function generateNomorBSTB() {
-            const nomor_batch = $('#nomor_batch').val();
-            const jenis_grading = $('#jenis_grading').val();
+            let nomor_batch = $('#nama_supplier').val();
+            let jenis_grading = $('#jenis_grading').val();
 
             // Menghasilkan nomor BSTB baru
-            const nomorBSTB = `${nomor_batch}_${jenis_grading}`;
+            let nomorBSTB = `${nomor_batch}_${jenis_grading}`;
 
             // Mengisi input dengan nomor BSTB baru
             $('#id_box_grading_halus').val(nomorBSTB);
@@ -457,6 +486,13 @@
 
         function addRow() {
             // Mengambil nilai dari input
+            if ($('#is_grading').val()==1) {
+                addRowIsGrading()
+            }else{
+                addRowIsNotGrading()
+            }
+        }
+        function addRowIsGrading() {
             var nomor_grading = $('#nomor_grading').val();
             var id_box_raw_material = $('#id_box_raw_material').val();
             var nomor_batch = $('#nomor_batch').val();
@@ -628,6 +664,7 @@
             // Update indeks baris terakhir
             currentRowIndex++;
         }
+       
 
         // Ambil indeks terakhir sebelum menghapus baris
         var lastRowIndex = currentRowIndex;
@@ -772,6 +809,178 @@
                 });
             }
         }
+
+        // script jika tidak ada proses grading
+  
+        function getDetailJenisGrading(jenis_grading){
+            let arrayResult  = [];
+            $.ajax({
+                url: `{{ route('GradingHalusInput.setUnit') }}`,
+                method: 'GET',
+                async:false,
+                data: {
+                    jenis: jenis_grading
+                },
+                success: function(response) {
+                    console.log('pengurangan harga=' + response.pengurangan_harga);
+                    $('#kategori_susut').val(response.kategori_susut);
+                    $('#harga_esti').val(response.harga_estimasi);
+                    $('#pengurangan').val(response.pengurangan_harga);
+                    arrayResult.push({
+                        harga_estimasi : response.harga_estimasi,
+                        kategori_susut : response.kategori_susut,
+                        pengurangan_harga : response.pengurangan_harga,
+                    })
+                   
+                    
+                    // generateNomorBSTB();
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+            return arrayResult;
+        }
+        function calculateHargaEstimasi(modal,harga_estimasi,pengurangan_harga) {
+            let modal_number = parseFloat(modal);
+           
+            // Pastikan nilai modal adalah angka dan nomor_grading serta jenis_grading sudah terisi
+            // Pastikan nilai pengurangan_harga adalah angka
+            let pengurangan_harga_number = parseFloat(pengurangan_harga);
+            // Pastikan nilai harga_estimasi adalah angka
+            harga_estimasi = parseFloat(harga_estimasi);
+
+            // Menghasilkan nomor BSTB baru
+            if (isNaN(pengurangan_harga_number) || pengurangan_harga_number === null || pengurangan_harga_number ===
+                0) {
+                return harga_estimasi;
+            } else {
+                return modal_number - (modal_number * pengurangan_harga_number);
+               
+            }
+           
+        }
+        function addRowIsNotGrading() {
+            let nomor_grading = $('#nomor_grading').val();
+            $.ajax({
+                url: `{{ route('GradingHalusInput.getDataPreCleaning') }}`, // Ganti dengan URL endpoint yang sesuai untuk memeriksa ketersediaan id box
+                method: 'GET',
+                data: {
+                    nomor_grading:nomor_grading,
+                    _token: '{{ csrf_token() }}'
+                },
+                dataType: 'json',
+                success: function(response) {
+                    response.forEach((item) => {
+                        console.log(item);
+                        let arrayDataJenisGrading = getDetailJenisGrading(item.jenis_pre_cleaning)[0]
+                        console.log(arrayDataJenisGrading);
+                        let pengurangan_harga = arrayDataJenisGrading.pengurangan_harga;
+                        let harga_estimasi = arrayDataJenisGrading.harga_estimasi;
+                        let kategori_susut = arrayDataJenisGrading.kategori_susut;
+                        harga_estimasi = calculateHargaEstimasi(item.modal,harga_estimasi ,arrayDataJenisGrading['pengurangan_harga'])
+                        var nomor_grading = $('#nomor_grading').val()  ;
+                        var id_box_raw_material = item.id_box_raw_material ;
+                        var nomor_batch = item.nomor_batch ;
+                        var nomor_nota_internal = item.nomor_nota_internal ;
+                        var nama_supplier =item.nama_supplier ;
+                        var jenis_raw_material =item.jenis_raw_material ;
+                        var kadar_air = item.kadar_air ;
+                        var berat_adding = item.berat_kirim ;
+                        var pcs_adding = item.pcs_kirim ;
+                        var jenis_grading = item.jenis_pre_cleaning ;
+                        var berat_grading = item.berat_pre_cleaning ;
+                        var pcs_grading = item.pcs_pre_cleaning ;
+                        var keterangan = $('#keterangan').val() ;
+                        var modal = item.modal ;
+                        var total_modal = item.total_modal ;
+                    
+                        var id_box_grading_halus = nama_supplier+'_'+jenis_grading ;
+                        var susut_depan = '0' ;
+                        var susut_belakang = '0' ;
+                        var kontribusi = '0' ;
+                        var biaya_produksi = '0' ;
+                       
+                        var total_harga = '0' ;
+                        var user_created = $('#user_created').val();
+
+                         dataArray.push({
+                            nomor_grading: nomor_grading,
+                            id_box_raw_material: id_box_raw_material,
+                            nomor_batch: nomor_batch,
+                            nomor_nota_internal: nomor_nota_internal,
+                            nama_supplier: nama_supplier,
+                            jenis_raw_material: jenis_raw_material,
+                            kadar_air: kadar_air,
+                            berat_adding: berat_adding,
+                            pcs_adding: pcs_adding,
+                            jenis_grading: jenis_grading,
+                            berat_grading: berat_grading,
+                            pcs_grading: pcs_grading,
+                            keterangan: keterangan,
+                            modal: modal,
+                            total_modal: total_modal,
+                            kategori_susut: kategori_susut,
+                            id_box_grading_halus: id_box_grading_halus,
+                            susut_depan: susut_depan,
+                            susut_belakang: susut_belakang,
+                            biaya_produksi: biaya_produksi,
+                            kontribusi: kontribusi,
+                            harga_estimasi: harga_estimasi,
+                            total_harga: total_harga,
+                            
+                            user_created: user_created,
+                        });
+                        var newRow = '<tr>' +
+                            '<td>' + nomor_grading + '</td>' +
+                            '<td>' + id_box_raw_material + '</td>' +
+                            '<td>' + nomor_batch + '</td>' +
+                            '<td>' + nomor_nota_internal + '</td>' +
+                            '<td>' + nama_supplier + '</td>' +
+                            '<td>' + jenis_raw_material + '</td>' +
+                            '<td>' + kadar_air + '</td>' +
+                            '<td>' + berat_adding + '</td>' +
+                            '<td>' + pcs_adding + '</td>' +
+                            '<td>' + jenis_grading + '</td>' +
+                            '<td>' + berat_grading + '</td>' +
+                            '<td>' + pcs_grading + '</td>' +
+                            '<td>' + keterangan + '</td>' +
+                            '<td>' + modal + '</td>' +
+                            '<td>' + total_modal + '</td>' +
+                            '<td>' + kategori_susut + '</td>' +
+                            '<td>' + id_box_grading_halus + '</td>' +
+                            '<td>' + susut_depan + '</td>' +
+                            '<td>' + susut_belakang + '</td>' +
+                           
+                            '<td>' + harga_estimasi + '</td>' +
+                            '<td>' + kontribusi + '</td>' +
+                           
+                            '<td>' + user_created + '</td>' +
+                            '</td><td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
+
+                        $('#tableBody').append(newRow);
+
+                         // Setelah berhasil menambahkan baris baru, panggil fungsi untuk menghitung berat grading per adding
+                        hitungBeratGradingPerAdding();
+
+                        // Setelah berhasil menambahkan baris ke tabel, panggil fungsi untuk menghitung rata-rata berat grading per adding
+                        hitungRataRataBeratGradingPerAdding();
+                        hitungKontribusi();
+                    });
+                },
+                error: function(error) {
+                    Swal.fire({
+                        title: 'Failed!',
+                        text: 'Terjadi kesalahan saat memeriksa ketersediaan nomor grading. Silakan coba lagi.',
+                        icon: 'error'
+                    });
+                    console.log('Error:', error);
+                }
+            });
+            $('#is_grading').prop('disabled',false);
+            $('#nomor_grading').prop('disabled',false);
+        }
+
     </script>
 @endsection
 @section('printArea')

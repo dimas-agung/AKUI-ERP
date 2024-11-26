@@ -13,7 +13,7 @@ class GradingKasarHasilService
 {
     public function simpanData($dataArray, $total_susut)
     {
-        try {
+        // try {
             DB::beginTransaction();
             $ids = [];
             foreach ($dataArray as $item) {
@@ -28,14 +28,14 @@ class GradingKasarHasilService
                 'data' => $ids,
                 'redirectTo' => route('GradingKasarHasil.index'), // Ganti dengan nama route yang sesuai
             ];
-        } catch (\Exception $e) {
-            DB::rollBack();
+        // } catch (\Exception $e) {
+        //     DB::rollBack();
 
-            return [
-                'success' => false,
-                'error' => 'Gagal menyimpan data. ' . $e->getMessage(),
-            ];
-        }
+        //     return [
+        //         'success' => false,
+        //         'error' => 'Gagal menyimpan data. ' . $e->getMessage(),
+        //     ];
+        // }
     }
 
     private function createItem($item, $total_susut)

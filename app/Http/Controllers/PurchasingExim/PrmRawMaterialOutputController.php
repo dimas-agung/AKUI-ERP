@@ -22,7 +22,7 @@ class PrmRawMaterialOutputController extends Controller
     public function index()
     {
         $i = 1;
-        $PrmRawMOIC = PrmRawMaterialOutputItem::all();
+        $PrmRawMOIC = PrmRawMaterialOutputItem::with('PrmRawMaterialStock')->get();
 
         // return $jumlahKadarAir;
         return response()->view('purchasing_exim.PrmRawMaterialOutput.index', [

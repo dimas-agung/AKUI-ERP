@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('doc_no');
             $table->string('nomor_bstb');
             $table->string('nomor_batch');
+            $table->string('nomor_nota_internal');
             $table->string('id_box');
             $table->string('nama_supplier');
             $table->string('jenis');

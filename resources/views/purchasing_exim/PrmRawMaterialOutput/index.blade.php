@@ -26,6 +26,7 @@
                                 <th class="text-center" scope="col">Nomor Dokument</th>
                                 <th class="text-center" scope="col">Nomor BSTB</th>
                                 <th class="text-center">Nomor Batch</th>
+                                <th class="text-center">Nomor Nota Internal</th>
                                 <th class="text-center">Id Box</th>
                                 <th class="text-center">Nama Supplier</th>
                                 <th class="text-center">Jenis</th>
@@ -50,6 +51,7 @@
                                     <td class="text-center">{{ $item->doc_no }}</td>
                                     <td class="text-center">{{ $item->nomor_bstb }}</td>
                                     <td class="text-center">{{ $item->nomor_batch }}</td>
+                                    <td class="text-center">{{ $item->PrmRawMaterialStock->nomor_nota_internal }}</td>
                                     <td class="text-center">{{ $item->id_box }}</td>
                                     <td class="text-center">{{ $item->nama_supplier }}</td>
                                     <td class="text-center">{{ $item->jenis }}</td>

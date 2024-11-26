@@ -35,7 +35,7 @@
                                     </div>
                                 @endif
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group mandatory">
                                             <label>Nomer Dokument</label>
                                             <input type="text" id="doc_no" class="form-control" name="doc_no"
@@ -43,7 +43,15 @@
                                                 data-parsley-required="true">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <div class="form-group mandatory">
+                                            <label>Nomer BSTB</label>
+                                            <input type="text" id="nomor_bstb" class="form-control" name="nomor_bstb"
+                                                value="{{ old('nomor_bstb') }}" placeholder="Masukkan Nomer BSTB"
+                                                data-parsley-required="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>NIP Admin</label>
                                             <input type="text" id="user_created" class="form-control" name="user_created"
@@ -498,6 +506,7 @@
 
                         $('#letak_tujuan_edit').val(response.letak_tujuan);
                         $('#inisial_tujuan_edit').val(response.inisial_tujuan);
+                        generateNomorBSTB(response.inisial_tujuan);
                     } else {
                         // Berat 0, mencegah pemilihan dan memberikan pesan kepada pengguna
                         // alert("Berat tidak boleh 0. Pilih nomor_bstb lain.");
@@ -530,7 +539,7 @@
             const nomor_bstb = `BSTB_PNE_${tanggal}${bulan}${tahun}-${jam}${menit}${detik}_${inisial_tujuan}`;
 
             // Menampilkan hasil ke dalam elemen HTML dengan ID 'hasil_nomor_bstb'
-            // $('#hasil_nomor_bstb').text(nomor_bstb);
+            $('#nomor_bstb').val(nomor_bstb);
             return nomor_bstb;
             console.log(nomor_bstb);
         }
@@ -641,7 +650,8 @@
             }
 
             // Memanggil fungsi generateNomorBSTB untuk mendapatkan nomor_bstb
-            var nomor_bstb = generateNomorBSTB(inisial_tujuan);
+            // var nomor_bstb = generateNomorBSTB(inisial_tujuan);
+            var nomor_bstb =$('#nomor_bstb').val();
 
             var newRow = '<tr>' +
                 '<td>' + doc_no + '</td>' +
@@ -711,7 +721,7 @@
             $('#keterangan_item').val('');
             // Menonaktif kan nilai input ketika ditambah
             $('#doc_no').prop('readonly', true);
-            $('#nomor_bstb').prop('readonly', true);
+            // $('#nomor_bstb').prop('readonly', true);
             $('#nomor_batch').prop('readonly', true);
             $('#keterangan').prop('readonly', true);
             $('#user_created').prop('readonly', true);

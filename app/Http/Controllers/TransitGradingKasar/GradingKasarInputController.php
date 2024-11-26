@@ -50,6 +50,13 @@ class GradingKasarInputController extends Controller
     {
         $nomor_bstb = $request->nomor_bstb;
         $data = StockTransitRawMaterial::where('nomor_bstb',$nomor_bstb)->first();
+        $sum_total_modal = StockTransitRawMaterial::where('nomor_bstb',$nomor_bstb)->sum('total_modal');
+        $sum_berat = StockTransitRawMaterial::where('nomor_bstb',$nomor_bstb)->sum('berat');
+        $modal_baru = $sum_total_modal/$sum_berat;
+        $data->total_modal = $sum_total_modal;
+        $data->berat = $sum_berat;
+        $data->modal = $modal_baru;
+        // $data->modal_baru = $modal_baru;
 
         // Kembalikan nomor batch sebagai respons
         return response()->json($data);

@@ -30,7 +30,8 @@ class PreGradingHalusAddingController extends Controller
     public function getPreGradingHalusStock()
     {
         if ($this->PreGradingHalusStock === null) {
-            $this->PreGradingHalusStock = PreGradingHalusStock::where('status', 1)->get();
+            $this->PreGradingHalusStock = PreGradingHalusStock::select('nomor_job')
+            ->distinct()->where('status', 1)->get();
         }
         return $this->PreGradingHalusStock;
     }

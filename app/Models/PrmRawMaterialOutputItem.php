@@ -15,6 +15,7 @@ class PrmRawMaterialOutputItem extends Model
         'doc_no',
         'nomor_bstb',
         'nomor_batch',
+        'nomor_nota_internal',
         'id_box',
         'nama_supplier',
         'status',

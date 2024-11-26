@@ -26,6 +26,7 @@
                                 <th class="text-center">ID Box</th>
                                 <th class="text-center">Nomor BTSB</th>
                                 <th class="text-center">Nama Supplier</th>
+                                <th class="text-center">Nomor Nota Internal</th>
                                 <th class="text-center">Jenis</th>
                                 <th class="text-center">Berat</th>
                                 <th class="text-center">Kadar Air</th>
@@ -49,6 +50,7 @@
                                 <td class="text-center">{!! $post->id_box !!}</td>
                                 <td class="text-center">{!! $post->nomor_bstb !!}</td>
                                 <td class="text-center">{!! $post->nama_supplier !!}</td>
+                                <td class="text-center">{!! $post->nomor_nota_internal !!}</td>
                                 <td class="text-center">{!! $post->jenis !!}</td>
                                 <td class="text-center">{!! $post->berat !!}</td>
                                 <td class="text-center">{!! $post->kadar_air !!}</td>

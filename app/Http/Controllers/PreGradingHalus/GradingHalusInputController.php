@@ -9,6 +9,7 @@ use App\Models\MasterJenisGradingHalus;
 use App\Services\GradingHalusInputService;
 use App\Services\HppService;
 use App\Http\Controllers\Controller;
+use App\Models\PreGradingHalusAdding;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -112,5 +113,21 @@ class GradingHalusInputController extends Controller
     public function destroy($nomor_grading): RedirectResponse
     {
         return $this->GradingHalusInputService->destroy($nomor_grading);
+    }
+    public function getDataPreCleaning(Request $request)
+    {
+       $nomor_grading = $request->input('nomor_grading');
+        
+        $data = PreGradingHalusAdding::with('PreGradingHalusInput')->where('nomor_grading',$nomor_grading)->get();
+        $dataResponse = [];
+        foreach ($data as $key => $value) {
+            # code...
+            $dataResponse[] = $value->PreGradingHalusInput;
+                // return $value->PreGradingHalusInput;
+        }
+        // $data->map(function ($item, $key) {
+        // });
+
+        return json_encode($dataResponse[0]);
     }
 }

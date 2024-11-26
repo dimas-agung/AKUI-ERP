@@ -489,6 +489,7 @@ Route::middleware('auth')->group(function () {
             Route::controller(App\Http\Controllers\PreGradingHalus\GradingHalusInputController::class)->group(function () {
                 Route::get('/grading_halus_input', 'index')->name('GradingHalusInput.index');
                 Route::get('/grading_halus_input/create', 'create')->name('GradingHalusInput.create');
+                Route::get('/grading_halus_input/getDataPreCleaning', 'getDataPreCleaning')->name('GradingHalusInput.getDataPreCleaning');
                 Route::get('/grading_halus_input/get_data_id_box', 'set')->name('GradingHalusInput.set');
                 Route::get('/grading_halus_input/get_data_id_box/jenis_grading', 'setUnit')->name('GradingHalusInput.setUnit');
                 Route::post('/grading_halus_input/sendData', 'sendData')->name('GradingHalusInput.sendData');
