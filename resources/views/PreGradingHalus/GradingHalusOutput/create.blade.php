@@ -61,7 +61,15 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Nomor Partai</label>
+                                     
+                                        <input type="text" class="form-control" id="nomor_partai" name="nomor_partai" onkeypress="return event.charCode != 32"
+                                            >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Nomor BSTB</label>
                                         <input type="hidden" class="form-control" id="inisial_tujuan">
@@ -69,7 +77,7 @@
                                             >
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Nomor Job</label>
                                         <input type="text" class="form-control" id="nomor_job" name="nomor_job" >
@@ -191,8 +199,10 @@
                                 <th class="text-center" scope="col">Upah Oprator</th>
                                 <th class="text-center" scope="col">Tujuan Kirim</th>
                                 <th class="text-center" scope="col">Keterangan</th>
+                                @role('admin')
                                 <th class="text-center" scope="col">Modal</th>
                                 <th class="text-center" scope="col">Total Modal</th>
+                                @endrole
                                 <th class="text-center" scope="col">NIP Admin</th>
                                 <th class="text-center" scope="col">Action</th>
                             </tr>
@@ -252,6 +262,7 @@
 
                 const generatedNomorJob = generateNomorBSTB('JOB', inisialTujuan);
                 $('#nomor_job').val(generatedNomorJob);
+                $('#nomor_partai').val('Pt_'+generatedNomorJob);
             }
         }
 
@@ -341,6 +352,7 @@
             let generatedNomorJob = generateNomorBSTB('JOB'); // Memanggil generateNomorBSTB dengan prefix 'JOB'
             $('#nomor_bstb').val(generatedNomorBSTB);
             $('#nomor_job').val(generatedNomorJob);
+            $('#nomor_partai').val('Pt_'+generatedNomorJob);
         });
 
         $('#berat_job').on('input', function() {
@@ -481,6 +493,7 @@
             var id_box_grading_halus = $('#id_box_grading_halus').val();
             var nomor_batch = $('#nomor_batch').val();
             var nomor_bstb = $('#nomor_bstb').val().replace(/\s/g, "");
+            var nomor_partai = $('#nomor_partai').val().replace(/\s/g, "");
             // var nomor_job = $('#nomor_job').val();
             var jenis_job = $('#jenis_job').val();
             var berat_job = $('#berat_job').val();
@@ -528,6 +541,7 @@
             var newRow = '<tr>' +
                 '<td>' + id_box_grading_halus + '</td>' +
                 '<td>' + nomor_batch + '</td>' +
+                '<td>' + nomor_partai + '</td>' +
                 '<td>' + nomor_bstb + '</td>' +
                 '<td>' + nomor_job + '</td>' +
                 '<td>' + jenis_job + '</td>' +
@@ -536,8 +550,10 @@
                 '<td>' + upah_oprator + '</td>' +
                 '<td>' + tujuan_kirim + '</td>' +
                 '<td>' + keterangan + '</td>' +
+                @role('admin')
                 '<td>' + modal + '</td>' +
                 '<td>' + total_modal + '</td>' +
+                @endrole
                 '<td>' + user_created + '</td>' +
                 '</td><td><button class="btn btn-danger" onclick="hapusBaris(this)">Delete</button></td></tr>';
 
@@ -547,6 +563,7 @@
             dataArray.push({
                 id_box_grading_halus: id_box_grading_halus,
                 nomor_batch: nomor_batch,
+                nomor_partai: nomor_partai,
                 nomor_bstb: nomor_bstb,
                 nomor_job: nomor_job,
                 jenis_job: jenis_job,

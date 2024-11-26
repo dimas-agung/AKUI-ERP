@@ -29,6 +29,7 @@
                                 <th class="text-center">Pcs Keluar</th>
                                 <th class="text-center">Sisa Berat</th>
                                 <th class="text-center">Sisa Pcs</th>
+                                <th class="text-center">Rasio</th>
                                 @role('admin')
                                     <th class="text-center">Modal</th>
                                     <th class="text-center">Total Modal</th>
@@ -49,6 +50,7 @@
                                     <td class="text-center">{{ $item->pcs_keluar }}</td>
                                     <td class="text-center">{{ $item->sisa_berat }}</td>
                                     <td class="text-center">{{ $item->sisa_pcs }}</td>
+                                    <td class="text-center">{{ $item->modal * 0.0000196841305522212 }}</td>
                                     @role('admin')
                                         <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
                                         <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>

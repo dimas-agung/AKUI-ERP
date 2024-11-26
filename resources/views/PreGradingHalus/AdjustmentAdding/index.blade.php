@@ -62,6 +62,7 @@
                                         <th scope="col" class="text-center">Berat Adding</th>
                                         <th scope="col" class="text-center">Pcs Adding</th>
                                         <th scope="col" class="text-center">Keterangan</th>
+                                        <th scope="col" class="text-center">Rasio</th>
                                         @role('admin')
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
@@ -84,6 +85,7 @@
                                             <td class="text-center">{{ $item->berat_adding }}</td>
                                             <td class="text-center">{{ $item->pcs_adding }}</td>
                                             <td class="text-center">{{ $item->keterangan }}</td>
+                                            <td class="text-center">{{ $item->modal * 0.0000196841305522212 }}</td>
                                             @role('admin')
                                                 <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
                                                 <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}

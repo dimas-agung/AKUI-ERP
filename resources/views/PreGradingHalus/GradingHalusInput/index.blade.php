@@ -64,6 +64,7 @@
                                 <th class="text-center" scope="col">Berat Grading</th>
                                 <th class="text-center" scope="col">Pcs Grading</th>
                                 <th class="text-center" scope="col">Keterangan</th>
+                                <th class="text-center" scope="col">Rasio</th>
                                 @role('admin')
                                     <th class="text-center" scope="col">Modal</th>
                                     <th class="text-center" scope="col">Total Modal</th>
@@ -116,6 +117,7 @@
                                     <td class="text-center">{{ $item->berat_grading }}</td>
                                     <td class="text-center">{{ $item->pcs_grading }}</td>
                                     <td class="text-center">{{ $item->keterangan }}</td>
+                                    <td class="text-center">{{ $item->modal * 0.0000196841305522212 }}</td>
                                     @role('admin')
                                         <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
                                         <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>

@@ -39,6 +39,7 @@
                                         <th class="text-center" scope="col">Pcs Pre Cleaning<</th>
                                         <th scope="col" class="text-center">Kadar Air</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
+                                        <th scope="col" class="text-center">Rasio</th>
                                         @role('admin')
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
@@ -65,6 +66,7 @@
                                             <td class="text-center">{{ $PreGradingHalusStock->pcs_pre_cleaning }}</td>
                                             <td class="text-center">{{ $PreGradingHalusStock->kadar_air }}</td>
                                             <td class="text-center">{{ $PreGradingHalusStock->tujuan_kirim }}</td>
+                                            <td class="text-center">{{ $PreGradingHalusStock->modal * 0.0000196841305522212 }}</td>
                                             @role('admin')
                                                 <td class="text-center">
                                                     {{ number_format($PreGradingHalusStock->modal, 2, ',', '.') }}</td>

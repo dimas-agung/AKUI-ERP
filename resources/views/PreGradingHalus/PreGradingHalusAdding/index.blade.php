@@ -68,6 +68,7 @@
                                         <th scope="col" class="text-center">Berat Kirim</th>
                                         <th scope="col" class="text-center">Pcs Kirim</th>
                                         <th scope="col" class="text-center">Tujuan Kirim</th>
+                                        <th scope="col" class="text-center">Rasio</th>
                                         @role('admin')
                                             <th scope="col" class="text-center">Modal</th>
                                             <th scope="col" class="text-center">Total Modal</th>
@@ -97,6 +98,7 @@
                                             </td>
                                             <td class="text-center">{{ $PGHA->pcs_kirim }}</td>
                                             <td class="text-center">{{ $PGHA->tujuan_kirim }}</td>
+                                            <td class="text-center">{{ $PGHA->modal * 0.0000196841305522212 }}</td>
                                             @role('admin')
                                                 <td class="text-center">{{ number_format($PGHA->modal, 2, ',', '.') }}</td>
                                                 <td class="text-center">{{ number_format($PGHA->total_modal, 2, ',', '.') }}

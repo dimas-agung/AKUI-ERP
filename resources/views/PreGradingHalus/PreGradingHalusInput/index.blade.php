@@ -67,7 +67,8 @@
                                 <th class="text-center" scope="col">Tujuan Kirim</th>
                                 <th class="text-center" scope="col">Jenis Pre Cleaning</th>
                                 <th class="text-center" scope="col">Berat Pre Cleaning<</th>
-                                <th class="text-center" scope="col">Pcs Pre Cleaning<</th>
+                                <th class="text-center" scope="col">Pcs Pre Cleaning</th>
+                                <th class="text-center" scope="col">Rasio</th>
                                 @role('admin')
                                     <th class="text-center" scope="col">Modal</th>
                                     <th class="text-center" scope="col">Total Modal</th>
@@ -107,6 +108,7 @@
                                     <td class="text-center">{{ $item->jenis_pre_cleaning }}</td>
                                     <td class="text-center">{{ $item->berat_pre_cleaning }}</td>
                                     <td class="text-center">{{ $item->pcs_pre_cleaning }}</td>
+                                    <td class="text-center">{{ $item->modal * 0.0000196841305522212 }}</td>
                                     @role('admin')
                                         <td class="text-center">{{ number_format($item->modal, 2, ',', '.') }}</td>
                                         <td class="text-center">{{ number_format($item->total_modal, 2, ',', '.') }}</td>
