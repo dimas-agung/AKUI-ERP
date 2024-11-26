@@ -30,6 +30,7 @@ class TransitCabutBulu extends Model
         'nama_team_leader',
         'modal',
         'total_modal',
+        'nomor_partai',
         'status',
     ];
     public function CabutBuluPengembalian()

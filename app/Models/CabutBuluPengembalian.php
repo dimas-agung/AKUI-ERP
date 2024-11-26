@@ -35,6 +35,7 @@ class CabutBuluPengembalian extends Model
         'user_created',
         'user_updated',
         'status',
+        'nomor_partai',
         'is_trial',
     ];
     public function CabutBuluStock()

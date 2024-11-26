@@ -23,6 +23,7 @@ class PreWashStock extends Model
         'modal',
         'total_modal',
         'upah_operator',
+        'nomor_partai',
         'user_created',
         'user_updated',
     ];

@@ -28,6 +28,7 @@ class CabutBuluPenerimaan extends Model
         'total_modal',
         'user_created',
         'user_updated',
+        'nomor_partai',
         'status',
     ];
     public function TransitPreWash()

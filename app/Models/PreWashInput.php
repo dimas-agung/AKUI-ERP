@@ -22,6 +22,7 @@ class PreWashInput extends Model
         'status',
         'modal',
         'total_modal',
+        'nomor_partai',
         'user_created',
         'user_updated',
     ];

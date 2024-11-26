@@ -28,6 +28,7 @@ class PreWashOutput extends Model
         'keterangan',
         'modal',
         'total_modal',
+        'nomor_partai',
         'user_created',
         'user_updated',
     ];

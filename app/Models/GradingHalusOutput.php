@@ -23,6 +23,7 @@ class GradingHalusOutput extends Model
         'nomor_bstb',
         'modal',
         'total_modal',
+        'nomor_partai',
         'user_created',
         'user_updated',
     ];

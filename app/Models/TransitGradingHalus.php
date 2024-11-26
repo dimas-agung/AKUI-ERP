@@ -24,6 +24,7 @@ class TransitGradingHalus extends Model
         'modal',
         'total_modal',
         'user_created',
+        'nomor_partai',
         'user_updated',
     ];
 
